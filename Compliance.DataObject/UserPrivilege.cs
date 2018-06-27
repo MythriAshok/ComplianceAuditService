@@ -8,7 +8,7 @@ namespace Compliance.DataObject
     {
         public int PrivilegeId { get; set; }
         public string  PrivilegeName { get; set; }
-        public int IsActive { get; set; }
+        public bool IsActive { get; set; }
         public string PrivilegeType { get; set; }
     }
 }

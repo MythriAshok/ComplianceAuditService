@@ -15,11 +15,14 @@ namespace Compliance.DataObject
         public int Version { get; set; }
         public int ReviewerId { get; set; }
         public string ReviewerComments { get; set; }
+        public DateTime LastUpdatedDate { get; set; }
+
         public int ComplianceId { get; set; }
         public int OrgId { get; set; }
         public int ComplianceOptionsId { get; set; }
+        public int AuditorId { get; set; }
         public int UserId { get; set; }
-        public DateTime LastUpdatedDate { get; set; }
+        public string AuditStatus { get; set; }
 
     }
 }

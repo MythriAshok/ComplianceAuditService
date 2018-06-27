@@ -12,5 +12,6 @@ namespace Compliance.DataObject
         public int CountryId { get; set; }
         public int StateId { get; set; }
         public int CityId { get; set; }
+        public string PostalCode { get; set; }
     }
 }
