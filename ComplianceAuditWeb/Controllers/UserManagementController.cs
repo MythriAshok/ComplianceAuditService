@@ -13,5 +13,17 @@ namespace ComplianceAuditWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult CreateRoles()
+        {
+            return View();
+        }
+
+        public ActionResult CreateUser()
+        {
+            return View();
+        }
+
+
     }
 }
