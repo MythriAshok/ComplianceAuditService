@@ -184,6 +184,11 @@ namespace Compliance.DataAccess
             return OrganizationId;
         }
 
+        public int GetOrganizationHier()
+        {
+
+        }
+
     }
 }
     
