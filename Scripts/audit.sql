@@ -136,6 +136,7 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_org_hier` (
   `Last_Updated_Date` DATETIME NULL DEFAULT NULL,
   `Location_ID` INT(11) NOT NULL,
   `User_ID` INT(11) NOT NULL,
+  `Is_Active` BIT(1) NULL DEFAULT NULL,
   PRIMARY KEY (`Org_Hier_ID`),
   INDEX `Location_ID` (`Location_ID` ASC),
   INDEX `User_ID` (`User_ID` ASC),
@@ -147,6 +148,31 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_org_hier` (
     REFERENCES `auditmoduledb`.`tbl_user` (`User_ID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `auditmoduledb`.`tbl_branch_auditor_mapping`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `auditmoduledb`.`tbl_branch_auditor_mapping` ;
+
+CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_branch_auditor_mapping` (
+  `Branch_Allocation_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `Org_Hier_ID` INT(11) NOT NULL,
+  `Auditor_ID` INT(11) NOT NULL,
+  `Financial_Year` DATETIME NULL DEFAULT NULL,
+  `Is_Active` BIT(1) NULL DEFAULT NULL,
+  `Login_ID` INT(11) NULL DEFAULT NULL,
+  `Allocation_Date` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`Branch_Allocation_ID`),
+  INDEX `Org_Hier_ID` (`Org_Hier_ID` ASC),
+  INDEX `Auditor_ID` (`Auditor_ID` ASC),
+  CONSTRAINT `tbl_branch_auditor_mapping_ibfk_1`
+    FOREIGN KEY (`Org_Hier_ID`)
+    REFERENCES `auditmoduledb`.`tbl_org_hier` (`Org_Hier_ID`),
+  CONSTRAINT `tbl_branch_auditor_mapping_ibfk_2`
+    FOREIGN KEY (`Auditor_ID`)
+    REFERENCES `auditmoduledb`.`tbl_user` (`User_ID`))
 ENGINE = InnoDB;
 
 
@@ -273,6 +299,118 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_compliance_audit` (
     FOREIGN KEY (`Auditor_ID`)
     REFERENCES `auditmoduledb`.`tbl_user` (`User_ID`),
   CONSTRAINT `tbl_compliance_audit_ibfk_5`
+    FOREIGN KEY (`User_ID`)
+    REFERENCES `auditmoduledb`.`tbl_user` (`User_ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `auditmoduledb`.`tbl_compliance_audit_audittrail`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `auditmoduledb`.`tbl_compliance_audit_audittrail` ;
+
+CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_compliance_audit_audittrail` (
+  `Compliance_Audit_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `Comp_Schedule_Instance` INT(11) NULL DEFAULT NULL,
+  `Penalty_nc` VARCHAR(150) NULL DEFAULT NULL,
+  `Audit_Remarks` VARCHAR(150) NULL DEFAULT NULL,
+  `Audit_artefacts` VARCHAR(150) NULL DEFAULT NULL,
+  `Audit_Date` DATETIME NULL DEFAULT NULL,
+  `Version` INT(11) NULL DEFAULT NULL,
+  `Reviewer_ID` INT(11) NULL DEFAULT NULL,
+  `Review_Comments` VARCHAR(500) NULL DEFAULT NULL,
+  `Last_Updated_Date` DATETIME NULL DEFAULT NULL,
+  `Audit_Status` VARCHAR(10) NULL DEFAULT NULL,
+  `Compliance_Xref_ID` INT(11) NOT NULL,
+  `Org_Hier_ID` INT(11) NOT NULL,
+  `Compliance_Opt_Xref_ID` INT(11) NOT NULL,
+  `Auditor_ID` INT(11) NOT NULL,
+  `User_ID` INT(11) NOT NULL,
+  `Action_Type` VARCHAR(10) NULL DEFAULT NULL,
+  PRIMARY KEY (`Compliance_Audit_ID`),
+  INDEX `Compliance_Xref_ID` (`Compliance_Xref_ID` ASC),
+  INDEX `Org_Hier_ID` (`Org_Hier_ID` ASC),
+  INDEX `Compliance_Opt_Xref_ID` (`Compliance_Opt_Xref_ID` ASC),
+  INDEX `Auditor_ID` (`Auditor_ID` ASC),
+  INDEX `User_ID` (`User_ID` ASC),
+  CONSTRAINT `tbl_compliance_audit_audittrail_ibfk_1`
+    FOREIGN KEY (`Compliance_Xref_ID`)
+    REFERENCES `auditmoduledb`.`tbl_compliance_xref` (`Compliance_Xref_ID`),
+  CONSTRAINT `tbl_compliance_audit_audittrail_ibfk_2`
+    FOREIGN KEY (`Org_Hier_ID`)
+    REFERENCES `auditmoduledb`.`tbl_org_hier` (`Org_Hier_ID`),
+  CONSTRAINT `tbl_compliance_audit_audittrail_ibfk_3`
+    FOREIGN KEY (`Compliance_Opt_Xref_ID`)
+    REFERENCES `auditmoduledb`.`tbl_compliance_options_xref` (`Compliance_Opt_Xref_ID`),
+  CONSTRAINT `tbl_compliance_audit_audittrail_ibfk_4`
+    FOREIGN KEY (`Auditor_ID`)
+    REFERENCES `auditmoduledb`.`tbl_user` (`User_ID`),
+  CONSTRAINT `tbl_compliance_audit_audittrail_ibfk_5`
+    FOREIGN KEY (`User_ID`)
+    REFERENCES `auditmoduledb`.`tbl_user` (`User_ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `auditmoduledb`.`tbl_compliance_branch_mapping`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `auditmoduledb`.`tbl_compliance_branch_mapping` ;
+
+CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_compliance_branch_mapping` (
+  `Branch_Mapping_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `Org_Hier_ID` INT(11) NOT NULL,
+  `Compliance_Xref_ID` INT(11) NOT NULL,
+  `Financial_Year` DATETIME NULL DEFAULT NULL,
+  `Is_Active` BIT(1) NULL DEFAULT NULL,
+  `Login_ID` INT(11) NULL DEFAULT NULL,
+  `Allocation_Date` DATETIME NULL DEFAULT NULL,
+  PRIMARY KEY (`Branch_Mapping_ID`),
+  INDEX `Org_Hier_ID` (`Org_Hier_ID` ASC),
+  INDEX `Compliance_Xref_ID` (`Compliance_Xref_ID` ASC),
+  CONSTRAINT `tbl_compliance_branch_mapping_ibfk_1`
+    FOREIGN KEY (`Org_Hier_ID`)
+    REFERENCES `auditmoduledb`.`tbl_org_hier` (`Org_Hier_ID`),
+  CONSTRAINT `tbl_compliance_branch_mapping_ibfk_2`
+    FOREIGN KEY (`Compliance_Xref_ID`)
+    REFERENCES `auditmoduledb`.`tbl_compliance_xref` (`Compliance_Xref_ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `auditmoduledb`.`tbl_compliance_xref_audittrail`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `auditmoduledb`.`tbl_compliance_xref_audittrail` ;
+
+CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_compliance_xref_audittrail` (
+  `Compliance_Xref_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `Comp_Category` VARCHAR(45) NULL DEFAULT NULL,
+  `Comp_Description` VARCHAR(45) NULL DEFAULT NULL,
+  `Is_Header` BIT(1) NULL DEFAULT NULL,
+  `level` VARCHAR(5) NULL DEFAULT NULL,
+  `Comp_Order` INT(3) NULL DEFAULT NULL,
+  `Option_ID` INT(11) NULL DEFAULT NULL,
+  `Risk_Category` VARCHAR(45) NULL DEFAULT NULL,
+  `Risk_Description` VARCHAR(100) NULL DEFAULT NULL,
+  `Recurrence` VARCHAR(45) NULL DEFAULT NULL,
+  `Form` VARCHAR(45) NULL DEFAULT NULL,
+  `Type` VARCHAR(45) NULL DEFAULT NULL,
+  `Is_Best_Practice` BIT(1) NULL DEFAULT NULL,
+  `Version` INT(3) NULL DEFAULT NULL,
+  `Effective_Start_Date` DATETIME NULL DEFAULT NULL,
+  `Effective_End_Date` DATETIME NULL DEFAULT NULL,
+  `Country_ID` INT(11) NULL DEFAULT NULL,
+  `State_ID` INT(11) NULL DEFAULT NULL,
+  `City_ID` INT(11) NULL DEFAULT NULL,
+  `Last_Updated_Date` DATETIME NULL DEFAULT NULL,
+  `User_ID` INT(11) NOT NULL,
+  `Action_Type` VARCHAR(10) NULL DEFAULT NULL,
+  PRIMARY KEY (`Compliance_Xref_ID`),
+  INDEX `User_ID` (`User_ID` ASC),
+  CONSTRAINT `tbl_compliance_xref_audittrail_ibfk_1`
     FOREIGN KEY (`User_ID`)
     REFERENCES `auditmoduledb`.`tbl_user` (`User_ID`)
     ON DELETE CASCADE
