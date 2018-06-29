@@ -19,6 +19,87 @@ CREATE SCHEMA IF NOT EXISTS `auditmoduledb` DEFAULT CHARACTER SET utf8mb4 ;
 USE `auditmoduledb` ;
 
 -- -----------------------------------------------------
+-- Table `auditmoduledb`.`tbl_country`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `auditmoduledb`.`tbl_country` ;
+
+CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_country` (
+  `Country_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `Country_Code` VARCHAR(5) NOT NULL,
+  `Country_Name` VARCHAR(70) NOT NULL,
+  PRIMARY KEY (`Country_ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `auditmoduledb`.`tbl_state`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `auditmoduledb`.`tbl_state` ;
+
+CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_state` (
+  `State_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `State_Code` VARCHAR(5) NULL DEFAULT NULL,
+  `State_Name` VARCHAR(70) NULL DEFAULT NULL,
+  `Country_ID` INT(11) NOT NULL,
+  PRIMARY KEY (`State_ID`),
+  INDEX `FK_Country` (`Country_ID` ASC),
+  CONSTRAINT `FK_Country`
+    FOREIGN KEY (`Country_ID`)
+    REFERENCES `auditmoduledb`.`tbl_country` (`Country_ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `auditmoduledb`.`tbl_city`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `auditmoduledb`.`tbl_city` ;
+
+CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_city` (
+  `City_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `City_Name` VARCHAR(70) NULL DEFAULT NULL,
+  `State_ID` INT(11) NOT NULL,
+  PRIMARY KEY (`City_ID`),
+  INDEX `FK_State` (`State_ID` ASC),
+  CONSTRAINT `FK_State`
+    FOREIGN KEY (`State_ID`)
+    REFERENCES `auditmoduledb`.`tbl_state` (`State_ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `auditmoduledb`.`tbl_branch_location`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `auditmoduledb`.`tbl_branch_location` ;
+
+CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_branch_location` (
+  `Location_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `Location_Name` VARCHAR(75) NULL DEFAULT NULL,
+  `Adress` VARCHAR(450) NULL DEFAULT NULL,
+  `Country_ID` INT(11) NOT NULL,
+  `State_ID` INT(11) NOT NULL,
+  `City_ID` INT(11) NOT NULL,
+  `Postal_Code` VARCHAR(10) NULL DEFAULT NULL,
+  PRIMARY KEY (`Location_ID`),
+  INDEX `Country_ID` (`Country_ID` ASC),
+  INDEX `State_ID` (`State_ID` ASC),
+  INDEX `City_ID` (`City_ID` ASC),
+  CONSTRAINT `tbl_branch_location_ibfk_1`
+    FOREIGN KEY (`Country_ID`)
+    REFERENCES `auditmoduledb`.`tbl_country` (`Country_ID`),
+  CONSTRAINT `tbl_branch_location_ibfk_2`
+    FOREIGN KEY (`State_ID`)
+    REFERENCES `auditmoduledb`.`tbl_state` (`State_ID`),
+  CONSTRAINT `tbl_branch_location_ibfk_3`
+    FOREIGN KEY (`City_ID`)
+    REFERENCES `auditmoduledb`.`tbl_city` (`City_ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `auditmoduledb`.`tbl_user`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `auditmoduledb`.`tbl_user` ;
@@ -39,6 +120,62 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `auditmoduledb`.`tbl_org_hier`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `auditmoduledb`.`tbl_org_hier` ;
+
+CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_org_hier` (
+  `Org_Hier_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `Company_Name` VARCHAR(45) NULL DEFAULT NULL,
+  `Company_ID` INT(11) NULL DEFAULT NULL,
+  `Parent_Company_ID` INT(11) NULL DEFAULT NULL,
+  `Description` VARCHAR(45) NULL DEFAULT NULL,
+  `level` INT(3) NULL DEFAULT NULL,
+  `Is_Leaf` BIT(1) NULL DEFAULT NULL,
+  `Industry_Type` VARCHAR(45) NULL DEFAULT NULL,
+  `Last_Updated_Date` DATETIME NULL DEFAULT NULL,
+  `Location_ID` INT(11) NOT NULL,
+  `User_ID` INT(11) NOT NULL,
+  PRIMARY KEY (`Org_Hier_ID`),
+  INDEX `Location_ID` (`Location_ID` ASC),
+  INDEX `User_ID` (`User_ID` ASC),
+  CONSTRAINT `tbl_org_hier_ibfk_1`
+    FOREIGN KEY (`Location_ID`)
+    REFERENCES `auditmoduledb`.`tbl_branch_location` (`Location_ID`),
+  CONSTRAINT `tbl_org_hier_ibfk_2`
+    FOREIGN KEY (`User_ID`)
+    REFERENCES `auditmoduledb`.`tbl_user` (`User_ID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `auditmoduledb`.`tbl_company_details`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `auditmoduledb`.`tbl_company_details` ;
+
+CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_company_details` (
+  `Company_Details_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `Org_Hier_ID` INT(11) NOT NULL,
+  `Industry_Type` VARCHAR(45) NULL DEFAULT NULL,
+  `Formal_Name` VARCHAR(45) NULL DEFAULT NULL,
+  `Calender_StartDate` DATETIME NULL DEFAULT NULL,
+  `Calender_EndDate` DATETIME NULL DEFAULT NULL,
+  `Auditing_Frequency` VARCHAR(45) NULL DEFAULT NULL,
+  `Website` VARCHAR(45) NULL DEFAULT NULL,
+  `Company_Email_ID` VARCHAR(45) NULL DEFAULT NULL,
+  `Company_ContactNumber1` VARCHAR(45) NULL DEFAULT NULL,
+  `Company_ContactNumber2` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`Company_Details_ID`),
+  INDEX `Org_Hier_ID` (`Org_Hier_ID` ASC),
+  CONSTRAINT `tbl_company_details_ibfk_1`
+    FOREIGN KEY (`Org_Hier_ID`)
+    REFERENCES `auditmoduledb`.`tbl_org_hier` (`Org_Hier_ID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `auditmoduledb`.`tbl_compliance_xref`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `auditmoduledb`.`tbl_compliance_xref` ;
@@ -47,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_compliance_xref` (
   `Compliance_Xref_ID` INT(11) NOT NULL AUTO_INCREMENT,
   `Comp_Category` VARCHAR(45) NULL DEFAULT NULL,
   `Comp_Description` VARCHAR(45) NULL DEFAULT NULL,
-  `Is_Header` TINYINT(4) NULL DEFAULT NULL,
+  `Is_Header` BIT(1) NULL DEFAULT NULL,
   `level` VARCHAR(5) NULL DEFAULT NULL,
   `Comp_Order` INT(3) NULL DEFAULT NULL,
   `Option_ID` INT(11) NULL DEFAULT NULL,
@@ -56,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_compliance_xref` (
   `Recurrence` VARCHAR(45) NULL DEFAULT NULL,
   `Form` VARCHAR(45) NULL DEFAULT NULL,
   `Type` VARCHAR(45) NULL DEFAULT NULL,
-  `Is_Best_Practice` TINYINT(4) NULL DEFAULT NULL,
+  `Is_Best_Practice` BIT(1) NULL DEFAULT NULL,
   `Version` INT(3) NULL DEFAULT NULL,
   `Effective_Start_Date` DATETIME NULL DEFAULT NULL,
   `Effective_End_Date` DATETIME NULL DEFAULT NULL,
@@ -76,158 +213,22 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `auditmoduledb`.`compliance_options_xref`
+-- Table `auditmoduledb`.`tbl_compliance_options_xref`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `auditmoduledb`.`compliance_options_xref` ;
+DROP TABLE IF EXISTS `auditmoduledb`.`tbl_compliance_options_xref` ;
 
-CREATE TABLE IF NOT EXISTS `auditmoduledb`.`compliance_options_xref` (
+CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_compliance_options_xref` (
   `Compliance_Opt_Xref_ID` INT(11) NOT NULL AUTO_INCREMENT,
-  `Optiond_Text` VARCHAR(45) NULL DEFAULT NULL,
+  `Option_Text` VARCHAR(45) NULL DEFAULT NULL,
   `Option_Order` INT(3) NULL DEFAULT NULL,
   `Compliance_Xref_ID` INT(11) NOT NULL,
   PRIMARY KEY (`Compliance_Opt_Xref_ID`),
   INDEX `Compliance_Xref_ID` (`Compliance_Xref_ID` ASC),
-  CONSTRAINT `compliance_options_xref_ibfk_1`
+  CONSTRAINT `tbl_compliance_options_xref_ibfk_1`
     FOREIGN KEY (`Compliance_Xref_ID`)
     REFERENCES `auditmoduledb`.`tbl_compliance_xref` (`Compliance_Xref_ID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `auditmoduledb`.`tbl_country`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `auditmoduledb`.`tbl_country` ;
-
-CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_country` (
-  `CountryID` INT(11) NOT NULL AUTO_INCREMENT,
-  `Country_Code` VARCHAR(5) NOT NULL,
-  `Country_Name` VARCHAR(70) NOT NULL,
-  PRIMARY KEY (`CountryID`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `auditmoduledb`.`tbl_state`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `auditmoduledb`.`tbl_state` ;
-
-CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_state` (
-  `StateID` INT(11) NOT NULL AUTO_INCREMENT,
-  `State_Code` VARCHAR(5) NULL DEFAULT NULL,
-  `State_Name` VARCHAR(70) NULL DEFAULT NULL,
-  `CountryID` INT(11) NOT NULL,
-  PRIMARY KEY (`StateID`),
-  INDEX `FK_Country` (`CountryID` ASC),
-  CONSTRAINT `FK_Country`
-    FOREIGN KEY (`CountryID`)
-    REFERENCES `auditmoduledb`.`tbl_country` (`CountryID`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `auditmoduledb`.`tbl_city`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `auditmoduledb`.`tbl_city` ;
-
-CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_city` (
-  `CityID` INT(11) NOT NULL AUTO_INCREMENT,
-  `City_Name` VARCHAR(70) NULL DEFAULT NULL,
-  `StateID` INT(11) NOT NULL,
-  PRIMARY KEY (`CityID`),
-  INDEX `FK_State` (`StateID` ASC),
-  CONSTRAINT `FK_State`
-    FOREIGN KEY (`StateID`)
-    REFERENCES `auditmoduledb`.`tbl_state` (`StateID`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `auditmoduledb`.`tbl_branch_location`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `auditmoduledb`.`tbl_branch_location` ;
-
-CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_branch_location` (
-  `LocationID` INT(11) NOT NULL AUTO_INCREMENT,
-  `Location_Name` VARCHAR(75) NULL DEFAULT NULL,
-  `Adress` VARCHAR(450) NULL DEFAULT NULL,
-  `CountryID` INT(11) NOT NULL,
-  `StateID` INT(11) NOT NULL,
-  `CityID` INT(11) NOT NULL,
-  `Postal_Code` VARCHAR(10) NULL DEFAULT NULL,
-  PRIMARY KEY (`LocationID`),
-  INDEX `CountryID` (`CountryID` ASC),
-  INDEX `StateID` (`StateID` ASC),
-  INDEX `CityID` (`CityID` ASC),
-  CONSTRAINT `tbl_branch_location_ibfk_1`
-    FOREIGN KEY (`CountryID`)
-    REFERENCES `auditmoduledb`.`tbl_country` (`CountryID`),
-  CONSTRAINT `tbl_branch_location_ibfk_2`
-    FOREIGN KEY (`StateID`)
-    REFERENCES `auditmoduledb`.`tbl_state` (`StateID`),
-  CONSTRAINT `tbl_branch_location_ibfk_3`
-    FOREIGN KEY (`CityID`)
-    REFERENCES `auditmoduledb`.`tbl_city` (`CityID`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `auditmoduledb`.`tbl_org_hier`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `auditmoduledb`.`tbl_org_hier` ;
-
-CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_org_hier` (
-  `Org_ID` INT(11) NOT NULL AUTO_INCREMENT,
-  `Company_Name` VARCHAR(45) NULL DEFAULT NULL,
-  `Company_ID` INT(11) NULL DEFAULT NULL,
-  `Parent_Company_ID` INT(11) NULL DEFAULT NULL,
-  `Description` VARCHAR(45) NULL DEFAULT NULL,
-  `level` INT(3) NULL DEFAULT NULL,
-  `Is_Leaf` TINYINT(4) NULL DEFAULT NULL,
-  `Industry_Type` VARCHAR(45) NULL DEFAULT NULL,
-  `Last_Updated_Date` DATETIME NULL DEFAULT NULL,
-  `LocationID` INT(11) NOT NULL,
-  `User_ID` INT(11) NOT NULL,
-  PRIMARY KEY (`Org_ID`),
-  INDEX `LocationID` (`LocationID` ASC),
-  INDEX `User_ID` (`User_ID` ASC),
-  CONSTRAINT `tbl_org_hier_ibfk_1`
-    FOREIGN KEY (`LocationID`)
-    REFERENCES `auditmoduledb`.`tbl_branch_location` (`LocationID`),
-  CONSTRAINT `tbl_org_hier_ibfk_2`
-    FOREIGN KEY (`User_ID`)
-    REFERENCES `auditmoduledb`.`tbl_user` (`User_ID`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `auditmoduledb`.`tbl_company_details`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `auditmoduledb`.`tbl_company_details` ;
-
-CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_company_details` (
-  `iD` INT(11) NULL DEFAULT NULL,
-  `Org_Hier_ID` INT(11) NOT NULL,
-  `Industry_Type` VARCHAR(45) NULL DEFAULT NULL,
-  `Formal_Name` VARCHAR(45) NULL DEFAULT NULL,
-  `Calender_StartDate` DATETIME NULL DEFAULT NULL,
-  `Calender_EndDate` DATETIME NULL DEFAULT NULL,
-  `Auditing_Frequency` VARCHAR(45) NULL DEFAULT NULL,
-  `Website` VARCHAR(45) NULL DEFAULT NULL,
-  `Company_EmailID` VARCHAR(45) NULL DEFAULT NULL,
-  `Company_ContactNumber1` VARCHAR(45) NULL DEFAULT NULL,
-  `Company_ContactNumber2` VARCHAR(45) NULL DEFAULT NULL,
-  INDEX `Org_Hier_ID` (`Org_Hier_ID` ASC),
-  CONSTRAINT `tbl_company_details_ibfk_1`
-    FOREIGN KEY (`Org_Hier_ID`)
-    REFERENCES `auditmoduledb`.`tbl_org_hier` (`Org_ID`))
 ENGINE = InnoDB;
 
 
@@ -249,13 +250,13 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_compliance_audit` (
   `Last_Updated_Date` DATETIME NULL DEFAULT NULL,
   `Audit_Status` VARCHAR(10) NULL DEFAULT NULL,
   `Compliance_Xref_ID` INT(11) NOT NULL,
-  `Org_ID` INT(11) NOT NULL,
+  `Org_Hier_ID` INT(11) NOT NULL,
   `Compliance_Opt_Xref_ID` INT(11) NOT NULL,
   `Auditor_ID` INT(11) NOT NULL,
   `User_ID` INT(11) NOT NULL,
   PRIMARY KEY (`Compliance_Audit_ID`),
   INDEX `Compliance_Xref_ID` (`Compliance_Xref_ID` ASC),
-  INDEX `Org_ID` (`Org_ID` ASC),
+  INDEX `Org_Hier_ID` (`Org_Hier_ID` ASC),
   INDEX `Compliance_Opt_Xref_ID` (`Compliance_Opt_Xref_ID` ASC),
   INDEX `Auditor_ID` (`Auditor_ID` ASC),
   INDEX `User_ID` (`User_ID` ASC),
@@ -263,11 +264,11 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_compliance_audit` (
     FOREIGN KEY (`Compliance_Xref_ID`)
     REFERENCES `auditmoduledb`.`tbl_compliance_xref` (`Compliance_Xref_ID`),
   CONSTRAINT `tbl_compliance_audit_ibfk_2`
-    FOREIGN KEY (`Org_ID`)
-    REFERENCES `auditmoduledb`.`tbl_org_hier` (`Org_ID`),
+    FOREIGN KEY (`Org_Hier_ID`)
+    REFERENCES `auditmoduledb`.`tbl_org_hier` (`Org_Hier_ID`),
   CONSTRAINT `tbl_compliance_audit_ibfk_3`
     FOREIGN KEY (`Compliance_Opt_Xref_ID`)
-    REFERENCES `auditmoduledb`.`compliance_options_xref` (`Compliance_Opt_Xref_ID`),
+    REFERENCES `auditmoduledb`.`tbl_compliance_options_xref` (`Compliance_Opt_Xref_ID`),
   CONSTRAINT `tbl_compliance_audit_ibfk_4`
     FOREIGN KEY (`Auditor_ID`)
     REFERENCES `auditmoduledb`.`tbl_user` (`User_ID`),
@@ -287,8 +288,8 @@ DROP TABLE IF EXISTS `auditmoduledb`.`tbl_role` ;
 CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_role` (
   `Role_ID` INT(11) NOT NULL AUTO_INCREMENT,
   `Role_Name` VARCHAR(45) NULL DEFAULT NULL,
-  `Is_Active` TINYINT(4) NULL DEFAULT NULL,
-  `Is_Group_Role` TINYINT(4) NULL DEFAULT NULL,
+  `Is_Active` BIT(1) NULL DEFAULT NULL,
+  `Is_Group_Role` BIT(1) NULL DEFAULT NULL,
   PRIMARY KEY (`Role_ID`))
 ENGINE = InnoDB;
 
@@ -317,13 +318,13 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `auditmoduledb`.`tbl_menus` ;
 
 CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_menus` (
-  `iD` INT(11) NOT NULL AUTO_INCREMENT,
+  `Menu_ID` INT(11) NOT NULL AUTO_INCREMENT,
   `Parent_MenuID` INT(11) NULL DEFAULT NULL,
   `Menu_Name` VARCHAR(45) NULL DEFAULT NULL,
   `Page_URL` VARCHAR(45) NULL DEFAULT NULL,
   `Is_Active` BIT(1) NULL DEFAULT NULL,
   `User_Group_ID` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`iD`),
+  PRIMARY KEY (`Menu_ID`),
   INDEX `User_Group_ID` (`User_Group_ID` ASC),
   CONSTRAINT `tbl_menus_ibfk_1`
     FOREIGN KEY (`User_Group_ID`)
@@ -340,7 +341,7 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_privilege` (
   `Privilege_ID` INT(11) NOT NULL AUTO_INCREMENT,
   `Privilege_Name` VARCHAR(45) NULL DEFAULT NULL,
   `Privilege_Type` VARCHAR(45) NULL DEFAULT NULL,
-  `Is_Active` TINYINT(4) NULL DEFAULT NULL,
+  `Is_Active` BIT(1) NULL DEFAULT NULL,
   PRIMARY KEY (`Privilege_ID`))
 ENGINE = InnoDB;
 
@@ -352,7 +353,7 @@ DROP TABLE IF EXISTS `auditmoduledb`.`tbl_role_priv_map` ;
 
 CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_role_priv_map` (
   `Role_Priv_ID` INT(11) NOT NULL AUTO_INCREMENT,
-  `Is_Active` TINYINT(4) NULL DEFAULT NULL,
+  `Is_Active` BIT(1) NULL DEFAULT NULL,
   `Role_ID` INT(11) NOT NULL,
   `Privilege_ID` INT(11) NOT NULL,
   PRIMARY KEY (`Role_Priv_ID`),
