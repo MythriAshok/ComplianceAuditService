@@ -11,9 +11,8 @@ namespace Compliance.DataAccess
     static class DBConnection
     {
         static public MySqlConnection getconnection()
-        {
-                string connection = ConfigurationManager.AppSettings["constr"];
-                MySqlConnection conn = new MySqlConnection(connection);
+        {              
+                MySqlConnection conn = new MySqlConnection(ConfigurationManager.ConnectionStrings["constr"].ConnectionString);
 
             return conn;
         }
