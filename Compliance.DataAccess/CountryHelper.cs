@@ -10,17 +10,15 @@ namespace Compliance.DataAccess
 {
    public class CountryHelper
     {
-        MySqlConnection connection = DBConnection.getconnection();
+        MySqlConnection conn = DBConnection.getconnection();
         public DataTable GetCountry()
         {
             DataTable dtCountry = new DataTable();
             try
             {
-                connection.Open();
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.Connection = connection;
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getCountry",conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "sp_getCountry";
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtCountry);
             }
@@ -30,7 +28,7 @@ namespace Compliance.DataAccess
             }
             finally
             {
-                connection.Close();
+                conn.Close();
             }
             return dtCountry;
         }
@@ -40,22 +38,20 @@ namespace Compliance.DataAccess
             DataTable dtState = new DataTable();
             try
             {
-                connection.Open();
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.Connection = connection;
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getState",conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("m_CountryID", MySqlDbType.Int32).Value = CountryId;
-                cmd.CommandText = "sp_getState";
+                cmd.Parameters.Add("p_CountryID", MySqlDbType.Int32).Value = CountryId;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtState);
             }
-            catch (Exception ex)
+            catch 
             {
-                throw ex;
+                throw ;
             }
             finally
             {
-                connection.Close();
+                conn.Close();
             }
             return dtState;
         }
@@ -65,22 +61,20 @@ namespace Compliance.DataAccess
             DataTable dtCity = new DataTable();
             try
             {
-                connection.Open();
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.Connection = connection;
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getCity",conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("m_StateID", MySqlDbType.Int32).Value = StateId;
-                cmd.CommandText = "sp_getCity";
+                cmd.Parameters.Add("p_StateID", MySqlDbType.Int32).Value = StateId;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtCity);
             }
-            catch (Exception ex)
+            catch 
             {
-                throw ex;
+                throw ;
             }
             finally
             {
-                connection.Close();
+                conn.Close();
             }
             return dtCity;
         }

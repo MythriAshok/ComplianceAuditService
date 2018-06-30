@@ -8,7 +8,7 @@ namespace Compliance.DataObject
 {
   public  class CompanyDetails
     {
-        public int iD { get; set; }
+        public int Company_Details_ID { get; set; }
         public int Org_Hier_ID { get; set; }
         public string Industry_Type { get; set; }
         public string Formal_Name { get; set; }
