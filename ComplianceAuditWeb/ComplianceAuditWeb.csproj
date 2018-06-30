@@ -123,6 +123,8 @@
     <Content Include="Views\ManageOrganization\_Company.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\ManageOrganization\View.cshtml" />
+    <Content Include="Views\Shared\_Layout1.cshtml" />
+    <Content Include="Views\UserManagement\CreateUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -132,7 +134,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\UserManagement\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Compliance.DataObject\Compliance.DataObject.csproj">
