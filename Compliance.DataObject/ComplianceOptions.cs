@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Compliance.DataObject
 {
-    class ComplianceOptions
+   public class ComplianceOptions
     {
         public int ComplianceOptionsId { get; set; }
         public string OptionText { get; set; }

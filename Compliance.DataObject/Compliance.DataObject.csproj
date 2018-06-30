@@ -43,6 +43,7 @@
     <Compile Include="Branch.cs" />
     <Compile Include="City.cs" />
     <Compile Include="CompanyDetails.cs" />
+    <Compile Include="ComplianceXref.cs" />
     <Compile Include="ComplianceAudit.cs" />
     <Compile Include="ComplianceOptions.cs" />
     <Compile Include="Country.cs" />
