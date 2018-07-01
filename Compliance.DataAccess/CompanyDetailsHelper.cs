@@ -11,28 +11,27 @@ namespace Compliance.DataAccess
 {
    public class CompanyDetailsHelper
     {
-        MySqlConnection connection = DBConnection.getconnection();
-        public int CreateCompanyDetails(CompanyDetails details)
+        MySqlConnection conn = DBConnection.getconnection();
+        public int insertupdateCompanyDetails(CompanyDetails details, char Flag)
         {
             int CompanyDetailsId = 0;
             try
             {
-                connection.Open();
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.Connection = connection;
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_insertupdateCompanyDetails",conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "sp_insertCompanyDetails";
-                cmd.Parameters.Add("p_iD ", MySqlDbType.Int32).Value = details.iD;
-                cmd.Parameters.Add("p_Org_Hier_ID", MySqlDbType.Int32).Value = details.Org_Hier_ID;
-                cmd.Parameters.Add("p_Industry_Type", MySqlDbType.VarChar, 45).Value = details.Industry_Type;
-                cmd.Parameters.Add("p_Formal_Name", MySqlDbType.VarChar, 45).Value = details.Formal_Name;
-                cmd.Parameters.Add("p_Calender_StartDate", MySqlDbType.DateTime).Value = details.Calender_StartDate;
-                cmd.Parameters.Add("p_Calender_EndDate", MySqlDbType.DateTime).Value = details.Calender_EndDate;
-                cmd.Parameters.Add("p_Auditing_Frequency", MySqlDbType.VarChar, 45).Value = details.Auditing_Frequency;
-                cmd.Parameters.Add("p_Website", MySqlDbType.VarChar, 45).Value = details.Website;
-                cmd.Parameters.Add("p_Company_EmailID", MySqlDbType.Int32).Value = details.Company_EmailID;
-                cmd.Parameters.Add("p_Company_ContactNumber1", MySqlDbType.DateTime).Value = details.Company_ContactNumber1;
-                cmd.Parameters.Add("p_Company_ContactNumber2", MySqlDbType.DateTime).Value = details.Company_ContactNumber2;
+                cmd.Parameters.AddWithValue("p_Flag", Flag);
+                cmd.Parameters.AddWithValue("p_Company_Details ", details.Company_Details_ID ) ;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", details.Org_Hier_ID);
+                cmd.Parameters.AddWithValue("p_Industry_Type", details.Industry_Type) ;
+                cmd.Parameters.AddWithValue("p_Formal_Name", details.Formal_Name);
+                cmd.Parameters.AddWithValue("p_Calender_StartDate", details.Calender_StartDate);
+                cmd.Parameters.AddWithValue("p_Calender_EndDate", details.Calender_EndDate);
+                cmd.Parameters.AddWithValue("p_Auditing_Frequency", details.Auditing_Frequency) ;
+                cmd.Parameters.AddWithValue("p_Website", details.Website);
+                cmd.Parameters.AddWithValue("p_Company_EmailID", details.Company_EmailID);
+                cmd.Parameters.AddWithValue("p_Company_ContactNumber1", details.Company_ContactNumber1);
+                cmd.Parameters.AddWithValue("p_Company_ContactNumber2", details.Company_ContactNumber2);
                // MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 object objcompanydetailsid = cmd.ExecuteScalar();
                 if (objcompanydetailsid != null)
@@ -40,13 +39,13 @@ namespace Compliance.DataAccess
                     CompanyDetailsId = Convert.ToInt32(objcompanydetailsid);
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                throw;
             }
             finally
             {
-                connection.Close();
+                conn.Close();
             }
             return CompanyDetailsId;
         }
@@ -56,22 +55,20 @@ namespace Compliance.DataAccess
             DataTable dtCompanyDetails = new DataTable();
             try
             {
-                connection.Open();
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.Connection = connection;
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getCompanyDetails",conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("p_Company_Details_ID ", MySqlDbType.Int32).Value = CompanyDetailsId;
-                cmd.CommandText = "sp_getCompanyDetails";
+                cmd.Parameters.AddWithValue("p_Company_Details_ID ", CompanyDetailsId) ;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtCompanyDetails);
             }
-            catch (Exception ex)
+            catch 
             {
-                throw ex;
+                throw ;
             }
             finally
             {
-                connection.Close();
+                conn.Close();
             }
             return dtCompanyDetails;
         }

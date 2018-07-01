@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using System.Data;
+using Compliance.DataObject;
 
 namespace Compliance.DataAccess
 {
     public class OrganizationHelper
     {
-        public int CreateOrganizationHier(Organization org)
+        MySqlConnection connection = DBConnection.getconnection();
+        public int CreateOrganizationHier(Organization org, char Flag)
         {
             int OrganizationId = 0;
             try
@@ -18,18 +21,19 @@ namespace Compliance.DataAccess
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("m_Org_ID ", MySqlDbType.Int32).Value = org.OrganizationId;
-                cmd.Parameters.Add("m_Company_Name", MySqlDbType.VarChar, 45).Value = org.CompanyName;
-                cmd.Parameters.Add("m_Company_ID", MySqlDbType.Int32).Value = org.CompanyId;
-                cmd.Parameters.Add("m_Parent_Company_ID", MySqlDbType.Int32).Value = org.ParentCompanyId;
-                cmd.Parameters.Add("m_Description", MySqlDbType.VarChar, 45).Value = org.Description;
-                cmd.Parameters.Add("m_level", MySqlDbType.Bit).Value = org.Level;
-                cmd.Parameters.Add("m_Is_Leaf", MySqlDbType.Bit).Value = org.Leaf;
-                cmd.Parameters.Add("m_Industry_Type", MySqlDbType.VarChar, 45).Value = org.IndustryType;
-                cmd.Parameters.Add("m_Last_Updated_Date", MySqlDbType.DateTime).Value = org.LastUpdatedDate;
-                cmd.Parameters.Add("m_LocationID", MySqlDbType.Int32).Value = org.BranchId;
-                cmd.Parameters.Add("m_User_ID", MySqlDbType.Int32).Value = org.UserId;
-                cmd.CommandText = "sp_insertOrganizationHier";
+                cmd.CommandText = "sp_insertupdateOrganizationHier";
+                cmd.Parameters.AddWithValue("p_Flag ", Flag);
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID ", org.OrganizationId);
+                cmd.Parameters.AddWithValue("p_Company_Name", org.CompanyName) ;
+                cmd.Parameters.AddWithValue("p_Company_ID", org.CompanyId);
+                cmd.Parameters.AddWithValue("p_Parent_Company_ID", org.ParentCompanyId);
+                cmd.Parameters.AddWithValue("p_Description", org.Description);
+                cmd.Parameters.AddWithValue("p_level", org.Level);
+                cmd.Parameters.AddWithValue("p_Is_Leaf", org.Leaf);
+                cmd.Parameters.AddWithValue("p_Industry_Type", org.IndustryType);
+                cmd.Parameters.AddWithValue("p_Last_Updated_Date", org.LastUpdatedDate);
+                cmd.Parameters.AddWithValue("p_LocationID", org.BranchId);
+                cmd.Parameters.AddWithValue("p_User_ID", org.UserId);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 object objorganizationid = cmd.ExecuteScalar();
                 if (objorganizationid != null)
@@ -37,9 +41,9 @@ namespace Compliance.DataAccess
                     OrganizationId = Convert.ToInt32(objorganizationid);
                 }
             }
-            catch (Exception ex)
+            catch 
             {
-                throw ex;
+                throw ;
             }
             finally
             {
@@ -57,14 +61,14 @@ namespace Compliance.DataAccess
                 MySqlCommand cmd = new MySqlCommand();
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("m_Org_ID ", MySqlDbType.Int32).Value = OrgID;
                 cmd.CommandText = "sp_getOrganizationHier";
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID ", OrgID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtOrganization);
             }
-            catch (Exception ex)
+            catch 
             {
-                throw ex;
+                throw ;
             }
             finally
             {

@@ -11,24 +11,23 @@ namespace Compliance.DataAccess
 {
    public class BranchHelper
     {
-        MySqlConnection connection = DBConnection.getconnection();
-        public int createBranchLocation(Branch branchLocation)
+        MySqlConnection conn = DBConnection.getconnection();
+        public int insertupdateBranchLocation(Branch branchLocation,char Flag )
         {
             int BranchLocationId = 0;
             try
             {
-                connection.Open();
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.Connection = connection;
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_insertupdateBranchLocation",conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "sp_insertupdateBranchLocation";
-                cmd.Parameters.Add("p_LocationID ", MySqlDbType.Int32).Value = branchLocation.BranchId;
-                cmd.Parameters.Add("p_CountryID", MySqlDbType.Int32).Value = branchLocation.CountryId;
-                cmd.Parameters.Add("p_StateID", MySqlDbType.Int32).Value = branchLocation.StateId;
-                cmd.Parameters.Add("p_CityID", MySqlDbType.Int32).Value = branchLocation.CityId;
-                cmd.Parameters.Add("p_Address", MySqlDbType.Int32).Value = branchLocation.Address;
-                cmd.Parameters.Add("p_Location_Name", MySqlDbType.Int32).Value = branchLocation.BranchName;
-                cmd.Parameters.Add("p_Postal_Code", MySqlDbType.Int32).Value = branchLocation.PostalCode;
+                cmd.Parameters.AddWithValue("p_Flag ", Flag);
+                cmd.Parameters.AddWithValue("p_LocationID ", branchLocation.BranchId);
+                cmd.Parameters.AddWithValue("p_CountryID", branchLocation.CountryId);
+                cmd.Parameters.AddWithValue("p_StateID", branchLocation.StateId);
+                cmd.Parameters.AddWithValue("p_CityID", branchLocation.CityId) ;
+                cmd.Parameters.AddWithValue("p_Address", branchLocation.Address);
+                cmd.Parameters.AddWithValue("p_Location_Name", branchLocation.BranchName);
+                cmd.Parameters.AddWithValue("p_Postal_Code", branchLocation.PostalCode);
                // MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 object objbranchlocationid = cmd.ExecuteScalar();
                 if (objbranchlocationid != null)
@@ -36,13 +35,13 @@ namespace Compliance.DataAccess
                     BranchLocationId = Convert.ToInt32(objbranchlocationid);
                 }
             }
-            catch (Exception ex)
+            catch 
             {
-                throw ex;
+                throw;
             }
             finally
             {
-                connection.Close();
+                conn.Close();
             }
             return BranchLocationId;
         }
@@ -52,24 +51,22 @@ namespace Compliance.DataAccess
             DataTable dtBranchLocation = new DataTable();
             try
             {
-                connection.Open();
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.Connection = connection;
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getBranchLocation",conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-               // cmd.Parameters.Add("p_CountryID", MySqlDbType.Int32).Value = CountryID;
+                // cmd.Parameters.Add("p_CountryID", MySqlDbType.Int32).Value = CountryID;
                 //cmd.Parameters.Add("p_StateID", MySqlDbType.Int32).Value = StateId;
                 cmd.Parameters.Add("p_Location_ID", MySqlDbType.Int32).Value = BranchLocationId;
-                cmd.CommandText = "sp_getBranchLocation";
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtBranchLocation);
             }
-            catch (Exception ex)
+            catch 
             {
-                throw ex;
+                throw;
             }
             finally
             {
-                connection.Close();
+                conn.Close();
             }
             return dtBranchLocation;
         }
