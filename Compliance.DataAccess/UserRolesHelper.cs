@@ -37,5 +37,38 @@ namespace Compliance.DataAccess
 
             return dtUser;
         }
+        public bool insertUpdateUserRole(UserRoles roles,char flag)
+        {
+            bool result = false;
+            try
+            {
+                if (roles != null)
+                {
+                    conn = DBConnection.getconnection();
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateRole", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("p_flag", flag);
+                    cmd.Parameters.AddWithValue("p_Role_ID", roles.UserRoleId);
+                    cmd.Parameters.AddWithValue("p_Role_Name", roles.UserName);
+                    cmd.Parameters.AddWithValue("p_Is_Active", roles.IsGroupRole);
+                    cmd.Parameters.AddWithValue("p_Is_Group_Role", roles.IsActive);
+                    int res = cmd.ExecuteNonQuery();
+                    if (res > 0)
+                        result = true;
+                }
+            }
+
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return result;
+        }
     }
 }

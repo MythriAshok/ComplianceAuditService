@@ -23,13 +23,13 @@ using System.Data;
 namespace Compliance.DataAccess
 {
     public class UserHelper
-    {
+    {   
         MySqlConnection conn = new MySqlConnection();
         /// <summary>
-        /// 
+        /// This method is used to insert are update the user information to tbl_user in auditmoduledb
         /// </summary>
         /// <param name="user">User object</param>
-        /// <param name="flag"></param>
+        /// <param name="flag">Value of flag 'I' indicates that it is for Insert and 'U' indicates that it is for Update</param>
         /// <returns></returns>
         public string insertupdateUser(User user,char flag)
         {
@@ -53,9 +53,9 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Contact_Number", user.ContactNumber);
                     cmd.Parameters.AddWithValue("p_Gender", user.Gender);
                     cmd.Parameters.AddWithValue("p_Is_Active", user.IsActive);
-
                     result = Convert.ToString(cmd.ExecuteScalar());
                     }
+                    result = "User Module is null";
                 }
             catch 
             {
@@ -69,6 +69,11 @@ namespace Compliance.DataAccess
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public bool DeleteUser(int userId)
         {
             bool result=false;
@@ -97,6 +102,11 @@ namespace Compliance.DataAccess
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public DataTable getUser(int userId)
         {
             DataTable dtUser = new DataTable();

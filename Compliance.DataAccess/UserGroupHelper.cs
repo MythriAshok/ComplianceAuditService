@@ -12,7 +12,6 @@ namespace Compliance.DataAccess
     class UserGroupHelper
     {
         MySqlConnection conn = new MySqlConnection();
-
         public DataTable getUserGroup(int UserGroupID)
         {
             DataTable dtUser = new DataTable();
@@ -36,6 +35,41 @@ namespace Compliance.DataAccess
             }
 
             return dtUser;
+        }
+
+        public bool insertupdateUser(UserGroup usergroup, char flag)
+        {
+            bool result = false;
+
+            try
+            {
+                if (usergroup != null)
+                {
+                    conn = DBConnection.getconnection();
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateUser", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("p_flag", flag);
+                    cmd.Parameters.AddWithValue("User_Group_ID",usergroup.UserGroupId);
+                    cmd.Parameters.AddWithValue("p_User_Group_Name", usergroup.UserGroupName);
+                    cmd.Parameters.AddWithValue("User_Group_Description", usergroup.UserGroupDescription);
+                    cmd.Parameters.AddWithValue("p_Role_ID", usergroup.UserRoleId);
+                    int res= cmd.ExecuteNonQuery();
+                    if(res>0)
+                    result = true;
+                }
+                result = false;
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return result;
         }
     }
 }
