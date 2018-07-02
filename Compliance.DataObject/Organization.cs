@@ -6,18 +6,19 @@ namespace Compliance.DataObject
 {
    public class Organization
     {
-        public int OrganizationId { get; set; }
-        public string CompanyName { get; set; }
-        public int CompanyId { get; set; }
-        public int ParentCompanyId { get; set; }
+        public int Organization_Id { get; set; }
+        public string Company_Name { get; set; }
+        public int Company_Id { get; set; }
+        public int Parent_Company_Id { get; set; }
         public string Description { get; set; }
         public int Level { get; set; }
-        public int Leaf { get; set; }
-        public string IndustryType { get; set; }
-        public int BranchId { get; set; }
+        public int Is_Leaf { get; set; }
+        public string Industry_Type { get; set; }
+        public int Branch_Id { get; set; }
 
-        public int UserId { get; set; }
+        public int User_Id { get; set; }
 
-        public DateTime LastUpdatedDate { get; set; }
+        public DateTime Last_Updated_Date { get; set; }
+        public DateTime Is_Active { get; set; }
     }
 }

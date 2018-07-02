@@ -17,25 +17,31 @@ namespace Compliance.DataAccess
             int BranchLocationId = 0;
             try
             {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_insertupdateBranchLocation",conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Flag ", Flag);
-                cmd.Parameters.AddWithValue("p_LocationID ", branchLocation.BranchId);
-                cmd.Parameters.AddWithValue("p_CountryID", branchLocation.CountryId);
-                cmd.Parameters.AddWithValue("p_StateID", branchLocation.StateId);
-                cmd.Parameters.AddWithValue("p_CityID", branchLocation.CityId) ;
-                cmd.Parameters.AddWithValue("p_Address", branchLocation.Address);
-                cmd.Parameters.AddWithValue("p_Location_Name", branchLocation.BranchName);
-                cmd.Parameters.AddWithValue("p_Postal_Code", branchLocation.PostalCode);
-               // MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                object objbranchlocationid = cmd.ExecuteScalar();
-                if (objbranchlocationid != null)
+                if (branchLocation != null)
                 {
-                    BranchLocationId = Convert.ToInt32(objbranchlocationid);
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateBranchLocation", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("p_Flag ", Flag);
+                    cmd.Parameters.AddWithValue("p_LocationID ", branchLocation.Branch_Id);
+                    cmd.Parameters.AddWithValue("p_CountryID", branchLocation.Country_Id);
+                    cmd.Parameters.AddWithValue("p_StateID", branchLocation.State_Id);
+                    cmd.Parameters.AddWithValue("p_CityID", branchLocation.City_Id);
+                    cmd.Parameters.AddWithValue("p_Address", branchLocation.Address);
+                    cmd.Parameters.AddWithValue("p_Location_Name", branchLocation.Branch_Name);
+                    cmd.Parameters.AddWithValue("p_Postal_Code", branchLocation.Postal_Code);
+                    cmd.Parameters.AddWithValue("p_Branch_Coordinates1", branchLocation.Branch_Coordinates1);
+                    cmd.Parameters.AddWithValue("p_Branch_Coordinates2", branchLocation.Branch_Coordinates2);
+                    cmd.Parameters.AddWithValue("p_Branch_CoordinatesURL", branchLocation.Branch_CoordinatesURL);
+                    // MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                    object objbranchlocationid = cmd.ExecuteScalar();
+                    if (objbranchlocationid != null)
+                    {
+                        BranchLocationId = Convert.ToInt32(objbranchlocationid);
+                    }
                 }
             }
-            catch 
+            catch
             {
                 throw;
             }
@@ -46,7 +52,7 @@ namespace Compliance.DataAccess
             return BranchLocationId;
         }
 
-        public DataTable GetBranchLocation(int BranchLocationId)
+        public DataTable getBranchLocation(int Branch_Location_Id)
         {
             DataTable dtBranchLocation = new DataTable();
             try
@@ -56,7 +62,7 @@ namespace Compliance.DataAccess
                 cmd.CommandType = CommandType.StoredProcedure;
                 // cmd.Parameters.Add("p_CountryID", MySqlDbType.Int32).Value = CountryID;
                 //cmd.Parameters.Add("p_StateID", MySqlDbType.Int32).Value = StateId;
-                cmd.Parameters.Add("p_Location_ID", MySqlDbType.Int32).Value = BranchLocationId;
+                cmd.Parameters.Add("p_Location_ID", MySqlDbType.Int32).Value = Branch_Location_Id;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtBranchLocation);
             }
@@ -69,6 +75,34 @@ namespace Compliance.DataAccess
                 conn.Close();
             }
             return dtBranchLocation;
+        }
+
+        public bool deleteBranchLocation(int Branch_Location_Id)
+        {
+            bool resultBranchLocation = false;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_deleteBranchLocation", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                // cmd.Parameters.Add("p_CountryID", MySqlDbType.Int32).Value = CountryID;
+                //cmd.Parameters.Add("p_StateID", MySqlDbType.Int32).Value = StateId;
+                cmd.Parameters.Add("p_Location_ID", MySqlDbType.Int32).Value = Branch_Location_Id;
+                object resultCount = cmd.ExecuteScalar();
+                if(resultCount != null)
+                {
+                    resultBranchLocation = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return resultBranchLocation;
         }
 
     }

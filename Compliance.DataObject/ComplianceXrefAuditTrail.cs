@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Compliance.DataObject
 {
-    public class ComplianceXref
+   public class ComplianceXrefAuditTrail
     {
         public int Compliance_Xref_ID { get; set; }
         public string Comp_Category { get; set; }
         public string Comp_Description { get; set; }
-        public bool  Is_Header {get; set;}
+        public bool Is_Header { get; set; }
         public string level { get; set; }
         public int Comp_Order { get; set; }
         public int Option_ID { get; set; }
@@ -30,6 +30,6 @@ namespace Compliance.DataObject
         public DateTime Last_Updated_Date { get; set; }
         public int User_ID { get; set; }
         public int Is_Active { get; set; }
-
+        public string Action_Type { get; set; }
     }
 }

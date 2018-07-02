@@ -6,12 +6,15 @@ namespace Compliance.DataObject
 {
    public class Branch
     {
-        public int BranchId { get; set; }
-        public string BranchName { get; set; }
+        public int Branch_Id { get; set; }
+        public string Branch_Name { get; set; }
         public int Address { get; set; }
-        public int CountryId { get; set; }
-        public int StateId { get; set; }
-        public int CityId { get; set; }
-        public string PostalCode { get; set; }
+        public int Country_Id { get; set; }
+        public int State_Id { get; set; }
+        public int City_Id { get; set; }
+        public string Postal_Code { get; set; }
+        public string Branch_Coordinates1 { get; set; }
+        public string Branch_Coordinates2 { get; set; }
+        public string Branch_CoordinatesURL { get; set; }
     }
 }

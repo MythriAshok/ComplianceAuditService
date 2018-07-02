@@ -14,56 +14,60 @@ namespace Compliance.DataAccess
     {
         MySqlConnection conn = DBConnection.getconnection();
         // MySqlConnection connection = new MySqlConnection(ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString);
-        public int CreateComplianceXref(ComplianceXref xref, char Flag)
+        public bool insertupdateComplianceXref(ComplianceXref xref, char Flag)
         {
-            int ComplianceXrefId = 0;
+            bool ComplianceXref = false;
             try
-            { 
-            conn.Open();
-            MySqlCommand cmd = new MySqlCommand("sp_insertupdateComplianceXref",conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("p_Flag", Flag);
-            cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", xref.Compliance_Xref_ID);
-            cmd.Parameters.AddWithValue("p_Comp_Category", xref.Comp_Category);
-            cmd.Parameters.AddWithValue("p_Comp_Description", xref.Comp_Description);
-            cmd.Parameters.AddWithValue("p_Is_Header", xref.Is_Header);
-            cmd.Parameters.AddWithValue("p_level", xref.level);
-            cmd.Parameters.AddWithValue("p_Option_ID", xref.Option_ID);
-            cmd.Parameters.AddWithValue("p_Risk_Category", xref.Risk_Category);
-            cmd.Parameters.AddWithValue("p_Risk_Description", xref.Risk_Description);
-            cmd.Parameters.AddWithValue("p_Recurrence", xref.Recurrence);
-            cmd.Parameters.AddWithValue("p_Form ", xref.Form);
-            cmd.Parameters.AddWithValue("p_Type", xref.Type);
-            cmd.Parameters.AddWithValue("p_Is_Best_Practice", xref.Is_Best_Practice);
-            cmd.Parameters.AddWithValue("p_Version", xref.Version);
-            cmd.Parameters.AddWithValue("p_Effective_Start_Date", xref.Effective_Start_Date);
-            cmd.Parameters.AddWithValue("p_Effective_End_Date", xref.Effective_End_Date);
-            cmd.Parameters.AddWithValue("p_Country_ID ", xref.Country_ID);
-            cmd.Parameters.AddWithValue("p_State_ID", xref.State_ID);
-            cmd.Parameters.AddWithValue("p_City_ID", xref.City_ID);
-            cmd.Parameters.AddWithValue("p_Last_Updated_Date", xref.Last_Updated_Date );
-            cmd.Parameters.AddWithValue("p_User_ID", xref.User_ID);
-           // MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-            object objcompliancexrefid = cmd.ExecuteScalar();
-            if (objcompliancexrefid != null)
-                {
-                    ComplianceXrefId = Convert.ToInt32(objcompliancexrefid);
+            {
+                if(xref != null)
+                { 
+                   conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateComplianceXref", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("p_Flag", Flag);
+                    cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", xref.Compliance_Xref_ID);
+                    cmd.Parameters.AddWithValue("p_Comp_Category", xref.Comp_Category);
+                    cmd.Parameters.AddWithValue("p_Comp_Description", xref.Comp_Description);
+                    cmd.Parameters.AddWithValue("p_Is_Header", xref.Is_Header);
+                    cmd.Parameters.AddWithValue("p_level", xref.level);
+                    cmd.Parameters.AddWithValue("p_Option_ID", xref.Option_ID);
+                    cmd.Parameters.AddWithValue("p_Risk_Category", xref.Risk_Category);
+                    cmd.Parameters.AddWithValue("p_Risk_Description", xref.Risk_Description);
+                    cmd.Parameters.AddWithValue("p_Recurrence", xref.Recurrence);
+                    cmd.Parameters.AddWithValue("p_Form ", xref.Form);
+                    cmd.Parameters.AddWithValue("p_Type", xref.Type);
+                    cmd.Parameters.AddWithValue("p_Is_Best_Practice", xref.Is_Best_Practice);
+                    cmd.Parameters.AddWithValue("p_Version", xref.Version);
+                    cmd.Parameters.AddWithValue("p_Effective_Start_Date", xref.Effective_Start_Date);
+                    cmd.Parameters.AddWithValue("p_Effective_End_Date", xref.Effective_End_Date);
+                    cmd.Parameters.AddWithValue("p_Country_ID ", xref.Country_ID);
+                    cmd.Parameters.AddWithValue("p_State_ID", xref.State_ID);
+                    cmd.Parameters.AddWithValue("p_City_ID", xref.City_ID);
+                    cmd.Parameters.AddWithValue("p_Last_Updated_Date", xref.Last_Updated_Date);
+                    cmd.Parameters.AddWithValue("p_User_ID", xref.User_ID);
+                    cmd.Parameters.AddWithValue("p_Is_Active", xref.Is_Active);
+                    // MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                    int objcompliancexref = cmd.ExecuteNonQuery();
+                    if (objcompliancexref > 0)
+                    {
+                        ComplianceXref = true;
+                    }
                 }
             }
-            catch 
+            catch
             {
-                throw ;
+                throw;
             }
             finally
             {
                 conn.Close();
             }
-            return ComplianceXrefId;
+            return ComplianceXref;
         }
 
           
 
-        public DataTable GetComlianceXref(int ComplianceXrefID)
+        public DataTable getComlianceXref(int Compliance_Xref_ID)
         {
             DataTable dtComplianceXref = new DataTable();
             try
@@ -71,7 +75,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getComplianceXref",conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID ", ComplianceXrefID);
+                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID ", Compliance_Xref_ID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtComplianceXref);
             }
@@ -84,6 +88,32 @@ namespace Compliance.DataAccess
                 conn.Close();
             }
             return dtComplianceXref;
+        }
+
+        public bool deleteComlianceXref(int Compliance_Xref_ID)
+        {
+            bool resultComplianceXref = false;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getComplianceXref", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID ", Compliance_Xref_ID);
+                int resultCount = cmd.ExecuteNonQuery();
+                if(resultCount > 0)
+                {
+                    resultComplianceXref = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return resultComplianceXref;
         }
     }
 

@@ -7,23 +7,24 @@ using MySql.Data.MySqlClient;
 using Compliance.DataObject;
 using System.Data;
 
+
 namespace Compliance.DataAccess
 {
-   public class ComplianceAuditHelper
+   public class ComplianceAuditTrailHelper
     {
         MySqlConnection conn = DBConnection.getconnection();
 
-        public bool insertupdateComplianceAudit(List<ComplianceAudit> auditdata, char Flag)
+        public bool insertupdateComplianceAuditTrail(List<ComplianceAuditAuditTrail> audittraildata, char Flag)
         {
             bool ComplianceAuditResult = true;
             try
             {
-                if (auditdata != null)
+                if (audittraildata != null)
                 {
                     conn.Open();
-                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateComplianceAudit",conn);
+                    MySqlCommand cmd = new MySqlCommand("sp_insertComplianceAuditTrail", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    foreach (ComplianceAudit audit in auditdata)
+                    foreach (ComplianceAuditAuditTrail audit in audittraildata)
                     {
                         cmd.Parameters.AddWithValue("p_Flag", Flag);
                         cmd.Parameters.AddWithValue("p_Compliance_Audit_ID ", audit.Compliance_Audit_Id);
@@ -34,15 +35,16 @@ namespace Compliance.DataAccess
                         cmd.Parameters.AddWithValue("p_Audit_Date ", audit.Audit_Date);
                         cmd.Parameters.AddWithValue("p_Version", audit.Version);
                         cmd.Parameters.AddWithValue("p_Reviewer_ID", audit.Reviewer_Id);
-                        cmd.Parameters.AddWithValue("p_Review_Comments", audit.Reviewer_Comments) ;
-                      //  cmd.Parameters.AddWithValue("p_Last_Updated_Date", MySqlDbType.DateTime).Value = audit.LastUpdatedDate;
+                        cmd.Parameters.AddWithValue("p_Review_Comments", audit.Reviewer_Comments);
+                        //  cmd.Parameters.AddWithValue("p_Last_Updated_Date", MySqlDbType.DateTime).Value = audit.LastUpdatedDate;
                         cmd.Parameters.AddWithValue("p_Audit_Status", audit.Audit_Status);
-                        cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", audit.Compliance_Xref_Id) ;
+                        cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", audit.Compliance_Xref_Id);
                         cmd.Parameters.AddWithValue("p_Org_Hier_ID", audit.Org_Hier_Id);
                         cmd.Parameters.AddWithValue("p_Compliance_Opt_Xref_ID", audit.Compliance_Options_Id);
                         cmd.Parameters.AddWithValue("p_Auditor_ID ", audit.Auditor_Id);
-                        cmd.Parameters.AddWithValue("p_User_ID", audit.User_Id) ;
+                        cmd.Parameters.AddWithValue("p_User_ID", audit.User_Id);
                         cmd.Parameters.AddWithValue("p_Is_Active", audit.Is_Active);
+                        cmd.Parameters.AddWithValue("p_Action_Type", audit.Action_Type);
                         int objcomplianceauditid = cmd.ExecuteNonQuery();
                         if (objcomplianceauditid <= 0)
                         {
@@ -56,10 +58,10 @@ namespace Compliance.DataAccess
                     ComplianceAuditResult = false;
                 }
             }
-            catch 
+            catch
             {
                 ComplianceAuditResult = false;
-                throw ;
+                throw;
             }
             finally
             {
@@ -68,21 +70,21 @@ namespace Compliance.DataAccess
             return ComplianceAuditResult;
         }
 
-        public DataTable getComlianceAudit(int Compliance_Audit_ID)
+        public DataTable getComlianceAuditTrail(int Compliance_Audit_ID)
         {
             DataTable dtComplianceAudit = new DataTable();
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getComplianceAudit", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getComplianceAuditTrail", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Compliance_Audit_ID ",  Compliance_Audit_ID);
+                cmd.Parameters.AddWithValue("p_Compliance_Audit_ID ", Compliance_Audit_ID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtComplianceAudit);
             }
             catch
             {
-                throw ;
+                throw;
             }
             finally
             {
@@ -91,19 +93,19 @@ namespace Compliance.DataAccess
             return dtComplianceAudit;
         }
 
-        public bool deleteComlianceAudit(int Compliance_Audit_ID)
+        public bool deleteComlianceAuditTrail(int Compliance_Audit_ID)
         {
-            bool resultComplianceAudit = false;
+            bool resultComplianceAuditTrail = false;
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getComplianceAudit", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getComplianceAuditTrail", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Compliance_Audit_ID ", Compliance_Audit_ID);
+                cmd.Parameters.AddWithValue("p_Compliance_Audit_ID ",  Compliance_Audit_ID);
                 int resultCount = cmd.ExecuteNonQuery();
-                if(resultCount > 0)
+                if (resultCount > 0)
                 {
-                    resultComplianceAudit = true;
+                    resultComplianceAuditTrail = true;
                 }
             }
             catch
@@ -114,7 +116,7 @@ namespace Compliance.DataAccess
             {
                 conn.Close();
             }
-            return resultComplianceAudit;
+            return resultComplianceAuditTrail;
         }
     }
 }

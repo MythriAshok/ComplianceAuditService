@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Compliance.DataObject
 {
-   public class ComplianceAudit
+  public  class ComplianceAuditAuditTrail
     {
         public int Compliance_Audit_Id { get; set; }
         public int Compliance_Schedule_Instance { get; set; }
@@ -24,6 +26,6 @@ namespace Compliance.DataObject
         public int User_Id { get; set; }
         public string Audit_Status { get; set; }
         public string Is_Active { get; set; }
-
+        public string Action_Type { get; set; }
     }
 }

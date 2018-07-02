@@ -50,7 +50,9 @@
     <Compile Include="CommonHelper.cs" />
     <Compile Include="CompanyDetailsHelper.cs" />
     <Compile Include="ComplianceAuditHelper.cs" />
+    <Compile Include="ComplianceAuditTrailHelper.cs" />
     <Compile Include="ComplianceOptionsXrefHelper.cs" />
+    <Compile Include="ComplianceXrefAuditTrailHelper.cs" />
     <Compile Include="CountryHelper.cs" />
     <Compile Include="DBConnection.cs" />
     <Compile Include="ComplianceXrefHelper.cs" />

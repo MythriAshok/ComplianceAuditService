@@ -6,9 +6,9 @@ namespace Compliance.DataObject
 {
    public class ComplianceOptions
     {
-        public int ComplianceOptionsId { get; set; }
-        public string OptionText { get; set; }
-        public int OptionOrder { get; set; }
-        public int ComplianceId { get; set; }
+        public int Compliance_Options_Id { get; set; }
+        public string Option_Text { get; set; }
+        public int Option_Order { get; set; }
+        public int Compliance_Id { get; set; }
     }
 }
