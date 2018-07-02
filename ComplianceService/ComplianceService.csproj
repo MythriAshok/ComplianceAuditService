@@ -66,9 +66,14 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BranchService.svc" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BranchService.svc.cs">
+      <DependentUpon>BranchService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="IBranchService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +93,16 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Compliance.DataAccess\Compliance.DataAccess.csproj">
+      <Project>{2a5e7a21-eb1c-4c95-b44a-83a513d07fd6}</Project>
+      <Name>Compliance.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Compliance.DataObject\Compliance.DataObject.csproj">
+      <Project>{4172ab6c-c4ca-464f-911a-6453ed85c702}</Project>
+      <Name>Compliance.DataObject</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
