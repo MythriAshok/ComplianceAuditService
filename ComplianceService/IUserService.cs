@@ -7,14 +7,11 @@ using System.Text;
 
 namespace ComplianceService
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IUser" in both code and config file together.
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IUserService" in both code and config file together.
     [ServiceContract]
-    public interface IUser
+    public interface IUserService
     {
         [OperationContract]
         void DoWork();
-
-        [OperationContract]
-        void updateuser();
     }
 }
