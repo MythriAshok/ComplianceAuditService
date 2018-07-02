@@ -11,7 +11,7 @@ namespace Compliance.DataAccess
    public class CountryHelper
     {
         MySqlConnection conn = DBConnection.getconnection();
-        public DataTable GetCountry()
+        public DataTable getCountry()
         {
             DataTable dtCountry = new DataTable();
             try
@@ -33,7 +33,7 @@ namespace Compliance.DataAccess
             return dtCountry;
         }
 
-        public DataTable GetState(int CountryId)
+        public DataTable getState(int Country_Id)
         {
             DataTable dtState = new DataTable();
             try
@@ -41,7 +41,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getState",conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("p_CountryID", MySqlDbType.Int32).Value = CountryId;
+                cmd.Parameters.AddWithValue("p_CountryID",  Country_Id);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtState);
             }
@@ -56,7 +56,7 @@ namespace Compliance.DataAccess
             return dtState;
         }
 
-        public DataTable GetCity(int StateId)
+        public DataTable getCity(int State_Id)
         {
             DataTable dtCity = new DataTable();
             try
@@ -64,7 +64,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getCity",conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("p_StateID", MySqlDbType.Int32).Value = StateId;
+                cmd.Parameters.AddWithValue("p_StateID",  State_Id);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtCity);
             }

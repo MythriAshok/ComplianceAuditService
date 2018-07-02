@@ -17,22 +17,25 @@ namespace Compliance.DataAccess
             int ComplianceOptionsId = 0;
             try
             {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_insertupdateComplianceOptionsXref",conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Flag", Flag);
-                cmd.Parameters.AddWithValue("p_Compliance_Opt_Xerf_ID ", options.ComplianceOptionsId) ;
-                cmd.Parameters.AddWithValue("p_Optiond_Text", options.OptionText);
-                cmd.Parameters.AddWithValue("p_Option_Order", options.OptionOrder);
-                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", options.ComplianceId);
-                // MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                object objcomplianceoptionsid = cmd.ExecuteScalar();
-                if (objcomplianceoptionsid != null)
+                if (options != null)
                 {
-                    ComplianceOptionsId = Convert.ToInt32(objcomplianceoptionsid);
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateComplianceOptionsXref", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("p_Flag", Flag);
+                    cmd.Parameters.AddWithValue("p_Compliance_Opt_Xerf_ID ", options.Compliance_Options_Id);
+                    cmd.Parameters.AddWithValue("p_Optiond_Text", options.Option_Text);
+                    cmd.Parameters.AddWithValue("p_Option_Order", options.Option_Order);
+                    cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", options.Compliance_Id);
+                    // MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                    object objcomplianceoptionsid = cmd.ExecuteScalar();
+                    if (objcomplianceoptionsid != null)
+                    {
+                        ComplianceOptionsId = Convert.ToInt32(objcomplianceoptionsid);
+                    }
                 }
             }
-            catch 
+            catch
             {
                 throw;
             }
@@ -43,7 +46,7 @@ namespace Compliance.DataAccess
             return ComplianceOptionsId;
         }
 
-        public DataTable GetComplianceOptionsXref(int ComplianceID)
+        public DataTable getComplianceOptionsXref(int Compliance_ID)
         {
             DataTable dtOrganization = new DataTable();
             try
@@ -51,7 +54,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getComplianceOptionsXref",conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Compliance_Opt_Xerf_ID ", ComplianceID);
+                cmd.Parameters.AddWithValue("p_Compliance_Opt_Xerf_ID ", Compliance_ID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtOrganization);
             }
@@ -64,6 +67,32 @@ namespace Compliance.DataAccess
                 conn.Close();
             }
             return dtOrganization;
+        }
+
+        public bool deleteComplianceOptionsXref(int Compliance_Opt_Xref_ID)
+        {
+            bool resultOrganization = false;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getComplianceOptionsXref", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Compliance_Opt_Xerf_ID ", Compliance_Opt_Xref_ID);
+                int resultCount = cmd.ExecuteNonQuery();
+                if(resultCount > 0)
+                {
+                    resultOrganization = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return resultOrganization;
         }
 
     }
