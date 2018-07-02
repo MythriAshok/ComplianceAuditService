@@ -42,11 +42,12 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_state` (
   `State_Name` VARCHAR(70) NULL DEFAULT NULL,
   `Country_ID` INT(11) NOT NULL,
   PRIMARY KEY (`State_ID`),
-  INDEX `FK_Country` (`Country_ID` ASC),
   CONSTRAINT `FK_Country`
     FOREIGN KEY (`Country_ID`)
     REFERENCES `auditmoduledb`.`tbl_country` (`Country_ID`))
 ENGINE = InnoDB;
+
+CREATE INDEX `FK_Country` ON `auditmoduledb`.`tbl_state` (`Country_ID` ASC);
 
 
 -- -----------------------------------------------------
@@ -59,13 +60,14 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_city` (
   `City_Name` VARCHAR(70) NULL DEFAULT NULL,
   `State_ID` INT(11) NOT NULL,
   PRIMARY KEY (`City_ID`),
-  INDEX `FK_State` (`State_ID` ASC),
   CONSTRAINT `FK_State`
     FOREIGN KEY (`State_ID`)
     REFERENCES `auditmoduledb`.`tbl_state` (`State_ID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
+
+CREATE INDEX `FK_State` ON `auditmoduledb`.`tbl_city` (`State_ID` ASC);
 
 
 -- -----------------------------------------------------
@@ -81,10 +83,10 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_branch_location` (
   `State_ID` INT(11) NOT NULL,
   `City_ID` INT(11) NOT NULL,
   `Postal_Code` VARCHAR(10) NULL DEFAULT NULL,
+  `Branch_Coordinates1` VARCHAR(100) NULL DEFAULT NULL,
+  `Branch_Coordinates2` VARCHAR(100) NULL DEFAULT NULL,
+  `Branch_CoordinateURL` VARCHAR(100) NULL DEFAULT NULL,
   PRIMARY KEY (`Location_ID`),
-  INDEX `Country_ID` (`Country_ID` ASC),
-  INDEX `State_ID` (`State_ID` ASC),
-  INDEX `City_ID` (`City_ID` ASC),
   CONSTRAINT `tbl_branch_location_ibfk_1`
     FOREIGN KEY (`Country_ID`)
     REFERENCES `auditmoduledb`.`tbl_country` (`Country_ID`),
@@ -97,6 +99,12 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_branch_location` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
+
+CREATE INDEX `Country_ID` ON `auditmoduledb`.`tbl_branch_location` (`Country_ID` ASC);
+
+CREATE INDEX `State_ID` ON `auditmoduledb`.`tbl_branch_location` (`State_ID` ASC);
+
+CREATE INDEX `City_ID` ON `auditmoduledb`.`tbl_branch_location` (`City_ID` ASC);
 
 
 -- -----------------------------------------------------
@@ -112,6 +120,7 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_user` (
   `Last_Name` VARCHAR(45) NULL DEFAULT NULL,
   `Email_ID` VARCHAR(100) NULL DEFAULT NULL,
   `Contact_Number` VARCHAR(50) NULL DEFAULT NULL,
+  `Company_ID` INT(11) NULL DEFAULT NULL,
   `Gender` VARCHAR(45) NULL DEFAULT NULL,
   `Is_Active` BIT(1) NULL DEFAULT NULL,
   `Last_Login` DATETIME NULL DEFAULT NULL,
@@ -138,8 +147,6 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_org_hier` (
   `User_ID` INT(11) NOT NULL,
   `Is_Active` BIT(1) NULL DEFAULT NULL,
   PRIMARY KEY (`Org_Hier_ID`),
-  INDEX `Location_ID` (`Location_ID` ASC),
-  INDEX `User_ID` (`User_ID` ASC),
   CONSTRAINT `tbl_org_hier_ibfk_1`
     FOREIGN KEY (`Location_ID`)
     REFERENCES `auditmoduledb`.`tbl_branch_location` (`Location_ID`),
@@ -149,6 +156,10 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_org_hier` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
+
+CREATE INDEX `Location_ID` ON `auditmoduledb`.`tbl_org_hier` (`Location_ID` ASC);
+
+CREATE INDEX `User_ID` ON `auditmoduledb`.`tbl_org_hier` (`User_ID` ASC);
 
 
 -- -----------------------------------------------------
@@ -165,15 +176,22 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_branch_auditor_mapping` (
   `Login_ID` INT(11) NULL DEFAULT NULL,
   `Allocation_Date` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`Branch_Allocation_ID`),
-  INDEX `Org_Hier_ID` (`Org_Hier_ID` ASC),
-  INDEX `Auditor_ID` (`Auditor_ID` ASC),
   CONSTRAINT `tbl_branch_auditor_mapping_ibfk_1`
     FOREIGN KEY (`Org_Hier_ID`)
     REFERENCES `auditmoduledb`.`tbl_org_hier` (`Org_Hier_ID`),
   CONSTRAINT `tbl_branch_auditor_mapping_ibfk_2`
     FOREIGN KEY (`Auditor_ID`)
+    REFERENCES `auditmoduledb`.`tbl_user` (`User_ID`),
+  CONSTRAINT `tbl_branch_auditor_mapping_ibfk_3`
+    FOREIGN KEY (`Login_ID`)
     REFERENCES `auditmoduledb`.`tbl_user` (`User_ID`))
 ENGINE = InnoDB;
+
+CREATE INDEX `Org_Hier_ID` ON `auditmoduledb`.`tbl_branch_auditor_mapping` (`Org_Hier_ID` ASC);
+
+CREATE INDEX `Auditor_ID` ON `auditmoduledb`.`tbl_branch_auditor_mapping` (`Auditor_ID` ASC);
+
+CREATE INDEX `Login_ID` ON `auditmoduledb`.`tbl_branch_auditor_mapping` (`Login_ID` ASC);
 
 
 -- -----------------------------------------------------
@@ -193,12 +211,14 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_company_details` (
   `Company_Email_ID` VARCHAR(45) NULL DEFAULT NULL,
   `Company_ContactNumber1` VARCHAR(45) NULL DEFAULT NULL,
   `Company_ContactNumber2` VARCHAR(45) NULL DEFAULT NULL,
+  `Is_Active` BIT(1) NULL DEFAULT NULL,
   PRIMARY KEY (`Company_Details_ID`),
-  INDEX `Org_Hier_ID` (`Org_Hier_ID` ASC),
   CONSTRAINT `tbl_company_details_ibfk_1`
     FOREIGN KEY (`Org_Hier_ID`)
     REFERENCES `auditmoduledb`.`tbl_org_hier` (`Org_Hier_ID`))
 ENGINE = InnoDB;
+
+CREATE INDEX `Org_Hier_ID` ON `auditmoduledb`.`tbl_company_details` (`Org_Hier_ID` ASC);
 
 
 -- -----------------------------------------------------
@@ -228,14 +248,16 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_compliance_xref` (
   `City_ID` INT(11) NULL DEFAULT NULL,
   `Last_Updated_Date` DATETIME NULL DEFAULT NULL,
   `User_ID` INT(11) NOT NULL,
+  `Is_Active` BIT(1) NULL DEFAULT NULL,
   PRIMARY KEY (`Compliance_Xref_ID`),
-  INDEX `User_ID` (`User_ID` ASC),
   CONSTRAINT `tbl_compliance_xref_ibfk_1`
     FOREIGN KEY (`User_ID`)
     REFERENCES `auditmoduledb`.`tbl_user` (`User_ID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
+
+CREATE INDEX `User_ID` ON `auditmoduledb`.`tbl_compliance_xref` (`User_ID` ASC);
 
 
 -- -----------------------------------------------------
@@ -249,13 +271,14 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_compliance_options_xref` (
   `Option_Order` INT(3) NULL DEFAULT NULL,
   `Compliance_Xref_ID` INT(11) NOT NULL,
   PRIMARY KEY (`Compliance_Opt_Xref_ID`),
-  INDEX `Compliance_Xref_ID` (`Compliance_Xref_ID` ASC),
   CONSTRAINT `tbl_compliance_options_xref_ibfk_1`
     FOREIGN KEY (`Compliance_Xref_ID`)
     REFERENCES `auditmoduledb`.`tbl_compliance_xref` (`Compliance_Xref_ID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
+
+CREATE INDEX `Compliance_Xref_ID` ON `auditmoduledb`.`tbl_compliance_options_xref` (`Compliance_Xref_ID` ASC);
 
 
 -- -----------------------------------------------------
@@ -280,12 +303,8 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_compliance_audit` (
   `Compliance_Opt_Xref_ID` INT(11) NOT NULL,
   `Auditor_ID` INT(11) NOT NULL,
   `User_ID` INT(11) NOT NULL,
+  `Is_Active` BIT(1) NULL DEFAULT NULL,
   PRIMARY KEY (`Compliance_Audit_ID`),
-  INDEX `Compliance_Xref_ID` (`Compliance_Xref_ID` ASC),
-  INDEX `Org_Hier_ID` (`Org_Hier_ID` ASC),
-  INDEX `Compliance_Opt_Xref_ID` (`Compliance_Opt_Xref_ID` ASC),
-  INDEX `Auditor_ID` (`Auditor_ID` ASC),
-  INDEX `User_ID` (`User_ID` ASC),
   CONSTRAINT `tbl_compliance_audit_ibfk_1`
     FOREIGN KEY (`Compliance_Xref_ID`)
     REFERENCES `auditmoduledb`.`tbl_compliance_xref` (`Compliance_Xref_ID`),
@@ -304,6 +323,16 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_compliance_audit` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
+
+CREATE INDEX `Compliance_Xref_ID` ON `auditmoduledb`.`tbl_compliance_audit` (`Compliance_Xref_ID` ASC);
+
+CREATE INDEX `Org_Hier_ID` ON `auditmoduledb`.`tbl_compliance_audit` (`Org_Hier_ID` ASC);
+
+CREATE INDEX `Compliance_Opt_Xref_ID` ON `auditmoduledb`.`tbl_compliance_audit` (`Compliance_Opt_Xref_ID` ASC);
+
+CREATE INDEX `Auditor_ID` ON `auditmoduledb`.`tbl_compliance_audit` (`Auditor_ID` ASC);
+
+CREATE INDEX `User_ID` ON `auditmoduledb`.`tbl_compliance_audit` (`User_ID` ASC);
 
 
 -- -----------------------------------------------------
@@ -328,13 +357,9 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_compliance_audit_audittrail` (
   `Compliance_Opt_Xref_ID` INT(11) NOT NULL,
   `Auditor_ID` INT(11) NOT NULL,
   `User_ID` INT(11) NOT NULL,
+  `Is_Active` BIT(1) NULL DEFAULT NULL,
   `Action_Type` VARCHAR(10) NULL DEFAULT NULL,
   PRIMARY KEY (`Compliance_Audit_ID`),
-  INDEX `Compliance_Xref_ID` (`Compliance_Xref_ID` ASC),
-  INDEX `Org_Hier_ID` (`Org_Hier_ID` ASC),
-  INDEX `Compliance_Opt_Xref_ID` (`Compliance_Opt_Xref_ID` ASC),
-  INDEX `Auditor_ID` (`Auditor_ID` ASC),
-  INDEX `User_ID` (`User_ID` ASC),
   CONSTRAINT `tbl_compliance_audit_audittrail_ibfk_1`
     FOREIGN KEY (`Compliance_Xref_ID`)
     REFERENCES `auditmoduledb`.`tbl_compliance_xref` (`Compliance_Xref_ID`),
@@ -354,6 +379,16 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_compliance_audit_audittrail` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+CREATE INDEX `Compliance_Xref_ID` ON `auditmoduledb`.`tbl_compliance_audit_audittrail` (`Compliance_Xref_ID` ASC);
+
+CREATE INDEX `Org_Hier_ID` ON `auditmoduledb`.`tbl_compliance_audit_audittrail` (`Org_Hier_ID` ASC);
+
+CREATE INDEX `Compliance_Opt_Xref_ID` ON `auditmoduledb`.`tbl_compliance_audit_audittrail` (`Compliance_Opt_Xref_ID` ASC);
+
+CREATE INDEX `Auditor_ID` ON `auditmoduledb`.`tbl_compliance_audit_audittrail` (`Auditor_ID` ASC);
+
+CREATE INDEX `User_ID` ON `auditmoduledb`.`tbl_compliance_audit_audittrail` (`User_ID` ASC);
+
 
 -- -----------------------------------------------------
 -- Table `auditmoduledb`.`tbl_compliance_branch_mapping`
@@ -369,15 +404,22 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_compliance_branch_mapping` (
   `Login_ID` INT(11) NULL DEFAULT NULL,
   `Allocation_Date` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`Branch_Mapping_ID`),
-  INDEX `Org_Hier_ID` (`Org_Hier_ID` ASC),
-  INDEX `Compliance_Xref_ID` (`Compliance_Xref_ID` ASC),
   CONSTRAINT `tbl_compliance_branch_mapping_ibfk_1`
     FOREIGN KEY (`Org_Hier_ID`)
     REFERENCES `auditmoduledb`.`tbl_org_hier` (`Org_Hier_ID`),
   CONSTRAINT `tbl_compliance_branch_mapping_ibfk_2`
     FOREIGN KEY (`Compliance_Xref_ID`)
-    REFERENCES `auditmoduledb`.`tbl_compliance_xref` (`Compliance_Xref_ID`))
+    REFERENCES `auditmoduledb`.`tbl_compliance_xref` (`Compliance_Xref_ID`),
+  CONSTRAINT `tbl_compliance_branch_mapping_ibfk_3`
+    FOREIGN KEY (`Login_ID`)
+    REFERENCES `auditmoduledb`.`tbl_user` (`User_ID`))
 ENGINE = InnoDB;
+
+CREATE INDEX `Org_Hier_ID` ON `auditmoduledb`.`tbl_compliance_branch_mapping` (`Org_Hier_ID` ASC);
+
+CREATE INDEX `Compliance_Xref_ID` ON `auditmoduledb`.`tbl_compliance_branch_mapping` (`Compliance_Xref_ID` ASC);
+
+CREATE INDEX `Login_ID` ON `auditmoduledb`.`tbl_compliance_branch_mapping` (`Login_ID` ASC);
 
 
 -- -----------------------------------------------------
@@ -407,15 +449,17 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_compliance_xref_audittrail` (
   `City_ID` INT(11) NULL DEFAULT NULL,
   `Last_Updated_Date` DATETIME NULL DEFAULT NULL,
   `User_ID` INT(11) NOT NULL,
+  `Is_Active` BIT(1) NULL DEFAULT NULL,
   `Action_Type` VARCHAR(10) NULL DEFAULT NULL,
   PRIMARY KEY (`Compliance_Xref_ID`),
-  INDEX `User_ID` (`User_ID` ASC),
   CONSTRAINT `tbl_compliance_xref_audittrail_ibfk_1`
     FOREIGN KEY (`User_ID`)
     REFERENCES `auditmoduledb`.`tbl_user` (`User_ID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
+
+CREATE INDEX `User_ID` ON `auditmoduledb`.`tbl_compliance_xref_audittrail` (`User_ID` ASC);
 
 
 -- -----------------------------------------------------
@@ -442,12 +486,14 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_user_group` (
   `User_Group_Name` VARCHAR(45) NULL DEFAULT NULL,
   `User_Group_Description` VARCHAR(45) NULL DEFAULT NULL,
   `Role_ID` INT(11) NOT NULL,
+  `Is_Active` BIT(1) NULL DEFAULT NULL,
   PRIMARY KEY (`User_Group_ID`),
-  INDEX `Role_ID` (`Role_ID` ASC),
   CONSTRAINT `tbl_user_group_ibfk_1`
     FOREIGN KEY (`Role_ID`)
     REFERENCES `auditmoduledb`.`tbl_role` (`Role_ID`))
 ENGINE = InnoDB;
+
+CREATE INDEX `Role_ID` ON `auditmoduledb`.`tbl_user_group` (`Role_ID` ASC);
 
 
 -- -----------------------------------------------------
@@ -463,11 +509,12 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_menus` (
   `Is_Active` BIT(1) NULL DEFAULT NULL,
   `User_Group_ID` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`Menu_ID`),
-  INDEX `User_Group_ID` (`User_Group_ID` ASC),
   CONSTRAINT `tbl_menus_ibfk_1`
     FOREIGN KEY (`User_Group_ID`)
     REFERENCES `auditmoduledb`.`tbl_user_group` (`User_Group_ID`))
 ENGINE = InnoDB;
+
+CREATE INDEX `User_Group_ID` ON `auditmoduledb`.`tbl_menus` (`User_Group_ID` ASC);
 
 
 -- -----------------------------------------------------
@@ -495,8 +542,6 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_role_priv_map` (
   `Role_ID` INT(11) NOT NULL,
   `Privilege_ID` INT(11) NOT NULL,
   PRIMARY KEY (`Role_Priv_ID`),
-  INDEX `Role_ID` (`Role_ID` ASC),
-  INDEX `Privilege_ID` (`Privilege_ID` ASC),
   CONSTRAINT `tbl_role_priv_map_ibfk_1`
     FOREIGN KEY (`Role_ID`)
     REFERENCES `auditmoduledb`.`tbl_role` (`Role_ID`),
@@ -504,6 +549,10 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_role_priv_map` (
     FOREIGN KEY (`Privilege_ID`)
     REFERENCES `auditmoduledb`.`tbl_privilege` (`Privilege_ID`))
 ENGINE = InnoDB;
+
+CREATE INDEX `Role_ID` ON `auditmoduledb`.`tbl_role_priv_map` (`Role_ID` ASC);
+
+CREATE INDEX `Privilege_ID` ON `auditmoduledb`.`tbl_role_priv_map` (`Privilege_ID` ASC);
 
 
 -- -----------------------------------------------------
@@ -516,8 +565,6 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_user_group_members` (
   `User_ID` INT(11) NOT NULL,
   `User_Group_ID` INT(11) NOT NULL,
   PRIMARY KEY (`User_Group_Members_ID`),
-  INDEX `User_ID` (`User_ID` ASC),
-  INDEX `User_Group_ID` (`User_Group_ID` ASC),
   CONSTRAINT `tbl_user_group_members_ibfk_1`
     FOREIGN KEY (`User_ID`)
     REFERENCES `auditmoduledb`.`tbl_user` (`User_ID`),
@@ -525,6 +572,10 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_user_group_members` (
     FOREIGN KEY (`User_Group_ID`)
     REFERENCES `auditmoduledb`.`tbl_user_group` (`User_Group_ID`))
 ENGINE = InnoDB;
+
+CREATE INDEX `User_ID` ON `auditmoduledb`.`tbl_user_group_members` (`User_ID` ASC);
+
+CREATE INDEX `User_Group_ID` ON `auditmoduledb`.`tbl_user_group_members` (`User_Group_ID` ASC);
 
 
 -- -----------------------------------------------------
@@ -537,8 +588,6 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_user_role_map` (
   `Role_ID` INT(11) NOT NULL,
   `User_ID` INT(11) NOT NULL,
   PRIMARY KEY (`User_Role_ID`),
-  INDEX `Role_ID` (`Role_ID` ASC),
-  INDEX `User_ID` (`User_ID` ASC),
   CONSTRAINT `tbl_user_role_map_ibfk_1`
     FOREIGN KEY (`Role_ID`)
     REFERENCES `auditmoduledb`.`tbl_role` (`Role_ID`),
@@ -546,6 +595,10 @@ CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_user_role_map` (
     FOREIGN KEY (`User_ID`)
     REFERENCES `auditmoduledb`.`tbl_user` (`User_ID`))
 ENGINE = InnoDB;
+
+CREATE INDEX `Role_ID` ON `auditmoduledb`.`tbl_user_role_map` (`Role_ID` ASC);
+
+CREATE INDEX `User_ID` ON `auditmoduledb`.`tbl_user_role_map` (`User_ID` ASC);
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
