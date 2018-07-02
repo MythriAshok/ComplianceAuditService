@@ -34,7 +34,6 @@ namespace Compliance.DataAccess
         public string insertupdateUser(User user,char flag)
         {
             string result="";
-             
                 try
                 {
                     if (user != null)

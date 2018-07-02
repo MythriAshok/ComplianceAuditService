@@ -9,19 +9,19 @@ using System.Data;
 
 namespace Compliance.DataAccess
 {
-    class UserPrivilegeHelper
+    class MenuHelper
     {
         MySqlConnection conn = new MySqlConnection();
-        public DataTable getRolePrivilege(int Role_ID)
+        public DataTable Menus(int User_Group_ID)
         {
             DataTable dtmenus = new DataTable();
             try
             {
                 conn = DBConnection.getconnection();
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getRolePrivilege", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getMenus", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Role_ID", Role_ID);
+                cmd.Parameters.AddWithValue("p_User_Group_ID", User_Group_ID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtmenus);
             }

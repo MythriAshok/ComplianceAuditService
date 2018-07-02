@@ -54,6 +54,7 @@
     <Compile Include="CountryHelper.cs" />
     <Compile Include="DBConnection.cs" />
     <Compile Include="ComplianceXrefHelper.cs" />
+    <Compile Include="MenuHelper.cs" />
     <Compile Include="MenusHelper.cs" />
     <Compile Include="OrganizationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
