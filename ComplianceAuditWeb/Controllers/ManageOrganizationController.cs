@@ -23,10 +23,25 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult AddGroup(OrganizationViewModel viewModel)
         {
-            
-            //BranchLocationService1.LocationServiceClient client = new BranchLocationService1.LocationServiceClient();
-           // int id = client.insertBranchLocation(branch);
-            return View();
+            BranchLocationService.LocationServiceClient clientbranch = new BranchLocationService.LocationServiceClient();
+            int BranchId = clientbranch.insertBranchLocation(viewModel.branch);
+            if (BranchId > 0)
+            {
+                viewModel.organization.Branch_Id = BranchId;
+                OrganizationHierService.OrganizationServiceClient clientorg = new OrganizationHierService.OrganizationServiceClient();
+                int OrgId = clientorg.insertOrganization(viewModel.organization);
+                if (OrgId > 0)
+                {
+                    viewModel.companydetails.Org_Hier_ID = OrgId;
+                    CompanyDetailService.CompanyDetailsSeriveClient clientcompany = new CompanyDetailService.CompanyDetailsSeriveClient();
+                    int CompanyDetailsId = clientcompany.insertCompanyDetails(viewModel.companydetails);
+                }
+                return View("AddGroup");
+            }
+            else
+            {
+                return View();
+            }
         }
     }
 }
