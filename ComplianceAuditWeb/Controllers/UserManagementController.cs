@@ -21,6 +21,7 @@ namespace ComplianceAuditWeb.Controllers
 
         public ActionResult CreateUser()
         {
+
             return View();
         }
 
