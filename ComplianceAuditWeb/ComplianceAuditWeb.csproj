@@ -45,6 +45,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -140,6 +142,13 @@
       <Project>{4172ab6c-c4ca-464f-911a-6453ed85c702}</Project>
       <Name>Compliance.DataObject</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ComplianceService\ComplianceService.csproj">
+      <Project>{9f6d89b1-a4ec-442f-a9e6-7e0fbafbb46f}</Project>
+      <Name>ComplianceService</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

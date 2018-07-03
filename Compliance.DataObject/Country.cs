@@ -9,5 +9,5 @@ namespace Compliance.DataObject
         public int CompanyId { get; set; }
         public int CompanyCode { get; set; }
         public string CompanyName { get; set; }
-    }
+           }
 }

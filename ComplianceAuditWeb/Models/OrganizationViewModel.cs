@@ -10,5 +10,6 @@ namespace ComplianceAuditWeb.Models
     {
         public Organization organization { get; set; }
         public Branch branch { get; set; }
+        public CompanyDetails companydetails { get; set; }
     }
 }
