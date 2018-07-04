@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BranchHelper.cs" />
-    <Compile Include="CommonHelper.cs" />
     <Compile Include="CompanyDetailsHelper.cs" />
     <Compile Include="ComplianceAuditHelper.cs" />
     <Compile Include="ComplianceAuditTrailHelper.cs" />

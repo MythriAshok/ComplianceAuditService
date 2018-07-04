@@ -3,46 +3,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-//using Compliance.DataObject;
-using ComplianceService;
 using ComplianceAuditWeb.Models;
 using Compliance.DataObject;
+using ComplianceService;
 
 namespace ComplianceAuditWeb.Controllers
 {
-    public class ManageOrganizationController : Controller
+    public class ManageBranchController : Controller
     {
-        // GET: ManageOrganization
+        // GET: ManageBranch
         public ActionResult Index()
         {
             return View();
         }
         [HttpGet]
-        public ActionResult AddGroup()
+        public ActionResult AddBrnch()
         {
-            OrganizationViewModel viewmodel = new OrganizationViewModel();
-            viewmodel.Country = new List<Country>();
+            BranchViewModel viewmodel = new BranchViewModel();
+           // viewmodel.countrylist = new List<Country>();
             viewmodel.State = new List<State>();
             viewmodel.City = new List<City>();
-            OrganizationHierService.OrganizationServiceClient clientgroup = new OrganizationHierService.OrganizationServiceClient();
-            clientgroup.BindCountry(viewmodel.Country);
-            clientgroup.BindState(viewmodel.State);
-            clientgroup.BindCity(viewmodel.City);
+            BranchServices.BranchServicesClient clientbranch = new BranchServices.BranchServicesClient();
+           // clientbranch.BindCountry(viewmodel.Country);
+            clientbranch.BindState(viewmodel.State);
+            clientbranch.BindCity(viewmodel.City);
             return View(viewmodel);
         }
         [HttpPost]
         public ActionResult AddGroup(OrganizationViewModel viewmodel)
         {
-            OrganizationHierService.OrganizationServiceClient clientorg = new OrganizationHierService.OrganizationServiceClient();
-            int BranchId = clientorg.insertBranchLocation(viewmodel.branch);
+            BranchServices.BranchServicesClient clientbranch = new BranchServices.BranchServicesClient();
+            int BranchId = clientbranch.insertBranchLocation(viewmodel.branch);
             if (BranchId > 0)
             {
                 viewmodel.organization.Branch_Id = BranchId;
-                int OrgId = clientorg.insertOrganization(viewmodel.organization);
+                int OrgId = clientbranch.insertOrganization(viewmodel.organization);
                 if (OrgId > 0)
                 {
                     viewmodel.companydetails.Org_Hier_ID = OrgId;
-                    int CompanyDetailsId = clientorg.insertCompanyDetails(viewmodel.companydetails);
+                    int CompanyDetailsId = clientbranch.insertCompanyDetails(viewmodel.companydetails);
                 }
                 else
                 {
@@ -55,5 +54,4 @@ namespace ComplianceAuditWeb.Controllers
                 return View();
             }
         }
-    }
 }

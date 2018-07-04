@@ -8,9 +8,9 @@ using Compliance.DataObject;
 
 namespace ComplianceService
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IOrganizationService" in both code and config file together.
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "ICompanyService" in both code and config file together.
     [ServiceContract]
-    public interface IOrganizationService
+    public interface ICompanyService
     {
         [OperationContract]
         int insertBranchLocation(Branch branchlocation);
@@ -28,4 +28,3 @@ namespace ComplianceService
         List<Country> BindCountry();
     }
 }
-

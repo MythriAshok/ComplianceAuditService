@@ -79,5 +79,75 @@ namespace Compliance.DataAccess
             return dtCity;
         }
 
+
+        public DataTable getCountryList()
+        {
+            DataTable dtCountry = new DataTable();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getCountryList", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtCountry);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dtCountry;
+        }
+
+        public DataTable getStateList()
+        {
+            DataTable dtState = new DataTable();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getStateList", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtState);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dtState;
+        }
+
+                public DataTable getCityList()
+                {
+                    DataTable dtCity = new DataTable();
+                    try
+                    {
+                        conn.Open();
+                        MySqlCommand cmd = new MySqlCommand("sp_getCityList", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                        adapter.Fill(dtCity);
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+
+            return dtCity;
+
+        }
     }
+
 }
+

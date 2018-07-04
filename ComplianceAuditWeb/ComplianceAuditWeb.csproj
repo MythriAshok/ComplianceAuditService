@@ -91,13 +91,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\BranchLocationService\LocationService.disco" />
-    <None Include="Connected Services\BranchLocationService\configuration91.svcinfo" />
-    <None Include="Connected Services\BranchLocationService\configuration.svcinfo" />
-    <None Include="Connected Services\BranchLocationService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <None Include="Connected Services\UserService\UserService.disco" />
     <None Include="Connected Services\UserService\configuration91.svcinfo" />
     <None Include="Connected Services\UserService\configuration.svcinfo" />
@@ -112,16 +105,6 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Connected Services\BranchLocationService\LocationService.wsdl" />
-    <None Include="Connected Services\BranchLocationService\LocationService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\BranchLocationService\LocationService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\BranchLocationService\LocationService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Connected Services\UserService\UserService.wsdl" />
     <None Include="Connected Services\UserService\UserService.xsd">
       <SubType>Designer</SubType>
@@ -141,20 +124,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Connected Services\BranchLocationService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Connected Services\UserService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\ManageAccessController.cs" />
+    <Compile Include="Controllers\ManageBranchController.cs" />
+    <Compile Include="Controllers\ManageCompanyController.cs" />
+    <Compile Include="Controllers\ManageOrganizationController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccessManagement.cs" />
+    <Compile Include="Models\BranchViewModel.cs" />
+    <Compile Include="Models\CompanyViewModel.cs" />
     <Compile Include="Models\OrganizationViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -181,6 +166,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ManageAccess\" />
+    <Folder Include="Views\ManageBranch\" />
+    <Folder Include="Views\ManageCompany\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Compliance.DataObject\Compliance.DataObject.csproj">
@@ -196,7 +184,6 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\BranchLocationService\" />
     <WCFMetadataStorage Include="Connected Services\UserService\" />
   </ItemGroup>
   <PropertyGroup>

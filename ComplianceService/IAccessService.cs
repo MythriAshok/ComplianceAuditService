@@ -7,11 +7,12 @@ using System.Text;
 
 namespace ComplianceService
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "ICompanyDetailsService" in both code and config file together.
+    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IAccessService" in both code and config file together.
     [ServiceContract]
-    public interface ICompanyDetailsService
+    public interface IAccessService
     {
         [OperationContract]
         void DoWork();
+
     }
 }

@@ -17,8 +17,8 @@ namespace Compliance.DataAccess
             int OrganizationId = 0;
             try
             {
-                if (org!=null)
-                    {
+                if (org != null)
+                {
                     conn.Open();
                     MySqlCommand cmd = new MySqlCommand("sp_insertupdateOrganizationHier", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -60,15 +60,15 @@ namespace Compliance.DataAccess
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getOrganizationHier",conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getOrganizationHier", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID ", OrgID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtOrganization);
             }
-            catch 
+            catch
             {
-                throw ;
+                throw;
             }
             finally
             {
@@ -87,7 +87,7 @@ namespace Compliance.DataAccess
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID ", Org_Hier_ID);
                 int resultCount = cmd.ExecuteNonQuery();
-                if(resultCount>0)
+                if (resultCount > 0)
                 {
                     resultOrganization = true;
                 }
@@ -102,8 +102,7 @@ namespace Compliance.DataAccess
             }
             return resultOrganization;
         }
-
-
-
     }
 }
+
+       
