@@ -9,7 +9,7 @@ using System.Data;
 
 namespace Compliance.DataAccess
 {
-    class UserPrivilegeHelper
+   public class UserPrivilegeHelper
     {
         MySqlConnection conn = new MySqlConnection();
         public DataTable getRolePrivilege(int Role_ID)

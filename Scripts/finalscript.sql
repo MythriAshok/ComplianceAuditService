@@ -224,5 +224,14 @@ Drop procedure if exists 'sp_getUserRole'
 Delimiter /
 create procedure sp_getUserRole(p_User_ID int)
 begin
-select Role_ID from tbl_user_role_map where User_ID=p_User_ID;
+select a.Role_ID,Role_Name from tbl_user_role_map a left join tbl_role b on a.Role_ID=b.Role_ID where User_ID=p_User_ID;
 end /
+
+Drop procedure if exists 'sp_getUserRoleList'
+Delimiter /
+create procedure sp_getUserRoleList()
+begin
+select Role_ID,Role_Name from tbl_role where Is_Group_Role=0 and Is_Active=1;
+end /
+
+
