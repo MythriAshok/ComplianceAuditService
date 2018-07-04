@@ -36,6 +36,10 @@ namespace ComplianceAuditWeb.Controllers
                     CompanyDetailService.CompanyDetailsSeriveClient clientcompany = new CompanyDetailService.CompanyDetailsSeriveClient();
                     int CompanyDetailsId = clientcompany.insertCompanyDetails(viewModel.companydetails);
                 }
+                else
+                {
+                    return View();
+                }
                 return View("AddGroup");
             }
             else
