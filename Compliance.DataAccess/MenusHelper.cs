@@ -9,7 +9,7 @@ using System.Data;
 
 namespace Compliance.DataAccess
 {
-    class MenusHelper
+    public class MenusHelper
     {
         MySqlConnection conn = new MySqlConnection();       
         public DataTable getMenus(int User_Group_ID)

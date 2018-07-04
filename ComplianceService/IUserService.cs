@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using Compliance.DataObject;
 
 namespace ComplianceService
 {
@@ -12,6 +13,12 @@ namespace ComplianceService
     public interface IUserService
     {
         [OperationContract]
-        void DoWork();
+        string insertUser(User user);
+        [OperationContract]
+        string updateUser(User user);
+        [OperationContract]
+        List<UserGroup> BindUserGroup();
+        [OperationContract]
+        void BindUserRole(List<UserRoles> userRoles);
     }
 }

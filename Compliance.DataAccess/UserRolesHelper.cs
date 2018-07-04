@@ -70,5 +70,33 @@ namespace Compliance.DataAccess
 
             return result;
         }
+        
+           public DataTable getUserRoleList(int RoleID)
+        {
+            DataTable dtUser = new DataTable();
+            try
+            {
+                conn = DBConnection.getconnection();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getUserRoleList", conn);
+                cmd.CommandType = CommandType.StoredProcedure;               
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtUser);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return dtUser;
+        }
+
+
+
+
     }
 }
