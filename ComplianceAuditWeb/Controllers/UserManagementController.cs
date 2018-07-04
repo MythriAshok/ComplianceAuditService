@@ -27,7 +27,7 @@ namespace ComplianceAuditWeb.Controllers
             userviewmodel.UserGroup = new List<UserGroup>();
             UserService.UserServiceClient userServiceClient = new UserService.UserServiceClient();
             //userviewmodel.UserGroup = userServiceClient.BindUserGroup();
-            //BindUserRole(userviewmodel.roles);
+            //userServiceClient.BindUserRole(userviewmodel.roles);
             return View(userviewmodel);
         }
         [HttpPost]
