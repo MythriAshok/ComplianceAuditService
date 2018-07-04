@@ -21,8 +21,6 @@ namespace Compliance.DataObject
         public DateTime Last_Updated_Date { get; set; }
         public DateTime Is_Active { get; set; }
 
-        public List<Country> Country { get; set; }
-        public List<State> State { get; set; }
-        public List<City> City { get; set; }
+      
     }
 }
