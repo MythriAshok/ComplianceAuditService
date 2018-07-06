@@ -7,6 +7,7 @@ using System.Text;
 using Compliance.DataAccess;
 using Compliance.DataObject;
 using System.Data;
+using System.Xml;
 
 namespace ComplianceService
 {
@@ -107,12 +108,32 @@ namespace ComplianceService
         }
 
 
-        public List<Country> BindCountry()
+        public string GetCountryList() //create private mthd n move this into tht n this methd returns nly string
         {
+            XmlDocument xmlCountries = BindCountry();
+
+            return xmlCountries.InnerText;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public string GetCountryListISO() //create private mthd n move this into tht n this methd returns nly string
+        {
+            XmlDocument xmlCountries = BindCountry();
+            string str = 
+
+        }
+
+        private XmlDocument BindCountry()
+        {
+            XmlDocument xmlCountries = new XmlDocument();
             CountryHelper helper = new CountryHelper();
-            helper.getCountryList();
-            List<Country> countrylist = new List<Country>();
-            return countrylist;
+            DataTable dt = helper.getCountryList();
+           // dt.ReadXml();
+
+            return xmlCountries;
         }
 
         public List<State> BindState()

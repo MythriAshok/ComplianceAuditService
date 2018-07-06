@@ -18,20 +18,23 @@ namespace ComplianceAuditWeb.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult AddGroup()
+        public ActionResult AddGroupCompany()
         {
             OrganizationViewModel viewmodel = new OrganizationViewModel();
             viewmodel.Country = new List<Country>();
             viewmodel.State = new List<State>();
             viewmodel.City = new List<City>();
+
             OrganizationHierService.OrganizationServiceClient clientgroup = new OrganizationHierService.OrganizationServiceClient();
-            clientgroup.BindCountry(viewmodel.Country);
-            clientgroup.BindState(viewmodel.State);
-            clientgroup.BindCity(viewmodel.City);
+            XmlDocument xmlCountries = new XmlDocument();
+            xmlCountries.LoadXml(response);
+            //clientgroup.BindCountry(viewmodel.Country);
+            //clientgroup.BindState(viewmodel.State);
+            // clientgroup.BindCity(viewmodel.City);
             return View(viewmodel);
         }
         [HttpPost]
-        public ActionResult AddGroup(OrganizationViewModel viewmodel)
+        public ActionResult AddGroupCompany(OrganizationViewModel viewmodel)
         {
             OrganizationHierService.OrganizationServiceClient clientorg = new OrganizationHierService.OrganizationServiceClient();
             int BranchId = clientorg.insertBranchLocation(viewmodel.branch);
@@ -41,6 +44,7 @@ namespace ComplianceAuditWeb.Controllers
                 int OrgId = clientorg.insertOrganization(viewmodel.organization);
                 if (OrgId > 0)
                 {
+                    viewmodel.
                     viewmodel.companydetails.Org_Hier_ID = OrgId;
                     int CompanyDetailsId = clientorg.insertCompanyDetails(viewmodel.companydetails);
                 }
