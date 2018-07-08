@@ -8,6 +8,7 @@ using Compliance.DataAccess;
 using Compliance.DataObject;
 using System.Data;
 using System.Xml;
+using System.IO;
 
 namespace ComplianceService
 {
@@ -18,13 +19,15 @@ namespace ComplianceService
         public void DoWork()
         {
         }
-        public int insertOrganization(Organization org)
+        public int insertOrganization(Organization org, CompanyDetails company, Branch branch)
         {
             int insertorgid = 0;
             try
             {
                 OrganizationHelper helper = new OrganizationHelper();
+
                 insertorgid = helper.insertupdateOrganizationHier(org, 'I');
+
             }
             catch
             {
@@ -108,10 +111,9 @@ namespace ComplianceService
         }
 
 
-        public string GetCountryList() //create private mthd n move this into tht n this methd returns nly string
+        public string GetCountryList() 
         {
             XmlDocument xmlCountries = BindCountry();
-
             return xmlCountries.InnerText;
         }
 
@@ -119,37 +121,52 @@ namespace ComplianceService
         /// 
         /// </summary>
         /// <returns></returns>
-        public string GetCountryListISO() //create private mthd n move this into tht n this methd returns nly string
-        {
-            XmlDocument xmlCountries = BindCountry();
-            string str = 
+        //public string GetCountryListIOS() //create private mthd n move this into tht n this methd returns nly string
+        //{
+        //    XmlDocument xmlCountries = BindCountry();
+        //    string str = Convert.ToString(xmlCountries);
+        //    return str;
 
-        }
+        //}
 
         private XmlDocument BindCountry()
         {
             XmlDocument xmlCountries = new XmlDocument();
             CountryHelper helper = new CountryHelper();
-            DataTable dt = helper.getCountryList();
+            DataTable dtCountries = helper.getCountryList();
            // dt.ReadXml();
-
             return xmlCountries;
         }
 
-        public List<State> BindState()
+
+        public string GetStateList()
         {
+            XmlDocument xmlStates = BindState();
+            return xmlStates.InnerText;
+        }
+        private XmlDocument BindState()
+        {
+            XmlDocument xmlStates = new XmlDocument();
             CountryHelper helper = new CountryHelper();
-            helper.getStateList();
-            List<State> statelist = new List<State>();
-            return statelist;
+            DataTable dtStates = helper.getStateList();
+            //List<State> statelist = new List<State>();
+            return xmlStates;
         }
 
-        public List<City> BindCity()
+        public string GetCityList(int stateId)
         {
-            CountryHelper helper = new CountryHelper();
-            helper.getCityList();
-            List<City> citylist = new List<City>();
-            return citylist;
+            return BindCity(stateId);
+            
+        }
+        private string BindCity(int stateId)
+        {
+            CountryHelper countryhelper = new CountryHelper();
+            DataSet dsCities = countryhelper.getCity(stateId);
+            string xmlstr = dsCities.GetXml();
+
+            
+
+            return xmlstr;
         }
     }
 }
