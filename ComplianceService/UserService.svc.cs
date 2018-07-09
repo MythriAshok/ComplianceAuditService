@@ -6,7 +6,7 @@ using System.ServiceModel;
 using System.Text;
 using Compliance.DataAccess;
 using Compliance.DataObject;
-
+using System.Data;
 
 namespace ComplianceService
 {
@@ -27,17 +27,29 @@ namespace ComplianceService
             return res;
         }
 
-        public List<UserGroup> BindUserGroup()
+
+        public string GetUserGroup()
         {
-            UserGroupHelper helper = new UserGroupHelper();
-            List<UserGroup> userGroups = new List<UserGroup>();
-            helper.getUserGroupList();
-            return userGroups;
+            return BindUserGroup();
         }
-        public void BindUserRole(List<Roles> Roles)
+       
+        private string BindUserGroup()
         {
             UserGroupHelper helper = new UserGroupHelper();
-            helper.getUserGroupList();
+            DataSet userGroups = helper.getUserGroupList();
+            string xmlgroups = userGroups.GetXml();
+            return xmlgroups;
+        }
+        public string GetRoles()
+        {
+            return BindRole();
+        }
+        private string BindRole()
+        {
+            UserGroupHelper helper = new UserGroupHelper();
+            DataSet roles=helper.getUserGroupList();
+            string xmlroles = roles.GetXml();
+            return xmlroles;
         }
 
         public string insertRoles(Roles Role)
@@ -53,8 +65,14 @@ namespace ComplianceService
             helper.insertUpdateRole(Role, 'U');
             return "";
         }
-        public void BindPrivilege()
+
+        public string GetPrivilege()
         {
+            return BindPrivilege();
+        }
+        private string BindPrivilege()
+        {
+            return "";
         }
         public string insertGroups()
         {

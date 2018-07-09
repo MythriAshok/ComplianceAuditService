@@ -10,8 +10,8 @@ namespace ComplianceAuditWeb.Models
     public class UserViewModel
     {
        public User User { get; set; }
-       public List<UserGroup> UserGroup { get; set; }
-       public List<Roles> Roles { get; set; }
+       public IEnumerable<UserGroup> UserGroupList { get; set; }
+       public List<Roles> RolesList { get; set; }
       
     }
 }

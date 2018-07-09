@@ -29,34 +29,34 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="BindUserGroup">
+  <xs:element name="GetUserGroup">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="BindUserGroupResponse">
+  <xs:element name="GetUserGroupResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="BindUserGroupResult" nillable="true" type="q3:ArrayOfUserGroup" />
+        <xs:element minOccurs="0" name="GetUserGroupResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="BindUserRole">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="userRoles" nillable="true" type="q4:ArrayOfRoles" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="BindUserRoleResponse">
+  <xs:element name="GetRoles">
     <xs:complexType>
       <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRolesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetRolesResult" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="insertRoles">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="Role" nillable="true" type="q5:Roles" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="Role" nillable="true" type="q3:Roles" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -70,7 +70,7 @@
   <xs:element name="updateRoles">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="Role" nillable="true" type="q6:Roles" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="Role" nillable="true" type="q4:Roles" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -81,14 +81,16 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="BindPrivilege">
+  <xs:element name="GetPrivilege">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="BindPrivilegeResponse">
+  <xs:element name="GetPrivilegeResponse">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetPrivilegeResult" nillable="true" type="xs:string" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="insertGroups">
