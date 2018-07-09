@@ -46,8 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BranchHelper.cs" />
-    <Compile Include="CompanyDetailsHelper.cs" />
     <Compile Include="ComplianceAuditHelper.cs" />
     <Compile Include="ComplianceAuditTrailHelper.cs" />
     <Compile Include="ComplianceOptionsXrefHelper.cs" />

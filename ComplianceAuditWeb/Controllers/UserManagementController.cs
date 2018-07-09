@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ComplianceAuditWeb.Models;
 using Compliance.DataObject;
+using System.Xml;
 
 namespace ComplianceAuditWeb.Controllers
 {
@@ -26,6 +27,11 @@ namespace ComplianceAuditWeb.Controllers
             UserViewModel userviewmodel = new UserViewModel();
             userviewmodel.UserGroup = new List<UserGroup>();
             UserService.UserServiceClient userServiceClient = new UserService.UserServiceClient();
+            string response = string.Empty;
+
+            XmlDocument xmlCountries = new XmlDocument();
+            xmlCountries.LoadXml(response);
+
             //userviewmodel.UserGroup = userServiceClient.BindUserGroup();
             //userServiceClient.BindUserRole(userviewmodel.roles);
             return View(userviewmodel);

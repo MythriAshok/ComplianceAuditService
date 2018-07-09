@@ -12,6 +12,99 @@ namespace Compliance.DataAccess
     public class OrganizationHelper
     {
         MySqlConnection conn = DBConnection.getconnection();
+        public int insertupdateBranchLocation(BranchLocation branchLocation, char Flag)
+        {
+            int BranchLocationId = 0;
+            try
+            {
+                if (branchLocation != null)
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateBranchLocation", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("p_Flag ", Flag);
+                    cmd.Parameters.AddWithValue("p_LocationID ", branchLocation.Branch_Id);
+                    cmd.Parameters.AddWithValue("p_CountryID", branchLocation.Country_Id);
+                    cmd.Parameters.AddWithValue("p_StateID", branchLocation.State_Id);
+                    cmd.Parameters.AddWithValue("p_CityID", branchLocation.City_Id);
+                    cmd.Parameters.AddWithValue("p_Address", branchLocation.Address);
+                    cmd.Parameters.AddWithValue("p_Location_Name", branchLocation.Branch_Name);
+                    cmd.Parameters.AddWithValue("p_Postal_Code", branchLocation.Postal_Code);
+                    cmd.Parameters.AddWithValue("p_Branch_Coordinates1", branchLocation.Branch_Coordinates1);
+                    cmd.Parameters.AddWithValue("p_Branch_Coordinates2", branchLocation.Branch_Coordinates2);
+                    cmd.Parameters.AddWithValue("p_Branch_CoordinatesURL", branchLocation.Branch_CoordinatesURL);
+                    // MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                    object objbranchlocationid = cmd.ExecuteScalar();
+                    if (objbranchlocationid != null)
+                    {
+                        BranchLocationId = Convert.ToInt32(objbranchlocationid);
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return BranchLocationId;
+        }
+
+        public DataTable getBranchLocation(int Branch_Location_Id)
+        {
+            DataTable dtBranchLocation = new DataTable();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getBranchLocation", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                // cmd.Parameters.Add("p_CountryID", MySqlDbType.Int32).Value = CountryID;
+                //cmd.Parameters.Add("p_StateID", MySqlDbType.Int32).Value = StateId;
+                cmd.Parameters.Add("p_Location_ID", MySqlDbType.Int32).Value = Branch_Location_Id;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtBranchLocation);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dtBranchLocation;
+        }
+
+        public bool deleteBranchLocation(int Branch_Location_Id)
+        {
+            bool resultBranchLocation = false;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_deleteBranchLocation", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                // cmd.Parameters.Add("p_CountryID", MySqlDbType.Int32).Value = CountryID;
+                //cmd.Parameters.Add("p_StateID", MySqlDbType.Int32).Value = StateId;
+                cmd.Parameters.Add("p_Location_ID", MySqlDbType.Int32).Value = Branch_Location_Id;
+                object resultCount = cmd.ExecuteScalar();
+                if (resultCount != null)
+                {
+                    resultBranchLocation = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return resultBranchLocation;
+        }
+
         public int insertupdateOrganizationHier(Organization org, char Flag)
         {
             int OrganizationId = 0;
@@ -60,11 +153,13 @@ namespace Compliance.DataAccess
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getOrganizationHier", conn);
+                MySqlTransaction tran= conn.BeginTransaction();
+                MySqlCommand cmd = new MySqlCommand("sp_getOrganizationHier", conn,tran);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID ", OrgID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtOrganization);
+                tran.Commit();
             }
             catch
             {
@@ -102,7 +197,102 @@ namespace Compliance.DataAccess
             }
             return resultOrganization;
         }
+
+
+        public int insertupdateCompanyDetails(CompanyDetails details, char Flag)
+        {
+            int CompanyDetailsId = 0;
+            try
+            {
+                if (details != null)
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateCompanyDetails", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("p_Flag", Flag);
+                    cmd.Parameters.AddWithValue("p_Company_Details_ID ", details.Company_Details_ID);
+                    cmd.Parameters.AddWithValue("p_Org_Hier_ID", details.Org_Hier_ID);
+                    cmd.Parameters.AddWithValue("p_Industry_Type", details.Industry_Type);
+                    cmd.Parameters.AddWithValue("p_Formal_Name", details.Formal_Name);
+                    cmd.Parameters.AddWithValue("p_Calender_StartDate", details.Calender_StartDate);
+                    cmd.Parameters.AddWithValue("p_Calender_EndDate", details.Calender_EndDate);
+                    cmd.Parameters.AddWithValue("p_Auditing_Frequency", details.Auditing_Frequency);
+                    cmd.Parameters.AddWithValue("p_Website", details.Website);
+                    cmd.Parameters.AddWithValue("p_Company_EmailID", details.Company_EmailID);
+                    cmd.Parameters.AddWithValue("p_Company_ContactNumber1", details.Company_ContactNumber1);
+                    cmd.Parameters.AddWithValue("p_Company_ContactNumber2", details.Company_ContactNumber2);
+                    cmd.Parameters.AddWithValue("p_Is_Active", details.Is_Active);
+                    // MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                    object objcompanydetailsid = cmd.ExecuteScalar();
+                    if (objcompanydetailsid != null)
+                    {
+                        CompanyDetailsId = Convert.ToInt32(objcompanydetailsid);
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return CompanyDetailsId;
+        }
+
+        public DataTable getCompanyDetails(int CompanyDetailsId)
+        {
+            DataTable dtCompanyDetails = new DataTable();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getCompanyDetails", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Company_Details_ID ", CompanyDetailsId);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtCompanyDetails);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dtCompanyDetails;
+        }
+
+        public bool deleteCompanyDetails(int Company_Details_Id)
+        {
+            bool resultCompanyDetails = false;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getCompanyDetails", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Company_Details_ID ", Company_Details_Id);
+                int resultCount = cmd.ExecuteNonQuery();
+                if (resultCount > 0)
+                {
+                    resultCompanyDetails = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return resultCompanyDetails;
+        }
+
     }
 }
+
+
 
        

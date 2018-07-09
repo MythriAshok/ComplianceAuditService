@@ -1,0 +1,26 @@
+﻿@model ComplianceAuditWeb.Models.OrganizationViewModel;
+
+@{
+    Layout = "null";
+}
+
+
+@using Html.BeginForm(ManageOrganizationController,AddGroupCompany)
+{
+@Html.Label("Country");
+
+@Html.DropDownListFor(model => model.organizationViewModel.country,ViewBag.CountryList as SelectList);
+
+@Html.Label("State");
+
+@Html.TextBoxFor(model => model.organization.state);
+
+@Html.Label("City");
+
+@Html.TextBoxFor(model => model.organization.city);
+
+
+}
+
+
+

@@ -12,161 +12,218 @@ using System.IO;
 
 namespace ComplianceService
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "OrganizationService" in code, svc and config file together.
+    // NOTE: You can use the "Rename" command on the "Refa ctor" menu to change the class name "OrganizationService" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select OrganizationService.svc or OrganizationService.svc.cs at the Solution Explorer and start debugging.
     public class OrganizationService : IOrganizationService
     {
-        public void DoWork()
+        public bool insertOrganization(Organization org, CompanyDetails company, BranchLocation branch)
         {
-        }
-        public int insertOrganization(Organization org, CompanyDetails company, Branch branch)
-        {
-            int insertorgid = 0;
+            int OrganizationID = 0;
+            int BranchLocationID = 0;
+            int CompanyDetailsID = 0;
+            bool insertResult = false;
             try
             {
-                OrganizationHelper helper = new OrganizationHelper();
-
-                insertorgid = helper.insertupdateOrganizationHier(org, 'I');
-
+                OrganizationHelper organizationhelper = new OrganizationHelper();
+                BranchLocationID = organizationhelper.insertupdateBranchLocation(branch, 'I');
+                if (BranchLocationID > 0)
+                {
+                    org.Branch_Id = BranchLocationID;
+                    OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
+                    if (OrganizationID > 0)
+                    {
+                        company.Org_Hier_ID = OrganizationID;
+                        CompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'I');
+                    }
+                }
+                if (BranchLocationID > 0 || OrganizationID > 0)
+                {
+                    insertResult = true;
+                }
             }
             catch
             {
                 throw;
             }
-            return insertorgid;
+            return insertResult;
         }
-        public int updateOrganization(Organization org)
+        public bool updateOrganization(Organization org, CompanyDetails company, BranchLocation branch)
         {
-            int insertorgid = 0;
+            int insertOrganizationID = 0;
+            int inserBranchID = 0;
+            int insertCompanyDetailsID = 0;
+            bool updateResult = false;
             try
             {
-                OrganizationHelper helper = new OrganizationHelper();
-                insertorgid = helper.insertupdateOrganizationHier(org, 'I');
+                OrganizationHelper organizationhelper = new OrganizationHelper();
+                inserBranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
+                insertOrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
+                insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
+                if (inserBranchID > 0 || insertOrganizationID > 0 || insertCompanyDetailsID > 0)
+                {
+                    updateResult = true;
+                }
             }
             catch
             {
                 throw;
             }
-            return insertorgid;
+            return updateResult;
         }
 
-        public int insertCompanyDetails(CompanyDetails companydetails)
+        public bool insertCompany(Organization org, CompanyDetails company, BranchLocation branch)
         {
-            int insertcompid = 0;
+            int OrganizationID = 0;
+            int BranchLocationID = 0;
+            int CompanyDetailsID = 0;
+            bool insertResult = false;
             try
             {
-                CompanyDetailsHelper helper = new CompanyDetailsHelper();
-                insertcompid = helper.insertupdateCompanyDetails(companydetails, 'I');
+                OrganizationHelper organizationhelper = new OrganizationHelper();
+                BranchLocationID = organizationhelper.insertupdateBranchLocation(branch, 'I');
+                if (BranchLocationID > 0)
+                {
+                    org.Branch_Id = BranchLocationID;
+                    OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
+                    if (OrganizationID > 0)
+                    {
+                        company.Org_Hier_ID = OrganizationID;
+                        CompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'I');
+                    }
+                }
+                if (BranchLocationID > 0 || OrganizationID > 0)
+                {
+                    insertResult = true;
+                }
             }
             catch
             {
                 throw;
             }
-            return insertcompid;
+            return insertResult;
         }
 
-        public int updateCompanyDetails(CompanyDetails companydetails)
+        public bool updateCompany(Organization org, CompanyDetails company, BranchLocation branch)
         {
-            int updatecompid = 0;
+            int insertOrganizationID = 0;
+            int inserBranchID = 0;
+            int insertCompanyDetailsID = 0;
+            bool updateResult = false;
             try
             {
-                CompanyDetailsHelper helper = new CompanyDetailsHelper();
-                updatecompid = helper.insertupdateCompanyDetails(companydetails, 'I');
+                OrganizationHelper organizationhelper = new OrganizationHelper();
+                inserBranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
+                insertOrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
+                insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
+                if (inserBranchID > 0 || insertOrganizationID > 0 || insertCompanyDetailsID > 0)
+                {
+                    updateResult = true;
+                }
             }
             catch
             {
                 throw;
             }
-            return updatecompid;
+            return updateResult;
         }
 
-        public int insertBranchLocation(Branch branchlocation)
+        public bool insertBranch(Organization org, BranchLocation branch)
         {
-            int insertresultbranchid = 0;
+            int OrganizationID = 0;
+            int BranchLocationID = 0;
+            bool insertResult = false;
             try
             {
-                BranchHelper helper = new BranchHelper();
-                insertresultbranchid = helper.insertupdateBranchLocation(branchlocation, 'I');
+                OrganizationHelper organizationhelper = new OrganizationHelper();
+                BranchLocationID = organizationhelper.insertupdateBranchLocation(branch, 'I');
+                if (BranchLocationID > 0)
+                {
+                    org.Branch_Id = BranchLocationID;
+                    OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
+                }
+                if (BranchLocationID != 0 && OrganizationID != 0)
+                {
+                    insertResult = true;
+                }
             }
             catch
             {
                 throw;
             }
-            return insertresultbranchid;
+            return insertResult;
         }
 
-        public int updateBranchLocation(Branch branchlocation)
+        public bool updateBranch(Organization org, BranchLocation branch)
         {
-            int updateresultbranchid = 0;
+            int insertOrganizationID = 0;
+            int inserBranchID = 0;
+            bool updateResult = false;
             try
             {
-                BranchHelper helper = new BranchHelper();
-                updateresultbranchid = helper.insertupdateBranchLocation(branchlocation, 'U');
+                OrganizationHelper organizationhelper = new OrganizationHelper();
+                inserBranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
+                insertOrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
+                if (inserBranchID != 0 || insertOrganizationID != 0 )
+                {
+                    updateResult = true;
+                }
             }
             catch
             {
                 throw;
             }
-            return updateresultbranchid;
+            return updateResult;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         public string GetCountryList() 
         {
-            XmlDocument xmlCountries = BindCountry();
-            return xmlCountries.InnerText;
+            return BindCountry();
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        //public string GetCountryListIOS() //create private mthd n move this into tht n this methd returns nly string
-        //{
-        //    XmlDocument xmlCountries = BindCountry();
-        //    string str = Convert.ToString(xmlCountries);
-        //    return str;
-
-        //}
-
-        private XmlDocument BindCountry()
+        private string BindCountry()
         {
-            XmlDocument xmlCountries = new XmlDocument();
             CountryHelper helper = new CountryHelper();
-            DataTable dtCountries = helper.getCountryList();
-           // dt.ReadXml();
+            DataSet dsCountries = helper.getCountry();
+            string xmlCountries = dsCountries.GetXml();
             return xmlCountries;
         }
 
-
-        public string GetStateList()
+        public string GetStateList(int countryID)
         {
-            XmlDocument xmlStates = BindState();
-            return xmlStates.InnerText;
+            return BindState(countryID);
         }
-        private XmlDocument BindState()
+        private string BindState(int countryID)
         {
-            XmlDocument xmlStates = new XmlDocument();
-            CountryHelper helper = new CountryHelper();
-            DataTable dtStates = helper.getStateList();
-            //List<State> statelist = new List<State>();
+            CountryHelper countryhelper = new CountryHelper();
+            DataSet dsStates = countryhelper.getState(countryID);
+            string xmlStates = dsStates.GetXml();
             return xmlStates;
         }
 
-        public string GetCityList(int stateId)
+        public string GetCityList(int stateID)
         {
-            return BindCity(stateId);
-            
+            return BindCity(stateID);
         }
-        private string BindCity(int stateId)
+        private string BindCity(int stateID)
         {
             CountryHelper countryhelper = new CountryHelper();
-            DataSet dsCities = countryhelper.getCity(stateId);
-            string xmlstr = dsCities.GetXml();
-
-            
-
-            return xmlstr;
+            DataSet dsCities = countryhelper.getCity(stateID);
+            string xmlCities = dsCities.GetXml();
+            return xmlCities;
         }
     }
 }

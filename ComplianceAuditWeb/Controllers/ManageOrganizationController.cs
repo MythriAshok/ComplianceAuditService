@@ -10,82 +10,174 @@ using System.Xml;
 using System.Data;
 using System.IO;
 
+
+
 namespace ComplianceAuditWeb.Controllers
 {
     public class ManageOrganizationController : Controller
     {
         // GET: ManageOrganization
-        public ActionResult Index()
-        {
-            return View();
-        }
+        
         [HttpGet]
         public ActionResult AddGroupCompany()
         {
             int stateID=0;
             int countryID=0;
             OrganizationViewModel organizationVM = new OrganizationViewModel();
-            //viewmodel.Country = new List<Country>();
-            //viewmodel.State = new List<State>();
-            //viewmodel.City = new List<City>();
             OrganizationService.OrganizationServiceClient organizationservice = new OrganizationService.OrganizationServiceClient();
 
-            string strXMLCities = organizationservice.GetCityList(stateID);
-            string strXMLStates = organizationservice.GetStateList(countryID);
             string strXMLCountries = organizationservice.GetCountryList();
+            string strXMLStates = organizationservice.GetStateList(countryID);
+            string strXMLCities = organizationservice.GetCityList(stateID);
 
+
+            organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
+            organizationVM.State.ReadXml(new StringReader(strXMLStates));
             organizationVM.City.ReadXml(new StringReader(strXMLCities));
-            organizationVM.City.ReadXml(new StringReader(strXMLCities));
-            organizationVM.City.ReadXml(new StringReader(strXMLCities));
-
-
-
-
-
-
-
-            //string response = string.Empty;
-            //XmlDocument xmlCountries = new XmlDocument();
-            //xmlCountries.LoadXml(response);
-
-            //string str = clientgroup.GetCityList();
-            //foreach(string item in strlist)
-            //{
-
-            //}
-            //strlist = str;
-
-
-            //clientgroup.BindCountry(viewmodel.Country);
-            //clientgroup.BindState(viewmodel.State);
-            // clientgroup.BindCity(viewmodel.City);
-            return View(viewmodel);
+            return View(organizationVM);
         }
 
         [HttpPost]
-        public ActionResult AddGroupCompany(OrganizationViewModel viewmodel)
+        public ActionResult AddGroupCompany(OrganizationViewModel organizationVM)
         {
-            OrganizationService.OrganizationServiceClient clientorg = new OrganizationService.OrganizationServiceClient();
-            int BranchId = clientorg.insertBranchLocation(viewmodel.branch);
-            if (BranchId > 0)
+            bool result = false;
+            OrganizationService.OrganizationServiceClient organizationClient = new OrganizationService.OrganizationServiceClient();
+            result = organizationClient.insertOrganization(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
+            if( result!= false)
             {
-                viewmodel.organization.Branch_Id = BranchId;
-                int OrgId = clientorg.insertOrganization(viewmodel.organization);
-                if (OrgId > 0)
-                {
-                    viewmodel.companydetails.Org_Hier_ID = OrgId;
-                    int CompanyDetailsId = clientorg.insertCompanyDetails(viewmodel.companydetails);
-                }
-                else
-                {
-                    return View();
-                }
-                return View("AddGroup");
+                return View("AddGroupCompany");
+            }
+            else
+            { 
+                return View();
+            }
+        }
+        [HttpGet]
+        public ActionResult UpdateGroupCompany()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult UpdateGroupCompany(OrganizationViewModel organizationVM)
+        {
+            bool result = false;
+            OrganizationService.OrganizationServiceClient organizationClient = new OrganizationService.OrganizationServiceClient();
+            result = organizationClient.updateOrganization(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
+            if(result!= false)
+            {
+                return View("UpdateGroupCompany");
             }
             else
             {
                 return View();
-           }
+            }
         }
+        [HttpGet]
+        public ActionResult AddCompany()
+        {
+            int stateID = 0;
+            int countryID = 0;
+            OrganizationViewModel organizationVM = new OrganizationViewModel();
+            OrganizationService.OrganizationServiceClient organizationservice = new OrganizationService.OrganizationServiceClient();
+
+            string strXMLCountries = organizationservice.GetCountryList();
+            string strXMLStates = organizationservice.GetStateList(countryID);
+            string strXMLCities = organizationservice.GetCityList(stateID);
+
+
+            organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
+            organizationVM.State.ReadXml(new StringReader(strXMLStates));
+            organizationVM.City.ReadXml(new StringReader(strXMLCities));
+            return View(organizationVM);
+        }
+        [HttpPost]
+        public ActionResult AddCompany(OrganizationViewModel organizationVM)
+        {
+            bool result = false;
+            OrganizationService.OrganizationServiceClient organizationClient = new OrganizationService.OrganizationServiceClient();
+            result = organizationClient.insertCompany(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
+            if (result != false)
+            {
+                return View("AddCompany");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        [HttpGet]
+        public ActionResult UpdateCompany()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult UpdateCompany(OrganizationViewModel organizationVM)
+        {
+            bool result = false;
+            OrganizationService.OrganizationServiceClient organizationClient = new OrganizationService.OrganizationServiceClient();
+            result = organizationClient.updateCompany(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
+            if (result != false)
+            {
+                return View("UpdateCompany");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        [HttpGet]
+        public ActionResult AddBranch()
+        {
+            int stateID = 0;
+            int countryID = 0;
+            OrganizationViewModel organizationVM = new OrganizationViewModel();
+            OrganizationService.OrganizationServiceClient organizationservice = new OrganizationService.OrganizationServiceClient();
+
+            string strXMLCountries = organizationservice.GetCountryList();
+            string strXMLStates = organizationservice.GetStateList(countryID);
+            string strXMLCities = organizationservice.GetCityList(stateID);
+
+
+            organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
+            organizationVM.State.ReadXml(new StringReader(strXMLStates));
+            organizationVM.City.ReadXml(new StringReader(strXMLCities));
+            return View(organizationVM);
+        }
+        [HttpPost]
+        public ActionResult AddBranch(OrganizationViewModel organizationVM)
+        {
+            bool result = false;
+            OrganizationService.OrganizationServiceClient organizationClient = new OrganizationService.OrganizationServiceClient();
+            result = organizationClient.insertBranch(organizationVM.organization,  organizationVM.branch);
+            if (result != false)
+            {
+                return View("AddBranch");
+            }
+            else
+            {
+                return View();
+            }
+        }
+        [HttpGet]
+        public ActionResult UpdateBranch()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult UpdateBranch(OrganizationViewModel organizationVM)
+        {
+            bool result = false;
+            OrganizationService.OrganizationServiceClient organizationClient = new OrganizationService.OrganizationServiceClient();
+            result = organizationClient.updateBranch(organizationVM.organization,  organizationVM.branch);
+            if (result != false)
+            {
+                return View("UpdateBranch");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
     }
 }

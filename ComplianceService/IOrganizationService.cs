@@ -13,19 +13,29 @@ namespace ComplianceService
     public interface IOrganizationService
     {
         [OperationContract]
-        int insertBranchLocation(Branch branchlocation);
+        bool insertOrganization(Organization org, CompanyDetails company, BranchLocation branch);
         [OperationContract]
-        int updateBranchLocation(Branch branchlocation);
+        bool updateOrganization(Organization org, CompanyDetails company, BranchLocation branch);
+
         [OperationContract]
-        int insertCompanyDetails(CompanyDetails companydetails);
+        bool insertCompany(Organization org, CompanyDetails company, BranchLocation branch);
         [OperationContract]
-        int updateCompanyDetails(CompanyDetails companydetails);
+        bool updateCompany(Organization org, CompanyDetails company, BranchLocation branch);
+
         [OperationContract]
-        int insertOrganization(Organization companydetails);
+        bool insertBranch(Organization org,  BranchLocation branch);
         [OperationContract]
-        int updateOrganization(Organization companydetails);
+        bool updateBranch(Organization org, BranchLocation branch);
+
+
+
+
         [OperationContract]
-        List<Country> BindCountry();
+        string GetCountryList();
+        [OperationContract]
+        string GetStateList(int countryID);
+        [OperationContract]
+        string GetCityList(int stateID);
     }
 }
 

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="OrganizationService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:56172/OrganizationService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:56172/OrganizationService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:56172/OrganizationService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Compliance.DataObject" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IOrganizationService_insertOrganization_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertOrganization" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_insertOrganization_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertOrganizationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_updateOrganization_InputMessage">
+    <wsdl:part name="parameters" element="tns:updateOrganization" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_updateOrganization_OutputMessage">
+    <wsdl:part name="parameters" element="tns:updateOrganizationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_insertCompany_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertCompany" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_insertCompany_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertCompanyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_updateCompany_InputMessage">
+    <wsdl:part name="parameters" element="tns:updateCompany" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_updateCompany_OutputMessage">
+    <wsdl:part name="parameters" element="tns:updateCompanyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_insertBranch_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertBranch" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_insertBranch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertBranchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_updateBranch_InputMessage">
+    <wsdl:part name="parameters" element="tns:updateBranch" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_updateBranch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:updateBranchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetCountryList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCountryList" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetCountryList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCountryListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetStateList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStateList" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetStateList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStateListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetCityList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCityList" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetCityList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCityListResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IOrganizationService">
+    <wsdl:operation name="insertOrganization">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertOrganization" message="tns:IOrganizationService_insertOrganization_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/insertOrganizationResponse" message="tns:IOrganizationService_insertOrganization_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="updateOrganization">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/updateOrganization" message="tns:IOrganizationService_updateOrganization_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/updateOrganizationResponse" message="tns:IOrganizationService_updateOrganization_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="insertCompany">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertCompany" message="tns:IOrganizationService_insertCompany_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/insertCompanyResponse" message="tns:IOrganizationService_insertCompany_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="updateCompany">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/updateCompany" message="tns:IOrganizationService_updateCompany_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/updateCompanyResponse" message="tns:IOrganizationService_updateCompany_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="insertBranch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertBranch" message="tns:IOrganizationService_insertBranch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/insertBranchResponse" message="tns:IOrganizationService_insertBranch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="updateBranch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/updateBranch" message="tns:IOrganizationService_updateBranch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/updateBranchResponse" message="tns:IOrganizationService_updateBranch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCountryList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GetCountryList" message="tns:IOrganizationService_GetCountryList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GetCountryListResponse" message="tns:IOrganizationService_GetCountryList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetStateList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GetStateList" message="tns:IOrganizationService_GetStateList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GetStateListResponse" message="tns:IOrganizationService_GetStateList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCityList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GetCityList" message="tns:IOrganizationService_GetCityList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GetCityListResponse" message="tns:IOrganizationService_GetCityList_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IOrganizationService" type="tns:IOrganizationService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="insertOrganization">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/insertOrganization" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateOrganization">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/updateOrganization" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="insertCompany">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/insertCompany" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateCompany">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/updateCompany" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="insertBranch">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/insertBranch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateBranch">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/updateBranch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCountryList">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/GetCountryList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStateList">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/GetStateList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCityList">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/GetCityList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OrganizationService">
+    <wsdl:port name="BasicHttpBinding_IOrganizationService" binding="tns:BasicHttpBinding_IOrganizationService">
+      <soap:address location="http://localhost:56172/OrganizationService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

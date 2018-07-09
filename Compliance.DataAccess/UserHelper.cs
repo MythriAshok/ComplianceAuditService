@@ -130,5 +130,91 @@ namespace Compliance.DataAccess
 
             return dtUser;
         }
+
+
+        //public int insertLoginData(User user, char Flag)
+        //{
+        //    int LoginID = 0;
+        //    try
+        //    {
+        //        conn.Open();
+        //        MySqlCommand cmd = new MySqlCommand("insertLoginData", conn);
+        //        cmd.CommandType = CommandType.StoredProcedure;
+        //        cmd.Parameters.AddWithValue("p_flag", Flag);
+        //        cmd.Parameters.AddWithValue("p_User_ID", user.UserId);
+        //        cmd.Parameters.AddWithValue("p_User_Password", user.UserPassword);
+        //        cmd.Parameters.AddWithValue("p_First_Name", user.FirstName);
+        //        cmd.Parameters.AddWithValue("p_Middle_Name", user.MiddleName);
+        //        cmd.Parameters.AddWithValue("p_Last_Name", user.LastName);
+        //        cmd.Parameters.AddWithValue("p_Email_ID", user.EmailId);
+        //        cmd.Parameters.AddWithValue("p_Contact_Number", user.ContactNumber);
+        //        cmd.Parameters.AddWithValue("p_Gender", user.Gender);
+        //        cmd.Parameters.AddWithValue("p_Is_Active", user.IsActive);
+        //        object log = cmd.ExecuteScalar();
+        //        if (log != null)
+        //        {
+        //            LoginID = Convert.ToInt32(log);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+
+        //    }
+        //    finally
+        //    {
+        //        conn.Close();
+        //    }
+        //    return LoginID;
+        //}
+
+        public DataTable getLoginData(User user)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("getLoginData", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_User_ID",  user.UserId);
+                cmd.Parameters.AddWithValue("p_Email_ID",  user.EmailId);
+                cmd.Parameters.AddWithValue("p_UserPassword", user.UserPassword);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dt;
+        }
+
+       //public string updatePassword(User user)
+       // {
+       //     string result = "";
+       //     try
+       //     {
+       //         conn.Open();
+       //         MySqlCommand cmd = new MySqlCommand("sp_updatePassword", conn);
+       //         cmd.CommandType = CommandType.StoredProcedure;
+       //         cmd.Parameters.AddWithValue("p_User_ID", user.UserId);
+       //         cmd.Parameters.AddWithValue("p_Email_ID", user.EmailId);
+       //         cmd.Parameters.AddWithValue("p_UserPassword", user.UserPassword);
+       //         result = Convert.ToString(cmd.ExecuteNonQuery());
+       //     }
+       //     catch (Exception ex)
+       //     {
+       //         throw ex;
+       //     }
+       //     finally
+       //     {
+       //         conn.Close();
+       //     }
+       //     return result;
+       // }
     }
 }
