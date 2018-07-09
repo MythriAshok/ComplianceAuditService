@@ -11,7 +11,7 @@ namespace ComplianceAuditWeb.Models
     {
        public User User { get; set; }
        public List<UserGroup> UserGroup { get; set; }
-       public List<UserRoles> Roles { get; set; }
+       public List<Roles> Roles { get; set; }
       
     }
 }

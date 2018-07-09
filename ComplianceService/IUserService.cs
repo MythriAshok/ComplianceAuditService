@@ -19,11 +19,11 @@ namespace ComplianceService
         [OperationContract]
         List<UserGroup> BindUserGroup();
         [OperationContract]
-        void BindUserRole(List<UserRoles> userRoles);
+        void BindUserRole(List<Roles> userRoles);
         [OperationContract]
-        string insertRoles();
+        string insertRoles(Roles Role);
         [OperationContract]
-        string updateRoles();
+        string updateRoles(Roles Role);
         [OperationContract]
         void BindPrivilege();
         [OperationContract]
