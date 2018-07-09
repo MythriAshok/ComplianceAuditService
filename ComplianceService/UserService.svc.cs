@@ -7,6 +7,7 @@ using System.Text;
 using Compliance.DataAccess;
 using Compliance.DataObject;
 
+
 namespace ComplianceService
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "UserService" in code, svc and config file together.
@@ -33,23 +34,32 @@ namespace ComplianceService
             helper.getUserGroupList();
             return userGroups;
         }
-        public void BindUserRole(List<UserRoles> userRoles)
+        public void BindUserRole(List<Roles> Roles)
         {
             UserGroupHelper helper = new UserGroupHelper();
             helper.getUserGroupList();
         }
 
-        public string insertRoles()
+        public string insertRoles(Roles Role)
         {
+            UserRolesHelper helper = new UserRolesHelper();
+            helper.insertUpdateRole(Role, 'I');
             return "";
         }
        
-        public string updateRoles()
-        { return ""; }
+        public string updateRoles(Roles Role)
+        {
+            UserRolesHelper helper = new UserRolesHelper();
+            helper.insertUpdateRole(Role, 'U');
+            return "";
+        }
         public void BindPrivilege()
-        { }
+        {
+        }
         public string insertGroups()
-        { return ""; }
+        {
+            return "";
+        }
         public string updateGroups()
         {
             return "";

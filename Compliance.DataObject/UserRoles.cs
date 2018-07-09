@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Compliance.DataObject
 {
-    public class UserRoles
+    public class Roles
     {
-        public int UserRoleId { get; set; }
-        public string UserName { get; set; }
+        public int RoleId { get; set; }
+        public string RoleName { get; set; }
         public bool IsActive { get; set; }
         public bool IsGroupRole { get; set; }
     }

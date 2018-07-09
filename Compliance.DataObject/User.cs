@@ -12,8 +12,10 @@ namespace Compliance.DataObject
         [DataType(DataType.Password)]
         public string UserPassword { get; set; }
         [Required]
+        [DataType(DataType.Text)]
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
+        [Required]
         public string LastName { get; set; }
         [Required]
         [DataType(DataType.EmailAddress)]

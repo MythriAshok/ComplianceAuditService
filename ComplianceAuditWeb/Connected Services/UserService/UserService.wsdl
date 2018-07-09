@@ -31,6 +31,36 @@
   <wsdl:message name="IUserService_BindUserRole_OutputMessage">
     <wsdl:part name="parameters" element="tns:BindUserRoleResponse" />
   </wsdl:message>
+  <wsdl:message name="IUserService_insertRoles_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertRoles" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_insertRoles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertRolesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_updateRoles_InputMessage">
+    <wsdl:part name="parameters" element="tns:updateRoles" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_updateRoles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:updateRolesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_BindPrivilege_InputMessage">
+    <wsdl:part name="parameters" element="tns:BindPrivilege" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_BindPrivilege_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BindPrivilegeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_insertGroups_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertGroups" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_insertGroups_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertGroupsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_updateGroups_InputMessage">
+    <wsdl:part name="parameters" element="tns:updateGroups" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_updateGroups_OutputMessage">
+    <wsdl:part name="parameters" element="tns:updateGroupsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="insertUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/insertUser" message="tns:IUserService_insertUser_InputMessage" />
@@ -47,6 +77,26 @@
     <wsdl:operation name="BindUserRole">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/BindUserRole" message="tns:IUserService_BindUserRole_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/BindUserRoleResponse" message="tns:IUserService_BindUserRole_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="insertRoles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/insertRoles" message="tns:IUserService_insertRoles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/insertRolesResponse" message="tns:IUserService_insertRoles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="updateRoles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/updateRoles" message="tns:IUserService_updateRoles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/updateRolesResponse" message="tns:IUserService_updateRoles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BindPrivilege">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/BindPrivilege" message="tns:IUserService_BindPrivilege_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/BindPrivilegeResponse" message="tns:IUserService_BindPrivilege_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="insertGroups">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/insertGroups" message="tns:IUserService_insertGroups_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/insertGroupsResponse" message="tns:IUserService_insertGroups_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="updateGroups">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/updateGroups" message="tns:IUserService_updateGroups_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/updateGroupsResponse" message="tns:IUserService_updateGroups_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IUserService" type="tns:IUserService">
@@ -80,6 +130,51 @@
     </wsdl:operation>
     <wsdl:operation name="BindUserRole">
       <soap:operation soapAction="http://tempuri.org/IUserService/BindUserRole" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="insertRoles">
+      <soap:operation soapAction="http://tempuri.org/IUserService/insertRoles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateRoles">
+      <soap:operation soapAction="http://tempuri.org/IUserService/updateRoles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BindPrivilege">
+      <soap:operation soapAction="http://tempuri.org/IUserService/BindPrivilege" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="insertGroups">
+      <soap:operation soapAction="http://tempuri.org/IUserService/insertGroups" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateGroups">
+      <soap:operation soapAction="http://tempuri.org/IUserService/updateGroups" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

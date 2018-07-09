@@ -30,19 +30,19 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="UserGroup" nillable="true" type="tns:UserGroup" />
-  <xs:complexType name="ArrayOfUserRoles">
+  <xs:complexType name="ArrayOfRoles">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserRoles" nillable="true" type="tns:UserRoles" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Roles" nillable="true" type="tns:Roles" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfUserRoles" nillable="true" type="tns:ArrayOfUserRoles" />
-  <xs:complexType name="UserRoles">
+  <xs:element name="ArrayOfRoles" nillable="true" type="tns:ArrayOfRoles" />
+  <xs:complexType name="Roles">
     <xs:sequence>
       <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsGroupRole" type="xs:boolean" />
-      <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="UserRoleId" type="xs:int" />
+      <xs:element minOccurs="0" name="RoleId" type="xs:int" />
+      <xs:element minOccurs="0" name="RoleName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="UserRoles" nillable="true" type="tns:UserRoles" />
+  <xs:element name="Roles" nillable="true" type="tns:Roles" />
 </xs:schema>
