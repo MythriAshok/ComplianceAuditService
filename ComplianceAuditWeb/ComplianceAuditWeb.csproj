@@ -64,6 +64,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WebMatrix.WebData">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.WebData.2.0.20710.0\lib\net40\WebMatrix.WebData.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -92,10 +95,38 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\AccessService\AccessService.wsdl" />
+    <None Include="Connected Services\AccessService\AccessService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OrganizationService\OrganizationService.wsdl" />
+    <None Include="Connected Services\OrganizationService\OrganizationService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OrganizationService\OrganizationService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\OrganizationService\OrganizationService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\UserService\UserService.disco" />
     <None Include="Connected Services\UserService\configuration91.svcinfo" />
     <None Include="Connected Services\UserService\configuration.svcinfo" />
     <None Include="Connected Services\UserService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\OrganizationService\OrganizationService.disco" />
+    <None Include="Connected Services\OrganizationService\configuration91.svcinfo" />
+    <None Include="Connected Services\OrganizationService\configuration.svcinfo" />
+    <None Include="Connected Services\OrganizationService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\AccessService\AccessService.disco" />
+    <None Include="Connected Services\AccessService\configuration91.svcinfo" />
+    <None Include="Connected Services\AccessService\configuration.svcinfo" />
+    <None Include="Connected Services\AccessService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -125,23 +156,32 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Connected Services\AccessService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\OrganizationService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\UserService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Controllers\ManageAccessController.cs" />
-    <Compile Include="Controllers\ManageBranchController.cs" />
-    <Compile Include="Controllers\ManageCompanyController.cs" />
     <Compile Include="Controllers\ManageOrganizationController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccessManagement.cs" />
+    <Compile Include="Models\AccessViewModel.cs" />
     <Compile Include="Models\BranchViewModel.cs" />
     <Compile Include="Models\CompanyViewModel.cs" />
     <Compile Include="Models\OrganizationViewModel.cs" />
+    <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -158,6 +198,7 @@
     <Content Include="Views\ManageOrganization\View.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
     <Content Include="Views\UserManagement\CreateUser.cshtml" />
+    <Content Include="Views\ManageOrganization\_Organization.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -168,8 +209,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\ManageAccess\" />
-    <Folder Include="Views\ManageBranch\" />
-    <Folder Include="Views\ManageCompany\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Compliance.DataObject\Compliance.DataObject.csproj">
@@ -185,6 +224,8 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\AccessService\" />
+    <WCFMetadataStorage Include="Connected Services\OrganizationService\" />
     <WCFMetadataStorage Include="Connected Services\UserService\" />
   </ItemGroup>
   <PropertyGroup>

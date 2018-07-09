@@ -26,7 +26,7 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult Login(AccessViewModel accessmanagement)
         {
-            AccessService.AccessServiceClient clientaccess = new AccessService.AccessServiceClient();
+            //AccessService.AccessServiceClient clientaccess = new AccessService.AccessServiceClient();
             //int UId = clientaccess.
             //if (UId != 0)
             //{
@@ -35,7 +35,7 @@ namespace ComplianceAuditWeb.Controllers
             //else
             //{
                 return View();
-            //}
+           // }
         }
         [HttpGet]
         public ActionResult ForgotPassword()
@@ -44,6 +44,7 @@ namespace ComplianceAuditWeb.Controllers
         }
         [HttpPost]
         public ActionResult ForgotPassword(string EmailAddress) //can pass the viewmodel with property called emailID
+
         {
             if (ModelState.IsValid)
             {
@@ -51,17 +52,20 @@ namespace ComplianceAuditWeb.Controllers
                 {
                     //string str = abc, dfg;
 
-                    string  To = EmailAddress, UserId, UserPassword, SMTPPort, Host;
-                    
-                    string token = WebSecurity.GeneratePasswordResetToken(EmailAddress,1440);
+                    string To = EmailAddress, UserId, UserPassword, SMTPPort, Host;
+
+                    string token = WebSecurity.GeneratePasswordResetToken(EmailAddress, 1440);
                     if (token == null)
                     {
                         return View("");// if doesnt match 
                     }
                     else
                     {
-                        var lnkHref = "<a href='" + Url.Action("ResetPassword", "Account", new { email = EmailAddress,
-                            code = token }, "http") + "'>Reset Password</a>"; // creats url  with above token
+                        var lnkHref = "<a href='" + Url.Action("ResetPassword", "Account", new
+                        {
+                            email = EmailAddress,
+                            code = token
+                        }, "http") + "'>Reset Password</a>"; // creats url  with above token
 
                         // html template for send email
                         string subject = "Your Changed password";
@@ -70,7 +74,7 @@ namespace ComplianceAuditWeb.Controllers
                         // get and set the appSettings using configuration manager.
                         EmailManager.AppSettings(out UserId, out UserPassword, out SMTPPort, out Host);
                         //call send email methods
-                        EmailManager.SendEmail(UserId, subject, body,UserId, To, UserPassword, SMTPPort, Host);
+                        EmailManager.SendEmail(UserId, subject, body, UserId, To, UserPassword, SMTPPort, Host);
                     }
                 }
             }
@@ -88,7 +92,7 @@ namespace ComplianceAuditWeb.Controllers
         }
         public class EmailManager
         {
-            public static void AppSettings(out string UserId,out string UserPassword, out string SMTPPort, out string Host)
+            public static void AppSettings(out string UserId, out string UserPassword, out string SMTPPort, out string Host)
             {
                 UserId = ConfigurationManager.AppSettings.Get("UserId");
                 UserPassword = ConfigurationManager.AppSettings.Get("UserPassword");
@@ -100,7 +104,7 @@ namespace ComplianceAuditWeb.Controllers
                 string Host)
             {
                 System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
-               // MailMessage mailMessage = new MailMessage("mythriashok.aak@gmail.com", EmailAddress);
+                // MailMessage mailMessage = new MailMessage("mythriashok.aak@gmail.com", EmailAddress);
                 mail.To.Add(To);
                 mail.From = new System.Net.Mail.MailAddress(From);
                 mail.Subject = Subject;
@@ -123,10 +127,10 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult ResetPassword(ResetPasswordModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 bool resetResponse = WebSecurity.ResetPassword(model.ReturnToken, model.Password);
-                if(resetResponse)
+                if (resetResponse)
                 {
                     ViewBag.Message = "Successfully changed";
                 }
@@ -144,21 +148,21 @@ namespace ComplianceAuditWeb.Controllers
             return View();
         }
 
-        //public ActionResult UpdatePassword(string userName, string currentPassword, string newPassword)
-        //{
-        //   bool token= WebSecurity.ChangePassword(userName, currentPassword, newPassword);
-        //    if(token!= false)
-        //    {
-        //        return View("");
-        //    }
-        //    else
-        //    {
-        //        return View();
-        //    }
-            
-            //AccessManagementServices.AccessManagementServicesClient clientaccess = new AccessManagementServices.AccessManagementServicesClient();
-            //string result = clientaccess.updatePasswordData(viewmodel);
-           // return View();
+        public ActionResult UpdatePassword(string userName, string currentPassword, string newPassword)
+        {
+            bool token = WebSecurity.ChangePassword(userName, currentPassword, newPassword);
+            if (token != false)
+            {
+                return View("");
+            }
+            else
+            {
+                return View();
+            }
+
+            //AccessService.AccessServiceClient clientaccess = new AccessService.AccessServiceClient();
+            //string result = clientaccess.(viewmodel);
+            //return View();
         }
 
 
@@ -167,6 +171,7 @@ namespace ComplianceAuditWeb.Controllers
 
 
     }
+}
 
     
     

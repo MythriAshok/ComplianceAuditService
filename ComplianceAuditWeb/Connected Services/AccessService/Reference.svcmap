@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="56f389c8-f9ab-4ea4-aeac-c928cc61fad5" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5d766971-9e62-4d98-b1ea-6ee45257d392" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,9 +22,9 @@
     <MetadataSource Address="http://localhost:56172/AccessService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="AccessService.disco" MetadataType="Disco" ID="0db4fb80-2a36-4604-b346-a30051af8f40" SourceId="1" SourceUrl="http://localhost:56172/AccessService.svc?disco" />
-    <MetadataFile FileName="AccessService.xsd" MetadataType="Schema" ID="698b384b-ec0a-4ba6-93b3-39586284ff2c" SourceId="1" SourceUrl="http://localhost:56172/AccessService.svc?xsd=xsd0" />
-    <MetadataFile FileName="AccessService.wsdl" MetadataType="Wsdl" ID="6a2305b2-1a2b-44f3-978b-2e24c20df9cb" SourceId="1" SourceUrl="http://localhost:56172/AccessService.svc?wsdl" />
+    <MetadataFile FileName="AccessService.disco" MetadataType="Disco" ID="1d20db07-d791-4afd-bcf5-7650a4467871" SourceId="1" SourceUrl="http://localhost:56172/AccessService.svc?disco" />
+    <MetadataFile FileName="AccessService.xsd" MetadataType="Schema" ID="c281c043-9ea7-4c0f-92b8-4a94b869e8b9" SourceId="1" SourceUrl="http://localhost:56172/AccessService.svc?xsd=xsd0" />
+    <MetadataFile FileName="AccessService.wsdl" MetadataType="Wsdl" ID="e1b93a4a-4632-4613-b3ff-4798dd5dadb9" SourceId="1" SourceUrl="http://localhost:56172/AccessService.svc?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
