@@ -9,7 +9,7 @@ namespace ComplianceAuditWeb.Models
     public class BranchViewModel
     {
         public Organization organization { get; set; }
-        public Branch branch { get; set; }
+        public BranchLocation branch { get; set; }
         public CompanyDetails companydetails { get; set; }
         public List<Country> countrylist { get; set; }
         public List<State> State { get; set; }

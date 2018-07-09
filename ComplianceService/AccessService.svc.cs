@@ -4,6 +4,12 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using Compliance.DataAccess;
+using Compliance.DataObject;
+using System.Data;
+
+using System.Net;
+using System.Net.Mail;
 
 namespace ComplianceService
 {
@@ -14,6 +20,19 @@ namespace ComplianceService
         public void DoWork()
         {
         }
-        public 
+        public int GetLoginData(User user)
+        {
+            UserHelper userHelper = new UserHelper();
+            int LoginId = Convert.ToInt32(userHelper.getLoginData(user));
+            return LoginId;
+        }
+
+        //public string updatePasswordData(User user)
+        //{
+        //    string result = null;
+        //    UserHelper userHelper = new UserHelper();
+        //    result = userHelper.updatePassword(user);
+        //    return result;
+        //}
     }
 }

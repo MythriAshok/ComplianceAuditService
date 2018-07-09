@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Compliance.DataObject
 {
-   public class Branch
+   public class BranchLocation
     {
         public int Branch_Id { get; set; }
         public string Branch_Name { get; set; }

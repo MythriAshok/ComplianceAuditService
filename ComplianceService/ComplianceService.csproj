@@ -67,8 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AccessService.svc" />
-    <Content Include="BranchService.svc" />
-    <Content Include="CompanyService.svc" />
     <Content Include="OrganizationService.svc" />
     <Content Include="UserService.svc" />
     <Content Include="Web.config" />
@@ -77,15 +75,7 @@
     <Compile Include="AccessService.svc.cs">
       <DependentUpon>AccessService.svc</DependentUpon>
     </Compile>
-    <Compile Include="BranchService.svc.cs">
-      <DependentUpon>BranchService.svc</DependentUpon>
-    </Compile>
-    <Compile Include="CompanyService.svc.cs">
-      <DependentUpon>CompanyService.svc</DependentUpon>
-    </Compile>
     <Compile Include="IAccessService.cs" />
-    <Compile Include="IBranchService.cs" />
-    <Compile Include="ICompanyService.cs" />
     <Compile Include="IOrganizationService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="OrganizationService.svc.cs">

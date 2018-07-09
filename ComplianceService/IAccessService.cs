@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using Compliance.DataObject;
 
 namespace ComplianceService
 {
@@ -14,5 +15,7 @@ namespace ComplianceService
         [OperationContract]
         void DoWork();
 
+
+        int GetLoginData(User user);
     }
 }

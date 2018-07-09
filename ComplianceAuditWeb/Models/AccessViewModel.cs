@@ -6,7 +6,7 @@ using Compliance.DataObject;
 
 namespace ComplianceAuditWeb.Models
 {
-    public class AccessManagement
+    public class AccessViewModel
     {
         public User user { get; set; }
     }
