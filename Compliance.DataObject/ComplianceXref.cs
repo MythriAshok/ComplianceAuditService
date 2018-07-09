@@ -29,7 +29,7 @@ namespace Compliance.DataObject
         public int City_ID { get; set; }
         public DateTime Last_Updated_Date { get; set; }
         public int User_ID { get; set; }
-        public int Is_Active { get; set; }
+        public bool Is_Active { get; set; }
 
     }
 }

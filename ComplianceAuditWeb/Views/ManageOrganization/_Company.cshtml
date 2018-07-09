@@ -1,8 +1,19 @@
 ﻿@model ComplianceAuditWeb.Models.OrganizationViewModel;
 
-@{ 
+@{
 
 
 }
 
-@Html.TextBoxFor(model => model.branch.BranchName);
+@using (Html.BeginForm())
+{
+    Html.LabelFor(m => m.organization.Company_Name);
+    Html.TextBoxFor(m => m.organization.Company_Name);
+
+    Html.LabelFor(m => m.organization.Description);
+    Html.TextAreaFor(m => m.organization.Description);
+
+    List
+
+    @Html.TextBoxFor(model => model.branch.BranchName);
+

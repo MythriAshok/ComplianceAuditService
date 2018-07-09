@@ -12,14 +12,14 @@ namespace Compliance.DataObject
         public int Parent_Company_Id { get; set; }
         public string Description { get; set; }
         public int Level { get; set; }
-        public int Is_Leaf { get; set; }
+        public bool Is_Leaf { get; set; }
         public string Industry_Type { get; set; }
         public int Branch_Id { get; set; }
 
         public int User_Id { get; set; }
 
         public DateTime Last_Updated_Date { get; set; }
-        public DateTime Is_Active { get; set; }
+        public bool Is_Active { get; set; }
 
       
     }

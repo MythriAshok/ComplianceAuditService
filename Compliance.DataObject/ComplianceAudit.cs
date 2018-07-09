@@ -23,7 +23,7 @@ namespace Compliance.DataObject
         public int Auditor_Id { get; set; }
         public int User_Id { get; set; }
         public string Audit_Status { get; set; }
-        public string Is_Active { get; set; }
+        public bool Is_Active { get; set; }
 
     }
 }

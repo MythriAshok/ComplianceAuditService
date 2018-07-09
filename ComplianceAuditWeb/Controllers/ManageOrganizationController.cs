@@ -34,6 +34,10 @@ namespace ComplianceAuditWeb.Controllers
             organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
             organizationVM.State.ReadXml(new StringReader(strXMLStates));
             organizationVM.City.ReadXml(new StringReader(strXMLCities));
+
+            organizationVM.Country.AsEnumerable();
+
+            
             return View(organizationVM);
         }
 

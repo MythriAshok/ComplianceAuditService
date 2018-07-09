@@ -19,6 +19,6 @@ namespace Compliance.DataObject
         public int Company_EmailID { get; set; }
         public string Company_ContactNumber1 { get; set; }
         public string Company_ContactNumber2  { get; set; }
-        public string Is_Active  { get; set; }
+        public bool Is_Active  { get; set; }
     }
 }
