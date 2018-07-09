@@ -12,9 +12,9 @@ namespace Compliance.DataAccess
    public class UserGroupHelper
     {
         MySqlConnection conn = new MySqlConnection();
-        public DataTable getUserGroup(int UserGroupID)
+        public DataSet getUserGroup(int UserGroupID)
         {
-            DataTable dtUser = new DataTable();
+            DataSet dtUser = new DataSet();
             try
             {
                 conn = DBConnection.getconnection();
@@ -71,9 +71,9 @@ namespace Compliance.DataAccess
 
             return result;
         }
-        public DataTable getUserGroupList()
+        public DataSet getUserGroupList()
         {
-            DataTable dtUser = new DataTable();
+            DataSet dtUser = new DataSet();
             try
             {
                 conn = DBConnection.getconnection();

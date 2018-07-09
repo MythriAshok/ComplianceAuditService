@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using ComplianceAuditWeb.Models;
 using Compliance.DataObject;
 using System.Xml;
+using System.Data;
 
 namespace ComplianceAuditWeb.Controllers
 {
@@ -24,13 +25,15 @@ namespace ComplianceAuditWeb.Controllers
         [HttpGet]
         public ActionResult CreateUser()
         {           
-            UserViewModel userviewmodel = new UserViewModel();
-            userviewmodel.UserGroup = new List<UserGroup>();
+            UserViewModel userviewmodel = new UserViewModel();         
             UserService.UserServiceClient userServiceClient = new UserService.UserServiceClient();
-            string response = string.Empty;
-
-            XmlDocument xmlCountries = new XmlDocument();
-            xmlCountries.LoadXml(response);
+            string response = string.Empty;           
+            string xmlGroups=userServiceClient.GetUserGroup();
+            DataTable Groups = new DataTable();
+            Groups.ReadXml(xmlGroups);
+            userviewmodel.UserGroupList = (IEnumerable<UserGroup>)Groups.AsEnumerable();
+            //XmlDocument xmlCountries = new XmlDocument();
+            //xmlCountries.LoadXml(response);
 
             //userviewmodel.UserGroup = userServiceClient.BindUserGroup();
             //userServiceClient.BindUserRole(userviewmodel.roles);

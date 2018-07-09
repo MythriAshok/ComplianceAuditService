@@ -26,10 +26,6 @@ namespace ComplianceService
         bool insertBranch(Organization org,  BranchLocation branch);
         [OperationContract]
         bool updateBranch(Organization org, BranchLocation branch);
-
-
-
-
         [OperationContract]
         string GetCountryList();
         [OperationContract]
