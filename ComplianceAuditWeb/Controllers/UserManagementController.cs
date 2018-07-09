@@ -29,8 +29,8 @@ namespace ComplianceAuditWeb.Controllers
             UserService.UserServiceClient userServiceClient = new UserService.UserServiceClient();
             string response = string.Empty;
 
-            XmlDocument xmlCountries = new XmlDocument();
-            xmlCountries.LoadXml(response);
+            //XmlDocument xmlCountries = new XmlDocument();
+            //xmlCountries.LoadXml(response);
 
             //userviewmodel.UserGroup = userServiceClient.BindUserGroup();
             //userServiceClient.BindUserRole(userviewmodel.roles);
