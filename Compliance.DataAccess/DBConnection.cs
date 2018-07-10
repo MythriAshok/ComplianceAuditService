@@ -12,7 +12,7 @@ namespace Compliance.DataAccess
     {
         static public MySqlConnection getconnection()
         {              
-                MySqlConnection conn = new MySqlConnection("Server = 127.0.0.1; Port = 3306; Database = auditmoduledb; Uid = root; Pwd = Ovi@1996");
+                MySqlConnection conn = new MySqlConnection("Server = 127.0.0.1; Port = 3306; Database = auditmoduledb; Uid = root; Pwd = My@123");
 
             return conn;
         }
