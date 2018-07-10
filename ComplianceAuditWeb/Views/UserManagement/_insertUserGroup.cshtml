@@ -1,0 +1,14 @@
+﻿@model Compliance.DataObject.UserGroup
+
+@Html.Label("GroupName");
+@Html.TextBoxFor(model => model.UserGroupName);
+
+@Html.Label("GroupDescription");
+@Html.TextBoxFor(model => model.UserGroupDescription);
+
+@Html.Label("Role");
+@*@Html.ListBoxFor();*@
+
+@Html.LabelFor(model => model.IsActive);
+@Html.RadioButtonFor(model => model.IsActive, "Yes");
+@Html.RadioButtonFor(model => model.IsActive, "No");
