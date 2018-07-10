@@ -155,13 +155,7 @@ namespace ComplianceService
             return updateResult;
         }
 
-        public int getCompany()
-        {
-            int CompanyID = 0;
-            OrganizationHelper orgHelper = new OrganizationHelper();
-            //orgHelper.getCompanyDetails
-            return CompanyID;
-        }
+        
         public bool insertBranch(Organization org, BranchLocation branch)
         {
             int OrganizationID = 0;
@@ -210,11 +204,7 @@ namespace ComplianceService
             return updateResult;
         }
 
-        public int getBranch()
-        {
-            int BranchID = 0;
-            return BranchID;
-        }
+        
 
 
 
