@@ -13,9 +13,9 @@ namespace ComplianceService
     public interface IUserService
     {
         [OperationContract]
-        string insertUser(User user);
+        bool insertUser(User user);
         [OperationContract]
-        string updateUser(User user);
+        bool updateUser(User user);
         [OperationContract]
         string GetUserGroup();
         [OperationContract]

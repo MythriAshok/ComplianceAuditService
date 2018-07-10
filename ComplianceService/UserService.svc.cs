@@ -14,19 +14,18 @@ namespace ComplianceService
     // NOTE: In order to launch WCF Test Client for testing this service, please select UserService.svc or UserService.svc.cs at the Solution Explorer and start debugging.
     public class UserService : IUserService
     {
-        public string insertUser(User user)
+        public bool insertUser(User user)
         {
             UserHelper helper = new UserHelper();
             string res = helper.insertupdateUser(user, 'I');
-            return res;
+            return true;
         }
-        public string updateUser(User user)
+        public bool updateUser(User user)
         {
             UserHelper helper = new UserHelper();
             string res = helper.insertupdateUser(user, 'U');
-            return res;
+            return true;
         }
-
 
         public string GetUserGroup()
         {
