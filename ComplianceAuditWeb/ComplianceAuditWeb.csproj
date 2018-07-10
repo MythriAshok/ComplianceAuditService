@@ -205,6 +205,8 @@
     <Content Include="Views\UserManagement\CreateUser.cshtml" />
     <Content Include="Views\ManageOrganization\_Organization.cshtml" />
     <Content Include="Views\ManageOrganization\_Branch.cshtml" />
+    <Content Include="Views\UserManagement\_insertUser.cshtml" />
+    <Content Include="Views\ManageOrganization\OrganicationMainView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

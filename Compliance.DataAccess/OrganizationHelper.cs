@@ -52,9 +52,9 @@ namespace Compliance.DataAccess
             return BranchLocationId;
         }
 
-        public DataTable getBranchLocation(int Branch_Location_Id)
+        public DataSet getBranchLocation(int Branch_Location_Id)
         {
-            DataTable dtBranchLocation = new DataTable();
+            DataSet dsBranchLocation = new DataSet();
             try
             {
                 conn.Open();
@@ -64,7 +64,7 @@ namespace Compliance.DataAccess
                 //cmd.Parameters.Add("p_StateID", MySqlDbType.Int32).Value = StateId;
                 cmd.Parameters.Add("p_Location_ID", MySqlDbType.Int32).Value = Branch_Location_Id;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                adapter.Fill(dtBranchLocation);
+                adapter.Fill(dsBranchLocation);
             }
             catch
             {
@@ -74,7 +74,7 @@ namespace Compliance.DataAccess
             {
                 conn.Close();
             }
-            return dtBranchLocation;
+            return dsBranchLocation;
         }
 
         public bool deleteBranchLocation(int Branch_Location_Id)
@@ -147,19 +147,20 @@ namespace Compliance.DataAccess
             return OrganizationId;
         }
 
-        public DataTable getOrganizationHier(int OrgID)
+        public DataSet getOrganizationHier(int OrgID)
         {
-            DataTable dtOrganization = new DataTable();
+            DataSet dsOrganization = new DataSet();
             try
             {
                 conn.Open();
-                MySqlTransaction tran= conn.BeginTransaction();
-                MySqlCommand cmd = new MySqlCommand("sp_getOrganizationHier", conn,tran);
+               // MySqlTransaction tran= conn.BeginTransaction();
+              //  MySqlCommand cmd = new MySqlCommand("sp_getOrganizationHierJoin", conn,tran);
+                MySqlCommand cmd = new MySqlCommand("sp_getOrganizationHierJoin", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID ", OrgID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                adapter.Fill(dtOrganization);
-                tran.Commit();
+                adapter.Fill(dsOrganization);
+               // tran.Commit();
             }
             catch
             {
@@ -169,7 +170,7 @@ namespace Compliance.DataAccess
             {
                 conn.Close();
             }
-            return dtOrganization;
+            return dsOrganization;
         }
 
         public bool deleteOrganizationHier(int Org_Hier_ID)
@@ -241,9 +242,9 @@ namespace Compliance.DataAccess
             return CompanyDetailsId;
         }
 
-        public DataTable getCompanyDetails(int CompanyDetailsId)
+        public DataSet getCompanyDetails(int CompanyDetailsId)
         {
-            DataTable dtCompanyDetails = new DataTable();
+            DataSet dsCompanyDetails = new DataSet();
             try
             {
                 conn.Open();
@@ -251,7 +252,7 @@ namespace Compliance.DataAccess
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Company_Details_ID ", CompanyDetailsId);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                adapter.Fill(dtCompanyDetails);
+                adapter.Fill(dsCompanyDetails);
             }
             catch
             {
@@ -261,7 +262,7 @@ namespace Compliance.DataAccess
             {
                 conn.Close();
             }
-            return dtCompanyDetails;
+            return dsCompanyDetails;
         }
 
         public bool deleteCompanyDetails(int Company_Details_Id)

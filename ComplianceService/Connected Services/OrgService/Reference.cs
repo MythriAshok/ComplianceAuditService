@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ComplianceAuditWeb.OrganizationService {
+namespace ComplianceService.OrgService {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="OrganizationService.IOrganizationService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="OrgService.IOrganizationService")]
     public interface IOrganizationService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertOrganization", ReplyAction="http://tempuri.org/IOrganizationService/insertOrganizationResponse")]
@@ -89,12 +89,12 @@ namespace ComplianceAuditWeb.OrganizationService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IOrganizationServiceChannel : ComplianceAuditWeb.OrganizationService.IOrganizationService, System.ServiceModel.IClientChannel {
+    public interface IOrganizationServiceChannel : ComplianceService.OrgService.IOrganizationService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class OrganizationServiceClient : System.ServiceModel.ClientBase<ComplianceAuditWeb.OrganizationService.IOrganizationService>, ComplianceAuditWeb.OrganizationService.IOrganizationService {
+    public partial class OrganizationServiceClient : System.ServiceModel.ClientBase<ComplianceService.OrgService.IOrganizationService>, ComplianceService.OrgService.IOrganizationService {
         
         public OrganizationServiceClient() {
         }

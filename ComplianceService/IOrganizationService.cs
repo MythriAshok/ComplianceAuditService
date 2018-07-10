@@ -16,6 +16,8 @@ namespace ComplianceService
         bool insertOrganization(Organization org, CompanyDetails company, BranchLocation branch);
         [OperationContract]
         bool updateOrganization(Organization org, CompanyDetails company, BranchLocation branch);
+        [OperationContract]
+        string getGroupCompany(int orgID);
 
         [OperationContract]
         bool insertCompany(Organization org, CompanyDetails company, BranchLocation branch);
@@ -23,9 +25,15 @@ namespace ComplianceService
         bool updateCompany(Organization org, CompanyDetails company, BranchLocation branch);
 
         [OperationContract]
+        int getCompany();
+
+        [OperationContract]
         bool insertBranch(Organization org,  BranchLocation branch);
         [OperationContract]
         bool updateBranch(Organization org, BranchLocation branch);
+
+        [OperationContract]
+        int getBranch();
         [OperationContract]
         string GetCountryList();
         [OperationContract]
