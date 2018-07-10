@@ -1,8 +1,6 @@
-﻿@model ComplianceAuditWeb.Models.OrganizationViewModel;
-
+﻿@model ComplianceAuditWeb.Models.CompanyViewModel
 @{
-
-
+    Layout = "null";
 }
 
 @using (Html.BeginForm())
@@ -13,7 +11,113 @@
     Html.LabelFor(m => m.organization.Description);
     Html.TextAreaFor(m => m.organization.Description);
 
-    List
+    Html.LabelFor(m => m.organization.Industry_Type);
+    Html.TextBoxFor(m => m.organization.Industry_Type);
 
-    @Html.TextBoxFor(model => model.branch.BranchName);
+    Html.LabelFor(m => m.organization.Is_Active);
+    Html.CheckBoxFor(m => m.organization.Is_Active);
 
+    Html.LabelFor(m => m.organization.Is_Leaf);
+    Html.CheckBoxFor(m => m.organization.Is_Leaf);
+
+    Html.LabelFor(m => m.organization.Last_Updated_Date);
+    Html.TextBoxFor(m => m.organization.Last_Updated_Date);
+
+    Html.LabelFor(m => m.organization.Level);
+    Html.TextBoxFor(m => m.organization.Level);
+
+    Html.LabelFor(m => m.organization.Parent_Company_Id);
+    Html.TextBoxFor(m => m.organization.Parent_Company_Id);
+
+    Html.LabelFor(m => m.organization.User_Id);
+    Html.TextBoxFor(m => m.organization.User_Id);
+
+    Html.LabelFor(m => m.companydetails.Formal_Name);
+    Html.TextBoxFor(m => m.companydetails.Formal_Name);
+
+    Html.LabelFor(m => m.companydetails.Industry_Type);
+    Html.TextBoxFor(m => m.companydetails.Industry_Type);
+
+    Html.LabelFor(m => m.companydetails.Website);
+    Html.TextBoxFor(m => m.companydetails.Website);
+
+    Html.LabelFor(m => m.companydetails.Is_Active);
+    Html.TextBoxFor(m => m.companydetails.Is_Active);
+
+    Html.LabelFor(m => m.companydetails.Company_EmailID);
+    Html.TextBoxFor(m => m.companydetails.Company_EmailID);
+
+    Html.LabelFor(m => m.companydetails.Company_ContactNumber1);
+    Html.TextBoxFor(m => m.companydetails.Company_ContactNumber1);
+
+    Html.LabelFor(m => m.companydetails.Company_ContactNumber2);
+    Html.TextBoxFor(m => m.companydetails.Company_ContactNumber2);
+
+    Html.LabelFor(m => m.companydetails.Calender_StartDate);
+    Html.TextBoxFor(m => m.companydetails.Calender_StartDate);
+
+    Html.LabelFor(m => m.companydetails.Calender_EndDate);
+    Html.TextBoxFor(m => m.companydetails.Calender_EndDate);
+
+    Html.LabelFor(m => m.companydetails.Auditing_Frequency);
+    Html.DropDownListFor(m => m.companydetails.Auditing_Frequency, new SelectList
+        (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.AuditingFrequency))),
+        "Select Auditing Freequency");
+
+    Html.LabelFor(m => m.branch.Branch_Name);
+    Html.TextBoxFor(m => m.branch.Branch_Name);
+
+    Html.LabelFor(m => m.branch.Address);
+    Html.TextBoxFor(m => m.branch.Address);
+
+    Html.LabelFor(m => m.branch.Branch_CoordinatesURL);
+    Html.TextBoxFor(m => m.branch.Branch_CoordinatesURL);
+
+    Html.LabelFor(m => m.branch.Branch_Coordinates1);
+    Html.TextBoxFor(m => m.branch.Branch_Coordinates1);
+
+    Html.LabelFor(m => m.branch.Branch_Coordinates2);
+    Html.TextBoxFor(m => m.branch.Branch_Coordinates2);
+
+    Html.LabelFor(m => m.branch.Postal_Code);
+    Html.TextBoxFor(m => m.branch.Postal_Code);
+
+    Html.LabelFor(m => m.Country);
+    //Html.DropDownListFor(m => m.Country, Model.Country);
+
+    List<SelectListItem> countryList = new List<SelectListItem>();
+    foreach (System.Data.DataRow row in Model.Country.Rows)
+    {
+        countryList.Add(new SelectListItem() { Text = row["CountryName"].ToString(), Value = row["CountryID"].ToString() });
+    }
+    @Html.DropDownListFor(m => m.Country, countryList);
+
+
+    Html.LabelFor(m => m.State);
+    //Html.DropDownListFor(m => m.Country, Model.Country);
+
+    List<SelectListItem> stateList = new List<SelectListItem>();
+    foreach (System.Data.DataRow row in Model.Country.Rows)
+    {
+        stateList.Add(new SelectListItem() { Text = row["StateName"].ToString(), Value = row["StateID"].ToString() });
+    }
+    @Html.DropDownListFor(m => m.Country, stateList);
+
+
+    Html.LabelFor(m => m.City);
+    //Html.DropDownListFor(m => m.Country, Model.Country);
+
+    List<SelectListItem> cityList = new List<SelectListItem>();
+    foreach (System.Data.DataRow row in Model.Country.Rows)
+    {
+        cityList.Add(new SelectListItem() { Text = row["CityName"].ToString(), Value = row["CityID"].ToString() });
+    }
+    @Html.DropDownListFor(m => m.Country, cityList);
+
+
+
+
+
+
+
+}

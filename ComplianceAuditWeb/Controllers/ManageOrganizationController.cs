@@ -35,7 +35,8 @@ namespace ComplianceAuditWeb.Controllers
             organizationVM.State.ReadXml(new StringReader(strXMLStates));
             organizationVM.City.ReadXml(new StringReader(strXMLCities));
 
-            organizationVM.Country.AsEnumerable();
+            
+             //organizationVM.Country.AsEnumerable();
 
             
             return View(organizationVM);
@@ -77,6 +78,19 @@ namespace ComplianceAuditWeb.Controllers
             }
         }
         [HttpGet]
+        public ActionResult GetGroupCompany()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult GetGroupCompany(OrganizationViewModel organizationVM)
+        {
+            OrganizationService.OrganizationServiceClient organizationServiceClient = new OrganizationService.OrganizationServiceClient();
+            organizationServiceClient.getGroupCompany(organizationVM.organization.Organization_Id);
+            return View();
+        }
+
+        [HttpGet]
         public ActionResult AddCompany()
         {
             int stateID = 0;
@@ -95,11 +109,11 @@ namespace ComplianceAuditWeb.Controllers
             return View(organizationVM);
         }
         [HttpPost]
-        public ActionResult AddCompany(OrganizationViewModel organizationVM)
+        public ActionResult AddCompany(CompanyViewModel companyVM)
         {
             bool result = false;
             OrganizationService.OrganizationServiceClient organizationClient = new OrganizationService.OrganizationServiceClient();
-            result = organizationClient.insertCompany(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
+            result = organizationClient.insertCompany(companyVM.organization, companyVM.companydetails, companyVM.branch);
             if (result != false)
             {
                 return View("AddCompany");
@@ -115,11 +129,11 @@ namespace ComplianceAuditWeb.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult UpdateCompany(OrganizationViewModel organizationVM)
+        public ActionResult UpdateCompany(CompanyViewModel companyVM)
         {
             bool result = false;
             OrganizationService.OrganizationServiceClient organizationClient = new OrganizationService.OrganizationServiceClient();
-            result = organizationClient.updateCompany(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
+            result = organizationClient.updateCompany(companyVM.organization, companyVM.companydetails, companyVM.branch);
             if (result != false)
             {
                 return View("UpdateCompany");
@@ -129,6 +143,19 @@ namespace ComplianceAuditWeb.Controllers
                 return View();
             }
         }
+        [HttpGet]
+        public ActionResult GetCompany()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult GetCompany(CompanyViewModel companyVM)
+        {
+            OrganizationService.OrganizationServiceClient organizationServiceClient = new OrganizationService.OrganizationServiceClient();
+           // organizationServiceClient.GetCompany();
+            return View();
+        }
+
         [HttpGet]
         public ActionResult AddBranch()
         {
@@ -148,11 +175,11 @@ namespace ComplianceAuditWeb.Controllers
             return View(organizationVM);
         }
         [HttpPost]
-        public ActionResult AddBranch(OrganizationViewModel organizationVM)
+        public ActionResult AddBranch(BranchViewModel branchVM)
         {
             bool result = false;
             OrganizationService.OrganizationServiceClient organizationClient = new OrganizationService.OrganizationServiceClient();
-            result = organizationClient.insertBranch(organizationVM.organization,  organizationVM.branch);
+            result = organizationClient.insertBranch(branchVM.organization, branchVM.branch);
             if (result != false)
             {
                 return View("AddBranch");
@@ -168,11 +195,11 @@ namespace ComplianceAuditWeb.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult UpdateBranch(OrganizationViewModel organizationVM)
+        public ActionResult UpdateBranch(BranchViewModel branchVM)
         {
             bool result = false;
             OrganizationService.OrganizationServiceClient organizationClient = new OrganizationService.OrganizationServiceClient();
-            result = organizationClient.updateBranch(organizationVM.organization,  organizationVM.branch);
+            result = organizationClient.updateBranch(branchVM.organization, branchVM.branch);
             if (result != false)
             {
                 return View("UpdateBranch");
@@ -181,6 +208,18 @@ namespace ComplianceAuditWeb.Controllers
             {
                 return View();
             }
+        }
+        [HttpGet]
+        public ActionResult GetBranch()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult GetBranch(BranchViewModel branchVM)
+        {
+            OrganizationService.OrganizationServiceClient organizationServiceClient = new OrganizationService.OrganizationServiceClient();
+           // organizationServiceClient.GetBranch();
+            return View();
         }
 
     }

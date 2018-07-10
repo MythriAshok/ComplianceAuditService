@@ -71,6 +71,34 @@ namespace ComplianceService
             return updateResult;
         }
 
+        //public string getOrganization(int orgID)
+        //{
+        //    string xmlOrganization = "";
+        //    string xmlCompanyDetails = "";
+        //    string xmlBranchLocation = "";
+        //    Organization org = new Organization();
+        //    OrganizationHelper orgHelper = new OrganizationHelper();
+        //    DataSet dsorganization = orgHelper.getOrganizationHier(orgID);
+        //    xmlOrganization = dsorganization.GetXml();
+        //    DataSet dsBranchLocation = orgHelper.getBranchLocation(org.Branch_Id);
+        //    xmlBranchLocation = dsBranchLocation.GetXml();
+        //    DataSet dsCompanyDetails = orgHelper.getCompanyDetails(org.Company_Id);
+        //    xmlCompanyDetails = dsCompanyDetails.GetXml();
+        //    Tuple<string, string, string> tuple = new Tuple<string, string, string>(xmlBranchLocation, xmlOrganization, xmlCompanyDetails);
+        //    string strGroupCompany = tuple.ToString();
+        //    return strGroupCompany;
+        //}
+
+        public string getGroupCompany(int orgID)
+        {
+            Organization org = new Organization();
+            OrganizationHelper orgHelper = new OrganizationHelper();
+            DataSet dsOrganization = orgHelper.getOrganizationHier(orgID);
+            string xmlOrganization =dsOrganization.GetXml();
+            return xmlOrganization;
+        }
+
+
         public bool insertCompany(Organization org, CompanyDetails company, BranchLocation branch)
         {
             int OrganizationID = 0;
@@ -127,6 +155,7 @@ namespace ComplianceService
             return updateResult;
         }
 
+        
         public bool insertBranch(Organization org, BranchLocation branch)
         {
             int OrganizationID = 0;
@@ -174,6 +203,8 @@ namespace ComplianceService
             }
             return updateResult;
         }
+
+        
 
 
 

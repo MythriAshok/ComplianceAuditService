@@ -29,7 +29,7 @@ namespace ComplianceAuditWeb.Controllers
         {           
             UserViewModel userviewmodel = new UserViewModel();         
             UserService.UserServiceClient userServiceClient = new UserService.UserServiceClient();
-            string response = string.Empty;           
+            //string response = string.Empty;           
             string xmlGroups=userServiceClient.GetUserGroup();
             DataTable Groups = new DataTable();
             Groups.ReadXml(xmlGroups);
