@@ -17,7 +17,7 @@ create procedure sp_getState
 p_CountryID int
 )
 begin
-select *  from tbl_state;
+select *  from tbl_state where Country_ID= p_Country_ID;
 end/
 
 
@@ -30,7 +30,7 @@ create procedure sp_getCity
 p_StateID int
 )
 begin
-select *  from tbl_city;
+select *  from tbl_city where State_ID = p_State_ID;
 end/
 
 
