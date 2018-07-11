@@ -1,0 +1,10 @@
+﻿@model ComplianceAuditWeb.Models.OrganizationViewModel
+@{
+    ViewBag.Title = "AddCompany";
+}
+
+<h2>AddCompany</h2>
+
+@Html.Partial("_Company", Model)
+
+@Html.ActionLink("Back to List", "Index")

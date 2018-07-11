@@ -37,12 +37,6 @@
   <wsdl:message name="IOrganizationService_updateCompany_OutputMessage">
     <wsdl:part name="parameters" element="tns:updateCompanyResponse" />
   </wsdl:message>
-  <wsdl:message name="IOrganizationService_getCompany_InputMessage">
-    <wsdl:part name="parameters" element="tns:getCompany" />
-  </wsdl:message>
-  <wsdl:message name="IOrganizationService_getCompany_OutputMessage">
-    <wsdl:part name="parameters" element="tns:getCompanyResponse" />
-  </wsdl:message>
   <wsdl:message name="IOrganizationService_insertBranch_InputMessage">
     <wsdl:part name="parameters" element="tns:insertBranch" />
   </wsdl:message>
@@ -54,12 +48,6 @@
   </wsdl:message>
   <wsdl:message name="IOrganizationService_updateBranch_OutputMessage">
     <wsdl:part name="parameters" element="tns:updateBranchResponse" />
-  </wsdl:message>
-  <wsdl:message name="IOrganizationService_getBranch_InputMessage">
-    <wsdl:part name="parameters" element="tns:getBranch" />
-  </wsdl:message>
-  <wsdl:message name="IOrganizationService_getBranch_OutputMessage">
-    <wsdl:part name="parameters" element="tns:getBranchResponse" />
   </wsdl:message>
   <wsdl:message name="IOrganizationService_GetCountryList_InputMessage">
     <wsdl:part name="parameters" element="tns:GetCountryList" />
@@ -100,10 +88,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/updateCompany" message="tns:IOrganizationService_updateCompany_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/updateCompanyResponse" message="tns:IOrganizationService_updateCompany_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="getCompany">
-      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/getCompany" message="tns:IOrganizationService_getCompany_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/getCompanyResponse" message="tns:IOrganizationService_getCompany_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="insertBranch">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertBranch" message="tns:IOrganizationService_insertBranch_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/insertBranchResponse" message="tns:IOrganizationService_insertBranch_OutputMessage" />
@@ -111,10 +95,6 @@
     <wsdl:operation name="updateBranch">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/updateBranch" message="tns:IOrganizationService_updateBranch_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/updateBranchResponse" message="tns:IOrganizationService_updateBranch_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="getBranch">
-      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/getBranch" message="tns:IOrganizationService_getBranch_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/getBranchResponse" message="tns:IOrganizationService_getBranch_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetCountryList">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GetCountryList" message="tns:IOrganizationService_GetCountryList_InputMessage" />
@@ -176,15 +156,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getCompany">
-      <soap:operation soapAction="http://tempuri.org/IOrganizationService/getCompany" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="insertBranch">
       <soap:operation soapAction="http://tempuri.org/IOrganizationService/insertBranch" style="document" />
       <wsdl:input>
@@ -196,15 +167,6 @@
     </wsdl:operation>
     <wsdl:operation name="updateBranch">
       <soap:operation soapAction="http://tempuri.org/IOrganizationService/updateBranch" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getBranch">
-      <soap:operation soapAction="http://tempuri.org/IOrganizationService/getBranch" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

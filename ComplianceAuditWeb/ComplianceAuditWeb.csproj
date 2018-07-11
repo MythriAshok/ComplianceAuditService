@@ -105,14 +105,14 @@
     <None Include="Connected Services\AccessService\AccessService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\OrganizationService\OrganizationService.wsdl" />
-    <None Include="Connected Services\OrganizationService\OrganizationService.xsd">
+    <None Include="Connected Services\OrgService\OrganizationService.wsdl" />
+    <None Include="Connected Services\OrgService\OrganizationService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\OrganizationService\OrganizationService1.xsd">
+    <None Include="Connected Services\OrgService\OrganizationService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\OrganizationService\OrganizationService2.xsd">
+    <None Include="Connected Services\OrgService\OrganizationService2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\UserService\UserService.disco" />
@@ -122,17 +122,17 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Connected Services\OrganizationService\OrganizationService.disco" />
-    <None Include="Connected Services\OrganizationService\configuration91.svcinfo" />
-    <None Include="Connected Services\OrganizationService\configuration.svcinfo" />
-    <None Include="Connected Services\OrganizationService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <None Include="Connected Services\AccessService\AccessService.disco" />
     <None Include="Connected Services\AccessService\configuration91.svcinfo" />
     <None Include="Connected Services\AccessService\configuration.svcinfo" />
     <None Include="Connected Services\AccessService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\OrgService\OrganizationService.disco" />
+    <None Include="Connected Services\OrgService\configuration91.svcinfo" />
+    <None Include="Connected Services\OrgService\configuration.svcinfo" />
+    <None Include="Connected Services\OrgService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -167,7 +167,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Connected Services\OrganizationService\Reference.cs">
+    <Compile Include="Connected Services\OrgService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -206,9 +206,10 @@
     <Content Include="Views\ManageOrganization\_Organization.cshtml" />
     <Content Include="Views\ManageOrganization\_Branch.cshtml" />
     <Content Include="Views\UserManagement\_insertUser.cshtml" />
-    <Content Include="Views\ManageOrganization\OrganicationMainView.cshtml" />
     <Content Include="Views\UserManagement\_insertRole.cshtml" />
     <Content Include="Views\UserManagement\_insertUserGroup.cshtml" />
+    <Content Include="Views\ManageOrganization\AddGroupCompany.cshtml" />
+    <Content Include="Views\ManageOrganization\AddCompany.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -235,7 +236,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\AccessService\" />
-    <WCFMetadataStorage Include="Connected Services\OrganizationService\" />
+    <WCFMetadataStorage Include="Connected Services\OrgService\" />
     <WCFMetadataStorage Include="Connected Services\UserService\" />
   </ItemGroup>
   <PropertyGroup>

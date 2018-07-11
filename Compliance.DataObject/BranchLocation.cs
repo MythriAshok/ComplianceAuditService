@@ -8,7 +8,7 @@ namespace Compliance.DataObject
     {
         public int Branch_Id { get; set; }
         public string Branch_Name { get; set; }
-        public int Address { get; set; }
+        public string Address { get; set; }
         public int Country_Id { get; set; }
         public int State_Id { get; set; }
         public int City_Id { get; set; }

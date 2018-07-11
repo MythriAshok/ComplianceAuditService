@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ComplianceAuditWeb.OrganizationService {
+namespace ComplianceAuditWeb.OrgService {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="OrganizationService.IOrganizationService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="OrgService.IOrganizationService")]
     public interface IOrganizationService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertOrganization", ReplyAction="http://tempuri.org/IOrganizationService/insertOrganizationResponse")]
@@ -45,12 +45,6 @@ namespace ComplianceAuditWeb.OrganizationService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updateCompany", ReplyAction="http://tempuri.org/IOrganizationService/updateCompanyResponse")]
         System.Threading.Tasks.Task<bool> updateCompanyAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getCompany", ReplyAction="http://tempuri.org/IOrganizationService/getCompanyResponse")]
-        int getCompany();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getCompany", ReplyAction="http://tempuri.org/IOrganizationService/getCompanyResponse")]
-        System.Threading.Tasks.Task<int> getCompanyAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertBranch", ReplyAction="http://tempuri.org/IOrganizationService/insertBranchResponse")]
         bool insertBranch(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch);
         
@@ -62,12 +56,6 @@ namespace ComplianceAuditWeb.OrganizationService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updateBranch", ReplyAction="http://tempuri.org/IOrganizationService/updateBranchResponse")]
         System.Threading.Tasks.Task<bool> updateBranchAsync(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getBranch", ReplyAction="http://tempuri.org/IOrganizationService/getBranchResponse")]
-        int getBranch();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getBranch", ReplyAction="http://tempuri.org/IOrganizationService/getBranchResponse")]
-        System.Threading.Tasks.Task<int> getBranchAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetCountryList", ReplyAction="http://tempuri.org/IOrganizationService/GetCountryListResponse")]
         string GetCountryList();
@@ -89,12 +77,12 @@ namespace ComplianceAuditWeb.OrganizationService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IOrganizationServiceChannel : ComplianceAuditWeb.OrganizationService.IOrganizationService, System.ServiceModel.IClientChannel {
+    public interface IOrganizationServiceChannel : ComplianceAuditWeb.OrgService.IOrganizationService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class OrganizationServiceClient : System.ServiceModel.ClientBase<ComplianceAuditWeb.OrganizationService.IOrganizationService>, ComplianceAuditWeb.OrganizationService.IOrganizationService {
+    public partial class OrganizationServiceClient : System.ServiceModel.ClientBase<ComplianceAuditWeb.OrgService.IOrganizationService>, ComplianceAuditWeb.OrgService.IOrganizationService {
         
         public OrganizationServiceClient() {
         }
@@ -155,14 +143,6 @@ namespace ComplianceAuditWeb.OrganizationService {
             return base.Channel.updateCompanyAsync(org, company, branch);
         }
         
-        public int getCompany() {
-            return base.Channel.getCompany();
-        }
-        
-        public System.Threading.Tasks.Task<int> getCompanyAsync() {
-            return base.Channel.getCompanyAsync();
-        }
-        
         public bool insertBranch(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch) {
             return base.Channel.insertBranch(org, branch);
         }
@@ -177,14 +157,6 @@ namespace ComplianceAuditWeb.OrganizationService {
         
         public System.Threading.Tasks.Task<bool> updateBranchAsync(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch) {
             return base.Channel.updateBranchAsync(org, branch);
-        }
-        
-        public int getBranch() {
-            return base.Channel.getBranch();
-        }
-        
-        public System.Threading.Tasks.Task<int> getBranchAsync() {
-            return base.Channel.getBranchAsync();
         }
         
         public string GetCountryList() {

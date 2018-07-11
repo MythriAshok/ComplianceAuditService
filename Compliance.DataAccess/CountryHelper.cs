@@ -41,7 +41,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getState", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_CountryID", CountryID);
+                cmd.Parameters.AddWithValue("p_Country_ID", CountryID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsState);
             }
@@ -64,7 +64,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getCity", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_StateID", StateID);
+                cmd.Parameters.AddWithValue("p_State_ID", StateID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsCity);
             }

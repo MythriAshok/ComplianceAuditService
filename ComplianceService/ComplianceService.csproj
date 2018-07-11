@@ -74,6 +74,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="CountryService.svc" />
     <Content Include="OrganizationService.svc" />
     <Content Include="UserService.svc" />
     <Content Include="Web.config" />
@@ -87,7 +88,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="CountryService.svc.cs">
+      <DependentUpon>CountryService.svc</DependentUpon>
+    </Compile>
     <Compile Include="IAccessService.cs" />
+    <Compile Include="ICountryService.cs" />
     <Compile Include="IOrganizationService.cs" />
     <Compile Include="IUserService.cs" />
     <Compile Include="OrganizationService.svc.cs">

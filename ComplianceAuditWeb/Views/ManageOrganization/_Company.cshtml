@@ -1,6 +1,6 @@
 ﻿@model ComplianceAuditWeb.Models.CompanyViewModel
 @{
-    Layout = "null";
+//Layout = "null";
 }
 
 @using (Html.BeginForm())
@@ -85,7 +85,7 @@
     Html.LabelFor(m => m.Country);
     //Html.DropDownListFor(m => m.Country, Model.Country);
 
-    List<SelectListItem> countryList = new List<SelectListItem>();
+    @*List<SelectListItem> countryList = new List<SelectListItem>();
     foreach (System.Data.DataRow row in Model.Country.Rows)
     {
         countryList.Add(new SelectListItem() { Text = row["CountryName"].ToString(), Value = row["CountryID"].ToString() });
@@ -112,7 +112,7 @@
     {
         cityList.Add(new SelectListItem() { Text = row["CityName"].ToString(), Value = row["CityID"].ToString() });
     }
-    @Html.DropDownListFor(m => m.Country, cityList);
+    @Html.DropDownListFor(m => m.Country, cityList);*@
 
 
 
