@@ -17,11 +17,13 @@ namespace ComplianceAuditWeb.Controllers
         {
             return View();
         }
-
-        public ActionResult insertRoles()
-        {
-            
-
+        [HttpPost]
+        public ActionResult insertRoles(Roles roles)
+        {           
+            UserService.UserServiceClient client = new UserService.UserServiceClient();
+            client.Open();
+            string result=client.insertRoles(roles);
+            client.Close();
             return View();
         }
         [HttpGet]

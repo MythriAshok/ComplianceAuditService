@@ -4,11 +4,21 @@ use auditmoduledb;
 'I' indicates the insert and 'U' indicates the update.alter
 Before inserting it checks for exists with the Email_ID column in user table
 created by ojeshwini  */
-Drop procedure if exists 'sp_insertupdateUser'
+Drop procedure if exists `auditmoduledb`.`sp_insertupdateUser`;
 Delimiter /
-create procedure sp_insertupdateUser(p_flag char(1),p_User_ID int,p_User_Password varchar(10),p_First_Name varchar(45),
-p_Middle_Name varchar(45),p_Last_Name varchar(45),p_Email_ID varchar(100),p_Contact_Number varchar(50),
-p_Gender varchar(45),p_Is_Active bit)
+create procedure sp_insertupdateUser
+(
+p_flag char(1),
+p_User_ID int,
+p_User_Password varchar(10),
+p_First_Name varchar(45),
+p_Middle_Name varchar(45),
+p_Last_Name varchar(45),
+p_Email_ID varchar(100),
+p_Contact_Number varchar(50),
+p_Gender varchar(45),
+p_Is_Active bit
+)
 begin
 if(p_flag='I')
 then
@@ -45,16 +55,18 @@ SET
 WHERE `User_ID` = p_User_ID;
 end if;
 end /
+delimiter ;
 
-Drop procedure if exists 'sp_deleteUser'
+Drop procedure if exists `auditmoduledb`.`sp_deleteUser`;
 Delimiter /
 create procedure sp_deleteUser(p_User_ID int)
 begin
 update `auditmoduledb`.`tbl_user` set Is_Active=0 
 where User_ID = p_User_ID;
 end /
+delimiter ;
 
-Drop procedure if exists 'sp_getUser'
+Drop procedure if exists `auditmoduledb`.`sp_getUser`;
 Delimiter /
 create procedure sp_getUser(p_User_ID int)
 begin
@@ -86,9 +98,9 @@ FROM `auditmoduledb`.`tbl_user`
 where User_ID = p_User_ID;
 end if;
 end /
+delimiter ;
 
-
-Drop procedure if exists 'sp_insertupdateRole'
+Drop procedure if exists `auditmoduledb`.`sp_insertupdateRole`;
 Delimiter /
 create procedure sp_insertupdateRole(p_flag char(1),p_Role_ID int,p_Role_Name varchar(45),p_Is_Active bit,p_Is_Group_Role bit)
 begin
@@ -110,8 +122,9 @@ SET
 WHERE `Role_ID` = p_Role_ID ;
 end if;
 end /
+delimiter ;
 
-Drop procedure if exists 'sp_deleteRole'
+Drop procedure if exists `auditmoduledb`.`sp_deleteRole`;
 Delimiter /
 create procedure sp_deleteRole(p_Role_ID int)
 begin
@@ -120,8 +133,9 @@ SET
 `Is_Active` = 0
 WHERE `Role_ID` = p_Role_ID ;
 end /
+delimiter ;
 
-Drop procedure if exists 'sp_getRole'
+Drop procedure if exists `auditmoduledb`.`sp_getRole`;
 Delimiter /
 create procedure sp_getRole(p_Role_ID int)
 begin
@@ -141,9 +155,9 @@ FROM `auditmoduledb`.`tbl_role`
 WHERE `Role_ID` = p_Role_ID ;
 end if;
 end /
+delimiter ;
 
-
-Drop procedure if exists 'sp_insertupdateUserGroup'
+Drop procedure if exists `auditmoduledb`.`sp_insertupdateUserGroup`;
 Delimiter /
 create procedure sp_insertupdateUserGroup(p_flag char(1),User_Group_ID int,p_User_Group_Name varchar(45),
 User_Group_Description varchar(45),p_Role_ID int)
@@ -165,10 +179,11 @@ SET
 WHERE `User_Group_ID` = p_User_Group_ID;
 end if;
 end /
+delimiter ;
 
-Drop procedure if exists 'sp_getUserGroup'
+Drop procedure if exists `auditmoduledb`.`sp_getUserGroup`;
 Delimiter /
-create procedure sp_getRole(p_User_Group_ID int)
+create procedure sp_getUserGroup(p_User_Group_ID int)
 begin
 if(p_User_Group_ID=0)
 then
@@ -186,8 +201,9 @@ FROM `auditmoduledb`.`tbl_user_group`
 WHERE `User_Group_ID` = p_User_Group_ID;
 end if;
 end /
+delimiter ;
 
-Drop procedure if exists 'sp_getMenus'
+Drop procedure if exists `auditmoduledb`.`sp_getMenus`;
 Delimiter /
 create procedure sp_getMenus(p_User_Group_ID int)
 begin
@@ -211,27 +227,37 @@ FROM `auditmoduledb`.`tbl_menus`
 WHERE `User_Group_ID` = p_User_Group_ID;
 end if;
 end /
+Delimiter ;
 
-Drop procedure if exists 'sp_getRolePrivilege'
+Drop procedure if exists `auditmoduledb`.`sp_getRolePrivilege`;
 Delimiter /
 create procedure sp_getRolePrivilege(p_Role_ID int)
 begin
 select Privilege_Name,Privilege_Type,Is_Active from tbl_role_priv_map a left join tbl_privilege b 
 on a.Role_ID=b.Role_ID where a.Role_ID=p_Role_ID;
 end /
+Delimiter ;
 
-Drop procedure if exists 'sp_getUserRole'
+Drop procedure if exists `auditmoduledb`.`sp_getUserRole`;	
 Delimiter /
 create procedure sp_getUserRole(p_User_ID int)
 begin
 select a.Role_ID,Role_Name from tbl_user_role_map a left join tbl_role b on a.Role_ID=b.Role_ID where User_ID=p_User_ID;
 end /
+Delimiter ;
 
-Drop procedure if exists 'sp_getUserRoleList'
+Drop procedure if exists `auditmoduledb`.`sp_getUserRoleList`;
 Delimiter /
 create procedure sp_getUserRoleList()
 begin
 select Role_ID,Role_Name from tbl_role where Is_Group_Role=0 and Is_Active=1;
 end /
+Delimiter ;
 
-
+Drop procedure if exists `auditmoduledb`.`sp_getUserGroupRoleList`;
+Delimiter /
+create procedure sp_getUserGroupRoleList()
+begin
+select Role_ID,Role_Name from tbl_role where Is_Group_Role=1 and Is_Active=1;
+end /
+Delimiter ;
