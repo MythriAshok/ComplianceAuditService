@@ -18,8 +18,10 @@ namespace ComplianceAuditWeb.Controllers
             return View();
         }
 
-        public ActionResult CreateRoles()
+        public ActionResult insertRoles()
         {
+            
+
             return View();
         }
         [HttpGet]
@@ -44,6 +46,12 @@ namespace ComplianceAuditWeb.Controllers
         {
             UserService.UserServiceClient userServiceClient = new UserService.UserServiceClient();
             string msg=userServiceClient.insertUser(userviewmodel.User);            
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult UserGroup()
+        {
             return View();
         }
     }

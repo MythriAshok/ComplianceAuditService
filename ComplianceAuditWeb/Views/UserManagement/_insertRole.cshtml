@@ -1,0 +1,13 @@
+﻿@model Compliance.DataObject.Roles
+
+@Html.LabelFor(model => model.RoleName);
+@Html.TextBoxFor(model => model.RoleName);
+
+@Html.LabelFor(model => model.IsGroupRole);
+@Html.TextBoxFor(model => model.IsGroupRole, "Yes");
+@Html.TextBoxFor(model => model.IsGroupRole, "No");
+
+@Html.LabelFor(model => model.IsActive);
+@Html.RadioButtonFor(model => model.IsActive, "Yes");
+@Html.RadioButtonFor(model => model.IsActive, "No");
+
