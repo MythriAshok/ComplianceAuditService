@@ -290,6 +290,10 @@ namespace Compliance.DataAccess
             }
             return resultCompanyDetails;
         }
+        public void get()
+        {
+
+        }
 
     }
 }
