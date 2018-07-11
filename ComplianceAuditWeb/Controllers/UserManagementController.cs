@@ -7,6 +7,7 @@ using ComplianceAuditWeb.Models;
 using Compliance.DataObject;
 using System.Xml;
 using System.Data;
+using System.IO;
 
 namespace ComplianceAuditWeb.Controllers
 {
@@ -34,7 +35,7 @@ namespace ComplianceAuditWeb.Controllers
             //string response = string.Empty;           
             string xmlGroups=userServiceClient.GetUserGroup();
             DataTable Groups = new DataTable();
-            Groups.ReadXml(xmlGroups);
+            Groups.ReadXml(new StringReader(xmlGroups));
             userviewmodel.UserGroupList = (IEnumerable<UserGroup>)Groups.AsEnumerable();
             //XmlDocument xmlCountries = new XmlDocument();
             //xmlCountries.LoadXml(response);

@@ -67,26 +67,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AccessService.svc" />
-    <None Include="Connected Services\OrgService\OrganizationService.disco" />
-    <None Include="Connected Services\OrgService\configuration91.svcinfo" />
-    <None Include="Connected Services\OrgService\configuration.svcinfo" />
-    <None Include="Connected Services\OrgService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="CountryService.svc" />
     <Content Include="OrganizationService.svc" />
     <Content Include="UserService.svc" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessService.svc.cs">
       <DependentUpon>AccessService.svc</DependentUpon>
-    </Compile>
-    <Compile Include="Connected Services\OrgService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="CountryService.svc.cs">
       <DependentUpon>CountryService.svc</DependentUpon>
@@ -110,16 +100,6 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Connected Services\OrgService\OrganizationService.wsdl" />
-    <None Include="Connected Services\OrgService\OrganizationService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\OrgService\OrganizationService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\OrgService\OrganizationService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -143,9 +123,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\OrgService\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
