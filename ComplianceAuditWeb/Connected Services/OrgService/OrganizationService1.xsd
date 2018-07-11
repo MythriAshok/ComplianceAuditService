@@ -36,7 +36,7 @@
   <xs:element name="CompanyDetails" nillable="true" type="tns:CompanyDetails" />
   <xs:complexType name="BranchLocation">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Address" type="xs:int" />
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Branch_Coordinates1" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Branch_Coordinates2" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Branch_CoordinatesURL" nillable="true" type="xs:string" />

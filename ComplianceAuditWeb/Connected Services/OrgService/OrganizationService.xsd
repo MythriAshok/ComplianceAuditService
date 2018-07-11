@@ -79,18 +79,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="getCompany">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="getCompanyResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="getCompanyResult" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="insertBranch">
     <xs:complexType>
       <xs:sequence>
@@ -118,18 +106,6 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="updateBranchResult" type="xs:boolean" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="getBranch">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="getBranchResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="getBranchResult" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

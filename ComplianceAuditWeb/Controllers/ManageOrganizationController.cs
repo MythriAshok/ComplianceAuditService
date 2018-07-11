@@ -18,44 +18,50 @@ namespace ComplianceAuditWeb.Controllers
     {
         // GET: ManageOrganization
         
-        [HttpGet]
+       
         public ActionResult AddGroupCompany()
         {
-            int stateID=0;
-            int countryID=0;
+            int stateID = 0;
+            int countryID = 0;
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+
             OrganizationViewModel organizationVM = new OrganizationViewModel();
-            OrganizationService.OrganizationServiceClient organizationservice = new OrganizationService.OrganizationServiceClient();
 
             string strXMLCountries = organizationservice.GetCountryList();
             string strXMLStates = organizationservice.GetStateList(countryID);
             string strXMLCities = organizationservice.GetCityList(stateID);
 
-
+           
             organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
             organizationVM.State.ReadXml(new StringReader(strXMLStates));
             organizationVM.City.ReadXml(new StringReader(strXMLCities));
 
-            
-             //organizationVM.Country.AsEnumerable();
 
-            
-            return View(organizationVM);
+            //     //organizationVM.Country.AsEnumerable();
+
+
+            //    return View(organizationVM);
+            return View("AddGroupCompany", organizationVM);
         }
 
         [HttpPost]
         public ActionResult AddGroupCompany(OrganizationViewModel organizationVM)
         {
             bool result = false;
-            OrganizationService.OrganizationServiceClient organizationClient = new OrganizationService.OrganizationServiceClient();
-            result = organizationClient.insertOrganization(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
-            if( result!= false)
+            if (ModelState.IsValid)
             {
-                return View("AddGroupCompany");
+                OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
+                result = organizationClient.insertOrganization(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
+                if (result != false)
+                {
+                    return View("AddGroupCompany");
+                }
+                else
+                {
+                    return View();
+                }
             }
-            else
-            { 
-                return View();
-            }
+            return View();
         }
         [HttpGet]
         public ActionResult UpdateGroupCompany()
@@ -66,9 +72,9 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult UpdateGroupCompany(OrganizationViewModel organizationVM)
         {
             bool result = false;
-            OrganizationService.OrganizationServiceClient organizationClient = new OrganizationService.OrganizationServiceClient();
+            OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
             result = organizationClient.updateOrganization(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
-            if(result!= false)
+            if (result != false)
             {
                 return View("UpdateGroupCompany");
             }
@@ -76,6 +82,7 @@ namespace ComplianceAuditWeb.Controllers
             {
                 return View();
             }
+        
         }
         [HttpGet]
         public ActionResult GetGroupCompany()
@@ -85,7 +92,7 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult GetGroupCompany(OrganizationViewModel organizationVM)
         {
-            OrganizationService.OrganizationServiceClient organizationServiceClient = new OrganizationService.OrganizationServiceClient();
+            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
             organizationServiceClient.getGroupCompany(organizationVM.organization.Organization_Id);
             return View();
         }
@@ -93,26 +100,27 @@ namespace ComplianceAuditWeb.Controllers
         [HttpGet]
         public ActionResult AddCompany()
         {
-            int stateID = 0;
-            int countryID = 0;
-            OrganizationViewModel organizationVM = new OrganizationViewModel();
-            OrganizationService.OrganizationServiceClient organizationservice = new OrganizationService.OrganizationServiceClient();
+            //int stateID = 0;
+            //int countryID = 0;
+            //OrganizationViewModel organizationVM = new OrganizationViewModel();
+            //OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
 
-            string strXMLCountries = organizationservice.GetCountryList();
-            string strXMLStates = organizationservice.GetStateList(countryID);
-            string strXMLCities = organizationservice.GetCityList(stateID);
+            //string strXMLCountries = organizationservice.GetCountryList();
+            //string strXMLStates = organizationservice.GetStateList(countryID);
+            //string strXMLCities = organizationservice.GetCityList(stateID);
 
 
-            organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
-            organizationVM.State.ReadXml(new StringReader(strXMLStates));
-            organizationVM.City.ReadXml(new StringReader(strXMLCities));
-            return View(organizationVM);
+            //organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
+            //organizationVM.State.ReadXml(new StringReader(strXMLStates));
+            //organizationVM.City.ReadXml(new StringReader(strXMLCities));
+            //return View(organizationVM);
+            return View();
         }
         [HttpPost]
         public ActionResult AddCompany(CompanyViewModel companyVM)
         {
             bool result = false;
-            OrganizationService.OrganizationServiceClient organizationClient = new OrganizationService.OrganizationServiceClient();
+            OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
             result = organizationClient.insertCompany(companyVM.organization, companyVM.companydetails, companyVM.branch);
             if (result != false)
             {
@@ -132,7 +140,7 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult UpdateCompany(CompanyViewModel companyVM)
         {
             bool result = false;
-            OrganizationService.OrganizationServiceClient organizationClient = new OrganizationService.OrganizationServiceClient();
+            OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
             result = organizationClient.updateCompany(companyVM.organization, companyVM.companydetails, companyVM.branch);
             if (result != false)
             {
@@ -151,7 +159,7 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult GetCompany(CompanyViewModel companyVM)
         {
-            OrganizationService.OrganizationServiceClient organizationServiceClient = new OrganizationService.OrganizationServiceClient();
+            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
            // organizationServiceClient.GetCompany();
             return View();
         }
@@ -162,7 +170,7 @@ namespace ComplianceAuditWeb.Controllers
             int stateID = 0;
             int countryID = 0;
             OrganizationViewModel organizationVM = new OrganizationViewModel();
-            OrganizationService.OrganizationServiceClient organizationservice = new OrganizationService.OrganizationServiceClient();
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
 
             string strXMLCountries = organizationservice.GetCountryList();
             string strXMLStates = organizationservice.GetStateList(countryID);
@@ -178,7 +186,7 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult AddBranch(BranchViewModel branchVM)
         {
             bool result = false;
-            OrganizationService.OrganizationServiceClient organizationClient = new OrganizationService.OrganizationServiceClient();
+            OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
             result = organizationClient.insertBranch(branchVM.organization, branchVM.branch);
             if (result != false)
             {
@@ -198,7 +206,7 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult UpdateBranch(BranchViewModel branchVM)
         {
             bool result = false;
-            OrganizationService.OrganizationServiceClient organizationClient = new OrganizationService.OrganizationServiceClient();
+            OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
             result = organizationClient.updateBranch(branchVM.organization, branchVM.branch);
             if (result != false)
             {
@@ -217,7 +225,7 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult GetBranch(BranchViewModel branchVM)
         {
-            OrganizationService.OrganizationServiceClient organizationServiceClient = new OrganizationService.OrganizationServiceClient();
+            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
            // organizationServiceClient.GetBranch();
             return View();
         }

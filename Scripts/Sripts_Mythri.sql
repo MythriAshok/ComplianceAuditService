@@ -17,7 +17,7 @@ create procedure sp_getState
 p_CountryID int
 )
 begin
-select *  from tbl_state;
+select *  from tbl_state where Country_ID= p_Country_ID;
 end/
 
 
@@ -30,7 +30,7 @@ create procedure sp_getCity
 p_StateID int
 )
 begin
-select *  from tbl_city;
+select *  from tbl_city where State_ID = p_State_ID;
 end/
 
 
@@ -159,6 +159,30 @@ where _Org_Hier_ID = p_Org_Hier_ID;
 End If;
 
 end/
+
+Drop procedure sp_getOrganizationHierJoin;
+Delimiter /
+create procedure sp_getOrganizationHierJoin
+(
+p_Org_Hier_ID int 
+)
+begin  
+if(p_Org_Hier_ID = 0) then
+select Company_Name, Company_ID, Parent_Company_ID, Description, level,
+Is_Leaf, Industry_Type, Last_Updated_Date, LocationID, User_ID, Is_Active from tbl_org_hier;
+else 
+
+select Company_Name, Company_ID, Parent_Company_ID, Description, level,
+Is_Leaf, Industry_Type, Last_Updated_Date, LocationID, User_ID, Is_Active from tbl_org_hier 
+
+inner join  tbl_company_Details  on tbl_company_details.Org_Hier_ID = tbl_org_hier.Org_Hier_ID
+
+inner join tbl_branch_location on tbl_branch_location.Location_ID = tbl_org_hier.Location_ID;
+
+End If;
+
+end/
+
 
 
 drop procedure sp_deleteOrganizationHier;
