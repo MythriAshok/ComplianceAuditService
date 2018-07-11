@@ -7,6 +7,7 @@ begin
 select *  from tbl_Country;
 end/
 
+
 ---------------------------------------------------------
 
 
@@ -14,7 +15,7 @@ Drop procedure sp_getState;
 Delimiter /
 create procedure sp_getState
 (
-p_CountryID int
+p_Country_ID int
 )
 begin
 select *  from tbl_state where Country_ID= p_Country_ID;
@@ -27,7 +28,7 @@ Drop procedure sp_getCity;
 Delimiter /
 create procedure sp_getCity
 (
-p_StateID int
+p_State_ID int
 )
 begin
 select *  from tbl_city where State_ID = p_State_ID;
@@ -41,31 +42,34 @@ Drop procedure sp_insertupdateBranchLocation;
 Delimiter /
 create procedure sp_insertupdateBranchLocation
 (
- p_Flag char(1),
- p_Location_ID int,
- p_Location_Name varchar(75),
- p_Address varchar(450), 
- p_Country_ID int, 
- p_State_ID int, 
- p_City_ID int, 
- p_Postal_Code int,
- p_Branch_Coordinates1 varchar (100),
-  p_Branch_Coordinates2 varchar (100),
-  p_Branch_CoordinatesURL varchar (100)
+p_Flag char(1),
+p_Location_ID int,
+p_Location_Name varchar(75),
+p_Address varchar(450), 
+p_Country_ID int, 
+p_State_ID int, 
+p_City_ID int, 
+p_Postal_Code int,
+p_Branch_Coordinates1 varchar (100),
+p_Branch_Coordinates2 varchar (100),
+p_Branch_CoordinatesURL varchar (100)
 )
 
 begin
 if(p_Flag = 'I')then
 
-insert into tbl_branch_location( Location_Name, Address, Country_ID, State_ID, City_ID, Postal_Code, Branch_Coordinates1, Branch_Coordinates2, Branch_CoordinatesURL)
+insert into tbl_branch_location(Location_ID,Location_Name,Address,Country_ID,State_ID,City_ID,
+Postal_Code,Branch_Coordinates1,Branch_Coordinates2,Branch_CoordinatesURL)
 
-values( p_Location_Name, p_Address, p_Country_ID, p_State_ID, p_City_ID, p_Postal_Code, p_Branch_Coordinates1, p_Branch_Coordinates2, p_Branch_CoordinatesURL);
+values(p_Location_ID,p_Location_Name,p_Address,p_Country_ID,p_State_ID,p_City_ID,
+p_Postal_Code,p_Branch_Coordinates1,p_Branch_Coordinates2,p_Branch_CoordinatesURL);
 
 else
 update tbl_branch_location set
 
-Location_Name=p_Location_Name, Address=p_Address, Country_ID=p_Country_ID, State_ID=p_State_ID, City_ID=p_City_ID, Postal_Code=p_Postal_Code,
- Branch_Coordinates1= p_Branch_Coordinates1, Branch_Coordinates= p_Branch_Coordinates2,
+Location_Name=p_Location_Name,Address=p_Address,Country_ID=p_Country_ID,State_ID=p_State_ID,City_ID=p_City_ID,
+Postal_Code=p_Postal_Code,
+Branch_Coordinates1= p_Branch_Coordinates1,Branch_Coordinates=p_Branch_Coordinates2,
 Branch_CoordinatesURL= p_Branch_CoordinatesURL
 where Location_ID=p_Location_ID;
 
@@ -78,13 +82,34 @@ Drop procedure sp_getBranchLocation;
 Delimiter /
 create procedure sp_getBranchLocation
 (
-p_Country_ID int,
-p_State_ID int,
-p_City_ID int 
+p_Location_ID int
 )
-begin   
-select LocationID, Location_Name, Address,Country_ID, State_ID,Postal_Code, Branch_Coordinates1,  Branch_Coordinates2,  Branch_CoordinatesURL from tbl_branch_location
+begin
+if(p_Location_ID=0)
+then
+select
+LocationID, 
+Location_Name, 
+Address,Country_ID, 
+State_ID,Postal_Code, 
+Branch_Coordinates1,  
+Branch_Coordinates2,  
+Branch_CoordinatesURL 
+from tbl_branch_location;
+else
+select
+LocationID,
+Location_Name, 
+Address,
+Country_ID,
+State_ID,
+Postal_Code, 
+Branch_Coordinates1,  
+Branch_Coordinates2,  
+Branch_CoordinatesURL 
+from tbl_branch_location
 where City_ID = p_City_ID and Country_ID = p_Country_ID and State_ID = p_State_ID;
+end if;
 end/
 
 
@@ -148,9 +173,8 @@ p_Org_Hier_ID int
 )
 begin  
 if(p_Org_Hier_ID = 0) then
-
-  select Company_Name, Company_ID, Parent_Company_ID, Description, level,
-  Is_Leaf, Industry_Type, Last_Updated_Date, LocationID, User_ID, Is_Active from tbl_org_hier;
+select Company_Name, Company_ID, Parent_Company_ID, Description, level,
+Is_Leaf, Industry_Type, Last_Updated_Date, LocationID, User_ID, Is_Active from tbl_org_hier;
 else 
 
 select Company_Name, Company_ID, Parent_Company_ID, Description, level,
@@ -159,6 +183,7 @@ where _Org_Hier_ID = p_Org_Hier_ID;
 End If;
 
 end/
+
 
 Drop procedure sp_getOrganizationHierJoin;
 Delimiter /
@@ -169,11 +194,11 @@ p_Org_Hier_ID int
 begin  
 if(p_Org_Hier_ID = 0) then
 select Company_Name, Company_ID, Parent_Company_ID, Description, level,
-Is_Leaf, Industry_Type, Last_Updated_Date, LocationID, User_ID, Is_Active from tbl_org_hier;
+Is_Leaf, Industry_Type, Last_Updated_Date, Location_ID, User_ID, Is_Active from tbl_org_hier;
 else 
 
 select Company_Name, Company_ID, Parent_Company_ID, Description, level,
-Is_Leaf, Industry_Type, Last_Updated_Date, LocationID, User_ID, Is_Active from tbl_org_hier 
+Is_Leaf, Industry_Type, Last_Updated_Date, Location_ID, User_ID, Is_Active from tbl_org_hier 
 
 inner join  tbl_company_Details  on tbl_company_details.Org_Hier_ID = tbl_org_hier.Org_Hier_ID
 
@@ -182,6 +207,7 @@ inner join tbl_branch_location on tbl_branch_location.Location_ID = tbl_org_hier
 End If;
 
 end/
+
 
 
 
@@ -248,10 +274,17 @@ create procedure sp_getCompanyDetails
 p_Company_Details_ID int
 )
 begin
+if(p_Company_Details)
+then
+select Org_Hier_ID, Industry_Type,Formal_Name, Calender_StartDate, 
+Calender_EndDate, Auditing_Frequency, Website, Company_EmailID,
+Company_ContactNumber1,Company_ContactNumber2,Is_Active from tbl_company_details;
+else
 select Org_Hier_ID, Industry_Type,Formal_Name, Calender_StartDate, 
 Calender_EndDate, Auditing_Frequency, Website, Company_EmailID,
 Company_ContactNumber1,Company_ContactNumber2,Is_Active from tbl_company_details
 where Company_Details_ID = p_Company_Details_ID;
+end if;
 end
 
 
@@ -303,8 +336,13 @@ create procedure sp_getComplianceOptionsXref
 p_Compliance_Opt_Xerf_ID int  
 )
 begin
+if(p_Compliance_Opt_Xerf_ID = 0)
+then
+select  Optiond_Text, Option_Order, Compliance_Xref_ID from compliance_options_xref;
+else
 select  Optiond_Text, Option_Order, Compliance_Xref_ID from compliance_options_xref
 where Compliance_Opt_Xerf_ID=p_Compliance_Opt_Xerf_ID;
+end if;
 end/
 
 
@@ -417,12 +455,19 @@ create procedure sp_getComplianceAuditTrail
 p_Compliance_Audit_ID int
 )
 begin
+if(p_Compliance_Audit_ID =0)
+then
+select Comp_Schedule_Instance,Penalty_nc,Audit_Remarks ,Audit_artefacts,
+Audit_Date,Version,Reviewer_ID ,Review_Comments,Last_Updated_Date ,
+Audit_Status,Compliance_Xref_ID,Org_ID ,Compliance_Opt_Xref_ID,Auditor_ID,User_ID ,Is_Active ,Action_Type
+from tbl_Compliance_Audit_AuditTrail;
+else
 select Comp_Schedule_Instance,Penalty_nc,Audit_Remarks ,Audit_artefacts,
 Audit_Date,Version,Reviewer_ID ,Review_Comments,Last_Updated_Date ,
 Audit_Status,Compliance_Xref_ID,Org_ID ,Compliance_Opt_Xref_ID,Auditor_ID,User_ID ,Is_Active ,Action_Type
 from tbl_Compliance_Audit_AuditTrail
 where Compliance_Audit_ID=p_Compliance_Audit_ID;
-
+end if;
 end/
 
 
@@ -447,12 +492,19 @@ p_Compliance_Audit_ID int
 )
 
 begin
+if(p_Compliance_Audit_ID=0)
+then
+select Comp_Schedule_Instance,Penalty_nc,Audit_Remarks ,Audit_artefacts,
+Audit_Date,Version,Reviewer_ID ,Review_Comments,Last_Updated_Date ,
+Audit_Status,Compliance_Xref_ID,Org_ID ,Compliance_Opt_Xref_ID,Auditor_ID,User_ID ,Is_Active 
+from tbl_compliance_audit ;
+else
 select Comp_Schedule_Instance,Penalty_nc,Audit_Remarks ,Audit_artefacts,
 Audit_Date,Version,Reviewer_ID ,Review_Comments,Last_Updated_Date ,
 Audit_Status,Compliance_Xref_ID,Org_ID ,Compliance_Opt_Xref_ID,Auditor_ID,User_ID ,Is_Active 
 from tbl_compliance_audit 
 where Compliance_Audit_ID=p_Compliance_Audit_ID;
-
+end if;
 end/
 
 
@@ -568,12 +620,18 @@ create procedure sp_getComplianceXrefAuditTrail
 (
 p_Compliance_Xref_ID int
 )
-
 begin
+if(p_Compliance_Xref_ID=0)
+then
 select Comp_Category, Comp_Description,Is_Header,level,Comp_Order,Option_ID,Risk_Category,
 Risk_Description,Recurrence,Form,Type,Is_Best_Practice ,Version,Effective_Start_Date,Effective_End_Date,
 Country_ID ,State_ID ,City_ID ,Last_Updated_Date,User_ID, Action_Type,Is_Active from tbl_compliance_xref_audittrail;
-where Compliance_Xref_ID = p_Compliance_Xref_ID
+else
+select Comp_Category, Comp_Description,Is_Header,level,Comp_Order,Option_ID,Risk_Category,
+Risk_Description,Recurrence,Form,Type,Is_Best_Practice ,Version,Effective_Start_Date,Effective_End_Date,
+Country_ID ,State_ID ,City_ID ,Last_Updated_Date,User_ID, Action_Type,Is_Active from tbl_compliance_xref_audittrail
+where Compliance_Xref_ID = p_Compliance_Xref_ID;
+end if;
 end/ 
 
 
@@ -594,10 +652,17 @@ create procedure sp_getComplianceXref
 p_Compliance_Xref_ID int 
 )
 begin
+if(p_Compliance_Xref_ID=0)
+then
+select Comp_Category, Comp_Description,Is_Header,level,Comp_Order,Option_ID,Risk_Category,
+Risk_Description,Recurrence,Form,Type,Is_Best_Practice ,Version,Effective_Start_Date,Effective_End_Date,
+Country_ID ,State_ID ,City_ID ,Last_Updated_Date,User_ID,Is_Active from tbl_compliance_xref;
+else
 select Comp_Category, Comp_Description,Is_Header,level,Comp_Order,Option_ID,Risk_Category,
 Risk_Description,Recurrence,Form,Type,Is_Best_Practice ,Version,Effective_Start_Date,Effective_End_Date,
 Country_ID ,State_ID ,City_ID ,Last_Updated_Date,User_ID,Is_Active from tbl_compliance_xref
 where Compliance_Xref_ID= p_Compliance_Xref_ID;
+end if;
 end/
 
 
@@ -647,10 +712,17 @@ create procedure sp_getBranchAuditorMapping
 p_Branch_Allocation_ID int 
 )
 begin
+if(p_Branch_Allocation_ID=0)
+then
+select Org_Hier_ID,Auditor_ID,Financial_Year,Is_Active,
+Login_ID,Allocation_Date
+from tbl_compliance_branch_mapping; 
+else
 select Org_Hier_ID,Auditor_ID,Financial_Year,Is_Active,
 Login_ID,Allocation_Date
 from tbl_compliance_branch_mapping 
 where Branch_Allocation_ID=p_Branch_Allocation_ID;
+end if;
 end/
 
 
@@ -707,10 +779,17 @@ create procedure sp_getComplianceBranchMapping
 p_Branch_Mapping_ID int 
 )
 begin
+if(p_Branch_Mapping_ID=0)
+then
+select Org_Hier_ID,Compliance_Xref_ID,Financial_Year,Is_Active,
+Login_ID,Allocation_Date
+from tbl_compliance_branch_mapping ;
+else
 select Org_Hier_ID,Compliance_Xref_ID,Financial_Year,Is_Active,
 Login_ID,Allocation_Date
 from tbl_compliance_branch_mapping 
 where Branch_Mapping_ID=p_Branch_Mapping_ID;
+end if;
 end/
 
 
@@ -725,8 +804,67 @@ end/
 
 
 ---------------------------------------------------------
+drop procedure insertLoginData;
+delimiter /
+create procedure insertLoginData
+(
+p_User_ID int,
+p_User_Password varchar(10),
+p_First_Name varchar(45),
+p_Middle_Name varchar(45),
+p_Last_Name varchar(45),
+p_Email_ID varchar(100),
+p_Contact_Number varchar(50),
+p_Company_ID int,
+p_Gender varchar(45),
+p_Is_Active bit,
+p_Last_Login datetime
+)
+BEGIN
+insert into tbl_user values(p_User_Password,p_First_Name, p_Middle_Name,p_Last_Name,
+p_Email_ID,p_Contact_Number,p_Contact_ID, p_Gender,p_Is_Active,p_Last_Login);
+Select @@IDENTITY;
+END/
+
+drop procedure sp_getLoginData;
+delimiter /
+create procedure sp_getLoginData
+(
+p_User_ID int ,
+p_Email_ID varchar(100),
+p_User_Password varchar(10)
+)
+begin
+select * from tbl_user where Email_ID= p_Email_ID and User_Password = p_User_Password;
+end/
 
 
+delimiter /
+create procedure sp_fetchchangePassword
+(
+p_User_ID int,
+p_Email_ID varchar(100),
+p_User_Password varchar(10)
+)
+begin
+select User_ID from tbl_user where Email_ID= p_Email_ID and User_Password=p_User_Password;
+
+end/
+
+
+
+
+
+delimiter /
+create procedure sp_updatePassword
+(
+p_User_ID int,
+p_Email_ID varchar(100),
+p_User_Password varchar(10)
+)
+begin
+update tbl_user set User_Password = p_User_Password where User_ID = p_User_ID;
+end/
 
 
 delimiter ; 

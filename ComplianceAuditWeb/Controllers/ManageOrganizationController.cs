@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ComplianceService;
 using ComplianceAuditWeb.Models;
-//using Compliance.DataObject;
+using Compliance.DataObject;
 using System.Xml;
 using System.Data;
 using System.IO;
@@ -23,15 +23,17 @@ namespace ComplianceAuditWeb.Controllers
         {
             int stateID = 0;
             int countryID = 0;
+            OrganizationViewModel organizationVM = new OrganizationViewModel();
+
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
 
-            OrganizationViewModel organizationVM = new OrganizationViewModel();
+
 
             string strXMLCountries = organizationservice.GetCountryList();
             string strXMLStates = organizationservice.GetStateList(countryID);
             string strXMLCities = organizationservice.GetCityList(stateID);
 
-           
+
             organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
             organizationVM.State.ReadXml(new StringReader(strXMLStates));
             organizationVM.City.ReadXml(new StringReader(strXMLCities));
