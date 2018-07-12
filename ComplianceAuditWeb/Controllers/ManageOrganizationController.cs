@@ -38,7 +38,7 @@ namespace ComplianceAuditWeb.Controllers
             //organizationVM.State.ReadXml(new StringReader(strXMLStates));
             //organizationVM.City.ReadXml(new StringReader(strXMLCities));
 
-            ViewBag.CountryList = organizationVM.CountryList;
+            //ViewBag.CountryList = organizationVM.CountryList;
             //     //organizationVM.Country.AsEnumerable();
 
 

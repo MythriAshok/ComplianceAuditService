@@ -13,9 +13,9 @@ namespace ComplianceAuditWeb.Models
         public Organization organization { get; set; }
         public BranchLocation branch { get; set; }
         public CompanyDetails companydetails { get; set; }
-        public DataTable Country { get; set; }
-        public DataTable State { get; set; }
-        public DataTable City { get; set; }
+        public DataSet Country { get; set; }
+        public DataSet State { get; set; }
+        public DataSet City { get; set; }
         public IEnumerable CountryList { get; set; }
         public IEnumerable <Country> cList { get; set; }
         public List<Country> CountriesList { get; set; }
