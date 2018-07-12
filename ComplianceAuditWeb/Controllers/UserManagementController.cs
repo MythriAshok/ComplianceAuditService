@@ -18,15 +18,48 @@ namespace ComplianceAuditWeb.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public ActionResult insertRoles()
+        {
+            RolesViewModel rolesView = new RolesViewModel();
+            UserService.UserServiceClient client = new UserService.UserServiceClient();
+            string xmldata = client.GetPrivilege(0);
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StreamReader(xmldata));
+            DataTable dt = ds.Tables[0];
+            rolesView.privilege = new List<SelectListItem>();
+            foreach (System.Data.DataRow row in dt.Rows)
+            {
+                rolesView.privilege.Add(new SelectListItem() { Text = row["Privilege_Name"].ToString(), Value = row["Privilege_ID"].ToString() });
+            }           
+            return View("_insertRole", rolesView);
+        }
+
         [HttpPost]
-        public ActionResult insertRoles(Roles roles)
+        public ActionResult insertRoles(RolesViewModel rolesView)
         {           
             UserService.UserServiceClient client = new UserService.UserServiceClient();
             client.Open();
-            string result=client.insertRoles(roles);
+            bool result=client.insertRoles(rolesView.roles);
             client.Close();
             return View();
         }
+
+        [HttpGet]
+        public ActionResult UserGroup()
+        {
+            UserGroupViewModel userGroupView = new UserGroupViewModel();
+            UserService.UserServiceClient client = new UserService.UserServiceClient();
+            string xmldata = client.GetRoles();
+            return View("_insertRole");
+        }
+        [HttpPost]
+        public ActionResult UserGroup(UserGroupViewModel userGroupView)
+        {
+            
+            return View();
+        }
+
         [HttpGet]
         public ActionResult CreateUser()
         {           
@@ -48,14 +81,10 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult CreateUser(UserViewModel userviewmodel)
         {
             UserService.UserServiceClient userServiceClient = new UserService.UserServiceClient();
-            string msg=userServiceClient.insertUser(userviewmodel.User);            
+            bool result=userServiceClient.insertUser(userviewmodel.User);            
             return View();
         }
 
-        [HttpGet]
-        public ActionResult UserGroup()
-        {
-            return View();
-        }
+       
     }
 }

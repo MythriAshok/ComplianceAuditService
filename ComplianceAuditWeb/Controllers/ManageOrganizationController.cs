@@ -10,8 +10,6 @@ using System.Xml;
 using System.Data;
 using System.IO;
 
-
-
 namespace ComplianceAuditWeb.Controllers
 {
     public class ManageOrganizationController : Controller
@@ -21,8 +19,8 @@ namespace ComplianceAuditWeb.Controllers
        
         public ActionResult AddGroupCompany()
         {
-            int stateID = 0;
-            int countryID = 0;
+            int stateID = 1;
+            int countryID = 1;
             OrganizationViewModel organizationVM = new OrganizationViewModel();
 
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
@@ -30,13 +28,19 @@ namespace ComplianceAuditWeb.Controllers
 
 
             string strXMLCountries = organizationservice.GetCountryList();
-            string strXMLStates = organizationservice.GetStateList(countryID);
-            string strXMLCities = organizationservice.GetCityList(stateID);
+           // string strXMLStates = organizationservice.GetStateList(countryID);
+          //  string strXMLCities = organizationservice.GetCityList(stateID);
 
 
-            organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
-            organizationVM.State.ReadXml(new StringReader(strXMLStates));
-            organizationVM.City.ReadXml(new StringReader(strXMLCities));
+            //organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
+
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(strXMLCountries));
+            dt.ReadXml(new StringReader(strXMLCountries));
+
+            //organizationVM.State.ReadXml(new StringReader(strXMLStates));
+            //organizationVM.City.ReadXml(new StringReader(strXMLCities));
 
 
             //     //organizationVM.Country.AsEnumerable();
@@ -102,20 +106,20 @@ namespace ComplianceAuditWeb.Controllers
         [HttpGet]
         public ActionResult AddCompany()
         {
-            //int stateID = 0;
-            //int countryID = 0;
-            //OrganizationViewModel organizationVM = new OrganizationViewModel();
-            //OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+            int stateID = 0;
+            int countryID = 0;
+            OrganizationViewModel organizationVM = new OrganizationViewModel();
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
 
-            //string strXMLCountries = organizationservice.GetCountryList();
-            //string strXMLStates = organizationservice.GetStateList(countryID);
-            //string strXMLCities = organizationservice.GetCityList(stateID);
+            string strXMLCountries = organizationservice.GetCountryList();
+            string strXMLStates = organizationservice.GetStateList(countryID);
+            string strXMLCities = organizationservice.GetCityList(stateID);
 
 
-            //organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
-            //organizationVM.State.ReadXml(new StringReader(strXMLStates));
-            //organizationVM.City.ReadXml(new StringReader(strXMLCities));
-            //return View(organizationVM);
+            organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
+            organizationVM.State.ReadXml(new StringReader(strXMLStates));
+            organizationVM.City.ReadXml(new StringReader(strXMLCities));
+            return View(organizationVM);
             return View();
         }
         [HttpPost]

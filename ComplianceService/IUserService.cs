@@ -17,15 +17,15 @@ namespace ComplianceService
         [OperationContract]
         bool updateUser(User user);
         [OperationContract]
-        string GetUserGroup();
+        string GetUserGroup(int Groupid);
         [OperationContract]
         string GetRoles();
         [OperationContract]
-        string insertRoles(Roles Role);
+        bool insertRoles(Roles Role);
         [OperationContract]
-        string updateRoles(Roles Role);
+        bool updateRoles(Roles Role);
         [OperationContract]
-        string GetPrivilege();        
+        string GetPrivilege(int Roleid);
         [OperationContract]
         string insertGroups();
         [OperationContract]

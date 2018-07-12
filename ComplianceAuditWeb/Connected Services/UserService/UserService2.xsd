@@ -11,7 +11,7 @@
   <xs:element name="insertUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="insertUserResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="insertUserResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -25,7 +25,7 @@
   <xs:element name="updateUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="updateUserResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="updateUserResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -63,7 +63,7 @@
   <xs:element name="insertRolesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="insertRolesResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="insertRolesResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -77,13 +77,15 @@
   <xs:element name="updateRolesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="updateRolesResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="updateRolesResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetPrivilege">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Roleid" type="xs:int" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetPrivilegeResponse">

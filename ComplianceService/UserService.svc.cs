@@ -27,51 +27,54 @@ namespace ComplianceService
             return true;
         }
 
-        public string GetUserGroup()
+        public string GetUserGroup(int Groupid)
         {
-            return BindUserGroup();
+            return BindUserGroup(Groupid);
         }
        
-        private string BindUserGroup()
+        private string BindUserGroup(int Groupid)
         {
             UserGroupHelper helper = new UserGroupHelper();
-            DataSet userGroups = helper.getUserGroupList();
+            DataSet userGroups = helper.getUserGroup(Groupid);
             string xmlgroups = userGroups.GetXml();
             return xmlgroups;
         }
-        public string GetRoles()
+        public string GetRoles(int Roleid)
         {
-            return BindRole();
+            return BindRole(Roleid);
         }
-        private string BindRole()
+        private string BindRole(int Roleid)
         {
-            UserGroupHelper helper = new UserGroupHelper();
-            DataSet roles=helper.getUserGroupList();
+            UserRolesHelper helper = new UserRolesHelper();
+            DataSet roles = helper.getGroupRole();
             string xmlroles = roles.GetXml();
             return xmlroles;
         }
 
-        public string insertRoles(Roles Role)
+        public bool insertRoles(Roles Role)
         {
             UserRolesHelper helper = new UserRolesHelper();
-            helper.insertUpdateRole(Role, 'I');
-            return "";
+            bool res=helper.insertUpdateRole(Role, 'I');
+            return res;
         }
        
-        public string updateRoles(Roles Role)
+        public bool updateRoles(Roles Role)
         {
             UserRolesHelper helper = new UserRolesHelper();
-            helper.insertUpdateRole(Role, 'U');
-            return "";
+            bool res=helper.insertUpdateRole(Role, 'U');
+            return res;
         }
 
-        public string GetPrivilege()
+        public string GetPrivilege(int Roleid)
         {
-            return BindPrivilege();
+            return BindPrivilege(Roleid);
         }
-        private string BindPrivilege()
+        private string BindPrivilege(int Roleid)
         {
-            return "";
+            UserPrivilegeHelper helper = new UserPrivilegeHelper();
+            DataSet privilege = helper.getRolePrivilege(Roleid);
+            string xmlPrivilege = privilege.GetXml();
+            return xmlPrivilege;
         }
         public string insertGroups()
         {

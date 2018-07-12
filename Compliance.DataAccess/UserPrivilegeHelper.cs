@@ -12,9 +12,9 @@ namespace Compliance.DataAccess
    public class UserPrivilegeHelper
     {
         MySqlConnection conn = new MySqlConnection();
-        public DataTable getRolePrivilege(int Role_ID)
+        public DataSet getRolePrivilege(int Role_ID)
         {
-            DataTable dtmenus = new DataTable();
+            DataSet dtmenus = new DataSet();
             try
             {
                 conn = DBConnection.getconnection();
