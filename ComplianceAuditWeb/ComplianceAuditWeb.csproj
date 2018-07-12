@@ -210,6 +210,7 @@
     <Content Include="Views\UserManagement\_insertUserGroup.cshtml" />
     <Content Include="Views\ManageOrganization\AddGroupCompany.cshtml" />
     <Content Include="Views\ManageOrganization\AddCompany.cshtml" />
+    <Content Include="Views\ManageOrganization\GetGroupCompany.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

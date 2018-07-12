@@ -17,9 +17,11 @@ namespace ComplianceAuditWeb.Models
         public DataTable State { get; set; }
         public DataTable City { get; set; }
         public IEnumerable CountryList { get; set; }
+        public IEnumerable <Country> cList { get; set; }
+        public List<Country> CountriesList { get; set; }
 
-       // public City city { get; set; }
-       public enum AuditingFrequency
+        // public City city { get; set; }
+        public enum AuditingFrequency
         {
             Quarterly,
             HalfYearly,

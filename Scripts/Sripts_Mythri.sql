@@ -1,17 +1,16 @@
 use auditmoduledb;
 
-Drop procedure sp_getCountry;
+Drop Procedure if exists `sp_getCountry`;
 Delimiter /
 create procedure sp_getCountry()
 begin
 select *  from tbl_Country;
 end/
+Delimiter ;
 
 
----------------------------------------------------------
 
-
-Drop procedure sp_getState;
+Drop Procedure if exists `sp_getState`;
 Delimiter /
 create procedure sp_getState
 (
@@ -20,11 +19,11 @@ p_Country_ID int
 begin
 select *  from tbl_state where Country_ID= p_Country_ID;
 end/
+Delimiter ;
 
 
----------------------------------------------------------
 
-Drop procedure sp_getCity;
+Drop Procedure if exists `sp_getCity`;
 Delimiter /
 create procedure sp_getCity
 (
@@ -33,12 +32,11 @@ p_State_ID int
 begin
 select *  from tbl_city where State_ID = p_State_ID;
 end/
+Delimiter ;
 
 
----------------------------------------------------------
 
-
-Drop procedure sp_insertupdateBranchLocation;
+Drop Procedure if exists `sp_insertupdateBranchLocation`;
 Delimiter /
 create procedure sp_insertupdateBranchLocation
 (
@@ -77,8 +75,10 @@ end if;
 
 end/
 
+Delimiter ;
 
-Drop procedure sp_getBranchLocation;
+
+Drop Procedure if exists `sp_getBranchLocation`;
 Delimiter /
 create procedure sp_getBranchLocation
 (
@@ -111,9 +111,9 @@ from tbl_branch_location
 where City_ID = p_City_ID and Country_ID = p_Country_ID and State_ID = p_State_ID;
 end if;
 end/
+Delimiter ;
 
-
-drop procedure sp_deleteBranchLocation;
+Drop Procedure if exists `sp_deleteBranchLocation`;
 delimiter /
 create procedure sp_deleteBranchLocation
 (
@@ -121,11 +121,10 @@ p_Location_ID int
 )
 delete from tbl_branch_location where Location_ID=p_Location_ID;
 
- 
- -------------------------------------------------------------------------------------------------------
+ Delimiter ;
 
 
-Drop procedure sp_insertupdateOrganizationHier;
+Drop Procedure if exists  `sp_insertupdateOrganizationHier`;
 Delimiter /
 create procedure sp_insertupdateOrganizationHier
 (
@@ -164,8 +163,9 @@ end if;
 
 end/
 
+Delimiter ;
 
-Drop procedure sp_getOrganizationHier;
+Drop Procedure if exists `sp_getOrganizationHier`;
 Delimiter /
 create procedure sp_getOrganizationHier
 (
@@ -183,9 +183,10 @@ where _Org_Hier_ID = p_Org_Hier_ID;
 End If;
 
 end/
+Delimiter ;
 
 
-Drop procedure sp_getOrganizationHierJoin;
+Drop Procedure if exists `sp_getOrganizationHierJoin`;
 Delimiter /
 create procedure sp_getOrganizationHierJoin
 (
@@ -208,10 +209,10 @@ End If;
 
 end/
 
+Delimiter ;
 
 
-
-drop procedure sp_deleteOrganizationHier;
+Drop Procedure if exists  sp_deleteOrganizationHier;
 delimiter /
 create procedure sp_deleteOrganizationHier
 (
@@ -220,11 +221,11 @@ p_Org_Hier_ID int
 begin
 update tbl_org_hier set Is_Active = 0 where Org_Hier_ID=p_Org_Hier_ID ;
 end/
----------------------------------------------------------
+Delimiter ;
 
 
 
-Drop procedure sp_insertupdateCompanyDetails;
+Drop Procedure if exists sp_insertupdateCompanyDetails;
 Delimiter /
 create procedure sp_insertupdateCompanyDetails
 (
@@ -265,9 +266,10 @@ where Company_Details_ID=p_Company_Details_ID;
 end if;
 
 end/
+delimiter ;
 
 
-Drop procedure sp_getCompanyDetails;
+Drop Procedure if exists sp_getCompanyDetails;
 Delimiter /
 create procedure sp_getCompanyDetails
 (
@@ -286,9 +288,9 @@ Company_ContactNumber1,Company_ContactNumber2,Is_Active from tbl_company_details
 where Company_Details_ID = p_Company_Details_ID;
 end if;
 end
+delimiter ;
 
-
-drop procedure sp_deleteCompanyDetails;
+Drop Procedure if exists sp_deleteCompanyDetails;
 delimiter /
 create procedure sp_deleteCompanyDetails
 (
@@ -297,10 +299,11 @@ p_Company_Details_ID int
 begin
 
 update tbl_company_details set Is_Active = 0 where Company_Details_ID=p_Company_Details_ID;
---------------------------------------------------------------------------------------------------------------
+
+delimiter ;
 
 
-Drop procedure sp_insertupdateComplianceOptionsXref;
+Drop Procedure if exists sp_insertupdateComplianceOptionsXref;
 Delimiter /
 create procedure sp_insertupdateComplianceOptionsXref
 (
@@ -328,8 +331,9 @@ end if;
 
 end/
 
+delimiter ;
 
-Drop procedure sp_getComplianceOptionsXref;
+Drop Procedure if exists sp_getComplianceOptionsXref;
 Delimiter /
 create procedure sp_getComplianceOptionsXref
 (
@@ -344,9 +348,9 @@ select  Optiond_Text, Option_Order, Compliance_Xref_ID from compliance_options_x
 where Compliance_Opt_Xerf_ID=p_Compliance_Opt_Xerf_ID;
 end if;
 end/
+delimiter ;
 
-
-drop procedure sp_deleteComplianceOptionsXref;
+Drop Procedure if exists sp_deleteComplianceOptionsXref;
 delimiter /
 create procedure sp_deleteComplianceOptionsXref
 (
@@ -354,16 +358,11 @@ p_Compliance_Opt_Xerf_ID int
 )
 begin
 delete from tbl_compliance_xref where Compliance_Opt_Xerf_ID=p_Compliance_Opt_Xerf_ID;
-
----------------------------------------------------------------------------------------------------------
-
---------------------------------------------------------------------------------------------
+end/
+delimiter ;
 
 
-Select NOW();
-
----------------------------------------------------------
-Drop procedure sp_insertupdateComplianceAudit
+Drop Procedure if exists sp_insertupdateComplianceAudit;
 Delimiter /
 create procedure sp_insertupdateComplianceAudit
 (
@@ -411,9 +410,9 @@ where Compliance_Audit_ID= p_Compliance_Audit_ID;
 end if;
 
 end/
+delimiter ;
 
-
-drop procedure sp_insertComplianceAuditTrail;
+Drop Procedure if exists sp_insertComplianceAuditTrail;
 Delimiter /
 create procedure sp_insertComplianceAuditTrail
 (
@@ -446,9 +445,10 @@ p_Audit_Date,p_Version,p_Reviewer_ID ,p_Review_Comments,NOW() ,
 p_Audit_Status,p_Compliance_Xref_ID,p_Org_ID ,p_Compliance_Opt_Xref_ID,p_Auditor_ID,p_User_ID,p_Is_Active ,p_Action_Type);
 
 end/
+delimiter ;
 
 
-drop procedure sp_getComplianceAuditTrail;
+Drop Procedure if exists sp_getComplianceAuditTrail;
 delimiter /
 create procedure sp_getComplianceAuditTrail
 (
@@ -469,9 +469,9 @@ from tbl_Compliance_Audit_AuditTrail
 where Compliance_Audit_ID=p_Compliance_Audit_ID;
 end if;
 end/
+delimiter ;
 
-
-drop procedure sp_deleteComplianceAuditTrail;
+Drop Procedure if exists sp_deleteComplianceAuditTrail;
 delimiter /
 create procedure sp_deleteComplianceAuditTrail
 (
@@ -479,12 +479,12 @@ p_Compliance_Audit_ID int
 )
 begin
 update tbl_Compliance_Audit_AuditTrail set Is_Actice = 0 where Compliance_Audit_ID=p_Compliance_Audit_ID;
+end/
+delimiter ;
 
 
 
-SELECT LAST_INSERT_ID();
-
-Drop procedure sp_getComplianceAudit;
+Drop Procedure if exists sp_getComplianceAudit;
 Delimiter /
 create procedure sp_getComplianceAudit
 (
@@ -507,17 +507,21 @@ where Compliance_Audit_ID=p_Compliance_Audit_ID;
 end if;
 end/
 
+delimiter ;
 
 
+Drop Procedure if exists sp_deleteComplianceAudit;
+delimiter /
 create procedure sp_deleteComplianceAudit
 (
 p_Compliance_Audit_ID int
 )
 begin
 update tbl_compliance_audit set Is_Active  =0 where Compliance_Audit_ID=p_Compliance_Audit_ID;
----------------------------------------------------------
+end/
+delimiter ;
 
-drop procedure sp_insertupdateComplianceXref;
+Drop Procedure if exists sp_insertupdateComplianceXref;
 delimiter /
 create procedure sp_insertupdateComplianceXref
 (
@@ -573,7 +577,10 @@ end if;
 
 end/
 
-drop procedure sp_insertComplianceXrefAuditTrail;
+delimiter ;
+
+
+Drop Procedure if exists sp_insertComplianceXrefAuditTrail;
 delimiter /
 create procedure sp_insertComplianceXrefAuditTrail
 (
@@ -612,9 +619,10 @@ p_Country_ID ,p_State_ID ,p_City_ID ,p_User_ID,p_Action_Type,p_Is_Active,Now()  
 
 end/
 
+delimiter ;
 
 
-get procedure sp_getComplianceXrefAuditTrail;
+Drop Procedure if exists sp_getComplianceXrefAuditTrail;
 delimiter /
 create procedure sp_getComplianceXrefAuditTrail
 (
@@ -634,8 +642,12 @@ where Compliance_Xref_ID = p_Compliance_Xref_ID;
 end if;
 end/ 
 
+delimiter ;
 
-delete procedure sp_deleteComplianceXrefAuditTrail
+
+Drop Procedure if exists sp_deleteComplianceXrefAuditTrail;
+Delimiter /
+create procedure sp_deleteComplianceXrefAuditTrail
 (
 p_Compliance_Xref_ID int
 )
@@ -643,9 +655,10 @@ p_Compliance_Xref_ID int
 begin
 update tbl_compliance_xref_audittrail set Is_Active = 0 where Compliance_Xref_ID=p_Compliance_Xref_ID;
 
+end/
+delimiter ;
 
-
-drop procedure sp_getComplianceXref;
+Drop Procedure if exists sp_getComplianceXref;
 delimiter /
 create procedure sp_getComplianceXref
 (
@@ -666,10 +679,10 @@ end if;
 end/
 
 
+delimiter ;
 
------------------------------------------------------------------------------------------------------------
 
-drop procedure sp_insertupdateBranchAuditorMapping;
+Drop Procedure if exists sp_insertupdateBranchAuditorMapping;
 delimiter /
 create procedure sp_insertupdateBranchAuditorMapping
 (
@@ -704,8 +717,9 @@ end if;
 end/
 
 
+delimiter ;
 
-Drop procedure sp_getBranchAuditorMapping;
+Drop Procedure if exists sp_getBranchAuditorMapping;
 Delimiter /
 create procedure sp_getBranchAuditorMapping
 (
@@ -726,7 +740,10 @@ end if;
 end/
 
 
+delimiter ;
 
+Drop Procedure if exists sp_deleteBranchAuditorMapping;
+Delimiter /
 create procedure sp_deleteBranchAuditorMapping
 (
 p_Branch_Allocation_ID int 
@@ -735,9 +752,10 @@ begin
 update tbl_compliance_branch_mapping set Is_Active = 0 where Branch_Allocation_ID=p_Branch_Allocation_ID;
 end/
 
----------------------------------------------------------
+delimiter ;
 
-
+Drop Procedure if exists sp_insertupdateComplianceBranchMapping;
+Delimiter /
 create procedure sp_insertupdateComplianceBranchMapping
 (
 p_Flag char(1),
@@ -771,8 +789,9 @@ end if;
 end/
 
 
+delimiter ;
 
-Drop procedure sp_getComplianceBranchMapping;
+Drop Procedure if exists sp_getComplianceBranchMapping;
 Delimiter /
 create procedure sp_getComplianceBranchMapping
 (
@@ -792,8 +811,10 @@ where Branch_Mapping_ID=p_Branch_Mapping_ID;
 end if;
 end/
 
+delimiter ;
 
-
+Drop Procedure if exists sp_deleteComplianceBranchMapping;
+delimiter /
 create procedure sp_deleteComplianceBranchMapping
 (
 p_Branch_Mapping_ID int 
@@ -803,8 +824,9 @@ update tbl_compliance_branch_mapping set Is_Active = 0 where Branch_Mapping_ID=p
 end/
 
 
----------------------------------------------------------
-drop procedure insertLoginData;
+delimiter ;
+
+Drop Procedure if exists insertLoginData;
 delimiter /
 create procedure insertLoginData
 (
@@ -826,7 +848,9 @@ p_Email_ID,p_Contact_Number,p_Contact_ID, p_Gender,p_Is_Active,p_Last_Login);
 Select @@IDENTITY;
 END/
 
-drop procedure sp_getLoginData;
+delimiter ;
+
+Drop Procedure if exists sp_getLoginData;
 delimiter /
 create procedure sp_getLoginData
 (
@@ -838,7 +862,9 @@ begin
 select * from tbl_user where Email_ID= p_Email_ID and User_Password = p_User_Password;
 end/
 
+delimiter ;
 
+Drop Procedure if exists sp_fetchchangePassword;
 delimiter /
 create procedure sp_fetchchangePassword
 (
@@ -853,8 +879,9 @@ end/
 
 
 
+delimiter ;
 
-
+Drop Procedure if exists sp_updatePassword;
 delimiter /
 create procedure sp_updatePassword
 (
