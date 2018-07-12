@@ -35,5 +35,29 @@ namespace Compliance.DataAccess
             }
             return dtmenus;
         }
+
+        public DataSet getPrivilege()
+        {
+            DataSet dtmenus = new DataSet();
+            try
+            {
+                conn = DBConnection.getconnection();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getPrivilege", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtmenus);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dtmenus;
+        }
+
     }
 }

@@ -19,7 +19,7 @@ namespace ComplianceService
         [OperationContract]
         string GetUserGroup(int Groupid);
         [OperationContract]
-        string GetRoles();
+        string GetRoles(int Roleid);
         [OperationContract]
         bool insertRoles(Roles Role);
         [OperationContract]
