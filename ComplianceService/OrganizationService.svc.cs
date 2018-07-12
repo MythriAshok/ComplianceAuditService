@@ -155,7 +155,17 @@ namespace ComplianceService
             return updateResult;
         }
 
-        
+        public string getCompany(int orgID)
+        {
+            Organization org = new Organization();
+            OrganizationHelper orgHelper = new OrganizationHelper();
+            DataSet dsOrganizationCompany = orgHelper.getOrganizationHier(orgID);
+            string xmlOrganizationCompany = dsOrganizationCompany.GetXml();
+            return xmlOrganizationCompany;
+        }
+
+
+
         public bool insertBranch(Organization org, BranchLocation branch)
         {
             int OrganizationID = 0;
@@ -204,8 +214,15 @@ namespace ComplianceService
             return updateResult;
         }
 
-        
 
+        public string getBranch(int orgID)
+        {
+            Organization org = new Organization();
+            OrganizationHelper orgHelper = new OrganizationHelper();
+            DataSet dsOrganizationBranch = orgHelper.getOrganizationHier(orgID);
+            string xmlOrganizationBranch = dsOrganizationBranch.GetXml();
+            return xmlOrganizationBranch;
+        }
 
 
 
