@@ -43,7 +43,7 @@ namespace ComplianceAuditWeb.Controllers
 
 
             //    return View(organizationVM);
-            return View("AddGroupCompany", organizationVM);
+            return View("_Organization", organizationVM);
         }
 
         [HttpPost]

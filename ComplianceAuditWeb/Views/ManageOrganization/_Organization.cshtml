@@ -1,7 +1,7 @@
 ﻿@model ComplianceAuditWeb.Models.OrganizationViewModel
-@*@{
+@{
     Layout = "null";
-}*@
+}
 
 @using (Html.BeginForm())
 {
@@ -84,8 +84,8 @@
 
     Html.LabelFor(m => m.CountryList);
     //List<SelectList> list = new List<SelectList>();
-    //list.Add(new SelectList (Model.CountryList));
-    Html.DropDownListFor(m => m.CountryList,(IEnumerable<SelectListItem>) ViewBag.CountryList, "-- Select Country--" );
+    ////list.Add(new SelectList (Model.CountryList));
+    //Html.DropDownListFor(m => m.CountryList,(IEnumerable<SelectListItem>) ViewBag.CountryList, "-- Select Country--" );
 
     @*List<SelectListItem> countryList = new List<SelectListItem>();
     foreach (System.Data.DataRow row in Model.Country.Rows)
