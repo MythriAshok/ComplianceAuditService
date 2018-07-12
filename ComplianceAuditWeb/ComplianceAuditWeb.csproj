@@ -188,6 +188,8 @@
     <Compile Include="Models\CompanyViewModel.cs" />
     <Compile Include="Models\OrganizationViewModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
+    <Compile Include="Models\RolesViewModel.cs" />
+    <Compile Include="Models\UserGroupViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -210,7 +212,7 @@
     <Content Include="Views\UserManagement\_insertUserGroup.cshtml" />
     <Content Include="Views\ManageOrganization\AddGroupCompany.cshtml" />
     <Content Include="Views\ManageOrganization\AddCompany.cshtml" />
-    <Content Include="Views\ManageOrganization\GetGroupCompany.cshtml" />
+    <Content Include="Views\UserManagement\insertRoles.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

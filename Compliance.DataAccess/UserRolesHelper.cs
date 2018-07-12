@@ -13,16 +13,64 @@ namespace Compliance.DataAccess
     {
         MySqlConnection conn = new MySqlConnection();
 
-        public DataTable getUserRole(int RoleID)
+        public DataSet getUserRole(int RoleID)
         {
-            DataTable dtUser = new DataTable();
+            DataSet dtUser = new DataSet();
             try
             {
                 conn = DBConnection.getconnection();
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getUserGroup", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getUserRole", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_User_Group_ID", RoleID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtUser);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return dtUser;
+        }
+
+        public DataSet getUserRoleList()
+        {
+            DataSet dtUser = new DataSet();
+            try
+            {
+                conn = DBConnection.getconnection();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getUserRoleList", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtUser);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return dtUser;
+        }
+
+        public DataSet getGroupRole()
+        {
+            DataSet dtUser = new DataSet();
+            try
+            {
+                conn = DBConnection.getconnection();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getUserGroupRole", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtUser);
             }
@@ -67,36 +115,7 @@ namespace Compliance.DataAccess
             {
                 conn.Close();
             }
-
             return result;
-        }
-        
-           public DataTable getUserRoleList(int RoleID)
-        {
-            DataTable dtUser = new DataTable();
-            try
-            {
-                conn = DBConnection.getconnection();
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getUserRoleList", conn);
-                cmd.CommandType = CommandType.StoredProcedure;               
-                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                adapter.Fill(dtUser);
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                conn.Close();
-            }
-
-            return dtUser;
-        }
-
-
-
-
+        }               
     }
 }

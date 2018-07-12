@@ -1,13 +1,15 @@
-﻿@model Compliance.DataObject.Roles
+﻿@model ComplianceAuditWeb.Models.RolesViewModel
 
-@Html.LabelFor(model => model.RoleName);
-@Html.TextBoxFor(model => model.RoleName);
+@Html.LabelFor(model=>model.roles.RoleName);
+@Html.TextBoxFor(model => model.roles.RoleName);
 
-@Html.LabelFor(model => model.IsGroupRole);
-@Html.TextBoxFor(model => model.IsGroupRole, "Yes");
-@Html.TextBoxFor(model => model.IsGroupRole, "No");
+@Html.LabelFor(model => model.roles.IsGroupRole);
+@Html.TextBoxFor(model => model.roles.IsGroupRole, "Yes");
+@Html.TextBoxFor(model => model.roles.IsGroupRole, "No");
 
-@Html.LabelFor(model => model.IsActive);
-@Html.RadioButtonFor(model => model.IsActive, "Yes");
-@Html.RadioButtonFor(model => model.IsActive, "No");
+@Html.LabelFor(model => model.roles.IsActive);
+@Html.CheckBoxFor(model => model.roles.IsActive);
+
+
+@Html.DropDownListFor(model => model.privilege, Model.privilege);
 

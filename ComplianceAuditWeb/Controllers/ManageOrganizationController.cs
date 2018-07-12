@@ -10,8 +10,6 @@ using System.Xml;
 using System.Data;
 using System.IO;
 
-
-
 namespace ComplianceAuditWeb.Controllers
 {
     public class ManageOrganizationController : Controller
@@ -21,29 +19,35 @@ namespace ComplianceAuditWeb.Controllers
        
         public ActionResult AddGroupCompany()
         {
-            int stateID = 0;
-            int countryID = 0;
+            int stateID = 1;
+            int countryID = 1;
             OrganizationViewModel organizationVM = new OrganizationViewModel();
 
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
 
 
-            string strXMLCountries = organizationservice.GetCountryList();
-            string strXMLStates = organizationservice.GetStateList(countryID);
-            string strXMLCities = organizationservice.GetCityList(stateID);
 
-            organizationVM.CountryList = strXMLCountries;
+            string strXMLCountries = organizationservice.GetCountryList();
+           // string strXMLStates = organizationservice.GetStateList(countryID);
+          //  string strXMLCities = organizationservice.GetCityList(stateID);
+
 
             //organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
+
+            DataTable dt = new DataTable();
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(strXMLCountries));
+            dt.ReadXml(new StringReader(strXMLCountries));
+
             //organizationVM.State.ReadXml(new StringReader(strXMLStates));
             //organizationVM.City.ReadXml(new StringReader(strXMLCities));
 
-            //ViewBag.CountryList = organizationVM.CountryList;
+
             //     //organizationVM.Country.AsEnumerable();
 
 
             //    return View(organizationVM);
-            return View("_Organization", organizationVM);
+            return View("AddGroupCompany", organizationVM);
         }
 
         [HttpPost]
@@ -53,10 +57,7 @@ namespace ComplianceAuditWeb.Controllers
             if (ModelState.IsValid)
             {
                 OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
-                organizationVM.organization.Is_Leaf = false;
-                organizationVM.organization.Level = 1;
                 result = organizationClient.insertOrganization(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
-                //Session["result"] = result;
                 if (result != false)
                 {
                     return View("AddGroupCompany");
@@ -69,20 +70,14 @@ namespace ComplianceAuditWeb.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult UpdateGroupCompany(int OrgID)
+        public ActionResult UpdateGroupCompany()
         {
-            OrgService.OrganizationServiceClient organizationclient = new OrgService.OrganizationServiceClient();
-            OrganizationViewModel organizationViewModel = new OrganizationViewModel();
-            Session["data"] = organizationclient.getGroupCompany(OrgID);
-            organizationViewModel = (OrganizationViewModel) Session["data"];
-            return View(organizationViewModel);
+            return View();
         }
         [HttpPost]
         public ActionResult UpdateGroupCompany(OrganizationViewModel organizationVM)
         {
             bool result = false;
-
-            
             OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
             result = organizationClient.updateOrganization(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
             if (result != false)
@@ -111,20 +106,20 @@ namespace ComplianceAuditWeb.Controllers
         [HttpGet]
         public ActionResult AddCompany()
         {
-            //int stateID = 0;
-            //int countryID = 0;
-            //OrganizationViewModel organizationVM = new OrganizationViewModel();
-            //OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+            int stateID = 0;
+            int countryID = 0;
+            OrganizationViewModel organizationVM = new OrganizationViewModel();
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
 
-            //string strXMLCountries = organizationservice.GetCountryList();
-            //string strXMLStates = organizationservice.GetStateList(countryID);
-            //string strXMLCities = organizationservice.GetCityList(stateID);
+            string strXMLCountries = organizationservice.GetCountryList();
+            string strXMLStates = organizationservice.GetStateList(countryID);
+            string strXMLCities = organizationservice.GetCityList(stateID);
 
 
-            //organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
-            //organizationVM.State.ReadXml(new StringReader(strXMLStates));
-            //organizationVM.City.ReadXml(new StringReader(strXMLCities));
-            //return View(organizationVM);
+            organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
+            organizationVM.State.ReadXml(new StringReader(strXMLStates));
+            organizationVM.City.ReadXml(new StringReader(strXMLCities));
+            return View(organizationVM);
             return View();
         }
         [HttpPost]
@@ -132,9 +127,6 @@ namespace ComplianceAuditWeb.Controllers
         {
             bool result = false;
             OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
-
-            companyVM.organization.Is_Leaf = false;
-            companyVM.organization.Level = 2;
             result = organizationClient.insertCompany(companyVM.organization, companyVM.companydetails, companyVM.branch);
             if (result != false)
             {
@@ -201,9 +193,6 @@ namespace ComplianceAuditWeb.Controllers
         {
             bool result = false;
             OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
-
-            branchVM.organization.Level = 2;
-            branchVM.organization.Is_Leaf = false;
             result = organizationClient.insertBranch(branchVM.organization, branchVM.branch);
             if (result != false)
             {
