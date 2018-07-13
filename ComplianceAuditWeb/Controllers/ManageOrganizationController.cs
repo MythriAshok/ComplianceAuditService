@@ -103,10 +103,45 @@ namespace ComplianceAuditWeb.Controllers
         [HttpGet]
         public ActionResult UpdateGroupCompany(int OrgID)
         {
-            OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
-            Session["data"]= organizationClient.getGroupCompany(OrgID);
+            //OrgID = 9;
             OrganizationViewModel organizationViewModel = new OrganizationViewModel();
-            organizationViewModel = (OrganizationViewModel)Session["data"];
+            OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
+            string strxmlUpdatedData = organizationClient.getGroupCompany(OrgID);
+            DataSet dsUpdatedData = new DataSet();
+            dsUpdatedData.ReadXml(new StringReader(strxmlUpdatedData));
+
+            organizationViewModel.organization.Company_Name = dsUpdatedData.Tables[0].Rows[0]["CompanyName"].ToString();
+            organizationViewModel.organization.Description = dsUpdatedData.Tables[0].Rows[0]["CompanyName"].ToString();
+            organizationViewModel.organization.Industry_Type = dsUpdatedData.Tables[0].Rows[0]["CompanyName"].ToString();
+            organizationViewModel.organization.Is_Active = dsUpdatedData.Tables[0].Rows[0]["CompanyName"].ToString();
+            organizationViewModel.organization.Last_Updated_Date =
+                organizationViewModel.organization.User_Id=
+                organizationViewModel.companydetails.Auditing_Frequency
+                organizationViewModel.companydetails.Calender_StartDate
+                organizationViewModel.companydetails.Calender_EndDate
+                organizationViewModel.companydetails.Company_ContactNumber1
+                organizationViewModel.companydetails.Company_ContactNumber2
+                organizationViewModel.companydetails.Company_EmailID
+                organizationViewModel.companydetails.Formal_Name
+                organizationViewModel.companydetails.Industry_Type
+                organizationViewModel.companydetails.Website
+                organizationViewModel.branch.Address
+                organizationViewModel.branch
+
+                organizationViewModel.branch.Address
+
+                organizationViewModel.branch.Address
+
+                organizationViewModel.branch.Address
+
+                organizationViewModel.branch.Address
+
+                organizationViewModel.branch.Address
+
+                organizationViewModel.branch.Address
+
+
+                or
             return View(organizationViewModel);
         }
         [HttpPost]
@@ -339,7 +374,7 @@ namespace ComplianceAuditWeb.Controllers
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
             string strxmlGroupCompanies = organizationservice.GetGroupCompaniesList();
 
-            grouplist.GroupCompanies = strxmlGroupCompanies.AsEnumerable(); // this needs to be cast
+            //grouplist.GroupCompanies = strxmlGroupCompanies.AsEnumerable(); // this needs to be cast
 
             //(IEnumerable<ListOfGroupCompanies>) strxmlGroupCompanies.AsEnumerable();
 
