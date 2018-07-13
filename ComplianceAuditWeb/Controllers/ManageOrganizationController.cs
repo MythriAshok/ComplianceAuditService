@@ -37,7 +37,14 @@ namespace ComplianceAuditWeb.Controllers
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(strXMLCountries));
-            dt.ReadXml(new StringReader(strXMLCountries));
+            //dt.ReadXml(new StringReader(strXMLCountries));
+            organizationVM.Country = new List<SelectListItem>();
+            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            {
+                organizationVM.Country.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
+            }
+            return View("_Organization", organizationVM);
+        }
 
             //organizationVM.State.ReadXml(new StringReader(strXMLStates));
             //organizationVM.City.ReadXml(new StringReader(strXMLCities));
@@ -47,8 +54,8 @@ namespace ComplianceAuditWeb.Controllers
 
 
             //    return View(organizationVM);
-            return View("AddGroupCompany", organizationVM);
-        }
+            
+        
 
         [HttpPost]
         public ActionResult AddGroupCompany(OrganizationViewModel organizationVM)
@@ -57,6 +64,8 @@ namespace ComplianceAuditWeb.Controllers
             if (ModelState.IsValid)
             {
                 OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
+                organizationVM.organization.Is_Leaf = false;
+                organizationVM.organization.Level = 1;
                 result = organizationClient.insertOrganization(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
                 if (result != false)
                 {
@@ -70,9 +79,13 @@ namespace ComplianceAuditWeb.Controllers
             return View();
         }
         [HttpGet]
-        public ActionResult UpdateGroupCompany()
+        public ActionResult UpdateGroupCompany(int OrgID)
         {
-            return View();
+            OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
+            Session["data"]= organizationClient.getGroupCompany(OrgID);
+            OrganizationViewModel organizationViewModel = new OrganizationViewModel();
+            organizationViewModel = (OrganizationViewModel)Session["data"];
+            return View(organizationViewModel);
         }
         [HttpPost]
         public ActionResult UpdateGroupCompany(OrganizationViewModel organizationVM)
@@ -116,11 +129,11 @@ namespace ComplianceAuditWeb.Controllers
             string strXMLCities = organizationservice.GetCityList(stateID);
 
 
-            organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
-            organizationVM.State.ReadXml(new StringReader(strXMLStates));
-            organizationVM.City.ReadXml(new StringReader(strXMLCities));
+            //organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
+            //organizationVM.State.ReadXml(new StringReader(strXMLStates));
+            //organizationVM.City.ReadXml(new StringReader(strXMLCities));
             return View(organizationVM);
-            return View();
+            
         }
         [HttpPost]
         public ActionResult AddCompany(CompanyViewModel companyVM)
@@ -183,9 +196,9 @@ namespace ComplianceAuditWeb.Controllers
             string strXMLCities = organizationservice.GetCityList(stateID);
 
 
-            organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
-            organizationVM.State.ReadXml(new StringReader(strXMLStates));
-            organizationVM.City.ReadXml(new StringReader(strXMLCities));
+            //organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
+            //organizationVM.State.ReadXml(new StringReader(strXMLStates));
+            //organizationVM.City.ReadXml(new StringReader(strXMLCities));
             return View(organizationVM);
         }
         [HttpPost]

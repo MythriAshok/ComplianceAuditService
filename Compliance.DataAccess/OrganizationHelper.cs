@@ -24,7 +24,7 @@ namespace Compliance.DataAccess
                     cmd.CommandType = CommandType.StoredProcedure;
                     //cmd.Parameters.AddWithValue("p_Flag ", Flag);
                     cmd.Parameters.Add("p_Flag", MySqlDbType.VarChar, 1).Value = Flag;
-                    cmd.Parameters.Add("p_Location_ID ", MySqlDbType.Int32).Value= branchLocation.Branch_Id;
+                    cmd.Parameters.Add("p_Location_ID", MySqlDbType.Int32).Value= branchLocation.Branch_Id;
                     cmd.Parameters.Add("p_Location_Name", MySqlDbType.VarChar, 75).Value = branchLocation.Branch_Name;
 
                     cmd.Parameters.Add("p_Address", MySqlDbType.VarChar, 450).Value = branchLocation.Address;
@@ -35,7 +35,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.Add("p_Postal_Code", MySqlDbType.Int32).Value = branchLocation.Postal_Code;
                     cmd.Parameters.Add("p_Branch_Coordinates1", MySqlDbType.VarChar,100).Value = branchLocation.Branch_Coordinates1;
                     cmd.Parameters.Add("p_Branch_Coordinates2", MySqlDbType.VarChar,100).Value = branchLocation.Branch_Coordinates2;
-                    cmd.Parameters.Add("p_Branch_CoordinatesURL", MySqlDbType.VarChar,100).Value = branchLocation.Branch_CoordinatesURL;
+                    cmd.Parameters.Add("p_Branch_CoordinateURL", MySqlDbType.VarChar,100).Value = branchLocation.Branch_CoordinatesURL;
                     // MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                     object objbranchlocationid = cmd.ExecuteScalar();
                     if (objbranchlocationid != null)
