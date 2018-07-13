@@ -161,6 +161,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Views\ManageOrganization\ListOfGroupCompanies.cshtml" />
+    <Content Include="Views\Shared\_Layout1.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -189,6 +191,7 @@
     <Compile Include="Models\AccessViewModel.cs" />
     <Compile Include="Models\BranchViewModel.cs" />
     <Compile Include="Models\CompanyViewModel.cs" />
+    <Compile Include="Models\ListOfGroupCompanies.cs" />
     <Compile Include="Models\OrganizationViewModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\RolesViewModel.cs" />
@@ -206,7 +209,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\ManageOrganization\_Company.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Shared\_Layout1.cshtml" />
     <Content Include="Views\UserManagement\CreateUser.cshtml" />
     <Content Include="Views\ManageOrganization\_Organization.cshtml" />
     <Content Include="Views\ManageOrganization\_Branch.cshtml" />
@@ -216,6 +218,8 @@
     <Content Include="Views\ManageOrganization\AddGroupCompany.cshtml" />
     <Content Include="Views\ManageOrganization\AddCompany.cshtml" />
     <Content Include="Views\UserManagement\insertRoles.cshtml" />
+    <Content Include="Views\ManageOrganization\AddBranch.cshtml" />
+    <Content Include="Views\ManageOrganization\View.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

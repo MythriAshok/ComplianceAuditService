@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a7c3101d-78b4-45d3-83c0-1f6f17422938" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c18bc835-ab41-4d5b-ac3f-176363df6753" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,11 +22,11 @@
     <MetadataSource Address="http://localhost:56172/OrganizationService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="OrganizationService.xsd" MetadataType="Schema" ID="b0e2114d-ebf2-4ec4-8f1c-d25cf46ba0ab" SourceId="1" SourceUrl="http://localhost:56172/OrganizationService.svc?xsd=xsd0" />
-    <MetadataFile FileName="OrganizationService.wsdl" MetadataType="Wsdl" ID="09fc897a-1860-41cc-9352-96cc0423029f" SourceId="1" SourceUrl="http://localhost:56172/OrganizationService.svc?wsdl" />
-    <MetadataFile FileName="OrganizationService.disco" MetadataType="Disco" ID="20c84c3e-9b73-4843-b4cd-39809c81513b" SourceId="1" SourceUrl="http://localhost:56172/OrganizationService.svc?disco" />
-    <MetadataFile FileName="OrganizationService1.xsd" MetadataType="Schema" ID="0a10a7d6-579b-42b0-bf44-fefe56b09a7f" SourceId="1" SourceUrl="http://localhost:56172/OrganizationService.svc?xsd=xsd2" />
-    <MetadataFile FileName="OrganizationService2.xsd" MetadataType="Schema" ID="7cf89648-2161-4835-b099-f196f41753cc" SourceId="1" SourceUrl="http://localhost:56172/OrganizationService.svc?xsd=xsd1" />
+    <MetadataFile FileName="OrganizationService.xsd" MetadataType="Schema" ID="ac7c2016-1314-4196-9e25-b9da75575e13" SourceId="1" SourceUrl="http://localhost:56172/OrganizationService.svc?xsd=xsd0" />
+    <MetadataFile FileName="OrganizationService.wsdl" MetadataType="Wsdl" ID="2a8d4e50-9bfe-4322-9a94-13287e54fa16" SourceId="1" SourceUrl="http://localhost:56172/OrganizationService.svc?wsdl" />
+    <MetadataFile FileName="OrganizationService.disco" MetadataType="Disco" ID="c417c105-8717-46a1-b5aa-9b3b7b7486c4" SourceId="1" SourceUrl="http://localhost:56172/OrganizationService.svc?disco" />
+    <MetadataFile FileName="OrganizationService1.xsd" MetadataType="Schema" ID="7cd3a15b-848b-49cd-b4ea-f27f195e3f1f" SourceId="1" SourceUrl="http://localhost:56172/OrganizationService.svc?xsd=xsd2" />
+    <MetadataFile FileName="OrganizationService2.xsd" MetadataType="Schema" ID="bbe4447e-364f-40b2-9af9-b4eac2610ea6" SourceId="1" SourceUrl="http://localhost:56172/OrganizationService.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -24,7 +24,7 @@ namespace Compliance.DataAccess
                     cmd.CommandType = CommandType.StoredProcedure;
                     //cmd.Parameters.AddWithValue("p_Flag ", Flag);
                     cmd.Parameters.Add("p_Flag", MySqlDbType.VarChar, 1).Value = Flag;
-                    cmd.Parameters.Add("p_Location_ID ", MySqlDbType.Int32).Value= branchLocation.Branch_Id;
+                    cmd.Parameters.Add("p_Location_ID", MySqlDbType.Int32).Value= branchLocation.Branch_Id;
                     cmd.Parameters.Add("p_Location_Name", MySqlDbType.VarChar, 75).Value = branchLocation.Branch_Name;
 
                     cmd.Parameters.Add("p_Address", MySqlDbType.VarChar, 450).Value = branchLocation.Address;
@@ -35,7 +35,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.Add("p_Postal_Code", MySqlDbType.Int32).Value = branchLocation.Postal_Code;
                     cmd.Parameters.Add("p_Branch_Coordinates1", MySqlDbType.VarChar,100).Value = branchLocation.Branch_Coordinates1;
                     cmd.Parameters.Add("p_Branch_Coordinates2", MySqlDbType.VarChar,100).Value = branchLocation.Branch_Coordinates2;
-                    cmd.Parameters.Add("p_Branch_CoordinatesURL", MySqlDbType.VarChar,100).Value = branchLocation.Branch_CoordinatesURL;
+                    cmd.Parameters.Add("p_Branch_CoordinateURL", MySqlDbType.VarChar,100).Value = branchLocation.Branch_CoordinatesURL;
                     // MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                     object objbranchlocationid = cmd.ExecuteScalar();
                     if (objbranchlocationid != null)
@@ -118,8 +118,8 @@ namespace Compliance.DataAccess
                     conn.Open();
                     MySqlCommand cmd = new MySqlCommand("sp_insertupdateOrganizationHier", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("p_Flag ", Flag);
-                    cmd.Parameters.AddWithValue("p_Org_Hier_ID ", org.Organization_Id);
+                    cmd.Parameters.AddWithValue("p_Flag", Flag);
+                    cmd.Parameters.AddWithValue("p_Org_Hier_ID", org.Organization_Id);
                     cmd.Parameters.AddWithValue("p_Company_Name", org.Company_Name);
                     cmd.Parameters.AddWithValue("p_Company_ID", org.Company_Id);
                     cmd.Parameters.AddWithValue("p_Parent_Company_ID", org.Parent_Company_Id);
@@ -214,7 +214,7 @@ namespace Compliance.DataAccess
                     MySqlCommand cmd = new MySqlCommand("sp_insertupdateCompanyDetails", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("p_Flag", Flag);
-                    cmd.Parameters.AddWithValue("p_Company_Details_ID ", details.Company_Details_ID);
+                    cmd.Parameters.AddWithValue("p_Company_Details_ID", details.Company_Details_ID);
                     cmd.Parameters.AddWithValue("p_Org_Hier_ID", details.Org_Hier_ID);
                     cmd.Parameters.AddWithValue("p_Industry_Type", details.Industry_Type);
                     cmd.Parameters.AddWithValue("p_Formal_Name", details.Formal_Name);
@@ -222,7 +222,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Calender_EndDate", details.Calender_EndDate);
                     cmd.Parameters.AddWithValue("p_Auditing_Frequency", details.Auditing_Frequency);
                     cmd.Parameters.AddWithValue("p_Website", details.Website);
-                    cmd.Parameters.AddWithValue("p_Company_EmailID", details.Company_EmailID);
+                    cmd.Parameters.AddWithValue("p_Company_Email_ID", details.Company_EmailID);
                     cmd.Parameters.AddWithValue("p_Company_ContactNumber1", details.Company_ContactNumber1);
                     cmd.Parameters.AddWithValue("p_Company_ContactNumber2", details.Company_ContactNumber2);
                     cmd.Parameters.AddWithValue("p_Is_Active", details.Is_Active);
@@ -268,6 +268,8 @@ namespace Compliance.DataAccess
             return dsCompanyDetails;
         }
 
+       
+
         public bool deleteCompanyDetails(int Company_Details_Id)
         {
             bool resultCompanyDetails = false;
@@ -293,11 +295,31 @@ namespace Compliance.DataAccess
             }
             return resultCompanyDetails;
         }
-        public void get()
+       
+
+
+        public DataSet getGroupCompanyList()
         {
-
+            DataSet dsGroupCompaniesList = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getGroupCompaniesList", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                // cmd.Parameters.AddWithValue("p_Company_Details_ID ", CompanyDetailsId);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsGroupCompaniesList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsGroupCompaniesList;
         }
-
     }
 }
 

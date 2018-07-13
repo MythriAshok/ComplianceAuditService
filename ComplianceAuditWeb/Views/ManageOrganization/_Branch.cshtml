@@ -1,92 +1,73 @@
-﻿@model ComplianceAuditWeb.Models.BranchViewModel;
+﻿@model ComplianceAuditWeb.Models.BranchViewModel
 @{
-    Layout = "null";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 
 @using (Html.BeginForm())
 {
-    Html.LabelFor(m => m.branch.Branch_Name);
-    Html.TextBoxFor(m => m.branch.Branch_Name);
+    @Html.LabelFor(m => m.branch.Branch_Name);
+    @Html.TextBoxFor(m => m.branch.Branch_Name);
 
-    Html.LabelFor(m => m.branch.Address);
-    Html.TextBoxFor(m => m.branch.Address);
+    @Html.LabelFor(m => m.branch.Address);
+    @Html.TextBoxFor(m => m.branch.Address);
 
-    Html.LabelFor(m => m.branch.Branch_CoordinatesURL);
-    Html.TextBoxFor(m => m.branch.Branch_CoordinatesURL);
+    @Html.LabelFor(m => m.branch.Branch_CoordinatesURL);
+    @Html.TextBoxFor(m => m.branch.Branch_CoordinatesURL);
 
-    Html.LabelFor(m => m.branch.Branch_Coordinates1);
-    Html.TextBoxFor(m => m.branch.Branch_Coordinates1);
+    @Html.LabelFor(m => m.branch.Branch_Coordinates1);
+    @Html.TextBoxFor(m => m.branch.Branch_Coordinates1);
 
-    Html.LabelFor(m => m.branch.Branch_Coordinates2);
-    Html.TextBoxFor(m => m.branch.Branch_Coordinates2);
+    @Html.LabelFor(m => m.branch.Branch_Coordinates2);
+    @Html.TextBoxFor(m => m.branch.Branch_Coordinates2);
 
-    Html.LabelFor(m => m.branch.Postal_Code);
-    Html.TextBoxFor(m => m.branch.Postal_Code);
+    @Html.LabelFor(m => m.branch.Postal_Code);
+    @Html.TextBoxFor(m => m.branch.Postal_Code);
 
-    Html.LabelFor(m => m.organization.Company_Name);
-    Html.TextBoxFor(m => m.organization.Company_Name);
+    @Html.LabelFor(m => m.organization.Company_Name);
+    @Html.TextBoxFor(m => m.organization.Company_Name);
 
-    Html.LabelFor(m => m.organization.Description);
-    Html.TextAreaFor(m => m.organization.Description);
+    @Html.LabelFor(m => m.organization.Description);
+    @Html.TextAreaFor(m => m.organization.Description);
 
-    Html.LabelFor(m => m.organization.Industry_Type);
-    Html.TextBoxFor(m => m.organization.Industry_Type);
+    @Html.LabelFor(m => m.organization.Industry_Type);
+    @Html.TextBoxFor(m => m.organization.Industry_Type);
 
-    Html.LabelFor(m => m.organization.Is_Active);
-    Html.CheckBoxFor(m => m.organization.Is_Active);
+    @Html.LabelFor(m => m.organization.Is_Active);
+    @Html.CheckBoxFor(m => m.organization.Is_Active);
 
-    Html.LabelFor(m => m.organization.Is_Leaf);
-    Html.CheckBoxFor(m => m.organization.Is_Leaf);
+    @Html.LabelFor(m => m.organization.Is_Leaf);
+    @Html.CheckBoxFor(m => m.organization.Is_Leaf);
 
-    Html.LabelFor(m => m.organization.Last_Updated_Date);
-    Html.TextBoxFor(m => m.organization.Last_Updated_Date);
+    @Html.LabelFor(m => m.organization.Last_Updated_Date);
+    @Html.TextBoxFor(m => m.organization.Last_Updated_Date);
 
-    Html.LabelFor(m => m.organization.Level);
-    Html.TextBoxFor(m => m.organization.Level);
+    @Html.LabelFor(m => m.organization.Level);
+    @Html.TextBoxFor(m => m.organization.Level);
 
-    Html.LabelFor(m => m.organization.Parent_Company_Id);
-    Html.TextBoxFor(m => m.organization.Parent_Company_Id);
+    @Html.LabelFor(m => m.organization.Parent_Company_Id);
+    @Html.TextBoxFor(m => m.organization.Parent_Company_Id);
 
-    Html.LabelFor(m => m.organization.User_Id);
-    Html.TextBoxFor(m => m.organization.User_Id);
+    @Html.LabelFor(m => m.organization.User_Id);
+    @Html.TextBoxFor(m => m.organization.User_Id);
 
-    Html.LabelFor(m => m.branchAuditingFrequency);
-    Html.DropDownListFor(m => m.branchAuditingFrequency, new SelectList
-        (Enum.GetValues(typeof(ComplianceAuditWeb.Models.BranchViewModel))),
-        "Select Branch Auditing Freequency");
-
-    Html.LabelFor(m => m.branchType);
-    Html.DropDownListFor(m => m.branchType, new SelectList
-        (Enum.GetValues(typeof(ComplianceAuditWeb.Models.BranchViewModel))),
-        "Select Type of Branch");
-
-    List<SelectListItem> countryList = new List<SelectListItem>();
-    foreach (System.Data.DataRow row in Model.Country.Rows)
-    {
-        countryList.Add(new SelectListItem() { Text = row["CountryName"].ToString(), Value = row["CountryID"].ToString() });
-    }
-    @Html.DropDownListFor(m => m.Country, countryList);
+    @*@Html.LabelFor(m => m.branchAuditingFrequency);
+        @Html.DropDownListFor(m => m.branchAuditingFrequency, new SelectList
+            (Enum.GetValues(typeof(ComplianceAuditWeb.Models.BranchViewModel))),
+            "Select Branch Auditing Freequency");*@
 
 
-    Html.LabelFor(m => m.State);
 
-    List<SelectListItem> stateList = new List<SelectListItem>();
-    foreach (System.Data.DataRow row in Model.Country.Rows)
-    {
-        stateList.Add(new SelectListItem() { Text = row["StateName"].ToString(), Value = row["StateID"].ToString() });
-    }
-    @Html.DropDownListFor(m => m.Country, stateList);
+    @Html.Label("Country")
+    @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country);
 
 
-    Html.LabelFor(m => m.City);
 
-    List<SelectListItem> cityList = new List<SelectListItem>();
-    foreach (System.Data.DataRow row in Model.Country.Rows)
-    {
-        cityList.Add(new SelectListItem() { Text = row["CityName"].ToString(), Value = row["CityID"].ToString() });
-    }
-    @Html.DropDownListFor(m => m.Country, cityList);
+    @Html.LabelFor(m => m.State);
+    @Html.DropDownListFor(m => m.branch.State_Id, Model.State);
 
+    @Html.LabelFor(m => m.City);
+    @Html.DropDownListFor(m => m.branch.City_Id, Model.City);
 
+    <input type="submit" value="Create" class="btn btn-default" />
 
 }

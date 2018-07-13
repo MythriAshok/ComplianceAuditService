@@ -67,6 +67,18 @@
   <wsdl:message name="IOrganizationService_GetCityList_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetCityListResponse" />
   </wsdl:message>
+  <wsdl:message name="IOrganizationService_BindGroupCompaniesList_InputMessage">
+    <wsdl:part name="parameters" element="tns:BindGroupCompaniesList" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_BindGroupCompaniesList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BindGroupCompaniesListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetGroupCompaniesList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetGroupCompaniesList" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetGroupCompaniesList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetGroupCompaniesListResponse" />
+  </wsdl:message>
   <wsdl:portType name="IOrganizationService">
     <wsdl:operation name="insertOrganization">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertOrganization" message="tns:IOrganizationService_insertOrganization_InputMessage" />
@@ -107,6 +119,14 @@
     <wsdl:operation name="GetCityList">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GetCityList" message="tns:IOrganizationService_GetCityList_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GetCityListResponse" message="tns:IOrganizationService_GetCityList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="BindGroupCompaniesList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/BindGroupCompaniesList" message="tns:IOrganizationService_BindGroupCompaniesList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/BindGroupCompaniesListResponse" message="tns:IOrganizationService_BindGroupCompaniesList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGroupCompaniesList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GetGroupCompaniesList" message="tns:IOrganizationService_GetGroupCompaniesList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GetGroupCompaniesListResponse" message="tns:IOrganizationService_GetGroupCompaniesList_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IOrganizationService" type="tns:IOrganizationService">
@@ -194,6 +214,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetCityList">
       <soap:operation soapAction="http://tempuri.org/IOrganizationService/GetCityList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BindGroupCompaniesList">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/BindGroupCompaniesList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGroupCompaniesList">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/GetGroupCompaniesList" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
