@@ -1,25 +1,38 @@
 ﻿@model ComplianceAuditWeb.Models.UserViewModel
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>UserViewModel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
 
-        <div>
-            @Html.DropDownList("UserGroup",Model.UserGroupList as SelectList);
-        </div>
-    </div>
+    @Html.Label("FirstName")
+    @Html.TextBoxFor(m => m.User.FirstName)
+
+    @Html.Label("MiddleName")
+    @Html.TextBoxFor(m => m.User.MiddleName)
+
+    @Html.Label("LastName")
+    @Html.TextBoxFor(m => m.User.LastName)
+
+    @Html.Label("EmailId(UserName)")
+    @Html.TextBoxFor(m => m.User.EmailId)
+
+    @Html.Label("Gender")
+    @Html.RadioButtonFor(m => m.User.Gender, "Male")
+    @Html.RadioButtonFor(m => m.User.Gender, "Female")
+    @Html.RadioButtonFor(m => m.User.Gender, "Others")
+
+    @Html.Label("Password")
+    @Html.TextBoxFor(m => m.User.UserPassword)
+
+    @Html.Label("Contact Number")
+    @Html.TextBoxFor(m => m.User.ContactNumber)
+
+    @Html.Label("UserGroup")
+    @Html.ListBoxFor(m => m.UserGroupID, Model.UserGroupList)
+
+    @Html.Label("Roles")
+    @Html.ListBoxFor(m => m.RoleID, Model.RolesList)
+
+    <input type="submit" value="Create" class="btn btn-default" />
+
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

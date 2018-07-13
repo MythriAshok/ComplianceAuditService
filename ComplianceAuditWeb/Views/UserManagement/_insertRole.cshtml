@@ -12,12 +12,11 @@
     @Html.LabelFor(model => model.roles.IsGroupRole)
     @Html.CheckBoxFor(model => model.roles.IsGroupRole)
 
-    @Html.LabelFor(model => model.roles.IsActive)
-    @Html.CheckBoxFor(model => model.roles.IsActive)
-
+    if (Model.privilege != null)
+    {
     @Html.Label("Privilege")
-    @Html.ListBoxFor(m=>m.PrivilegeId, Model.privilege)
-
+    @Html.ListBoxFor(m => m.PrivilegeId, Model.privilege)
+    }
     <input type="submit" value="Create" class="btn btn-default" />
 
 }

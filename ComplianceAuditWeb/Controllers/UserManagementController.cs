@@ -93,11 +93,16 @@ namespace ComplianceAuditWeb.Controllers
             return View("_insertUser", userviewmodel);
         }
         [HttpPost]
-        public ActionResult CreateUser(UserViewModel userviewmodel)
+        public ActionResult CreateUser(UserViewModel model)
         {
-            UserService.UserServiceClient Client = new UserService.UserServiceClient();          
-            bool result=Client.insertUser(userviewmodel.User);
-           
+            UserService.UserServiceClient Client = new UserService.UserServiceClient();
+            string res = Client.insertUser(model.User);
+            if (res != "EXISTS")
+            {
+                model.User.UserId = Convert.ToInt32(res);
+                Client.insertUserGroupmember(model.User.UserId, model.UserGroupID);
+                Client.insertUserRole(model.User.UserId, model.RoleID);
+            }
             return View();
         }
 

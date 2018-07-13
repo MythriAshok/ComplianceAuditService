@@ -38,7 +38,7 @@ INSERT INTO `auditmoduledb`.`tbl_user`(`User_ID`,
 `Last_Login`)
 VALUES(p_User_ID,p_User_Password,p_First_Name,p_Middle_Name,p_Last_Name,p_Email_ID,
 p_Contact_Number,p_Gender,p_Is_Active,now());
-select "Sucessfully Created New User";
+select last_insert_id();
 end if;
 else
 UPDATE `auditmoduledb`.`tbl_user`
@@ -281,4 +281,27 @@ end if;
 end /
 Delimiter ;
 
+Drop procedure if exists `auditmoduledb`.`sp_insertUserRole`;
+Delimiter /
+create procedure sp_insertUserRole(p_Role_ID int,p_User_ID int)
+begin
+INSERT INTO `auditmoduledb`.`tbl_user_role_map`
+(`Role_ID`,
+`User_ID`)
+VALUES
+(p_Role_ID,p_User_ID);
+end /
+Delimiter ;
 
+Drop procedure if exists `auditmoduledb`.`sp_insertUserGroupMembers`;
+Delimiter /
+create procedure sp_insertUserGroupMembers(p_User_ID int,p_User_Group_ID int)
+begin
+INSERT INTO `auditmoduledb`.`tbl_user_group_members`
+(`User_Group_Members_ID`,
+`User_ID`,
+`User_Group_ID`)
+VALUES
+(p_User_ID,p_User_Group_ID);
+end /
+Delimiter ;
