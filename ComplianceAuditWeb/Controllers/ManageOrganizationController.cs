@@ -15,8 +15,11 @@ namespace ComplianceAuditWeb.Controllers
     public class ManageOrganizationController : Controller
     {
         // GET: ManageOrganization
-        
-       
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         public ActionResult AddGroupCompany()
         {
             int stateID = 1;
@@ -28,55 +31,75 @@ namespace ComplianceAuditWeb.Controllers
 
 
             string strXMLCountries = organizationservice.GetCountryList();
-           // string strXMLStates = organizationservice.GetStateList(countryID);
-          //  string strXMLCities = organizationservice.GetCityList(stateID);
+            string strXMLStates = organizationservice.GetStateList(countryID);
+          string strXMLCities = organizationservice.GetCityList(stateID);
 
 
             //organizationVM.Country.ReadXml(new StringReader(strXMLCountries));
 
-            DataTable dt = new DataTable();
-            DataSet ds = new DataSet();
-            ds.ReadXml(new StringReader(strXMLCountries));
+           // DataTable dt = new DataTable();
+            DataSet dsCountries = new DataSet();
+            DataSet dsStates = new DataSet();
+            DataSet dsCities = new DataSet();
+            dsCountries.ReadXml(new StringReader(strXMLCountries));
+            dsStates.ReadXml(new StringReader(strXMLStates));
+            dsCities.ReadXml(new StringReader(strXMLCities));
             //dt.ReadXml(new StringReader(strXMLCountries));
             organizationVM.Country = new List<SelectListItem>();
-            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
             {
                 organizationVM.Country.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
             }
-            return View("_Organization", organizationVM);
-        }
-
-            //organizationVM.State.ReadXml(new StringReader(strXMLStates));
-            //organizationVM.City.ReadXml(new StringReader(strXMLCities));
-
-
-            //     //organizationVM.Country.AsEnumerable();
-
-
-            //    return View(organizationVM);
-            
         
 
-        [HttpPost]
+        organizationVM.State = new List<SelectListItem>();
+            foreach (System.Data.DataRow row in dsStates.Tables[0].Rows)
+            {
+                organizationVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
+            }
+
+
+            organizationVM.City = new List<SelectListItem>();
+            foreach (System.Data.DataRow row in dsCities.Tables[0].Rows)
+            {
+                organizationVM.City.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
+            }
+            return View("AddGroupCompany", organizationVM);
+}
+
+
+
+//organizationVM.State.ReadXml(new StringReader(strXMLStates));
+//organizationVM.City.ReadXml(new StringReader(strXMLCities));
+
+
+//     //organizationVM.Country.AsEnumerable();
+
+
+//    return View(organizationVM);
+
+
+
+[HttpPost]
         public ActionResult AddGroupCompany(OrganizationViewModel organizationVM)
         {
             bool result = false;
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
                 organizationVM.organization.Is_Leaf = false;
                 organizationVM.organization.Level = 1;
                 result = organizationClient.insertOrganization(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
                 if (result != false)
                 {
-                    return View("AddGroupCompany");
+                    return View("AddCompany");
                 }
                 else
                 {
                     return View();
                 }
-            }
-            return View();
+            
+           // return View();
         }
         [HttpGet]
         public ActionResult UpdateGroupCompany(int OrgID)

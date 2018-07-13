@@ -1,9 +1,8 @@
 ﻿@model ComplianceAuditWeb.Models.OrganizationViewModel
 @{
-                /**/
-
-                Layout = null;
+    Layout = "~/Views/Shared/_Layout1.cshtml";
 }
+{
 <h4>Test</h4>
 @using (Html.BeginForm("AddGroupCompany", "ManageOrganization"))
 {
@@ -19,14 +18,12 @@
     @Html.LabelFor(m => m.organization.Is_Active);
     @Html.CheckBoxFor(m => m.organization.Is_Active);
 
-    @Html.LabelFor(m => m.organization.Is_Leaf);
-    @Html.CheckBoxFor(m => m.organization.Is_Leaf);
+   
 
     @Html.LabelFor(m => m.organization.Last_Updated_Date);
-    @Html.TextBoxFor(m => m.organization.Last_Updated_Date);
+    @Html.TextBoxFor(m => m.organization.Last_Updated_Date, @DateTime.Now.Year);
 
-    @Html.LabelFor(m => m.organization.Level);
-    @Html.TextBoxFor(m => m.organization.Level);
+  
 
     @Html.LabelFor(m => m.organization.Parent_Company_Id);
     @Html.TextBoxFor(m => m.organization.Parent_Company_Id);
@@ -44,7 +41,7 @@
     @Html.TextBoxFor(m => m.companydetails.Website);
 
     @Html.LabelFor(m => m.companydetails.Is_Active);
-    @Html.TextBoxFor(m => m.companydetails.Is_Active);
+    @Html.CheckBoxFor(m => m.companydetails.Is_Active);
 
     @Html.LabelFor(m => m.companydetails.Company_EmailID);
     @Html.TextBoxFor(m => m.companydetails.Company_EmailID);
@@ -63,8 +60,8 @@
 
     @Html.LabelFor(m => m.companydetails.Auditing_Frequency);
     @Html.DropDownListFor(m => m.companydetails.Auditing_Frequency, new SelectList
-        (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.AuditingFrequency))),
-        "Select Auditing Freequency");
+            (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.AuditingFrequency))),
+            "Select Auditing Freequency");
 
     @Html.LabelFor(m => m.branch.Branch_Name);
     @Html.TextBoxFor(m => m.branch.Branch_Name);
@@ -85,7 +82,13 @@
     @Html.TextBoxFor(m => m.branch.Postal_Code);
 
     @Html.LabelFor(m => m.Country);
-    @Html.DropDownListFor(m => m.Country, Model.Country);
+    @Html.DropDownListFor(model => model.Country, Model.Country);
+
+    @Html.LabelFor(m => m.State);
+    @Html.DropDownListFor(Model => Model.State, Model.State);
+
+    @Html.LabelFor(m => m.Country);
+    @Html.DropDownListFor(Model => Model.City, Model.City);
 
     @*List<SelectListItem> countryList = new List<SelectListItem>();
         foreach (System.Data.DataRow row in Model.Country.Rows)
@@ -120,6 +123,9 @@
 
 
     <input type="submit" value="Create" class="btn btn-default" />
+
+}
+    @Html.ActionLink("Back to List", "Index")
 
 
 }
