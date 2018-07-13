@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using Compliance.DataObject;
 
 namespace ComplianceAuditWeb.Models
@@ -12,6 +13,8 @@ namespace ComplianceAuditWeb.Models
         public int CompanyID { get; set; }
         public string IndustryType { get; set; }
         public List<Organization> Organization { get; set; }
+        public IEnumerable<Organization> GroupCompanies { get; set; }
+        public List<SelectListItem> GroupCompany { get; set; }
 
         public string GroupCompanyLogo { get; set; }
 

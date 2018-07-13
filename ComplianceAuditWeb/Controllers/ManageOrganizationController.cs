@@ -331,21 +331,36 @@ namespace ComplianceAuditWeb.Controllers
             return View();
         }
 
-
+        [HttpGet]
         public ActionResult ListOfGroupCompanies()
         {
-            ListOfGroupCompanies ListOfGroupCompanies = new ListOfGroupCompanies();
+            ListOfGroupCompanies grouplist = new ListOfGroupCompanies();
+            //IEnumerable<ListOfGroupCompanies> ListOfGroupCompanies = new IEnumerable<ListOfGroupCompanies>();
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
             string strxmlGroupCompanies = organizationservice.GetGroupCompaniesList();
 
+            grouplist.GroupCompanies = strxmlGroupCompanies.AsEnumerable(); // this needs to be cast
 
+            //(IEnumerable<ListOfGroupCompanies>) strxmlGroupCompanies.AsEnumerable();
 
+            
+            
+            //ListOfGroupCompanies.Add(grouplist);
 
+           // var List = strxmlGroupCompanies.AsEnumerable();
+
+            // ListOfGroupCompanies.Add()
             DataSet dsGroupCompaniesList = new DataSet();
-
             dsGroupCompaniesList.ReadXml(new StringReader(strxmlGroupCompanies));
+            
+            //ListOfGroupCompanies.CompanyName
 
 
+            return View(grouplist);
+        }
+        [HttpPost]
+        public ActionResult ListOfGroupCompanies(ListOfGroupCompanies ListOfGroupCompanies)
+        {
             return View();
         }
 
