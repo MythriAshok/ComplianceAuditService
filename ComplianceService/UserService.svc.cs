@@ -14,16 +14,17 @@ namespace ComplianceService
     // NOTE: In order to launch WCF Test Client for testing this service, please select UserService.svc or UserService.svc.cs at the Solution Explorer and start debugging.
     public class UserService : IUserService
     {
-        public bool insertUser(User user)
+        public string insertUser(User Objuser)
         {
             UserHelper helper = new UserHelper();
-            string res = helper.insertupdateUser(user, 'I');
-            return true;
+            Objuser.IsActive = true;
+            string res = helper.insertupdateUser(Objuser, 'I');
+            return res;
         }
-        public bool updateUser(User user)
+        public bool updateUser(User Objuser)
         {
             UserHelper helper = new UserHelper();
-            string res = helper.insertupdateUser(user, 'U');
+            string res = helper.insertupdateUser(Objuser, 'U');
             return true;
         }
 
@@ -38,6 +39,19 @@ namespace ComplianceService
             DataSet userGroups = helper.getUserGroup(Groupid);
             string xmlgroups = userGroups.GetXml();
             return xmlgroups;
+        }
+        public bool insertUserGroupmember(int Userid,int Groupid)
+        {
+            UserHelper helper = new UserHelper();
+            bool res=helper.insertUserGroupmember(Groupid, Userid);
+            return res;
+        }
+
+        public bool insertUserRole(int Userid, int Roleid)
+        {
+            UserHelper helper = new UserHelper();
+            bool res = helper.insertUserRole(Roleid, Userid);
+            return res;
         }
         public string GetRoles(int flag)
         {
@@ -54,6 +68,7 @@ namespace ComplianceService
         public int insertRoles(Roles Role)
         {
             UserRolesHelper helper = new UserRolesHelper();
+            Role.IsActive = true;
             int res=helper.insertUpdateRole(Role, 'I');
             return res;
         }
@@ -90,16 +105,17 @@ namespace ComplianceService
             string xmlPrivilege = privilege.GetXml();
             return xmlPrivilege;
         }
-        public bool insertGroups(UserGroup Group)
+        public bool insertGroups(UserGroup ObjGroup)
         {
             UserGroupHelper helper = new UserGroupHelper();
-            bool res=helper.insertupdateUser(Group, 'I');
+            ObjGroup.IsActive = true;
+            bool res=helper.insertupdateUser(ObjGroup, 'I');
             return res;
         }
-        public bool updateGroups(UserGroup Group)
+        public bool updateGroups(UserGroup ObjGroup)
         {
             UserGroupHelper helper = new UserGroupHelper();
-            bool res=helper.insertupdateUser(Group, 'U');
+            bool res=helper.insertupdateUser(ObjGroup, 'U');
             return res;
         }
     }

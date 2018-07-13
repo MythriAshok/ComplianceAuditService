@@ -4,17 +4,19 @@
 
 @using (Html.BeginForm())
 {
+    @Html.AntiForgeryToken()
+
     @Html.Label("GroupName")
     @Html.TextBoxFor(model => model.Group.UserGroupName)
 
     @Html.Label("GroupDescription")
     @Html.TextBoxFor(model => model.Group.UserGroupDescription)
 
-    @Html.Label("Role")
-    @Html.DropDownListFor(model => model.RoleId, Model.Roles)
-
-    @Html.Label("IsActive")
-    @Html.CheckBoxFor(model => model.Group.IsActive)
+    if (Model.Roles != null)
+    {
+        @Html.Label("Role")
+        @Html.DropDownListFor(model => model.RoleId, Model.Roles)
+    }
 
     <input type="submit" value="Create" class="btn btn-default" />
 }

@@ -16,16 +16,28 @@ namespace ComplianceAuditWeb.UserService {
     public interface IUserService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/insertUser", ReplyAction="http://tempuri.org/IUserService/insertUserResponse")]
-        bool insertUser(Compliance.DataObject.User user);
+        string insertUser(Compliance.DataObject.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/insertUser", ReplyAction="http://tempuri.org/IUserService/insertUserResponse")]
-        System.Threading.Tasks.Task<bool> insertUserAsync(Compliance.DataObject.User user);
+        System.Threading.Tasks.Task<string> insertUserAsync(Compliance.DataObject.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/updateUser", ReplyAction="http://tempuri.org/IUserService/updateUserResponse")]
         bool updateUser(Compliance.DataObject.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/updateUser", ReplyAction="http://tempuri.org/IUserService/updateUserResponse")]
         System.Threading.Tasks.Task<bool> updateUserAsync(Compliance.DataObject.User user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/insertUserGroupmember", ReplyAction="http://tempuri.org/IUserService/insertUserGroupmemberResponse")]
+        bool insertUserGroupmember(int Userid, int Groupid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/insertUserGroupmember", ReplyAction="http://tempuri.org/IUserService/insertUserGroupmemberResponse")]
+        System.Threading.Tasks.Task<bool> insertUserGroupmemberAsync(int Userid, int Groupid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/insertUserRole", ReplyAction="http://tempuri.org/IUserService/insertUserRoleResponse")]
+        bool insertUserRole(int Userid, int Roleid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/insertUserRole", ReplyAction="http://tempuri.org/IUserService/insertUserRoleResponse")]
+        System.Threading.Tasks.Task<bool> insertUserRoleAsync(int Userid, int Roleid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUserGroup", ReplyAction="http://tempuri.org/IUserService/GetUserGroupResponse")]
         string GetUserGroup(int Groupid);
@@ -103,11 +115,11 @@ namespace ComplianceAuditWeb.UserService {
                 base(binding, remoteAddress) {
         }
         
-        public bool insertUser(Compliance.DataObject.User user) {
+        public string insertUser(Compliance.DataObject.User user) {
             return base.Channel.insertUser(user);
         }
         
-        public System.Threading.Tasks.Task<bool> insertUserAsync(Compliance.DataObject.User user) {
+        public System.Threading.Tasks.Task<string> insertUserAsync(Compliance.DataObject.User user) {
             return base.Channel.insertUserAsync(user);
         }
         
@@ -117,6 +129,22 @@ namespace ComplianceAuditWeb.UserService {
         
         public System.Threading.Tasks.Task<bool> updateUserAsync(Compliance.DataObject.User user) {
             return base.Channel.updateUserAsync(user);
+        }
+        
+        public bool insertUserGroupmember(int Userid, int Groupid) {
+            return base.Channel.insertUserGroupmember(Userid, Groupid);
+        }
+        
+        public System.Threading.Tasks.Task<bool> insertUserGroupmemberAsync(int Userid, int Groupid) {
+            return base.Channel.insertUserGroupmemberAsync(Userid, Groupid);
+        }
+        
+        public bool insertUserRole(int Userid, int Roleid) {
+            return base.Channel.insertUserRole(Userid, Roleid);
+        }
+        
+        public System.Threading.Tasks.Task<bool> insertUserRoleAsync(int Userid, int Roleid) {
+            return base.Channel.insertUserRoleAsync(Userid, Roleid);
         }
         
         public string GetUserGroup(int Groupid) {

@@ -23,7 +23,7 @@ using System.Data;
 namespace Compliance.DataAccess
 {
     public class UserHelper
-    {   
+    {
         MySqlConnection conn = new MySqlConnection();
         /// <summary>
         /// This method is used to insert are update the user information to tbl_user in auditmoduledb
@@ -31,13 +31,13 @@ namespace Compliance.DataAccess
         /// <param name="user">User object</param>
         /// <param name="flag">Value of flag 'I' indicates that it is for Insert and 'U' indicates that it is for Update</param>
         /// <returns></returns>
-        public string insertupdateUser(User user,char flag)
+        public string insertupdateUser(User user, char flag)
         {
-            string result="";
-                try
+            string result = "";
+            try
+            {
+                if (user != null)
                 {
-                    if (user != null)
-                    {
                     conn = DBConnection.getconnection();
                     conn.Open();
                     MySqlCommand cmd = new MySqlCommand("sp_insertupdateUser", conn);
@@ -53,10 +53,11 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Gender", user.Gender);
                     cmd.Parameters.AddWithValue("p_Is_Active", user.IsActive);
                     result = Convert.ToString(cmd.ExecuteScalar());
-                    }
-                    result = "User Module is null";
                 }
-            catch 
+                else
+                    result = "User Module is null";
+            }
+            catch
             {
                 throw;
             }
@@ -75,7 +76,7 @@ namespace Compliance.DataAccess
         /// <returns></returns>
         public bool DeleteUser(int userId)
         {
-            bool result=false;
+            bool result = false;
             try
             {
                 conn = DBConnection.getconnection();
@@ -83,13 +84,13 @@ namespace Compliance.DataAccess
                 MySqlCommand cmd = new MySqlCommand("sp_createuser", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_User_ID", userId);
-                int res=cmd.ExecuteNonQuery();
-                if(res>0)
+                int res = cmd.ExecuteNonQuery();
+                if (res > 0)
                 {
                     result = true;
                 }
             }
-            catch 
+            catch
             {
                 throw;
             }
@@ -176,8 +177,8 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("getLoginData", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_User_ID",  user.UserId);
-                cmd.Parameters.AddWithValue("p_Email_ID",  user.EmailId);
+                cmd.Parameters.AddWithValue("p_User_ID", user.UserId);
+                cmd.Parameters.AddWithValue("p_Email_ID", user.EmailId);
                 cmd.Parameters.AddWithValue("p_UserPassword", user.UserPassword);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dt);
@@ -193,28 +194,86 @@ namespace Compliance.DataAccess
             return dt;
         }
 
-       //public string updatePassword(User user)
-       // {
-       //     string result = "";
-       //     try
-       //     {
-       //         conn.Open();
-       //         MySqlCommand cmd = new MySqlCommand("sp_updatePassword", conn);
-       //         cmd.CommandType = CommandType.StoredProcedure;
-       //         cmd.Parameters.AddWithValue("p_User_ID", user.UserId);
-       //         cmd.Parameters.AddWithValue("p_Email_ID", user.EmailId);
-       //         cmd.Parameters.AddWithValue("p_UserPassword", user.UserPassword);
-       //         result = Convert.ToString(cmd.ExecuteNonQuery());
-       //     }
-       //     catch (Exception ex)
-       //     {
-       //         throw ex;
-       //     }
-       //     finally
-       //     {
-       //         conn.Close();
-       //     }
-       //     return result;
-       // }
+        //public string updatePassword(User user)
+        // {
+        //     string result = "";
+        //     try
+        //     {
+        //         conn.Open();
+        //         MySqlCommand cmd = new MySqlCommand("sp_updatePassword", conn);
+        //         cmd.CommandType = CommandType.StoredProcedure;
+        //         cmd.Parameters.AddWithValue("p_User_ID", user.UserId);
+        //         cmd.Parameters.AddWithValue("p_Email_ID", user.EmailId);
+        //         cmd.Parameters.AddWithValue("p_UserPassword", user.UserPassword);
+        //         result = Convert.ToString(cmd.ExecuteNonQuery());
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         throw ex;
+        //     }
+        //     finally
+        //     {
+        //         conn.Close();
+        //     }
+        //     return result;
+        // }
+
+        public bool insertUserRole(int roleid, int userid)
+        {
+            bool result = false;
+            try
+            {
+                conn = DBConnection.getconnection();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_insertUserRole", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Role_ID", roleid);
+                cmd.Parameters.AddWithValue("p_User_ID", userid);
+                int res = cmd.ExecuteNonQuery();
+                if (res > 0)
+                {
+                    result = true;
+                }
+            }
+
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return result;
+        }
+
+        public bool insertUserGroupmember(int usergroupid, int userid)
+        {
+            bool result = false;
+            try
+            {
+                conn = DBConnection.getconnection();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_insertUserGroupMembers", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_User_ID", userid);
+                cmd.Parameters.AddWithValue("p_User_Group_ID",usergroupid );
+                int res = cmd.ExecuteNonQuery();
+                if (res > 0)
+                {
+                    result = true;
+                }
+            }
+
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return result;
+        }
     }
 }

@@ -20,6 +20,18 @@
   <wsdl:message name="IUserService_updateUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:updateUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IUserService_insertUserGroupmember_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertUserGroupmember" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_insertUserGroupmember_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertUserGroupmemberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_insertUserRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertUserRole" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_insertUserRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertUserRoleResponse" />
+  </wsdl:message>
   <wsdl:message name="IUserService_GetUserGroup_InputMessage">
     <wsdl:part name="parameters" element="tns:GetUserGroup" />
   </wsdl:message>
@@ -77,6 +89,14 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/updateUser" message="tns:IUserService_updateUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/updateUserResponse" message="tns:IUserService_updateUser_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="insertUserGroupmember">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/insertUserGroupmember" message="tns:IUserService_insertUserGroupmember_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/insertUserGroupmemberResponse" message="tns:IUserService_insertUserGroupmember_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="insertUserRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/insertUserRole" message="tns:IUserService_insertUserRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/insertUserRoleResponse" message="tns:IUserService_insertUserRole_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetUserGroup">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetUserGroup" message="tns:IUserService_GetUserGroup_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetUserGroupResponse" message="tns:IUserService_GetUserGroup_OutputMessage" />
@@ -123,6 +143,24 @@
     </wsdl:operation>
     <wsdl:operation name="updateUser">
       <soap:operation soapAction="http://tempuri.org/IUserService/updateUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="insertUserGroupmember">
+      <soap:operation soapAction="http://tempuri.org/IUserService/insertUserGroupmember" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="insertUserRole">
+      <soap:operation soapAction="http://tempuri.org/IUserService/insertUserRole" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
