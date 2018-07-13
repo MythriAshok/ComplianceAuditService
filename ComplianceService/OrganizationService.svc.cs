@@ -25,6 +25,7 @@ namespace ComplianceService
             try
             {
                 OrganizationHelper organizationhelper = new OrganizationHelper();
+
                 BranchLocationID = organizationhelper.insertupdateBranchLocation(branch, 'I');
                 if (BranchLocationID > 0)
                 {
@@ -94,7 +95,7 @@ namespace ComplianceService
             Organization org = new Organization();
             OrganizationHelper orgHelper = new OrganizationHelper();
             DataSet dsOrganization = orgHelper.getOrganizationHier(orgID);
-            string xmlOrganization =dsOrganization.GetXml();
+            string xmlOrganization = dsOrganization.GetXml();
             return xmlOrganization;
         }
 
@@ -202,7 +203,7 @@ namespace ComplianceService
                 OrganizationHelper organizationhelper = new OrganizationHelper();
                 inserBranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
                 insertOrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
-                if (inserBranchID != 0 || insertOrganizationID != 0 )
+                if (inserBranchID != 0 || insertOrganizationID != 0)
                 {
                     updateResult = true;
                 }
@@ -238,7 +239,7 @@ namespace ComplianceService
 
 
 
-        public string GetCountryList() 
+        public string GetCountryList()
         {
             return BindCountry();
         }
@@ -272,6 +273,18 @@ namespace ComplianceService
             DataSet dsCities = countryhelper.getCity(stateID);
             string xmlCities = dsCities.GetXml();
             return xmlCities;
+        }
+
+        public string GetGroupCompaniesList()
+        {
+            return BindGroupCompaniesList();
+        }
+        private string BindGroupCompaniesList()
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsGroupCompanies = OrganizationHelper.getGroupCompanyList();
+            string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
+            return xmlGroupCompaniesList;
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Compliance.DataObject;
 using System.Data;
+using System.Web.Mvc;
 
 namespace ComplianceAuditWeb.Models
 {
@@ -12,9 +13,9 @@ namespace ComplianceAuditWeb.Models
         public Organization organization { get; set; }
         public BranchLocation branch { get; set; }
         public CompanyDetails companydetails { get; set;}
-        public DataTable Country { get; set; }
-        public DataTable State { get; set; }
-        public DataTable City { get; set; }
+        public List<SelectListItem> Country { get; set; }
+        public List<SelectListItem> State { get; set; }
+        public List<SelectListItem> City { get; set; }
 
     }
     public enum Auditingfrequency

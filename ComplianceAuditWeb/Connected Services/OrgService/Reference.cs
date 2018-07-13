@@ -74,6 +74,18 @@ namespace ComplianceAuditWeb.OrgService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetCityList", ReplyAction="http://tempuri.org/IOrganizationService/GetCityListResponse")]
         System.Threading.Tasks.Task<string> GetCityListAsync(int stateID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/BindGroupCompaniesList", ReplyAction="http://tempuri.org/IOrganizationService/BindGroupCompaniesListResponse")]
+        string BindGroupCompaniesList();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/BindGroupCompaniesList", ReplyAction="http://tempuri.org/IOrganizationService/BindGroupCompaniesListResponse")]
+        System.Threading.Tasks.Task<string> BindGroupCompaniesListAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetGroupCompaniesList", ReplyAction="http://tempuri.org/IOrganizationService/GetGroupCompaniesListResponse")]
+        string GetGroupCompaniesList();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetGroupCompaniesList", ReplyAction="http://tempuri.org/IOrganizationService/GetGroupCompaniesListResponse")]
+        System.Threading.Tasks.Task<string> GetGroupCompaniesListAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -181,6 +193,22 @@ namespace ComplianceAuditWeb.OrgService {
         
         public System.Threading.Tasks.Task<string> GetCityListAsync(int stateID) {
             return base.Channel.GetCityListAsync(stateID);
+        }
+        
+        public string BindGroupCompaniesList() {
+            return base.Channel.BindGroupCompaniesList();
+        }
+        
+        public System.Threading.Tasks.Task<string> BindGroupCompaniesListAsync() {
+            return base.Channel.BindGroupCompaniesListAsync();
+        }
+        
+        public string GetGroupCompaniesList() {
+            return base.Channel.GetGroupCompaniesList();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetGroupCompaniesListAsync() {
+            return base.Channel.GetGroupCompaniesListAsync();
         }
     }
 }

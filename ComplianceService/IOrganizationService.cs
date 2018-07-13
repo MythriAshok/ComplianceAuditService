@@ -38,6 +38,11 @@ namespace ComplianceService
         string GetStateList(int countryID);
         [OperationContract]
         string GetCityList(int stateID);
+
+     
+       
+        [OperationContract]
+        string GetGroupCompaniesList();
     }
 }
 
