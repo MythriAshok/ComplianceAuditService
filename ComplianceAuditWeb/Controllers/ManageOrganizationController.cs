@@ -91,7 +91,7 @@ namespace ComplianceAuditWeb.Controllers
                 result = organizationClient.insertOrganization(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
                 if (result != false)
                 {
-                return View("View");
+                return RedirectToAction("AddCompany");
                 }
                 else
                 {
@@ -334,28 +334,17 @@ namespace ComplianceAuditWeb.Controllers
         [HttpGet]
         public ActionResult ListOfGroupCompanies()
         {
-            ListOfGroupCompanies grouplist = new ListOfGroupCompanies();
-            //IEnumerable<ListOfGroupCompanies> ListOfGroupCompanies = new IEnumerable<ListOfGroupCompanies>();
+            List<ListOfGroupCompanies> grouplist = new List<ListOfGroupCompanies>();
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
             string strxmlGroupCompanies = organizationservice.GetGroupCompaniesList();
-
-            grouplist.GroupCompanies = strxmlGroupCompanies.AsEnumerable(); // this needs to be cast
-
-            //(IEnumerable<ListOfGroupCompanies>) strxmlGroupCompanies.AsEnumerable();
-
-            
-            
-            //ListOfGroupCompanies.Add(grouplist);
-
-           // var List = strxmlGroupCompanies.AsEnumerable();
-
-            // ListOfGroupCompanies.Add()
             DataSet dsGroupCompaniesList = new DataSet();
             dsGroupCompaniesList.ReadXml(new StringReader(strxmlGroupCompanies));
-            
-            //ListOfGroupCompanies.CompanyName
-
-
+            foreach(System.Data.DataRow row in dsGroupCompaniesList.Tables[0].Rows)
+            {
+                ListOfGroupCompanies listOfGroup = new ListOfGroupCompanies { CompanyID = Convert.ToInt32(row[""]), CompanyName = row[""].ToString(),
+                    GroupCompanyLogo = row[""].ToString(), IndustryType = row[""].ToString() };
+                grouplist.Add(listOfGroup);
+            }          
             return View(grouplist);
         }
         [HttpPost]
