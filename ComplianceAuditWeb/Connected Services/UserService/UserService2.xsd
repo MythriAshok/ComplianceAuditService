@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:56172/UserService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Compliance.DataObject" />
+  <xs:import schemaLocation="http://localhost:56172/UserService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:element name="insertUser">
     <xs:complexType>
       <xs:sequence>
@@ -31,7 +32,9 @@
   </xs:element>
   <xs:element name="GetUserGroup">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Groupid" type="xs:int" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetUserGroupResponse">
@@ -43,7 +46,9 @@
   </xs:element>
   <xs:element name="GetRoles">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="flag" type="xs:int" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetRolesResponse">
@@ -63,7 +68,7 @@
   <xs:element name="insertRolesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="insertRolesResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="insertRolesResult" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -78,6 +83,21 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="updateRolesResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="insertRolePrivilege">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Roleid" type="xs:int" />
+        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Privilegeid" nillable="true" type="q5:ArrayOfint" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="insertRolePrivilegeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="insertRolePrivilegeResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -97,25 +117,29 @@
   </xs:element>
   <xs:element name="insertGroups">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="group" nillable="true" type="q6:UserGroup" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="insertGroupsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="insertGroupsResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="insertGroupsResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="updateGroups">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="group" nillable="true" type="q7:UserGroup" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="updateGroupsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="updateGroupsResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="updateGroupsResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

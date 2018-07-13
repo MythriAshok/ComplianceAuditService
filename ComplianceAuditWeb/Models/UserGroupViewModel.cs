@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Web.Mvc;
 using Compliance.DataObject;
 
 namespace ComplianceAuditWeb.Models
@@ -10,6 +10,8 @@ namespace ComplianceAuditWeb.Models
     {
         public UserGroup Group { get; set; }
         
-        public Roles Roles { get; set; }
+        public List<SelectListItem> Roles { get; set; }
+
+        public int[] RoleId { get; set; }
     }
 }

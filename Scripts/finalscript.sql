@@ -107,12 +107,12 @@ begin
 if(p_flag='I')
 then
 INSERT INTO `auditmoduledb`.`tbl_role`
-(`Role_ID`,
-`Role_Name`,
+(`Role_Name`,
 `Is_Active`,
 `Is_Group_Role`)
 VALUES
-(p_Role_ID,p_Role_Name,p_Is_Active,p_Is_Group_Role);
+(p_Role_Name,p_Is_Active,p_Is_Group_Role);
+select last_insert_id();
 else
 UPDATE `auditmoduledb`.`tbl_role`
 SET
@@ -120,9 +120,23 @@ SET
 `Is_Active` = p_Is_Active,
 `Is_Group_Role` = p_Is_Group_Role
 WHERE `Role_ID` = p_Role_ID ;
+select last_insert_id();
 end if;
 end /
 delimiter ;
+
+Drop procedure if exists `sp_insertRolePrivilege`;
+Delimiter /
+create procedure sp_insertRolePrivilege(p_Role_ID int,p_Privilege_ID int,p_Is_Active bit)
+begin
+INSERT INTO `auditmoduledb`.`tbl_role_priv_map`
+(`Is_Active`,
+`Role_ID`,
+`Privilege_ID`)
+VALUES
+(p_Is_Active,p_Role_ID,p_Privilege_ID);
+end /
+Delimiter ;
 
 Drop procedure if exists `auditmoduledb`.`sp_deleteRole`;
 Delimiter /
@@ -238,6 +252,14 @@ on a.Role_ID=b.Role_ID where a.Role_ID=p_Role_ID;
 end /
 Delimiter ;
 
+Drop procedure if exists `auditmoduledb`.`sp_getPrivilege`;
+Delimiter /
+create procedure sp_getPrivilege()
+begin
+select Privilege_ID,Privilege_Name,Privilege_Type,Is_Active from  tbl_privilege;
+end /
+Delimiter ;
+
 Drop procedure if exists `auditmoduledb`.`sp_getUserRole`;	
 Delimiter /
 create procedure sp_getUserRole(p_User_ID int)
@@ -246,18 +268,17 @@ select a.Role_ID,Role_Name from tbl_user_role_map a left join tbl_role b on a.Ro
 end /
 Delimiter ;
 
-Drop procedure if exists `auditmoduledb`.`sp_getUserRoleList`;
+Drop procedure if exists `auditmoduledb`.`sp_getRoleList`;
 Delimiter /
-create procedure sp_getUserRoleList()
+create procedure sp_getRoleList(p_flag int)
 begin
+if(p_flag=0)
+then
 select Role_ID,Role_Name from tbl_role where Is_Group_Role=0 and Is_Active=1;
+else
+select Role_ID,Role_Name from tbl_role where Is_Group_Role=1 and Is_Active=1;
+end if;
 end /
 Delimiter ;
 
-Drop procedure if exists `auditmoduledb`.`sp_getUserGroupRoleList`;
-Delimiter /
-create procedure sp_getUserGroupRoleList()
-begin
-select Role_ID,Role_Name from tbl_role where Is_Group_Role=1 and Is_Active=1;
-end /
-Delimiter ;
+

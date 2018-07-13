@@ -25,13 +25,13 @@ namespace ComplianceAuditWeb.Controllers
             UserService.UserServiceClient client = new UserService.UserServiceClient();
             string xmldata = client.GetPrivilege(0);
             DataSet ds = new DataSet();
-            ds.ReadXml(new StreamReader(xmldata));
-            DataTable dt = ds.Tables[0];
+            ds.ReadXml(new StringReader(xmldata));
             rolesView.privilege = new List<SelectListItem>();
-            foreach (System.Data.DataRow row in dt.Rows)
-            {
+            if (ds!=null)
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
                 rolesView.privilege.Add(new SelectListItem() { Text = row["Privilege_Name"].ToString(), Value = row["Privilege_ID"].ToString() });
-            }           
+                }            
             return View("_insertRole", rolesView);
         }
 
@@ -39,24 +39,32 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult insertRoles(RolesViewModel rolesView)
         {           
             UserService.UserServiceClient client = new UserService.UserServiceClient();
-            client.Open();
-            bool result=client.insertRoles(rolesView.roles);
-            client.Close();
-            return View();
+            int roleid=client.insertRoles(rolesView.roles);                        
+            client.insertRolePrivilege(roleid, rolesView.PrivilegeId);                                
+            return View("CreateUser");
         }
 
         [HttpGet]
         public ActionResult UserGroup()
         {
-            UserGroupViewModel userGroupView = new UserGroupViewModel();
-            UserService.UserServiceClient client = new UserService.UserServiceClient();
-            string xmldata = client.GetRoles();
-            return View("_insertRole");
+            UserGroupViewModel GroupView = new UserGroupViewModel();
+            UserService.UserServiceClient Client = new UserService.UserServiceClient();          
+            string xmldata = Client.GetRoles(0);
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            GroupView.Roles = new List<SelectListItem>();
+            GroupView.Roles.Add(new SelectListItem { Text = "--Select Roles--", Value = "0" });
+            foreach(System.Data.DataRow row in ds.Tables[0].Rows)
+            {
+                GroupView.Roles.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
+            }
+            return View("_insertUserGroup", GroupView);
         }
         [HttpPost]
-        public ActionResult UserGroup(UserGroupViewModel userGroupView)
-        {
-            
+        public ActionResult UserGroup(UserGroupViewModel GroupView)
+        {            
+            UserService.UserServiceClient Client = new UserService.UserServiceClient();           
+            Client.insertGroups(GroupView.Group);            
             return View();
         }
 
@@ -64,24 +72,32 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult CreateUser()
         {           
             UserViewModel userviewmodel = new UserViewModel();         
-            UserService.UserServiceClient userServiceClient = new UserService.UserServiceClient();
-            //string response = string.Empty;           
-            string xmlGroups=userServiceClient.GetUserGroup();
-            DataTable Groups = new DataTable();
+            UserService.UserServiceClient Client = new UserService.UserServiceClient();                              
+            string xmlGroups=Client.GetUserGroup(0);
+            DataSet Groups = new DataSet();
             Groups.ReadXml(new StringReader(xmlGroups));
-            userviewmodel.UserGroupList = (IEnumerable<UserGroup>)Groups.AsEnumerable();
-            //XmlDocument xmlCountries = new XmlDocument();
-            //xmlCountries.LoadXml(response);
-
-            //userviewmodel.UserGroup = userServiceClient.BindUserGroup();
-            //userServiceClient.BindUserRole(userviewmodel.roles);
-            return View(userviewmodel);
+            userviewmodel.UserGroupList = new List<SelectListItem>();
+            userviewmodel.UserGroupList.Add(new SelectListItem { Text = "--Select--", Value = "0" });
+            foreach (System.Data.DataRow row in Groups.Tables[0].Rows)
+            {
+                userviewmodel.UserGroupList.Add(new SelectListItem { Text = row["User_Group_Name"].ToString(), Value =row["User_Group_ID"].ToString() });
+            }
+            string xmlRoles=Client.GetRoles(0);
+            Groups.ReadXml(new StringReader(xmlRoles));
+            userviewmodel.RolesList= new List<SelectListItem>();
+            userviewmodel.RolesList.Add(new SelectListItem { Text = "--Select--", Value = "0" });
+            foreach (System.Data.DataRow row in Groups.Tables[0].Rows)
+            {
+                userviewmodel.RolesList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
+            }
+            return View("_insertUser", userviewmodel);
         }
         [HttpPost]
         public ActionResult CreateUser(UserViewModel userviewmodel)
         {
-            UserService.UserServiceClient userServiceClient = new UserService.UserServiceClient();
-            bool result=userServiceClient.insertUser(userviewmodel.User);            
+            UserService.UserServiceClient Client = new UserService.UserServiceClient();          
+            bool result=Client.insertUser(userviewmodel.User);
+           
             return View();
         }
 

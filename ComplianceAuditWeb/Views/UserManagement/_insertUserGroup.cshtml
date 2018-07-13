@@ -1,14 +1,20 @@
-﻿@model Compliance.DataObject.UserGroup
+﻿@model ComplianceAuditWeb.Models.UserGroupViewModel
 
-@Html.Label("GroupName");
-@Html.TextBoxFor(model => model.UserGroupName);
+@{ Layout = null;}
 
-@Html.Label("GroupDescription");
-@Html.TextBoxFor(model => model.UserGroupDescription);
+@using (Html.BeginForm())
+{
+    @Html.Label("GroupName")
+    @Html.TextBoxFor(model => model.Group.UserGroupName)
 
-@Html.Label("Role");
-@*@Html.ListBoxFor();*@
+    @Html.Label("GroupDescription")
+    @Html.TextBoxFor(model => model.Group.UserGroupDescription)
 
-@Html.LabelFor(model => model.IsActive);
-@Html.RadioButtonFor(model => model.IsActive, "Yes");
-@Html.RadioButtonFor(model => model.IsActive, "No");
+    @Html.Label("Role")
+    @Html.DropDownListFor(model => model.RoleId, Model.Roles)
+
+    @Html.Label("IsActive")
+    @Html.CheckBoxFor(model => model.Group.IsActive)
+
+    <input type="submit" value="Create" class="btn btn-default" />
+}

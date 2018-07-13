@@ -39,29 +39,43 @@ namespace ComplianceService
             string xmlgroups = userGroups.GetXml();
             return xmlgroups;
         }
-        public string GetRoles(int Roleid)
+        public string GetRoles(int flag)
         {
-            return BindRole(Roleid);
+            return BindRole(flag);
         }
-        private string BindRole(int Roleid)
+        private string BindRole(int flag)
         {
             UserRolesHelper helper = new UserRolesHelper();
-            DataSet roles = helper.getGroupRole();
+            DataSet roles = helper.getRoleList(flag);
             string xmlroles = roles.GetXml();
             return xmlroles;
         }
 
-        public bool insertRoles(Roles Role)
+        public int insertRoles(Roles Role)
         {
             UserRolesHelper helper = new UserRolesHelper();
-            bool res=helper.insertUpdateRole(Role, 'I');
+            int res=helper.insertUpdateRole(Role, 'I');
             return res;
         }
        
         public bool updateRoles(Roles Role)
         {
+            bool result=false;
             UserRolesHelper helper = new UserRolesHelper();
-            bool res=helper.insertUpdateRole(Role, 'U');
+            int res=helper.insertUpdateRole(Role, 'U');
+            if (res > 0)
+                result = true;
+            return result;
+        }
+
+        public bool insertRolePrivilege(int Roleid,int[] Privilegeid)
+        {
+            bool res = false;
+            UserRolesHelper helper = new UserRolesHelper();
+            foreach (var item in Privilegeid)
+            {
+              res=helper.insertRolePrivilege(Roleid, item);
+            }          
             return res;
         }
 
@@ -72,17 +86,21 @@ namespace ComplianceService
         private string BindPrivilege(int Roleid)
         {
             UserPrivilegeHelper helper = new UserPrivilegeHelper();
-            DataSet privilege = helper.getRolePrivilege(Roleid);
+            DataSet privilege = helper.getPrivilege();
             string xmlPrivilege = privilege.GetXml();
             return xmlPrivilege;
         }
-        public string insertGroups()
+        public bool insertGroups(UserGroup Group)
         {
-            return "";
+            UserGroupHelper helper = new UserGroupHelper();
+            bool res=helper.insertupdateUser(Group, 'I');
+            return res;
         }
-        public string updateGroups()
+        public bool updateGroups(UserGroup Group)
         {
-            return "";
+            UserGroupHelper helper = new UserGroupHelper();
+            bool res=helper.insertupdateUser(Group, 'U');
+            return res;
         }
     }
 }

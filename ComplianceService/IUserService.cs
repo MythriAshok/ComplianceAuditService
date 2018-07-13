@@ -19,16 +19,18 @@ namespace ComplianceService
         [OperationContract]
         string GetUserGroup(int Groupid);
         [OperationContract]
-        string GetRoles(int Roleid);
+        string GetRoles(int flag);
         [OperationContract]
-        bool insertRoles(Roles Role);
+        int insertRoles(Roles Role);
         [OperationContract]
         bool updateRoles(Roles Role);
         [OperationContract]
+        bool insertRolePrivilege(int Roleid, int[] Privilegeid);
+        [OperationContract]
         string GetPrivilege(int Roleid);
         [OperationContract]
-        string insertGroups();
+        bool insertGroups(UserGroup group);
         [OperationContract]
-        string updateGroups();
+        bool updateGroups(UserGroup group);
     }    
 }
