@@ -24,4 +24,14 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Roles" nillable="true" type="tns:Roles" />
+  <xs:complexType name="UserGroup">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
+      <xs:element minOccurs="0" name="UserGroupDescription" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserGroupId" type="xs:int" />
+      <xs:element minOccurs="0" name="UserGroupName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UserRoleId" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UserGroup" nillable="true" type="tns:UserGroup" />
 </xs:schema>

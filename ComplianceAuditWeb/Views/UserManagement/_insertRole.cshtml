@@ -1,15 +1,24 @@
 ﻿@model ComplianceAuditWeb.Models.RolesViewModel
 
-@Html.LabelFor(model=>model.roles.RoleName);
-@Html.TextBoxFor(model => model.roles.RoleName);
+@{ Layout = null;}
 
-@Html.LabelFor(model => model.roles.IsGroupRole);
-@Html.TextBoxFor(model => model.roles.IsGroupRole, "Yes");
-@Html.TextBoxFor(model => model.roles.IsGroupRole, "No");
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-@Html.LabelFor(model => model.roles.IsActive);
-@Html.CheckBoxFor(model => model.roles.IsActive);
+    @Html.LabelFor(model => model.roles.RoleName)
+    @Html.TextBoxFor(model => model.roles.RoleName)
 
+    @Html.LabelFor(model => model.roles.IsGroupRole)
+    @Html.CheckBoxFor(model => model.roles.IsGroupRole)
 
-@Html.DropDownListFor(model => model.privilege, Model.privilege);
+    @Html.LabelFor(model => model.roles.IsActive)
+    @Html.CheckBoxFor(model => model.roles.IsActive)
+
+    @Html.Label("Privilege")
+    @Html.ListBoxFor(m=>m.PrivilegeId, Model.privilege)
+
+    <input type="submit" value="Create" class="btn btn-default" />
+
+}
 

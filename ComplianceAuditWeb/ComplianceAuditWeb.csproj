@@ -154,6 +154,9 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Properties\DataSources\Compliance.DataObject.UserGroup.datasource" />
+    <None Include="Connected Services\UserService\UserService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
