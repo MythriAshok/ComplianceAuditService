@@ -33,11 +33,23 @@ namespace ComplianceAuditWeb.UserService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/getUser", ReplyAction="http://tempuri.org/IUserService/getUserResponse")]
         System.Threading.Tasks.Task<string> getUserAsync(int Userid);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/insertUserRole", ReplyAction="http://tempuri.org/IUserService/insertUserRoleResponse")]
-        bool insertUserRole(int Userid, int Roleid);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/getUserAssignedGroup", ReplyAction="http://tempuri.org/IUserService/getUserAssignedGroupResponse")]
+        string getUserAssignedGroup(int Userid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/getUserAssignedGroup", ReplyAction="http://tempuri.org/IUserService/getUserAssignedGroupResponse")]
+        System.Threading.Tasks.Task<string> getUserAssignedGroupAsync(int Userid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/getUserRoles", ReplyAction="http://tempuri.org/IUserService/getUserRolesResponse")]
+        string getUserRoles(int Userid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/getUserRoles", ReplyAction="http://tempuri.org/IUserService/getUserRolesResponse")]
+        System.Threading.Tasks.Task<string> getUserRolesAsync(int Userid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/insertUserRole", ReplyAction="http://tempuri.org/IUserService/insertUserRoleResponse")]
-        System.Threading.Tasks.Task<bool> insertUserRoleAsync(int Userid, int Roleid);
+        bool insertUserRole(int Userid, int[] Roleid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/insertUserRole", ReplyAction="http://tempuri.org/IUserService/insertUserRoleResponse")]
+        System.Threading.Tasks.Task<bool> insertUserRoleAsync(int Userid, int[] Roleid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/insertRoles", ReplyAction="http://tempuri.org/IUserService/insertRolesResponse")]
         int insertRoles(Compliance.DataObject.Roles Role);
@@ -70,10 +82,10 @@ namespace ComplianceAuditWeb.UserService {
         System.Threading.Tasks.Task<string> GetPrivilegeAsync(int Roleid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/insertUserGroupmember", ReplyAction="http://tempuri.org/IUserService/insertUserGroupmemberResponse")]
-        bool insertUserGroupmember(int Userid, int Groupid);
+        bool insertUserGroupmember(int Userid, int[] Groupid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/insertUserGroupmember", ReplyAction="http://tempuri.org/IUserService/insertUserGroupmemberResponse")]
-        System.Threading.Tasks.Task<bool> insertUserGroupmemberAsync(int Userid, int Groupid);
+        System.Threading.Tasks.Task<bool> insertUserGroupmemberAsync(int Userid, int[] Groupid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/insertGroups", ReplyAction="http://tempuri.org/IUserService/insertGroupsResponse")]
         bool insertGroups(Compliance.DataObject.UserGroup group);
@@ -145,11 +157,27 @@ namespace ComplianceAuditWeb.UserService {
             return base.Channel.getUserAsync(Userid);
         }
         
-        public bool insertUserRole(int Userid, int Roleid) {
+        public string getUserAssignedGroup(int Userid) {
+            return base.Channel.getUserAssignedGroup(Userid);
+        }
+        
+        public System.Threading.Tasks.Task<string> getUserAssignedGroupAsync(int Userid) {
+            return base.Channel.getUserAssignedGroupAsync(Userid);
+        }
+        
+        public string getUserRoles(int Userid) {
+            return base.Channel.getUserRoles(Userid);
+        }
+        
+        public System.Threading.Tasks.Task<string> getUserRolesAsync(int Userid) {
+            return base.Channel.getUserRolesAsync(Userid);
+        }
+        
+        public bool insertUserRole(int Userid, int[] Roleid) {
             return base.Channel.insertUserRole(Userid, Roleid);
         }
         
-        public System.Threading.Tasks.Task<bool> insertUserRoleAsync(int Userid, int Roleid) {
+        public System.Threading.Tasks.Task<bool> insertUserRoleAsync(int Userid, int[] Roleid) {
             return base.Channel.insertUserRoleAsync(Userid, Roleid);
         }
         
@@ -193,11 +221,11 @@ namespace ComplianceAuditWeb.UserService {
             return base.Channel.GetPrivilegeAsync(Roleid);
         }
         
-        public bool insertUserGroupmember(int Userid, int Groupid) {
+        public bool insertUserGroupmember(int Userid, int[] Groupid) {
             return base.Channel.insertUserGroupmember(Userid, Groupid);
         }
         
-        public System.Threading.Tasks.Task<bool> insertUserGroupmemberAsync(int Userid, int Groupid) {
+        public System.Threading.Tasks.Task<bool> insertUserGroupmemberAsync(int Userid, int[] Groupid) {
             return base.Channel.insertUserGroupmemberAsync(Userid, Groupid);
         }
         

@@ -24,35 +24,7 @@ namespace Compliance.DataAccess
    public class UserRolesHelper
     {
         MySqlConnection conn = new MySqlConnection();
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="RoleID"></param>
-        /// <returns></returns>
-        public DataSet getUserRole(int RoleID)
-        {
-            DataSet dtUser = new DataSet();
-            try
-            {
-                conn = DBConnection.getconnection();
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getUserRole", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_User_Group_ID", RoleID);
-                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                adapter.Fill(dtUser);
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                conn.Close();
-            }
-
-            return dtUser;
-        }
+        
         /// <summary>
         /// This method is used to call the storeprocedure 'sp_getRoleList' by passing flag value 
         /// </summary>

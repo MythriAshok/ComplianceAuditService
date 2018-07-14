@@ -1,4 +1,15 @@
-﻿using System;
+﻿#region Code History
+/*CODE HISTORY
+ * ============================================================================================================
+ *  Version No      DATE       Developer Name        Description
+ * ===========================================================================================================
+ *  1.0          28-06-2018    Ojeshwini H P        DataAccess Layer for Menu Table
+ *                                                  It consists of the methods getMenus().
+ *  
+ */
+#endregion
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,10 +22,15 @@ namespace Compliance.DataAccess
 {
     public class MenusHelper
     {
-        MySqlConnection conn = new MySqlConnection();       
-        public DataTable getMenus(int User_Group_ID)
+        MySqlConnection conn = new MySqlConnection();
+        /// <summary>
+        /// This method will return the Dataset of Menus table associated with User_Group_ID by executing the 'sp_getMenus' storeProcedure.
+        /// </summary>
+        /// <param name="User_Group_ID">UserGroupId is a type of int</param>
+        /// <returns>Dataset of Menus Table</returns>
+        public DataSet getMenus(int User_Group_ID)
         {
-            DataTable dtMenu = new DataTable();
+            DataSet dtMenu = new DataSet();
             try
             {
                 conn = DBConnection.getconnection();

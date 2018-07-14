@@ -33,10 +33,10 @@
     @Html.TextBoxFor(m => m.User.ContactNumber)
 
     @Html.Label("UserGroup")
-    @Html.DropDownListFor(m => m.UserGroupID, Model.UserGroupList)
+    @Html.ListBoxFor(m => m.UserGroupID, Model.UserGroupList)
 
     @Html.Label("Roles")
-    @Html.DropDownListFor(m => m.RoleID, Model.RolesList)
+    @Html.ListBoxFor(m => m.RoleID, Model.RolesList)
 
     <input type="submit" value="Create" class="btn btn-default" />
 

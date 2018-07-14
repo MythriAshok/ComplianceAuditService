@@ -94,7 +94,7 @@ SELECT `tbl_user`.`User_ID`,
     `tbl_user`.`Gender`,
     `tbl_user`.`Is_Active`,
     `tbl_user`.`Last_Login`
-FROM `auditmoduledb`.`tbl_user`
+FROM `auditmoduledb`.`tbl_user` as a
 where User_ID = p_User_ID;
 end if;
 end /
@@ -216,6 +216,17 @@ WHERE `User_Group_ID` = p_User_Group_ID;
 end if;
 end /
 delimiter ;
+
+Drop procedure if exists `auditmoduledb`.`sp_getUserassignedGroup`;
+Delimiter /
+create procedure sp_getUserassignedGroup(p_User_ID int)
+begin
+SELECT a.User_Group_ID,a.User_Group_Name
+FROM `auditmoduledb`.`tbl_user_group` a left join tbl_user_group_members b on a.User_Group_ID=b.User_Group_ID
+WHERE b.User_ID =p_User_ID ;
+end /
+delimiter ;
+
 
 Drop procedure if exists `auditmoduledb`.`sp_getMenus`;
 Delimiter /

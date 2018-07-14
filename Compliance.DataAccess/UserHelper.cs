@@ -276,6 +276,64 @@ namespace Compliance.DataAccess
                 conn.Close();
             }
             return result;
+        }        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UserID"></param>
+        /// <returns></returns>
+        public DataSet getUserRole(int Userid)
+        {
+            DataSet dtUser = new DataSet();
+            try
+            {
+                conn = DBConnection.getconnection();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getUserRole", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_User_ID", Userid);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtUser);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return dtUser;
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="RoleID"></param>
+        /// <returns></returns>
+        public DataSet getUserAssignedGroup(int Userid)
+        {
+            DataSet dtUser = new DataSet();
+            try
+            {
+                conn = DBConnection.getconnection();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getUserassignedGroup", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_User_ID", Userid);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtUser);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return dtUser;
         }
     }
 }
