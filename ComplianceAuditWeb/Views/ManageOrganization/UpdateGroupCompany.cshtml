@@ -17,11 +17,12 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
 
-                @*@Html.LabelFor(m => m.CountryList);
-                    @Html.DropDownList("Country", Model.CountryList as SelectList);*@
+                @Html.LabelFor(m => m.organization.Is_Active);
+                @Html.CheckBoxFor(m => m.organization.Is_Active);
 
 
-                @*@Html.DropDownListFor(m => m.CountryList,(IEnumerable<SelectListItem>) ViewBag.CountryList, "-- Select Country--" );*@
+
+
 
                 @Html.Partial("_Organization", Model);
             </div>

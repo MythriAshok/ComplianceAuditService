@@ -19,7 +19,7 @@ namespace Compliance.DataObject
         public DateTime Calender_EndDate  { get; set; }
         public string Auditing_Frequency { get; set; }
         public string Website { get; set; }
-        public int Company_EmailID { get; set; }
+        public string Company_EmailID { get; set; }
         public string Company_ContactNumber1 { get; set; }
         public string Company_ContactNumber2  { get; set; }
         public bool Is_Active  { get; set; }
