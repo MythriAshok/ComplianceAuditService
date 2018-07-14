@@ -27,7 +27,18 @@ namespace ComplianceService
             string res = helper.insertupdateUser(Objuser, 'U');
             return true;
         }
+        public string getUser(int Userid)
+        {
+            return BindUser(Userid);
+        }
 
+        private string BindUser(int Userid)
+        {
+            UserHelper helper = new UserHelper();
+            DataSet ds = helper.getUser(Userid);
+            string xmldata = ds.GetXml();
+            return xmldata;
+        }
         public string GetUserGroup(int Groupid)
         {
             return BindUserGroup(Groupid);

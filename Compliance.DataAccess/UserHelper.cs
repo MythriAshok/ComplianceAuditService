@@ -3,10 +3,9 @@
  * ============================================================================================================
  *  Version No      DATE       Developer Name        Description
  * ===========================================================================================================
- *  1.0          28-06-2018    Ojeshwini H P        DataAccess Layer for User DataTable
- *                                                  insertupdateUser method
- *                                                  DeleteUser method
- *                                                  getUser method
+ *  1.0          28-06-2018    Ojeshwini H P        DataAccess Layer for User Table
+ *                                                  It consists of the methods insertupdateUser(),DeleteUser()
+ *                                                  getUser(),getLoginData(),insertUserRole() and insertUserGroupmember().
  *  
  */
 #endregion
@@ -70,7 +69,7 @@ namespace Compliance.DataAccess
         }
 
         /// <summary>
-        /// 
+        /// This method will interact with the User Table and updates the Is_active column to 0 for the given userid
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
@@ -79,15 +78,18 @@ namespace Compliance.DataAccess
             bool result = false;
             try
             {
-                conn = DBConnection.getconnection();
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_createuser", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_User_ID", userId);
-                int res = cmd.ExecuteNonQuery();
-                if (res > 0)
+                if (userId > 0)
                 {
-                    result = true;
+                    conn = DBConnection.getconnection();
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("sp_createuser", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("p_User_ID", userId);
+                    int res = cmd.ExecuteNonQuery();
+                    if (res > 0)
+                    {
+                        result = true;
+                    }
                 }
             }
             catch
@@ -107,9 +109,9 @@ namespace Compliance.DataAccess
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public DataTable getUser(int userId)
+        public DataSet getUser(int userId)
         {
-            DataTable dtUser = new DataTable();
+            DataSet dtUser = new DataSet();
             try
             {
                 conn = DBConnection.getconnection();
@@ -169,9 +171,9 @@ namespace Compliance.DataAccess
         //    return LoginID;
         //}
 
-        public DataTable getLoginData(User user)
+        public DataSet getLoginData(User user)
         {
-            DataTable dt = new DataTable();
+            DataSet dt = new DataSet();
             try
             {
                 conn.Open();

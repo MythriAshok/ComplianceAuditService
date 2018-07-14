@@ -1,5 +1,7 @@
 ﻿@model ComplianceAuditWeb.Models.UserViewModel
 
+@{ Layout = null;}
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -17,8 +19,11 @@
     @Html.TextBoxFor(m => m.User.EmailId)
 
     @Html.Label("Gender")
+    @Html.Label("Male")
     @Html.RadioButtonFor(m => m.User.Gender, "Male")
+    @Html.Label("Female")
     @Html.RadioButtonFor(m => m.User.Gender, "Female")
+    @Html.Label("Others")
     @Html.RadioButtonFor(m => m.User.Gender, "Others")
 
     @Html.Label("Password")
@@ -28,10 +33,10 @@
     @Html.TextBoxFor(m => m.User.ContactNumber)
 
     @Html.Label("UserGroup")
-    @Html.ListBoxFor(m => m.UserGroupID, Model.UserGroupList)
+    @Html.DropDownListFor(m => m.UserGroupID, Model.UserGroupList)
 
     @Html.Label("Roles")
-    @Html.ListBoxFor(m => m.RoleID, Model.RolesList)
+    @Html.DropDownListFor(m => m.RoleID, Model.RolesList)
 
     <input type="submit" value="Create" class="btn btn-default" />
 

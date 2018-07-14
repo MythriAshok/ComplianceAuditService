@@ -4,7 +4,7 @@
  *  Version No      DATE       Developer Name        Description
  * ===========================================================================================================
  *  1.0          28-06-2018    Ojeshwini H P        DataAccess Layer for UserPrivilege
- *                                                  The methods defined here are getRolePrivilege
+ *                                                  The methods defined here are getRolePrivilege() and getPrivilege().
  *  
  */
 #endregion
@@ -52,7 +52,10 @@ namespace Compliance.DataAccess
             }
             return dtmenus;
         }
-
+        /// <summary>
+        /// This method will interact with the Privilege table using the storeprocedure "sp_getPrivilege" and returns whole table as Dataset.
+        /// </summary>
+        /// <returns>Dataset of Privilege Table</returns>
         public DataSet getPrivilege()
         {
             DataSet dtmenus = new DataSet();

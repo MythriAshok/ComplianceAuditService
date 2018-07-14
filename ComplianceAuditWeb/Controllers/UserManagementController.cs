@@ -49,7 +49,7 @@ namespace ComplianceAuditWeb.Controllers
         {
             UserGroupViewModel GroupView = new UserGroupViewModel();
             UserService.UserServiceClient Client = new UserService.UserServiceClient();          
-            string xmldata = Client.GetRoles(0);
+            string xmldata = Client.GetRoles(1);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             GroupView.Roles = new List<SelectListItem>();
@@ -65,7 +65,7 @@ namespace ComplianceAuditWeb.Controllers
         {            
             UserService.UserServiceClient Client = new UserService.UserServiceClient();           
             Client.insertGroups(GroupView.Group);            
-            return View();
+            return View("CreateUser");
         }
 
         [HttpGet]
@@ -83,10 +83,11 @@ namespace ComplianceAuditWeb.Controllers
                 userviewmodel.UserGroupList.Add(new SelectListItem { Text = row["User_Group_Name"].ToString(), Value =row["User_Group_ID"].ToString() });
             }
             string xmlRoles=Client.GetRoles(0);
-            Groups.ReadXml(new StringReader(xmlRoles));
+            DataSet dsRoles = new DataSet();
+            dsRoles.ReadXml(new StringReader(xmlRoles));
             userviewmodel.RolesList= new List<SelectListItem>();
             userviewmodel.RolesList.Add(new SelectListItem { Text = "--Select--", Value = "0" });
-            foreach (System.Data.DataRow row in Groups.Tables[0].Rows)
+            foreach (System.Data.DataRow row in dsRoles.Tables[0].Rows)
             {
                 userviewmodel.RolesList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
             }
@@ -103,9 +104,28 @@ namespace ComplianceAuditWeb.Controllers
                 Client.insertUserGroupmember(model.User.UserId, model.UserGroupID);
                 Client.insertUserRole(model.User.UserId, model.RoleID);
             }
-            return View();
+            return View("CreateUser");
+        }
+        [HttpGet]
+        public ActionResult UpdateUser(int userid)
+        {
+            UserViewModel model = new UserViewModel();
+            UserService.UserServiceClient Client = new UserService.UserServiceClient();
+            string res = Client.getUser(userid);
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(res));
+            model.User.FirstName = Convert.ToString(ds.Tables[0].Rows[0]["First_Name"]);
+            model.User.MiddleName= Convert.ToString(ds.Tables[0].Rows[0]["Middle_Name"]);
+            model.User.LastName= Convert.ToString(ds.Tables[0].Rows[0]["Last_Name"]);
+            model.User.ContactNumber= Convert.ToString(ds.Tables[0].Rows[0]["Contact_Number"]);
+            model.User.EmailId= Convert.ToString(ds.Tables[0].Rows[0]["Email_ID"]);
+            model.User.Gender= Convert.ToString(ds.Tables[0].Rows[0]["Gender"]);
+            model.User.LastLogin= Convert.ToDateTime(ds.Tables[0].Rows[0]["Last_Login"]);
+            
+            return View("CreateUser");
         }
 
-       
+
+
     }
 }

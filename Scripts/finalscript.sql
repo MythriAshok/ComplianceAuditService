@@ -22,7 +22,7 @@ p_Is_Active bit
 begin
 if(p_flag='I')
 then
-if exists(select Email_ID from `auditmoduledb`.`tbl_user` where Email_ID=EmailID)
+if exists(select Email_ID from `auditmoduledb`.`tbl_user` where Email_ID=p_Email_ID)
 then
 select "EXISTS";
 else
@@ -173,8 +173,8 @@ delimiter ;
 
 Drop procedure if exists `auditmoduledb`.`sp_insertupdateUserGroup`;
 Delimiter /
-create procedure sp_insertupdateUserGroup(p_flag char(1),User_Group_ID int,p_User_Group_Name varchar(45),
-User_Group_Description varchar(45),p_Role_ID int)
+create procedure sp_insertupdateUserGroup(p_flag char(1),p_User_Group_ID int,p_User_Group_Name varchar(45),
+p_User_Group_Description varchar(45),p_Role_ID int)
 begin
 if(p_flag='I')
 then
@@ -298,8 +298,7 @@ Delimiter /
 create procedure sp_insertUserGroupMembers(p_User_ID int,p_User_Group_ID int)
 begin
 INSERT INTO `auditmoduledb`.`tbl_user_group_members`
-(`User_Group_Members_ID`,
-`User_ID`,
+(`User_ID`,
 `User_Group_ID`)
 VALUES
 (p_User_ID,p_User_Group_ID);

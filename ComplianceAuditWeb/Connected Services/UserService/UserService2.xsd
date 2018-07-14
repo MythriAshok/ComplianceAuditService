@@ -30,18 +30,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="insertUserGroupmember">
+  <xs:element name="getUser">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="Userid" type="xs:int" />
-        <xs:element minOccurs="0" name="Groupid" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="insertUserGroupmemberResponse">
+  <xs:element name="getUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="insertUserGroupmemberResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="getUserResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -57,34 +56,6 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="insertUserRoleResult" type="xs:boolean" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetUserGroup">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="Groupid" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetUserGroupResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="GetUserGroupResult" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetRoles">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="flag" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetRolesResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="GetRolesResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -113,6 +84,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="updateRolesResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRoles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="flag" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRolesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetRolesResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -145,6 +130,21 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="insertUserGroupmember">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Userid" type="xs:int" />
+        <xs:element minOccurs="0" name="Groupid" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="insertUserGroupmemberResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="insertUserGroupmemberResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="insertGroups">
     <xs:complexType>
       <xs:sequence>
@@ -170,6 +170,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="updateGroupsResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserGroup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Groupid" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserGroupResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetUserGroupResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
