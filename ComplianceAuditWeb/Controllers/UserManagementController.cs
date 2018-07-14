@@ -161,11 +161,5 @@ namespace ComplianceAuditWeb.Controllers
             return View("CreateUser");
         }
 
-        [HttpGet]
-        public ActionResult ListofUsers()
-        {
-
-        }
-
     }
 }
