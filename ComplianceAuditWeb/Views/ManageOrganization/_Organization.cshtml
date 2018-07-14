@@ -14,14 +14,12 @@
     @Html.LabelFor(m => m.organization.Industry_Type);
     @Html.TextBoxFor(m => m.organization.Industry_Type);
 
-    @Html.LabelFor(m => m.organization.Is_Active);
-    @Html.CheckBoxFor(m => m.organization.Is_Active);
+ 
 
     @Html.LabelFor(m => m.organization.Last_Updated_Date);
     @Html.TextBoxFor(m => m.organization.Last_Updated_Date);
 
-    @Html.LabelFor(m => m.organization.Parent_Company_Id);
-    @Html.TextBoxFor(m => m.organization.Parent_Company_Id);
+   
 
     @Html.LabelFor(m => m.organization.User_Id);
     @Html.TextBoxFor(m => m.organization.User_Id);
@@ -35,8 +33,7 @@
     @Html.LabelFor(m => m.companydetails.Website);
     @Html.TextBoxFor(m => m.companydetails.Website);
 
-    @Html.LabelFor(m => m.companydetails.Is_Active);
-    @Html.CheckBoxFor(m => m.companydetails.Is_Active);
+ 
 
     @Html.LabelFor(m => m.companydetails.Company_EmailID);
     @Html.TextBoxFor(m => m.companydetails.Company_EmailID);
@@ -79,8 +76,7 @@
     @Html.Label("Country")
     @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country);
 
-    @*@Html.LabelFor(m => m.Country);
-    @Html.DropDownListFor(model => model.Country, Model.Country);*@
+ 
 
     @Html.LabelFor(m => m.State);
     @Html.DropDownListFor(m => m.branch.State_Id, Model.State);

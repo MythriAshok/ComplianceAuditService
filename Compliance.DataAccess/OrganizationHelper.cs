@@ -9,9 +9,21 @@ using Compliance.DataObject;
 
 namespace Compliance.DataAccess
 {
+    /// <summary>
+    /// Organization Helper class to interact with database stored procedures
+    /// </summary>
     public class OrganizationHelper
     {
+        /// <summary>
+        /// fetching the MySql Connection from DBConnection class
+        /// </summary>
         MySqlConnection conn = DBConnection.getconnection();
+        /// <summary>
+        /// A method to insert or update the branch location in the database using parameter char(Flag)
+        /// </summary>
+        /// <param name="branchLocation"></param>
+        /// <param name="Flag"></param>
+        /// <returns>BranchLocationID</returns>
         public int insertupdateBranchLocation(BranchLocation branchLocation, char Flag)
         {
             int BranchLocationId = 0;
@@ -22,21 +34,17 @@ namespace Compliance.DataAccess
                     conn.Open();
                     MySqlCommand cmd = new MySqlCommand("sp_insertupdateBranchLocation", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    //cmd.Parameters.AddWithValue("p_Flag ", Flag);
                     cmd.Parameters.Add("p_Flag", MySqlDbType.VarChar, 1).Value = Flag;
                     cmd.Parameters.Add("p_Location_ID", MySqlDbType.Int32).Value= branchLocation.Branch_Id;
                     cmd.Parameters.Add("p_Location_Name", MySqlDbType.VarChar, 75).Value = branchLocation.Branch_Name;
-
                     cmd.Parameters.Add("p_Address", MySqlDbType.VarChar, 450).Value = branchLocation.Address;
                     cmd.Parameters.Add("p_Country_ID", MySqlDbType.Int32).Value = branchLocation.Country_Id;
                     cmd.Parameters.Add("p_State_ID", MySqlDbType.Int32).Value = branchLocation.State_Id;
                     cmd.Parameters.Add("p_City_ID", MySqlDbType.Int32).Value = branchLocation.City_Id;
-
                     cmd.Parameters.Add("p_Postal_Code", MySqlDbType.Int32).Value = branchLocation.Postal_Code;
                     cmd.Parameters.Add("p_Branch_Coordinates1", MySqlDbType.VarChar,100).Value = branchLocation.Branch_Coordinates1;
                     cmd.Parameters.Add("p_Branch_Coordinates2", MySqlDbType.VarChar,100).Value = branchLocation.Branch_Coordinates2;
                     cmd.Parameters.Add("p_Branch_CoordinateURL", MySqlDbType.VarChar,100).Value = branchLocation.Branch_CoordinatesURL;
-                    // MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                     object objbranchlocationid = cmd.ExecuteScalar();
                     if (objbranchlocationid != null)
                     {
@@ -54,7 +62,11 @@ namespace Compliance.DataAccess
             }
             return BranchLocationId;
         }
-
+        /// <summary>
+        /// A method to fetch the dataset of BranchLOcation from the database
+        /// </summary>
+        /// <param name="Branch_Location_Id"></param>
+        /// <returns>dataset of BranchLocation</returns>
         public DataSet getBranchLocation(int Branch_Location_Id)
         {
             DataSet dsBranchLocation = new DataSet();
@@ -63,8 +75,6 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getBranchLocation", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                // cmd.Parameters.Add("p_CountryID", MySqlDbType.Int32).Value = CountryID;
-                //cmd.Parameters.Add("p_StateID", MySqlDbType.Int32).Value = StateId;
                 cmd.Parameters.Add("p_Location_ID", MySqlDbType.Int32).Value = Branch_Location_Id;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsBranchLocation);
@@ -79,7 +89,11 @@ namespace Compliance.DataAccess
             }
             return dsBranchLocation;
         }
-
+        /// <summary>
+        /// A method to delete the records in the BranchLocation Table in database
+        /// </summary>
+        /// <param name="Branch_Location_Id"></param>
+        /// <returns>boolean value</returns>
         public bool deleteBranchLocation(int Branch_Location_Id)
         {
             bool resultBranchLocation = false;
@@ -88,8 +102,6 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_deleteBranchLocation", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                // cmd.Parameters.Add("p_CountryID", MySqlDbType.Int32).Value = CountryID;
-                //cmd.Parameters.Add("p_StateID", MySqlDbType.Int32).Value = StateId;
                 cmd.Parameters.Add("p_Location_ID", MySqlDbType.Int32).Value = Branch_Location_Id;
                 object resultCount = cmd.ExecuteScalar();
                 if (resultCount != null)
@@ -107,7 +119,12 @@ namespace Compliance.DataAccess
             }
             return resultBranchLocation;
         }
-
+        /// <summary>
+        /// A method to insert or update the data of Organization in the database by passing char(Flag)
+        /// </summary>
+        /// <param name="org"></param>
+        /// <param name="Flag"></param>
+        /// <returns>OrganizationID</returns>
         public int insertupdateOrganizationHier(Organization org, char Flag)
         {
             int OrganizationId = 0;
@@ -116,7 +133,8 @@ namespace Compliance.DataAccess
                 if (org != null)
                 {
                     conn.Open();
-                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateOrganizationHier", conn);
+                    MySqlTransaction tran= conn.BeginTransaction();
+                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateOrganizationHier", conn,tran);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("p_Flag", Flag);
                     cmd.Parameters.AddWithValue("p_Org_Hier_ID", org.Organization_Id);
@@ -137,6 +155,7 @@ namespace Compliance.DataAccess
                     {
                         OrganizationId = Convert.ToInt32(objorganizationid);
                     }
+                    tran.Commit();
                 }
             }
             catch
@@ -149,21 +168,22 @@ namespace Compliance.DataAccess
             }
             return OrganizationId;
         }
-
+        /// <summary>
+        /// A method to fetch the dataset Organization data from the database
+        /// </summary>
+        /// <param name="OrgID"></param>
+        /// <returns>dataset of Organization</returns>
         public DataSet getOrganizationHier(int OrgID)
         {
             DataSet dsOrganization = new DataSet();
             try
             {
                 conn.Open();
-               // MySqlTransaction tran= conn.BeginTransaction();
-              //  MySqlCommand cmd = new MySqlCommand("sp_getOrganizationHierJoin", conn,tran);
                 MySqlCommand cmd = new MySqlCommand("sp_getOrganizationHierJoin", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID", OrgID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsOrganization);
-               // tran.Commit();
             }
             catch
             {
@@ -175,7 +195,11 @@ namespace Compliance.DataAccess
             }
             return dsOrganization;
         }
-
+        /// <summary>
+        /// A method to delete the records of Organization table in the database
+        /// </summary>
+        /// <param name="Org_Hier_ID"></param>
+        /// <returns>boolean value</returns>
         public bool deleteOrganizationHier(int Org_Hier_ID)
         {
             bool resultOrganization = false;
@@ -201,8 +225,12 @@ namespace Compliance.DataAccess
             }
             return resultOrganization;
         }
-
-
+        /// <summary>
+        /// Method to insert or update the CompanyDetails in the database using char(Flag)
+        /// </summary>
+        /// <param name="details"></param>
+        /// <param name="Flag"></param>
+        /// <returns>CompanyDetailsID</returns>
         public int insertupdateCompanyDetails(CompanyDetails details, char Flag)
         {
             int CompanyDetailsId = 0;
@@ -226,7 +254,6 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Company_ContactNumber1", details.Company_ContactNumber1);
                     cmd.Parameters.AddWithValue("p_Company_ContactNumber2", details.Company_ContactNumber2);
                     cmd.Parameters.AddWithValue("p_Is_Active", details.Is_Active);
-                    // MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                     object objcompanydetailsid = cmd.ExecuteScalar();
                     if (objcompanydetailsid != null)
                     {
@@ -244,7 +271,11 @@ namespace Compliance.DataAccess
             }
             return CompanyDetailsId;
         }
-
+        /// <summary>
+        /// Method to fetch the dataset of CompanyDetails from the database 
+        /// </summary>
+        /// <param name="CompanyDetailsId"></param>
+        /// <returns>dataset of CompanyDetails</returns>
         public DataSet getCompanyDetails(int CompanyDetailsId)
         {
             DataSet dsCompanyDetails = new DataSet();
@@ -267,9 +298,11 @@ namespace Compliance.DataAccess
             }
             return dsCompanyDetails;
         }
-
-       
-
+        /// <summary>
+        /// Method to delete the record of CompanyDetails table in the database
+        /// </summary>
+        /// <param name="Company_Details_Id"></param>
+        /// <returns>boolean value</returns>
         public bool deleteCompanyDetails(int Company_Details_Id)
         {
             bool resultCompanyDetails = false;
@@ -295,9 +328,10 @@ namespace Compliance.DataAccess
             }
             return resultCompanyDetails;
         }
-       
-
-
+        /// <summary>
+        /// A method to get the list of all GroupCompanies present in the database
+        /// </summary>
+        /// <returns>dataset of all groupcompanies present in the database</returns>
         public DataSet getGroupCompanyList()
         {
             DataSet dsGroupCompaniesList = new DataSet();
@@ -306,7 +340,6 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getGroupCompaniesList", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                // cmd.Parameters.AddWithValue("p_Company_Details_ID ", CompanyDetailsId);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsGroupCompaniesList);
             }
