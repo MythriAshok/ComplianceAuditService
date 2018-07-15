@@ -1,5 +1,7 @@
 ﻿@model ComplianceAuditWeb.Models.UserViewModel
 
+@{ Layout = null;}
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -17,8 +19,11 @@
     @Html.TextBoxFor(m => m.User.EmailId)
 
     @Html.Label("Gender")
+    @Html.Label("Male")
     @Html.RadioButtonFor(m => m.User.Gender, "Male")
+    @Html.Label("Female")
     @Html.RadioButtonFor(m => m.User.Gender, "Female")
+    @Html.Label("Others")
     @Html.RadioButtonFor(m => m.User.Gender, "Others")
 
     @Html.Label("Password")

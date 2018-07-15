@@ -3,15 +3,14 @@
  * ============================================================================================================
  *  Version No      DATE       Developer Name        Description
  * ===========================================================================================================
- *  1.0          28-06-2018    Ojeshwini H P        DataAccess Layer for User DataTable
- *                                                  insertupdateUser method
- *                                                  DeleteUser method
- *                                                  getUser method
+ *  1.0          28-06-2018    Ojeshwini H P        DataAccess Layer for Role Table
+ *                                                  It constists the method getUserRole(),getRoleList(),insertUpdateRole(),
+ *                                                  and insertRolePrivilege().                                                  
  *  
  */
 #endregion
- 
- using System;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,36 +24,12 @@ namespace Compliance.DataAccess
    public class UserRolesHelper
     {
         MySqlConnection conn = new MySqlConnection();
-
-        public DataSet getUserRole(int RoleID)
-        {
-            DataSet dtUser = new DataSet();
-            try
-            {
-                conn = DBConnection.getconnection();
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getUserRole", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_User_Group_ID", RoleID);
-                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                adapter.Fill(dtUser);
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                conn.Close();
-            }
-
-            return dtUser;
-        }
+        
         /// <summary>
-        /// 
+        /// This method is used to call the storeprocedure 'sp_getRoleList' by passing flag value 
         /// </summary>
-        /// <param name="flag">Pass zero to get Dataset of UserRoles and 1 for Dataset of GroupRoles</param>
-        /// <returns></returns>
+        /// <param name="flag">Pass 0 to get Dataset of UserRoles and 1 for Dataset of GroupRoles</param>
+        /// <returns>Dataset of Roles Table</returns>
         public DataSet getRoleList(int flag)
         {
             DataSet dtUser = new DataSet();
@@ -79,7 +54,12 @@ namespace Compliance.DataAccess
 
             return dtUser;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roles"></param>
+        /// <param name="flag"></param>
+        /// <returns></returns>
         public int insertUpdateRole(Roles roles,char flag)
         {
             int roleid = 0;
@@ -111,7 +91,12 @@ namespace Compliance.DataAccess
             }
             return roleid;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="roleid"></param>
+        /// <param name="privilegeid"></param>
+        /// <returns></returns>
         public bool insertRolePrivilege(int roleid, int privilegeid)
         {
             bool result = false;

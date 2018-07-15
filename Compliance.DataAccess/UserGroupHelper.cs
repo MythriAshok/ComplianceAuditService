@@ -25,6 +25,11 @@ namespace Compliance.DataAccess
    public class UserGroupHelper
     {
         MySqlConnection conn = new MySqlConnection();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UserGroupID"></param>
+        /// <returns></returns>
         public DataSet getUserGroup(int UserGroupID)
         {
             DataSet dtUser = new DataSet();
@@ -49,7 +54,12 @@ namespace Compliance.DataAccess
 
             return dtUser;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="usergroup"></param>
+        /// <param name="flag"></param>
+        /// <returns></returns>
         public bool insertupdateUser(UserGroup usergroup, char flag)
         {
             bool result = false;
@@ -60,12 +70,12 @@ namespace Compliance.DataAccess
                 {
                     conn = DBConnection.getconnection();
                     conn.Open();
-                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateUser", conn);
+                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateUserGroup", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("p_flag", flag);
-                    cmd.Parameters.AddWithValue("User_Group_ID",usergroup.UserGroupId);
+                    cmd.Parameters.AddWithValue("p_User_Group_ID",usergroup.UserGroupId);
                     cmd.Parameters.AddWithValue("p_User_Group_Name", usergroup.UserGroupName);
-                    cmd.Parameters.AddWithValue("User_Group_Description", usergroup.UserGroupDescription);
+                    cmd.Parameters.AddWithValue("p_User_Group_Description", usergroup.UserGroupDescription);
                     cmd.Parameters.AddWithValue("p_Role_ID", usergroup.UserRoleId);
                     int res= cmd.ExecuteNonQuery();
                     if(res>0)

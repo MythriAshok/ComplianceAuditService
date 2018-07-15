@@ -27,7 +27,18 @@ namespace ComplianceService
             string res = helper.insertupdateUser(Objuser, 'U');
             return true;
         }
+        public string getUser(int Userid)
+        {
+            return BindUser(Userid);
+        }
 
+        private string BindUser(int Userid)
+        {
+            UserHelper helper = new UserHelper();
+            DataSet ds = helper.getUser(Userid);
+            string xmldata = ds.GetXml();
+            return xmldata;
+        }
         public string GetUserGroup(int Groupid)
         {
             return BindUserGroup(Groupid);
@@ -40,17 +51,25 @@ namespace ComplianceService
             string xmlgroups = userGroups.GetXml();
             return xmlgroups;
         }
-        public bool insertUserGroupmember(int Userid,int Groupid)
+        public bool insertUserGroupmember(int Userid,int[] Groupid)
         {
+            bool res = false;
             UserHelper helper = new UserHelper();
-            bool res=helper.insertUserGroupmember(Groupid, Userid);
+            foreach (var item in Groupid)
+            {
+               res = helper.insertUserGroupmember(item, Userid);
+            }
             return res;
         }
 
-        public bool insertUserRole(int Userid, int Roleid)
+        public bool insertUserRole(int Userid, int[] Roleid)
         {
+            bool res = false;
             UserHelper helper = new UserHelper();
-            bool res = helper.insertUserRole(Roleid, Userid);
+            foreach (var item in Roleid)
+            {
+                res = helper.insertUserRole(item, Userid);
+            }
             return res;
         }
         public string GetRoles(int flag)
@@ -117,6 +136,28 @@ namespace ComplianceService
             UserGroupHelper helper = new UserGroupHelper();
             bool res=helper.insertupdateUser(ObjGroup, 'U');
             return res;
+        }
+        public string getUserRoles(int Userid)
+        {
+            return BindUserRole(Userid);
+        }
+        private string BindUserRole(int Userid)
+        {
+            UserHelper helper = new UserHelper();
+            DataSet ds= helper.getUserRole(Userid);
+            string xmldata = ds.GetXml();
+            return xmldata;
+        }
+        public string getUserAssignedGroup(int Userid)
+        {
+            return BindUserAssignedGroup(Userid);
+        }
+        private string BindUserAssignedGroup(int Userid)
+        {
+            UserHelper helper = new UserHelper();
+            DataSet ds = helper.getUserAssignedGroup(Userid);
+            string xmldata = ds.GetXml();
+            return xmldata;
         }
     }
 }
