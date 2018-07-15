@@ -116,7 +116,7 @@ namespace Compliance.DataAccess
             {
                 conn = DBConnection.getconnection();
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_createuser", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getUser", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_User_ID", userId);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);

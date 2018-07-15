@@ -222,6 +222,8 @@
     <Content Include="Views\ManageOrganization\View.cshtml" />
     <Content Include="Views\ManageOrganization\UpdateGroupCompany.cshtml" />
     <Content Include="Views\ManageOrganization\GetGroupCompany.cshtml" />
+    <Content Include="Views\UserManagement\ListofUsers.cshtml" />
+    <Content Include="Views\UserManagement\_ListofUsers.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

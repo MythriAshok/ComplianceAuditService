@@ -108,36 +108,48 @@ namespace ComplianceAuditWeb.Controllers
             return View("CreateUser");
         }
         [HttpGet]
-        public ActionResult UpdateUser(int userid)
+        public ActionResult UpdateUser()
         {
+            int userid = 2;
             UserViewModel model = new UserViewModel();
+            model.User = new User();
             UserService.UserServiceClient Client = new UserService.UserServiceClient();
             string xmldata = Client.getUser(userid);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
-            model.User.FirstName = Convert.ToString(ds.Tables[0].Rows[0]["First_Name"]);
-            model.User.MiddleName = Convert.ToString(ds.Tables[0].Rows[0]["Middle_Name"]);
+            // object fn = ds.Tables[0].Rows[0]["First_Name"];
+            model.User.UserId = userid;
+            model.User.FirstName = ds.Tables[0].Rows[0]["First_Name"].ToString();
+            //model.User.MiddleName = Convert.ToString(ds.Tables[0].Rows[0]["Middle_Name"]);
             model.User.LastName = Convert.ToString(ds.Tables[0].Rows[0]["Last_Name"]);
             model.User.ContactNumber = Convert.ToString(ds.Tables[0].Rows[0]["Contact_Number"]);
             model.User.EmailId = Convert.ToString(ds.Tables[0].Rows[0]["Email_ID"]);
             model.User.Gender = Convert.ToString(ds.Tables[0].Rows[0]["Gender"]);
             model.User.LastLogin = Convert.ToDateTime(ds.Tables[0].Rows[0]["Last_Login"]);
+            //model.User.IsActive = Convert.ToBoolean(ds.Tables[0].Rows[0]["Is_Active"]);
             model.UserGroupList = new List<SelectListItem>();
             xmldata = Client.GetUserGroup(0);
-            ds = null;
+            ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             xmldata = Client.getUserAssignedGroup(model.User.UserId);
             DataSet dsgroup = new DataSet();
             dsgroup.ReadXml(new StringReader(xmldata));
+            //int i = 0;
+            //foreach(System.Data.DataRow item in dsgroup.Tables[0].Rows)
+            //{
+            //    model.RoleID[i++] = Convert.ToInt32(item["User_Group_ID"]);
+            //}
+            
             foreach (System.Data.DataRow row in ds.Tables[0].Rows)
             {
                 model.UserGroupList.Add(new SelectListItem { Text = row["User_Group_Name"].ToString(), Value = row["User_Group_ID"].ToString() });
             }
-            ds = null;
+            model.RolesList = new List<SelectListItem>();
+            ds = new DataSet();
             xmldata = Client.GetRoles(0);
             ds.ReadXml(new StringReader(xmldata));
             xmldata = Client.getUserRoles(model.User.UserId);
-            dsgroup = null;
+            dsgroup = new DataSet();
             dsgroup.ReadXml(new StringReader(xmldata));
             foreach (System.Data.DataRow row in ds.Tables[0].Rows)
             {
@@ -150,7 +162,7 @@ namespace ComplianceAuditWeb.Controllers
                         break;
                     }
                 }
-                model.UserGroupList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString(), Selected = selected });
+                model.RolesList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString(), Selected = selected });
             }
             return View("_insertUser",model);
         }
@@ -159,6 +171,20 @@ namespace ComplianceAuditWeb.Controllers
         {
             UserService.UserServiceClient Client = new UserService.UserServiceClient();
             return View("CreateUser");
+        }
+       
+        public ActionResult ListofUsers()
+        {
+            UserService.UserServiceClient client = new UserService.UserServiceClient();
+            string xmldata = client.getUser(0);
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            List<User> userlist = new List<User>();
+            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            {
+                userlist.Add(new User { UserId=Convert.ToInt32(row["User_ID"]),FirstName =Convert.ToString(row["First_Name"]), LastName = Convert.ToString(row["Last_Name"]), EmailId = Convert.ToString(row["Email_ID"]) });
+            }
+            return View("_ListofUsers", userlist);
         }
 
     }

@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Compliance.DataObject.User>
+
+@{ Layout = null;}
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    @*<tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MiddleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContactNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastLogin)
+        </th>
+        <th></th>
+    </tr>*@
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.ActionLink(item.FirstName, "UpdateUser", new { id = item.UserId })
+            <br />
+            @Html.DisplayFor(modelItem => item.LastName)
+            <br />
+            @Html.DisplayFor(modelItem => item.EmailId)            
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.MiddleName)
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.ContactNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastLogin)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "UpdateUser", new { id=item.UserId }) @*|
+            @Html.ActionLink("Details", "Details", new { id=item.UserId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
+        </td>*@
+    </tr>
+}
+
+</table>
