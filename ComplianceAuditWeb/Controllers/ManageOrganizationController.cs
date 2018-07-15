@@ -121,11 +121,14 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult UpdateGroupCompany(int OrgID)
         {
             //int OrgID = 0;
-            OrganizationViewModel organizationViewModel = new OrganizationViewModel();
             OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
             string strxmlUpdatedData = organizationClient.getGroupCompany(OrgID);
             DataSet dsUpdatedData = new DataSet();
             dsUpdatedData.ReadXml(new StringReader(strxmlUpdatedData));
+            OrganizationViewModel organizationViewModel = new OrganizationViewModel();
+            Organization organization = new Organization();
+            CompanyDetails companydetails = new CompanyDetails();
+            BranchLocation branchLocation = new BranchLocation();
             organizationViewModel.organization.Company_Name = dsUpdatedData.Tables[0].Rows[0]["Company_Name"].ToString();
             organizationViewModel.organization.Description = dsUpdatedData.Tables[0].Rows[0]["Description"].ToString();
             organizationViewModel.organization.Industry_Type = dsUpdatedData.Tables[0].Rows[0]["Industry_Type"].ToString();
@@ -136,16 +139,16 @@ namespace ComplianceAuditWeb.Controllers
             organizationViewModel.companydetails.Calender_StartDate = Convert.ToDateTime(dsUpdatedData.Tables[0].Rows[0]["Calender_StartDate"]);
             organizationViewModel.companydetails.Calender_EndDate = Convert.ToDateTime(dsUpdatedData.Tables[0].Rows[0]["Calender_EndDate"]);
             organizationViewModel.companydetails.Company_ContactNumber1 = dsUpdatedData.Tables[0].Rows[0]["Company_ContactNumber1"].ToString();
-            organizationViewModel.companydetails.Company_ContactNumber2= dsUpdatedData.Tables[0].Rows[0]["Company_ContactNumber2"].ToString();
-            organizationViewModel.companydetails.Company_EmailID= dsUpdatedData.Tables[0].Rows[0]["Company_Email_ID"].ToString();
-            organizationViewModel.companydetails.Formal_Name= dsUpdatedData.Tables[0].Rows[0]["Formal_Name"].ToString();
-            organizationViewModel.companydetails.Industry_Type= dsUpdatedData.Tables[0].Rows[0]["Industry_Type"].ToString();
-            organizationViewModel.companydetails.Website= dsUpdatedData.Tables[0].Rows[0]["Website"].ToString();
-            organizationViewModel.branch.Address= dsUpdatedData.Tables[0].Rows[0]["Address"].ToString();
-            organizationViewModel.branch.Branch_Coordinates1= dsUpdatedData.Tables[0].Rows[0]["Branch_Coordinates1"].ToString();
-            organizationViewModel.branch.Branch_Coordinates2= dsUpdatedData.Tables[0].Rows[0]["Branch_Coordinates2"].ToString();
-            organizationViewModel.branch.Branch_CoordinatesURL= dsUpdatedData.Tables[0].Rows[0]["Branch_CoordinatesURL"].ToString();
-            organizationViewModel.branch.Branch_Name= dsUpdatedData.Tables[0].Rows[0]["Branch_Name"].ToString();
+            organizationViewModel.companydetails.Company_ContactNumber2 = dsUpdatedData.Tables[0].Rows[0]["Company_ContactNumber2"].ToString();
+            organizationViewModel.companydetails.Company_EmailID = dsUpdatedData.Tables[0].Rows[0]["Company_Email_ID"].ToString();
+            organizationViewModel.companydetails.Formal_Name = dsUpdatedData.Tables[0].Rows[0]["Formal_Name"].ToString();
+            organizationViewModel.companydetails.Industry_Type = dsUpdatedData.Tables[0].Rows[0]["Industry_Type"].ToString();
+            organizationViewModel.companydetails.Website = dsUpdatedData.Tables[0].Rows[0]["Website"].ToString();
+            organizationViewModel.branch.Address = dsUpdatedData.Tables[0].Rows[0]["Address"].ToString();
+            organizationViewModel.branch.Branch_Coordinates1 = dsUpdatedData.Tables[0].Rows[0]["Branch_Coordinates1"].ToString();
+            organizationViewModel.branch.Branch_Coordinates2 = dsUpdatedData.Tables[0].Rows[0]["Branch_Coordinates2"].ToString();
+            organizationViewModel.branch.Branch_CoordinatesURL = dsUpdatedData.Tables[0].Rows[0]["Branch_CoordinatesURL"].ToString();
+            organizationViewModel.branch.Branch_Name = dsUpdatedData.Tables[0].Rows[0]["Branch_Name"].ToString();
             organizationViewModel.branch.Country_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Country_Id"]);
             organizationViewModel.branch.City_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["City_ID"]);
             organizationViewModel.branch.State_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["State_ID"]);
