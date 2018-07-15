@@ -35,16 +35,16 @@ namespace Compliance.DataAccess
                     MySqlCommand cmd = new MySqlCommand("sp_insertupdateBranchLocation", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("p_Flag", MySqlDbType.VarChar, 1).Value = Flag;
-                    cmd.Parameters.Add("p_Location_ID", MySqlDbType.Int32).Value= branchLocation.Branch_Id;
+                    cmd.Parameters.Add("p_Location_ID", MySqlDbType.Int32).Value = branchLocation.Branch_Id;
                     cmd.Parameters.Add("p_Location_Name", MySqlDbType.VarChar, 75).Value = branchLocation.Branch_Name;
                     cmd.Parameters.Add("p_Address", MySqlDbType.VarChar, 450).Value = branchLocation.Address;
                     cmd.Parameters.Add("p_Country_ID", MySqlDbType.Int32).Value = branchLocation.Country_Id;
                     cmd.Parameters.Add("p_State_ID", MySqlDbType.Int32).Value = branchLocation.State_Id;
                     cmd.Parameters.Add("p_City_ID", MySqlDbType.Int32).Value = branchLocation.City_Id;
                     cmd.Parameters.Add("p_Postal_Code", MySqlDbType.Int32).Value = branchLocation.Postal_Code;
-                    cmd.Parameters.Add("p_Branch_Coordinates1", MySqlDbType.VarChar,100).Value = branchLocation.Branch_Coordinates1;
-                    cmd.Parameters.Add("p_Branch_Coordinates2", MySqlDbType.VarChar,100).Value = branchLocation.Branch_Coordinates2;
-                    cmd.Parameters.Add("p_Branch_CoordinateURL", MySqlDbType.VarChar,100).Value = branchLocation.Branch_CoordinatesURL;
+                    cmd.Parameters.Add("p_Branch_Coordinates1", MySqlDbType.VarChar, 100).Value = branchLocation.Branch_Coordinates1;
+                    cmd.Parameters.Add("p_Branch_Coordinates2", MySqlDbType.VarChar, 100).Value = branchLocation.Branch_Coordinates2;
+                    cmd.Parameters.Add("p_Branch_CoordinateURL", MySqlDbType.VarChar, 100).Value = branchLocation.Branch_CoordinatesURL;
                     object objbranchlocationid = cmd.ExecuteScalar();
                     if (objbranchlocationid != null)
                     {
@@ -133,8 +133,8 @@ namespace Compliance.DataAccess
                 if (org != null)
                 {
                     conn.Open();
-                    MySqlTransaction tran= conn.BeginTransaction();
-                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateOrganizationHier", conn,tran);
+                    MySqlTransaction tran = conn.BeginTransaction();
+                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateOrganizationHier", conn, tran);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("p_Flag", Flag);
                     cmd.Parameters.AddWithValue("p_Org_Hier_ID", org.Organization_Id);
@@ -338,7 +338,7 @@ namespace Compliance.DataAccess
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getGroupCompaniesList", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getGroupCompaniesListDropDown", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsGroupCompaniesList);
@@ -352,6 +352,52 @@ namespace Compliance.DataAccess
                 conn.Close();
             }
             return dsGroupCompaniesList;
+        }
+
+        public DataSet getGroupCompanyListDropDown()
+        {
+            DataSet dsGroupCompaniesListDropDown = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getGroupCompaniesListDropDown", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsGroupCompaniesListDropDown);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsGroupCompaniesListDropDown;
+        }
+
+        public DataSet getCompanyListDropDown(int id)
+        {
+            DataSet dsCompaniesListDropDown = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getCompaniesListDropDown", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Parent_Company_ID", id);
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsCompaniesListDropDown);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsCompaniesListDropDown;
         }
     }
 }

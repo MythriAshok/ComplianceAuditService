@@ -6,6 +6,10 @@
 <h4>Test</h4>
 @using (Html.BeginForm("AddCompany", "ManageOrganization"))
 {
+    @Html.Label("GroupCompany")
+    @Html.DropDownListFor(m => m.GroupCompanyID,Model.GroupCompaniesList);
+
+
     @Html.Label("Company Name");
     @Html.TextBoxFor(m => m.organization.Company_Name);
 
@@ -15,15 +19,8 @@
     @Html.LabelFor(m => m.organization.Industry_Type);
     @Html.TextBoxFor(m => m.organization.Industry_Type);
 
-  
-
-
     @Html.LabelFor(m => m.organization.Last_Updated_Date);
     @Html.TextBoxFor(m => m.organization.Last_Updated_Date, @DateTime.Now.Year);
-
-
-
-   
 
     @Html.LabelFor(m => m.organization.User_Id);
     @Html.TextBoxFor(m => m.organization.User_Id);
@@ -31,8 +28,7 @@
     @Html.LabelFor(m => m.companydetails.Formal_Name);
     @Html.TextBoxFor(m => m.companydetails.Formal_Name);
 
-    @Html.LabelFor(m => m.companydetails.Industry_Type);
-    @Html.TextBoxFor(m => m.companydetails.Industry_Type);
+
 
     @Html.LabelFor(m => m.companydetails.Website);
     @Html.TextBoxFor(m => m.companydetails.Website);
@@ -88,11 +84,6 @@
 
     @Html.LabelFor(m => m.City);
     @Html.DropDownListFor(m => m.branch.City_Id, Model.City);
-
-
-
-
-
 
     <input type="submit" value="Create" class="btn btn-default" />
 

@@ -43,6 +43,14 @@ namespace ComplianceService
        
         [OperationContract]
         string GetGroupCompaniesList();
+
+        [OperationContract]
+
+        string getGroupCompanyListDropDown();
+
+        [OperationContract]
+
+        string getCompanyListDropDown(int groupcompanyID);
     }
 }
 
