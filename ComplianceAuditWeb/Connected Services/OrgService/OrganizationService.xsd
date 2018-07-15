@@ -149,18 +149,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="BindGroupCompaniesList">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="BindGroupCompaniesListResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="BindGroupCompaniesListResult" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="GetGroupCompaniesList">
     <xs:complexType>
       <xs:sequence />
@@ -170,6 +158,32 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="GetGroupCompaniesListResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getGroupCompanyListDropDown">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getGroupCompanyListDropDownResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getGroupCompanyListDropDownResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getCompanyListDropDown">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="groupcompanyID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getCompanyListDropDownResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getCompanyListDropDownResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

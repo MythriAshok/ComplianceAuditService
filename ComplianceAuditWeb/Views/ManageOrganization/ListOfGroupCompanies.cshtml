@@ -29,21 +29,24 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.CompanyName)
+            @*@Html.DisplayFor(modelItem => item.CompanyName)*@
+            @*@Html.DisplayFor(modelItem => item.GroupCompanyLogo)*@
+            @Html.DisplayFor(modelItem => item.CompanyID)
+            <br />
+            @Html.ActionLink(item.CompanyName, "UpdateGroupCompany", new {Orgid= item.CompanyID })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.CompanyID)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IndustryType)
-        </td>
+       
         <td>
             @Html.DisplayFor(modelItem => item.GroupCompanyLogo)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
             @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
             @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Deactivate", "Deactivate", new { /* id=item.PrimaryKey */ })
         </td>
     </tr>
 }

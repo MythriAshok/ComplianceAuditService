@@ -8,7 +8,7 @@ select *  from tbl_Country;
 end/
 Delimiter ;
 
-
+call sp_getCountry()
 
 Drop Procedure if exists `sp_getState`;
 Delimiter /
@@ -21,7 +21,7 @@ select *  from tbl_state where Country_ID= p_Country_ID;
 end/
 Delimiter ;
 
-
+call sp_getState(2)
 
 Drop Procedure if exists `sp_getCity`;
 Delimiter /
@@ -50,17 +50,18 @@ p_City_ID int,
 p_Postal_Code int,
 p_Branch_Coordinates1 varchar (100),
 p_Branch_Coordinates2 varchar (100),
-p_Branch_CoordinatesURL varchar (100)
+p_Branch_CoordinateURL varchar (100)
 )
 
 begin
 if(p_Flag = 'I')then
 
 insert into tbl_branch_location(Location_ID,Location_Name,Address,Country_ID,State_ID,City_ID,
-Postal_Code,Branch_Coordinates1,Branch_Coordinates2,Branch_CoordinatesURL)
+Postal_Code,Branch_Coordinates1,Branch_Coordinates2,Branch_CoordinateURL)
 
 values(p_Location_ID,p_Location_Name,p_Address,p_Country_ID,p_State_ID,p_City_ID,
-p_Postal_Code,p_Branch_Coordinates1,p_Branch_Coordinates2,p_Branch_CoordinatesURL);
+p_Postal_Code,p_Branch_Coordinates1,p_Branch_Coordinates2,p_Branch_CoordinateURL);
+select last_insert_id();
 
 else
 update tbl_branch_location set
@@ -68,7 +69,7 @@ update tbl_branch_location set
 Location_Name=p_Location_Name,Address=p_Address,Country_ID=p_Country_ID,State_ID=p_State_ID,City_ID=p_City_ID,
 Postal_Code=p_Postal_Code,
 Branch_Coordinates1= p_Branch_Coordinates1,Branch_Coordinates=p_Branch_Coordinates2,
-Branch_CoordinatesURL= p_Branch_CoordinatesURL
+Branch_CoordinatesURL= p_Branch_CoordinateURL
 where Location_ID=p_Location_ID;
 
 end if;
@@ -123,7 +124,6 @@ delete from tbl_branch_location where Location_ID=p_Location_ID;
 
  Delimiter ;
 
-
 Drop Procedure if exists  `sp_insertupdateOrganizationHier`;
 Delimiter /
 create procedure sp_insertupdateOrganizationHier
@@ -150,7 +150,8 @@ insert into tbl_org_hier( Company_Name, Company_ID, Parent_Company_ID, Descripti
  Is_Leaf, Industry_Type, Last_Updated_Date, Location_ID, User_ID, Is_Active)
  
 values( p_Company_Name, p_Company_ID, p_Parent_Company_ID, p_Description, p_level,
-p_Is_Leaf, p_Industry_Type, p_Last_Updated_Date, p_Location_ID, p_User_ID,p_Is_Active);
+p_Is_Leaf, p_Industry_Type, now(), p_Location_ID, p_User_ID,p_Is_Active);
+select last_insert_id();
 
 else
 update tbl_org_hier set
@@ -164,6 +165,7 @@ end if;
 end/
 
 Delimiter ;
+call sp_getOrganizationHier(1);
 
 Drop Procedure if exists `sp_getOrganizationHier`;
 Delimiter /
@@ -174,12 +176,12 @@ p_Org_Hier_ID int
 begin  
 if(p_Org_Hier_ID = 0) then
 select Company_Name, Company_ID, Parent_Company_ID, Description, level,
-Is_Leaf, Industry_Type, Last_Updated_Date, LocationID, User_ID, Is_Active from tbl_org_hier;
+Is_Leaf, Industry_Type, Last_Updated_Date, Location_ID, User_ID, Is_Active from tbl_org_hier;
 else 
 
 select Company_Name, Company_ID, Parent_Company_ID, Description, level,
-Is_Leaf, Industry_Type, Last_Updated_Date, LocationID, User_ID, Is_Active from tbl_org_hier
-where _Org_Hier_ID = p_Org_Hier_ID;
+Is_Leaf, Industry_Type, Last_Updated_Date, Location_ID, User_ID, Is_Active from tbl_org_hier
+where Org_Hier_ID = p_Org_Hier_ID;
 End If;
 
 end/
@@ -195,21 +197,61 @@ p_Org_Hier_ID int
 begin  
 if(p_Org_Hier_ID = 0) then
 select Company_Name, Company_ID, Parent_Company_ID, Description, level,
-Is_Leaf, Industry_Type, Last_Updated_Date, Location_ID, User_ID, Is_Active from tbl_org_hier;
+Is_Leaf, Industry_Type, Last_Updated_Date,tbl_org_hier.Location_ID, User_ID, Is_Active from tbl_org_hier;
 else 
 
 select Company_Name, Company_ID, Parent_Company_ID, Description, level,
-Is_Leaf, Industry_Type, Last_Updated_Date, Location_ID, User_ID, Is_Active from tbl_org_hier 
+Is_Leaf, Industry_Type, Last_Updated_Date, User_ID, Is_Active,
+Formal_Name, Calender_StartDate, Calender_EndDate, Auditing_Frequency, Website, Company_Email_ID,
+Location_Name,Address,Country_ID,State_ID,City_ID,Postal_Code,Branch_Coordinates1,Branch_Coordinates2,
+Branch_CoordinateURL,
+Company_ContactNumber1,Company_ContactNumber2 from tbl_org_hier 
 
 inner join  tbl_company_Details  on tbl_company_details.Org_Hier_ID = tbl_org_hier.Org_Hier_ID
 
-inner join tbl_branch_location on tbl_branch_location.Location_ID = tbl_org_hier.Location_ID;
+inner join tbl_branch_location on tbl_branch_location.Location_ID = tbl_org_hier.Location_ID
 
+where tbl_org_hier.Org_Hier_ID= p_Org_Hier_ID;
 End If;
 
 end/
+call sp_getOrganizationHierJoin(2)
 
 Delimiter ;
+
+
+
+Drop Procedure if exists `sp_getGroupCompaniesList`;
+Delimiter /
+create procedure sp_getGroupCompaniesList()
+
+begin  
+
+select Company_Name, Company_ID,Industry_Type,Is_Active from tbl_org_hier where ;
+end/
+
+Delimiter ;
+
+Drop Procedure if exists `sp_getGroupCompaniesListDropDown`;
+Delimiter /
+create procedure sp_getGroupCompaniesListDropDown()
+begin
+select Org_Hier_ID, Company_Name  from tbl_org_hier where Parent_Company_ID=0;
+end/
+Delimiter ;
+
+
+Drop Procedure if exists `sp_getCompaniesListDropDown`;
+Delimiter /
+create procedure sp_getCompaniesListDropDown
+(
+p_Parent_Company_ID int
+)
+begin
+select Org_Hier_ID,Company_Name  from tbl_org_hier where Parent_Company_ID= p_Parent_Company_ID;
+end/
+Delimiter ;
+
 
 
 Drop Procedure if exists  sp_deleteOrganizationHier;
@@ -232,7 +274,7 @@ create procedure sp_insertupdateCompanyDetails
 p_Flag char (1),
 p_Company_Details_ID int ,
 p_Org_Hier_ID int ,
-p_Industry_Type varchar(45),
+
 p_Formal_Name varchar(45),
 p_Calender_StartDate datetime,
 p_Calender_EndDate datetime,
@@ -247,20 +289,21 @@ p_Is_Active bit
 begin
 if(p_Flag ='I') then
 
-insert into tbl_company_details(Org_Hier_ID, Industry_Type,Formal_Name, Calender_StartDate, 
+insert into tbl_company_details(Org_Hier_ID,Formal_Name, Calender_StartDate, 
 Calender_EndDate, Auditing_Frequency, Website, Company_Email_ID,
-Company_ContactNumber1,Company_ContactNumber2,Is_Active)
+Company_ContactNumber1,Company_ContactNumber2)
 
-values(p_Org_Hier_ID, p_Industry_Type,p_Formal_Name, p_Calender_StartDate, 
+values(p_Org_Hier_ID,p_Formal_Name, p_Calender_StartDate, 
 p_Calender_EndDate, p_Auditing_Frequency, p_Website, p_Company_Email_ID,
-p_Company_ContactNumber1,p_Company_ContactNumber2,p_Is_Active);
+p_Company_ContactNumber1,p_Company_ContactNumber2);
+select last_insert_id();
 
 else 
 update tbl_company_details set
 
-Org_Hier_ID=p_Org_Hier_ID,Industry_Type= p_Industry_Type,Formal_Name=p_Formal_Name,Calender_StartDate= p_Calender_StartDate, 
+Org_Hier_ID=p_Org_Hier_ID,Formal_Name=p_Formal_Name,Calender_StartDate= p_Calender_StartDate, 
 Calender_EndDate=p_Calender_EndDate,Auditing_Frequency= p_Auditing_Frequency,Website= p_Website,Company_Email_ID= p_Company_Email_ID,
-Company_ContactNumber1=p_Company_ContactNumber1,Company_ContactNumber2=p_Company_ContactNumber2,Is_Active=p_Is_Active
+Company_ContactNumber1=p_Company_ContactNumber1,Company_ContactNumber2=p_Company_ContactNumber2
 where Company_Details_ID=p_Company_Details_ID;
 
 end if;
@@ -276,19 +319,29 @@ create procedure sp_getCompanyDetails
 p_Company_Details_ID int
 )
 begin
-if(p_Company_Details)
+if(p_Company_Details=0)
 then
 select Org_Hier_ID, Industry_Type,Formal_Name, Calender_StartDate, 
 Calender_EndDate, Auditing_Frequency, Website, Company_EmailID,
-Company_ContactNumber1,Company_ContactNumber2,Is_Active from tbl_company_details;
+Company_ContactNumber1,Company_ContactNumber2 from tbl_company_details;
 else
 select Org_Hier_ID, Industry_Type,Formal_Name, Calender_StartDate, 
 Calender_EndDate, Auditing_Frequency, Website, Company_EmailID,
-Company_ContactNumber1,Company_ContactNumber2,Is_Active from tbl_company_details
+Company_ContactNumber1,Company_ContactNumber2 from tbl_company_details
 where Company_Details_ID = p_Company_Details_ID;
 end if;
 end
 delimiter ;
+
+
+
+
+
+
+
+
+
+
 
 Drop Procedure if exists sp_deleteCompanyDetails;
 delimiter /

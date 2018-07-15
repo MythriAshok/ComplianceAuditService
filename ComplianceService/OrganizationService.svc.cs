@@ -360,5 +360,40 @@ namespace ComplianceService
             string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
             return xmlGroupCompaniesList;
         }
+
+        public string getGroupCompanyListDropDown()
+        {
+            return BindGroupCompaniesListDropDown();
+        }
+        /// <summary>
+        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
+        /// </summary>
+        /// <returns></returns>
+        private string BindGroupCompaniesListDropDown()
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsGroupCompanies = OrganizationHelper.getGroupCompanyListDropDown();
+            string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
+            return xmlGroupCompaniesList;
+        }
+
+        public string getCompanyListDropDown(int groupcompanyID)
+        {
+            return BindCompaniesListDropDown(groupcompanyID);
+        }
+        /// <summary>
+        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
+        /// </summary>
+        /// <returns></returns>
+        private string BindCompaniesListDropDown(int groupcompanyID)
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsGroupCompanies = OrganizationHelper.getCompanyListDropDown(groupcompanyID);
+            string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
+            return xmlGroupCompaniesList;
+        }
+
+
+
     }
 }

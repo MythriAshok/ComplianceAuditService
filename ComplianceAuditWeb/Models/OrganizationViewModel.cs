@@ -18,9 +18,7 @@ namespace ComplianceAuditWeb.Models
 
         public List<SelectListItem>  State { get; set; }
         public List<SelectListItem>  City { get; set; }
-       
 
-        // public City city { get; set; }
         public enum AuditingFrequency
         {
             Quarterly,

@@ -5,6 +5,14 @@
 
 @using (Html.BeginForm())
 {
+
+    @Html.Label("GroupCompany")
+    @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList);
+
+    @Html.Label("Company")
+    @Html.DropDownListFor(m => m.CompanyID, Model.CompaniesList);
+
+
     @Html.LabelFor(m => m.branch.Branch_Name);
     @Html.TextBoxFor(m => m.branch.Branch_Name);
 
@@ -31,10 +39,10 @@
 
     @Html.LabelFor(m => m.organization.Industry_Type);
     @Html.TextBoxFor(m => m.organization.Industry_Type);
-   
-   
 
-  
+
+
+
 
     @Html.LabelFor(m => m.organization.Last_Updated_Date);
     @Html.TextBoxFor(m => m.organization.Last_Updated_Date);
