@@ -44,5 +44,9 @@ namespace ComplianceService
         string GetUserGroup(int Groupid);
         [OperationContract]
         bool DeleteUser(int Userid);
+        [OperationContract]
+        bool UpdateUserGroupMember(int Userid);
+        [OperationContract]
+        bool UpdateUserRole(int Userid);
     }    
 }

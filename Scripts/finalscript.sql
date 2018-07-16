@@ -43,13 +43,10 @@ end if;
 else
 UPDATE `auditmoduledb`.`tbl_user`
 SET
-`User_Password` = p_User_Password,
 `First_Name` = p_First_Name,
 `Middle_Name` = p_Middle_Name,
 `Last_Name` = p_Last_Name,
-`Email_ID` = p_Email_ID,
 `Contact_Number` = p_Contact_Number,
-`Gender` = p_Gender,
 `Is_Active` = p_Is_Active,
 `Last_Login` = now()
 WHERE `User_ID` = p_User_ID;
@@ -82,7 +79,7 @@ SELECT `tbl_user`.`User_ID`,
     `tbl_user`.`Gender`,
     `tbl_user`.`Is_Active`,
     `tbl_user`.`Last_Login`
-FROM `auditmoduledb`.`tbl_user`;
+FROM `auditmoduledb`.`tbl_user` where Is_Active=1;
 else
 SELECT `tbl_user`.`User_ID`,
     `tbl_user`.`User_Password`,
@@ -94,7 +91,7 @@ SELECT `tbl_user`.`User_ID`,
     `tbl_user`.`Gender`,
     `tbl_user`.`Is_Active`,
     `tbl_user`.`Last_Login`
-FROM `auditmoduledb`.`tbl_user` as a
+FROM `auditmoduledb`.`tbl_user` 
 where User_ID = p_User_ID;
 end if;
 end /
@@ -159,7 +156,7 @@ SELECT `tbl_role`.`Role_ID`,
     `tbl_role`.`Role_Name`,
     `tbl_role`.`Is_Active`,
     `tbl_role`.`Is_Group_Role`
-FROM `auditmoduledb`.`tbl_role`;
+FROM `auditmoduledb`.`tbl_role` where Is_Active=1;
 else
 SELECT `tbl_role`.`Role_ID`,
     `tbl_role`.`Role_Name`,
@@ -206,12 +203,13 @@ SELECT `tbl_user_group`.`User_Group_ID`,
     `tbl_user_group`.`User_Group_Name`,
     `tbl_user_group`.`User_Group_Description`,
     `tbl_user_group`.`Role_ID`
-FROM `auditmoduledb`.`tbl_user_group`;
+FROM `auditmoduledb`.`tbl_user_group`where Is_Active=1;
 else
 SELECT `tbl_user_group`.`User_Group_ID`,
     `tbl_user_group`.`User_Group_Name`,
     `tbl_user_group`.`User_Group_Description`,
-    `tbl_user_group`.`Role_ID`
+    `tbl_user_group`.`Role_ID`,
+    `tbl_user_group`.`Is_Active`
 FROM `auditmoduledb`.`tbl_user_group`
 WHERE `User_Group_ID` = p_User_Group_ID;
 end if;
@@ -268,7 +266,7 @@ Drop procedure if exists `auditmoduledb`.`sp_getPrivilege`;
 Delimiter /
 create procedure sp_getPrivilege()
 begin
-select Privilege_ID,Privilege_Name,Privilege_Type,Is_Active from  tbl_privilege;
+select Privilege_ID,Privilege_Name,Privilege_Type,Is_Active from  tbl_privilege where Is_Active=1;
 end /
 Delimiter ;
 
@@ -305,6 +303,15 @@ VALUES
 end /
 Delimiter ;
 
+Drop procedure if exists `auditmoduledb`.`sp_DeleteUserRole`;
+Delimiter /
+create procedure sp_DeleteUserRole(p_User_ID int)
+begin
+DELETE FROM `auditmoduledb`.`tbl_user_role_map`
+WHERE User_ID=p_User_ID;
+end /
+Delimiter ;
+
 Drop procedure if exists `auditmoduledb`.`sp_insertUserGroupMembers`;
 Delimiter /
 create procedure sp_insertUserGroupMembers(p_User_ID int,p_User_Group_ID int)
@@ -314,5 +321,14 @@ INSERT INTO `auditmoduledb`.`tbl_user_group_members`
 `User_Group_ID`)
 VALUES
 (p_User_ID,p_User_Group_ID);
+end /
+Delimiter ;
+
+Drop procedure if exists `auditmoduledb`.`sp_DeleteUserGroupMembers`;
+Delimiter /
+create procedure sp_DeleteUserGroupMembers(p_User_ID int)
+begin
+DELETE FROM `auditmoduledb`.`tbl_user_group_members`
+WHERE User_ID= p_User_ID;
 end /
 Delimiter ;

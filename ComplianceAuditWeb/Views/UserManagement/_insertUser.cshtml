@@ -9,6 +9,8 @@
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+    @Html.HiddenFor(model => model.User.UserId)
+
     @Html.Label("FirstName")
     @Html.TextBoxFor(m => m.User.FirstName)
 
@@ -18,19 +20,22 @@
     @Html.Label("LastName")
     @Html.TextBoxFor(m => m.User.LastName)
 
-    @Html.Label("EmailId(UserName)")
-    @Html.TextBoxFor(m => m.User.EmailId)
+    if (Model.User.UserId <= 0)
+    {
+        @Html.Label("EmailId(UserName)")
+        @Html.TextBoxFor(m => m.User.EmailId)
 
-    @Html.Label("Gender")
-    @Html.Label("Male")
-    @Html.RadioButtonFor(m => m.User.Gender, "Male")
-    @Html.Label("Female")
-    @Html.RadioButtonFor(m => m.User.Gender, "Female")
-    @Html.Label("Others")
-    @Html.RadioButtonFor(m => m.User.Gender, "Others")
+        @Html.Label("Gender")
+        @Html.Label("Male")
+        @Html.RadioButtonFor(m => m.User.Gender, "Male")
+        @Html.Label("Female")
+        @Html.RadioButtonFor(m => m.User.Gender, "Female")
+        @Html.Label("Others")
+        @Html.RadioButtonFor(m => m.User.Gender, "Others")
 
-    @Html.Label("Password")
-    @Html.PasswordFor(m => m.User.UserPassword)
+        @Html.Label("Password")
+        @Html.PasswordFor(m => m.User.UserPassword)
+    }
 
     @Html.Label("Contact Number")
     @Html.TextBoxFor(m => m.User.ContactNumber)
@@ -44,9 +49,10 @@
     string button = "Save";
     if (Model.User.UserId > 0)
     {
+        @*@Html.CheckBoxFor(m=>m.User.IsActive)*@
         button = "Update";
-        @Html.ActionLink("Delete", "DeleteUser", routeValues: new { UserId = Model.User.UserId })
+        @Html.ActionLink("Delete", "DeleteUser", routeValues: new { UserId = Model.User.UserId }, htmlAttributes: new { @class = "btn btn-default" })
     }
     <input type="submit" value=@button class="btn btn-default" />
 }
-/**/
+

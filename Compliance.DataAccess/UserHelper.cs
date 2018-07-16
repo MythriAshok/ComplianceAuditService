@@ -82,7 +82,7 @@ namespace Compliance.DataAccess
                 {
                     conn = DBConnection.getconnection();
                     conn.Open();
-                    MySqlCommand cmd = new MySqlCommand("sp_createuser", conn);
+                    MySqlCommand cmd = new MySqlCommand("sp_deleteUser", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("p_User_ID", userId);
                     int res = cmd.ExecuteNonQuery();
@@ -276,7 +276,63 @@ namespace Compliance.DataAccess
                 conn.Close();
             }
             return result;
-        }        
+        }
+
+        public bool DeleteUserGroupmember(int userid)
+        {
+            bool result = false;
+            try
+            {
+                conn = DBConnection.getconnection();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_DeleteUserGroupMembers", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_User_ID", userid);
+                int res = cmd.ExecuteNonQuery();
+                if (res > 0)
+                {
+                    result = true;
+                }
+            }
+
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return result;
+        }
+
+        public bool DeleteUserRole(int userid)
+        {
+            bool result = false;
+            try
+            {
+                conn = DBConnection.getconnection();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_DeleteUserRole", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_User_ID", userid);
+                int res = cmd.ExecuteNonQuery();
+                if (res > 0)
+                {
+                    result = true;
+                }
+            }
+
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return result;
+        }
         /// <summary>
         /// 
         /// </summary>

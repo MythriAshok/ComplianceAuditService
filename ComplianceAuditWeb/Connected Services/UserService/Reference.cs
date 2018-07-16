@@ -110,6 +110,18 @@ namespace ComplianceAuditWeb.UserService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteUser", ReplyAction="http://tempuri.org/IUserService/DeleteUserResponse")]
         System.Threading.Tasks.Task<bool> DeleteUserAsync(int Userid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/UpdateUserGroupMember", ReplyAction="http://tempuri.org/IUserService/UpdateUserGroupMemberResponse")]
+        bool UpdateUserGroupMember(int Userid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/UpdateUserGroupMember", ReplyAction="http://tempuri.org/IUserService/UpdateUserGroupMemberResponse")]
+        System.Threading.Tasks.Task<bool> UpdateUserGroupMemberAsync(int Userid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/UpdateUserRole", ReplyAction="http://tempuri.org/IUserService/UpdateUserRoleResponse")]
+        bool UpdateUserRole(int Userid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/UpdateUserRole", ReplyAction="http://tempuri.org/IUserService/UpdateUserRoleResponse")]
+        System.Threading.Tasks.Task<bool> UpdateUserRoleAsync(int Userid);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -265,6 +277,22 @@ namespace ComplianceAuditWeb.UserService {
         
         public System.Threading.Tasks.Task<bool> DeleteUserAsync(int Userid) {
             return base.Channel.DeleteUserAsync(Userid);
+        }
+        
+        public bool UpdateUserGroupMember(int Userid) {
+            return base.Channel.UpdateUserGroupMember(Userid);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UpdateUserGroupMemberAsync(int Userid) {
+            return base.Channel.UpdateUserGroupMemberAsync(Userid);
+        }
+        
+        public bool UpdateUserRole(int Userid) {
+            return base.Channel.UpdateUserRole(Userid);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UpdateUserRoleAsync(int Userid) {
+            return base.Channel.UpdateUserRoleAsync(Userid);
         }
     }
 }

@@ -11,10 +11,8 @@ namespace ComplianceAuditWeb.Models
     {
        public User User { get; set; }
        public List<SelectListItem> UserGroupList { get; set; }
-
-        public List<int> UserGroupID { get; set; }
+        public int[] UserGroupID { get; set; }
        public List<SelectListItem> RolesList { get; set; }
-
         public int[] RoleID { get; set; }
       
     }
