@@ -166,5 +166,18 @@ namespace ComplianceService
             bool res=helper.DeleteUser(Userid);
             return res;
         }
+
+        public bool UpdateUserGroupMember(int Userid)
+        {
+            UserHelper helper = new UserHelper();
+            return helper.DeleteUserGroupmember(Userid);
+        }
+
+        public bool UpdateUserRole(int Userid)
+        {
+            UserHelper helper = new UserHelper();
+            return helper.DeleteUserRole(Userid);
+            
+        }
     }
 }

@@ -104,6 +104,18 @@
   <wsdl:message name="IUserService_DeleteUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IUserService_UpdateUserGroupMember_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserGroupMember" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_UpdateUserGroupMember_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserGroupMemberResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_UpdateUserRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserRole" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_UpdateUserRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateUserRoleResponse" />
+  </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="insertUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/insertUser" message="tns:IUserService_insertUser_InputMessage" />
@@ -168,6 +180,14 @@
     <wsdl:operation name="DeleteUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/DeleteUser" message="tns:IUserService_DeleteUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/DeleteUserResponse" message="tns:IUserService_DeleteUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserGroupMember">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/UpdateUserGroupMember" message="tns:IUserService_UpdateUserGroupMember_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/UpdateUserGroupMemberResponse" message="tns:IUserService_UpdateUserGroupMember_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/UpdateUserRole" message="tns:IUserService_UpdateUserRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/UpdateUserRoleResponse" message="tns:IUserService_UpdateUserRole_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IUserService" type="tns:IUserService">
@@ -309,6 +329,24 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteUser">
       <soap:operation soapAction="http://tempuri.org/IUserService/DeleteUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserGroupMember">
+      <soap:operation soapAction="http://tempuri.org/IUserService/UpdateUserGroupMember" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserRole">
+      <soap:operation soapAction="http://tempuri.org/IUserService/UpdateUserRole" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
