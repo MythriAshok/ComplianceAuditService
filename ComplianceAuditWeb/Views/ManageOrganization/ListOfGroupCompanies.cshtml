@@ -15,10 +15,10 @@
             @Html.DisplayNameFor(model => model.CompanyName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CompanyID)
+            @Html.DisplayNameFor(model => model.OrganizationID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IndustryType)
+            @Html.DisplayNameFor(model => model.IsActive)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.GroupCompanyLogo)
@@ -31,22 +31,25 @@
         <td>
             @*@Html.DisplayFor(modelItem => item.CompanyName)*@
             @*@Html.DisplayFor(modelItem => item.GroupCompanyLogo)*@
-            @Html.DisplayFor(modelItem => item.CompanyID)
+            @Html.DisplayFor(modelItem => item.OrganizationID)
             <br />
-            @Html.ActionLink(item.CompanyName, "UpdateGroupCompany", new {Orgid= item.CompanyID })
+            @Html.ActionLink(item.CompanyName, "UpdateGroupCompany", new { Orgid = item.OrganizationID })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CompanyID)
+            @Html.DisplayFor(modelItem => item.OrganizationID)
         </td>
-       
+        <td>
+            @Html.DisplayFor(modelItem => item.IsActive)
+        </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.GroupCompanyLogo)
         </td>
         <td>
             @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
             @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            @Html.ActionLink("Deactivate", "Deactivate", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Deactivate", "DeactivateGroupCompany", new { Orgid = item.OrganizationID })
         </td>
     </tr>
 }

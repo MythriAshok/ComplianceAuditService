@@ -225,6 +225,61 @@ namespace Compliance.DataAccess
             }
             return resultOrganization;
         }
+
+        public bool DeactivateGroupCompany(int Org_Hier_ID)
+        {
+            bool resultGroupCompany = false;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_DeactivateOrgHier", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", Org_Hier_ID);
+                int resultCount = cmd.ExecuteNonQuery();
+                if (resultCount > 0)
+                {
+                    resultGroupCompany = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return resultGroupCompany;
+        }
+
+        public bool DeleteGroupCompany(int OrgID)
+        {
+            bool resultGroupCompany = false;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_deleteOrganizationHier", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", OrgID);
+                int resultCount = cmd.ExecuteNonQuery();
+                if (resultCount > 0)
+                {
+                    resultGroupCompany = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return resultGroupCompany;
+        }
+
+
+
         /// <summary>
         /// Method to insert or update the CompanyDetails in the database using char(Flag)
         /// </summary>
@@ -338,7 +393,7 @@ namespace Compliance.DataAccess
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getGroupCompaniesListDropDown", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getGroupCompaniesList", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsGroupCompaniesList);

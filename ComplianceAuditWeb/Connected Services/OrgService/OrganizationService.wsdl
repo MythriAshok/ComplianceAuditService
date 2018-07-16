@@ -85,6 +85,12 @@
   <wsdl:message name="IOrganizationService_getCompanyListDropDown_OutputMessage">
     <wsdl:part name="parameters" element="tns:getCompanyListDropDownResponse" />
   </wsdl:message>
+  <wsdl:message name="IOrganizationService_DeactivateGroupCompany_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateGroupCompany" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_DeactivateGroupCompany_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateGroupCompanyResponse" />
+  </wsdl:message>
   <wsdl:portType name="IOrganizationService">
     <wsdl:operation name="insertOrganization">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertOrganization" message="tns:IOrganizationService_insertOrganization_InputMessage" />
@@ -137,6 +143,10 @@
     <wsdl:operation name="getCompanyListDropDown">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/getCompanyListDropDown" message="tns:IOrganizationService_getCompanyListDropDown_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/getCompanyListDropDownResponse" message="tns:IOrganizationService_getCompanyListDropDown_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateGroupCompany">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/DeactivateGroupCompany" message="tns:IOrganizationService_DeactivateGroupCompany_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/DeactivateGroupCompanyResponse" message="tns:IOrganizationService_DeactivateGroupCompany_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IOrganizationService" type="tns:IOrganizationService">
@@ -251,6 +261,15 @@
     </wsdl:operation>
     <wsdl:operation name="getCompanyListDropDown">
       <soap:operation soapAction="http://tempuri.org/IOrganizationService/getCompanyListDropDown" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateGroupCompany">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/DeactivateGroupCompany" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -187,4 +187,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="DeactivateGroupCompany">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OrgID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeactivateGroupCompanyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DeactivateGroupCompanyResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

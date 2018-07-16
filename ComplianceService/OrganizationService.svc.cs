@@ -88,6 +88,41 @@ namespace ComplianceService
             }
             return updateResult;
         }
+
+        public bool DeactivateGroupCompany(int OrgID)
+        {
+            bool status = false;
+            OrganizationHelper organizationHelper = new OrganizationHelper();
+            string result = organizationHelper.DeactivateGroupCompany(OrgID).ToString();
+            if (result != null)
+            {
+                 status = true;
+            }
+            else
+            {
+                 status = false;
+            }
+            return status;
+        }
+
+        public bool DeleteGroupCompany(int OrgID)
+        {
+            bool status = false;
+            OrganizationHelper organizationHelper = new OrganizationHelper();
+            string result = organizationHelper.DeleteGroupCompany(OrgID).ToString();
+            if (result != null)
+            {
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
+            return status;
+        }
+
+
+
         /// <summary>
         /// A public method in the service layer that interacts with the Organization helper class to fetch the data of groupcompany from the database
         /// </summary>

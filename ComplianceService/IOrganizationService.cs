@@ -51,6 +51,10 @@ namespace ComplianceService
         [OperationContract]
 
         string getCompanyListDropDown(int groupcompanyID);
+        [OperationContract]
+
+
+        bool DeactivateGroupCompany(int OrgID);
     }
 }
 
