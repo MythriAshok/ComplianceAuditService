@@ -121,38 +121,75 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult UpdateGroupCompany(int OrgID)
         {
             //int OrgID = 0;
-            OrganizationViewModel organizationViewModel = new OrganizationViewModel();
             OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
             string strxmlUpdatedData = organizationClient.getGroupCompany(OrgID);
             DataSet dsUpdatedData = new DataSet();
             dsUpdatedData.ReadXml(new StringReader(strxmlUpdatedData));
+            OrganizationViewModel organizationViewModel = new OrganizationViewModel();
+            organizationViewModel.organization  = new Organization();
+            organizationViewModel.companydetails = new CompanyDetails();
+            organizationViewModel.branch = new BranchLocation();
+           // Organization organization = new Organization();
+            //CompanyDetails companydetails = new CompanyDetails();
+           // BranchLocation branch = new BranchLocation();
             organizationViewModel.organization.Company_Name = dsUpdatedData.Tables[0].Rows[0]["Company_Name"].ToString();
-            organizationViewModel.organization.Description = dsUpdatedData.Tables[0].Rows[0]["Description"].ToString();
+            organizationViewModel. organization.Description = dsUpdatedData.Tables[0].Rows[0]["Description"].ToString();
             organizationViewModel.organization.Industry_Type = dsUpdatedData.Tables[0].Rows[0]["Industry_Type"].ToString();
-            organizationViewModel.organization.Is_Active = Convert.ToBoolean(dsUpdatedData.Tables[0].Rows[0]["Is_Active"]);
+            //organizationViewModel.organization.Is_Active =(Boolean) dsUpdatedData.Tables[0].Rows[0]["Is_Active"];
             organizationViewModel.organization.Last_Updated_Date = Convert.ToDateTime(dsUpdatedData.Tables[0].Rows[0]["Last_Updated_Date"]);
             organizationViewModel.organization.User_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["User_ID"]);
             organizationViewModel.companydetails.Auditing_Frequency = dsUpdatedData.Tables[0].Rows[0]["Auditing_Frequency"].ToString();
             organizationViewModel.companydetails.Calender_StartDate = Convert.ToDateTime(dsUpdatedData.Tables[0].Rows[0]["Calender_StartDate"]);
             organizationViewModel.companydetails.Calender_EndDate = Convert.ToDateTime(dsUpdatedData.Tables[0].Rows[0]["Calender_EndDate"]);
             organizationViewModel.companydetails.Company_ContactNumber1 = dsUpdatedData.Tables[0].Rows[0]["Company_ContactNumber1"].ToString();
-            organizationViewModel.companydetails.Company_ContactNumber2= dsUpdatedData.Tables[0].Rows[0]["Company_ContactNumber2"].ToString();
-            organizationViewModel.companydetails.Company_EmailID= dsUpdatedData.Tables[0].Rows[0]["Company_Email_ID"].ToString();
-            organizationViewModel.companydetails.Formal_Name= dsUpdatedData.Tables[0].Rows[0]["Formal_Name"].ToString();
-            organizationViewModel.companydetails.Industry_Type= dsUpdatedData.Tables[0].Rows[0]["Industry_Type"].ToString();
-            organizationViewModel.companydetails.Website= dsUpdatedData.Tables[0].Rows[0]["Website"].ToString();
-            organizationViewModel.branch.Address= dsUpdatedData.Tables[0].Rows[0]["Address"].ToString();
-            organizationViewModel.branch.Branch_Coordinates1= dsUpdatedData.Tables[0].Rows[0]["Branch_Coordinates1"].ToString();
-            organizationViewModel.branch.Branch_Coordinates2= dsUpdatedData.Tables[0].Rows[0]["Branch_Coordinates2"].ToString();
-            organizationViewModel.branch.Branch_CoordinatesURL= dsUpdatedData.Tables[0].Rows[0]["Branch_CoordinatesURL"].ToString();
-            organizationViewModel.branch.Branch_Name= dsUpdatedData.Tables[0].Rows[0]["Branch_Name"].ToString();
-            organizationViewModel.branch.Country_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Country_Id"]);
-            organizationViewModel.branch.City_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["City_ID"]);
-            organizationViewModel.branch.State_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["State_ID"]);
+            organizationViewModel.companydetails.Company_ContactNumber2 = dsUpdatedData.Tables[0].Rows[0]["Company_ContactNumber2"].ToString();
+            organizationViewModel.companydetails.Company_EmailID = dsUpdatedData.Tables[0].Rows[0]["Company_Email_ID"].ToString();
+            organizationViewModel.companydetails.Formal_Name = dsUpdatedData.Tables[0].Rows[0]["Formal_Name"].ToString();
+            organizationViewModel.companydetails.Industry_Type = dsUpdatedData.Tables[0].Rows[0]["Industry_Type"].ToString();
+            organizationViewModel.companydetails.Website = dsUpdatedData.Tables[0].Rows[0]["Website"].ToString();
+            organizationViewModel.branch.Address = dsUpdatedData.Tables[0].Rows[0]["Address"].ToString();
+            organizationViewModel.branch.Branch_Coordinates1 = dsUpdatedData.Tables[0].Rows[0]["Branch_Coordinates1"].ToString();
+            organizationViewModel.branch.Branch_Coordinates2 = dsUpdatedData.Tables[0].Rows[0]["Branch_Coordinates2"].ToString();
+            organizationViewModel.branch.Branch_CoordinatesURL = dsUpdatedData.Tables[0].Rows[0]["Branch_CoordinateURL"].ToString();
+            organizationViewModel.branch.Branch_Name = dsUpdatedData.Tables[0].Rows[0]["Location_Name"].ToString();
             organizationViewModel.branch.Postal_Code = dsUpdatedData.Tables[0].Rows[0]["Postal_Code"].ToString();
+
+            organizationViewModel.branch.Country_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Country_ID"]);
+            DataSet dsCountries = new DataSet();
+            string strXMLCountries = organizationClient.GetCountryList();
+
+            dsCountries.ReadXml(new StringReader(strXMLCountries));
+            organizationViewModel.Country = new List<SelectListItem>();
+            foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
+            {
+                organizationViewModel.Country.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
+            }
+            organizationViewModel.branch.State_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["State_ID"]);
+
+            DataSet dsStates = new DataSet();
+            string strXMLStates = organizationClient.GetStateList(organizationViewModel.branch.Country_Id);
+
+            dsStates.ReadXml(new StringReader(strXMLStates));
+            organizationViewModel.State = new List<SelectListItem>();
+            foreach (System.Data.DataRow row in dsStates.Tables[0].Rows)
+            {
+                organizationViewModel.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
+            }
+            organizationViewModel.branch.City_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["City_ID"]);
+
+            DataSet dsCities = new DataSet();
+            string strXMLCities = organizationClient.GetCityList(organizationViewModel.branch.State_Id);
+
+            dsCities.ReadXml(new StringReader(strXMLCities));
+            organizationViewModel.City = new List<SelectListItem>();
+            foreach (System.Data.DataRow row in dsCities.Tables[0].Rows)
+            {
+                organizationViewModel.City.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
+            }
             return View(organizationViewModel);
         }
         /// <summary>
+        /// 
         /// Action method to update group company and save updated values 
         /// </summary>
         /// <param name="organizationVM"></param>
@@ -192,6 +229,66 @@ namespace ComplianceAuditWeb.Controllers
         {
             OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
             organizationServiceClient.getGroupCompany(organizationVM.organization.Organization_Id);
+            return View();
+        }
+        [HttpGet]
+        public ActionResult DeactivateGroupCompany(int OrgID)
+        {
+            OrganizationViewModel organizationViewModel = new OrganizationViewModel();
+            organizationViewModel.organization = new Organization();
+            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+            string strxmlData = organizationServiceClient.getGroupCompany(OrgID);
+            DataSet dsData = new DataSet();
+            dsData.ReadXml(new StringReader(strxmlData));
+            organizationViewModel.organization.Organization_Id = OrgID;
+            organizationViewModel.organization.Company_Name = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+            return View(organizationViewModel);
+        }
+        [HttpPost]
+        public ActionResult DeactivateGroupCompany(OrganizationViewModel organizationVM)
+        {
+            bool result = false;
+            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+            result = organizationServiceClient.DeactivateGroupCompany(organizationVM.organization.Organization_Id);
+            if(result == true)
+            {
+                return View();
+            }
+            else
+            {
+                return View();
+
+            }
+        }
+
+        [HttpGet]
+        public ActionResult DeleteGroupCompany(int OrgID)
+        {
+            OrganizationViewModel organizationViewModel = new OrganizationViewModel();
+            organizationViewModel.organization = new Organization();
+            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+            string strxmlData = organizationServiceClient.getGroupCompany(OrgID);
+            DataSet dsData = new DataSet();
+            dsData.ReadXml(new StringReader(strxmlData));
+            organizationViewModel.organization.Organization_Id = OrgID;
+            organizationViewModel.organization.Company_Name = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+            return View(organizationViewModel);
+        }
+        [HttpPost]
+        public ActionResult DeleteGroupCompany(OrganizationViewModel organizationViewModel)
+        {
+            bool result = false;
+            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+            //result = organizationServiceClient.DeleteGroupCompany(organizationViewModel.organization.Organization_Id);
+            //if (result == true)
+            //{
+            //    return View();
+            //}
+            //else
+            //{
+            //    return View();
+
+            //}
             return View();
         }
 
@@ -426,8 +523,10 @@ namespace ComplianceAuditWeb.Controllers
             dsGroupCompaniesList.ReadXml(new StringReader(strxmlGroupCompanies));
             foreach(System.Data.DataRow row in dsGroupCompaniesList.Tables[0].Rows)
             {
-                ListOfGroupCompanies listOfGroup = new ListOfGroupCompanies { CompanyID = Convert.ToInt32(row["Org_Hier_ID"]), CompanyName = row["Company_Name"].ToString(),
-                    
+                ListOfGroupCompanies listOfGroup = new ListOfGroupCompanies { OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
+                    CompanyName = row["Company_Name"].ToString(),
+                    IsActive =Convert.ToBoolean(Convert.ToInt32( row["Is_Active"]))
+
                 };
                 //GroupCompanyLogo = row["Group_Company_Logo"].ToString(), IndustryType = row["Industry_Type"].ToString() };
                 grouplist.Add(listOfGroup);
