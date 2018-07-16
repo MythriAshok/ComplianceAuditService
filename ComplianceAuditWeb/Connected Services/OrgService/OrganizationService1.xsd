@@ -8,6 +8,7 @@
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Industry_Type" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Is_Active" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Is_Delete" type="xs:boolean" />
       <xs:element minOccurs="0" name="Is_Leaf" type="xs:boolean" />
       <xs:element minOccurs="0" name="Last_Updated_Date" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Level" type="xs:int" />

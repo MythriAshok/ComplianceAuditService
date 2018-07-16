@@ -1,0 +1,30 @@
+﻿@model ComplianceAuditWeb.Models.OrganizationViewModel
+
+@{
+    ViewBag.Title = "ActivateGroupCompany";
+}
+
+<h2>ActivateGroupCompany</h2>
+
+<h3>Are you sure you want to activate this?</h3>
+<div>
+    <h4>OrganizationViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+
+        @Html.LabelFor(m => m.organization.Organization_Id)
+        @Html.TextBoxFor(m => m.organization.Organization_Id)
+
+        @Html.LabelFor(m => m.organization.Company_Name)
+        @Html.TextBoxFor(m => m.organization.Company_Name)
+        <input type="submit" value="Activate" class="btn btn-default" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+    }
+</div>

@@ -149,6 +149,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Location_ID", org.Branch_Id);
                     cmd.Parameters.AddWithValue("p_User_ID", org.User_Id);
                     cmd.Parameters.AddWithValue("p_Is_Active", org.Is_Active);
+                    cmd.Parameters.AddWithValue("p_Is_Delete", org.Is_Delete);
                     MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                     object objorganizationid = cmd.ExecuteScalar();
                     if (objorganizationid != null)
@@ -251,6 +252,33 @@ namespace Compliance.DataAccess
             }
             return resultGroupCompany;
         }
+
+        public bool ActivateGroupCompany(int Org_Hier_ID)
+        {
+            bool resultGroupCompany = false;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_ActivateOrgHier", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", Org_Hier_ID);
+                int resultCount = cmd.ExecuteNonQuery();
+                if (resultCount > 0)
+                {
+                    resultGroupCompany = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return resultGroupCompany;
+        }
+
 
         public bool DeleteGroupCompany(int OrgID)
         {

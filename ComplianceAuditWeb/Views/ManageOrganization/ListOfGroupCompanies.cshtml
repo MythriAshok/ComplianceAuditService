@@ -25,7 +25,7 @@
         </th>
         <th></th>
     </tr>
-
+    
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -46,10 +46,25 @@
             @Html.DisplayFor(modelItem => item.GroupCompanyLogo)
         </td>
         <td>
-            @*@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |*@
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Deactivate", "DeactivateGroupCompany", new { Orgid = item.OrganizationID })
+            @if (item.IsActive == true)
+            {
+                @Html.ActionLink("Deactivate", "DeactivateGroupCompany", new { Orgid = item.OrganizationID })
+                <br />
+                @Html.ActionLink("Delete", "DeleteGroupCompany", new { Orgid = item.OrganizationID });
+
+            }
+            else
+            {
+                @Html.ActionLink("Activate", "ActivateGroupCompany", new { Orgid = item.OrganizationID })
+                <br />
+                @Html.ActionLink("Delete", "DeleteGroupCompany", new { Orgid = item.OrganizationID });
+
+
+            }
+
+
+
+
         </td>
     </tr>
 }

@@ -13,6 +13,7 @@ namespace Compliance.DataObject
         public string Description { get; set; }
         public int Level { get; set; }
         public bool Is_Leaf { get; set; }
+        public bool Is_Delete { get; set; }
         public string Industry_Type { get; set; }
         public int Branch_Id { get; set; }
 

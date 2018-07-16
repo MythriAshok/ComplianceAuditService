@@ -3,122 +3,136 @@
     Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 @*<script src="~/Scripts/JavaScript.js"></script>
-<select id = "countryDropDown"
-    onchange = "getStateList()" >
-@foreach (var item in ViewBag.CountryList)
-{<text>
-    <option value = "@item.CountryID" > @item.CountryName </option>
-    </text>
-    } </select><br/>
-                    <br/>
+    <select id = "countryDropDown"
+        onchange = "getStateList()" >
+    @foreach (var item in ViewBag.CountryList)
+    {<text>
+        <option value = "@item.CountryID" > @item.CountryName </option>
+        </text>
+        } </select><br/>
+                        <br/>
 
-    <select id = "stateDropDown" >
-    </select>*@
+        <select id = "stateDropDown" >
+        </select>*@
 
 
-    
-    
-    
-    @using (Html.BeginForm("AddGroupCompany", "ManageOrganization"))
+
+
+
+@using (Html.BeginForm("AddGroupCompany", "ManageOrganization"))
+{
+    @Html.Label("Company Name");
+    @Html.TextBoxFor(m => m.organization.Company_Name);
+
+
+    @Html.HiddenFor(m => m.organization.Organization_Id);
+
+
+    @Html.LabelFor(m => m.organization.Description);
+    @Html.TextAreaFor(m => m.organization.Description);
+
+    @Html.LabelFor(m => m.organization.Industry_Type);
+    @Html.TextBoxFor(m => m.organization.Industry_Type);
+
+
+
+    @Html.LabelFor(m => m.organization.Last_Updated_Date);
+    @Html.TextBoxFor(m => m.organization.Last_Updated_Date);
+
+
+
+    @Html.LabelFor(m => m.organization.User_Id);
+    @Html.TextBoxFor(m => m.organization.User_Id);
+
+    @Html.LabelFor(m => m.companydetails.Formal_Name);
+    @Html.TextBoxFor(m => m.companydetails.Formal_Name);
+
+
+
+    @Html.LabelFor(m => m.companydetails.Website);
+    @Html.TextBoxFor(m => m.companydetails.Website);
+
+    @Html.HiddenFor(m => m.companydetails.Company_Details_ID);
+
+
+    @Html.LabelFor(m => m.companydetails.Company_EmailID);
+    @Html.TextBoxFor(m => m.companydetails.Company_EmailID);
+
+    @Html.LabelFor(m => m.companydetails.Company_ContactNumber1);
+    @Html.TextBoxFor(m => m.companydetails.Company_ContactNumber1);
+
+    @Html.LabelFor(m => m.companydetails.Company_ContactNumber2);
+    @Html.EditorFor(m => m.companydetails.Company_ContactNumber2);
+
+    @Html.LabelFor(m => m.companydetails.Calender_StartDate);
+    @Html.EditorFor(m => m.companydetails.Calender_StartDate, new { htmlAttributes = new { @class = "form-control" } });
+
+    @Html.LabelFor(m => m.companydetails.Calender_EndDate);
+    @Html.EditorFor(m => m.companydetails.Calender_EndDate);
+
+    @Html.LabelFor(m => m.companydetails.Auditing_Frequency);
+    @Html.DropDownListFor(m => m.companydetails.Auditing_Frequency, new SelectList
+            (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.AuditingFrequency))),
+            "Select Auditing Freequency");
+
+    @Html.LabelFor(m => m.branch.Branch_Name);
+    @Html.TextBoxFor(m => m.branch.Branch_Name);
+
+    @Html.HiddenFor(m => m.branch.Branch_Id);
+
+    @Html.LabelFor(m => m.branch.Address);
+    @Html.TextBoxFor(m => m.branch.Address);
+
+    @Html.LabelFor(m => m.branch.Branch_CoordinatesURL);
+    @Html.TextBoxFor(m => m.branch.Branch_CoordinatesURL);
+
+    @Html.LabelFor(m => m.branch.Branch_Coordinates1);
+    @Html.TextBoxFor(m => m.branch.Branch_Coordinates1);
+
+    @Html.LabelFor(m => m.branch.Branch_Coordinates2);
+    @Html.TextBoxFor(m => m.branch.Branch_Coordinates2);
+
+    @Html.LabelFor(m => m.branch.Postal_Code);
+    @Html.TextBoxFor(m => m.branch.Postal_Code);
+
+    @Html.Label("Country")
+    @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country);
+
+    // if (Model.State != null)
+    // {
+
+    @Html.LabelFor(m => m.State);
+    @Html.DropDownListFor(m => m.branch.State_Id, Model.State);
+    // }
+
+
+    // if (Model.City != null)
+    //{
+
+    @Html.LabelFor(m => m.City);
+    @Html.DropDownListFor(m => m.branch.City_Id, Model.City);
+    // }
+
+
+
+
+
+
+
+
+
+
+    string button = "Save";
+
+    if (Model.organization.Organization_Id != 0)
     {
-        @Html.Label("Company Name");
-        @Html.TextBoxFor(m => m.organization.Company_Name);
+        button = "Update";
+        @Html.ActionLink("Delete", "DeleteGroupCompany", new { Orgid = Model.organization.Organization_Id });
 
-        @Html.LabelFor(m => m.organization.Description);
-        @Html.TextAreaFor(m => m.organization.Description);
-
-        @Html.LabelFor(m => m.organization.Industry_Type);
-        @Html.TextBoxFor(m => m.organization.Industry_Type);
-
-
-
-        @Html.LabelFor(m => m.organization.Last_Updated_Date);
-        @Html.TextBoxFor(m => m.organization.Last_Updated_Date);
-
-
-
-        @Html.LabelFor(m => m.organization.User_Id);
-        @Html.TextBoxFor(m => m.organization.User_Id);
-
-        @Html.LabelFor(m => m.companydetails.Formal_Name);
-        @Html.TextBoxFor(m => m.companydetails.Formal_Name);
-
-    
-
-        @Html.LabelFor(m => m.companydetails.Website);
-        @Html.TextBoxFor(m => m.companydetails.Website);
-
-
-
-        @Html.LabelFor(m => m.companydetails.Company_EmailID);
-        @Html.TextBoxFor(m => m.companydetails.Company_EmailID);
-
-        @Html.LabelFor(m => m.companydetails.Company_ContactNumber1);
-        @Html.TextBoxFor(m => m.companydetails.Company_ContactNumber1);
-
-        @Html.LabelFor(m => m.companydetails.Company_ContactNumber2);
-        @Html.EditorFor(m => m.companydetails.Company_ContactNumber2);
-
-        @Html.LabelFor(m => m.companydetails.Calender_StartDate);
-        @Html.EditorFor(m => m.companydetails.Calender_StartDate, new { htmlAttributes = new { @class = "form-control" } });
-
-        @Html.LabelFor(m => m.companydetails.Calender_EndDate);
-        @Html.EditorFor(m => m.companydetails.Calender_EndDate);
-
-        @Html.LabelFor(m => m.companydetails.Auditing_Frequency);
-        @Html.DropDownListFor(m => m.companydetails.Auditing_Frequency, new SelectList
-                (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.AuditingFrequency))),
-                "Select Auditing Freequency");
-
-        @Html.LabelFor(m => m.branch.Branch_Name);
-        @Html.TextBoxFor(m => m.branch.Branch_Name);
-
-        @Html.LabelFor(m => m.branch.Address);
-        @Html.TextBoxFor(m => m.branch.Address);
-
-        @Html.LabelFor(m => m.branch.Branch_CoordinatesURL);
-        @Html.TextBoxFor(m => m.branch.Branch_CoordinatesURL);
-
-        @Html.LabelFor(m => m.branch.Branch_Coordinates1);
-        @Html.TextBoxFor(m => m.branch.Branch_Coordinates1);
-
-        @Html.LabelFor(m => m.branch.Branch_Coordinates2);
-        @Html.TextBoxFor(m => m.branch.Branch_Coordinates2);
-
-        @Html.LabelFor(m => m.branch.Postal_Code);
-        @Html.TextBoxFor(m => m.branch.Postal_Code);
-
-        @Html.Label("Country")
-            @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country);
-
-            // if (Model.State != null)
-            // {
-
-            @Html.LabelFor(m => m.State);
-            @Html.DropDownListFor(m => m.branch.State_Id, Model.State);
-            // }
-
-
-            // if (Model.City != null)
-            //{
-
-            @Html.LabelFor(m => m.City);
-            @Html.DropDownListFor(m => m.branch.City_Id, Model.City);
-            // }
-
-
-
-
-
-
-       
-
-
-
-
-
-
-        <input type="submit" value="Create" class="btn btn-default" />
     }
+
+
+    <input type="submit" value="@button" class="btn btn-default" />
+}
 
 

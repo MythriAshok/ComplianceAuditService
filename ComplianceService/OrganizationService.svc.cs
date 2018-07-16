@@ -105,6 +105,22 @@ namespace ComplianceService
             return status;
         }
 
+        public bool ActivateGroupCompany(int OrgID)
+        {
+            bool status = false;
+            OrganizationHelper organizationHelper = new OrganizationHelper();
+            string result = organizationHelper.ActivateGroupCompany(OrgID).ToString();
+            if (result != null)
+            {
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
+            return status;
+        }
+
         public bool DeleteGroupCompany(int OrgID)
         {
             bool status = false;

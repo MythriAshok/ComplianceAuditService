@@ -98,6 +98,18 @@ namespace ComplianceAuditWeb.OrgService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/DeactivateGroupCompany", ReplyAction="http://tempuri.org/IOrganizationService/DeactivateGroupCompanyResponse")]
         System.Threading.Tasks.Task<bool> DeactivateGroupCompanyAsync(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/DeleteGroupCompany", ReplyAction="http://tempuri.org/IOrganizationService/DeleteGroupCompanyResponse")]
+        bool DeleteGroupCompany(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/DeleteGroupCompany", ReplyAction="http://tempuri.org/IOrganizationService/DeleteGroupCompanyResponse")]
+        System.Threading.Tasks.Task<bool> DeleteGroupCompanyAsync(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/ActivateGroupCompany", ReplyAction="http://tempuri.org/IOrganizationService/ActivateGroupCompanyResponse")]
+        bool ActivateGroupCompany(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/ActivateGroupCompany", ReplyAction="http://tempuri.org/IOrganizationService/ActivateGroupCompanyResponse")]
+        System.Threading.Tasks.Task<bool> ActivateGroupCompanyAsync(int OrgID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -237,6 +249,22 @@ namespace ComplianceAuditWeb.OrgService {
         
         public System.Threading.Tasks.Task<bool> DeactivateGroupCompanyAsync(int OrgID) {
             return base.Channel.DeactivateGroupCompanyAsync(OrgID);
+        }
+        
+        public bool DeleteGroupCompany(int OrgID) {
+            return base.Channel.DeleteGroupCompany(OrgID);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteGroupCompanyAsync(int OrgID) {
+            return base.Channel.DeleteGroupCompanyAsync(OrgID);
+        }
+        
+        public bool ActivateGroupCompany(int OrgID) {
+            return base.Channel.ActivateGroupCompany(OrgID);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ActivateGroupCompanyAsync(int OrgID) {
+            return base.Channel.ActivateGroupCompanyAsync(OrgID);
         }
     }
 }

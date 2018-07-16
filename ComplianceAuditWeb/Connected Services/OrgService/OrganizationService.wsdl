@@ -91,6 +91,18 @@
   <wsdl:message name="IOrganizationService_DeactivateGroupCompany_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeactivateGroupCompanyResponse" />
   </wsdl:message>
+  <wsdl:message name="IOrganizationService_DeleteGroupCompany_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteGroupCompany" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_DeleteGroupCompany_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteGroupCompanyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_ActivateGroupCompany_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActivateGroupCompany" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_ActivateGroupCompany_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActivateGroupCompanyResponse" />
+  </wsdl:message>
   <wsdl:portType name="IOrganizationService">
     <wsdl:operation name="insertOrganization">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertOrganization" message="tns:IOrganizationService_insertOrganization_InputMessage" />
@@ -147,6 +159,14 @@
     <wsdl:operation name="DeactivateGroupCompany">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/DeactivateGroupCompany" message="tns:IOrganizationService_DeactivateGroupCompany_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/DeactivateGroupCompanyResponse" message="tns:IOrganizationService_DeactivateGroupCompany_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteGroupCompany">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/DeleteGroupCompany" message="tns:IOrganizationService_DeleteGroupCompany_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/DeleteGroupCompanyResponse" message="tns:IOrganizationService_DeleteGroupCompany_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActivateGroupCompany">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/ActivateGroupCompany" message="tns:IOrganizationService_ActivateGroupCompany_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/ActivateGroupCompanyResponse" message="tns:IOrganizationService_ActivateGroupCompany_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IOrganizationService" type="tns:IOrganizationService">
@@ -270,6 +290,24 @@
     </wsdl:operation>
     <wsdl:operation name="DeactivateGroupCompany">
       <soap:operation soapAction="http://tempuri.org/IOrganizationService/DeactivateGroupCompany" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteGroupCompany">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/DeleteGroupCompany" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateGroupCompany">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/ActivateGroupCompany" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

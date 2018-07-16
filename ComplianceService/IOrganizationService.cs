@@ -55,6 +55,15 @@ namespace ComplianceService
 
 
         bool DeactivateGroupCompany(int OrgID);
+        [OperationContract]
+
+
+        bool DeleteGroupCompany(int OrgID);
+        [OperationContract]
+
+
+
+        bool ActivateGroupCompany(int OrgID);
     }
 }
 
