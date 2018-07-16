@@ -74,7 +74,7 @@ DROP TABLE IF EXISTS `auditmoduledb`.`tbl_branch_location` ;
 CREATE TABLE IF NOT EXISTS `auditmoduledb`.`tbl_branch_location` (
   `Location_ID` INT(11) NOT NULL AUTO_INCREMENT,
   `Location_Name` VARCHAR(75) NULL DEFAULT NULL,
-  `Adress` VARCHAR(450) NULL DEFAULT NULL,
+  `Address` VARCHAR(450) NULL DEFAULT NULL,
   `Country_ID` INT(11) NOT NULL,
   `State_ID` INT(11) NOT NULL,
   `City_ID` INT(11) NOT NULL,
