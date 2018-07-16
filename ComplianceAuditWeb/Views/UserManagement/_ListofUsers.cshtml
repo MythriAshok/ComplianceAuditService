@@ -36,12 +36,15 @@
 @foreach (var item in Model)
 {
     <tr>
+        @*<td>
+            @Html.CheckBox("chkdeactive")
+        </td>*@
         <td>
-            @Html.ActionLink(item.FirstName, "UpdateUser", new { id = item.UserId })
+            @Html.ActionLink(linkText: item.FirstName, actionName: "UpdateUser", routeValues: new { UserId = item.UserId }, htmlAttributes: null)
             <br />
             @Html.DisplayFor(modelItem => item.LastName)
             <br />
-            @Html.DisplayFor(modelItem => item.EmailId)            
+            @Html.DisplayFor(modelItem => item.EmailId)
         </td>
         @*<td>
             @Html.DisplayFor(modelItem => item.MiddleName)

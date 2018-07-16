@@ -174,16 +174,17 @@ delimiter ;
 Drop procedure if exists `auditmoduledb`.`sp_insertupdateUserGroup`;
 Delimiter /
 create procedure sp_insertupdateUserGroup(p_flag char(1),p_User_Group_ID int,p_User_Group_Name varchar(45),
-p_User_Group_Description varchar(45),p_Role_ID int)
+p_User_Group_Description varchar(45),p_Role_ID int,p_Is_Active bit)
 begin
 if(p_flag='I')
 then
 INSERT INTO `auditmoduledb`.`tbl_user_group`
 (`User_Group_Name`,
 `User_Group_Description`,
-`Role_ID`)
+`Role_ID`,
+`Is_Active`)
 VALUES
-(p_User_Group_Name,p_User_Group_Description,p_Role_ID);
+(p_User_Group_Name,p_User_Group_Description,p_Role_ID,p_Is_Active);
 else
 UPDATE `auditmoduledb`.`tbl_user_group`
 SET

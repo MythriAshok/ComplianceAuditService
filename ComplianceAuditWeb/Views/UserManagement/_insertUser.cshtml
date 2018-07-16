@@ -4,7 +4,10 @@
 
 @using (Html.BeginForm())
 {
+
     @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     @Html.Label("FirstName")
     @Html.TextBoxFor(m => m.User.FirstName)
@@ -38,6 +41,12 @@
     @Html.Label("Roles")
     @Html.ListBoxFor(m => m.RoleID, Model.RolesList)
 
-    <input type="submit" value="Create" class="btn btn-default" />
-
+    string button = "Save";
+    if (Model.User.UserId > 0)
+    {
+        button = "Update";
+        @Html.ActionLink("Delete", "DeleteUser", routeValues: new { UserId = Model.User.UserId })
+    }
+    <input type="submit" value=@button class="btn btn-default" />
 }
+/**/

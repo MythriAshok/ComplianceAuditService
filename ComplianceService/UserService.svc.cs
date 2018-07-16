@@ -159,5 +159,12 @@ namespace ComplianceService
             string xmldata = ds.GetXml();
             return xmldata;
         }
+
+        public bool DeleteUser(int Userid)
+        {
+            UserHelper helper = new UserHelper();
+            bool res=helper.DeleteUser(Userid);
+            return res;
+        }
     }
 }

@@ -98,6 +98,12 @@
   <wsdl:message name="IUserService_GetUserGroup_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetUserGroupResponse" />
   </wsdl:message>
+  <wsdl:message name="IUserService_DeleteUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUser" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_DeleteUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUserResponse" />
+  </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="insertUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/insertUser" message="tns:IUserService_insertUser_InputMessage" />
@@ -158,6 +164,10 @@
     <wsdl:operation name="GetUserGroup">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetUserGroup" message="tns:IUserService_GetUserGroup_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetUserGroupResponse" message="tns:IUserService_GetUserGroup_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/DeleteUser" message="tns:IUserService_DeleteUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/DeleteUserResponse" message="tns:IUserService_DeleteUser_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IUserService" type="tns:IUserService">
@@ -290,6 +300,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetUserGroup">
       <soap:operation soapAction="http://tempuri.org/IUserService/GetUserGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUser">
+      <soap:operation soapAction="http://tempuri.org/IUserService/DeleteUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
