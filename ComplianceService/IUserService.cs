@@ -33,7 +33,11 @@ namespace ComplianceService
         [OperationContract]
         bool insertRolePrivilege(int Roleid, int[] Privilegeid);
         [OperationContract]
-        string GetPrivilege(int Roleid);
+        string GetPrivilege();
+        [OperationContract]
+        bool DeleteRolePrivilege(int Roleid);
+        [OperationContract]
+        string getRolePrivilege(int Roleid);
         [OperationContract]
         bool insertUserGroupmember(int Userid, int[] Groupid);
         [OperationContract]
@@ -48,5 +52,10 @@ namespace ComplianceService
         bool UpdateUserGroupMember(int Userid);
         [OperationContract]
         bool UpdateUserRole(int Userid);
+
+        [OperationContract]
+        bool DeleteGroup(int Groupid);
+        [OperationContract]
+        bool DeleteRole(int Roleid);
     }    
 }

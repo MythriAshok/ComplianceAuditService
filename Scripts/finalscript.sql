@@ -332,3 +332,21 @@ DELETE FROM `auditmoduledb`.`tbl_user_group_members`
 WHERE User_ID= p_User_ID;
 end /
 Delimiter ;
+
+Drop procedure if exists `auditmoduledb`.`sp_DeleteRolePrivilege`;
+Delimiter /
+create procedure sp_DeleteRolePrivilege(p_Role_ID int)
+begin
+DELETE FROM `auditmoduledb`.`tbl_role_priv_map`
+WHERE Role_ID= p_Role_ID;
+end /
+Delimiter ;
+
+Drop procedure if exists `auditmoduledb`.`sp_DeleteUsergroup`;
+Delimiter /
+create procedure sp_DeleteUsergroup(p_User_Group_ID int)
+begin
+DELETE FROM `auditmoduledb`.`tbl_user_group`
+WHERE User_Group_ID= p_User_Group_ID;
+end /
+Delimiter ;

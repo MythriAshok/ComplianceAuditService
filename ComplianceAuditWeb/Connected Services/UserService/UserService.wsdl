@@ -74,6 +74,18 @@
   <wsdl:message name="IUserService_GetPrivilege_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPrivilegeResponse" />
   </wsdl:message>
+  <wsdl:message name="IUserService_DeleteRolePrivilege_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteRolePrivilege" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_DeleteRolePrivilege_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteRolePrivilegeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_getRolePrivilege_InputMessage">
+    <wsdl:part name="parameters" element="tns:getRolePrivilege" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_getRolePrivilege_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getRolePrivilegeResponse" />
+  </wsdl:message>
   <wsdl:message name="IUserService_insertUserGroupmember_InputMessage">
     <wsdl:part name="parameters" element="tns:insertUserGroupmember" />
   </wsdl:message>
@@ -115,6 +127,18 @@
   </wsdl:message>
   <wsdl:message name="IUserService_UpdateUserRole_OutputMessage">
     <wsdl:part name="parameters" element="tns:UpdateUserRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_DeleteGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteGroup" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_DeleteGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_DeleteRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteRole" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_DeleteRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteRoleResponse" />
   </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="insertUser">
@@ -161,6 +185,14 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetPrivilege" message="tns:IUserService_GetPrivilege_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetPrivilegeResponse" message="tns:IUserService_GetPrivilege_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="DeleteRolePrivilege">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/DeleteRolePrivilege" message="tns:IUserService_DeleteRolePrivilege_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/DeleteRolePrivilegeResponse" message="tns:IUserService_DeleteRolePrivilege_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getRolePrivilege">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/getRolePrivilege" message="tns:IUserService_getRolePrivilege_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/getRolePrivilegeResponse" message="tns:IUserService_getRolePrivilege_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="insertUserGroupmember">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/insertUserGroupmember" message="tns:IUserService_insertUserGroupmember_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/insertUserGroupmemberResponse" message="tns:IUserService_insertUserGroupmember_OutputMessage" />
@@ -188,6 +220,14 @@
     <wsdl:operation name="UpdateUserRole">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/UpdateUserRole" message="tns:IUserService_UpdateUserRole_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/UpdateUserRoleResponse" message="tns:IUserService_UpdateUserRole_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteGroup">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/DeleteGroup" message="tns:IUserService_DeleteGroup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/DeleteGroupResponse" message="tns:IUserService_DeleteGroup_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/DeleteRole" message="tns:IUserService_DeleteRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/DeleteRoleResponse" message="tns:IUserService_DeleteRole_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IUserService" type="tns:IUserService">
@@ -291,6 +331,24 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="DeleteRolePrivilege">
+      <soap:operation soapAction="http://tempuri.org/IUserService/DeleteRolePrivilege" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRolePrivilege">
+      <soap:operation soapAction="http://tempuri.org/IUserService/getRolePrivilege" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="insertUserGroupmember">
       <soap:operation soapAction="http://tempuri.org/IUserService/insertUserGroupmember" style="document" />
       <wsdl:input>
@@ -347,6 +405,24 @@
     </wsdl:operation>
     <wsdl:operation name="UpdateUserRole">
       <soap:operation soapAction="http://tempuri.org/IUserService/UpdateUserRole" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteGroup">
+      <soap:operation soapAction="http://tempuri.org/IUserService/DeleteGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRole">
+      <soap:operation soapAction="http://tempuri.org/IUserService/DeleteRole" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

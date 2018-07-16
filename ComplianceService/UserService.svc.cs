@@ -112,12 +112,22 @@ namespace ComplianceService
             }          
             return res;
         }
-
-        public string GetPrivilege(int Roleid)
+        public string getRolePrivilege(int Roleid)
         {
-            return BindPrivilege(Roleid);
+            return BindRolePrivilege(Roleid);
         }
-        private string BindPrivilege(int Roleid)
+        private string BindRolePrivilege(int Roleid)
+        {
+            UserPrivilegeHelper helper = new UserPrivilegeHelper();
+            DataSet privilege = helper.getRolePrivilege(Roleid);
+            string xmlPrivilege = privilege.GetXml();
+            return xmlPrivilege;
+        }
+        public string GetPrivilege()
+        {
+            return BindPrivilege();
+        }
+        private string BindPrivilege()
         {
             UserPrivilegeHelper helper = new UserPrivilegeHelper();
             DataSet privilege = helper.getPrivilege();
@@ -178,6 +188,24 @@ namespace ComplianceService
             UserHelper helper = new UserHelper();
             return helper.DeleteUserRole(Userid);
             
+        }
+
+        public bool DeleteRolePrivilege(int Roleid)
+        {
+            UserRolesHelper helper = new UserRolesHelper();
+            return helper.DeleteRolePrivilege(Roleid);
+        }
+
+        public bool DeleteRole(int Roleid)
+        {
+            UserRolesHelper helper = new UserRolesHelper();
+            return helper.DeleteRolePrivilege(Roleid);
+        }
+
+        public bool DeleteGroup(int Groupid)
+        {
+            UserGroupHelper helper = new UserGroupHelper();
+            return helper.DeleteGroup(Groupid);
         }
     }
 }

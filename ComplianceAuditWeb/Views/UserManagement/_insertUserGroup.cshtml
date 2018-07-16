@@ -7,8 +7,13 @@
     @Html.AntiForgeryToken()
 
     @Html.Label("GroupName")
-    @Html.TextBoxFor(model => model.Group.UserGroupName)
-
+    if (Model.Group.UserGroupId > 0)
+    {
+        @Html.DisplayFor(model => model.Group.UserGroupName) 
+    }
+    else
+    {   @Html.TextBoxFor(model => model.Group.UserGroupName)
+    }
     @Html.Label("GroupDescription")
     @Html.TextBoxFor(model => model.Group.UserGroupDescription)
 
@@ -17,6 +22,11 @@
         @Html.Label("Role")
         @Html.DropDownListFor(model => model.Group.UserRoleId, Model.Roles)
     }
-
-    <input type="submit" value="Create" class="btn btn-default" />
+    string button = "save";
+    if(Model.Group.UserGroupId>0)
+    {
+        button = "Update";
+        @Html.ActionLink("Delete","Deletegroup",routeValues:new { GroupId = Model.Group.UserGroupId })
+    }
+    <input type="submit" value=@button class="btn btn-default" />
 }
