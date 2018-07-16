@@ -8,7 +8,7 @@ select *  from tbl_Country;
 end/
 Delimiter ;
 
-call sp_getCountry()
+
 
 Drop Procedure if exists `sp_getState`;
 Delimiter /
@@ -21,7 +21,7 @@ select *  from tbl_state where Country_ID= p_Country_ID;
 end/
 Delimiter ;
 
-call sp_getState(2)
+
 
 Drop Procedure if exists `sp_getCity`;
 Delimiter /
@@ -76,7 +76,6 @@ select last_insert_id();
 end if;
 
 end/
-
 Delimiter ;
 
 
@@ -115,6 +114,7 @@ end if;
 end/
 Delimiter ;
 
+
 Drop Procedure if exists `sp_deleteBranchLocation`;
 delimiter /
 create procedure sp_deleteBranchLocation
@@ -124,6 +124,7 @@ p_Location_ID int
 delete from tbl_branch_location where Location_ID=p_Location_ID ;
 
  Delimiter ;
+
 
 Drop Procedure if exists  `sp_insertupdateOrganizationHier`;
 Delimiter /
@@ -164,9 +165,8 @@ where Org_Hier_ID=p_Org_Hier_ID;
 end if;
 
 end/
-
 Delimiter ;
-call sp_getOrganizationHier(1);
+
 
 Drop Procedure if exists `sp_getOrganizationHier`;
 Delimiter /
@@ -216,8 +216,6 @@ where tbl_org_hier.Org_Hier_ID= p_Org_Hier_ID;
 End If;
 
 end/
-call sp_getOrganizationHierJoin(2)
-
 Delimiter ;
 
 
@@ -228,10 +226,10 @@ create procedure sp_getGroupCompaniesList()
 
 begin  
 
-select Company_Name, Org_Hier_ID,Industry_Type,Is_Active from tbl_org_hier where Parent_Company_ID=0;
+select Company_Name, Org_Hier_ID,Industry_Type,Is_Active from tbl_org_hier where Parent_Company_ID=0 and Is_Delete = 0;
 end/
-
 Delimiter ;
+
 
 Drop Procedure if exists `sp_getGroupCompaniesListDropDown`;
 Delimiter /
@@ -335,14 +333,6 @@ where Company_Details_ID = p_Company_Details_ID;
 end if;
 end
 delimiter ;
-
-
-
-
-
-
-
-
 
 
 
@@ -948,16 +938,18 @@ p_User_Password varchar(10)
 begin
 update tbl_user set User_Password = p_User_Password where User_ID = p_User_ID;
 end/
-
-
 delimiter ; 
 
-drop procedure sp_DeactivateOrgHier;
+
+drop procedure if exists sp_DeactivateOrgHier;
 delimiter /
-create procedure sp_DeactivateOrgHier(p_Org_Hier_ID int)
+create procedure sp_DeactivateOrgHier
+(
+p_Org_Hier_ID int
+)
 begin
 update tbl_org_hier set Is_Active = 0 where Org_Hier_ID=p_Org_Hier_ID;
-end
+end/
 delimiter ;
 
 
