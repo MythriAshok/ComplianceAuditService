@@ -104,6 +104,12 @@ namespace ComplianceAuditWeb.UserService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUserGroup", ReplyAction="http://tempuri.org/IUserService/GetUserGroupResponse")]
         System.Threading.Tasks.Task<string> GetUserGroupAsync(int Groupid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteUser", ReplyAction="http://tempuri.org/IUserService/DeleteUserResponse")]
+        bool DeleteUser(int Userid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteUser", ReplyAction="http://tempuri.org/IUserService/DeleteUserResponse")]
+        System.Threading.Tasks.Task<bool> DeleteUserAsync(int Userid);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -251,6 +257,14 @@ namespace ComplianceAuditWeb.UserService {
         
         public System.Threading.Tasks.Task<string> GetUserGroupAsync(int Groupid) {
             return base.Channel.GetUserGroupAsync(Groupid);
+        }
+        
+        public bool DeleteUser(int Userid) {
+            return base.Channel.DeleteUser(Userid);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteUserAsync(int Userid) {
+            return base.Channel.DeleteUserAsync(Userid);
         }
     }
 }
