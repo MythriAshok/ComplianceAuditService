@@ -14,7 +14,6 @@ Country_Name varchar(70) not null
 
 
 
-
 create table tbl_State
 (State_ID int not null auto_increment primary key,
 State_Code varchar(5),
@@ -24,15 +23,14 @@ Foreign key FK_Country (Country_ID) references tbl_Country(Country_ID)
 );
 
 
-create table tbl_City
-(
-City_ID int not null auto_increment primary key,
-City_Name varchar(70),
-State_ID int not null,
-Foreign key FK_State (State_ID) references tbl_State(State_ID)
-on update cascade
-on delete cascade
-);
+
+
+
+
+
+
+
+
 
 
 create table tbl_Branch_Location
@@ -53,7 +51,12 @@ Branch_Coordinates1 varchar(100),
 Branch_Coordinates2 varchar(100),
 Branch_CoordinateURL varchar(100)
 );
+ 
 
+
+alter table tbl_Branch_Location change Adress Address varchar(450);
+
+select * from tbl_branch_location;
 
 
 
@@ -72,6 +75,9 @@ Is_Active bit,
 Last_Login datetime
 );
 
+insert into tbl_user (User_ID, User_Password,First_Name,Middle_Name,Last_Name,Email_ID,Contact_Number,Company_ID,Gender,Is_Active,Last_Login)
+values(1,'pass','ovi','hathwar','p','ovi','8971089120','1','Female',1,now());
+select* from tbl_user;
 
 
 create table tbl_Org_Hier
@@ -94,12 +100,17 @@ on delete cascade,
 Is_Active bit
 );
 
+
+
+alter table tbl_org_hier add column Is_Delete bit ;
+select * from tbl_org_hier;
+
 create table tbl_Company_Details
 (
 Company_Details_ID int not null auto_increment primary key  ,
 Org_Hier_ID int not null ,
 Foreign key (Org_Hier_ID) references tbl_Org_Hier(Org_Hier_ID),
-Industry_Type varchar(45),
+
 Formal_Name varchar(45),
 Calender_StartDate datetime,
 Calender_EndDate datetime,
@@ -107,12 +118,13 @@ Auditing_Frequency varchar(45),
 Website varchar(45),
 Company_Email_ID varchar(45),
 Company_ContactNumber1 varchar(45),
-Company_ContactNumber2 varchar(45),
-Is_Active bit
+Company_ContactNumber2 varchar(45)
+
 );
 
 
 
+select * from tbl_company_details;
 
 create table tbl_Compliance_Xref
 (
@@ -331,7 +343,7 @@ User_Group_ID int,
 Foreign key (User_Group_ID) references tbl_User_Group(User_Group_ID)
 );
 
-
+drop table tbl_Branch_Auditor_Mapping
 create table tbl_Branch_Auditor_Mapping
 (
 Branch_Allocation_ID int not null auto_increment primary key,
@@ -341,13 +353,13 @@ Auditor_ID int not null,
 Foreign key (Auditor_ID ) references tbl_User(User_ID),
 Financial_Year datetime,
 Is_Active bit,
-Login_ID int,
+UpdatedByLogin_ID int,
 Foreign key (Login_ID ) references tbl_User(User_ID),
 Allocation_Date datetime
 );
 
 
-
+drop table tbl_Compliance_Branch_Mapping
 create table tbl_Compliance_Branch_Mapping
 (
 Branch_Mapping_ID int not null auto_increment primary key,
@@ -357,7 +369,7 @@ Compliance_Xref_ID int not null,
 Foreign key (Compliance_Xref_ID) references tbl_Compliance_Xref(Compliance_Xref_ID),
 Financial_Year datetime ,
 Is_Active bit,
-Login_ID int,
+UpdatedByLogin_ID int,
 Foreign key (Login_ID ) references tbl_User(User_ID),
 Allocation_Date datetime
 );

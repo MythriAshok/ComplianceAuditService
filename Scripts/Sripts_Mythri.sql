@@ -68,9 +68,10 @@ update tbl_branch_location set
 
 Location_Name=p_Location_Name,Address=p_Address,Country_ID=p_Country_ID,State_ID=p_State_ID,City_ID=p_City_ID,
 Postal_Code=p_Postal_Code,
-Branch_Coordinates1= p_Branch_Coordinates1,Branch_Coordinates=p_Branch_Coordinates2,
-Branch_CoordinatesURL= p_Branch_CoordinateURL
+Branch_Coordinates1= p_Branch_Coordinates1,Branch_Coordinates2=p_Branch_Coordinates2,
+Branch_CoordinateURL= p_Branch_CoordinateURL
 where Location_ID=p_Location_ID;
+select last_insert_id();
 
 end if;
 
@@ -120,7 +121,7 @@ create procedure sp_deleteBranchLocation
 (
 p_Location_ID int
 )
-delete from tbl_branch_location where Location_ID=p_Location_ID;
+delete from tbl_branch_location where Location_ID=p_Location_ID ;
 
  Delimiter ;
 
@@ -157,7 +158,7 @@ else
 update tbl_org_hier set
 
 Company_Name=p_Company_Name, Company_ID=p_Company_ID, Parent_Company_ID=p_Parent_Company_ID, Description=p_Description, level=p_level,
-Is_Leaf=p_Is_Leaf, Industry_Type=p_Industry_Type, Last_Updated_Date=p_Last_Updated_Date, Location_ID=p_Location_ID, User_ID=p_User_ID, Is_Active=p_Is_Active
+Is_Leaf=p_Is_Leaf, Industry_Type=p_Industry_Type, Last_Updated_Date=now(), Location_ID=p_Location_ID, User_ID=p_User_ID, Is_Active=p_Is_Active
 where Org_Hier_ID=p_Org_Hier_ID;
 
 end if;
@@ -227,7 +228,7 @@ create procedure sp_getGroupCompaniesList()
 
 begin  
 
-select Company_Name, Company_ID,Industry_Type,Is_Active from tbl_org_hier where ;
+select Company_Name, Org_Hier_ID,Industry_Type,Is_Active from tbl_org_hier where Parent_Company_ID=0;
 end/
 
 Delimiter ;
@@ -261,7 +262,9 @@ create procedure sp_deleteOrganizationHier
 p_Org_Hier_ID int
 )
 begin
-update tbl_org_hier set Is_Active = 0 where Org_Hier_ID=p_Org_Hier_ID ;
+update tbl_org_hier set
+Is_Delete=1
+where tbl_org_hier.Org_Hier_ID= p_Org_Hier_ID;
 end/
 Delimiter ;
 
@@ -305,7 +308,7 @@ Org_Hier_ID=p_Org_Hier_ID,Formal_Name=p_Formal_Name,Calender_StartDate= p_Calend
 Calender_EndDate=p_Calender_EndDate,Auditing_Frequency= p_Auditing_Frequency,Website= p_Website,Company_Email_ID= p_Company_Email_ID,
 Company_ContactNumber1=p_Company_ContactNumber1,Company_ContactNumber2=p_Company_ContactNumber2
 where Company_Details_ID=p_Company_Details_ID;
-
+select last_insert_id();
 end if;
 
 end/
@@ -350,8 +353,8 @@ create procedure sp_deleteCompanyDetails
 p_Company_Details_ID int
 )
 begin
+delete from tbl_company_details where tbl_Org_Hier.Or
 
-update tbl_company_details set Is_Active = 0 where Company_Details_ID=p_Company_Details_ID;
 
 delimiter ;
 
@@ -948,6 +951,15 @@ end/
 
 
 delimiter ; 
+
+drop procedure sp_DeactivateOrgHier;
+delimiter /
+create procedure sp_DeactivateOrgHier(p_Org_Hier_ID int)
+begin
+update tbl_org_hier set Is_Active = 0 where Org_Hier_ID=p_Org_Hier_ID;
+end
+delimiter ;
+
 
 
 
