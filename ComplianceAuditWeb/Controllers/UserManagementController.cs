@@ -24,6 +24,8 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult insertRoles()
         {
             RolesViewModel rolesView = new RolesViewModel();
+            rolesView.roles = new Roles();
+            rolesView.roles.RoleId = 0;
             UserService.UserServiceClient client = new UserService.UserServiceClient();
             string xmldata = client.GetPrivilege();
             DataSet ds = new DataSet();
@@ -97,6 +99,8 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult UserGroup()
         {
             UserGroupViewModel GroupView = new UserGroupViewModel();
+            GroupView.Group = new UserGroup();
+            GroupView.Group.UserGroupId = 0;
             UserService.UserServiceClient Client = new UserService.UserServiceClient();          
             string xmldata = Client.GetRoles(1);
             DataSet ds = new DataSet();
@@ -228,7 +232,7 @@ namespace ComplianceAuditWeb.Controllers
             ds.ReadXml(new StringReader(xmldata));            
             model.User.UserId = UserId;
             model.User.FirstName = ds.Tables[0].Rows[0]["First_Name"].ToString();
-            model.User.MiddleName = Convert.ToString(ds.Tables[0].Rows[0]["Middle_Name"]);
+            //model.User.MiddleName = Convert.ToString(ds.Tables[0].Rows[0]["Middle_Name"]);
             model.User.LastName = Convert.ToString(ds.Tables[0].Rows[0]["Last_Name"]);
             model.User.ContactNumber = Convert.ToString(ds.Tables[0].Rows[0]["Contact_Number"]);
             model.User.EmailId = Convert.ToString(ds.Tables[0].Rows[0]["Email_ID"]);
@@ -237,36 +241,41 @@ namespace ComplianceAuditWeb.Controllers
             //model.User.IsActive = Convert.ToBoolean(ds.Tables[0].Rows[0]["Is_Active"]);
             model.UserGroupList = new List<SelectListItem>();
             xmldata = Client.GetUserGroup(0);
-            ds.Clear();
+            ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             xmldata = Client.getUserAssignedGroup(model.User.UserId);
             DataSet dsgroup = new DataSet();
             dsgroup.ReadXml(new StringReader(xmldata));
-            bool dsinz = ds.IsInitialized;
-            bool dsgroupinz = dsgroup.IsInitialized;
-            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+           
+            if (ds.Tables.Count > 0)
             {
-                bool selected = false;
-                foreach (System.Data.DataRow roleid in dsgroup.Tables[0].Rows)
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
                 {
-                    if (Convert.ToInt32(roleid["User_Group_ID"]) == Convert.ToInt32(row["User_Group_ID"]))
+                    bool selected = false;
+                    if(dsgroup.Tables.Count>0)
+                    foreach (System.Data.DataRow roleid in dsgroup.Tables[0].Rows)
                     {
-                        selected = true;
-                        break;
+                        if (Convert.ToInt32(roleid["User_Group_ID"]) == Convert.ToInt32(row["User_Group_ID"]))
+                        {
+                            selected = true;
+                            break;
+                        }
                     }
+                    model.UserGroupList.Add(new SelectListItem { Text = row["User_Group_Name"].ToString(), Value = row["User_Group_ID"].ToString(), Selected = selected });
                 }
-                model.UserGroupList.Add(new SelectListItem { Text = row["User_Group_Name"].ToString(), Value = row["User_Group_ID"].ToString(),Selected=selected });
             }
             model.RolesList = new List<SelectListItem>();
-            ds.Clear();
+            ds = new DataSet();
             xmldata = Client.GetRoles(0);
             ds.ReadXml(new StringReader(xmldata));
             xmldata = Client.getUserRoles(model.User.UserId);
-            dsgroup.Clear();
+            dsgroup = new DataSet();
             dsgroup.ReadXml(new StringReader(xmldata));
+            if(ds.Tables.Count>0)
             foreach (System.Data.DataRow row in ds.Tables[0].Rows)
             {
                 bool selected = false;
+                if(ds.Tables.Count>0)
                 foreach (System.Data.DataRow roleid in dsgroup.Tables[0].Rows)
                 {
                     if (Convert.ToInt32(roleid["Role_ID"]) == Convert.ToInt32(row["Role_ID"]))
