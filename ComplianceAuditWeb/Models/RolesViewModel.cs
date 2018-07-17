@@ -9,10 +9,11 @@ namespace ComplianceAuditWeb.Models
 {
     public class RolesViewModel
     {
-       public Roles roles { get; set; }
+        public Roles roles { get; set; }
 
         public List<SelectListItem> privilege { get; set; }
 
         public int[] PrivilegeId { get; set; }
+
     }
 }

@@ -106,7 +106,7 @@ namespace ComplianceAuditWeb.Controllers
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             GroupView.Roles = new List<SelectListItem>();
-            //GroupView.Roles.Add(new SelectListItem { Text = "--Select Roles--", Value = "0" });
+            GroupView.Roles.Add(new SelectListItem { Text = "--Select Roles--", Value = "0" });
             foreach(System.Data.DataRow row in ds.Tables[0].Rows)
             {
                 GroupView.Roles.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
@@ -232,7 +232,7 @@ namespace ComplianceAuditWeb.Controllers
             ds.ReadXml(new StringReader(xmldata));            
             model.User.UserId = UserId;
             model.User.FirstName = ds.Tables[0].Rows[0]["First_Name"].ToString();
-            //model.User.MiddleName = Convert.ToString(ds.Tables[0].Rows[0]["Middle_Name"]);
+            model.User.MiddleName = Convert.ToString(ds.Tables[0].Rows[0]["Middle_Name"]);
             model.User.LastName = Convert.ToString(ds.Tables[0].Rows[0]["Last_Name"]);
             model.User.ContactNumber = Convert.ToString(ds.Tables[0].Rows[0]["Contact_Number"]);
             model.User.EmailId = Convert.ToString(ds.Tables[0].Rows[0]["Email_ID"]);

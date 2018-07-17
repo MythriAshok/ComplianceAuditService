@@ -228,6 +228,7 @@
     <Content Include="Views\UserManagement\_ListofUsers.cshtml" />
     <Content Include="Views\ManageOrganization\DeleteGroupCompany.cshtml" />
     <Content Include="Views\ManageOrganization\ActivateGroupCompany.cshtml" />
+    <Content Include="Views\UserManagement\_ListofRoles.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
