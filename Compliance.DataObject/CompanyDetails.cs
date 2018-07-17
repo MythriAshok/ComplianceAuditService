@@ -15,7 +15,10 @@ namespace Compliance.DataObject
         public string Formal_Name { get; set; }
         [Display(Name = "Start Date")]
         [DataType(DataType.Date)]
-        public DateTime Calender_StartDate { get; set; } 
+        public DateTime Calender_StartDate { get; set; }
+
+        [Display(Name = "End Date")]
+        [DataType(DataType.Date)]
         public DateTime Calender_EndDate  { get; set; }
         public string Auditing_Frequency { get; set; }
         public string Website { get; set; }

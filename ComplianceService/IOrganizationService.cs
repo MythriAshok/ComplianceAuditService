@@ -43,7 +43,10 @@ namespace ComplianceService
        
         [OperationContract]
         string GetGroupCompaniesList();
-
+        [OperationContract]
+        string GetCompaniesList();
+        [OperationContract]
+        string GetBranchList();
         [OperationContract]
 
         string getGroupCompanyListDropDown();
@@ -56,14 +59,31 @@ namespace ComplianceService
 
         bool DeactivateGroupCompany(int OrgID);
         [OperationContract]
-
-
         bool DeleteGroupCompany(int OrgID);
+        [OperationContract]
+        bool ActivateGroupCompany(int OrgID);
+
         [OperationContract]
 
 
+        bool DeactivateCompany(int OrgID);
+        [OperationContract]
+        bool DeleteCompany(int OrgID);
+        [OperationContract]
+        bool ActivateCompany(int OrgID);
 
-        bool ActivateGroupCompany(int OrgID);
+        [OperationContract]
+
+
+        bool DeactivateBranch(int OrgID);
+        [OperationContract]
+        bool DeleteBranch(int OrgID);
+        [OperationContract]
+        bool ActivateBranch(int OrgID);
+        [OperationContract]
+
+        string getBranch(int OrgID);
+
     }
 }
 

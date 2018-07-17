@@ -1,5 +1,7 @@
 ﻿@model ComplianceAuditWeb.Models.CompanyViewModel
 @{
+    /**/
+
     Layout = "~/Views/Shared/_Layout1.cshtml";
 }
 {
@@ -7,7 +9,7 @@
 @using (Html.BeginForm("AddCompany", "ManageOrganization"))
 {
     @Html.Label("GroupCompany")
-    @Html.DropDownListFor(m => m.GroupCompanyID,Model.GroupCompaniesList);
+    @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList);
 
 
     @Html.Label("Company Name");
@@ -16,16 +18,19 @@
     @Html.LabelFor(m => m.organization.Description);
     @Html.TextAreaFor(m => m.organization.Description);
 
-    @Html.LabelFor(m => m.organization.Industry_Type);
-    @Html.TextBoxFor(m => m.organization.Industry_Type);
+    @Html.Label("Industry Type");
 
-    @Html.LabelFor(m => m.organization.Last_Updated_Date);
-    @Html.TextBoxFor(m => m.organization.Last_Updated_Date, @DateTime.Now.Year);
+    @Html.DropDownListFor(m => m.companydetails.Industry_Type, new SelectList
+            (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.IndustryType))),
+            "Select Industry Type");
 
-    @Html.LabelFor(m => m.organization.User_Id);
+    @*@Html.LabelFor(m => m.organization.Last_Updated_Date);*@
+    @Html.HiddenFor(m => m.organization.Last_Updated_Date, @DateTime.Now.Year);
+
+    @Html.Label("User Name");
     @Html.TextBoxFor(m => m.organization.User_Id);
 
-    @Html.LabelFor(m => m.companydetails.Formal_Name);
+    @Html.Label("Company Formal Name");
     @Html.TextBoxFor(m => m.companydetails.Formal_Name);
 
 
@@ -33,47 +38,49 @@
     @Html.LabelFor(m => m.companydetails.Website);
     @Html.TextBoxFor(m => m.companydetails.Website);
 
- 
 
-    @Html.LabelFor(m => m.companydetails.Company_EmailID);
+
+    @Html.Label("Company Email Address");
     @Html.TextBoxFor(m => m.companydetails.Company_EmailID);
 
-    @Html.LabelFor(m => m.companydetails.Company_ContactNumber1);
+    @Html.Label("Contact Number1");
     @Html.TextBoxFor(m => m.companydetails.Company_ContactNumber1);
 
-    @Html.LabelFor(m => m.companydetails.Company_ContactNumber2);
+    @Html.Label("Contact Number2");
     @Html.TextBoxFor(m => m.companydetails.Company_ContactNumber2);
 
-    @Html.LabelFor(m => m.companydetails.Calender_StartDate);
-    @Html.TextBoxFor(m => m.companydetails.Calender_StartDate);
+    @Html.Label("Company Start Date");
+    @Html.EditorFor(m => m.companydetails.Calender_StartDate, new { htmlAttributes = new { @class = "form-control" } });
 
-    @Html.LabelFor(m => m.companydetails.Calender_EndDate);
-    @Html.TextBoxFor(m => m.companydetails.Calender_EndDate);
+    @Html.Label("Company End Date");
+    @Html.EditorFor(m => m.companydetails.Calender_EndDate, new { htmlAttributes = new { @class = "form-control" } });
 
-    @Html.LabelFor(m => m.companydetails.Auditing_Frequency);
+    @Html.Label("Auditing Frequency");
     @Html.DropDownListFor(m => m.companydetails.Auditing_Frequency, new SelectList
             (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.AuditingFrequency))),
             "Select Auditing Freequency");
 
-    @Html.LabelFor(m => m.branch.Branch_Name);
+    @Html.Label("Location Name");
     @Html.TextBoxFor(m => m.branch.Branch_Name);
+
+    @Html.HiddenFor(m => m.branch.Branch_Id);
 
     @Html.LabelFor(m => m.branch.Address);
     @Html.TextBoxFor(m => m.branch.Address);
 
-    @Html.LabelFor(m => m.branch.Branch_CoordinatesURL);
+    @Html.Label("Location URL");
     @Html.TextBoxFor(m => m.branch.Branch_CoordinatesURL);
 
-    @Html.LabelFor(m => m.branch.Branch_Coordinates1);
+    @Html.Label("Branch Coordinates1");
     @Html.TextBoxFor(m => m.branch.Branch_Coordinates1);
 
-    @Html.LabelFor(m => m.branch.Branch_Coordinates2);
+    @Html.Label("Branch Coordinates1");
     @Html.TextBoxFor(m => m.branch.Branch_Coordinates2);
 
-    @Html.LabelFor(m => m.branch.Postal_Code);
+    @Html.Label("Postal Code");
     @Html.TextBoxFor(m => m.branch.Postal_Code);
 
-    @Html.Label("Privilege")
+    @Html.Label("Country")
     @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country);
 
     @*@Html.LabelFor(m => m.Country);
@@ -85,10 +92,19 @@
     @Html.LabelFor(m => m.City);
     @Html.DropDownListFor(m => m.branch.City_Id, Model.City);
 
-    <input type="submit" value="Create" class="btn btn-default" />
+    string button = "Save";
+
+    if (Model.organization.Organization_Id != 0)
+    {
+        button = "Update";
+        @Html.ActionLink("Delete", "DeleteGroupCompany", new { Orgid = Model.organization.Organization_Id });
+
+    }
+
+
+    <input type="submit" value="@button" class="btn btn-default" />
 
 }
-@Html.ActionLink("Back to List", "Index")
 
 
 }

@@ -35,6 +35,6 @@ namespace ComplianceAuditWeb.Models
     public enum TypeOfBranch
     {
         SalesOffice,
-        Manufacturing
+        HeadOffice
     }
 }

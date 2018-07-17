@@ -28,4 +28,10 @@ namespace ComplianceAuditWeb.Models
         HalfYearly,
         Annually
     }
+
+    public enum IndustryType
+    {
+        IT,
+        Manufacturing
+    }
 }

@@ -13,46 +13,50 @@
     @Html.DropDownListFor(m => m.CompanyID, Model.CompaniesList);
 
 
-    @Html.LabelFor(m => m.branch.Branch_Name);
+    @Html.Label("Location Name");
     @Html.TextBoxFor(m => m.branch.Branch_Name);
 
     @Html.LabelFor(m => m.branch.Address);
     @Html.TextBoxFor(m => m.branch.Address);
 
-    @Html.LabelFor(m => m.branch.Branch_CoordinatesURL);
+    @Html.Label("Branch URL");
     @Html.TextBoxFor(m => m.branch.Branch_CoordinatesURL);
 
-    @Html.LabelFor(m => m.branch.Branch_Coordinates1);
+    @Html.Label("Branch Coordinates1");
     @Html.TextBoxFor(m => m.branch.Branch_Coordinates1);
 
-    @Html.LabelFor(m => m.branch.Branch_Coordinates2);
+    @Html.Label("Branch Coordinates2");
     @Html.TextBoxFor(m => m.branch.Branch_Coordinates2);
 
-    @Html.LabelFor(m => m.branch.Postal_Code);
+    @Html.Label("Postal Code");
     @Html.TextBoxFor(m => m.branch.Postal_Code);
 
-    @Html.LabelFor(m => m.organization.Company_Name);
+    @Html.Label("Branch Name");
     @Html.TextBoxFor(m => m.organization.Company_Name);
 
     @Html.LabelFor(m => m.organization.Description);
     @Html.TextAreaFor(m => m.organization.Description);
 
-    @Html.LabelFor(m => m.organization.Industry_Type);
-    @Html.TextBoxFor(m => m.organization.Industry_Type);
+    @Html.Label("Industry Type");
+   
+
+    @Html.DropDownListFor(m => m.organization.Industry_Type, new SelectList
+            (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.IndustryType))),
+            "Select Industry Type");
 
 
 
 
 
-    @Html.LabelFor(m => m.organization.Last_Updated_Date);
-    @Html.TextBoxFor(m => m.organization.Last_Updated_Date);
+    @*@Html.LabelFor(m => m.organization.Last_Updated_Date);*@
+    @Html.HiddenFor(m => m.organization.Last_Updated_Date);
 
 
 
-    @Html.LabelFor(m => m.organization.Parent_Company_Id);
-    @Html.TextBoxFor(m => m.organization.Parent_Company_Id);
+    @*@Html.LabelFor(m => m.organization.Parent_Company_Id);
+        @Html.TextBoxFor(m => m.organization.Parent_Company_Id);*@
 
-    @Html.LabelFor(m => m.organization.User_Id);
+    @Html.Label("User ID");
     @Html.TextBoxFor(m => m.organization.User_Id);
 
     @*@Html.LabelFor(m => m.branchAuditingFrequency);

@@ -1,0 +1,75 @@
+﻿@model IEnumerable<ComplianceAuditWeb.Models.ListOfGroupCompanies>
+
+@{
+                /**/
+
+                ViewBag.Title = "ListOfBranch";
+}
+
+<h2>ListOfGroupCompanies</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrganizationID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GroupCompanyLogo)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @*@Html.DisplayFor(modelItem => item.CompanyName)*@
+        @*@Html.DisplayFor(modelItem => item.GroupCompanyLogo)*@
+        @Html.DisplayFor(modelItem => item.OrganizationID)
+        <br />
+        @Html.ActionLink(item.CompanyName, "UpdateBranch", new { Orgid = item.OrganizationID })
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.OrganizationID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.IsActive)
+    </td>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.GroupCompanyLogo)
+    </td>
+    <td>
+        @if (item.IsActive == true)
+        {
+            @Html.ActionLink("Deactivate", "DeactivateBranch", new { Orgid = item.OrganizationID })
+            <br />
+            @Html.ActionLink("Delete", "DeleteBranch", new { Orgid = item.OrganizationID });
+
+        }
+        else
+        {
+            @Html.ActionLink("Activate", "ActivateBranch", new { Orgid = item.OrganizationID })
+            <br />
+            @Html.ActionLink("Delete", "DeleteBranch", new { Orgid = item.OrganizationID });
+
+
+        }
+
+
+
+
+    </td>
+</tr>
+}
+
+</table>
