@@ -247,10 +247,61 @@ namespace ComplianceService
         {
             Organization org = new Organization();
             OrganizationHelper orgHelper = new OrganizationHelper();
-            DataSet dsOrganizationCompany = orgHelper.getOrganizationHier(orgID);
-            string xmlOrganizationCompany = dsOrganizationCompany.GetXml();
-            return xmlOrganizationCompany;
+            DataSet dsCompany = orgHelper.getOrganizationHier(orgID);
+            string xmlCompany = dsCompany.GetXml();
+            return xmlCompany;
         }
+
+        public bool DeactivateCompany(int OrgID)
+        {
+            bool status = false;
+            OrganizationHelper organizationHelper = new OrganizationHelper();
+            string result = organizationHelper.DeactivateGroupCompany(OrgID).ToString();
+            if (result != null)
+            {
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
+            return status;
+        }
+
+        public bool ActivateCompany(int OrgID)
+        {
+            bool status = false;
+            OrganizationHelper organizationHelper = new OrganizationHelper();
+            string result = organizationHelper.ActivateGroupCompany(OrgID).ToString();
+            if (result != null)
+            {
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
+            return status;
+        }
+
+        public bool DeleteCompany(int OrgID)
+        {
+            bool status = false;
+            OrganizationHelper organizationHelper = new OrganizationHelper();
+            string result = organizationHelper.DeleteGroupCompany(OrgID).ToString();
+            if (result != null)
+            {
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
+            return status;
+        }
+
+
+
         /// <summary>
         /// A method in the service layer that interacts with organization helper class to insert the Branch details into the database
         /// </summary>
@@ -327,10 +378,63 @@ namespace ComplianceService
         {
             Organization org = new Organization();
             OrganizationHelper orgHelper = new OrganizationHelper();
-            DataSet dsOrganizationBranch = orgHelper.getOrganizationHier(orgID);
-            string xmlOrganizationBranch = dsOrganizationBranch.GetXml();
-            return xmlOrganizationBranch;
+            DataSet dsBranch = orgHelper.getBranch(orgID);
+            string xmlBranch = dsBranch.GetXml();
+            return xmlBranch;
         }
+
+        public bool DeactivateBranch(int OrgID)
+        {
+            bool status = false;
+            OrganizationHelper organizationHelper = new OrganizationHelper();
+            string result = organizationHelper.DeactivateGroupCompany(OrgID).ToString();
+            if (result != null)
+            {
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
+            return status;
+        }
+
+        public bool ActivateBranch(int OrgID)
+        {
+            bool status = false;
+            OrganizationHelper organizationHelper = new OrganizationHelper();
+            string result = organizationHelper.ActivateGroupCompany(OrgID).ToString();
+            if (result != null)
+            {
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
+            return status;
+        }
+
+        public bool DeleteBranch(int OrgID)
+        {
+            bool status = false;
+            OrganizationHelper organizationHelper = new OrganizationHelper();
+            string result = organizationHelper.DeleteGroupCompany(OrgID).ToString();
+            if (result != null)
+            {
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
+            return status;
+        }
+
+
+
+
+
         /// <summary>
         /// A method in the service layer  that interacts with bindCountry method,to fetch the Country list from the database.
         /// </summary>
@@ -411,6 +515,44 @@ namespace ComplianceService
             string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
             return xmlGroupCompaniesList;
         }
+
+
+
+        public string GetCompaniesList()
+        {
+            return BindCompaniesList();
+        }
+        /// <summary>
+        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
+        /// </summary>
+        /// <returns></returns>
+        private string BindCompaniesList()
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsCompanies = OrganizationHelper.getCompanyList();
+            string xmlCompaniesList = dsCompanies.GetXml();
+            return xmlCompaniesList;
+        }
+
+
+        public string GetBranchList()
+        {
+            return BindBranchList();
+        }
+        /// <summary>
+        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
+        /// </summary>
+        /// <returns></returns>
+        private string BindBranchList()
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsBranches = OrganizationHelper.getBranchList();
+            string xmlBranchList = dsBranches.GetXml();
+            return xmlBranchList;
+        }
+
+
+
 
         public string getGroupCompanyListDropDown()
         {

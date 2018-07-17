@@ -196,6 +196,31 @@ namespace Compliance.DataAccess
             }
             return dsOrganization;
         }
+
+        public DataSet getBranch(int OrgID)
+        {
+            DataSet dsBranch = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getBranchJoin", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", OrgID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsBranch);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsBranch;
+        }
+
+
         /// <summary>
         /// A method to delete the records of Organization table in the database
         /// </summary>
@@ -436,6 +461,51 @@ namespace Compliance.DataAccess
             }
             return dsGroupCompaniesList;
         }
+
+        public DataSet getCompanyList()
+        {
+            DataSet dsCompaniesList = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getCompaniesList", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsCompaniesList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsCompaniesList;
+        }
+
+        public DataSet getBranchList()
+        {
+            DataSet dsBranchList = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getBranchList", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsBranchList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsBranchList;
+        }
+
 
         public DataSet getGroupCompanyListDropDown()
         {

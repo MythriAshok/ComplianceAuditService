@@ -81,6 +81,18 @@ namespace ComplianceAuditWeb.OrgService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetGroupCompaniesList", ReplyAction="http://tempuri.org/IOrganizationService/GetGroupCompaniesListResponse")]
         System.Threading.Tasks.Task<string> GetGroupCompaniesListAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetCompaniesList", ReplyAction="http://tempuri.org/IOrganizationService/GetCompaniesListResponse")]
+        string GetCompaniesList();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetCompaniesList", ReplyAction="http://tempuri.org/IOrganizationService/GetCompaniesListResponse")]
+        System.Threading.Tasks.Task<string> GetCompaniesListAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetBranchList", ReplyAction="http://tempuri.org/IOrganizationService/GetBranchListResponse")]
+        string GetBranchList();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetBranchList", ReplyAction="http://tempuri.org/IOrganizationService/GetBranchListResponse")]
+        System.Threading.Tasks.Task<string> GetBranchListAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getGroupCompanyListDropDown", ReplyAction="http://tempuri.org/IOrganizationService/getGroupCompanyListDropDownResponse")]
         string getGroupCompanyListDropDown();
         
@@ -110,6 +122,48 @@ namespace ComplianceAuditWeb.OrgService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/ActivateGroupCompany", ReplyAction="http://tempuri.org/IOrganizationService/ActivateGroupCompanyResponse")]
         System.Threading.Tasks.Task<bool> ActivateGroupCompanyAsync(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/DeactivateCompany", ReplyAction="http://tempuri.org/IOrganizationService/DeactivateCompanyResponse")]
+        bool DeactivateCompany(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/DeactivateCompany", ReplyAction="http://tempuri.org/IOrganizationService/DeactivateCompanyResponse")]
+        System.Threading.Tasks.Task<bool> DeactivateCompanyAsync(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/DeleteCompany", ReplyAction="http://tempuri.org/IOrganizationService/DeleteCompanyResponse")]
+        bool DeleteCompany(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/DeleteCompany", ReplyAction="http://tempuri.org/IOrganizationService/DeleteCompanyResponse")]
+        System.Threading.Tasks.Task<bool> DeleteCompanyAsync(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/ActivateCompany", ReplyAction="http://tempuri.org/IOrganizationService/ActivateCompanyResponse")]
+        bool ActivateCompany(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/ActivateCompany", ReplyAction="http://tempuri.org/IOrganizationService/ActivateCompanyResponse")]
+        System.Threading.Tasks.Task<bool> ActivateCompanyAsync(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/DeactivateBranch", ReplyAction="http://tempuri.org/IOrganizationService/DeactivateBranchResponse")]
+        bool DeactivateBranch(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/DeactivateBranch", ReplyAction="http://tempuri.org/IOrganizationService/DeactivateBranchResponse")]
+        System.Threading.Tasks.Task<bool> DeactivateBranchAsync(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/DeleteBranch", ReplyAction="http://tempuri.org/IOrganizationService/DeleteBranchResponse")]
+        bool DeleteBranch(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/DeleteBranch", ReplyAction="http://tempuri.org/IOrganizationService/DeleteBranchResponse")]
+        System.Threading.Tasks.Task<bool> DeleteBranchAsync(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/ActivateBranch", ReplyAction="http://tempuri.org/IOrganizationService/ActivateBranchResponse")]
+        bool ActivateBranch(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/ActivateBranch", ReplyAction="http://tempuri.org/IOrganizationService/ActivateBranchResponse")]
+        System.Threading.Tasks.Task<bool> ActivateBranchAsync(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getBranch", ReplyAction="http://tempuri.org/IOrganizationService/getBranchResponse")]
+        string getBranch(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getBranch", ReplyAction="http://tempuri.org/IOrganizationService/getBranchResponse")]
+        System.Threading.Tasks.Task<string> getBranchAsync(int OrgID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -227,6 +281,22 @@ namespace ComplianceAuditWeb.OrgService {
             return base.Channel.GetGroupCompaniesListAsync();
         }
         
+        public string GetCompaniesList() {
+            return base.Channel.GetCompaniesList();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetCompaniesListAsync() {
+            return base.Channel.GetCompaniesListAsync();
+        }
+        
+        public string GetBranchList() {
+            return base.Channel.GetBranchList();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetBranchListAsync() {
+            return base.Channel.GetBranchListAsync();
+        }
+        
         public string getGroupCompanyListDropDown() {
             return base.Channel.getGroupCompanyListDropDown();
         }
@@ -265,6 +335,62 @@ namespace ComplianceAuditWeb.OrgService {
         
         public System.Threading.Tasks.Task<bool> ActivateGroupCompanyAsync(int OrgID) {
             return base.Channel.ActivateGroupCompanyAsync(OrgID);
+        }
+        
+        public bool DeactivateCompany(int OrgID) {
+            return base.Channel.DeactivateCompany(OrgID);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeactivateCompanyAsync(int OrgID) {
+            return base.Channel.DeactivateCompanyAsync(OrgID);
+        }
+        
+        public bool DeleteCompany(int OrgID) {
+            return base.Channel.DeleteCompany(OrgID);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteCompanyAsync(int OrgID) {
+            return base.Channel.DeleteCompanyAsync(OrgID);
+        }
+        
+        public bool ActivateCompany(int OrgID) {
+            return base.Channel.ActivateCompany(OrgID);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ActivateCompanyAsync(int OrgID) {
+            return base.Channel.ActivateCompanyAsync(OrgID);
+        }
+        
+        public bool DeactivateBranch(int OrgID) {
+            return base.Channel.DeactivateBranch(OrgID);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeactivateBranchAsync(int OrgID) {
+            return base.Channel.DeactivateBranchAsync(OrgID);
+        }
+        
+        public bool DeleteBranch(int OrgID) {
+            return base.Channel.DeleteBranch(OrgID);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteBranchAsync(int OrgID) {
+            return base.Channel.DeleteBranchAsync(OrgID);
+        }
+        
+        public bool ActivateBranch(int OrgID) {
+            return base.Channel.ActivateBranch(OrgID);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ActivateBranchAsync(int OrgID) {
+            return base.Channel.ActivateBranchAsync(OrgID);
+        }
+        
+        public string getBranch(int OrgID) {
+            return base.Channel.getBranch(OrgID);
+        }
+        
+        public System.Threading.Tasks.Task<string> getBranchAsync(int OrgID) {
+            return base.Channel.getBranchAsync(OrgID);
         }
     }
 }
