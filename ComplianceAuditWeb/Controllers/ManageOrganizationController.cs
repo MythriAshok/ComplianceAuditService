@@ -1,4 +1,13 @@
-﻿//
+﻿#region Code History
+/*CODE HISTORY
+ * ============================================================================================================
+ *  Version No      DATE       Developer Name        Description
+ * ===========================================================================================================
+ *  1.0          28-06-2018    Mythri A        DataAccess Layer for UserPrivilege
+ *                                                  The methods defined here are getRolePrivilege() and getPrivilege().
+ *  
+ */
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -32,8 +41,8 @@ namespace ComplianceAuditWeb.Controllers
         [HttpGet]
         public ActionResult AddGroupCompany()
         {
-            int stateID = 1;
-            int countryID = 1;
+            int stateID = 0;
+            int countryID = 0;
             OrganizationViewModel organizationVM = new OrganizationViewModel();
             organizationVM.organization = new Organization();
             organizationVM.organization.Organization_Id = 0;
@@ -48,26 +57,29 @@ namespace ComplianceAuditWeb.Controllers
             dsStates.ReadXml(new StringReader(strXMLStates));
             dsCities.ReadXml(new StringReader(strXMLCities));
             organizationVM.Country = new List<SelectListItem>();
+            
             foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
             {
                 organizationVM.Country.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
             }
-            ViewBag.CountryList = organizationVM.Country;
-
-            organizationVM.State = new List<SelectListItem>();
-            foreach (System.Data.DataRow row in dsStates.Tables[0].Rows)
+            if (dsStates.Tables.Count > 0)
             {
-                organizationVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
+                organizationVM.State = new List<SelectListItem>();
+                foreach (System.Data.DataRow row in dsStates.Tables[0].Rows)
+                {
+                    organizationVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
+                }
             }
 
 
-
-            organizationVM.City = new List<SelectListItem>();
-            foreach (System.Data.DataRow row in dsCities.Tables[0].Rows)
+            if (dsCities.Tables.Count > 0)
             {
-                organizationVM.City.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
+                organizationVM.City = new List<SelectListItem>();
+                foreach (System.Data.DataRow row in dsCities.Tables[0].Rows)
+                {
+                    organizationVM.City.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
+                }
             }
-
             return View("AddGroupCompany", organizationVM);
 }
 /// <summary>
@@ -80,25 +92,22 @@ namespace ComplianceAuditWeb.Controllers
         {
             
             OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
-       //     int countryiD = 0;
-       //     organizationVM.State = new List<SelectListItem>();
-       //     DataSet dsStates = new DataSet();
-       //     string strXMLStates = organizationClient.GetStateList(countryiD);
-       //     foreach (System.Data.DataRow row in dsStates.Tables[0].Rows)
-       //     {
-       //         organizationVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
-       //     }
-       //     //using (CITYSTATEEntities cITYSTATEEntities = new CITYSTATEEntities())
-       //     //{
-       //     //    lstcity = (cITYSTATEEntities.CITIES.Where(x => x.StateId == stateiD)).ToList<CITy>();
-       //     //}
+            string strXMLStates =   organizationClient.GetStateList(organizationVM.branch.Country_Id);
+            DataSet dsStates = new DataSet();
+            dsStates.ReadXml(new StringReader(strXMLStates));
+            organizationVM.State = new List<SelectListItem>();
+            foreach (System.Data.DataRow row in dsStates.Tables[0].Rows)
+            {
+                organizationVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
+            }
+            
+            
 
-       //     JavaScriptSerializer javaScriptSerializer = new JavaScriptSerializer();
-       //     string results = javaScriptSerializer.Serialize(organizationVM.State);
-       //    // return Json(result, JsonRequestBehavior.AllowGet);
-       //// }
 
-        bool result = false;
+
+
+
+            bool result = false;
             organizationVM.organization.Is_Leaf = false;
             organizationVM.organization.Level = 1;
             organizationVM.organization.Is_Active = true;
