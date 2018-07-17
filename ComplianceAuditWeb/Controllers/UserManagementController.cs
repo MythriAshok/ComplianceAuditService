@@ -25,13 +25,14 @@ namespace ComplianceAuditWeb.Controllers
         {
             RolesViewModel rolesView = new RolesViewModel();
             UserService.UserServiceClient client = new UserService.UserServiceClient();
-            string xmldata = client.GetPrivilege(0);
+            string xmldata = client.GetPrivilege();
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             rolesView.privilege = new List<SelectListItem>();
             if (ds!=null)
                 foreach (System.Data.DataRow row in ds.Tables[0].Rows)
                 {
+
                 rolesView.privilege.Add(new SelectListItem() { Text = row["Privilege_Name"].ToString(), Value = row["Privilege_ID"].ToString() });
                 }            
             return View("_insertRole", rolesView);
@@ -44,6 +45,51 @@ namespace ComplianceAuditWeb.Controllers
             UserService.UserServiceClient client = new UserService.UserServiceClient();
             int roleid=client.insertRoles(rolesView.roles);                        
             client.insertRolePrivilege(roleid, rolesView.PrivilegeId);                                
+            return View("CreateUser");
+        }
+
+        [HttpGet]
+        public ActionResult updateRoles(int Roleid)
+        {
+            RolesViewModel rolesView = new RolesViewModel();
+            rolesView.roles = new Roles();
+            rolesView.roles.RoleId = Roleid;
+            UserService.UserServiceClient client = new UserService.UserServiceClient();
+            DataSet dsrole = new DataSet();
+            string xmldata=client.GetRoles(Roleid);
+            dsrole.ReadXml(new StringReader(xmldata));
+            rolesView.roles.RoleName = Convert.ToString(dsrole.Tables[0].Rows[0]["Role_Name"]);
+            rolesView.roles.IsGroupRole = Convert.ToBoolean(dsrole.Tables[0].Rows[0]["Is_Group_Role"]);
+            xmldata = client.GetPrivilege();
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            rolesView.privilege = new List<SelectListItem>();
+            dsrole.Clear();
+            xmldata = client.getRolePrivilege(rolesView.roles.RoleId);
+            dsrole.ReadXml(new StringReader(xmldata));
+            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            {
+                bool selected = false;
+                foreach (System.Data.DataRow roleid in dsrole.Tables[0].Rows)
+                {
+                    if (Convert.ToInt32(roleid["Privilege_ID"]) == Convert.ToInt32(row["Privilege_ID"]))
+                    {
+                        selected = true;
+                        break;
+                    }
+                }
+                rolesView.privilege.Add(new SelectListItem() { Text = row["Privilege_Name"].ToString(), Value = row["Privilege_ID"].ToString(),Selected=selected });
+            }
+            return View("_insertRole", rolesView);
+        }
+
+        [HttpPost]
+        public ActionResult updateRoles(RolesViewModel rolesView)
+        {
+            UserService.UserServiceClient client = new UserService.UserServiceClient();
+            client.updateRoles(rolesView.roles);
+            client.DeleteRolePrivilege(rolesView.roles.RoleId);
+            client.insertRolePrivilege(rolesView.roles.RoleId, rolesView.PrivilegeId);
             return View("CreateUser");
         }
 
@@ -65,11 +111,44 @@ namespace ComplianceAuditWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult UserGroup(UserGroupViewModel GroupView)
+        public ActionResult UserGroup(UserGroupViewModel model)
         {            
             UserService.UserServiceClient Client = new UserService.UserServiceClient();           
-            Client.insertGroups(GroupView.Group);            
+            Client.insertGroups(model.Group);            
             return View("CreateUser");
+        }
+
+        [HttpGet]
+        public ActionResult Updateusergroup(int groupid)
+        {
+            UserService.UserServiceClient Client = new UserService.UserServiceClient();
+            UserGroupViewModel model = new UserGroupViewModel();
+            DataSet ds = new DataSet();
+            string xmldata=Client.GetUserGroup(groupid);
+            ds.ReadXml(new StringReader(xmldata));
+            model.Group = new UserGroup();
+            model.Group.UserGroupName = Convert.ToString(ds.Tables[0].Rows[0]["User_Group_Name"]);
+            model.Group.UserGroupDescription = Convert.ToString(ds.Tables[0].Rows[0]["User_Group_Description"]);
+            model.Group.UserRoleId = Convert.ToInt32(ds.Tables[0].Rows[0]["Role_ID"]);
+            xmldata = Client.GetRoles(1);
+            DataSet dsrole = new DataSet();
+            dsrole.ReadXml(new StringReader(xmldata));
+            model.Roles = new List<SelectListItem>();
+            //GroupView.Roles.Add(new SelectListItem { Text = "--Select Roles--", Value = "0" });
+            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            {
+                model.Roles.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
+            }
+
+            return View("_insertUserGroup", model);
+        }
+
+        [HttpPost]
+        public ActionResult Updateusergroup(UserGroupViewModel model)
+        {
+            UserService.UserServiceClient Client = new UserService.UserServiceClient();
+            Client.updateGroups(model.Group);
+            return View();
         }
 
         [HttpGet]
@@ -232,6 +311,20 @@ namespace ComplianceAuditWeb.Controllers
         {
             UserService.UserServiceClient client = new UserService.UserServiceClient();
             client.DeleteUser(UserId);
+            return View("CreateUser");
+        }
+
+        public ActionResult Deleterole(int RoleId)
+        {
+            UserService.UserServiceClient client = new UserService.UserServiceClient();
+            client.DeleteRole(RoleId);
+            return View("CreateUser");
+        }
+
+        public ActionResult Deletegroup(int GroupId)
+        {
+            UserService.UserServiceClient client = new UserService.UserServiceClient();
+            client.DeleteGroup(GroupId);
             return View("CreateUser");
         }
 

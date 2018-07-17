@@ -94,5 +94,33 @@ namespace Compliance.DataAccess
 
             return result;
         }
+
+        public bool DeleteGroup(int Groupid)
+        {
+            bool result = false;
+            try
+            {
+                conn = DBConnection.getconnection();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_DeleteUsergroup", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_User_Group_ID", Groupid);
+                int res = cmd.ExecuteNonQuery();
+                if (res > 0)
+                {
+                    result = true;
+                }
+            }
+
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return result;
+        }
     }
 }

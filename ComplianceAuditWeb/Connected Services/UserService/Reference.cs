@@ -76,10 +76,22 @@ namespace ComplianceAuditWeb.UserService {
         System.Threading.Tasks.Task<bool> insertRolePrivilegeAsync(int Roleid, int[] Privilegeid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetPrivilege", ReplyAction="http://tempuri.org/IUserService/GetPrivilegeResponse")]
-        string GetPrivilege(int Roleid);
+        string GetPrivilege();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetPrivilege", ReplyAction="http://tempuri.org/IUserService/GetPrivilegeResponse")]
-        System.Threading.Tasks.Task<string> GetPrivilegeAsync(int Roleid);
+        System.Threading.Tasks.Task<string> GetPrivilegeAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteRolePrivilege", ReplyAction="http://tempuri.org/IUserService/DeleteRolePrivilegeResponse")]
+        bool DeleteRolePrivilege(int Roleid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteRolePrivilege", ReplyAction="http://tempuri.org/IUserService/DeleteRolePrivilegeResponse")]
+        System.Threading.Tasks.Task<bool> DeleteRolePrivilegeAsync(int Roleid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/getRolePrivilege", ReplyAction="http://tempuri.org/IUserService/getRolePrivilegeResponse")]
+        string getRolePrivilege(int Roleid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/getRolePrivilege", ReplyAction="http://tempuri.org/IUserService/getRolePrivilegeResponse")]
+        System.Threading.Tasks.Task<string> getRolePrivilegeAsync(int Roleid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/insertUserGroupmember", ReplyAction="http://tempuri.org/IUserService/insertUserGroupmemberResponse")]
         bool insertUserGroupmember(int Userid, int[] Groupid);
@@ -122,6 +134,18 @@ namespace ComplianceAuditWeb.UserService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/UpdateUserRole", ReplyAction="http://tempuri.org/IUserService/UpdateUserRoleResponse")]
         System.Threading.Tasks.Task<bool> UpdateUserRoleAsync(int Userid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteGroup", ReplyAction="http://tempuri.org/IUserService/DeleteGroupResponse")]
+        bool DeleteGroup(int Groupid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteGroup", ReplyAction="http://tempuri.org/IUserService/DeleteGroupResponse")]
+        System.Threading.Tasks.Task<bool> DeleteGroupAsync(int Groupid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteRole", ReplyAction="http://tempuri.org/IUserService/DeleteRoleResponse")]
+        bool DeleteRole(int Roleid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteRole", ReplyAction="http://tempuri.org/IUserService/DeleteRoleResponse")]
+        System.Threading.Tasks.Task<bool> DeleteRoleAsync(int Roleid);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -231,12 +255,28 @@ namespace ComplianceAuditWeb.UserService {
             return base.Channel.insertRolePrivilegeAsync(Roleid, Privilegeid);
         }
         
-        public string GetPrivilege(int Roleid) {
-            return base.Channel.GetPrivilege(Roleid);
+        public string GetPrivilege() {
+            return base.Channel.GetPrivilege();
         }
         
-        public System.Threading.Tasks.Task<string> GetPrivilegeAsync(int Roleid) {
-            return base.Channel.GetPrivilegeAsync(Roleid);
+        public System.Threading.Tasks.Task<string> GetPrivilegeAsync() {
+            return base.Channel.GetPrivilegeAsync();
+        }
+        
+        public bool DeleteRolePrivilege(int Roleid) {
+            return base.Channel.DeleteRolePrivilege(Roleid);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteRolePrivilegeAsync(int Roleid) {
+            return base.Channel.DeleteRolePrivilegeAsync(Roleid);
+        }
+        
+        public string getRolePrivilege(int Roleid) {
+            return base.Channel.getRolePrivilege(Roleid);
+        }
+        
+        public System.Threading.Tasks.Task<string> getRolePrivilegeAsync(int Roleid) {
+            return base.Channel.getRolePrivilegeAsync(Roleid);
         }
         
         public bool insertUserGroupmember(int Userid, int[] Groupid) {
@@ -293,6 +333,22 @@ namespace ComplianceAuditWeb.UserService {
         
         public System.Threading.Tasks.Task<bool> UpdateUserRoleAsync(int Userid) {
             return base.Channel.UpdateUserRoleAsync(Userid);
+        }
+        
+        public bool DeleteGroup(int Groupid) {
+            return base.Channel.DeleteGroup(Groupid);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteGroupAsync(int Groupid) {
+            return base.Channel.DeleteGroupAsync(Groupid);
+        }
+        
+        public bool DeleteRole(int Roleid) {
+            return base.Channel.DeleteRole(Roleid);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteRoleAsync(int Roleid) {
+            return base.Channel.DeleteRoleAsync(Roleid);
         }
     }
 }

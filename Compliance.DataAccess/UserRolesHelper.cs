@@ -24,11 +24,11 @@ namespace Compliance.DataAccess
    public class UserRolesHelper
     {
         MySqlConnection conn = new MySqlConnection();
-        
+
         /// <summary>
-        /// This method is used to call the storeprocedure 'sp_getRoleList' by passing flag value 
+        /// This method is used to call the storeprocedure 'sp_getRoleList' by passing flag value Pass 0 to get Dataset of UserRoles and 1 for Dataset of GroupRoles.
         /// </summary>
-        /// <param name="flag">Pass 0 to get Dataset of UserRoles and 1 for Dataset of GroupRoles</param>
+        /// <param name="flag">int</param>
         /// <returns>Dataset of Roles Table</returns>
         public DataSet getRoleList(int flag)
         {
@@ -111,6 +111,62 @@ namespace Compliance.DataAccess
                 cmd.Parameters.AddWithValue("p_Is_Active", 1);
                     int res = cmd.ExecuteNonQuery();
                     if(res>0)
+                {
+                    result = true;
+                }
+            }
+
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return result;
+        }
+       
+            public bool DeleteRolePrivilege(int roleid)
+        {
+            bool result = false;
+            try
+            {
+                conn = DBConnection.getconnection();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_DeleteRolePrivilege", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Role_ID", roleid);
+                int res = cmd.ExecuteNonQuery();
+                if (res > 0)
+                {
+                    result = true;
+                }
+            }
+
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return result;
+        }
+
+        public bool DeleteRole(int roleid)
+        {
+            bool result = false;
+            try
+            {
+                conn = DBConnection.getconnection();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_deleteRole", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Role_ID", roleid);
+                int res = cmd.ExecuteNonQuery();
+                if (res > 0)
                 {
                     result = true;
                 }

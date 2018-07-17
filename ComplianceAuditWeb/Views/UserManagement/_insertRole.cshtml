@@ -6,18 +6,28 @@
 {
     @Html.AntiForgeryToken()
 
-    @Html.LabelFor(model => model.roles.RoleName)
-    @Html.TextBoxFor(model => model.roles.RoleName)
+    @Html.Label("RoleName")
+    if (Model.roles.RoleId > 0)
+        { @Html.DisplayFor(model => model.roles.RoleName)}
+    else
+        { @Html.TextBoxFor(model => model.roles.RoleName)}
 
-    @Html.LabelFor(model => model.roles.IsGroupRole)
+    @Html.Label("IsGroupRole")
     @Html.CheckBoxFor(model => model.roles.IsGroupRole)
 
     if (Model.privilege != null)
     {
-    @Html.Label("Privilege")
-    @Html.ListBoxFor(m => m.PrivilegeId, Model.privilege)
+        @Html.Label("Privilege")
+        @Html.ListBoxFor(m => m.PrivilegeId, Model.privilege)
     }
-    <input type="submit" value="Create" class="btn btn-default" />
+
+    string button = "save";
+    if (Model.roles.RoleId > 0)
+    {
+        button = "Update";
+        @Html.ActionLink("Delete", "Deleterole", routeValues: new { RoleId = Model.roles.RoleId })
+    }
+    <input type="submit" value=@button class="btn btn-default" />
 
 }
 
