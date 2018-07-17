@@ -183,6 +183,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\ComplianceManagementController.cs" />
     <Compile Include="Controllers\ManageAccessController.cs" />
     <Compile Include="Controllers\ManageOrganizationController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
@@ -224,7 +225,6 @@
     <Content Include="Views\ManageOrganization\UpdateGroupCompany.cshtml" />
     <Content Include="Views\ManageOrganization\GetGroupCompany.cshtml" />
     <Content Include="Views\ManageOrganization\DeactivateGroupCompany.cshtml" />
-    <Content Include="Views\UserManagement\ListofUsers.cshtml" />
     <Content Include="Views\UserManagement\_ListofUsers.cshtml" />
     <Content Include="Views\ManageOrganization\DeleteGroupCompany.cshtml" />
     <Content Include="Views\ManageOrganization\ActivateGroupCompany.cshtml" />
@@ -237,6 +237,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ComplianceManagement\" />
     <Folder Include="Views\ManageAccess\" />
   </ItemGroup>
   <ItemGroup>

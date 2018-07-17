@@ -12,7 +12,8 @@
         @Html.DisplayFor(model => model.Group.UserGroupName) 
     }
     else
-    {   @Html.TextBoxFor(model => model.Group.UserGroupName)
+    { 
+       @Html.TextBoxFor(model => model.Group.UserGroupName)
     }
     @Html.Label("GroupDescription")
     @Html.TextBoxFor(model => model.Group.UserGroupDescription)

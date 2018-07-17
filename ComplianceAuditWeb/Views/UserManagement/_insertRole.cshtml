@@ -8,10 +8,11 @@
 
     @Html.Label("RoleName")
     if (Model.roles.RoleId > 0)
-        { @Html.DisplayFor(model => model.roles.RoleName)}
+    { @Html.DisplayFor(model => model.roles.RoleName)}
     else
-        { @Html.TextBoxFor(model => model.roles.RoleName)}
-
+    {
+         @Html.TextBoxFor(model => model.roles.RoleName)
+    }
     @Html.Label("IsGroupRole")
     @Html.CheckBoxFor(model => model.roles.IsGroupRole)
 
