@@ -68,6 +68,7 @@
   <ItemGroup>
     <Content Include="AccessService.svc" />
     <Content Include="ComplianceService.svc" />
+    <Content Include="AuditService.svc" />
     <Content Include="CountryService.svc" />
     <Content Include="OrganizationService.svc" />
     <Content Include="UserService.svc" />
@@ -79,6 +80,9 @@
     <Compile Include="AccessService.svc.cs">
       <DependentUpon>AccessService.svc</DependentUpon>
     </Compile>
+    <Compile Include="AuditService.svc.cs">
+      <DependentUpon>AuditService.svc</DependentUpon>
+    </Compile>
     <Compile Include="ComplianceService.svc.cs">
       <DependentUpon>ComplianceService.svc</DependentUpon>
     </Compile>
@@ -86,6 +90,7 @@
       <DependentUpon>CountryService.svc</DependentUpon>
     </Compile>
     <Compile Include="IAccessService.cs" />
+    <Compile Include="IAuditService.cs" />
     <Compile Include="IComplianceService.cs" />
     <Compile Include="ICountryService.cs" />
     <Compile Include="IOrganizationService.cs" />
