@@ -1,6 +1,6 @@
 ﻿@model ComplianceAuditWeb.Models.UserViewModel
 
-@{ Layout = null;}
+@*@{ Layout = null;}*@
 
 @using (Html.BeginForm())
 {
@@ -13,17 +13,20 @@
 
     @Html.Label("FirstName")
     @Html.TextBoxFor(m => m.User.FirstName)
+    @Html.ValidationMessageFor(m=>m.User.FirstName, "", new { @class = "text-danger" })
 
     @Html.Label("MiddleName")
     @Html.TextBoxFor(m => m.User.MiddleName)
 
     @Html.Label("LastName")
     @Html.TextBoxFor(m => m.User.LastName)
+    @Html.ValidationMessageFor(m=>m.User.LastName, "", new { @class = "text-danger" })
 
+    @Html.Label("EmailId(UserName)")
     if (Model.User.UserId <= 0)
     {
-        @Html.Label("EmailId(UserName)")
         @Html.TextBoxFor(m => m.User.EmailId)
+        @Html.ValidationMessageFor(model => model.User.EmailId, "", new { @class = "text-danger" })
 
         @Html.Label("Gender")
         @Html.Label("Male")
@@ -35,10 +38,21 @@
 
         @Html.Label("Password")
         @Html.PasswordFor(m => m.User.UserPassword)
+        @Html.ValidationMessageFor(m=>m.User.UserPassword, "", new { @class = "text-danger" })
+
+        @*@Html.Label("Confirm Password")
+        @Html.TextBoxFor(m=>m.ConformPassword)
+        @Html.ValidationMessageFor(m => m.ConformPassword,"", new { @class = "text-danger" })*@
     }
+    else
+    {
+        @Html.DisplayFor(m => m.User.EmailId)
+    }
+
 
     @Html.Label("Contact Number")
     @Html.TextBoxFor(m => m.User.ContactNumber)
+    @Html.ValidationMessageFor(m=>m.ConformPassword,"",new { @class = "text-danger" })
 
     @Html.Label("UserGroup")
     @Html.ListBoxFor(m => m.UserGroupID, Model.UserGroupList)

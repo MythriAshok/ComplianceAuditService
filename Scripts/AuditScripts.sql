@@ -343,7 +343,7 @@ User_Group_ID int,
 Foreign key (User_Group_ID) references tbl_User_Group(User_Group_ID)
 );
 
-drop table tbl_Branch_Auditor_Mapping
+drop table tbl_Branch_Auditor_Mapping;
 create table tbl_Branch_Auditor_Mapping
 (
 Branch_Allocation_ID int not null auto_increment primary key,
@@ -359,7 +359,7 @@ Allocation_Date datetime
 );
 
 
-drop table tbl_Compliance_Branch_Mapping
+drop table tbl_Compliance_Branch_Mapping;
 create table tbl_Compliance_Branch_Mapping
 (
 Branch_Mapping_ID int not null auto_increment primary key,

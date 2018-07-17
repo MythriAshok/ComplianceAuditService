@@ -77,6 +77,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_User_Group_Name", usergroup.UserGroupName);
                     cmd.Parameters.AddWithValue("p_User_Group_Description", usergroup.UserGroupDescription);
                     cmd.Parameters.AddWithValue("p_Role_ID", usergroup.UserRoleId);
+                    cmd.Parameters.AddWithValue("p_Is_Active", usergroup.IsActive);
                     int res= cmd.ExecuteNonQuery();
                     if(res>0)
                     result = true;

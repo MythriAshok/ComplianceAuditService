@@ -4,14 +4,14 @@
 }
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
     <script language="javascript" type="text/javascript">
-        function GetState(CountryId) {
+        function GetState(_CountryId) {
             var procemessage = "<option value='0'> Please wait...</option>";
             $("#ddlstate").html(procemessage).show();
-            var url = "GetCityByStaeId";
+            var url = "/ManageOrganizationController/AddGroupCompany";
 
             $.ajax({
                 url: url,
-                data: { countryid: CountryId },
+                data: { countryid: _CountryId },
                 cache: false,
                 type: "POST",
                 success: function (data) {
@@ -115,7 +115,7 @@
         @Html.TextBoxFor(m => m.branch.Postal_Code);
 
         @Html.Label("Country")
-        @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country,new { @onchange = "javascript:GetCity(this.value);" });
+        @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country,new { @onchange = "javascript:GetState(this.value);" });
 
 
 
