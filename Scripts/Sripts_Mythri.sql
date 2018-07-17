@@ -142,28 +142,34 @@ create procedure sp_insertupdateOrganizationHier
  p_Last_Updated_Date datetime,
  p_Location_ID int,
  p_User_ID int,
- p_Is_Active bit
+ p_Is_Active bit,
+ p_Is_Delete bit
 )
 
 begin
 if(p_Flag = 'I')then
 
-insert into tbl_org_hier( Company_Name, Company_ID, Parent_Company_ID, Description, level,
- Is_Leaf, Industry_Type, Last_Updated_Date, Location_ID, User_ID, Is_Active)
- 
-values( p_Company_Name, p_Company_ID, p_Parent_Company_ID, p_Description, p_level,
-p_Is_Leaf, p_Industry_Type, now(), p_Location_ID, p_User_ID,p_Is_Active);
+insert into tbl_org_hier(Company_Name, Company_ID, Parent_Company_ID, Description, level,
+ Is_Leaf, Industry_Type, Last_Updated_Date, Location_ID, User_ID, Is_Active, Is_Delete)
+ values( p_Company_Name, p_Company_ID, p_Parent_Company_ID, p_Description, p_level,
+p_Is_Leaf, p_Industry_Type, now(), p_Location_ID, p_User_ID,p_Is_Active,p_Is_Delete);
 select last_insert_id();
-
 else
-update tbl_org_hier set
 
+update tbl_org_hier
+inner join tbl_Branch_Location on tbl_Branch_Location.Location_ID = tbl_Org_Hier.Location_ID
+inner join tbl_Company_Details on tbl_Company_Details.Org_Hier_ID = tbl_Org_Hier.Org_Hier_ID
+set
+tbl_org_hier.Org_Hier_ID=p_Org_Hier_ID,
 Company_Name=p_Company_Name, Company_ID=p_Company_ID, Parent_Company_ID=p_Parent_Company_ID, Description=p_Description, level=p_level,
-Is_Leaf=p_Is_Leaf, Industry_Type=p_Industry_Type, Last_Updated_Date=now(), Location_ID=p_Location_ID, User_ID=p_User_ID, Is_Active=p_Is_Active
-where Org_Hier_ID=p_Org_Hier_ID;
+Is_Leaf=p_Is_Leaf, Industry_Type=p_Industry_Type, Last_Updated_Date=now(),tbl_org_hier.Location_ID=p_Location_ID, User_ID=p_User_ID,
+Is_Active=p_Is_Active
 
+
+
+where tbl_org_hier.Org_Hier_ID=p_Org_Hier_ID ;
+select last_insert_id();
 end if;
-
 end/
 Delimiter ;
 
@@ -201,12 +207,13 @@ select Company_Name, Company_ID, Parent_Company_ID, Description, level,
 Is_Leaf, Industry_Type, Last_Updated_Date,tbl_org_hier.Location_ID, User_ID, Is_Active from tbl_org_hier;
 else 
 
-select Company_Name, Company_ID, Parent_Company_ID, Description, level,
-Is_Leaf, Industry_Type, Last_Updated_Date, User_ID, Is_Active,
-Formal_Name, Calender_StartDate, Calender_EndDate, Auditing_Frequency, Website, Company_Email_ID,
-Location_Name,Address,Country_ID,State_ID,City_ID,Postal_Code,Branch_Coordinates1,Branch_Coordinates2,
-Branch_CoordinateURL,
-Company_ContactNumber1,Company_ContactNumber2 from tbl_org_hier 
+select tbl_org_hier.Org_Hier_ID,Company_Name, Company_ID, Parent_Company_ID, Description, level,
+Is_Leaf, Industry_Type, Last_Updated_Date,tbl_org_hier.Location_ID, User_ID, Is_Active,Is_Delete,tbl_company_details.Company_Details_ID,
+tbl_company_details.Org_Hier_ID, Formal_Name, Calender_StartDate, Calender_EndDate, Auditing_Frequency,
+ Website, Company_Email_ID,Company_ContactNumber1,Company_ContactNumber2,
+tbl_branch_location.Location_ID,Location_Name,Address,Country_ID,State_ID,City_ID,Postal_Code,Branch_Coordinates1,Branch_Coordinates2,
+Branch_CoordinateURL
+ from tbl_org_hier 
 
 inner join  tbl_company_Details  on tbl_company_details.Org_Hier_ID = tbl_org_hier.Org_Hier_ID
 
@@ -217,6 +224,40 @@ End If;
 
 end/
 Delimiter ;
+
+
+Drop Procedure if exists `sp_getBranchJoin`;
+Delimiter /
+create procedure sp_getBranchJoin
+(
+p_Org_Hier_ID int 
+)
+begin  
+if(p_Org_Hier_ID = 0) then
+select Company_Name, Company_ID, Parent_Company_ID, Description, level,
+Is_Leaf, Industry_Type, Last_Updated_Date,tbl_org_hier.Location_ID, User_ID, Is_Active from tbl_org_hier;
+else 
+
+select tbl_org_hier.Org_Hier_ID,Company_Name, Company_ID, Parent_Company_ID, Description, level,
+Is_Leaf, Industry_Type, Last_Updated_Date,tbl_org_hier.Location_ID, User_ID, Is_Active,Is_Delete,
+
+tbl_branch_location.Location_ID,Location_Name,Address,Country_ID,State_ID,City_ID,Postal_Code,Branch_Coordinates1,Branch_Coordinates2,
+Branch_CoordinateURL
+ from tbl_org_hier 
+
+
+
+inner join tbl_branch_location on tbl_branch_location.Location_ID = tbl_org_hier.Location_ID
+
+where tbl_org_hier.Org_Hier_ID= p_Org_Hier_ID;
+End If;
+
+end/
+Delimiter ;
+
+
+
+
 
 
 
@@ -231,6 +272,30 @@ end/
 Delimiter ;
 
 
+Drop Procedure if exists `sp_getCompaniesList`;
+Delimiter /
+create procedure sp_getCompaniesList()
+
+begin  
+
+select Company_Name, Org_Hier_ID,Industry_Type,Is_Active from tbl_org_hier where level= 2 and Is_Delete = 0;
+end/
+Delimiter ;
+
+
+Drop Procedure if exists `sp_getBranchList`;
+Delimiter /
+create procedure sp_getBranchList()
+
+begin  
+
+select Company_Name, Org_Hier_ID,Industry_Type,Is_Active from tbl_org_hier where level=3 and Is_Delete = 0;
+end/
+Delimiter ;
+
+
+
+
 Drop Procedure if exists `sp_getGroupCompaniesListDropDown`;
 Delimiter /
 create procedure sp_getGroupCompaniesListDropDown()
@@ -238,6 +303,10 @@ begin
 select Org_Hier_ID, Company_Name  from tbl_org_hier where Parent_Company_ID=0;
 end/
 Delimiter ;
+
+
+
+
 
 
 Drop Procedure if exists `sp_getCompaniesListDropDown`;
@@ -302,7 +371,7 @@ select last_insert_id();
 else 
 update tbl_company_details set
 
-Org_Hier_ID=p_Org_Hier_ID,Formal_Name=p_Formal_Name,Calender_StartDate= p_Calender_StartDate, 
+Company_Details_ID=p_Company_Details_ID,Org_Hier_ID=p_Org_Hier_ID,Formal_Name=p_Formal_Name,Calender_StartDate= p_Calender_StartDate, 
 Calender_EndDate=p_Calender_EndDate,Auditing_Frequency= p_Auditing_Frequency,Website= p_Website,Company_Email_ID= p_Company_Email_ID,
 Company_ContactNumber1=p_Company_ContactNumber1,Company_ContactNumber2=p_Company_ContactNumber2
 where Company_Details_ID=p_Company_Details_ID;
@@ -336,17 +405,7 @@ delimiter ;
 
 
 
-Drop Procedure if exists sp_deleteCompanyDetails;
-delimiter /
-create procedure sp_deleteCompanyDetails
-(
-p_Company_Details_ID int
-)
-begin
-delete from tbl_company_details where tbl_Org_Hier.Or
 
-
-delimiter ;
 
 
 Drop Procedure if exists sp_insertupdateComplianceOptionsXref;
@@ -954,7 +1013,16 @@ delimiter ;
 
 
 
-
+drop procedure if exists sp_ActivateOrgHier;
+delimiter /
+create procedure sp_ActivateOrgHier
+(
+p_Org_Hier_ID int
+)
+begin
+update tbl_org_hier set Is_Active = 1 where Org_Hier_ID=p_Org_Hier_ID;
+end/
+delimiter ;
 
 
 
