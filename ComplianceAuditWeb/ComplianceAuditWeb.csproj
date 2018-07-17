@@ -224,12 +224,10 @@
     <Content Include="Views\ManageOrganization\View.cshtml" />
     <Content Include="Views\ManageOrganization\UpdateGroupCompany.cshtml" />
     <Content Include="Views\ManageOrganization\DeactivateGroupCompany.cshtml" />
-    <Content Include="Views\UserManagement\_ListofUsers.cshtml" />
     <Content Include="Views\ManageOrganization\DeleteGroupCompany.cshtml" />
     <Content Include="Views\ManageOrganization\ActivateGroupCompany.cshtml" />
     <Content Include="Views\ManageOrganization\ListOfBranches.cshtml" />
     <Content Include="Views\ManageOrganization\ListOfCompanies.cshtml" />
-    <Content Include="Views\UserManagement\_ListofRoles.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

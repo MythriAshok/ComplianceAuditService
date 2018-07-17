@@ -1,46 +1,38 @@
-﻿@model IEnumerable<Compliance.DataObject.Roles>
+﻿@model IEnumerable<ComplianceAuditWeb.Models.RolesViewModel>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.RoleId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RoleName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsGroupRole)
-        </th>
-        <th>
-        </th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.RoleId)
+            @Html.ActionLink(linkText: item.roles.RoleName,actionName:"updateRoles", routeValues: new { Roleid = item.roles.RoleId })            
+            @Html.DisplayFor(modelItem => item.roles.RoleName)
+            @Html.DisplayFor(modelItem => item.roles.IsGroupRole)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RoleName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsGroupRole)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
+        @*<td>
+            @if (item.roles.IsActive)
+            {@Html.ActionLink("Deactive", "DeactivateRole", new { Roleid = item.roles.RoleId })}
+        else
+        { @Html.ActionLink("Deactive", "DeactivateRole", new { Roleid = item.roles.RoleId })}
+        </td>*@
     </tr>
-}
+    <tr>
+        @foreach (var row in item.privilege)
+        {
+            if (row.Selected)
+            {
+             <td>
+                @Html.Display(row.Text)
+             </td>
+            }
 
+        }
+    </tr>           
+}
 </table>
