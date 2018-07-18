@@ -117,7 +117,7 @@ namespace Compliance.DataAccess
             return resultComplianceAudit;
         }
 
-        public DataSet getAllCompany(int AuditorID)
+        public DataSet getAllCompaniesAllocatedToAuditor(int AuditorID)
         {
             DataSet dsAllCompany = new DataSet();
             try
@@ -137,7 +137,53 @@ namespace Compliance.DataAccess
             {
                 conn.Close();
             }
-            return dsAllCompany;
+            return dsAllCompany; 
+        }
+
+        public DataSet getAllBranchAllocatedToAuditor(int AuditorID)
+        {
+            DataSet dsAllBranch = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getAllBranch", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_User_ID", AuditorID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsAllBranch);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsAllBranch; 
+        }
+
+        public DataSet getComlianceXrefDataForSeletedBranch(int BranchID)
+        {
+            DataSet dsComplianceXrefData = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getComplianceXrefData", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("Org_Hier_ID", BranchID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsComplianceXrefData);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsComplianceXrefData; 
         }
     }
 }

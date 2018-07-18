@@ -86,7 +86,7 @@ namespace ComplianceService
             return result;
         }
 
-        public bool insertComplianceAuditTrail(List<ComplianceAuditAuditTrail> auditdatalisttrail)
+        public bool insertComplianceAuditTrail(List<ComplianceAuditAuditTrail> auditdatalisttrail)// when data is updated or deleted from audit table
         {
             bool result = false;
             int ComplianceAuditTrailID = 0;
@@ -103,22 +103,7 @@ namespace ComplianceService
             return result;
         }
 
-        public bool updateComplianceAuditTrail(List<ComplianceAuditAuditTrail> auditdatalisttrail)
-        {
-            bool result = false;
-            int ComplianceAuditTrailID = 0;
-            ComplianceAuditTrailHelper complianceAuditTrailHelper = new ComplianceAuditTrailHelper();
-            ComplianceAuditTrailID = Convert.ToInt32(complianceAuditTrailHelper.insertupdateComplianceAuditTrail(auditdatalisttrail));
-            if (ComplianceAuditTrailID > 0)
-            {
-                result = true;
-            }
-            else
-            {
-                result = false;
-            }
-            return result;
-        }
+       
 
         public bool getComplianceAuditTrail(int ComplianceAuditTrailID)
         {
@@ -136,36 +121,47 @@ namespace ComplianceService
             return result;
         }
 
-        public bool deleteComplianceAuditTrail(int ComplianceAuditTrailID)
+      
+
+
+        public string getCompanyAllocatedToAuditor(int AuditorID)
         {
-            bool result = false;
-            ComplianceAuditTrailHelper complianceAuditTrailHelper = new ComplianceAuditTrailHelper();
-            ComplianceAuditTrailID = Convert.ToInt32(complianceAuditTrailHelper.deleteComlianceAuditTrail(ComplianceAuditTrailID));
-            if (ComplianceAuditTrailID > 0)
-            {
-                result = true;
-            }
-            else
-            {
-                result = false;
-            }
-            return result;
+            return bindCompanyAllocatedToAuditor(AuditorID);
         }
 
-
-        public string getCompany(int AuditorID)
-        {
-            return bindCompany(AuditorID);
-        }
-
-        private string bindCompany( int AuditorID)
+        private string bindCompanyAllocatedToAuditor( int AuditorID)
         {
             ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
-            DataSet dsCompanies = complianceAuditHelper.getAllCompany(AuditorID);
+            DataSet dsCompanies = complianceAuditHelper.getAllCompaniesAllocatedToAuditor(AuditorID);
             string strxmlAllCompanies = dsCompanies.GetXml();
             return strxmlAllCompanies;
         }
 
+        public string getBranchAllocatedToAuditor(int AuditorID)
+        {
+            return bindBranchAllocatedToAuditor(AuditorID);
+        }
+
+        private string bindBranchAllocatedToAuditor(int AuditorID)
+        {
+            ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
+            DataSet dsCompanies = complianceAuditHelper.getAllBranchAllocatedToAuditor(AuditorID);
+            string strxmlAllBranches = dsCompanies.GetXml();
+            return strxmlAllBranches;
+        }
+
+        public string getComplianceXref(int BranchID)
+        {
+            return bindComplianceXref(BranchID);
+        }
+
+        private string bindComplianceXref(int BranchID)
+        {
+            ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
+            DataSet dsCompliance = complianceAuditHelper.getComlianceXrefDataForSeletedBranch(BranchID);
+            string strxmlCompliance = dsCompliance.GetXml();
+            return strxmlCompliance;
+        }
        
 
     }
