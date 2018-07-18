@@ -12,8 +12,9 @@ namespace Compliance.DataObject
         public string Comp_Category { get; set; }
         public string Compliance_Title { get; set; }
         public string Comp_Description { get; set; }
+        public string compl_def_consequence { get; set; }
         public bool  Is_Header {get; set;}
-        public string level { get; set; }
+        public int level { get; set; }
         public int Comp_Order { get; set; }
         public int Compliance_Parent_ID { get; set; }
         public int Option_ID { get; set; }
