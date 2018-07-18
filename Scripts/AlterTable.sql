@@ -10,3 +10,9 @@ CHANGE COLUMN `Description` `Description` VARCHAR(450) NULL DEFAULT NULL ;
 
 ALTER TABLE `auditmoduledb`.`tbl_user_group` 
 CHANGE COLUMN `User_Group_Description` `User_Group_Description` VARCHAR(450) NULL DEFAULT NULL ;
+
+Alter table `auditmoduledb`.`tbl_compliance_xref`
+add column `Compliance_Title`  VARCHAR(450) NULL DEFAULT NULL ;
+
+Alter table `auditmoduledb`.`tbl_compliance_xref`
+add column `Compliance_Parent_ID` int not null;

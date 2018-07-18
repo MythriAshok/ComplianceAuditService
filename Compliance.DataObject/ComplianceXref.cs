@@ -10,10 +10,12 @@ namespace Compliance.DataObject
     {
         public int Compliance_Xref_ID { get; set; }
         public string Comp_Category { get; set; }
+        public string Compliance_Title { get; set; }
         public string Comp_Description { get; set; }
         public bool  Is_Header {get; set;}
         public string level { get; set; }
         public int Comp_Order { get; set; }
+        public int Compliance_Parent_ID { get; set; }
         public int Option_ID { get; set; }
         public string Risk_Category { get; set; }
         public string Risk_Description { get; set; }

@@ -86,13 +86,13 @@ namespace ComplianceAuditWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult updateRoles(RolesViewModel rolesView)
+        public ActionResult updateRoles(RolesViewModel model)
         {
             UserService.UserServiceClient client = new UserService.UserServiceClient();
-            client.updateRoles(rolesView.roles);
-            client.DeleteRolePrivilege(rolesView.roles.RoleId);
-            client.insertRolePrivilege(rolesView.roles.RoleId, rolesView.PrivilegeId);
-            return View("CreateUser");
+            client.updateRoles(model.roles);
+            client.DeleteRolePrivilege(model.roles.RoleId);
+            client.insertRolePrivilege(model.roles.RoleId, model.PrivilegeId);
+            return View("_insertRole",model);
         }
 
         [HttpGet]
@@ -315,6 +315,14 @@ namespace ComplianceAuditWeb.Controllers
             }
             return View("_ListofUsers", userlist);
         }
+
+        //public ActionResult ListofRoles()
+        //{
+        //    UserService.UserServiceClient client = new UserService.UserServiceClient();
+        //    //string xmldata = client.getr(0);
+
+        //    return View("_ListofRoles",);
+        //}
 
         public ActionResult DeleteUser(int UserId)
         {
