@@ -26,6 +26,8 @@ namespace Compliance.DataAccess
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("p_Flag", Flag);
                     cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", xref.Compliance_Xref_ID);
+                    cmd.Parameters.AddWithValue("p_Compliance_Parent_ID", xref.Compliance_Parent_ID);
+                    cmd.Parameters.AddWithValue("p_Compliance_Title", xref.Compliance_Title);
                     cmd.Parameters.AddWithValue("p_Comp_Category", xref.Comp_Category);
                     cmd.Parameters.AddWithValue("p_Comp_Description", xref.Comp_Description);
                     cmd.Parameters.AddWithValue("p_Is_Header", xref.Is_Header);
@@ -46,7 +48,6 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Last_Updated_Date", xref.Last_Updated_Date);
                     cmd.Parameters.AddWithValue("p_User_ID", xref.User_ID);
                     cmd.Parameters.AddWithValue("p_Is_Active", xref.Is_Active);
-                    // MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                     int objcompliancexref = cmd.ExecuteNonQuery();
                     if (objcompliancexref > 0)
                     {
@@ -64,12 +65,10 @@ namespace Compliance.DataAccess
             }
             return ComplianceXref;
         }
-
           
-
-        public DataTable getComlianceXref(int Compliance_Xref_ID)
+        public DataSet getComlianceXref(int Compliance_Xref_ID)
         {
-            DataTable dtComplianceXref = new DataTable();
+            DataSet dtComplianceXref = new DataSet();
             try
             {
                 conn.Open();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Compliance.DataObject;
 
 namespace ComplianceAuditWeb.Controllers
 {
@@ -11,6 +12,13 @@ namespace ComplianceAuditWeb.Controllers
         // GET: ComplianceManagement
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult CreateActs()
+        {
+            ComplianceXref model = new ComplianceXref();
+            com
             return View();
         }
     }
