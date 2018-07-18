@@ -69,17 +69,17 @@ namespace Compliance.DataAccess
             return ComplianceAuditResult;
         }
 
-        public DataTable getComlianceAuditTrail(int Compliance_Audit_ID)
+        public DataSet getComlianceAuditTrail(int Compliance_Audit_ID)
         {
-            DataTable dtComplianceAudit = new DataTable();
+            DataSet dsComplianceAuditTrail = new DataSet();
             try
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getComplianceAuditTrail", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Compliance_Audit_ID ", Compliance_Audit_ID);
+                cmd.Parameters.AddWithValue("p_Compliance_Audit_ID", Compliance_Audit_ID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                adapter.Fill(dtComplianceAudit);
+                adapter.Fill(dsComplianceAuditTrail);
             }
             catch
             {
@@ -89,7 +89,7 @@ namespace Compliance.DataAccess
             {
                 conn.Close();
             }
-            return dtComplianceAudit;
+            return dsComplianceAuditTrail;
         }
 
         public bool deleteComlianceAuditTrail(int Compliance_Audit_ID)

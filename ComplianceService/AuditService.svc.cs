@@ -53,21 +53,16 @@ namespace ComplianceService
         }
 
 
-
-        public bool getComplianceAudit(int ComplianceAuditID)
+        public string getComplianceAudit(int ComplianceAuditID)
         {
-            bool result = false;
+            return bindComplianceAudit(ComplianceAuditID);
+        }
+        private string bindComplianceAudit(int ComplianceAuditID)
+        {
             ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
-            ComplianceAuditID = Convert.ToInt32(complianceAuditHelper.deleteComlianceAudit(ComplianceAuditID));
-            if (ComplianceAuditID > 0)
-            {
-                result = true;
-            }
-            else
-            {
-                result = false;
-            }
-            return result;
+            DataSet dsComplianceAudit =  complianceAuditHelper.getComlianceAudit(ComplianceAuditID);
+            string strxmlComplianceAudit = dsComplianceAudit.GetXml();
+            return strxmlComplianceAudit;
         }
 
         public bool deleteComplianceAudit(int ComplianceAuditID)
@@ -103,22 +98,21 @@ namespace ComplianceService
             return result;
         }
 
-       
 
-        public bool getComplianceAuditTrail(int ComplianceAuditTrailID)
+
+        public string getComplianceAuditTrail(int ComplianceAuditTrailID)
         {
-            bool result = false;
-            ComplianceAuditTrailHelper complianceAuditTrailHelper = new ComplianceAuditTrailHelper();
-            ComplianceAuditTrailID = Convert.ToInt32(complianceAuditTrailHelper.getComlianceAuditTrail(ComplianceAuditTrailID));
-            if (ComplianceAuditTrailID > 0)
-            {
-                result = true;
-            }
-            else
-            {
-                result = false;
-            }
-            return result;
+            return bindComplianceAuditTrail(ComplianceAuditTrailID);
+        }
+
+        private string bindComplianceAuditTrail(int ComplianceAuditTrailID)
+        {
+            ComplianceAuditTrailHelper complianceAuditHelper = new ComplianceAuditTrailHelper();
+            DataSet dsComplianceAuditTrail = complianceAuditHelper.getComlianceAuditTrail(ComplianceAuditTrailID);
+            string strxmlComplianceAuditTrail = dsComplianceAuditTrail.GetXml();
+            return strxmlComplianceAuditTrail;
+
+            
         }
 
       
@@ -150,15 +144,15 @@ namespace ComplianceService
             return strxmlAllBranches;
         }
 
-        public string getComplianceXref(int BranchID)
+        public string getComplianceXref(int ComplianceXrefID)
         {
-            return bindComplianceXref(BranchID);
+            return bindComplianceXref(ComplianceXrefID);
         }
 
-        private string bindComplianceXref(int BranchID)
+        private string bindComplianceXref(int ComplianceXrefID)
         {
             ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
-            DataSet dsCompliance = complianceAuditHelper.getComlianceXrefDataForSeletedBranch(BranchID);
+            DataSet dsCompliance = complianceAuditHelper.getComlianceXrefDataForSeletedBranch(ComplianceXrefID);
             string strxmlCompliance = dsCompliance.GetXml();
             return strxmlCompliance;
         }

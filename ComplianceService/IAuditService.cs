@@ -24,22 +24,28 @@ namespace ComplianceService
 
         [OperationContract]
 
-        bool getComplianceAudit(int ComplianceAuditID);
+        string getComplianceAudit(int ComplianceAuditID);
         [OperationContract]
 
         bool deleteComplianceAudit(int ComplianceAuditID);
         [OperationContract]
 
         bool insertComplianceAuditTrail(List<ComplianceAuditAuditTrail> auditdatalisttrail);
+
+        [OperationContract]
+        string getComplianceAuditTrail(int ComplianceAuditTrailID);
         [OperationContract]
 
-        bool updateComplianceAuditTrail(List<ComplianceAuditAuditTrail> auditdatalisttrail);
-        [OperationContract]
-        bool getComplianceAuditTrail(int ComplianceAuditTrailID);
-        [OperationContract]
-        bool deleteComplianceAuditTrail(int ComplianceAuditTrailID);
+
+        string getCompanyAllocatedToAuditor(int AuditorID);
+
         [OperationContract]
 
-        string getCompany(int AuditorID);
+
+        string getBranchAllocatedToAuditor(int AuditorID);
+        [OperationContract]
+
+        string getComplianceXref(int ComplianceXrefID);
+
     }
 }

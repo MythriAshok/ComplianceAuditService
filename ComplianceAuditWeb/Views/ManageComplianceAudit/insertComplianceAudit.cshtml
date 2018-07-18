@@ -1,0 +1,41 @@
+﻿@model List<ComplianceAuditWeb.Models.ComplianceAuditViewModel>
+@{
+    ViewBag.Title = "insertComplianceAudit";
+}
+
+<h2>insertComplianceAudit</h2>
+@using (Html.BeginForm())
+
+
+
+@*<table>
+    <tr>
+        @foreach (var auditlist in Model)
+        {
+            foreach (var auditdata in auditlist.complianceAuditList)
+            {
+
+            }
+        }
+
+    </tr>
+</table>*@
+
+<table>
+    <tr>
+        @foreach (var data in Model)
+        {
+            <td>
+                @Html.DisplayFor(m => data.complianceXref.Comp_Category)
+            </td>
+            }
+    </tr>
+</table>
+
+
+
+
+
+
+
+

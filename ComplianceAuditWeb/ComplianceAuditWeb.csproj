@@ -276,6 +276,7 @@
     <Content Include="Views\ManageOrganization\ListOfBranches.cshtml" />
     <Content Include="Views\ManageOrganization\ListOfCompanies.cshtml" />
     <Content Include="Views\ComplianceManagement\_insertActs.cshtml" />
+    <Content Include="Views\ManageComplianceAudit\insertComplianceAudit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -286,7 +287,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\ManageAccess\" />
-    <Folder Include="Views\ManageComplianceAudit\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Compliance.DataObject\Compliance.DataObject.csproj">

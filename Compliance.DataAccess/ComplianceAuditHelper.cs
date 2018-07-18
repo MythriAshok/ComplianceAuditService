@@ -68,9 +68,9 @@ namespace Compliance.DataAccess
             return ComplianceAuditResult;
         }
 
-        public DataTable getComlianceAudit(int Compliance_Audit_ID)
+        public DataSet getComlianceAudit(int Compliance_Audit_ID)
         {
-            DataTable dtComplianceAudit = new DataTable();
+            DataSet dsComplianceAudit = new DataSet();
             try
             {
                 conn.Open();
@@ -78,7 +78,7 @@ namespace Compliance.DataAccess
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Compliance_Audit_ID",  Compliance_Audit_ID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                adapter.Fill(dtComplianceAudit);
+                adapter.Fill(dsComplianceAudit);
             }
             catch
             {
@@ -88,7 +88,7 @@ namespace Compliance.DataAccess
             {
                 conn.Close();
             }
-            return dtComplianceAudit;
+            return dsComplianceAudit;
         }
 
         public bool deleteComlianceAudit(int Compliance_Audit_ID)
@@ -97,7 +97,7 @@ namespace Compliance.DataAccess
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getComplianceAudit", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_deleteComplianceAudit", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Compliance_Audit_ID", Compliance_Audit_ID);
                 int resultCount = cmd.ExecuteNonQuery();

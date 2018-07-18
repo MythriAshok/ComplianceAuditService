@@ -81,20 +81,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="updateComplianceAuditTrail">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdatalisttrail" nillable="true" type="q4:ArrayOfComplianceAuditAuditTrail" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="updateComplianceAuditTrailResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="updateComplianceAuditTrailResult" type="xs:boolean" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="getComplianceAuditTrail">
     <xs:complexType>
       <xs:sequence>
@@ -109,31 +95,45 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="deleteComplianceAuditTrail">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="ComplianceAuditTrailID" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="deleteComplianceAuditTrailResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="deleteComplianceAuditTrailResult" type="xs:boolean" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="getCompany">
+  <xs:element name="getCompanyAllocatedToAuditor">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="AuditorID" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="getCompanyResponse">
+  <xs:element name="getCompanyAllocatedToAuditorResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="getCompanyResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="getCompanyAllocatedToAuditorResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getBranchAllocatedToAuditor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AuditorID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getBranchAllocatedToAuditorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getBranchAllocatedToAuditorResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getComplianceXref">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ComplianceXrefID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getComplianceXrefResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getComplianceXrefResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
