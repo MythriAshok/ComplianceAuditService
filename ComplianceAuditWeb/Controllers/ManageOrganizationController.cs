@@ -20,7 +20,7 @@ using Compliance.DataObject;
 using System.Xml;
 using System.Data;
 using System.IO;
-using System.Web.Script.Serialization;
+
 
 namespace ComplianceAuditWeb.Controllers
 {
@@ -100,10 +100,6 @@ namespace ComplianceAuditWeb.Controllers
             {
                 organizationVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
             }
-            
-            
-
-
 
 
 

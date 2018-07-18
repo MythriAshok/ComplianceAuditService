@@ -15,5 +15,31 @@ namespace ComplianceService
     {
         [OperationContract]
         void DoWork();
+        [OperationContract]
+
+        bool insertComplianceAudit(List<ComplianceAudit> auditdatalist);
+        [OperationContract]
+
+        bool updateComplianceAudit(List<ComplianceAudit> auditdatalist);
+
+        [OperationContract]
+
+        bool getComplianceAudit(int ComplianceAuditID);
+        [OperationContract]
+
+        bool deleteComplianceAudit(int ComplianceAuditID);
+        [OperationContract]
+
+        bool insertComplianceAuditTrail(List<ComplianceAuditAuditTrail> auditdatalisttrail);
+        [OperationContract]
+
+        bool updateComplianceAuditTrail(List<ComplianceAuditAuditTrail> auditdatalisttrail);
+        [OperationContract]
+        bool getComplianceAuditTrail(int ComplianceAuditTrailID);
+        [OperationContract]
+        bool deleteComplianceAuditTrail(int ComplianceAuditTrailID);
+        [OperationContract]
+
+        string getCompany(int AuditorID);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -17,21 +18,155 @@ namespace ComplianceService
         {
         }
 
-        //public bool insertUpdate ComplianceAudit(List<ComplianceAudit> auditdatalist, char Flag)
-        //{
-        //    bool result = false;
-        //    int ComplianceAuditID = 0;
-        //    ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
-        //    ComplianceAuditID=Convert.ToInt32( complianceAuditHelper.insertupdateComplianceAudit(auditdatalist, Flag));
-        //    if(ComplianceAuditID >0)
-        //    {
-        //        result = true;
-        //    }
-        //    else
-        //    {
-        //        result = false;
-        //    }
-        //    return result;
-        //}
+        public bool insertComplianceAudit(List<ComplianceAudit> auditdatalist)
+        {
+            bool result = false;
+            int ComplianceAuditID = 0;
+            ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
+            ComplianceAuditID = Convert.ToInt32(complianceAuditHelper.insertupdateComplianceAudit(auditdatalist, 'I'));
+            if (ComplianceAuditID > 0)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
+        }
+
+        public bool updateComplianceAudit(List<ComplianceAudit> auditdatalist)
+        {
+            bool result = false;
+            int ComplianceAuditID = 0;
+            ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
+            ComplianceAuditID = Convert.ToInt32(complianceAuditHelper.insertupdateComplianceAudit(auditdatalist, 'U'));
+            if (ComplianceAuditID > 0)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
+        }
+
+
+
+        public bool getComplianceAudit(int ComplianceAuditID)
+        {
+            bool result = false;
+            ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
+            ComplianceAuditID = Convert.ToInt32(complianceAuditHelper.deleteComlianceAudit(ComplianceAuditID));
+            if (ComplianceAuditID > 0)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
+        }
+
+        public bool deleteComplianceAudit(int ComplianceAuditID)
+        {
+            bool result = false;
+            ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
+            ComplianceAuditID = Convert.ToInt32(complianceAuditHelper.deleteComlianceAudit(ComplianceAuditID));
+            if (ComplianceAuditID > 0)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
+        }
+
+        public bool insertComplianceAuditTrail(List<ComplianceAuditAuditTrail> auditdatalisttrail)
+        {
+            bool result = false;
+            int ComplianceAuditTrailID = 0;
+            ComplianceAuditTrailHelper complianceAuditTrailHelper = new ComplianceAuditTrailHelper();
+            ComplianceAuditTrailID = Convert.ToInt32(complianceAuditTrailHelper.insertupdateComplianceAuditTrail(auditdatalisttrail));
+            if (ComplianceAuditTrailID > 0)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
+        }
+
+        public bool updateComplianceAuditTrail(List<ComplianceAuditAuditTrail> auditdatalisttrail)
+        {
+            bool result = false;
+            int ComplianceAuditTrailID = 0;
+            ComplianceAuditTrailHelper complianceAuditTrailHelper = new ComplianceAuditTrailHelper();
+            ComplianceAuditTrailID = Convert.ToInt32(complianceAuditTrailHelper.insertupdateComplianceAuditTrail(auditdatalisttrail));
+            if (ComplianceAuditTrailID > 0)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
+        }
+
+        public bool getComplianceAuditTrail(int ComplianceAuditTrailID)
+        {
+            bool result = false;
+            ComplianceAuditTrailHelper complianceAuditTrailHelper = new ComplianceAuditTrailHelper();
+            ComplianceAuditTrailID = Convert.ToInt32(complianceAuditTrailHelper.getComlianceAuditTrail(ComplianceAuditTrailID));
+            if (ComplianceAuditTrailID > 0)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
+        }
+
+        public bool deleteComplianceAuditTrail(int ComplianceAuditTrailID)
+        {
+            bool result = false;
+            ComplianceAuditTrailHelper complianceAuditTrailHelper = new ComplianceAuditTrailHelper();
+            ComplianceAuditTrailID = Convert.ToInt32(complianceAuditTrailHelper.deleteComlianceAuditTrail(ComplianceAuditTrailID));
+            if (ComplianceAuditTrailID > 0)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
+        }
+
+
+        public string getCompany(int AuditorID)
+        {
+            return bindCompany(AuditorID);
+        }
+
+        private string bindCompany( int AuditorID)
+        {
+            ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
+            DataSet dsCompanies = complianceAuditHelper.getAllCompany(AuditorID);
+            string strxmlAllCompanies = dsCompanies.GetXml();
+            return strxmlAllCompanies;
+        }
+
+       
+
     }
 }

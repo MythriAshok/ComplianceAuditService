@@ -14,7 +14,7 @@ namespace Compliance.DataAccess
     {
         MySqlConnection conn = DBConnection.getconnection();
 
-        public bool insertupdateComplianceAuditTrail(List<ComplianceAuditAuditTrail> audittraildata, char Flag)
+        public bool insertupdateComplianceAuditTrail(List<ComplianceAuditAuditTrail> audittraildata)
         {
             bool ComplianceAuditResult = true;
             try
@@ -26,7 +26,6 @@ namespace Compliance.DataAccess
                     cmd.CommandType = CommandType.StoredProcedure;
                     foreach (ComplianceAuditAuditTrail audit in audittraildata)
                     {
-                        cmd.Parameters.AddWithValue("p_Flag", Flag);
                         cmd.Parameters.AddWithValue("p_Compliance_Audit_ID ", audit.Compliance_Audit_Id);
                         cmd.Parameters.AddWithValue("p_Comp_Schedule_Instance", audit.Compliance_Schedule_Instance);
                         cmd.Parameters.AddWithValue("p_Penalty_nc", audit.Penalty_nc);

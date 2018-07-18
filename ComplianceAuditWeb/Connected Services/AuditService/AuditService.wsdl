@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="AuditService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:56172/AuditService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:56172/AuditService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:56172/AuditService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Compliance.DataObject" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IAuditService_DoWork_InputMessage">
+    <wsdl:part name="parameters" element="tns:DoWork" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_DoWork_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DoWorkResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_insertComplianceAudit_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertComplianceAudit" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_insertComplianceAudit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertComplianceAuditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_updateComplianceAudit_InputMessage">
+    <wsdl:part name="parameters" element="tns:updateComplianceAudit" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_updateComplianceAudit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:updateComplianceAuditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_getComplianceAudit_InputMessage">
+    <wsdl:part name="parameters" element="tns:getComplianceAudit" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_getComplianceAudit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getComplianceAuditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_deleteComplianceAudit_InputMessage">
+    <wsdl:part name="parameters" element="tns:deleteComplianceAudit" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_deleteComplianceAudit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:deleteComplianceAuditResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_insertComplianceAuditTrail_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertComplianceAuditTrail" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_insertComplianceAuditTrail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertComplianceAuditTrailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_updateComplianceAuditTrail_InputMessage">
+    <wsdl:part name="parameters" element="tns:updateComplianceAuditTrail" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_updateComplianceAuditTrail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:updateComplianceAuditTrailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_getComplianceAuditTrail_InputMessage">
+    <wsdl:part name="parameters" element="tns:getComplianceAuditTrail" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_getComplianceAuditTrail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getComplianceAuditTrailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_deleteComplianceAuditTrail_InputMessage">
+    <wsdl:part name="parameters" element="tns:deleteComplianceAuditTrail" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_deleteComplianceAuditTrail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:deleteComplianceAuditTrailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_getCompany_InputMessage">
+    <wsdl:part name="parameters" element="tns:getCompany" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_getCompany_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getCompanyResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IAuditService">
+    <wsdl:operation name="DoWork">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/DoWork" message="tns:IAuditService_DoWork_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/DoWorkResponse" message="tns:IAuditService_DoWork_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="insertComplianceAudit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/insertComplianceAudit" message="tns:IAuditService_insertComplianceAudit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/insertComplianceAuditResponse" message="tns:IAuditService_insertComplianceAudit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="updateComplianceAudit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/updateComplianceAudit" message="tns:IAuditService_updateComplianceAudit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/updateComplianceAuditResponse" message="tns:IAuditService_updateComplianceAudit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getComplianceAudit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/getComplianceAudit" message="tns:IAuditService_getComplianceAudit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/getComplianceAuditResponse" message="tns:IAuditService_getComplianceAudit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteComplianceAudit">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/deleteComplianceAudit" message="tns:IAuditService_deleteComplianceAudit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/deleteComplianceAuditResponse" message="tns:IAuditService_deleteComplianceAudit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="insertComplianceAuditTrail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/insertComplianceAuditTrail" message="tns:IAuditService_insertComplianceAuditTrail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/insertComplianceAuditTrailResponse" message="tns:IAuditService_insertComplianceAuditTrail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="updateComplianceAuditTrail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/updateComplianceAuditTrail" message="tns:IAuditService_updateComplianceAuditTrail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/updateComplianceAuditTrailResponse" message="tns:IAuditService_updateComplianceAuditTrail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getComplianceAuditTrail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/getComplianceAuditTrail" message="tns:IAuditService_getComplianceAuditTrail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/getComplianceAuditTrailResponse" message="tns:IAuditService_getComplianceAuditTrail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="deleteComplianceAuditTrail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/deleteComplianceAuditTrail" message="tns:IAuditService_deleteComplianceAuditTrail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/deleteComplianceAuditTrailResponse" message="tns:IAuditService_deleteComplianceAuditTrail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getCompany">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/getCompany" message="tns:IAuditService_getCompany_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/getCompanyResponse" message="tns:IAuditService_getCompany_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IAuditService" type="tns:IAuditService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="DoWork">
+      <soap:operation soapAction="http://tempuri.org/IAuditService/DoWork" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="insertComplianceAudit">
+      <soap:operation soapAction="http://tempuri.org/IAuditService/insertComplianceAudit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateComplianceAudit">
+      <soap:operation soapAction="http://tempuri.org/IAuditService/updateComplianceAudit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getComplianceAudit">
+      <soap:operation soapAction="http://tempuri.org/IAuditService/getComplianceAudit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteComplianceAudit">
+      <soap:operation soapAction="http://tempuri.org/IAuditService/deleteComplianceAudit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="insertComplianceAuditTrail">
+      <soap:operation soapAction="http://tempuri.org/IAuditService/insertComplianceAuditTrail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateComplianceAuditTrail">
+      <soap:operation soapAction="http://tempuri.org/IAuditService/updateComplianceAuditTrail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getComplianceAuditTrail">
+      <soap:operation soapAction="http://tempuri.org/IAuditService/getComplianceAuditTrail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteComplianceAuditTrail">
+      <soap:operation soapAction="http://tempuri.org/IAuditService/deleteComplianceAuditTrail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCompany">
+      <soap:operation soapAction="http://tempuri.org/IAuditService/getCompany" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AuditService">
+    <wsdl:port name="BasicHttpBinding_IAuditService" binding="tns:BasicHttpBinding_IAuditService">
+      <soap:address location="http://localhost:56172/AuditService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

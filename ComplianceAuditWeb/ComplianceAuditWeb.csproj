@@ -105,6 +105,16 @@
     <None Include="Connected Services\AccessService\AccessService.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\AuditService\AuditService.wsdl" />
+    <None Include="Connected Services\AuditService\AuditService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuditService\AuditService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuditService\AuditService11.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\OrgService\OrganizationService.wsdl" />
     <None Include="Connected Services\OrgService\OrganizationService.xsd">
       <SubType>Designer</SubType>
@@ -133,6 +143,13 @@
     <None Include="Connected Services\OrgService\configuration91.svcinfo" />
     <None Include="Connected Services\OrgService\configuration.svcinfo" />
     <None Include="Connected Services\OrgService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\AuditService\AuditService.disco" />
+    <None Include="Connected Services\AuditService\configuration91.svcinfo" />
+    <None Include="Connected Services\AuditService\configuration.svcinfo" />
+    <None Include="Connected Services\AuditService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -173,6 +190,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\AuditService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\OrgService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -185,6 +207,7 @@
     </Compile>
     <Compile Include="Controllers\ComplianceManagementController.cs" />
     <Compile Include="Controllers\ManageAccessController.cs" />
+    <Compile Include="Controllers\ManageComplianceAuditController.cs" />
     <Compile Include="Controllers\ManageOrganizationController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Global.asax.cs">
@@ -193,6 +216,7 @@
     <Compile Include="Models\AccessViewModel.cs" />
     <Compile Include="Models\BranchViewModel.cs" />
     <Compile Include="Models\CompanyViewModel.cs" />
+    <Compile Include="Models\ComplianceAuditViewModel.cs" />
     <Compile Include="Models\ListOfGroupCompanies.cs" />
     <Compile Include="Models\OrganizationViewModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
@@ -241,6 +265,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\ComplianceManagement\" />
     <Folder Include="Views\ManageAccess\" />
+    <Folder Include="Views\ManageComplianceAudit\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Compliance.DataObject\Compliance.DataObject.csproj">
@@ -257,6 +282,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\AccessService\" />
+    <WCFMetadataStorage Include="Connected Services\AuditService\" />
     <WCFMetadataStorage Include="Connected Services\OrgService\" />
     <WCFMetadataStorage Include="Connected Services\UserService\" />
   </ItemGroup>
