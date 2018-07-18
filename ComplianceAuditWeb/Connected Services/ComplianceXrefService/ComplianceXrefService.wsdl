@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ComplianceXrefService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:56172/ComplianceXrefService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:56172/ComplianceXrefService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:56172/ComplianceXrefService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Compliance.DataObject" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IComplianceXrefService_insertActs_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertActs" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_insertActs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertActsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_insertRules_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertRules" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_insertRules_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertRulesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_UpdateActs_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateActs" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_UpdateActs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateActsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_UpdateRules_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateRules" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_UpdateRules_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateRulesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_GetComplianceXref_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetComplianceXref" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_GetComplianceXref_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetComplianceXrefResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IComplianceXrefService">
+    <wsdl:operation name="insertActs">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/insertActs" message="tns:IComplianceXrefService_insertActs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/insertActsResponse" message="tns:IComplianceXrefService_insertActs_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="insertRules">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/insertRules" message="tns:IComplianceXrefService_insertRules_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/insertRulesResponse" message="tns:IComplianceXrefService_insertRules_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateActs">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/UpdateActs" message="tns:IComplianceXrefService_UpdateActs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/UpdateActsResponse" message="tns:IComplianceXrefService_UpdateActs_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRules">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/UpdateRules" message="tns:IComplianceXrefService_UpdateRules_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/UpdateRulesResponse" message="tns:IComplianceXrefService_UpdateRules_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetComplianceXref">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/GetComplianceXref" message="tns:IComplianceXrefService_GetComplianceXref_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/GetComplianceXrefResponse" message="tns:IComplianceXrefService_GetComplianceXref_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IComplianceXrefService" type="tns:IComplianceXrefService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="insertActs">
+      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/insertActs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="insertRules">
+      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/insertRules" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateActs">
+      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/UpdateActs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRules">
+      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/UpdateRules" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetComplianceXref">
+      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/GetComplianceXref" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ComplianceXrefService">
+    <wsdl:port name="BasicHttpBinding_IComplianceXrefService" binding="tns:BasicHttpBinding_IComplianceXrefService">
+      <soap:address location="http://localhost:56172/ComplianceXrefService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

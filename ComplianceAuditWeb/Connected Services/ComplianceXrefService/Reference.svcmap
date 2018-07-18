@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e51f999b-e186-4bd9-9cd4-373818489fc2" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:56172/ComplianceXrefService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ComplianceXrefService.disco" MetadataType="Disco" ID="f9ede82a-7b7d-4009-8d14-09c4eceaa6d7" SourceId="1" SourceUrl="http://localhost:56172/ComplianceXrefService.svc?disco" />
+    <MetadataFile FileName="ComplianceXrefService.xsd" MetadataType="Schema" ID="5d8e85b2-9435-4768-9c18-efe8ded0b348" SourceId="1" SourceUrl="http://localhost:56172/ComplianceXrefService.svc?xsd=xsd2" />
+    <MetadataFile FileName="ComplianceXrefService1.xsd" MetadataType="Schema" ID="da4450c3-a5e0-4359-a2f0-aee3154500d9" SourceId="1" SourceUrl="http://localhost:56172/ComplianceXrefService.svc?xsd=xsd1" />
+    <MetadataFile FileName="ComplianceXrefService.wsdl" MetadataType="Wsdl" ID="30840184-0661-4f80-984a-3dc3fee05665" SourceId="1" SourceUrl="http://localhost:56172/ComplianceXrefService.svc?wsdl" />
+    <MetadataFile FileName="ComplianceXrefService2.xsd" MetadataType="Schema" ID="6bfc22fb-f421-483b-a77e-9fd2a9d5eb42" SourceId="1" SourceUrl="http://localhost:56172/ComplianceXrefService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

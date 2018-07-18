@@ -91,7 +91,6 @@
     </Compile>
     <Compile Include="IAccessService.cs" />
     <Compile Include="IAuditService.cs" />
-    <Compile Include="IComplianceService.cs" />
     <Compile Include="IComplianceXrefService.cs" />
     <Compile Include="ICountryService.cs" />
     <Compile Include="IOrganizationService.cs" />

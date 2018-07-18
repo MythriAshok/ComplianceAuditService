@@ -105,6 +105,16 @@
     <None Include="Connected Services\AccessService\AccessService.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\ComplianceXrefService\ComplianceXrefService.wsdl" />
+    <None Include="Connected Services\ComplianceXrefService\ComplianceXrefService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ComplianceXrefService\ComplianceXrefService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ComplianceXrefService\ComplianceXrefService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\OrgService\OrganizationService.wsdl" />
     <None Include="Connected Services\OrgService\OrganizationService.xsd">
       <SubType>Designer</SubType>
@@ -133,6 +143,13 @@
     <None Include="Connected Services\OrgService\configuration91.svcinfo" />
     <None Include="Connected Services\OrgService\configuration.svcinfo" />
     <None Include="Connected Services\OrgService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\ComplianceXrefService\ComplianceXrefService.disco" />
+    <None Include="Connected Services\ComplianceXrefService\configuration91.svcinfo" />
+    <None Include="Connected Services\ComplianceXrefService\configuration.svcinfo" />
+    <None Include="Connected Services\ComplianceXrefService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -173,6 +190,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\ComplianceXrefService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\OrgService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -193,6 +215,7 @@
     <Compile Include="Models\AccessViewModel.cs" />
     <Compile Include="Models\BranchViewModel.cs" />
     <Compile Include="Models\CompanyViewModel.cs" />
+    <Compile Include="Models\ComplianceViewModel.cs" />
     <Compile Include="Models\ListOfGroupCompanies.cs" />
     <Compile Include="Models\OrganizationViewModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
@@ -228,6 +251,7 @@
     <Content Include="Views\ManageOrganization\ActivateGroupCompany.cshtml" />
     <Content Include="Views\ManageOrganization\ListOfBranches.cshtml" />
     <Content Include="Views\ManageOrganization\ListOfCompanies.cshtml" />
+    <Content Include="Views\ComplianceManagement\_insertActs.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -237,7 +261,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\ComplianceManagement\" />
     <Folder Include="Views\ManageAccess\" />
   </ItemGroup>
   <ItemGroup>
@@ -255,6 +278,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\AccessService\" />
+    <WCFMetadataStorage Include="Connected Services\ComplianceXrefService\" />
     <WCFMetadataStorage Include="Connected Services\OrgService\" />
     <WCFMetadataStorage Include="Connected Services\UserService\" />
   </ItemGroup>

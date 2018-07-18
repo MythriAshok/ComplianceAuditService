@@ -1,0 +1,69 @@
+﻿@model ComplianceAuditWeb.Models.ComplianceViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @Html.Label("Compliance Title", htmlAttributes: new { @class = "control-label col-md-2" })
+
+    @Html.EditorFor(model => model.Compliance.Compliance_Title, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.Compliance_Title, "", new { @class = "text-danger" })
+
+    @Html.Label("Risk Category", htmlAttributes: new { @class = "control-label col-md-2" })
+
+    @Html.DropDownListFor(model => model.Compliance.Risk_Category,new List<SelectListItem>
+        {   new SelectListItem{ Text="High", Value = "1" },
+            new SelectListItem{ Text="Medium", Value = "2" },
+            new SelectListItem{ Text="Low", Value = "3" }}, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.Risk_Category, "", new { @class = "text-danger" })
+
+    @Html.Label("Risk Description", htmlAttributes: new { @class = "control-label col-md-2" })
+
+    @Html.EditorFor(model => model.Compliance.Risk_Description, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.Risk_Description, "", new { @class = "text-danger" })
+
+    @Html.Label("Effective Start Date", htmlAttributes: new { @class = "control-label col-md-2" })
+
+    @Html.EditorFor(model => model.Compliance.Effective_Start_Date, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.Effective_Start_Date, "", new { @class = "text-danger" })
+
+    @Html.Label("Effective End Date", htmlAttributes: new { @class = "control-label col-md-2" })
+
+    @Html.EditorFor(model => model.Compliance.Effective_End_Date, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.Effective_End_Date, "", new { @class = "text-danger" })
+
+    @Html.Label("Country", htmlAttributes: new { @class = "control-label col-md-2" })
+
+    @Html.DropDownListFor(model => model.Compliance.Country_ID, Model.Countrylist, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.Country_ID, "", new { @class = "text-danger" })
+
+    @*@Html.Label("Is StateLaw", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.CheckBoxFor(model => model.Is_StateLaw, new { htmlAttributes = new { @class = "form-control" } })
+    if (Model.Is_StateLaw)
+    {*@
+    
+        @Html.Label("State", htmlAttributes: new { @class = "control-label col-md-2" })
+
+        @Html.DropDownListFor(model => model.Compliance.State_ID, Model.Statelist, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Compliance.State_ID, "", new { @class = "text-danger" })
+
+        @*@Html.Label("Is Regional Law", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.CheckBoxFor(model => model.Is_RegionalLaw, new { htmlAttributes = new { @class = "form-control" } })
+        if (Model.Is_RegionalLaw)
+        {*@
+            @Html.Label("City", htmlAttributes: new { @class = "control-label col-md-2" })
+
+            @Html.DropDownListFor(model => model.Compliance.City_ID, Model.Citylist, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Compliance.City_ID, "", new { @class = "text-danger" })
+        @*}
+    }*@
+
+    <input type="submit" value="Create" class="btn btn-default" />
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
