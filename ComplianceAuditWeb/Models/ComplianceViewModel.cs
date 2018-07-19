@@ -15,8 +15,17 @@ namespace ComplianceAuditWeb.Models
 
         public List<SelectListItem> Citylist { get; set; }
 
-        public bool Is_StateLaw { get; set; }
+        //public bool Is_StateLaw { get; set; }
 
-        public bool Is_RegionalLaw { get; set; }
+        //public bool Is_RegionalLaw { get; set; }
+        public enum RiskCategory
+        {
+            High,
+            Medium,
+            Low
+        }
     }
+
+  
+
 }

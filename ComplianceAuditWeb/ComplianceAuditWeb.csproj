@@ -172,9 +172,15 @@
     </None>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\acts.png" />
+    <Content Include="Images\rules.png" />
+    <Content Include="Images\section.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Connected Services\UserService\UserService.wsdl" />
@@ -191,6 +197,11 @@
     <None Include="Connected Services\UserService\UserService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\JavaScript.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -201,6 +212,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\Commonhelper.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Connected Services\AccessService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -237,11 +249,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccessViewModel.cs" />
+    <Compile Include="Models\AllocateActandRuleViewModel.cs" />
     <Compile Include="Models\AuditViewModel.cs" />
     <Compile Include="Models\BranchViewModel.cs" />
     <Compile Include="Models\CompanyViewModel.cs" />
     <Compile Include="Models\ComplianceAuditViewModel.cs" />
     <Compile Include="Models\ComplianceViewModel.cs" />
+    <Compile Include="Models\ListofComplianceViewModel.cs" />
     <Compile Include="Models\ListOfGroupCompanies.cs" />
     <Compile Include="Models\OrganizationViewModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
@@ -280,6 +294,11 @@
     <Content Include="Views\ComplianceManagement\_insertActs.cshtml" />
     <Content Include="Views\AuditManagement\_complianceAuditing.cshtml" />
     <Content Include="Views\AuditManagement\addComplianceAudit.cshtml" />
+    <Content Include="Views\ComplianceManagement\_ListofCompliance.cshtml" />
+    <Content Include="Views\ComplianceManagement\_CreateRules.cshtml" />
+    <Content Include="Views\ComplianceManagement\_CreateSection.cshtml" />
+    <Content Include="Views\ComplianceManagement\_ListofCompliance - Copy.cshtml" />
+    <Content Include="Views\ComplianceManagement\_AllocateActsandRules.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

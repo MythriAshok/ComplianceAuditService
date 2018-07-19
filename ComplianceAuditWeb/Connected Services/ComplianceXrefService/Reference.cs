@@ -16,34 +16,52 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
     public interface IComplianceXrefService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/insertActs", ReplyAction="http://tempuri.org/IComplianceXrefService/insertActsResponse")]
-        bool insertActs(Compliance.DataObject.ComplianceXref compliance);
+        int insertActs(Compliance.DataObject.ComplianceXref compliance);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/insertActs", ReplyAction="http://tempuri.org/IComplianceXrefService/insertActsResponse")]
-        System.Threading.Tasks.Task<bool> insertActsAsync(Compliance.DataObject.ComplianceXref compliance);
+        System.Threading.Tasks.Task<int> insertActsAsync(Compliance.DataObject.ComplianceXref compliance);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/insertRules", ReplyAction="http://tempuri.org/IComplianceXrefService/insertRulesResponse")]
-        bool insertRules(Compliance.DataObject.ComplianceXref compliance);
+        int insertRules(Compliance.DataObject.ComplianceXref compliance);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/insertRules", ReplyAction="http://tempuri.org/IComplianceXrefService/insertRulesResponse")]
-        System.Threading.Tasks.Task<bool> insertRulesAsync(Compliance.DataObject.ComplianceXref compliance);
+        System.Threading.Tasks.Task<int> insertRulesAsync(Compliance.DataObject.ComplianceXref compliance);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/insertSection", ReplyAction="http://tempuri.org/IComplianceXrefService/insertSectionResponse")]
+        int insertSection(Compliance.DataObject.ComplianceXref compliance);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/insertSection", ReplyAction="http://tempuri.org/IComplianceXrefService/insertSectionResponse")]
+        System.Threading.Tasks.Task<int> insertSectionAsync(Compliance.DataObject.ComplianceXref compliance);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/UpdateActs", ReplyAction="http://tempuri.org/IComplianceXrefService/UpdateActsResponse")]
-        bool UpdateActs(Compliance.DataObject.ComplianceXref compliance);
+        int UpdateActs(Compliance.DataObject.ComplianceXref compliance);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/UpdateActs", ReplyAction="http://tempuri.org/IComplianceXrefService/UpdateActsResponse")]
-        System.Threading.Tasks.Task<bool> UpdateActsAsync(Compliance.DataObject.ComplianceXref compliance);
+        System.Threading.Tasks.Task<int> UpdateActsAsync(Compliance.DataObject.ComplianceXref compliance);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/UpdateRules", ReplyAction="http://tempuri.org/IComplianceXrefService/UpdateRulesResponse")]
-        bool UpdateRules(Compliance.DataObject.ComplianceXref compliance);
+        int UpdateRules(Compliance.DataObject.ComplianceXref compliance);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/UpdateRules", ReplyAction="http://tempuri.org/IComplianceXrefService/UpdateRulesResponse")]
-        System.Threading.Tasks.Task<bool> UpdateRulesAsync(Compliance.DataObject.ComplianceXref compliance);
+        System.Threading.Tasks.Task<int> UpdateRulesAsync(Compliance.DataObject.ComplianceXref compliance);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetComplianceXref", ReplyAction="http://tempuri.org/IComplianceXrefService/GetComplianceXrefResponse")]
-        string GetComplianceXref();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetActs", ReplyAction="http://tempuri.org/IComplianceXrefService/GetActsResponse")]
+        string GetActs();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetComplianceXref", ReplyAction="http://tempuri.org/IComplianceXrefService/GetComplianceXrefResponse")]
-        System.Threading.Tasks.Task<string> GetComplianceXrefAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetActs", ReplyAction="http://tempuri.org/IComplianceXrefService/GetActsResponse")]
+        System.Threading.Tasks.Task<string> GetActsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSections", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSectionsResponse")]
+        string GetSections();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSections", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSectionsResponse")]
+        System.Threading.Tasks.Task<string> GetSectionsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetRules", ReplyAction="http://tempuri.org/IComplianceXrefService/GetRulesResponse")]
+        string GetRules();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetRules", ReplyAction="http://tempuri.org/IComplianceXrefService/GetRulesResponse")]
+        System.Threading.Tasks.Task<string> GetRulesAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -73,44 +91,68 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
                 base(binding, remoteAddress) {
         }
         
-        public bool insertActs(Compliance.DataObject.ComplianceXref compliance) {
+        public int insertActs(Compliance.DataObject.ComplianceXref compliance) {
             return base.Channel.insertActs(compliance);
         }
         
-        public System.Threading.Tasks.Task<bool> insertActsAsync(Compliance.DataObject.ComplianceXref compliance) {
+        public System.Threading.Tasks.Task<int> insertActsAsync(Compliance.DataObject.ComplianceXref compliance) {
             return base.Channel.insertActsAsync(compliance);
         }
         
-        public bool insertRules(Compliance.DataObject.ComplianceXref compliance) {
+        public int insertRules(Compliance.DataObject.ComplianceXref compliance) {
             return base.Channel.insertRules(compliance);
         }
         
-        public System.Threading.Tasks.Task<bool> insertRulesAsync(Compliance.DataObject.ComplianceXref compliance) {
+        public System.Threading.Tasks.Task<int> insertRulesAsync(Compliance.DataObject.ComplianceXref compliance) {
             return base.Channel.insertRulesAsync(compliance);
         }
         
-        public bool UpdateActs(Compliance.DataObject.ComplianceXref compliance) {
+        public int insertSection(Compliance.DataObject.ComplianceXref compliance) {
+            return base.Channel.insertSection(compliance);
+        }
+        
+        public System.Threading.Tasks.Task<int> insertSectionAsync(Compliance.DataObject.ComplianceXref compliance) {
+            return base.Channel.insertSectionAsync(compliance);
+        }
+        
+        public int UpdateActs(Compliance.DataObject.ComplianceXref compliance) {
             return base.Channel.UpdateActs(compliance);
         }
         
-        public System.Threading.Tasks.Task<bool> UpdateActsAsync(Compliance.DataObject.ComplianceXref compliance) {
+        public System.Threading.Tasks.Task<int> UpdateActsAsync(Compliance.DataObject.ComplianceXref compliance) {
             return base.Channel.UpdateActsAsync(compliance);
         }
         
-        public bool UpdateRules(Compliance.DataObject.ComplianceXref compliance) {
+        public int UpdateRules(Compliance.DataObject.ComplianceXref compliance) {
             return base.Channel.UpdateRules(compliance);
         }
         
-        public System.Threading.Tasks.Task<bool> UpdateRulesAsync(Compliance.DataObject.ComplianceXref compliance) {
+        public System.Threading.Tasks.Task<int> UpdateRulesAsync(Compliance.DataObject.ComplianceXref compliance) {
             return base.Channel.UpdateRulesAsync(compliance);
         }
         
-        public string GetComplianceXref() {
-            return base.Channel.GetComplianceXref();
+        public string GetActs() {
+            return base.Channel.GetActs();
         }
         
-        public System.Threading.Tasks.Task<string> GetComplianceXrefAsync() {
-            return base.Channel.GetComplianceXrefAsync();
+        public System.Threading.Tasks.Task<string> GetActsAsync() {
+            return base.Channel.GetActsAsync();
+        }
+        
+        public string GetSections() {
+            return base.Channel.GetSections();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetSectionsAsync() {
+            return base.Channel.GetSectionsAsync();
+        }
+        
+        public string GetRules() {
+            return base.Channel.GetRules();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetRulesAsync() {
+            return base.Channel.GetRulesAsync();
         }
     }
 }

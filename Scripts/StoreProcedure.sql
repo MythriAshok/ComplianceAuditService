@@ -1019,10 +1019,10 @@ insert into tbl_compliance_xref(Comp_Category,Compliance_Title,Comp_Description,
 Risk_Description,Recurrence,Form,Type,Is_Best_Practice ,Version,Effective_Start_Date,Effective_End_Date,
 Country_ID ,State_ID ,City_ID ,User_ID, Is_Active,Last_Updated_Date,Compliance_Parent_ID  )
 
-values(p_Comp_Category,p_Compliance_Title, p_Comp_Description,p_Is_Header,p_level,p_Comp_Order,p_Option_ID,p_Risk_Category,
+values(p_Comp_Category,p_Compliance_Title, p_Comp_Description,p_compl_def_consequence,p_Is_Header,p_level,p_Comp_Order,p_Option_ID,p_Risk_Category,
 p_Risk_Description,p_Recurrence,p_Form,p_Type,p_Is_Best_Practice ,p_Version,p_Effective_Start_Date,p_Effective_End_Date,
-p_Country_ID ,p_State_ID ,p_City_ID ,p_User_ID,Is_Active,Now(),p_Compliance_Parent_ID  );
-
+p_Country_ID ,p_State_ID ,p_City_ID ,p_User_ID,p_Is_Active,Now(),p_Compliance_Parent_ID  );
+select last_insert_id();
 else
 
 INSERT INTO tbl_compliance_xref_audittrail(Select Comp_Category,Compliance_Title,Comp_Description,p_compl_def_consequence,Is_Header,level,Comp_Order,Option_ID,Risk_Category,
@@ -1036,6 +1036,7 @@ Comp_Category=p_Comp_Category,Compliance_Title=p_Compliance_Title, Comp_Descript
 Risk_Description=p_Risk_Description,Recurrence=p_Recurrence,Form=p_Form,Type=p_Type,Is_Best_Practice=p_Is_Best_Practice ,Version=p_Version,Effective_Start_Date=p_Effective_Start_Date,Effective_End_Date=p_Effective_End_Date,
 Country_ID=p_Country_ID ,State_ID=p_State_ID ,City_ID=p_City_ID ,Last_Updated_Date=Now(),User_ID=p_User_ID, Is_Active=p_Is_Active
 where Compliance_Xref_ID=p_Compliance_Xref_ID;
+select row_count();
 end if;
 
 end/
@@ -1130,7 +1131,7 @@ p_Compliance_Xref_ID int
 begin
 if(p_Compliance_Xref_ID=0)
 then
-select Comp_Category,Compliance_Title, Comp_Description,compl_def_consequence,Is_Header,level,Comp_Order,Option_ID,Risk_Category,
+select Compliance_Xref_ID,Comp_Category,Compliance_Title, Comp_Description,compl_def_consequence,Is_Header,level,Comp_Order,Option_ID,Risk_Category,
 Risk_Description,Recurrence,Form,Type,Is_Best_Practice ,Version,Effective_Start_Date,Effective_End_Date,
 Country_ID ,State_ID ,City_ID ,Last_Updated_Date,User_ID,Is_Active,Compliance_Parent_ID from tbl_compliance_xref;
 else

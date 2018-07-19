@@ -14,9 +14,9 @@ namespace Compliance.DataAccess
     {
         MySqlConnection conn = DBConnection.getconnection();
         // MySqlConnection connection = new MySqlConnection(ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString);
-        public bool insertupdateComplianceXref(ComplianceXref xref, char Flag)
+        public int insertupdateComplianceXref(ComplianceXref xref, char Flag)
         {
-            bool ComplianceXref = false;
+            int ComplianceXref = 0;
             try
             {
                 if(xref != null)
@@ -50,11 +50,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_City_ID", xref.City_ID);
                     cmd.Parameters.AddWithValue("p_User_ID", xref.User_ID);
                     cmd.Parameters.AddWithValue("p_Is_Active", xref.Is_Active);
-                    int objcompliancexref = cmd.ExecuteNonQuery();
-                    if (objcompliancexref > 0)
-                    {
-                        ComplianceXref = true;
-                    }
+                    ComplianceXref = Convert.ToInt32(cmd.ExecuteScalar());                   
                 }
             }
             catch
@@ -91,6 +87,72 @@ namespace Compliance.DataAccess
             return dtComplianceXref;
         }
 
+        public DataSet getAct()
+        {
+            DataSet dtComplianceXref = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getActs", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtComplianceXref);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dtComplianceXref;
+        }
+
+        public DataSet getSection()
+        {
+            DataSet dtComplianceXref = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getSections", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtComplianceXref);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dtComplianceXref;
+        }
+
+        public DataSet getRules()
+        {
+            DataSet dtComplianceXref = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getRules", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtComplianceXref);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dtComplianceXref;
+        }
+
         public bool deleteComlianceXref(int Compliance_Xref_ID)
         {
             bool resultComplianceXref = false;
@@ -99,7 +161,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getComplianceXref", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID ", Compliance_Xref_ID);
+                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", Compliance_Xref_ID);
                 int resultCount = cmd.ExecuteNonQuery();
                 if(resultCount > 0)
                 {
