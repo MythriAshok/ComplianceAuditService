@@ -49,17 +49,11 @@
   <wsdl:message name="IAuditService_getComplianceAuditTrail_OutputMessage">
     <wsdl:part name="parameters" element="tns:getComplianceAuditTrailResponse" />
   </wsdl:message>
-  <wsdl:message name="IAuditService_getCompanyAllocatedToAuditor_InputMessage">
-    <wsdl:part name="parameters" element="tns:getCompanyAllocatedToAuditor" />
+  <wsdl:message name="IAuditService_getAllCompanyBrnachAssignedtoAuditor_InputMessage">
+    <wsdl:part name="parameters" element="tns:getAllCompanyBrnachAssignedtoAuditor" />
   </wsdl:message>
-  <wsdl:message name="IAuditService_getCompanyAllocatedToAuditor_OutputMessage">
-    <wsdl:part name="parameters" element="tns:getCompanyAllocatedToAuditorResponse" />
-  </wsdl:message>
-  <wsdl:message name="IAuditService_getBranchAllocatedToAuditor_InputMessage">
-    <wsdl:part name="parameters" element="tns:getBranchAllocatedToAuditor" />
-  </wsdl:message>
-  <wsdl:message name="IAuditService_getBranchAllocatedToAuditor_OutputMessage">
-    <wsdl:part name="parameters" element="tns:getBranchAllocatedToAuditorResponse" />
+  <wsdl:message name="IAuditService_getAllCompanyBrnachAssignedtoAuditor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getAllCompanyBrnachAssignedtoAuditorResponse" />
   </wsdl:message>
   <wsdl:message name="IAuditService_getComplianceXref_InputMessage">
     <wsdl:part name="parameters" element="tns:getComplianceXref" />
@@ -96,13 +90,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/getComplianceAuditTrail" message="tns:IAuditService_getComplianceAuditTrail_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/getComplianceAuditTrailResponse" message="tns:IAuditService_getComplianceAuditTrail_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="getCompanyAllocatedToAuditor">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/getCompanyAllocatedToAuditor" message="tns:IAuditService_getCompanyAllocatedToAuditor_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/getCompanyAllocatedToAuditorResponse" message="tns:IAuditService_getCompanyAllocatedToAuditor_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="getBranchAllocatedToAuditor">
-      <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/getBranchAllocatedToAuditor" message="tns:IAuditService_getBranchAllocatedToAuditor_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/getBranchAllocatedToAuditorResponse" message="tns:IAuditService_getBranchAllocatedToAuditor_OutputMessage" />
+    <wsdl:operation name="getAllCompanyBrnachAssignedtoAuditor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/getAllCompanyBrnachAssignedtoAuditor" message="tns:IAuditService_getAllCompanyBrnachAssignedtoAuditor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/getAllCompanyBrnachAssignedtoAuditorResponse" message="tns:IAuditService_getAllCompanyBrnachAssignedtoAuditor_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="getComplianceXref">
       <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/getComplianceXref" message="tns:IAuditService_getComplianceXref_InputMessage" />
@@ -174,17 +164,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="getCompanyAllocatedToAuditor">
-      <soap:operation soapAction="http://tempuri.org/IAuditService/getCompanyAllocatedToAuditor" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getBranchAllocatedToAuditor">
-      <soap:operation soapAction="http://tempuri.org/IAuditService/getBranchAllocatedToAuditor" style="document" />
+    <wsdl:operation name="getAllCompanyBrnachAssignedtoAuditor">
+      <soap:operation soapAction="http://tempuri.org/IAuditService/getAllCompanyBrnachAssignedtoAuditor" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

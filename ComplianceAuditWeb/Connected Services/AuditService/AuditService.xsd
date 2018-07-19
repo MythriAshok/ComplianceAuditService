@@ -49,7 +49,7 @@
   <xs:element name="getComplianceAuditResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="getComplianceAuditResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="getComplianceAuditResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -91,42 +91,28 @@
   <xs:element name="getComplianceAuditTrailResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="getComplianceAuditTrailResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="getComplianceAuditTrailResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="getCompanyAllocatedToAuditor">
+  <xs:element name="getAllCompanyBrnachAssignedtoAuditor">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="AuditorID" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="getCompanyAllocatedToAuditorResponse">
+  <xs:element name="getAllCompanyBrnachAssignedtoAuditorResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="getCompanyAllocatedToAuditorResult" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="getBranchAllocatedToAuditor">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="AuditorID" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="getBranchAllocatedToAuditorResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="getBranchAllocatedToAuditorResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="getAllCompanyBrnachAssignedtoAuditorResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="getComplianceXref">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="ComplianceXrefID" type="xs:int" />
+        <xs:element minOccurs="0" name="OrgID" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

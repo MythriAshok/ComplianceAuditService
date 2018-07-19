@@ -864,7 +864,8 @@ namespace ComplianceAuditWeb.Controllers
             dsGroupCompaniesList.ReadXml(new StringReader(strxmlGroupCompanies));
             foreach(System.Data.DataRow row in dsGroupCompaniesList.Tables[0].Rows)
             {
-                ListOfGroupCompanies listOfGroup = new ListOfGroupCompanies { OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
+                ListOfGroupCompanies listOfGroup = new ListOfGroupCompanies
+                { OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
                     CompanyName = row["Company_Name"].ToString(),
                     IsActive =Convert.ToBoolean(Convert.ToInt32( row["Is_Active"]))
 

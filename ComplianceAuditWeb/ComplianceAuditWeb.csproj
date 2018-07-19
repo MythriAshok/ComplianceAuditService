@@ -227,6 +227,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AuditManagementController.cs" />
     <Compile Include="Controllers\ComplianceManagementController.cs" />
     <Compile Include="Controllers\ManageAccessController.cs" />
     <Compile Include="Controllers\ManageComplianceAuditController.cs" />
@@ -236,6 +237,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccessViewModel.cs" />
+    <Compile Include="Models\AuditViewModel.cs" />
     <Compile Include="Models\BranchViewModel.cs" />
     <Compile Include="Models\CompanyViewModel.cs" />
     <Compile Include="Models\ComplianceAuditViewModel.cs" />
@@ -276,7 +278,8 @@
     <Content Include="Views\ManageOrganization\ListOfBranches.cshtml" />
     <Content Include="Views\ManageOrganization\ListOfCompanies.cshtml" />
     <Content Include="Views\ComplianceManagement\_insertActs.cshtml" />
-    <Content Include="Views\ManageComplianceAudit\insertComplianceAudit.cshtml" />
+    <Content Include="Views\AuditManagement\_complianceAuditing.cshtml" />
+    <Content Include="Views\AuditManagement\addComplianceAudit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

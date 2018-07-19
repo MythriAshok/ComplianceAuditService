@@ -117,15 +117,15 @@ namespace Compliance.DataAccess
             return resultComplianceAudit;
         }
 
-        public DataSet getAllCompaniesAllocatedToAuditor(int AuditorID)
+        public DataSet sp_getAllCompanyBrnachAssignedtoAuditor(int AuditorID)
         {
             DataSet dsAllCompany = new DataSet();
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getAllCompany", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getAllCompanyBrnachAssignedtoAuditor", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_User_ID", AuditorID);
+                cmd.Parameters.AddWithValue("p_Auditor_ID", AuditorID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsAllCompany);
             }
@@ -140,30 +140,9 @@ namespace Compliance.DataAccess
             return dsAllCompany; 
         }
 
-        public DataSet getAllBranchAllocatedToAuditor(int AuditorID)
-        {
-            DataSet dsAllBranch = new DataSet();
-            try
-            {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getAllBranch", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_User_ID", AuditorID);
-                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                adapter.Fill(dsAllBranch);
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return dsAllBranch; 
-        }
+      
 
-        public DataSet getComlianceXrefDataForSeletedBranch(int BranchID)
+        public DataSet getComlianceXrefDataForSeletedBranch(int OrgID)
         {
             DataSet dsComplianceXrefData = new DataSet();
             try
@@ -171,7 +150,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getComplianceXrefData", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("Org_Hier_ID", BranchID);
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", OrgID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsComplianceXrefData);
             }

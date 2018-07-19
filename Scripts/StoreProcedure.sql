@@ -1374,3 +1374,48 @@ update tbl_org_hier set Is_Active = 1 where Org_Hier_ID=p_Org_Hier_ID;
 end/
 delimiter ;
 
+
+Drop Procedure if exists `sp_getAllCompanyBrnachAssignedtoAuditor`;
+Delimiter /
+create procedure   sp_getAllCompanyBrnachAssignedtoAuditor
+(
+p_Auditor_ID int 
+)
+begin  
+ 
+select * from tbl_org_hier where 
+Org_Hier_ID IN(Select Org_Hier_ID from tbl_branch_auditor_mapping where Auditor_ID=p_Auditor_ID) 
+Union
+select * from tbl_org_hier where 
+Org_Hier_ID IN(
+Select distinct Parent_Company_ID from tbl_org_hier where 
+Org_Hier_ID in (Select Org_Hier_ID from tbl_branch_auditor_mapping where Auditor_ID=p_Auditor_ID));
+end/
+delimiter ;
+
+
+
+
+
+
+Drop Procedure if exists `sp_getComplianceXrefData`;
+Delimiter /
+create procedure sp_getComplianceXrefData
+(
+p_Org_Hier_ID int 
+)
+select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID  from tbl_compliance_xref 
+inner join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
+where 
+tbl_compliance_xref.Compliance_Xref_ID IN(Select Compliance_Xref_ID from tbl_compliance_branch_mapping where Org_Hier_ID=p_Org_Hier_ID) 
+Union
+select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID from tbl_compliance_xref 
+left join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
+where 
+tbl_compliance_xref.Compliance_Xref_ID IN(
+Select distinct  Compliance_Parent_ID from tbl_compliance_xref where 
+tbl_compliance_xref.Compliance_Xref_ID in (Select Compliance_Xref_ID from tbl_compliance_branch_mapping  
+where Org_Hier_ID=p_Org_Hier_ID));
+end/
+delimiter ;
+

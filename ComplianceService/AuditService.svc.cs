@@ -115,44 +115,32 @@ namespace ComplianceService
             
         }
 
-      
-
-
-        public string getCompanyAllocatedToAuditor(int AuditorID)
+        public string getAllCompanyBrnachAssignedtoAuditor(int AuditotID)
         {
-            return bindCompanyAllocatedToAuditor(AuditorID);
+            return bindAllCompanyBrnachAssignedtoAuditor(AuditotID);
         }
 
-        private string bindCompanyAllocatedToAuditor( int AuditorID)
+        private string bindAllCompanyBrnachAssignedtoAuditor(int AuditotID)
         {
             ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
-            DataSet dsCompanies = complianceAuditHelper.getAllCompaniesAllocatedToAuditor(AuditorID);
-            string strxmlAllCompanies = dsCompanies.GetXml();
-            return strxmlAllCompanies;
+            DataSet dsCompliance = complianceAuditHelper.sp_getAllCompanyBrnachAssignedtoAuditor(AuditotID);
+            string strxmlCompliance = dsCompliance.GetXml();
+            return strxmlCompliance;
         }
 
-        public string getBranchAllocatedToAuditor(int AuditorID)
+
+
+
+
+        public string getComplianceXref(int OrgID)
         {
-            return bindBranchAllocatedToAuditor(AuditorID);
+            return bindComplianceXref(OrgID);
         }
 
-        private string bindBranchAllocatedToAuditor(int AuditorID)
-        {
-            ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
-            DataSet dsCompanies = complianceAuditHelper.getAllBranchAllocatedToAuditor(AuditorID);
-            string strxmlAllBranches = dsCompanies.GetXml();
-            return strxmlAllBranches;
-        }
-
-        public string getComplianceXref(int ComplianceXrefID)
-        {
-            return bindComplianceXref(ComplianceXrefID);
-        }
-
-        private string bindComplianceXref(int ComplianceXrefID)
+        private string bindComplianceXref(int OrgID)
         {
             ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
-            DataSet dsCompliance = complianceAuditHelper.getComlianceXrefDataForSeletedBranch(ComplianceXrefID);
+            DataSet dsCompliance = complianceAuditHelper.getComlianceXrefDataForSeletedBranch(OrgID);
             string strxmlCompliance = dsCompliance.GetXml();
             return strxmlCompliance;
         }

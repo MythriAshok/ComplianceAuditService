@@ -34,10 +34,10 @@ namespace ComplianceAuditWeb.AuditService {
         System.Threading.Tasks.Task<bool> updateComplianceAuditAsync(Compliance.DataObject.ComplianceAudit[] auditdatalist);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getComplianceAudit", ReplyAction="http://tempuri.org/IAuditService/getComplianceAuditResponse")]
-        bool getComplianceAudit(int ComplianceAuditID);
+        string getComplianceAudit(int ComplianceAuditID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getComplianceAudit", ReplyAction="http://tempuri.org/IAuditService/getComplianceAuditResponse")]
-        System.Threading.Tasks.Task<bool> getComplianceAuditAsync(int ComplianceAuditID);
+        System.Threading.Tasks.Task<string> getComplianceAuditAsync(int ComplianceAuditID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/deleteComplianceAudit", ReplyAction="http://tempuri.org/IAuditService/deleteComplianceAuditResponse")]
         bool deleteComplianceAudit(int ComplianceAuditID);
@@ -52,28 +52,22 @@ namespace ComplianceAuditWeb.AuditService {
         System.Threading.Tasks.Task<bool> insertComplianceAuditTrailAsync(Compliance.DataObject.ComplianceAuditAuditTrail[] auditdatalisttrail);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getComplianceAuditTrail", ReplyAction="http://tempuri.org/IAuditService/getComplianceAuditTrailResponse")]
-        bool getComplianceAuditTrail(int ComplianceAuditTrailID);
+        string getComplianceAuditTrail(int ComplianceAuditTrailID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getComplianceAuditTrail", ReplyAction="http://tempuri.org/IAuditService/getComplianceAuditTrailResponse")]
-        System.Threading.Tasks.Task<bool> getComplianceAuditTrailAsync(int ComplianceAuditTrailID);
+        System.Threading.Tasks.Task<string> getComplianceAuditTrailAsync(int ComplianceAuditTrailID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getCompanyAllocatedToAuditor", ReplyAction="http://tempuri.org/IAuditService/getCompanyAllocatedToAuditorResponse")]
-        string getCompanyAllocatedToAuditor(int AuditorID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getAllCompanyBrnachAssignedtoAuditor", ReplyAction="http://tempuri.org/IAuditService/getAllCompanyBrnachAssignedtoAuditorResponse")]
+        string getAllCompanyBrnachAssignedtoAuditor(int AuditorID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getCompanyAllocatedToAuditor", ReplyAction="http://tempuri.org/IAuditService/getCompanyAllocatedToAuditorResponse")]
-        System.Threading.Tasks.Task<string> getCompanyAllocatedToAuditorAsync(int AuditorID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getBranchAllocatedToAuditor", ReplyAction="http://tempuri.org/IAuditService/getBranchAllocatedToAuditorResponse")]
-        string getBranchAllocatedToAuditor(int AuditorID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getBranchAllocatedToAuditor", ReplyAction="http://tempuri.org/IAuditService/getBranchAllocatedToAuditorResponse")]
-        System.Threading.Tasks.Task<string> getBranchAllocatedToAuditorAsync(int AuditorID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getAllCompanyBrnachAssignedtoAuditor", ReplyAction="http://tempuri.org/IAuditService/getAllCompanyBrnachAssignedtoAuditorResponse")]
+        System.Threading.Tasks.Task<string> getAllCompanyBrnachAssignedtoAuditorAsync(int AuditorID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getComplianceXref", ReplyAction="http://tempuri.org/IAuditService/getComplianceXrefResponse")]
-        string getComplianceXref(int ComplianceXrefID);
+        string getComplianceXref(int OrgID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getComplianceXref", ReplyAction="http://tempuri.org/IAuditService/getComplianceXrefResponse")]
-        System.Threading.Tasks.Task<string> getComplianceXrefAsync(int ComplianceXrefID);
+        System.Threading.Tasks.Task<string> getComplianceXrefAsync(int OrgID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -127,11 +121,11 @@ namespace ComplianceAuditWeb.AuditService {
             return base.Channel.updateComplianceAuditAsync(auditdatalist);
         }
         
-        public bool getComplianceAudit(int ComplianceAuditID) {
+        public string getComplianceAudit(int ComplianceAuditID) {
             return base.Channel.getComplianceAudit(ComplianceAuditID);
         }
         
-        public System.Threading.Tasks.Task<bool> getComplianceAuditAsync(int ComplianceAuditID) {
+        public System.Threading.Tasks.Task<string> getComplianceAuditAsync(int ComplianceAuditID) {
             return base.Channel.getComplianceAuditAsync(ComplianceAuditID);
         }
         
@@ -151,36 +145,28 @@ namespace ComplianceAuditWeb.AuditService {
             return base.Channel.insertComplianceAuditTrailAsync(auditdatalisttrail);
         }
         
-        public bool getComplianceAuditTrail(int ComplianceAuditTrailID) {
+        public string getComplianceAuditTrail(int ComplianceAuditTrailID) {
             return base.Channel.getComplianceAuditTrail(ComplianceAuditTrailID);
         }
         
-        public System.Threading.Tasks.Task<bool> getComplianceAuditTrailAsync(int ComplianceAuditTrailID) {
+        public System.Threading.Tasks.Task<string> getComplianceAuditTrailAsync(int ComplianceAuditTrailID) {
             return base.Channel.getComplianceAuditTrailAsync(ComplianceAuditTrailID);
         }
         
-        public string getCompanyAllocatedToAuditor(int AuditorID) {
-            return base.Channel.getCompanyAllocatedToAuditor(AuditorID);
+        public string getAllCompanyBrnachAssignedtoAuditor(int AuditorID) {
+            return base.Channel.getAllCompanyBrnachAssignedtoAuditor(AuditorID);
         }
         
-        public System.Threading.Tasks.Task<string> getCompanyAllocatedToAuditorAsync(int AuditorID) {
-            return base.Channel.getCompanyAllocatedToAuditorAsync(AuditorID);
+        public System.Threading.Tasks.Task<string> getAllCompanyBrnachAssignedtoAuditorAsync(int AuditorID) {
+            return base.Channel.getAllCompanyBrnachAssignedtoAuditorAsync(AuditorID);
         }
         
-        public string getBranchAllocatedToAuditor(int AuditorID) {
-            return base.Channel.getBranchAllocatedToAuditor(AuditorID);
+        public string getComplianceXref(int OrgID) {
+            return base.Channel.getComplianceXref(OrgID);
         }
         
-        public System.Threading.Tasks.Task<string> getBranchAllocatedToAuditorAsync(int AuditorID) {
-            return base.Channel.getBranchAllocatedToAuditorAsync(AuditorID);
-        }
-        
-        public string getComplianceXref(int ComplianceXrefID) {
-            return base.Channel.getComplianceXref(ComplianceXrefID);
-        }
-        
-        public System.Threading.Tasks.Task<string> getComplianceXrefAsync(int ComplianceXrefID) {
-            return base.Channel.getComplianceXrefAsync(ComplianceXrefID);
+        public System.Threading.Tasks.Task<string> getComplianceXrefAsync(int OrgID) {
+            return base.Channel.getComplianceXrefAsync(OrgID);
         }
     }
 }
