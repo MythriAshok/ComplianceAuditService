@@ -39,11 +39,23 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/UpdateRules", ReplyAction="http://tempuri.org/IComplianceXrefService/UpdateRulesResponse")]
         System.Threading.Tasks.Task<bool> UpdateRulesAsync(Compliance.DataObject.ComplianceXref compliance);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetComplianceXref", ReplyAction="http://tempuri.org/IComplianceXrefService/GetComplianceXrefResponse")]
-        string GetComplianceXref();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetActs", ReplyAction="http://tempuri.org/IComplianceXrefService/GetActsResponse")]
+        string GetActs();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetComplianceXref", ReplyAction="http://tempuri.org/IComplianceXrefService/GetComplianceXrefResponse")]
-        System.Threading.Tasks.Task<string> GetComplianceXrefAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetActs", ReplyAction="http://tempuri.org/IComplianceXrefService/GetActsResponse")]
+        System.Threading.Tasks.Task<string> GetActsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSections", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSectionsResponse")]
+        string GetSections();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSections", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSectionsResponse")]
+        System.Threading.Tasks.Task<string> GetSectionsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetRules", ReplyAction="http://tempuri.org/IComplianceXrefService/GetRulesResponse")]
+        string GetRules();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetRules", ReplyAction="http://tempuri.org/IComplianceXrefService/GetRulesResponse")]
+        System.Threading.Tasks.Task<string> GetRulesAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -105,12 +117,28 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
             return base.Channel.UpdateRulesAsync(compliance);
         }
         
-        public string GetComplianceXref() {
-            return base.Channel.GetComplianceXref();
+        public string GetActs() {
+            return base.Channel.GetActs();
         }
         
-        public System.Threading.Tasks.Task<string> GetComplianceXrefAsync() {
-            return base.Channel.GetComplianceXrefAsync();
+        public System.Threading.Tasks.Task<string> GetActsAsync() {
+            return base.Channel.GetActsAsync();
+        }
+        
+        public string GetSections() {
+            return base.Channel.GetSections();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetSectionsAsync() {
+            return base.Channel.GetSectionsAsync();
+        }
+        
+        public string GetRules() {
+            return base.Channel.GetRules();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetRulesAsync() {
+            return base.Channel.GetRulesAsync();
         }
     }
 }

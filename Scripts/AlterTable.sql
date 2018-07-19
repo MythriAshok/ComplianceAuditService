@@ -24,4 +24,4 @@ ALTER TABLE `auditmoduledb`.`tbl_compliance_xref`
 CHANGE COLUMN `Comp_Description` `Comp_Description` VARCHAR(450) NULL DEFAULT NULL ;
 
 Alter table `auditmoduledb`.`tbl_compliance_xref`
-add column `compl_def_consequence`  VARCHAR(450) NULL DEFAULT NULL ;
+add column `compl_def_consequence`  VARCHAR(1000) NULL DEFAULT NULL ;

@@ -21,6 +21,12 @@ namespace ComplianceService
         [OperationContract]
         bool UpdateRules(ComplianceXref compliance);
         [OperationContract]
-        string GetComplianceXref();
+        string GetActs();
+        [OperationContract]
+        string GetSections();
+        [OperationContract]
+        string GetRules();
+
+
     }
 }

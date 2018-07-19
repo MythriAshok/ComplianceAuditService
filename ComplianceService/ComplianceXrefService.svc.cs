@@ -57,15 +57,29 @@ namespace ComplianceService
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
             return helper.insertupdateComplianceXref(compliance,'U');
         }
-        public string GetComplianceXref()
+        public string GetActs()
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
-            DataSet ds=helper.getComlianceXref(0);
+            DataSet ds=helper.getAct();
             UtilityHelper utilityHelper = new UtilityHelper();
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();            
         }
-
-        
+        public string GetSections()
+        {
+            ComplianceXrefHelper helper = new ComplianceXrefHelper();
+            DataSet ds = helper.getSection();
+            UtilityHelper utilityHelper = new UtilityHelper();
+            ds = utilityHelper.ConvertNullsToEmptyString(ds);
+            return ds.GetXml();
+        }
+        public string GetRules()
+        {
+            ComplianceXrefHelper helper = new ComplianceXrefHelper();
+            DataSet ds = helper.getRules();
+            UtilityHelper utilityHelper = new UtilityHelper();
+            ds = utilityHelper.ConvertNullsToEmptyString(ds);
+            return ds.GetXml();
+        }
     }
 }

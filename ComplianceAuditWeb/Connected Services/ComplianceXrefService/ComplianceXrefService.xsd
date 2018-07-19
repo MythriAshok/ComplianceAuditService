@@ -25,7 +25,8 @@
       <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="User_ID" type="xs:int" />
       <xs:element minOccurs="0" name="Version" type="xs:int" />
-      <xs:element minOccurs="0" name="level" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="compl_def_consequence" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="level" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ComplianceXref" nillable="true" type="tns:ComplianceXref" />

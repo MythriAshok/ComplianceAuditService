@@ -1,0 +1,137 @@
+﻿@model ComplianceAuditWeb.Models.ListofComplianceViewModel
+<head>
+    <script>
+        $(document).ready(function () {
+
+            $('.btn-bootstrap-dialog').click(function () {
+                var url = $('#bootstrapDialog').data('url');
+
+                $.get(url, function (data) {
+                    $('#bootstrapDialog').html(data);
+
+                    $('#bootstrapDialog').modal('show');
+                });
+            });
+        });
+    </script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<p>
+    @Html.ActionLink("Create New Act", "CreateActs")
+</p>
+<div id="accordion">
+    @foreach (var Act in Model.Actslist)
+    {
+        <h3>@Html.DisplayFor(modelItem => Act.Compliance_Title)</h3>
+        <div>
+            @foreach (var section in Model.Sectionlist)
+            {
+                if (Act.Compliance_Xref_ID == section.Compliance_Parent_ID)
+                {
+                    @Html.DisplayFor(modelItem => section.Compliance_Title)
+                    <br />
+                    foreach (var Rule in Model.Rulelist)
+                    {
+                        if (section.Compliance_Xref_ID == Rule.Compliance_Parent_ID)
+                        {
+                            @Html.DisplayFor(modelItem => Rule.Compliance_Title)
+                            <br />
+                        }
+                    }
+                }
+                @Html.ActionLink("Add new Rule", "CreateRules", new { Parentid = section.Compliance_Xref_ID }, new { @class = " btn btn-default" })
+                @*<button class="btn-bootstrap-dialog"> Add New Rule </button>
+            <div class="modal fade" id="bootstrapDialog" tabindex="-1" role="dialog" aria-labelledby="myModal-label" aria-hidden="true" data-url='@Url.Action("CreateRules", "ComplianceManagement", new { Parentid = Act.Compliance_Xref_ID })'>
+            </div>*@
+            }
+            @Html.ActionLink("Add new Section", "CreateSection", new { Parentid = Act.Compliance_Xref_ID }, new { @class = " btn btn-default" })
+        </div>
+      
+
+        @*@Html.ActionLink("Add New Section", "Details", new { parentid = Act.Compliance_Xref_ID })*@
+
+        @*@Html.HiddenFor(modelItem => item.Compliance_Xref_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comp_Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Compliance_Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comp_Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.compl_def_consequence)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Is_Header)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.level)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comp_Order)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Compliance_Parent_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Option_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Risk_Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Risk_Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Recurrence)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Form)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Is_Best_Practice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Version)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Effective_Start_Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Effective_End_Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Last_Updated_Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Is_Active)
+                </td>
+                <td>
+
+                </td>
+            </tr>*@
+    }
+</div>
+<script>
+    $("#accordion").accordion();
+</script>

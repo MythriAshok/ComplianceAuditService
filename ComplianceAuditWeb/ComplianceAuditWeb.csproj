@@ -216,6 +216,7 @@
     <Compile Include="Models\BranchViewModel.cs" />
     <Compile Include="Models\CompanyViewModel.cs" />
     <Compile Include="Models\ComplianceViewModel.cs" />
+    <Compile Include="Models\ListofComplianceViewModel.cs" />
     <Compile Include="Models\ListOfGroupCompanies.cs" />
     <Compile Include="Models\OrganizationViewModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
@@ -252,6 +253,8 @@
     <Content Include="Views\ManageOrganization\ListOfBranches.cshtml" />
     <Content Include="Views\ManageOrganization\ListOfCompanies.cshtml" />
     <Content Include="Views\ComplianceManagement\_insertActs.cshtml" />
+    <Content Include="Views\ComplianceManagement\_ListofCompliance.cshtml" />
+    <Content Include="Views\ComplianceManagement\_CreateRules.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
