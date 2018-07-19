@@ -1,107 +1,88 @@
 ﻿@model ComplianceAuditWeb.Models.ComplianceViewModel
 
-@*<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModal-label">Bootstrap Dialog</h4>
-        </div>
-        <div class="modal-body">*@
-            @using (Html.BeginForm())
-            {
-                @Html.AntiForgeryToken()
+@{ Layout = null;}
 
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Compliance.Compliance_Parent_ID)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                @Html.Label("Compliance Title", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.Label("Compliance Title", htmlAttributes: new { @class = "control-label col-md-6" })
 
-                @Html.EditorFor(model => model.Compliance.Compliance_Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Compliance.Compliance_Title, "", new { @class = "text-danger" })
+    @Html.EditorFor(model => model.Compliance.Compliance_Title, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.Compliance_Title, "", new { @class = "text-danger" })
 
-                @Html.Label("Compliance Description", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.Label("Compliance Description", htmlAttributes: new { @class = "control-label col-md-6" })
 
-                @Html.EditorFor(model => model.Compliance.Comp_Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Compliance.Comp_Description, "", new { @class = "text-danger" })
+    @Html.TextAreaFor(model=>model.Compliance.Comp_Description, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.Comp_Description, "", new { @class = "text-danger" })
 
-                @Html.Label("compliance def consequence", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.Label("compliance def consequence", htmlAttributes: new { @class = "control-label col-md-6" })
 
-                @Html.EditorFor(model => model.Compliance.compl_def_consequence, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Compliance.compl_def_consequence, "", new { @class = "text-danger" })
+    @Html.TextAreaFor(model => model.Compliance.compl_def_consequence, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.compl_def_consequence, "", new { @class = "text-danger" })
 
+    @Html.Label("Risk Category", htmlAttributes: new { @class = "control-label col-md-6" })
 
-                @Html.HiddenFor(model => model.Compliance.Compliance_Parent_ID)
+    @Html.DropDownListFor(model => model.Compliance.Risk_Category, new SelectList(Enum.GetNames(typeof(ComplianceAuditWeb.Models.ComplianceViewModel.RiskCategory))), "--Select RiskCategory")
+    @Html.ValidationMessageFor(model => model.Compliance.Risk_Category, "", new { @class = "text-danger" })
 
-                @Html.Label("Risk Category", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.Label("Risk Description", htmlAttributes: new { @class = "control-label col-md-6" })
 
-                @Html.DropDownListFor(model => model.Compliance.Risk_Category,new List<SelectListItem>
-            {   new SelectListItem{ Text="High", Value = "1" },
-            new SelectListItem{ Text="Medium", Value = "2" },
-            new SelectListItem{ Text="Low", Value = "3" }}, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Compliance.Risk_Category, "", new { @class = "text-danger" })
+    @Html.EditorFor(model => model.Compliance.Risk_Description, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.Risk_Description, "", new { @class = "text-danger" })
 
-                @Html.Label("Risk Description", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.Label("Recurrence", htmlAttributes: new { @class = "control-label col-md-6" })
 
-                @Html.EditorFor(model => model.Compliance.Risk_Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Compliance.Risk_Description, "", new { @class = "text-danger" })
+    @Html.EditorFor(model => model.Compliance.Recurrence, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.Recurrence, "", new { @class = "text-danger" })
 
-                @Html.Label("Recurrence", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.Label("Form", htmlAttributes: new { @class = "control-label col-md-6" })
 
-                @Html.EditorFor(model => model.Compliance.Recurrence, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Compliance.Recurrence, "", new { @class = "text-danger" })
+    @Html.EditorFor(model => model.Compliance.Form, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.Form, "", new { @class = "text-danger" })
 
-                @Html.Label("Form", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.Label("Type", htmlAttributes: new { @class = "control-label col-md-6" })
 
-                @Html.EditorFor(model => model.Compliance.Form, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Compliance.Form, "", new { @class = "text-danger" })
+    @Html.EditorFor(model => model.Compliance.Type, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.Type, "", new { @class = "text-danger" })
 
-                @Html.Label("Type", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(model => model.Compliance.Is_Best_Practice, htmlAttributes: new { @class = "control-label col-md-6" })
 
-                @Html.EditorFor(model => model.Compliance.Type, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Compliance.Type, "", new { @class = "text-danger" })
+    @Html.EditorFor(model => model.Compliance.Is_Best_Practice)
+    @Html.ValidationMessageFor(model => model.Compliance.Is_Best_Practice, "", new { @class = "text-danger" })
 
-                @Html.LabelFor(model => model.Compliance.Is_Best_Practice, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(model => model.Compliance.Version, htmlAttributes: new { @class = "control-label col-md-6" })
 
-                @Html.EditorFor(model => model.Compliance.Is_Best_Practice)
-                @Html.ValidationMessageFor(model => model.Compliance.Is_Best_Practice, "", new { @class = "text-danger" })
+    @Html.EditorFor(model => model.Compliance.Version, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.Version, "", new { @class = "text-danger" })
 
-                @Html.LabelFor(model => model.Compliance.Version, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(model => model.Compliance.Effective_Start_Date, htmlAttributes: new { @class = "control-label col-md-6" })
 
-                @Html.EditorFor(model => model.Compliance.Version, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Compliance.Version, "", new { @class = "text-danger" })
+    @Html.EditorFor(model => model.Compliance.Effective_Start_Date, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.Effective_Start_Date, "", new { @class = "text-danger" })
 
-                @Html.LabelFor(model => model.Compliance.Effective_Start_Date, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.LabelFor(model => model.Compliance.Effective_End_Date, htmlAttributes: new { @class = "control-label col-md-6" })
 
-                @Html.EditorFor(model => model.Compliance.Effective_Start_Date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Compliance.Effective_Start_Date, "", new { @class = "text-danger" })
+    @Html.EditorFor(model => model.Compliance.Effective_End_Date, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.Effective_End_Date, "", new { @class = "text-danger" })
 
-                @Html.LabelFor(model => model.Compliance.Effective_End_Date, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.Label("Country", htmlAttributes: new { @class = "control-label col-md-6" })
 
-                @Html.EditorFor(model => model.Compliance.Effective_End_Date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Compliance.Effective_End_Date, "", new { @class = "text-danger" })
+    @Html.DropDownListFor(model => model.Compliance.Country_ID, Model.Countrylist, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.Country_ID, "", new { @class = "text-danger" })
 
-                @Html.Label("Country", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.Label("State", htmlAttributes: new { @class = "control-label col-md-6" })
 
-                @Html.DropDownListFor(model => model.Compliance.Country_ID, Model.Countrylist, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Compliance.Country_ID, "", new { @class = "text-danger" })
+    @Html.DropDownListFor(model => model.Compliance.State_ID, Model.Statelist, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.State_ID, "", new { @class = "text-danger" })
 
-                @Html.Label("State", htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.Label("City", htmlAttributes: new { @class = "control-label col-md-6" })
 
-                @Html.DropDownListFor(model => model.Compliance.State_ID, Model.Statelist, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Compliance.State_ID, "", new { @class = "text-danger" })
+    @Html.DropDownListFor(model => model.Compliance.City_ID, Model.Citylist, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => model.Compliance.City_ID, "", new { @class = "text-danger" })
 
-                @Html.Label("City", htmlAttributes: new { @class = "control-label col-md-2" })
+    <input type="submit" value="Create" class="btn btn-default" />
 
-                @Html.DropDownListFor(model => model.Compliance.City_ID, Model.Citylist, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Compliance.City_ID, "", new { @class = "text-danger" })
-
-                <input type="submit" value="Create" class="btn btn-default" />
-
-            }
-        @*</div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" id="btnOK" onclick="">OK</button>
-            <button class="btn btn-default" data-dismiss="modal" id="btnCancel">Cancel</button>
-        </div>
-    </div>
-</div>*@
+}       

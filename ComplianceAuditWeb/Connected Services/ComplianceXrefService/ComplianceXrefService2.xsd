@@ -11,7 +11,7 @@
   <xs:element name="insertActsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="insertActsResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="insertActsResult" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -25,35 +25,49 @@
   <xs:element name="insertRulesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="insertRulesResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="insertRulesResult" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="UpdateActs">
+  <xs:element name="insertSection">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="compliance" nillable="true" type="q3:ComplianceXref" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="UpdateActsResponse">
+  <xs:element name="insertSectionResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="UpdateActsResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="insertSectionResult" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="UpdateRules">
+  <xs:element name="UpdateActs">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="compliance" nillable="true" type="q4:ComplianceXref" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="UpdateActsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UpdateActsResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateRules">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="compliance" nillable="true" type="q5:ComplianceXref" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="UpdateRulesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="UpdateRulesResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="UpdateRulesResult" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

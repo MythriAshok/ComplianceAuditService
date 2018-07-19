@@ -1,137 +1,102 @@
 ﻿@model ComplianceAuditWeb.Models.ListofComplianceViewModel
+@{ Layout = "~/Views/Shared/_Layout1.cshtml";}
 <head>
-    <script>
-        $(document).ready(function () {
-
-            $('.btn-bootstrap-dialog').click(function () {
-                var url = $('#bootstrapDialog').data('url');
-
-                $.get(url, function (data) {
-                    $('#bootstrapDialog').html(data);
-
-                    $('#bootstrapDialog').modal('show');
-                });
-            });
-        });
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    @section scripts
+{
+        <script>
+            $(function () {
+                $(".btn-bootstrap-dialog").click(function () {
+                    var $buttonClicked = $(this);
+                    var options = {
+                        "backdrop": "static",
+                        keyboard: true
+                    };
+                    $.ajax({
+                        type: "GET",
+                        url: $(this).data("url"),
+                        contentType: "application/json; charset=utf-8",
+                        datatype: "json",
+                        success: function (data) {
+                            debugger;
+                            $('#myModalContent').html(data);
+                            $('#myModal').modal(options);
+                            $('#myModal').modal('show');
+                        },
+                        error: function () {
+                            alert("Content load failed.");
+                        }
+                    });
+                });
+            });
+        </script>
+
+    }
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
 </head>
 <p>
     @Html.ActionLink("Create New Act", "CreateActs")
 </p>
-<div id="accordion">
-    @foreach (var Act in Model.Actslist)
-    {
-        <h3>@Html.DisplayFor(modelItem => Act.Compliance_Title)</h3>
-        <div>
-            @foreach (var section in Model.Sectionlist)
-            {
-                if (Act.Compliance_Xref_ID == section.Compliance_Parent_ID)
+
+<div class="container">
+    <div id="accordion">
+        @foreach (var Act in Model.Actslist)
+        {
+            <h3><i class="fa fa-legal"></i>@Html.DisplayFor(modelItem => Act.Compliance_Title)</h3>
+            <div>
+                @foreach (var section in Model.Sectionlist)
                 {
-                    @Html.DisplayFor(modelItem => section.Compliance_Title)
-                    <br />
-                    foreach (var Rule in Model.Rulelist)
+                    if (Act.Compliance_Xref_ID == section.Compliance_Parent_ID)
                     {
-                        if (section.Compliance_Xref_ID == Rule.Compliance_Parent_ID)
-                        {
-                            @Html.DisplayFor(modelItem => Rule.Compliance_Title)
-                            <br />
-                        }
+                        string divid = "section" + @Html.DisplayFor(modelitem => section.Compliance_Xref_ID);
+                        string datatarget = "#" + divid;
+                        <button type="button" class="btn btn-info" data-toggle="collapse" data-target=@datatarget>
+                            <i class="fa fa-book"></i>@Html.DisplayFor(modelItem => section.Compliance_Title)
+                        </button>
+                        <div id=@divid class="collapse">
+                            @foreach (var Rule in Model.Rulelist)
+                            {
+                                if (section.Compliance_Xref_ID == Rule.Compliance_Parent_ID)
+                                {
+                                    <i class="fa fa-leanpub"></i>
+                                    @Html.DisplayFor(modelItem => Rule.Compliance_Title)
+                                    <br />
+                                }
+                            }
+
+                            <button id="Add" class="btn-bootstrap-dialog" data-url='@Url.Action("CreateRules", "ComplianceManagement", new { Parentid = section.Compliance_Xref_ID })'><span class="fa fa-leanpub"></span>Add New Rule</button>
+                        </div>
                     }
+
                 }
-                @Html.ActionLink("Add new Rule", "CreateRules", new { Parentid = section.Compliance_Xref_ID }, new { @class = " btn btn-default" })
-                @*<button class="btn-bootstrap-dialog"> Add New Rule </button>
-            <div class="modal fade" id="bootstrapDialog" tabindex="-1" role="dialog" aria-labelledby="myModal-label" aria-hidden="true" data-url='@Url.Action("CreateRules", "ComplianceManagement", new { Parentid = Act.Compliance_Xref_ID })'>
-            </div>*@
-            }
-            @Html.ActionLink("Add new Section", "CreateSection", new { Parentid = Act.Compliance_Xref_ID }, new { @class = " btn btn-default" })
+                <button id="Add" class="btn-bootstrap-dialog" data-url='@Url.Action("CreateSection","ComplianceManagement",new { Parentid = Act.Compliance_Xref_ID})'><span class="fa fa-book"></span>Add New Section</button>
+            </div>
+        }
+    </div>
+
+    <div id='myModal' class="modal fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog-centered" style="width:900px;height:400px; padding:10px;">
+            <div class="modal-content" style="overflow:scroll; padding:10px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div id='myModalContent' class="modal-body" style=" padding:10px">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal" id="btnCancel">Cancel</button>
+                </div>
+            </div>
         </div>
-      
-
-        @*@Html.ActionLink("Add New Section", "Details", new { parentid = Act.Compliance_Xref_ID })*@
-
-        @*@Html.HiddenFor(modelItem => item.Compliance_Xref_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Comp_Category)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Compliance_Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Comp_Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.compl_def_consequence)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Is_Header)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.level)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Comp_Order)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Compliance_Parent_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Option_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Risk_Category)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Risk_Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Recurrence)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Form)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Is_Best_Practice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Version)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Effective_Start_Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Effective_End_Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Country_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.State_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.City_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Last_Updated_Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User_ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Is_Active)
-                </td>
-                <td>
-
-                </td>
-            </tr>*@
-    }
+    </div>
 </div>
+
 <script>
     $("#accordion").accordion();
 </script>

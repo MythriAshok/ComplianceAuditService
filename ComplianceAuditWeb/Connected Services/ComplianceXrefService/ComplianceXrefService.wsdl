@@ -19,6 +19,12 @@
   <wsdl:message name="IComplianceXrefService_insertRules_OutputMessage">
     <wsdl:part name="parameters" element="tns:insertRulesResponse" />
   </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_insertSection_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertSection" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_insertSection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertSectionResponse" />
+  </wsdl:message>
   <wsdl:message name="IComplianceXrefService_UpdateActs_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateActs" />
   </wsdl:message>
@@ -58,6 +64,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/insertRules" message="tns:IComplianceXrefService_insertRules_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/insertRulesResponse" message="tns:IComplianceXrefService_insertRules_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="insertSection">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/insertSection" message="tns:IComplianceXrefService_insertSection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/insertSectionResponse" message="tns:IComplianceXrefService_insertSection_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="UpdateActs">
       <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/UpdateActs" message="tns:IComplianceXrefService_UpdateActs_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/UpdateActsResponse" message="tns:IComplianceXrefService_UpdateActs_OutputMessage" />
@@ -92,6 +102,15 @@
     </wsdl:operation>
     <wsdl:operation name="insertRules">
       <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/insertRules" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="insertSection">
+      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/insertSection" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

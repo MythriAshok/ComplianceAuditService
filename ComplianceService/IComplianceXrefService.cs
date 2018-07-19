@@ -13,13 +13,15 @@ namespace ComplianceService
     public interface IComplianceXrefService
     {
         [OperationContract]
-        bool insertActs(ComplianceXref compliance);
+        int insertActs(ComplianceXref compliance);
         [OperationContract]
-        bool insertRules(ComplianceXref compliance);
+        int insertRules(ComplianceXref compliance);
         [OperationContract]
-        bool UpdateActs(ComplianceXref compliance);
+        int insertSection(ComplianceXref compliance);
         [OperationContract]
-        bool UpdateRules(ComplianceXref compliance);
+        int UpdateActs(ComplianceXref compliance);
+        [OperationContract]
+        int UpdateRules(ComplianceXref compliance);
         [OperationContract]
         string GetActs();
         [OperationContract]

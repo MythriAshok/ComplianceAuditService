@@ -14,9 +14,9 @@ namespace Compliance.DataAccess
     {
         MySqlConnection conn = DBConnection.getconnection();
         // MySqlConnection connection = new MySqlConnection(ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString);
-        public bool insertupdateComplianceXref(ComplianceXref xref, char Flag)
+        public int insertupdateComplianceXref(ComplianceXref xref, char Flag)
         {
-            bool ComplianceXref = false;
+            int ComplianceXref = 0;
             try
             {
                 if(xref != null)
@@ -50,11 +50,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_City_ID", xref.City_ID);
                     cmd.Parameters.AddWithValue("p_User_ID", xref.User_ID);
                     cmd.Parameters.AddWithValue("p_Is_Active", xref.Is_Active);
-                    int objcompliancexref = cmd.ExecuteNonQuery();
-                    if (objcompliancexref > 0)
-                    {
-                        ComplianceXref = true;
-                    }
+                    ComplianceXref = Convert.ToInt32(cmd.ExecuteScalar());                   
                 }
             }
             catch

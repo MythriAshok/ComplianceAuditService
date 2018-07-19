@@ -14,7 +14,7 @@ namespace ComplianceService
     // NOTE: In order to launch WCF Test Client for testing this service, please select ComplianceXrefService.svc or ComplianceXrefService.svc.cs at the Solution Explorer and start debugging.
     public class ComplianceXrefService : IComplianceXrefService
     {
-        public bool insertActs(ComplianceXref compliance)
+        public int insertActs(ComplianceXref compliance)
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
             compliance.Is_Active = true;
@@ -26,7 +26,7 @@ namespace ComplianceService
             compliance.Compliance_Parent_ID = 0;
             return helper.insertupdateComplianceXref(compliance,'I');
         }
-        public bool insertSection(ComplianceXref compliance)
+        public int insertSection(ComplianceXref compliance)
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
             compliance.Is_Active = true;
@@ -37,22 +37,22 @@ namespace ComplianceService
             compliance.Version = 1;
             return helper.insertupdateComplianceXref(compliance,'I');
         }
-        public bool insertRules(ComplianceXref compliance)
+        public int insertRules(ComplianceXref compliance)
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
             compliance.Is_Active = true;
-            compliance.Is_Header = true;
+            compliance.Is_Header = false;
             compliance.level = 3;
             compliance.Comp_Category = "Rule";
             compliance.Version = 1;
             return helper.insertupdateComplianceXref(compliance,'I');
         }
-        public bool UpdateActs(ComplianceXref compliance)
+        public int UpdateActs(ComplianceXref compliance)
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
             return helper.insertupdateComplianceXref(compliance,'U');
         }
-        public bool UpdateRules(ComplianceXref compliance)
+        public int UpdateRules(ComplianceXref compliance)
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
             return helper.insertupdateComplianceXref(compliance,'U');
