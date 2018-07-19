@@ -115,6 +115,16 @@
     <None Include="Connected Services\ComplianceXrefService\ComplianceXrefService2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\AuditService\AuditService.wsdl" />
+    <None Include="Connected Services\AuditService\AuditService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuditService\AuditService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AuditService\AuditService11.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\OrgService\OrganizationService.wsdl" />
     <None Include="Connected Services\OrgService\OrganizationService.xsd">
       <SubType>Designer</SubType>
@@ -143,6 +153,13 @@
     <None Include="Connected Services\OrgService\configuration91.svcinfo" />
     <None Include="Connected Services\OrgService\configuration.svcinfo" />
     <None Include="Connected Services\OrgService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\AuditService\AuditService.disco" />
+    <None Include="Connected Services\AuditService\configuration91.svcinfo" />
+    <None Include="Connected Services\AuditService\configuration.svcinfo" />
+    <None Include="Connected Services\AuditService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -202,6 +219,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\AuditService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\ComplianceXrefService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -217,8 +239,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AuditManagementController.cs" />
     <Compile Include="Controllers\ComplianceManagementController.cs" />
     <Compile Include="Controllers\ManageAccessController.cs" />
+    <Compile Include="Controllers\ManageComplianceAuditController.cs" />
     <Compile Include="Controllers\ManageOrganizationController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Global.asax.cs">
@@ -226,8 +250,10 @@
     </Compile>
     <Compile Include="Models\AccessViewModel.cs" />
     <Compile Include="Models\AllocateActandRuleViewModel.cs" />
+    <Compile Include="Models\AuditViewModel.cs" />
     <Compile Include="Models\BranchViewModel.cs" />
     <Compile Include="Models\CompanyViewModel.cs" />
+    <Compile Include="Models\ComplianceAuditViewModel.cs" />
     <Compile Include="Models\ComplianceViewModel.cs" />
     <Compile Include="Models\ListofComplianceViewModel.cs" />
     <Compile Include="Models\ListOfGroupCompanies.cs" />
@@ -266,6 +292,8 @@
     <Content Include="Views\ManageOrganization\ListOfBranches.cshtml" />
     <Content Include="Views\ManageOrganization\ListOfCompanies.cshtml" />
     <Content Include="Views\ComplianceManagement\_insertActs.cshtml" />
+    <Content Include="Views\AuditManagement\_complianceAuditing.cshtml" />
+    <Content Include="Views\AuditManagement\addComplianceAudit.cshtml" />
     <Content Include="Views\ComplianceManagement\_ListofCompliance.cshtml" />
     <Content Include="Views\ComplianceManagement\_CreateRules.cshtml" />
     <Content Include="Views\ComplianceManagement\_CreateSection.cshtml" />
@@ -297,6 +325,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\AccessService\" />
+    <WCFMetadataStorage Include="Connected Services\AuditService\" />
     <WCFMetadataStorage Include="Connected Services\ComplianceXrefService\" />
     <WCFMetadataStorage Include="Connected Services\OrgService\" />
     <WCFMetadataStorage Include="Connected Services\UserService\" />

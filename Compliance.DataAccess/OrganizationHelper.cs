@@ -425,8 +425,19 @@ namespace Compliance.DataAccess
                 {
                     resultCompanyDetails = true;
                 }
+
+
+
+
             }
             catch
+
+
+
+
+
+
+
             {
                 throw;
             }
@@ -552,6 +563,8 @@ namespace Compliance.DataAccess
             }
             return dsCompaniesListDropDown;
         }
+       
+
     }
 }
 

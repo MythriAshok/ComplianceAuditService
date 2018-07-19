@@ -1,0 +1,53 @@
+﻿
+@*@model ComplianceAuditWeb.Models.AuditViewModel*@
+@model List<ComplianceAuditWeb.Models.ComplianceAuditViewModel>
+@{
+    ViewBag.Title = "insertComplianceAudit";
+}
+
+<h2>insertComplianceAudit</h2>
+@using (Html.BeginForm())
+{
+
+    <table>
+
+        @foreach (var data in Model)
+        {
+            <tr>
+                if (data.complianceXref.Comp_Category == "ACT")
+                {
+                <td>
+                    <img src="~/assets/images/acts.png" /> @Html.DisplayFor(m => data.complianceXref.Compliance_Title)
+                </td>
+                }
+                else if (data.complianceXref.Comp_Category == "SEC")
+                {
+                <td style="margin-left:10px">
+                    <img src="~/assets/images/sections.png" /> @Html.DisplayFor(m => data.complianceXref.Compliance_Title)
+                </td>
+                }
+                else
+                {
+                <td style="margin-left:20px">
+                    <img src="~/assets/images/rules.png" />@Html.DisplayFor(m => data.complianceXref.Compliance_Title)
+                </td>
+                <td>@Html.TextBoxFor(m => data.complianceAudit.Penalty_nc)</td>
+                <td>@Html.TextBoxFor(m => data.complianceAudit.Audit_Remarks)</td>
+                <td>@Html.TextBoxFor(m => data.complianceAudit.Audit_Date)</td>
+
+                }
+            </tr>
+        }
+
+
+
+    </table>
+
+
+}
+
+
+
+
+
+

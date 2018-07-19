@@ -20,7 +20,7 @@ using Compliance.DataObject;
 using System.Xml;
 using System.Data;
 using System.IO;
-using System.Web.Script.Serialization;
+
 
 namespace ComplianceAuditWeb.Controllers
 {
@@ -100,10 +100,6 @@ namespace ComplianceAuditWeb.Controllers
             {
                 organizationVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
             }
-            
-            
-
-
 
 
 
@@ -868,7 +864,8 @@ namespace ComplianceAuditWeb.Controllers
             dsGroupCompaniesList.ReadXml(new StringReader(strxmlGroupCompanies));
             foreach(System.Data.DataRow row in dsGroupCompaniesList.Tables[0].Rows)
             {
-                ListOfGroupCompanies listOfGroup = new ListOfGroupCompanies { OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
+                ListOfGroupCompanies listOfGroup = new ListOfGroupCompanies
+                { OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
                     CompanyName = row["Company_Name"].ToString(),
                     IsActive =Convert.ToBoolean(Convert.ToInt32( row["Is_Active"]))
 

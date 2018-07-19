@@ -26,7 +26,7 @@ namespace Compliance.DataAccess
                     foreach (ComplianceAudit audit in auditdata)
                     {
                         cmd.Parameters.AddWithValue("p_Flag", Flag);
-                        cmd.Parameters.AddWithValue("p_Compliance_Audit_ID ", audit.Compliance_Audit_Id);
+                        cmd.Parameters.AddWithValue("p_Compliance_Audit_ID", audit.Compliance_Audit_Id);
                         cmd.Parameters.AddWithValue("p_Comp_Schedule_Instance", audit.Compliance_Schedule_Instance);
                         cmd.Parameters.AddWithValue("p_Penalty_nc", audit.Penalty_nc);
                         cmd.Parameters.AddWithValue("p_Audit_Remarks", audit.Audit_Remarks);
@@ -68,17 +68,17 @@ namespace Compliance.DataAccess
             return ComplianceAuditResult;
         }
 
-        public DataTable getComlianceAudit(int Compliance_Audit_ID)
+        public DataSet getComlianceAudit(int Compliance_Audit_ID)
         {
-            DataTable dtComplianceAudit = new DataTable();
+            DataSet dsComplianceAudit = new DataSet();
             try
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getComplianceAudit", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Compliance_Audit_ID ",  Compliance_Audit_ID);
+                cmd.Parameters.AddWithValue("p_Compliance_Audit_ID",  Compliance_Audit_ID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                adapter.Fill(dtComplianceAudit);
+                adapter.Fill(dsComplianceAudit);
             }
             catch
             {
@@ -88,7 +88,7 @@ namespace Compliance.DataAccess
             {
                 conn.Close();
             }
-            return dtComplianceAudit;
+            return dsComplianceAudit;
         }
 
         public bool deleteComlianceAudit(int Compliance_Audit_ID)
@@ -97,9 +97,9 @@ namespace Compliance.DataAccess
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getComplianceAudit", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_deleteComplianceAudit", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Compliance_Audit_ID ", Compliance_Audit_ID);
+                cmd.Parameters.AddWithValue("p_Compliance_Audit_ID", Compliance_Audit_ID);
                 int resultCount = cmd.ExecuteNonQuery();
                 if(resultCount > 0)
                 {
@@ -115,6 +115,54 @@ namespace Compliance.DataAccess
                 conn.Close();
             }
             return resultComplianceAudit;
+        }
+
+        public DataSet sp_getAllCompanyBrnachAssignedtoAuditor(int AuditorID)
+        {
+            DataSet dsAllCompany = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getAllCompanyBrnachAssignedtoAuditor", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Auditor_ID", AuditorID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsAllCompany);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsAllCompany; 
+        }
+
+      
+
+        public DataSet getComlianceXrefDataForSeletedBranch(int OrgID)
+        {
+            DataSet dsComplianceXrefData = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getComplianceXrefData", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", OrgID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsComplianceXrefData);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsComplianceXrefData; 
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Compliance.DataAccess
     {
         MySqlConnection conn = DBConnection.getconnection();
 
-        public bool insertupdateComplianceAuditTrail(List<ComplianceAuditAuditTrail> audittraildata, char Flag)
+        public bool insertupdateComplianceAuditTrail(List<ComplianceAuditAuditTrail> audittraildata)
         {
             bool ComplianceAuditResult = true;
             try
@@ -26,7 +26,6 @@ namespace Compliance.DataAccess
                     cmd.CommandType = CommandType.StoredProcedure;
                     foreach (ComplianceAuditAuditTrail audit in audittraildata)
                     {
-                        cmd.Parameters.AddWithValue("p_Flag", Flag);
                         cmd.Parameters.AddWithValue("p_Compliance_Audit_ID ", audit.Compliance_Audit_Id);
                         cmd.Parameters.AddWithValue("p_Comp_Schedule_Instance", audit.Compliance_Schedule_Instance);
                         cmd.Parameters.AddWithValue("p_Penalty_nc", audit.Penalty_nc);
@@ -70,17 +69,17 @@ namespace Compliance.DataAccess
             return ComplianceAuditResult;
         }
 
-        public DataTable getComlianceAuditTrail(int Compliance_Audit_ID)
+        public DataSet getComlianceAuditTrail(int Compliance_Audit_ID)
         {
-            DataTable dtComplianceAudit = new DataTable();
+            DataSet dsComplianceAuditTrail = new DataSet();
             try
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getComplianceAuditTrail", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Compliance_Audit_ID ", Compliance_Audit_ID);
+                cmd.Parameters.AddWithValue("p_Compliance_Audit_ID", Compliance_Audit_ID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                adapter.Fill(dtComplianceAudit);
+                adapter.Fill(dsComplianceAuditTrail);
             }
             catch
             {
@@ -90,7 +89,7 @@ namespace Compliance.DataAccess
             {
                 conn.Close();
             }
-            return dtComplianceAudit;
+            return dsComplianceAuditTrail;
         }
 
         public bool deleteComlianceAuditTrail(int Compliance_Audit_ID)
