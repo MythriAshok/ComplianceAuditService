@@ -170,6 +170,38 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Content\assets\css\bootstrap.css" />
+    <Content Include="Content\assets\css\font-awesome.css" />
+    <Content Include="Content\assets\css\pagestyle.css" />
+    <Content Include="Content\assets\css\style.css" />
+    <Content Include="Content\assets\Dashboard Page.html" />
+    <Content Include="Content\assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\assets\images\about_icon.png" />
+    <Content Include="Content\assets\images\acts.png" />
+    <Content Include="Content\assets\images\audit_tool.png" />
+    <Content Include="Content\assets\images\company1.JPG" />
+    <Content Include="Content\assets\images\company2.JPG" />
+    <Content Include="Content\assets\images\contact_icon.png" />
+    <Content Include="Content\assets\images\content_icon.png" />
+    <Content Include="Content\assets\images\heding_corner.png" />
+    <Content Include="Content\assets\images\help_icon.png" />
+    <Content Include="Content\assets\images\icon1.png" />
+    <Content Include="Content\assets\images\icon2.png" />
+    <Content Include="Content\assets\images\icon3.png" />
+    <Content Include="Content\assets\images\icon4.png" />
+    <Content Include="Content\assets\images\kpi_alert.png" />
+    <Content Include="Content\assets\images\kpi_funnel.png" />
+    <Content Include="Content\assets\images\logo_new.png" />
+    <Content Include="Content\assets\images\plugin.png" />
+    <Content Include="Content\assets\images\product_icon.png" />
+    <Content Include="Content\assets\images\rules.png" />
+    <Content Include="Content\assets\images\sections.png" />
+    <Content Include="Content\assets\images\settings_icon.png" />
+    <Content Include="Content\assets\images\technical.png" />
+    <Content Include="Content\assets\images\video.png" />
+    <Content Include="Content\assets\js\bootstrap.js" />
+    <Content Include="Content\assets\js\jquery.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
@@ -202,6 +234,15 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\assets\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\assets\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\assets\fonts\FontAwesome.otf" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\JavaScript.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -242,7 +283,6 @@
     <Compile Include="Controllers\AuditManagementController.cs" />
     <Compile Include="Controllers\ComplianceManagementController.cs" />
     <Compile Include="Controllers\ManageAccessController.cs" />
-    <Compile Include="Controllers\ManageComplianceAuditController.cs" />
     <Compile Include="Controllers\ManageOrganizationController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Global.asax.cs">
@@ -299,6 +339,11 @@
     <Content Include="Views\ComplianceManagement\_CreateSection.cshtml" />
     <Content Include="Views\ComplianceManagement\_ListofCompliance - Copy.cshtml" />
     <Content Include="Views\ComplianceManagement\_AllocateActsandRules.cshtml" />
+    <Content Include="Views\ComplianceManagement\_ListofCompliance - Copy %282%29.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\Shared\_samplePage.cshtml" />
+    <Content Include="Views\Shared\_sampleDashboard.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -52,16 +52,16 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         System.Threading.Tasks.Task<string> GetActsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSections", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSectionsResponse")]
-        string GetSections();
+        string GetSections(int parentid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSections", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSectionsResponse")]
-        System.Threading.Tasks.Task<string> GetSectionsAsync();
+        System.Threading.Tasks.Task<string> GetSectionsAsync(int parentid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetRules", ReplyAction="http://tempuri.org/IComplianceXrefService/GetRulesResponse")]
-        string GetRules();
+        string GetRules(int parentid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetRules", ReplyAction="http://tempuri.org/IComplianceXrefService/GetRulesResponse")]
-        System.Threading.Tasks.Task<string> GetRulesAsync();
+        System.Threading.Tasks.Task<string> GetRulesAsync(int parentid);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -139,20 +139,20 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
             return base.Channel.GetActsAsync();
         }
         
-        public string GetSections() {
-            return base.Channel.GetSections();
+        public string GetSections(int parentid) {
+            return base.Channel.GetSections(parentid);
         }
         
-        public System.Threading.Tasks.Task<string> GetSectionsAsync() {
-            return base.Channel.GetSectionsAsync();
+        public System.Threading.Tasks.Task<string> GetSectionsAsync(int parentid) {
+            return base.Channel.GetSectionsAsync(parentid);
         }
         
-        public string GetRules() {
-            return base.Channel.GetRules();
+        public string GetRules(int parentid) {
+            return base.Channel.GetRules(parentid);
         }
         
-        public System.Threading.Tasks.Task<string> GetRulesAsync() {
-            return base.Channel.GetRulesAsync();
+        public System.Threading.Tasks.Task<string> GetRulesAsync(int parentid) {
+            return base.Channel.GetRulesAsync(parentid);
         }
     }
 }

@@ -109,7 +109,7 @@ namespace Compliance.DataAccess
             return dtComplianceXref;
         }
 
-        public DataSet getSection()
+        public DataSet getSection(int parentid)
         {
             DataSet dtComplianceXref = new DataSet();
             try
@@ -117,6 +117,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getSections", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Compliance_Parent_ID", parentid);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtComplianceXref);
             }
@@ -131,13 +132,14 @@ namespace Compliance.DataAccess
             return dtComplianceXref;
         }
 
-        public DataSet getRules()
+        public DataSet getRules(int parentid)
         {
             DataSet dtComplianceXref = new DataSet();
             try
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getRules", conn);
+                cmd.Parameters.AddWithValue("p_Compliance_Parent_ID", parentid);
                 cmd.CommandType = CommandType.StoredProcedure;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtComplianceXref);

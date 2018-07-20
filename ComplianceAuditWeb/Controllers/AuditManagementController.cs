@@ -74,9 +74,9 @@ namespace ComplianceAuditWeb.Controllers
                 {
                      
                 
-                    OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
-                    CompanyName = row["Company_Name"].ToString(),
-                    IsActive = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"]))
+                    //OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
+                    //CompanyName = row["Company_Name"].ToString(),
+                    //IsActive = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"]))
 
                
 
@@ -92,7 +92,7 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult addComplianceAudit(List<AuditViewModel> auditViewModelsList)
         {
             AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
-            auditServiceClient.insertComplianceAudit(auditViewModelsList);
+            //auditServiceClient.insertComplianceAudit(auditViewModelsList);
             return View();
         }
     }

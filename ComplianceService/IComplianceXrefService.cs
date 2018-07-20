@@ -25,9 +25,9 @@ namespace ComplianceService
         [OperationContract]
         string GetActs();
         [OperationContract]
-        string GetSections();
+        string GetSections(int parentid);
         [OperationContract]
-        string GetRules();
+        string GetRules(int parentid);
 
 
     }

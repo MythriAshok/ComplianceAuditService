@@ -85,7 +85,9 @@
   </xs:element>
   <xs:element name="GetSections">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="parentid" type="xs:int" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetSectionsResponse">
@@ -97,7 +99,9 @@
   </xs:element>
   <xs:element name="GetRules">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="parentid" type="xs:int" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetRulesResponse">

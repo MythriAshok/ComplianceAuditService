@@ -227,11 +227,11 @@ namespace ComplianceAuditWeb.Controllers
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             model.Actslist = bindCompliancelist(ds.Tables[0], model.Actslist);
-            xmldata = client.GetSections();
+            xmldata = client.GetSections(0);
             ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             model.Sectionlist = bindCompliancelist(ds.Tables[0], model.Sectionlist);
-            xmldata = client.GetRules();
+            xmldata = client.GetRules(0);
             ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             foreach (System.Data.DataRow row in ds.Tables[0].Rows)
@@ -294,6 +294,83 @@ namespace ComplianceAuditWeb.Controllers
                 });
             }
                 return model;
+        }
+        [HttpPost]
+        public ActionResult AllocateActandRule()
+        {
+            AllocateActandRuleViewModel model = new AllocateActandRuleViewModel();
+            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
+            string xmldata=client.GetCompaniesList();
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            model.Companylist = new List<SelectListItem>() { new SelectListItem { Text = "--Select Company--", Value = "0" } };
+            foreach(System.Data.DataRow row in ds.Tables[0].Rows)
+            {
+                model.Companylist.Add(new SelectListItem { Text =Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+            }
+           xmldata=client.GetBranchList();
+            ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            model.BranchList = new List<SelectListItem>() { new SelectListItem { Text = "--Select Branch--", Value = "0" } };
+            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            {
+                model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+            }
+            ComplianceXrefService.ComplianceXrefServiceClient xrefServiceClient = new ComplianceXrefService.ComplianceXrefServiceClient();
+            xmldata = xrefServiceClient.GetActs();
+            ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            model.Actdropdownlist = new List<SelectListItem>() { new SelectListItem { Text = "--Select Act--", Value = "0" } };
+            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            {
+                model.Actdropdownlist.Add(new SelectListItem { Text = Convert.ToString(row["Compliance_Title"]), Value = Convert.ToString(row["Compliance_Xref_ID"]) });
+            }           
+              xmldata=  xrefServiceClient.GetSections(0);
+            ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            model.Sectionlist = new List<SelectListItem>() { new SelectListItem { Text = "--Select Section--", Value = "0" } };
+            //model.Sectionlist = bindCompliancelist(ds.Tables[0], model.Sectionlist);
+            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            {
+                model.Sectionlist.Add(new SelectListItem
+                {
+                    Text = Convert.ToString(row["Compliance_Title"]),
+                    Value = Convert.ToString(row["Compliance_Xref_ID"])
+                });
+            }
+            xmldata = xrefServiceClient.GetRules(0);
+            ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            model.Rulelist = new List<SelectListItem>();
+            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            {
+                model.Rulelist.Add(new SelectListItem
+                {
+                    Text = Convert.ToString(row["Compliance_Title"]),
+                    Value = Convert.ToString(row["Compliance_Xref_ID"])
+                });
+            }
+            ViewBag.ChooseRight = new List<SelectListItem>();
+            return View("_AllocateActsandRules", model);
+        }
+
+        [HttpPost]
+        public ActionResult AllocateActandRule(AllocateActandRuleViewModel model)
+        {
+
+            return View();
+        }
+
+        public ActionResult test()
+        {
+            ViewBag.listbox1 = new List<SelectListItem>
+            {
+                new SelectListItem{Text="one",Value="1"},
+            new SelectListItem { Text = "two", Value = "2" },
+            new SelectListItem{Text="there",Value="3"}
+            };
+            ViewBag.ChooseRight = new List<SelectListItem>();
+            return View("_AllocateActsandRules");
         }
     }
 }

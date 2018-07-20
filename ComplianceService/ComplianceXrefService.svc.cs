@@ -65,21 +65,22 @@ namespace ComplianceService
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();            
         }
-        public string GetSections()
+        public string GetSections(int parentid)
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
-            DataSet ds = helper.getSection();
+            DataSet ds = helper.getSection(parentid);
             UtilityHelper utilityHelper = new UtilityHelper();
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();
         }
-        public string GetRules()
+        public string GetRules(int parentid)
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
-            DataSet ds = helper.getRules();
+            DataSet ds = helper.getRules(parentid);
             UtilityHelper utilityHelper = new UtilityHelper();
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();
         }
+
     }
 }

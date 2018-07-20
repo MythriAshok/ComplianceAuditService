@@ -10,7 +10,18 @@ namespace ComplianceAuditWeb.Models
     {
         public List<SelectListItem> Actdropdownlist { get; set; }
         public List<SelectListItem> BranchList { get; set; }
-        public List<ComplianceXref> Sectionlist { get; set; }
-        public List<ComplianceXref> Rulelist { get; set; }
+
+        public List<SelectListItem> Companylist { get; set; }
+        public List<SelectListItem> Sectionlist { get; set; }
+        public List<SelectListItem> Rulelist { get; set; }
+
+        public int CompanyId { get; set; }
+
+        public int BranchId { get; set; }
+
+        public int ActId { get; set; }
+
+        public int SectionId { get; set; }
+
     }
 }
