@@ -1,39 +1,41 @@
-﻿
-@*@model ComplianceAuditWeb.Models.AuditViewModel*@
-@model List<ComplianceAuditWeb.Models.ComplianceAuditViewModel>
+﻿@*@model ComplianceAuditWeb.Models.AuditViewModel*@
+@model List<ComplianceAuditWeb.Models.AuditViewModel>
 @{
-    ViewBag.Title = "insertComplianceAudit";
+    ViewBag.Title = "ComplianceAuditing";
 }
 
 <h2>insertComplianceAudit</h2>
 @using (Html.BeginForm())
 {
 
+    <input type="hidden" name="ComplianceAuditWeb.Models.AuditViewModel[0].Compliance_Title" />
+    <input type="hidden" name="ComplianceAuditWeb.Models.AuditViewModel[0].Comp_Category" />
+
     <table>
 
-        @foreach (var data in Model)
+        @foreach (var data in (List<ComplianceAuditWeb.Models.AuditViewModel>)ViewBag.List)
         {
             <tr>
-                if (data.complianceXref.Comp_Category == "ACT")
+                @if (data.complianceXrefList.Comp_Category == "ACT")
                 {
-                <td>
-                    <img src="~/assets/images/acts.png" /> @Html.DisplayFor(m => data.complianceXref.Compliance_Title)
-                </td>
+                    <td>
+                        <img src="~/assets/images/acts.png" /> @Html.DisplayFor(m => data.ComplianceXrefData.Compliance_Title)
+                    </td>
                 }
-                else if (data.complianceXref.Comp_Category == "SEC")
+                else if (data.ComplianceXrefData.Comp_Category == "SEC")
                 {
-                <td style="margin-left:10px">
-                    <img src="~/assets/images/sections.png" /> @Html.DisplayFor(m => data.complianceXref.Compliance_Title)
-                </td>
+                    <td style="margin-left:10px">
+                        <img src="~/assets/images/sections.png" /> @Html.DisplayFor(m => data.ComplianceXrefData.Compliance_Title)
+                    </td>
                 }
                 else
                 {
-                <td style="margin-left:20px">
-                    <img src="~/assets/images/rules.png" />@Html.DisplayFor(m => data.complianceXref.Compliance_Title)
-                </td>
-                <td>@Html.TextBoxFor(m => data.complianceAudit.Penalty_nc)</td>
-                <td>@Html.TextBoxFor(m => data.complianceAudit.Audit_Remarks)</td>
-                <td>@Html.TextBoxFor(m => data.complianceAudit.Audit_Date)</td>
+                    <td style="margin-left:20px">
+                        <img src="~/assets/images/rules.png" />@Html.DisplayFor(m => data.ComplianceXrefData.Compliance_Title)
+                    </td>
+                    <td>@Html.TextBoxFor(m => data.complianceAudit.Penalty_nc)</td>
+                    <td>@Html.TextBoxFor(m => data.complianceAudit.Audit_Remarks)</td>
+                    <td>@Html.TextBoxFor(m => data.complianceAudit.Audit_Date)</td>
 
                 }
             </tr>
