@@ -1,49 +1,47 @@
 ﻿@model ComplianceAuditWeb.Models.ListofComplianceViewModel
 @{ Layout = "~/Views/Shared/_Layout1.cshtml";}
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+
+@section scripts
+{
     <script src="//code.jquery.com/jquery-1.12.4.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    @section scripts
-{
-        <script>
-            $(function () {
-                $(".btn-bootstrap-dialog").click(function () {
-                    var $buttonClicked = $(this);
-                    var options = {
-                        "backdrop": "static",
-                        keyboard: true
-                    };
-                    $.ajax({
-                        type: "GET",
-                        url: $(this).data("url"),
-                        contentType: "application/json; charset=utf-8",
-                        datatype: "json",
-                        success: function (data) {
-                            debugger;
-                            $('#myModalContent').html(data);
-                            $('#myModal').modal(options);
-                            $('#myModal').modal('show');
-                        },
-                        error: function () {
-                            alert("Content load failed.");
-                        }
-                    });
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $(".btn-bootstrap-dialog").click(function () {
+                var $buttonClicked = $(this);
+                var options = {
+                    "backdrop": "static",
+                    keyboard: true
+                };
+                $.ajax({
+                    type: "GET",
+                    url: $(this).data("url"),
+                    contentType: "application/json; charset=utf-8",
+                    datatype: "json",
+                    success: function (data) {
+                        debugger;
+                        $('#myModalContent').html(data);
+                        $('#myModal').modal(options);
+                        $('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Content load failed.");
+                    }
                 });
             });
-        </script>
-
-    }
+        });
+    </script>
     <link href="~/Content/font-awesome.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
-</head>
-<p>
-    @Html.ActionLink("Create New Act", "CreateActs")
-</p>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    
+}
+    <p>
+        @Html.ActionLink("Create New Act", "CreateActs")
+    </p>
 
 <div class="container">
     <div id="accordion">
