@@ -211,7 +211,7 @@ body {
 
 
 .left_panel .top_panel {
-	background:#1ca2c8;
+	background:#FF0000;
 	padding:15px 0;	
 }
 
@@ -758,7 +758,7 @@ button.btn.primary-button {
     top: 12px;
     width: 36px;
     height: 30px;
-    background: #1ca2c8;
+    background: #FF0000;
     z-index: 100;
     padding-top: 4px;
     cursor: pointer;

@@ -27,7 +27,7 @@
     <input id="ShiftRight" type="button" value=">>>" />
     <input id="ShiftLeft" type="button" value="<<<" />
 
-    @Html.ListBox("ChooseRight", null, new { multiple = "multiple" })
+    @Html.ListBoxFor(model=>model.Selectedrule,null, new { multiple = "multiple" })
     <input type="submit" />
 }
 

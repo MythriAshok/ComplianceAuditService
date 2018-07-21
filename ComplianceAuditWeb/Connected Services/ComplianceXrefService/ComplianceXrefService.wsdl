@@ -5,6 +5,7 @@
       <xsd:import schemaLocation="http://localhost:56172/ComplianceXrefService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:56172/ComplianceXrefService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:56172/ComplianceXrefService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Compliance.DataObject" />
+      <xsd:import schemaLocation="http://localhost:56172/ComplianceXrefService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IComplianceXrefService_insertActs_InputMessage">
@@ -55,6 +56,24 @@
   <wsdl:message name="IComplianceXrefService_GetRules_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetRulesResponse" />
   </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_GetAuditorId_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAuditorId" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_GetAuditorId_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAuditorIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_getRuleforBranch_InputMessage">
+    <wsdl:part name="parameters" element="tns:getRuleforBranch" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_getRuleforBranch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getRuleforBranchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_inseretActandRuleforBranch_InputMessage">
+    <wsdl:part name="parameters" element="tns:inseretActandRuleforBranch" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_inseretActandRuleforBranch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:inseretActandRuleforBranchResponse" />
+  </wsdl:message>
   <wsdl:portType name="IComplianceXrefService">
     <wsdl:operation name="insertActs">
       <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/insertActs" message="tns:IComplianceXrefService_insertActs_InputMessage" />
@@ -87,6 +106,18 @@
     <wsdl:operation name="GetRules">
       <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/GetRules" message="tns:IComplianceXrefService_GetRules_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/GetRulesResponse" message="tns:IComplianceXrefService_GetRules_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAuditorId">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/GetAuditorId" message="tns:IComplianceXrefService_GetAuditorId_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/GetAuditorIdResponse" message="tns:IComplianceXrefService_GetAuditorId_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getRuleforBranch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/getRuleforBranch" message="tns:IComplianceXrefService_getRuleforBranch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/getRuleforBranchResponse" message="tns:IComplianceXrefService_getRuleforBranch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="inseretActandRuleforBranch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranch" message="tns:IComplianceXrefService_inseretActandRuleforBranch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranchResponse" message="tns:IComplianceXrefService_inseretActandRuleforBranch_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IComplianceXrefService" type="tns:IComplianceXrefService">
@@ -156,6 +187,33 @@
     </wsdl:operation>
     <wsdl:operation name="GetRules">
       <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/GetRules" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAuditorId">
+      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/GetAuditorId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRuleforBranch">
+      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/getRuleforBranch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="inseretActandRuleforBranch">
+      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranch" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -23,5 +23,7 @@ namespace ComplianceAuditWeb.Models
 
         public int SectionId { get; set; }
 
+        public int[] Selectedrule { get; set; }
+
     }
 }

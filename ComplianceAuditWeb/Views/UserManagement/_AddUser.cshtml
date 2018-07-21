@@ -1,0 +1,132 @@
+﻿@model ComplianceAuditWeb.Models.UserViewModel
+@{
+    /**/
+
+    ViewBag.Title = "Add User Page";
+}
+<ul class="breadcrumb ML15">
+    <li><a href="">User Management</a></li>
+    <li>Add User</li>
+</ul>
+<h2 class="ML15">Add User</h2>
+
+@using (Html.BeginForm())
+{
+<div class="mid_content_sec">
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.User.UserId)
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("FirstName", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.TextBoxFor(m => m.User.FirstName, new { @class = "inputMaterial ui - autocomplete - input" })
+            @Html.ValidationMessageFor(m => m.User.FirstName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("MiddleName", new { @class = "floating-label" })
+            @Html.TextBoxFor(m => m.User.MiddleName, new { @class = "inputMaterial ui - autocomplete - input" })
+        </div>
+    </div>
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("LastName", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.TextBoxFor(m => m.User.LastName, new { @class = "inputMaterial ui - autocomplete - input" })
+            @Html.ValidationMessageFor(m => m.User.LastName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("EmailId(UserName)", new { @class = "floating-label" })<span style="color:red">*</span>
+            @if (Model.User.UserId <= 0)
+            {
+                @Html.TextBoxFor(m => m.User.EmailId, new { @class = "inputMaterial ui - autocomplete - input" })
+                <span id="loading_data_icon"></span>
+                @Html.ValidationMessageFor(model => model.User.EmailId, "", new { @class = "text-danger" })
+            }
+            else
+            {
+                @Html.DisplayFor(m => m.User.EmailId, new { @class = "inputMaterial ui - autocomplete - input" })
+                <span id="loading_data_icon"></span>
+            }
+        </div>
+    </div>
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Contact Number", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.TextBoxFor(m => m.User.ContactNumber, new { @class = "inputMaterial ui - autocomplete - input" })
+            <span id="loading_data_icon"></span>
+            @Html.ValidationMessageFor(m => m.ConformPassword, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Password", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.PasswordFor(m => m.User.UserPassword, new { @class = "inputMaterial ui - autocomplete - input" })
+            <span id="loading_data_icon"></span>
+            @Html.ValidationMessageFor(m => m.User.UserPassword, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    @*@Html.Label("Confirm Password")
+        @Html.TextBoxFor(m=>m.ConformPassword)
+        @Html.ValidationMessageFor(m => m.ConformPassword,"", new { @class = "text-danger" })*@
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Gender", new { @class = "floating-label" })<span style="color:red">*</span>
+            <div class="input-field">
+                @Html.Label("Male", new { @class = "floating-label" })
+                @Html.RadioButtonFor(m => m.User.Gender, "Male", new { @class = "inputMaterial ui - autocomplete - input " })
+            </div>
+            <div class="input-field">
+                @Html.Label("Female", new { @class = "floating-label" })
+                @Html.RadioButtonFor(m => m.User.Gender, "Female", new { @class = "inputMaterial ui - autocomplete - input " })
+            </div>
+            <div class="input-field">
+                @Html.Label("Others", new { @class = "floating-label" })
+                @Html.RadioButtonFor(m => m.User.Gender, "Others", new { @class = "inputMaterial ui - autocomplete - input " })
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6 subSelect ">
+        <div class="input-field">
+            @Html.Label("UserGroup", new { @class = "floating-label" })
+            @Html.ListBoxFor(m => m.UserGroupID, Model.UserGroupList, new { @class = "inputMaterial ui - autocomplete - input ", size = "4" })
+            <span id="loading_data_icon"></span>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-8 subSelect ">
+        <div class="input-field">
+            @Html.Label("Roles", new { @class = "floating-label" })
+            @Html.ListBoxFor(m => m.RoleID, Model.RolesList, new { @class = "inputMaterial ui - autocomplete - input ", size = "4" })
+            <span id="loading_data_icon"></span>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <ul class="list-inline continueBtn">
+        <li>
+            @{string button = "Save";}
+            @if (Model.User.UserId > 0)
+            {
+
+                @*@Html.CheckBoxFor(m=>m.User.IsActive)*@
+                button = "Update";
+                @Html.ActionLink("Delete", "DeleteUser", routeValues: new { UserId = Model.User.UserId }, htmlAttributes: new { @class = "btn btn-default" })
+            }
+
+
+            @*<input type="submit" value=@button class="btn primary-button" />*@
+            <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">@button<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
+        </li>
+    </ul>
+</div>
+}
+
+

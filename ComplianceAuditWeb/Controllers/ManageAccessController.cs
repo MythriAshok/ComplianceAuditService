@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using ComplianceAuditWeb.Models;
 using WebMatrix.WebData;
+using Compliance.DataObject;
+using System.Data;
+using System.IO;
 
 namespace ComplianceAuditWeb.Controllers
 {
@@ -165,7 +168,28 @@ namespace ComplianceAuditWeb.Controllers
             //return View();
         }
 
+        public ActionResult MenuItems()
+        {
+            Session["username"] = "Satya Prakash";
+            Session["emailid"] = "satyaprakash@email.com";
+            Session["Usergroupid"] = 1;
 
+            List<Menus> menues = new List<Menus>();
+            
+            menues.Add(new Menus { MenuName = "Manage Company", PathUrl = "/Home/Contact", icon = "about_icon.png" });
+            menues.Add(new Menus { MenuName = "Acts & Rules", PathUrl = "", icon = "product_icon.png" });
+            menues.Add(new Menus { MenuName = "Auditing", PathUrl = "", icon = "settings_icon.png" });
+            //AccessService.AccessServiceClient client = new AccessService.AccessServiceClient();
+            //DataSet ds = new DataSet();
+            //string xmlmenu = client.getmenulist(Convert.ToInt32(Session["Usergroupid"]));
+            //ds.ReadXml(new StringReader(xmlmenu));
+            //foreach(System.Data.DataRow row in ds.Tables[0].Rows)
+            //{
+            //    menues.Add(new Menus { MenuName = Convert.ToString(row["Menu_Name"]), PathUrl = Convert.ToString(row["Page_URL"]), icon = Convert.ToString(row["icon"]),ParentMenuId=Convert.ToInt32(row["Parent_MenuID"]) });
+            //}
+
+            return PartialView("~/Views/Shared/_Menu.cshtml", menues);
+        }
 
 
 

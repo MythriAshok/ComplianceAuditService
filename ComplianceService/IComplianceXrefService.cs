@@ -28,7 +28,12 @@ namespace ComplianceService
         string GetSections(int parentid);
         [OperationContract]
         string GetRules(int parentid);
-
+        [OperationContract]
+        int GetAuditorId(int Branchid);
+        [OperationContract]
+        string getRuleforBranch(int sectionid, int branchid);
+        [OperationContract]
+        bool inseretActandRuleforBranch(ComplianceAudit audit, int[] ruleid);
 
     }
 }

@@ -10,7 +10,7 @@ using MySql.Data.MySqlClient;
 
 namespace Compliance.DataAccess
 {
-   public class ComplianceXrefHelper
+    public class ComplianceXrefHelper
     {
         MySqlConnection conn = DBConnection.getconnection();
         // MySqlConnection connection = new MySqlConnection(ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString);
@@ -19,9 +19,9 @@ namespace Compliance.DataAccess
             int ComplianceXref = 0;
             try
             {
-                if(xref != null)
-                { 
-                   conn.Open();
+                if (xref != null)
+                {
+                    conn.Open();
                     MySqlCommand cmd = new MySqlCommand("sp_insertupdateComplianceXref", conn);
                     Flag = 'I';
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -50,7 +50,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_City_ID", xref.City_ID);
                     cmd.Parameters.AddWithValue("p_User_ID", xref.User_ID);
                     cmd.Parameters.AddWithValue("p_Is_Active", xref.Is_Active);
-                    ComplianceXref = Convert.ToInt32(cmd.ExecuteScalar());                   
+                    ComplianceXref = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             catch
@@ -63,22 +63,22 @@ namespace Compliance.DataAccess
             }
             return ComplianceXref;
         }
-          
+
         public DataSet getComlianceXref(int Compliance_Xref_ID)
         {
             DataSet dtComplianceXref = new DataSet();
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getComplianceXref",conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getComplianceXref", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", Compliance_Xref_ID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtComplianceXref);
             }
-            catch 
+            catch
             {
-                throw ;
+                throw;
             }
             finally
             {
@@ -165,7 +165,7 @@ namespace Compliance.DataAccess
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", Compliance_Xref_ID);
                 int resultCount = cmd.ExecuteNonQuery();
-                if(resultCount > 0)
+                if (resultCount > 0)
                 {
                     resultComplianceXref = true;
                 }
@@ -180,9 +180,84 @@ namespace Compliance.DataAccess
             }
             return resultComplianceXref;
         }
-    }
+
+        public int getAuditorforBranch(int BranchId)
+        {
+            int Auditorid = 0;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getAuditorforBranch", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", BranchId);
+                Auditorid = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return Auditorid;
+        }
+
+        public bool insertActAndRuleforBranch(ComplianceAudit audit)
+        {
+            bool res = false;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_insertActandRuleforBranch", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Auditor_ID", audit.Auditor_Id);
+                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", audit.Compliance_Xref_Id);
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", audit.Org_Hier_Id);
+                cmd.Parameters.AddWithValue("p_User_ID", audit.User_Id);
+                int count=cmd.ExecuteNonQuery();
+                if(count>0)
+                {
+                    res = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return res;
+        }
+
+        public DataSet getRuleforBranch(int sectionid,int branchid)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getRuleforBranch", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", branchid);
+                cmd.Parameters.AddWithValue("p_Org_ID", branchid);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(ds);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return ds;
+
+        }
 
     }
-
+}
     
 
