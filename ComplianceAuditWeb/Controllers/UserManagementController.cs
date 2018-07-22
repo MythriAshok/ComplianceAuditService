@@ -21,7 +21,7 @@ namespace ComplianceAuditWeb.Controllers
 
        //GET:insertRoles
         [HttpGet]
-        public ActionResult insertRoles()
+        public ActionResult AddRoles()
         {
             RolesViewModel rolesView = new RolesViewModel();
             rolesView.roles = new Roles();
@@ -42,7 +42,7 @@ namespace ComplianceAuditWeb.Controllers
 
         //Post:insertRoles
         [HttpPost]
-        public ActionResult insertRoles(RolesViewModel rolesView)
+        public ActionResult AddRoles(RolesViewModel rolesView)
         {           
             UserService.UserServiceClient client = new UserService.UserServiceClient();
             int roleid=client.insertRoles(rolesView.roles);                        
@@ -96,7 +96,7 @@ namespace ComplianceAuditWeb.Controllers
         }
 
         [HttpGet]
-        public ActionResult UserGroup()
+        public ActionResult AddUserGroup()
         {
             UserGroupViewModel GroupView = new UserGroupViewModel();
             GroupView.Group = new UserGroup();
@@ -116,7 +116,7 @@ namespace ComplianceAuditWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult UserGroup(UserGroupViewModel model)
+        public ActionResult AddUserGroup(UserGroupViewModel model)
         {
             UserService.UserServiceClient Client = new UserService.UserServiceClient();           
             Client.insertGroups(model.Group);            

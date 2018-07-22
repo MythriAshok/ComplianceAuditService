@@ -805,7 +805,7 @@ begin
 if(p_Flag = 'I') then
 
 insert into tbl_branch_auditor_mapping(Branch_Allocation_ID,Org_Hier_ID,Auditor_ID,Financial_Year,Is_Active,
-Login_ID,Allocation_Date)
+UpdatedByLogin_ID,Allocation_Date)
 
 values(p_Branch_Allocation_ID,p_Org_Hier_ID,p_Auditor_ID,p_Financial_Year,p_Is_Active,
 p_Login_ID,p_Allocation_Date);
@@ -814,7 +814,7 @@ else
 update tbl_branch_auditor_mapping set
 
 Branch_Allocation_ID=p_Branch_Allocation_ID,Org_Hier_ID=p_Org_Hier_ID,Auditor_ID=p_Auditor_ID,Financial_Year=p_Financial_Year,Is_Active=p_Is_Active,
-Login_ID=p_Login_ID,Allocation_Date=p_Allocation_Date
+UpdatedByLogin_ID=p_Login_ID,Allocation_Date=p_Allocation_Date
 where Branch_Allocation_ID=p_Branch_Allocation_ID;
 
 end if;
@@ -834,11 +834,11 @@ begin
 if(p_Branch_Allocation_ID=0)
 then
 select Org_Hier_ID,Auditor_ID,Financial_Year,Is_Active,
-Login_ID,Allocation_Date
+UpdatedByLogin_ID,Allocation_Date
 from tbl_compliance_branch_mapping; 
 else
 select Org_Hier_ID,Auditor_ID,Financial_Year,Is_Active,
-Login_ID,Allocation_Date
+UpdatedByLogin_ID,Allocation_Date
 from tbl_compliance_branch_mapping 
 where Branch_Allocation_ID=p_Branch_Allocation_ID;
 end if;
@@ -877,7 +877,7 @@ begin
 if(p_Flag = 'I') then
 
 insert into tbl_branch_auditor_mapping(Branch_Allocation_ID,Org_Hier_ID,Compliance_Xref_ID,Financial_Year,Is_Active,
-Login_ID,Allocation_Date)
+UpdatedByLogin_ID,Allocation_Date)
 
 values(p_Branch_Allocation_ID,p_Org_Hier_ID,p_Compliance_Xref_ID,p_Financial_Year,p_Is_Active,
 p_Login_ID,p_Allocation_Date);
@@ -886,7 +886,7 @@ else
 update tbl_branch_auditor_mapping set
 
 Branch_Allocation_ID=p_Branch_Allocation_ID,Org_Hier_ID=p_Org_Hier_ID,Compliance_Xref_ID=p_Compliance_Xref_ID,Financial_Year=p_Financial_Year,Is_Active=p_Is_Active,
-Login_ID=p_Login_ID,Allocation_Date=p_Allocation_Date
+UpdatedByLogin_ID=p_Login_ID,Allocation_Date=p_Allocation_Date
 where p_Branch_Mapping_ID=p_Branch_Mapping_ID;
 
 end if;
@@ -906,11 +906,11 @@ begin
 if(p_Branch_Mapping_ID=0)
 then
 select Org_Hier_ID,Compliance_Xref_ID,Financial_Year,Is_Active,
-Login_ID,Allocation_Date
+UpdatedByLogin_ID,Allocation_Date
 from tbl_compliance_branch_mapping ;
 else
 select Org_Hier_ID,Compliance_Xref_ID,Financial_Year,Is_Active,
-Login_ID,Allocation_Date
+UpdatedByLogin_ID,Allocation_Date
 from tbl_compliance_branch_mapping 
 where Branch_Mapping_ID=p_Branch_Mapping_ID;
 end if;

@@ -10,172 +10,155 @@
     <li>Add Act</li>
 </ul>
 <h2 class="ML15">Add UserGroup</h2>
+@section scripts{
+    <script language="javascript" type="text/javascript">
+        function GetState(_CountryId) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#Compliance_State_ID").html(procemessage).show();
+            var url = "/ComplianceManagement/getstate";
 
-<script>
-    function Fillstate() {
-        debugger;
-        var countryid = $('#Compliance_Country_ID').val();
-        $.ajax
-            ({
-                url: '/ComplianceManagement/getstate',
-                type: 'POST',
-                dataType: 'application/json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    countryId: +countryid
-                }),
-                success: function (result) {
-                    $("#Compliance_State_ID").html("");
-                    $.each($.parseJSON(result), function (i, state) {
-                        $("#Compliance_State_ID").append
-                            ($('<option> </option>)').val(state.stateId).html(state.StateName)
-                    })
+            $.ajax({
+                url: url,
+                data: { countryid: _CountryId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>Select State</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
                     $("#Compliance_State_ID").html(markup).show();
                 },
-                error: function () {
-                    alert("Whooaaa! Something went wrong..")
-                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
             });
-    }
-</script>
-<script>
-    function getCityList() {
-        debugger;
-        var stateId = $("#stateDropDown").val();
-        $.ajax
-            ({
-                url: '/Home/GetCityList',
-                type: 'POST',
-                datatype: 'application/json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    stateId: +stateId
-                }),
-                success: function (result) {
-                    $("#cityDropDown").html("");
-                    $.each($.parseJSON(result), function (i, city) {
-                        $("#cityDropDown").append
-                            ($('<option></option>').val(city.CityID).html(city.CityName))
-                    })
+
+        }
+        function GetCity(_StateId) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#Compliance_City_ID").html(procemessage).show();
+            var url = "/ComplianceManagement/getcity";
+
+            $.ajax({
+                url: url,
+                data: { stateid: _StateId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>Select State</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#Compliance_City_ID").html(markup).show();
                 },
-                error: function () {
-                    alert("Whooaaa! Something went wrong..")
-                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
             });
-    }
-</script>
-<script type="text/javascript">
 
-    function onSelectedIndexChanged() {
-
-        var sub = document.getElementsByName("co.formAction");
-
-        sub.value = "";
-
-        document.forms[0].submit();
-
-    }
-
-</script>
-
+        }
+    </script>
+    
+}
 
 
 @using (Html.BeginForm())
 {
-<div class="mid_content_sec">
-    @Html.AntiForgeryToken()
+    <div class="mid_content_sec">
+        @Html.AntiForgeryToken()
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Compliance Title", new { @class = "floating-label" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Compliance Title", new { @class = "floating-label" })
 
-            @Html.TextBoxFor(model => model.Compliance.Compliance_Title, new { @class = "inputMaterial ui - autocomplete - input" })
-            <span id="loading_data_icon"></span>
-            @Html.ValidationMessageFor(model => model.Compliance.Compliance_Title, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.Compliance.Compliance_Title, new { @class = "inputMaterial ui - autocomplete - input" })
+                <span id="loading_data_icon"></span>
+                @Html.ValidationMessageFor(model => model.Compliance.Compliance_Title, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Risk Category", new { @class = "floating-label" })
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Risk Category", new { @class = "floating-label" })
 
-            @Html.DropDownListFor(model => model.Compliance.Risk_Category, new SelectList(Enum.GetNames(typeof(ComplianceAuditWeb.Models.ComplianceViewModel.RiskCategory))), "--Select RiskCategory", new { @class = "inputMaterial ui - autocomplete - input" })
-            @Html.ValidationMessageFor(model => model.Compliance.Risk_Category, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.Compliance.Risk_Category, new SelectList(Enum.GetNames(typeof(ComplianceAuditWeb.Models.ComplianceViewModel.RiskCategory))), "--Select RiskCategory", new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.Compliance.Risk_Category, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Risk Description", new { @class = "floating-label" })
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Risk Description", new { @class = "floating-label" })
 
-            @Html.TextBoxFor(model => model.Compliance.Risk_Description, new { @class = "inputMaterial ui - autocomplete - input" })
-            <span id="loading_data_icon"></span>
-            @Html.ValidationMessageFor(model => model.Compliance.Risk_Description, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.Compliance.Risk_Description, new { @class = "inputMaterial ui - autocomplete - input" })
+                <span id="loading_data_icon"></span>
+                @Html.ValidationMessageFor(model => model.Compliance.Risk_Description, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="clearfix"></div>
+        <div class="clearfix"></div>
 
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Effective Start Date", new { @class = "floating-label" })
-            @Html.EditorFor(model => model.Compliance.Effective_Start_Date)
-            <span id="loading_data_icon"></span>
-            @Html.ValidationMessageFor(model => model.Compliance.Effective_Start_Date, "", new { @class = "text-danger" })
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Effective Start Date", new { @class = "floating-label" })
+                @Html.EditorFor(model => model.Compliance.Effective_Start_Date)
+                <span id="loading_data_icon"></span>
+                @Html.ValidationMessageFor(model => model.Compliance.Effective_Start_Date, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Effective End Date", new { @class = "floating-label" })
-            @Html.EditorFor(model => model.Compliance.Effective_End_Date)
-            <span id="loading_data_icon"></span>
-            @Html.ValidationMessageFor(model => model.Compliance.Effective_End_Date, "", new { @class = "text-danger" })
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Effective End Date", new { @class = "floating-label" })
+                @Html.EditorFor(model => model.Compliance.Effective_End_Date)
+                <span id="loading_data_icon"></span>
+                @Html.ValidationMessageFor(model => model.Compliance.Effective_End_Date, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Country", new { @class = "floating-label" })
-            @Html.DropDownListFor(model => model.Compliance.Country_ID, Model.Countrylist, new { @onchange = "Fillstate", @class = "inputMaterial ui - autocomplete - input" })
-            @Html.ValidationMessageFor(model => model.Compliance.Country_ID, "", new { @class = "text-danger" })
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Country", new { @class = "floating-label" })
+                @Html.DropDownListFor(model => model.Compliance.Country_ID, Model.Countrylist, new { @onchange = "javascript:GetState(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.Compliance.Country_ID, "", new { @class = "text-danger" })
 
-            @*@Html.Label("Is StateLaw", new { @class = "floating-label" })
-                @Html.CheckBoxFor(model => model.Is_StateLaw,new { @class = "inputMaterial ui - autocomplete - input" })
-                if (Model.Is_StateLaw)
-                {*@
+                @*@Html.Label("Is StateLaw", new { @class = "floating-label" })
+                    @Html.CheckBoxFor(model => model.Is_StateLaw,new { @class = "inputMaterial ui - autocomplete - input" })
+                    if (Model.Is_StateLaw)
+                    {*@
+            </div>
         </div>
-    </div>
 
-    <div class="clearfix"></div>
+        <div class="clearfix"></div>
 
-    <div class="col-xs-6 subSelect ">
-        <div class="input-field">
-            @Html.Label("State", new { @class = "floating-label" })
+        <div class="col-xs-6 subSelect ">
+            <div class="input-field">
+                @Html.Label("State", new { @class = "floating-label" })
 
-            @Html.DropDownListFor(model => model.Compliance.State_ID, Model.Statelist, new { @onchange = "onSelectedIndexChanged()", @class = "inputMaterial ui - autocomplete - input" })
-            @Html.ValidationMessageFor(model => model.Compliance.State_ID, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.Compliance.State_ID, Model.Statelist, new { @onchange = "GetCity(this.value)", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.Compliance.State_ID, "", new { @class = "text-danger" })
 
-            @*@Html.Label("Is Regional Law", new { @class = "floating-label" })
-                @Html.CheckBoxFor(model => model.Is_RegionalLaw,new { @class = "inputMaterial ui - autocomplete - input" })
-                if (Model.Is_RegionalLaw)
-                {*@
+                @*@Html.Label("Is Regional Law", new { @class = "floating-label" })
+                    @Html.CheckBoxFor(model => model.Is_RegionalLaw,new { @class = "inputMaterial ui - autocomplete - input" })
+                    if (Model.Is_RegionalLaw)
+                    {*@
+            </div>
         </div>
-    </div>
-    <div class="col-xs-6 subSelect ">
-        <div class="input-field">
-            @Html.Label("City", new { @class = "floating-label" })
+        <div class="col-xs-6 subSelect ">
+            <div class="input-field">
+                @Html.Label("City", new { @class = "floating-label" })
 
-            @Html.DropDownListFor(model => model.Compliance.City_ID, Model.Citylist, new { @class = "inputMaterial ui - autocomplete - input" })
-            @Html.ValidationMessageFor(model => model.Compliance.City_ID, "", new { @class = "text-danger" })
-            @*}
-                }*@
+                @Html.DropDownListFor(model => model.Compliance.City_ID, Model.Citylist, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.Compliance.City_ID, "", new { @class = "text-danger" })
+                @*}
+                    }*@
+            </div>
         </div>
+
+        <div class="clearfix"></div>
+        <ul class="list-inline continueBtn">
+            <li>
+                @*<input type="submit" value="Create" name="co.formAction" class="btn btn-default" />*@
+
+                <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Save<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
+            </li>
+        </ul>
     </div>
-
-    <div class="clearfix"></div>
-    <ul class="list-inline continueBtn">
-        <li>
-            @*<input type="submit" value="Create" name="co.formAction" class="btn btn-default" />*@
-
-            <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Save<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
-        </li>
-    </ul>
-</div>
-        }
+}

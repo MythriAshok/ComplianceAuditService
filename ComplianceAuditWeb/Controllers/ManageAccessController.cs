@@ -179,6 +179,8 @@ namespace ComplianceAuditWeb.Controllers
             menues.Add(new Menus { MenuName = "Manage Company", PathUrl = "/Home/Contact", icon = "about_icon.png" });
             menues.Add(new Menus { MenuName = "Acts & Rules", PathUrl = "", icon = "product_icon.png" });
             menues.Add(new Menus { MenuName = "Auditing", PathUrl = "", icon = "settings_icon.png" });
+
+
             //AccessService.AccessServiceClient client = new AccessService.AccessServiceClient();
             //DataSet ds = new DataSet();
             //string xmlmenu = client.getmenulist(Convert.ToInt32(Session["Usergroupid"]));
