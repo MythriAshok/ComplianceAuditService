@@ -1,0 +1,132 @@
+﻿
+@model ComplianceAuditWeb.Models.AuditViewModel
+@{
+    ViewBag.Title = "ComplianceAuditing";
+}
+
+<h2>insertComplianceAudit</h2>
+@using (Html.BeginForm())
+{
+    int rulecount = 0;
+<table>
+    @for (int Act = 0; Act < Model.complianceXrefList.Count; Act++)
+    {
+        <tr>
+            <td><i class="fa fa-legal"></i>@Html.DisplayFor(m => m.complianceXrefList[Act].Compliance_Title)</td>
+        </tr>
+        for (int j = 0; j < Model.Section.Count; j++)
+        {
+
+            if (Model.complianceXrefList[Act].Compliance_Xref_ID == Model.Section[j].Compliance_Parent_ID)
+            {
+                <tr>
+                    <td>    <i class="fa fa-book"></i>@Html.DisplayFor(m => m.Section[j].Compliance_Title)</td>
+                </tr>
+
+                for (int i = 0; i < Model.Rules.Count(); i++)
+                {
+                <tr>
+                    @if (Model.Section[j].Compliance_Xref_ID == Model.Rules[i].Compliance_Parent_ID)
+                    {
+                       
+                    <td>
+                        <i class="fa fa-leanpub"></i> @Html.DisplayFor(m => m.Rules[i].Compliance_Title)
+                    </td>
+                        {
+                            rulecount = rulecount + 1;
+                            Model.complianceAuditList[rulecount].Compliance_Xref_Id = Model.Rules[i].Compliance_Xref_ID;
+                        }
+
+                        <td>
+                            
+                            @Html.Label("Status")
+                            @Html.EditorFor(m => m.complianceAuditList[rulecount].Audit_Status)
+                        </td>
+                        <td>
+
+                            @Html.Label("Remarks")
+                            @Html.EditorFor(m => m.complianceAuditList[rulecount].Audit_Remarks)
+                        </td>
+                        <td>
+                            @Html.Label("Auditing Date")
+
+                            @Html.EditorFor(m => m.complianceAuditList[rulecount].Audit_Date)
+                        </td>
+                        <td>
+
+                            @Html.Label("Penalty")
+                            @Html.EditorFor(m => m.complianceAuditList[rulecount].Penalty_nc)
+                        </td>
+
+                        @Html.HiddenFor(m => m.complianceAuditList[rulecount].Audit_ArteFacts)
+
+                        <td>
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Compliance_Xref_Id)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Auditor_Id)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Compliance_Audit_Id)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Compliance_Options_Id)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].User_Id)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Org_Hier_Id)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Compliance_Schedule_Instance)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Is_Active)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Reviewer_Id)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Last_Update_dDate)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Reviewer_Comments)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Version)
+
+
+                        </td>
+
+
+                    }
+
+
+                    
+                </tr>
+
+                        @*@Html.HiddenFor(m => m.Rules[i].Form)
+                            @Html.HiddenFor(m => m.Rules[i].City_ID)
+                            @Html.HiddenFor(m => m.Rules[i].Compliance_Parent_ID)
+                            @Html.HiddenFor(m => m.Rules[i].Compliance_Xref_ID)
+                            @Html.HiddenFor(m => m.Rules[i].compl_def_consequence)
+                            @Html.HiddenFor(m => m.Rules[i].Comp_Description)*@
+
+                    }
+                        }
+
+                        @*@Html.HiddenFor(m => m.Section[j].Form)
+                            @Html.HiddenFor(m => m.Section[j].City_ID)
+                            @Html.HiddenFor(m => m.Section[j].Compliance_Parent_ID)
+                            @Html.HiddenFor(m => m.Section[j].Compliance_Xref_ID)
+                            @Html.HiddenFor(m => m.Section[j].compl_def_consequence)
+                            @Html.HiddenFor(m => m.Section[j].Comp_Description)*@
+                        }
+
+                        @*@Html.HiddenFor(m => m.complianceXrefList[Act].Form)
+                            @Html.HiddenFor(m => m.complianceXrefList[Act].City_ID)
+                            @Html.HiddenFor(m => m.complianceXrefList[Act].Compliance_Parent_ID)
+                            @Html.HiddenFor(m => m.complianceXrefList[Act].Compliance_Xref_ID)
+                            @Html.HiddenFor(m => m.complianceXrefList[Act].compl_def_consequence)
+                            @Html.HiddenFor(m => m.complianceXrefList[Act].Comp_Description)*@
+
+
+
+                        }
+
+
+
+
+
+
+
+                    </table>
+
+@Html.Hidden(rulecount.ToString());
+    <input type="submit" value="Save" class="btn btn-default" />
+}
+
+
+
+
+
+

@@ -1,0 +1,62 @@
+﻿@*@model ComplianceAuditWeb.Models.AuditViewModel*@
+@model List<ComplianceAuditWeb.Models.AuditViewModel>
+@{
+    ViewBag.Title = "ComplianceAuditing";
+}
+
+<h2>insertComplianceAudit</h2>
+@using (Html.BeginForm())
+{
+
+    <input type="hidden" name="ComplianceAuditWeb.Models.AuditViewModel[0].Compliance_Title" />
+    <input type="hidden" name="ComplianceAuditWeb.Models.AuditViewModel[0].Comp_Category" />
+
+    <table>
+
+        @foreach (var data in (List<ComplianceAuditWeb.Models.AuditViewModel>)ViewBag.List)
+        {
+            <tr>
+                @foreach (var item in data.complianceXrefList)
+                {
+                if (item.Comp_Category == "ACT")
+                {
+                    <td>
+                        <img src="~/Content/assets/images/acts.png" /> @Html.DisplayFor(m => item.Compliance_Title)
+                    </td>
+                }
+                else if (item.Comp_Category == "SEC")
+                {
+                    <td style="margin-left:10px">
+                        <img src="~/Content/assets/images/sections.png" /> @Html.DisplayFor(m => item.Compliance_Title)
+                    </td>
+                }
+                else
+                {
+                    <td style="margin-left:20px">
+                        <img src="~/Content/assets/images/rules.png" />@Html.DisplayFor(m => item.Compliance_Title)
+                    </td>
+                        foreach (var dataitem in data.complianceAuditList)
+                        {
+                    <td>@Html.TextBoxFor(m => dataitem.Penalty_nc)</td>
+                    <td>@Html.TextBoxFor(m => dataitem.Audit_Remarks)</td>
+                    <td>@Html.TextBoxFor(m => dataitem.Audit_Date)</td>
+                        }
+
+                    }
+                }
+
+            </tr>
+        }
+
+
+
+    </table>
+
+
+}
+
+
+
+
+
+

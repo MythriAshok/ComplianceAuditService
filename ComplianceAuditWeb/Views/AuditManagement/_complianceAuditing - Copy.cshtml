@@ -1,0 +1,84 @@
+﻿
+@model ComplianceAuditWeb.Models.AuditViewModel
+@{
+    ViewBag.Title = "ComplianceAuditing";
+}
+
+<h2>insertComplianceAudit</h2>
+@using (Html.BeginForm())
+{
+    int rulecount = 0;
+    
+
+    <table>
+
+        @*@foreach (var data in (List<ComplianceAuditWeb.Models.AuditViewModel>)ViewBag.List)
+            {*@
+
+
+        @*@foreach (var item in Model.complianceXrefList)
+            {*@
+
+        @for (int i = 0; i < Model.complianceXrefList.Count(); i++)
+        {
+            var d = Model.complianceXrefList[i];
+        <tr>
+            @if (Model.complianceXrefList[i].Comp_Category == "ACT")
+            {
+                <td>
+                    <img src="~/Content/assets/images/acts.png" /> @Html.DisplayFor(m => m.complianceXrefList[i].Compliance_Title)
+                </td>
+            }
+            else if (Model.complianceXrefList[i].Comp_Category == "SEC")
+            {
+                <td>
+                    <img src="~/Content/assets/images/sections.png" /> @Html.DisplayFor(m => m.complianceXrefList[i].Compliance_Title)
+                </td>
+            }
+
+            else
+            {
+
+                <td style="margin-left:20px">
+                    <img src="~/Content/assets/images/rules.png" />@Html.DisplayFor(m => m.complianceXrefList[i].Compliance_Title)
+
+
+                    @{rulecount = rulecount + 1;}
+                </td>
+                <td>@Html.TextBoxFor(m => m.complianceAuditList[rulecount].Audit_Status)</td>
+                <td>@Html.TextBoxFor(m => m.complianceAuditList[rulecount].Audit_Remarks)</td>
+                <td>@Html.TextBoxFor(m => m.complianceAuditList[rulecount].Audit_Date)</td>
+                @Html.HiddenFor(m => m.complianceAuditList[rulecount].Version)
+                {var r = Model.complianceAuditList[rulecount];}
+
+
+            }
+
+
+            @Html.HiddenFor(m => m.complianceXrefList[i].Form)
+            @Html.HiddenFor(m => m.complianceXrefList[i].City_ID)
+            @Html.HiddenFor(m => m.complianceXrefList[i].Compliance_Parent_ID)
+            @Html.HiddenFor(m => m.complianceXrefList[i].Compliance_Xref_ID)
+            @Html.HiddenFor(m => m.complianceXrefList[i].compl_def_consequence)
+            @Html.HiddenFor(m => m.complianceXrefList[i].Comp_Description)
+
+        </tr>
+        }
+        }
+
+
+
+
+
+
+    </table>
+
+
+    <input type="submit" value="Save" class="btn btn-default" />
+}
+
+
+
+
+
+
