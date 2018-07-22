@@ -71,6 +71,9 @@ namespace ComplianceAuditWeb.Controllers
         {
             return RedirectToAction("addComplianceAudit");
         }
+
+
+
         [HttpGet]
         public ActionResult addComplianceAudit()
         {
@@ -207,7 +210,10 @@ namespace ComplianceAuditWeb.Controllers
                 //foreach(var item in formCollection)
                 //{
                 //}
-                for (int index = 0; index < formCollection.Count; index++)
+                int key = formCollection.Count;
+                int rulecount = Convert.ToInt32(formCollection[key-1]);
+                for (int index = 0; index < rulecount; index++)
+
                 //{
                 //    if (formCollection[index].ToString().Contains("complianceAuditList"))
                 {
@@ -222,30 +228,45 @@ namespace ComplianceAuditWeb.Controllers
                     audit.Audit_Date = Convert.ToDateTime(formCollection["complianceAuditList[" + counter + "].Audit_Date"]);
                     audit.Audit_Remarks = formCollection["complianceAuditList[" + counter + "].Audit_Remarks"];
                     audit.Penalty_nc = formCollection["complianceAuditList[" + counter + "].Penalty_nc"];
+                    audit.Compliance_Xref_Id = Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Xref_ID"]);
+                    audit.Auditor_Id = 1;// Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Auditor_ID"]);
+                    audit.Audit_ArteFacts = formCollection["complianceAuditList[" + counter + "].Audit_ArteFacts"];
+                    audit.Compliance_Audit_Id =  Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Audit_Id"]);
+                    audit.Compliance_Options_Id = 1;// Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Options_Id"]);
+                    audit.Compliance_Schedule_Instance = Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
+                    // audit.Is_Active = Convert.ToBoolean(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
+                    //audit.Last_Update_dDate = Convert.ToDateTime(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
+                    audit.Org_Hier_Id = 17; // Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
+                    audit.Reviewer_Comments = formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"];
+                    audit.Reviewer_Id = Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
+                    audit.User_Id = 1;// Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
+                    audit.Version = Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
+
+                    //OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
+                    //CompanyName = row["Company_Name"].ToString(),
+                    //IsActive = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"]))
 
                     auditdata.Add(audit);
 
-                    counter++;
+                        counter++;
 
                     //}
 
+
+
                 }
-
-
-
-
-
-
+                bool result = false;
                 AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
-                bool result = auditServiceClient.insertComplianceAudit(auditdata.ToArray());
-                if (result == true)
+                string compliancedata = Convert.ToString(auditServiceClient.insertComplianceAudit(auditdata.ToArray()));
+                if(compliancedata!= null)
                 {
-                    return View();
+                    result = true; 
                 }
                 else
                 {
-                    return View();
+                    result = false;
                 }
+              
             }
             return View();
 

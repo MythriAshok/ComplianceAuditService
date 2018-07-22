@@ -10,15 +10,15 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
+    <div>
         <h4>OrganizationViewModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+        <div>
+            <div >
 
-                @Html.LabelFor(m => m.organization.Is_Active);
-                @Html.CheckBoxFor(m => m.organization.Is_Active);
+                @*@Html.LabelFor(m => m.organization.Is_Active);
+                @Html.CheckBoxFor(m => m.organization.Is_Active);*@
 
 
 
@@ -30,9 +30,7 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
 
 
 

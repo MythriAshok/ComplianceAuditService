@@ -22,6 +22,11 @@ namespace Compliance.DataObject
         public DateTime Calender_EndDate  { get; set; }
         public string Auditing_Frequency { get; set; }
         public string Website { get; set; }
+
+
+        [RegularExpression("^(\\+?d{10})$", ErrorMessage = "Please enter a proper Phone number.")]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Contact Number", Prompt = "(1234567890")]
         public string Company_EmailID { get; set; }
         public string Company_ContactNumber1 { get; set; }
         public string Company_ContactNumber2  { get; set; }

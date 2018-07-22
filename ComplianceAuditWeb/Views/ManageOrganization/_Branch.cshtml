@@ -4,144 +4,192 @@
 
     ViewBag.Title = "Add Company Branch";
 }
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<script language="javascript" type="text/javascript">
+    function GetState(_CountryId) {
+        debugger;
+        var procemessage = "<option value='0'> Please wait...</option>";
+        alert(procemessage);
+        $("#branch_State_Id").html(procemessage).show();
+        var url = "/ComplianceManagement/getstate";
+        alert(url);
+        $.ajax({
+            url: url,
+            data: { countryid: _CountryId },
+            cache: false,
+            type: "POST",
+            dataType: 'application/json',
+            contentType: 'application/json',
+            //success: function (data) {
+            //    var markup = "<option value='0'>Select State</option>";
+            //    for (var x = 0; x < data.length; x++) {
+            //        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+            //    }
+            //    $("#branch_State_Id").html(markup).show();
+            success: function (result) {
+                $("#branch_State_Id").html("");
+                $.each($.parseJSON(result), function (i, state) {
+                    $("#branch_State_Id").append
+                        ($('<option> </option>)').val(state.stateId).html(state.StateName)
+                        )
+                }
+                )
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+</script>
 <ul class="breadcrumb ML15">
     <li><a href="">Branch Management</a></li>
     <li>Add Company Branch</li>
 </ul>
-<h2 class="ML15">Add Company Branch</h2>
+@*<h2 class="ML15">Add Company Branch</h2>*@
 @using (Html.BeginForm())
 {
-<div class="mid_content_sec">
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("GroupCompany", new { @class = "floating-label" })
-            @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input" })
+    <div class="mid_content_sec">
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("GroupCompany", new { @class = "floating-label" })
+                @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input" })
+            </div>
         </div>
-    </div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Company", new { @class = "floating-label" })
-            @Html.DropDownListFor(m => m.CompanyID, Model.CompaniesList, new { @class = "inputMaterial ui - autocomplete - input" })
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Company", new { @class = "floating-label" })
+                @Html.DropDownListFor(m => m.CompanyID, Model.CompaniesList, new { @class = "inputMaterial ui - autocomplete - input" })
+            </div>
         </div>
-    </div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Location Name", new { @class = "floating-label" })
-            @Html.TextBoxFor(m => m.branch.Branch_Name, new { @class = "inputMaterial ui - autocomplete - input" })
-            <span id="loading_data_icon"></span>
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Location Name", new { @class = "floating-label" })
+                @Html.TextBoxFor(m => m.branch.Branch_Name, new { @class = "inputMaterial ui - autocomplete - input" })
+                <span id="loading_data_icon"></span>
+            </div>
         </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Address", new { @class = "floating-label" })
-            @Html.TextBoxFor(m => m.branch.Address, new { @class = "inputMaterial ui - autocomplete - input" })
-            <span id="loading_data_icon"></span>
+        <div class="clearfix"></div>
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Address", new { @class = "floating-label" })
+                @Html.TextBoxFor(m => m.branch.Address, new { @class = "inputMaterial ui - autocomplete - input" })
+                <span id="loading_data_icon"></span>
+            </div>
         </div>
-    </div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Branch URL", new { @class = "floating-label" })
-            @Html.TextBoxFor(m => m.branch.Branch_CoordinatesURL, new { @class = "inputMaterial ui - autocomplete - input" })
-            <span id="loading_data_icon"></span>
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Branch URL", new { @class = "floating-label" })
+                @Html.TextBoxFor(m => m.branch.Branch_CoordinatesURL, new { @class = "inputMaterial ui - autocomplete - input" })
+                <span id="loading_data_icon"></span>
+            </div>
         </div>
-    </div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Branch Coordinates1", new { @class = "floating-label" })
-            @Html.TextBoxFor(m => m.branch.Branch_Coordinates1, new { @class = "inputMaterial ui - autocomplete - input" })
-            <span id="loading_data_icon"></span>
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Branch Coordinates1", new { @class = "floating-label" })
+                @Html.TextBoxFor(m => m.branch.Branch_Coordinates1, new { @class = "inputMaterial ui - autocomplete - input" })
+                <span id="loading_data_icon"></span>
+            </div>
         </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Branch Coordinates2", new { @class = "floating-label" })
-            @Html.TextBoxFor(m => m.branch.Branch_Coordinates2, new { @class = "inputMaterial ui - autocomplete - input" })
-            <span id="loading_data_icon"></span>
+        <div class="clearfix"></div>
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Branch Coordinates2", new { @class = "floating-label" })
+                @Html.TextBoxFor(m => m.branch.Branch_Coordinates2, new { @class = "inputMaterial ui - autocomplete - input" })
+                <span id="loading_data_icon"></span>
+            </div>
         </div>
-    </div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Postal Code", new { @class = "floating-label" })
-            @Html.TextBoxFor(m => m.branch.Postal_Code, new { @class = "inputMaterial ui - autocomplete - input" })
-            <span id="loading_data_icon"></span>
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Postal Code", new { @class = "floating-label" })
+                @Html.TextBoxFor(m => m.branch.Postal_Code, new { @class = "inputMaterial ui - autocomplete - input" })
+                <span id="loading_data_icon"></span>
+            </div>
         </div>
-    </div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Branch Name", new { @class = "floating-label" })
-            @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input" })
-            <span id="loading_data_icon"></span>
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Branch Name", new { @class = "floating-label" })
+                @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input" })
+                <span id="loading_data_icon"></span>
+            </div>
+        </div><div class="clearfix"></div>
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Description", new { @class = "floating-label" })
+                @Html.TextAreaFor(m => m.organization.Description, new { @class = "inputMaterial ui - autocomplete - input", size = 5 })
+                <span id="loading_data_icon"></span>
+            </div>
         </div>
-    </div><div class="clearfix"></div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Description", new { @class = "floating-label" })
-            @Html.TextAreaFor(m => m.organization.Description, new { @class = "inputMaterial ui - autocomplete - input" })
-            <span id="loading_data_icon"></span>
-        </div>
-    </div>
 
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Industry Type", new { @class = "floating-label" })
-            @Html.DropDownListFor(m => m.organization.Industry_Type, new SelectList
-                    (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.IndustryType))),
-                    "Select Industry Type", new { @class = "inputMaterial ui - autocomplete - input" })
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Industry Type", new { @class = "floating-label" })
+                @Html.DropDownListFor(m => m.organization.Industry_Type, new SelectList
+                        (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.IndustryType))),
+                        "Select Industry Type", new { @class = "inputMaterial ui - autocomplete - input" })
 
+            </div>
         </div>
-    </div>
-
-
-
-    @*@Html.LabelFor(m => m.organization.Last_Updated_Date);*@
-    @Html.HiddenFor(m => m.organization.Last_Updated_Date);
 
 
 
-    @*@Html.LabelFor(m => m.organization.Parent_Company_Id);
-        @Html.TextBoxFor(m => m.organization.Parent_Company_Id);*@
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("User ID", new { @class = "floating-label" })
-            @Html.TextBoxFor(m => m.organization.User_Id, new { @class = "inputMaterial ui - autocomplete - input" })
-            <span id="loading_data_icon"></span>
+        @*@Html.LabelFor(m => m.organization.Last_Updated_Date);*@
+        @Html.HiddenFor(m => m.organization.Last_Updated_Date)
+
+
+
+        @*@Html.LabelFor(m => m.organization.Parent_Company_Id);
+            @Html.TextBoxFor(m => m.organization.Parent_Company_Id);*@
+        @*<div class="col-xs-4 subSelect ">
+                <div class="input-field">
+                    @Html.Label("User ID", new { @class = "floating-label" })
+                    @Html.TextBoxFor(m => m.organization.User_Id, new { @class = "inputMaterial ui - autocomplete - input" })
+                    <span id="loading_data_icon"></span>
+                </div>
+            </div>*@
+
+        @*@Html.LabelFor(m => m.branchAuditingFrequency);
+            @Html.DropDownListFor(m => m.branchAuditingFrequency, new SelectList
+                (Enum.GetValues(typeof(ComplianceAuditWeb.Models.BranchViewModel))),
+                "Select Branch Auditing Freequency");*@
+
+
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Country", new { @class = "floating-label" })
+                @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country, new { @class = "inputMaterial ui - autocomplete - input" })
+            </div>
         </div>
+        <div class="clearfix"></div>
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+
+                @Html.LabelFor(m => m.State, new { @class = "floating-label" })
+                @Html.DropDownListFor(m => m.branch.State_Id, Model.State, new { @class = "inputMaterial ui - autocomplete - input" })
+            </div>
+        </div>   <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.LabelFor(m => m.City, new { @class = "floating-label" })
+                @Html.DropDownListFor(m => m.branch.City_Id, Model.City, new { @class = "inputMaterial ui - autocomplete - input" })
+            </div>
+        </div>
+        <ul class="list-inline continueBtn">
+            <li>
+
+                @{string button = "save";}
+                @if (Model.organization.Organization_Id != 0)
+                {
+                    button = "Update";
+                    @Html.ActionLink("Delete", "DeleteBranch", new { Orgid = Model.organization.Organization_Id });
+
+                }
+                @*<input type="submit" value="@button" class="btn btn-default" />*@
+
+                <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="@button">Create<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
+            </li>
+        </ul>
+
+
     </div>
-    <div class="clearfix"></div>
-    @*@Html.LabelFor(m => m.branchAuditingFrequency);
-        @Html.DropDownListFor(m => m.branchAuditingFrequency, new SelectList
-            (Enum.GetValues(typeof(ComplianceAuditWeb.Models.BranchViewModel))),
-            "Select Branch Auditing Freequency");*@
 
-
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Country", new { @class = "floating-label" })
-            @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country, new { @class = "inputMaterial ui - autocomplete - input" })
-        </div>
-    </div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-
-            @Html.LabelFor(m => m.State, new { @class = "floating-label" })
-            @Html.DropDownListFor(m => m.branch.State_Id, Model.State, new { @class = "inputMaterial ui - autocomplete - input" })
-        </div>
-    </div>   <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.LabelFor(m => m.City, new { @class = "floating-label" })
-            @Html.DropDownListFor(m => m.branch.City_Id, Model.City, new { @class = "inputMaterial ui - autocomplete - input" })
-        </div>
-    </div>
-    <div class="clearfix"></div>
-    <ul class="list-inline continueBtn">
-        <li>
-            @*<input type="submit" value="Create" class="btn btn-default" />*@
-            <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Create<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
-        </li>
-    </ul>
-
-</div>
-
-        }
+}

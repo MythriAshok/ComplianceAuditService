@@ -112,7 +112,7 @@ namespace ComplianceAuditWeb.Controllers
             result = organizationClient.insertOrganization(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
             if (result != false)
             {
-                return RedirectToAction("AddCompany");
+                return RedirectToAction("ListOfGroupCompanies");
             }
             else
             {
@@ -385,7 +385,7 @@ namespace ComplianceAuditWeb.Controllers
             
             if (result != false)
             {
-                return RedirectToAction("AddBranch");
+                return RedirectToAction("ListOfCompanies");
             }
             else
             {
@@ -592,7 +592,8 @@ namespace ComplianceAuditWeb.Controllers
             BranchViewModel branchVM = new BranchViewModel();
 
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
-
+            branchVM.organization = new Organization();
+            branchVM.organization.Organization_Id = 0;
             string strXMLGroupCompanyList = organizationservice.getGroupCompanyListDropDown();
             DataSet dsGroupCompanyList = new DataSet();
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
