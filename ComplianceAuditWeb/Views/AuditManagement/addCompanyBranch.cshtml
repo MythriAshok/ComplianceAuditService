@@ -1,0 +1,14 @@
+﻿@model ComplianceAuditWeb.Models.AuditViewModel
+@{
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+}
+
+@Html.Label("Company")
+@Html.DropDownListFor(m => m.complianceAudit.Org_Hier_Id, Model.MappedCompany);
+
+
+
+        
+
+@Html.Label("Branch");
+@Html.DropDownListFor(m => m.complianceAudit.Org_Hier_Id, Model.MappedCompany);

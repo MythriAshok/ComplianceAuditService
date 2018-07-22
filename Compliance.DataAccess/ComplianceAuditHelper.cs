@@ -31,7 +31,7 @@ namespace Compliance.DataAccess
                         cmd.Parameters.AddWithValue("p_Penalty_nc", audit.Penalty_nc);
                         cmd.Parameters.AddWithValue("p_Audit_Remarks", audit.Audit_Remarks);
                         cmd.Parameters.AddWithValue("p_Audit_artefacts", audit.Audit_ArteFacts);
-                        cmd.Parameters.AddWithValue("p_Audit_Date ", audit.Audit_Date);
+                        cmd.Parameters.AddWithValue("p_Audit_Date", audit.Audit_Date);
                         cmd.Parameters.AddWithValue("p_Version", audit.Version);
                         cmd.Parameters.AddWithValue("p_Reviewer_ID", audit.Reviewer_Id);
                         cmd.Parameters.AddWithValue("p_Review_Comments", audit.Reviewer_Comments) ;
@@ -40,7 +40,7 @@ namespace Compliance.DataAccess
                         cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", audit.Compliance_Xref_Id) ;
                         cmd.Parameters.AddWithValue("p_Org_Hier_ID", audit.Org_Hier_Id);
                         cmd.Parameters.AddWithValue("p_Compliance_Opt_Xref_ID", audit.Compliance_Options_Id);
-                        cmd.Parameters.AddWithValue("p_Auditor_ID ", audit.Auditor_Id);
+                        cmd.Parameters.AddWithValue("p_Auditor_ID", audit.Auditor_Id);
                         cmd.Parameters.AddWithValue("p_User_ID", audit.User_Id) ;
                         cmd.Parameters.AddWithValue("p_Is_Active", audit.Is_Active);
                         int objcomplianceauditid = cmd.ExecuteNonQuery();

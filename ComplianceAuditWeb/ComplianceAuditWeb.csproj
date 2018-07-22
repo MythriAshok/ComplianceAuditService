@@ -337,6 +337,10 @@
     <Content Include="Views\ComplianceManagement\_CreateSection.cshtml" />
     <Content Include="Views\ComplianceManagement\_ListofCompliance - Copy.cshtml" />
     <Content Include="Views\ComplianceManagement\_AllocateActsandRules.cshtml" />
+    <Content Include="Views\AuditManagement\_complianceAuditing - Copy.cshtml" />
+    <Content Include="Views\AuditManagement\addCompanyBranch.cshtml" />
+    <Content Include="Views\AuditManagement\_complianceAuditing - Copy - Copy.cshtml" />
+    <Content Include="Views\AuditManagement\_complianceAuditing - Copy - Copy %282%29.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

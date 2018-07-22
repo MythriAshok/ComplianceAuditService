@@ -487,7 +487,7 @@ p_Org_Hier_ID int ,
 p_Compliance_Opt_Xref_ID int ,
 p_Auditor_ID int,
 p_User_ID int ,
-Is_Active bit
+p_Is_Active bit
 )
 
 begin

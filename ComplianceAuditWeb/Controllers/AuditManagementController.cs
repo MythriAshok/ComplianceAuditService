@@ -18,11 +18,10 @@ namespace ComplianceAuditWeb.Controllers
         {
             return View();
         }
-
-        public ActionResult addComplianceAudit(string selectedcompanyid)
+        public ActionResult addCompanyBranch()
         {
-            selectedcompanyid = "17";
-            int ComplianceBrachID = 18;
+            string selectedcompanyid = "17";
+
             int AuditorID = 1;
             ComplianceAudit complianceAudit = new ComplianceAudit();
             AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
@@ -59,49 +58,200 @@ namespace ComplianceAuditWeb.Controllers
                 {
                     if (row["Parent_Company_ID"].ToString() == selectedcompanyid)
                     {
-                        
+
                         auditViewModel.MappedBranch.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
                     }
                 }
             }
 
+            return View(auditViewModel);
+        }
+        [HttpPost]
+        public ActionResult addCompanyBranch(AuditViewModel auditViewModel)
+        {
+            return RedirectToAction("addComplianceAudit");
+        }
+        [HttpGet]
+        public ActionResult addComplianceAudit()
+        {
+            int ComplianceBrachID = 18;
+            AuditViewModel auditViewModel = new AuditViewModel();
+            AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
+            List<AuditViewModel> auditViewModelsList = new List<AuditViewModel>();
+
+            auditViewModel.complianceAudit = new ComplianceAudit();
 
             string strxmlComplianceData = auditServiceClient.getComplianceXref(ComplianceBrachID);
             DataSet dsComplianceXrefData = new DataSet();
             dsComplianceXrefData.ReadXml(new StringReader(strxmlComplianceData));
+
             auditViewModel.complianceXrefList = new List<ComplianceXref>();
+            auditViewModel.Section = new List<ComplianceXref>();
+            auditViewModel.Rules = new List<ComplianceXref>();
+
             auditViewModel.ComplianceXrefData = new ComplianceXref();
+
+
             foreach (System.Data.DataRow row in dsComplianceXrefData.Tables[0].Rows)
             {
-
-                auditViewModel.complianceXrefList.Add(new ComplianceXref() {
-                    Compliance_Xref_ID = Convert.ToInt32(row["Compliance_Xref_ID"]),
-                    Compliance_Parent_ID = Convert.ToInt32(row["Compliance_Parent_ID"]),
-                    Compliance_Title = Convert.ToString(row["Compliance_Title"]),
-                    Comp_Category= Convert.ToString(row["Comp_Category"])
-                });
-
-                //auditViewModel.ComplianceXrefData.Compliance_Xref_ID = Convert.ToInt32(row["Compliance_Xref_ID"]);
-                //auditViewModel.ComplianceXrefData.Compliance_Parent_ID = Convert.ToInt32(row["Compliance_Parent_ID"]);
-                //auditViewModel.ComplianceXrefData.Compliance_Title = Convert.ToString(row["Compliance_Title"]);
-                //auditViewModel.ComplianceXrefData.Comp_Category = Convert.ToString(row["Comp_Category"];
-
-
-
-                auditViewModelsList.Add(auditViewModel);
-                ViewBag.List = auditViewModelsList;
+                if (row["level"].ToString() == "1")
+                {
+                    auditViewModel.complianceXrefList.Add(new ComplianceXref()
+                    {
+                        Compliance_Xref_ID = Convert.ToInt32(row["Compliance_Xref_ID"]),
+                        Compliance_Parent_ID = Convert.ToInt32(row["Compliance_Parent_ID"]),
+                        Compliance_Title = Convert.ToString(row["Compliance_Title"]),
+                        Comp_Category = Convert.ToString(row["Comp_Category"]),
+                        // Comp_Description = Convert.ToString(row["Comp_Description"]),
+                        //compl_def_consequence = Convert.ToString(row["compl_def_consequence"]),
+                        Country_ID = Convert.ToInt32(row["Country_ID"]),
+                        City_ID = Convert.ToInt32(row["City_ID"]),
+                        Effective_End_Date = Convert.ToDateTime(row["Effective_Start_Date"]),
+                        Effective_Start_Date = Convert.ToDateTime(row["Effective_End_Date"]),
+                        //Form = Convert.ToString(row["Form"]),
+                        //level = Convert.ToInt32(row["level"]),
+                        State_ID = Convert.ToInt32(row["State_ID"]),
+                        Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
+                        //Is_Best_Practice = Convert.ToBoolean(Convert.ToInt32(row["Is_Best_Practice"])),
+                        Risk_Category = Convert.ToString(row["Risk_Category"]),
+                        Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
+                        //Recurrence = Convert.ToString(row["Recurrence"]),
+                        Risk_Description = Convert.ToString(row["Risk_Description"]),
+                        //Type = Convert.ToString(row["Type"]),
+                    });
                 }
-            
-            return View("_complianceAuditing", ViewBag.List);
+                else if (row["level"].ToString() == "2")
+                {
+                    auditViewModel.Section.Add(new ComplianceXref()
+                    {
+                        Compliance_Xref_ID = Convert.ToInt32(row["Compliance_Xref_ID"]),
+                        Compliance_Parent_ID = Convert.ToInt32(row["Compliance_Parent_ID"]),
+                        Compliance_Title = Convert.ToString(row["Compliance_Title"]),
+                        Comp_Category = Convert.ToString(row["Comp_Category"]),
+                        Comp_Description = Convert.ToString(row["Comp_Description"]),
+                        compl_def_consequence = Convert.ToString(row["compl_def_consequence"]),
+                        Country_ID = Convert.ToInt32(row["Country_ID"]),
+                        City_ID = Convert.ToInt32(row["City_ID"]),
+                        Effective_End_Date = Convert.ToDateTime(row["Effective_Start_Date"]),
+                        Effective_Start_Date = Convert.ToDateTime(row["Effective_End_Date"]),
+                        Form = Convert.ToString(row["Form"]),
+                        level = Convert.ToInt32(row["level"]),
+                        State_ID = Convert.ToInt32(row["State_ID"]),
+                        Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
+                        Is_Best_Practice = Convert.ToBoolean(Convert.ToInt32(row["Is_Best_Practice"])),
+                        Risk_Category = Convert.ToString(row["Risk_Category"]),
+                        Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
+                        Recurrence = Convert.ToString(row["Recurrence"]),
+                        Risk_Description = Convert.ToString(row["Risk_Description"]),
+                        Type = Convert.ToString(row["Type"]),
 
+
+                    });
+                }
+                else
+                {
+                    auditViewModel.Rules.Add(new ComplianceXref()
+                    {
+                        Compliance_Xref_ID = Convert.ToInt32(row["Compliance_Xref_ID"]),
+                        Compliance_Parent_ID = Convert.ToInt32(row["Compliance_Parent_ID"]),
+                        Compliance_Title = Convert.ToString(row["Compliance_Title"]),
+                        Comp_Category = Convert.ToString(row["Comp_Category"]),
+                        Comp_Description = Convert.ToString(row["Comp_Description"]),
+                        compl_def_consequence = Convert.ToString(row["compl_def_consequence"]),
+                        Country_ID = Convert.ToInt32(row["Country_ID"]),
+                        City_ID = Convert.ToInt32(row["City_ID"]),
+                        Effective_End_Date = Convert.ToDateTime(row["Effective_Start_Date"]),
+                        Effective_Start_Date = Convert.ToDateTime(row["Effective_End_Date"]),
+                        Form = Convert.ToString(row["Form"]),
+                        level = Convert.ToInt32(row["level"]),
+                        State_ID = Convert.ToInt32(row["State_ID"]),
+                        Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
+                        Is_Best_Practice = Convert.ToBoolean(Convert.ToInt32(row["Is_Best_Practice"])),
+                        Risk_Category = Convert.ToString(row["Risk_Category"]),
+                        Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
+                        Recurrence = Convert.ToString(row["Recurrence"]),
+                        Risk_Description = Convert.ToString(row["Risk_Description"]),
+                        Type = Convert.ToString(row["Type"]),
+
+                    });
+                }
+            }
+            auditViewModel.complianceAuditList = new List<ComplianceAudit>();
+            //    auditViewModelsList.Add(auditViewModel);
+            // ViewBag.List = auditViewModelsList;            
+
+            foreach (var item in auditViewModel.Rules)
+            {
+                auditViewModel.complianceAuditList.Add(new ComplianceAudit { Compliance_Xref_Id = item.Compliance_Xref_ID });
+            }
+
+            return View("addComplianceAudit", auditViewModel);
         }
-
         [HttpPost]
-        public ActionResult addComplianceAudit(List<AuditViewModel> auditViewModelsList)
+        public ActionResult addComplianceAudit(FormCollection formCollection)
         {
-            AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
-           // auditServiceClient.insertComplianceAudit(auditViewModelsList);
+            if (ModelState.IsValid)
+            {
+                //AuditViewModel auditViewModel = new AuditViewModel();
+                //auditViewModel.complianceAudit = new ComplianceAudit();
+                //for(int i =0; i< formCollection.Count; i++ )
+                //{
+                //    var str = formCollection["complianceAuditList[1].Audit_Status"];
+                //}
+
+                //DataTable dt = new DataTable();
+                //DataSet ds = new DataSet();
+                int counter = 0;
+                List<ComplianceAudit> auditdata = new List<ComplianceAudit>();
+                ComplianceAudit audit = null;
+                //foreach(var item in formCollection)
+                //{
+                //}
+                for (int index = 0; index < formCollection.Count; index++)
+                //{
+                //    if (formCollection[index].ToString().Contains("complianceAuditList"))
+                {
+                    //if (formCollection[index].Contains("complianceAuditList"))
+                    //{
+                    audit = new ComplianceAudit();
+                    AuditViewModel auditm = new AuditViewModel();
+                    auditm.complianceAudit = new ComplianceAudit();
+                    //string str = formCollection["complianceAuditList["+ counter + "].Audit_Status"];
+                    // auditm.complianceAudit.Audit_Status = formCollection["complianceAuditList[" + counter + "].Audit_Status"];
+                    audit.Audit_Status = formCollection["complianceAuditList[" + counter + "].Audit_Status"];
+                    audit.Audit_Date = Convert.ToDateTime(formCollection["complianceAuditList[" + counter + "].Audit_Date"]);
+                    audit.Audit_Remarks = formCollection["complianceAuditList[" + counter + "].Audit_Remarks"];
+                    audit.Penalty_nc = formCollection["complianceAuditList[" + counter + "].Penalty_nc"];
+
+                    auditdata.Add(audit);
+
+                    counter++;
+
+                    //}
+
+                }
+
+
+
+
+
+
+                AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
+                bool result = auditServiceClient.insertComplianceAudit(auditdata.ToArray());
+                if (result == true)
+                {
+                    return View();
+                }
+                else
+                {
+                    return View();
+                }
+            }
             return View();
+
         }
     }
 }
+
+
+
