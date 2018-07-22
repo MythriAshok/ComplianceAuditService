@@ -941,6 +941,13 @@ namespace ComplianceAuditWeb.Controllers
             return View("ListOfBranches");
         }
 
+        public JsonResult getstate(int countryid)
+        {
+            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
+            string strXMLStates = client.GetStateList(countryid);          
+            return Json(strXMLStates);
+        }
+
     }
 
 }

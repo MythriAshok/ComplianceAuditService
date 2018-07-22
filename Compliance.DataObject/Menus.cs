@@ -11,7 +11,8 @@ namespace Compliance.DataObject
         public string MenuName { get; set; }
         public string PathUrl { get; set; }
         public bool IsActive { get; set; }
-        public int UserGroup { get; set; }
+        public int UserGroupId { get; set; }
+        public string icon { get; set; }
 
     }
 }

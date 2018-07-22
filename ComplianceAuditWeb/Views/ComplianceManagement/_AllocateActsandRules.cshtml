@@ -1,11 +1,45 @@
 ﻿@model ComplianceAuditWeb.Models.AllocateActandRuleViewModel
-
-@foreach (var item in Model.Actdropdownlist) {
-    <tr>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
+@{ Layout = "~/Views/Shared/_Layout1.cshtml";}
+@section scripts{
+    <script>
+        $(function () {
+            alert("alert");
+            $("#ShiftRight,#ShiftLeft").click(function (event) {
+                var ID = $(event.target).attr("ID");
+                var ChooseFrom = ID == "ShiftRight" ? "#ChooseLeft" : "#ChooseRight";
+                var moveTo = ID == "ShiftRight" ? "#ChooseRight" : "#ChooseLeft";
+                var SelectData = $(ChooseFrom + " :selected");
+                $(moveTo).append(SelectData);
+                SelectData.remove;
+            });
+        });
+    </script>
 }
+
+@using (Html.BeginForm())
+{
+    @Html.DropDownListFor(model => model.CompanyId, Model.Companylist)
+    @Html.DropDownListFor(model => model.BranchId, Model.BranchList)
+    @Html.DropDownListFor(model => model.ActId, Model.Actdropdownlist)
+    @Html.DropDownListFor(model => model.SectionId, Model.Sectionlist)
+    <br/>
+    @Html.ListBox("ChooseLeft", Model.Rulelist, new { multiple = "multiple" })
+    <input id="ShiftRight" type="button" value=">>>" />
+    <input id="ShiftLeft" type="button" value="<<<" />
+
+    @Html.ListBoxFor(model=>model.Selectedrule,null, new { multiple = "multiple" })
+    <input type="submit" />
+}
+
+@*@foreach (var item in Model.Sectionlist) {
+        <tr>
+            @foreach (var rule in Model.Rulelist) {
+
+            }
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }*@

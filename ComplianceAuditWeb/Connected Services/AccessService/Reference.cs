@@ -20,6 +20,18 @@ namespace ComplianceAuditWeb.AccessService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccessService/DoWork", ReplyAction="http://tempuri.org/IAccessService/DoWorkResponse")]
         System.Threading.Tasks.Task DoWorkAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccessService/getmenulist", ReplyAction="http://tempuri.org/IAccessService/getmenulistResponse")]
+        string getmenulist(int groupid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccessService/getmenulist", ReplyAction="http://tempuri.org/IAccessService/getmenulistResponse")]
+        System.Threading.Tasks.Task<string> getmenulistAsync(int groupid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccessService/GetLoginData", ReplyAction="http://tempuri.org/IAccessService/GetLoginDataResponse")]
+        int GetLoginData(Compliance.DataObject.User user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccessService/GetLoginData", ReplyAction="http://tempuri.org/IAccessService/GetLoginDataResponse")]
+        System.Threading.Tasks.Task<int> GetLoginDataAsync(Compliance.DataObject.User user);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -55,6 +67,22 @@ namespace ComplianceAuditWeb.AccessService {
         
         public System.Threading.Tasks.Task DoWorkAsync() {
             return base.Channel.DoWorkAsync();
+        }
+        
+        public string getmenulist(int groupid) {
+            return base.Channel.getmenulist(groupid);
+        }
+        
+        public System.Threading.Tasks.Task<string> getmenulistAsync(int groupid) {
+            return base.Channel.getmenulistAsync(groupid);
+        }
+        
+        public int GetLoginData(Compliance.DataObject.User user) {
+            return base.Channel.GetLoginData(user);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetLoginDataAsync(Compliance.DataObject.User user) {
+            return base.Channel.GetLoginDataAsync(user);
         }
     }
 }

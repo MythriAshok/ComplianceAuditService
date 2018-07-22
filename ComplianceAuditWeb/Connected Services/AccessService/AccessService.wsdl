@@ -3,6 +3,8 @@
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:56172/AccessService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:56172/AccessService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:56172/AccessService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Compliance.DataObject" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IAccessService_DoWork_InputMessage">
@@ -11,16 +13,54 @@
   <wsdl:message name="IAccessService_DoWork_OutputMessage">
     <wsdl:part name="parameters" element="tns:DoWorkResponse" />
   </wsdl:message>
+  <wsdl:message name="IAccessService_getmenulist_InputMessage">
+    <wsdl:part name="parameters" element="tns:getmenulist" />
+  </wsdl:message>
+  <wsdl:message name="IAccessService_getmenulist_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getmenulistResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAccessService_GetLoginData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoginData" />
+  </wsdl:message>
+  <wsdl:message name="IAccessService_GetLoginData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoginDataResponse" />
+  </wsdl:message>
   <wsdl:portType name="IAccessService">
     <wsdl:operation name="DoWork">
       <wsdl:input wsaw:Action="http://tempuri.org/IAccessService/DoWork" message="tns:IAccessService_DoWork_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAccessService/DoWorkResponse" message="tns:IAccessService_DoWork_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getmenulist">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAccessService/getmenulist" message="tns:IAccessService_getmenulist_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAccessService/getmenulistResponse" message="tns:IAccessService_getmenulist_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLoginData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAccessService/GetLoginData" message="tns:IAccessService_GetLoginData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAccessService/GetLoginDataResponse" message="tns:IAccessService_GetLoginData_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IAccessService" type="tns:IAccessService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="DoWork">
       <soap:operation soapAction="http://tempuri.org/IAccessService/DoWork" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getmenulist">
+      <soap:operation soapAction="http://tempuri.org/IAccessService/getmenulist" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLoginData">
+      <soap:operation soapAction="http://tempuri.org/IAccessService/GetLoginData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

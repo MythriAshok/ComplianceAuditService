@@ -52,16 +52,34 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         System.Threading.Tasks.Task<string> GetActsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSections", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSectionsResponse")]
-        string GetSections();
+        string GetSections(int parentid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSections", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSectionsResponse")]
-        System.Threading.Tasks.Task<string> GetSectionsAsync();
+        System.Threading.Tasks.Task<string> GetSectionsAsync(int parentid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetRules", ReplyAction="http://tempuri.org/IComplianceXrefService/GetRulesResponse")]
-        string GetRules();
+        string GetRules(int parentid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetRules", ReplyAction="http://tempuri.org/IComplianceXrefService/GetRulesResponse")]
-        System.Threading.Tasks.Task<string> GetRulesAsync();
+        System.Threading.Tasks.Task<string> GetRulesAsync(int parentid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetAuditorId", ReplyAction="http://tempuri.org/IComplianceXrefService/GetAuditorIdResponse")]
+        int GetAuditorId(int Branchid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetAuditorId", ReplyAction="http://tempuri.org/IComplianceXrefService/GetAuditorIdResponse")]
+        System.Threading.Tasks.Task<int> GetAuditorIdAsync(int Branchid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/getRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/getRuleforBranchResponse")]
+        string getRuleforBranch(int sectionid, int branchid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/getRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/getRuleforBranchResponse")]
+        System.Threading.Tasks.Task<string> getRuleforBranchAsync(int sectionid, int branchid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranchResponse")]
+        bool inseretActandRuleforBranch(Compliance.DataObject.ComplianceAudit audit, int[] ruleid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranchResponse")]
+        System.Threading.Tasks.Task<bool> inseretActandRuleforBranchAsync(Compliance.DataObject.ComplianceAudit audit, int[] ruleid);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -139,20 +157,44 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
             return base.Channel.GetActsAsync();
         }
         
-        public string GetSections() {
-            return base.Channel.GetSections();
+        public string GetSections(int parentid) {
+            return base.Channel.GetSections(parentid);
         }
         
-        public System.Threading.Tasks.Task<string> GetSectionsAsync() {
-            return base.Channel.GetSectionsAsync();
+        public System.Threading.Tasks.Task<string> GetSectionsAsync(int parentid) {
+            return base.Channel.GetSectionsAsync(parentid);
         }
         
-        public string GetRules() {
-            return base.Channel.GetRules();
+        public string GetRules(int parentid) {
+            return base.Channel.GetRules(parentid);
         }
         
-        public System.Threading.Tasks.Task<string> GetRulesAsync() {
-            return base.Channel.GetRulesAsync();
+        public System.Threading.Tasks.Task<string> GetRulesAsync(int parentid) {
+            return base.Channel.GetRulesAsync(parentid);
+        }
+        
+        public int GetAuditorId(int Branchid) {
+            return base.Channel.GetAuditorId(Branchid);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetAuditorIdAsync(int Branchid) {
+            return base.Channel.GetAuditorIdAsync(Branchid);
+        }
+        
+        public string getRuleforBranch(int sectionid, int branchid) {
+            return base.Channel.getRuleforBranch(sectionid, branchid);
+        }
+        
+        public System.Threading.Tasks.Task<string> getRuleforBranchAsync(int sectionid, int branchid) {
+            return base.Channel.getRuleforBranchAsync(sectionid, branchid);
+        }
+        
+        public bool inseretActandRuleforBranch(Compliance.DataObject.ComplianceAudit audit, int[] ruleid) {
+            return base.Channel.inseretActandRuleforBranch(audit, ruleid);
+        }
+        
+        public System.Threading.Tasks.Task<bool> inseretActandRuleforBranchAsync(Compliance.DataObject.ComplianceAudit audit, int[] ruleid) {
+            return base.Channel.inseretActandRuleforBranchAsync(audit, ruleid);
         }
     }
 }

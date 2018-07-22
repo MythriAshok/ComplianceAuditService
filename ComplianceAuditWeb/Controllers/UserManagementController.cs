@@ -37,7 +37,7 @@ namespace ComplianceAuditWeb.Controllers
 
                 rolesView.privilege.Add(new SelectListItem() { Text = row["Privilege_Name"].ToString(), Value = row["Privilege_ID"].ToString() });
                 }            
-            return View("_insertRole", rolesView);
+            return View("_AddRole", rolesView);
         }
 
         //Post:insertRoles
@@ -82,7 +82,7 @@ namespace ComplianceAuditWeb.Controllers
                 }
                 rolesView.privilege.Add(new SelectListItem() { Text = row["Privilege_Name"].ToString(), Value = row["Privilege_ID"].ToString(),Selected=selected });
             }
-            return View("_insertRole", rolesView);
+            return View("_AddRole", rolesView);
         }
 
         [HttpPost]
@@ -92,7 +92,7 @@ namespace ComplianceAuditWeb.Controllers
             client.updateRoles(model.roles);
             client.DeleteRolePrivilege(model.roles.RoleId);
             client.insertRolePrivilege(model.roles.RoleId, model.PrivilegeId);
-            return View("_insertRole",model);
+            return View("_AddRole",model);
         }
 
         [HttpGet]
@@ -111,12 +111,13 @@ namespace ComplianceAuditWeb.Controllers
             {
                 GroupView.Roles.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
             }
-            return View("_insertUserGroup", GroupView);
+            GroupView.Role = new List<SelectListItem>();
+            return View("_AddUserGroup", GroupView);
         }
 
         [HttpPost]
         public ActionResult UserGroup(UserGroupViewModel model)
-        {            
+        {
             UserService.UserServiceClient Client = new UserService.UserServiceClient();           
             Client.insertGroups(model.Group);            
             return View("CreateUser");
@@ -144,7 +145,7 @@ namespace ComplianceAuditWeb.Controllers
                 model.Roles.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
             }
 
-            return View("_insertUserGroup", model);
+            return View("_AddUserGroup", model);
         }
 
         [HttpPost]
@@ -180,7 +181,7 @@ namespace ComplianceAuditWeb.Controllers
             {
                 userviewmodel.RolesList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
             }
-            return View("_insertUser", userviewmodel);
+            return View("_AddUser", userviewmodel);
         }
 
         [HttpPost]
@@ -217,7 +218,7 @@ namespace ComplianceAuditWeb.Controllers
             {
                 model.RolesList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
             }
-            return View("_insertUser",model);
+            return View("_AddUser",model);
         }
 
         [HttpGet]
@@ -286,7 +287,7 @@ namespace ComplianceAuditWeb.Controllers
                 }
                 model.RolesList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString(),Selected=selected});
             }
-            return View("_insertUser",model);
+            return View("_AddUser",model);
         }
 
         [HttpPost]
@@ -327,8 +328,11 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult DeleteUser(int UserId)
         {
             UserService.UserServiceClient client = new UserService.UserServiceClient();
-            client.DeleteUser(UserId);
-            return View("CreateUser");
+            bool res=client.DeleteUser(UserId);
+            if (res)
+                return View("CreateUser");
+            else
+                return RedirectToAction("ListofUsers");
         }
 
         public ActionResult Deleterole(int RoleId)

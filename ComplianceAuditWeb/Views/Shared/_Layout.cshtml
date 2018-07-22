@@ -1,43 +1,89 @@
-﻿<!DOCTYPE html>
+﻿@using System.Web.Optimization;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    <meta name="viewport" content="width=device-width" />
-    <title>AddGroupCompany</title>
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+
+    <link href="~/Content/assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/pagestyle.css" rel="stylesheet" />
+
+    <script src="~/Content/assets/js/bootstrap.js"></script>
+    <script src="~/Content/assets/js/jquery.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    <div class="sidebar sidebar-collapsed">
+        @Html.Action("MenuItems", "ManageAccess");
+    </div>
 
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
+    <div class="main_body pull-right none">
+        <div class="dashboard">
+            <div class="header">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-md-9"><h1><img src="~/Content/assets/images/logo_new.png" /></h1></div>
+                        <div class="col-md-3 pull-right"><h1 class="pull-right"><img src="" alt="" /></h1></div>
+                    </div>
+                </div>
+
             </div>
         </div>
+        <div class="content-sec ML15">
+            @RenderBody()
+        </div>
+        <div class="clearfix"></div>
     </div>
+    <footer class="footer">
+        
+    </footer>
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+    <script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+    </script>
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+
+
+    //
+    <script>
+//$(function(){
+//    $('.queContainer').click(function(){
+//        $('.queContainer.active').addClass('active');
+//        $(this).toggleClass('active');
+//    });
+//});
+//</script>
+
+
+    <script>
+
+$('.toggle').on('click', function() {
+    $('.sidebar').toggleClass("sidebar-collapsed");
+	$('.main_body').toggleClass("new_width");
+});
+    </script>
+
+
+
+    <script>
+$(function(){
+    $('.homeBtn').click(function(){
+        $(this).toggleClass('active');
+    });
+});
+    </script>
+
+    <style>
+        body {
+            overflow-y: hidden;
+        }
+    </style>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
 </body>
 </html>

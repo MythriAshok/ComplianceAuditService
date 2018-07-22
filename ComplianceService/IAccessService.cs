@@ -14,8 +14,9 @@ namespace ComplianceService
     {
         [OperationContract]
         void DoWork();
-
-
+        [OperationContract]
+        string getmenulist(int groupid);
+        [OperationContract]
         int GetLoginData(User user);
     }
 }

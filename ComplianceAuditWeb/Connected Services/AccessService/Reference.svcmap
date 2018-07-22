@@ -22,8 +22,10 @@
     <MetadataSource Address="http://localhost:56172/AccessService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
+    <MetadataFile FileName="AccessService1.xsd" MetadataType="Schema" ID="5e16b2ed-d885-4b2d-a5b6-34fdc16505c1" SourceId="1" SourceUrl="http://localhost:56172/AccessService.svc?xsd=xsd2" />
     <MetadataFile FileName="AccessService.disco" MetadataType="Disco" ID="1d20db07-d791-4afd-bcf5-7650a4467871" SourceId="1" SourceUrl="http://localhost:56172/AccessService.svc?disco" />
     <MetadataFile FileName="AccessService.xsd" MetadataType="Schema" ID="c281c043-9ea7-4c0f-92b8-4a94b869e8b9" SourceId="1" SourceUrl="http://localhost:56172/AccessService.svc?xsd=xsd0" />
+    <MetadataFile FileName="AccessService11.xsd" MetadataType="Schema" ID="d79c981c-3e4c-4cc3-ba00-7271529b96ad" SourceId="1" SourceUrl="http://localhost:56172/AccessService.svc?xsd=xsd1" />
     <MetadataFile FileName="AccessService.wsdl" MetadataType="Wsdl" ID="e1b93a4a-4632-4613-b3ff-4798dd5dadb9" SourceId="1" SourceUrl="http://localhost:56172/AccessService.svc?wsdl" />
   </Metadata>
   <Extensions>

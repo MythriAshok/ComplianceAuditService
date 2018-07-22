@@ -238,7 +238,8 @@ SELECT `tbl_menus`.`Menu_ID`,
     `tbl_menus`.`Menu_Name`,
     `tbl_menus`.`Page_URL`,
     `tbl_menus`.`Is_Active`,
-    `tbl_menus`.`User_Group_ID`
+    `tbl_menus`.`User_Group_ID`,
+    `tbl_menus`.`icon`
 FROM `auditmoduledb`.`tbl_menus`;
 else
 SELECT `tbl_menus`.`Menu_ID`,
@@ -246,7 +247,8 @@ SELECT `tbl_menus`.`Menu_ID`,
     `tbl_menus`.`Menu_Name`,
     `tbl_menus`.`Page_URL`,
     `tbl_menus`.`Is_Active`,
-    `tbl_menus`.`User_Group_ID`
+    `tbl_menus`.`User_Group_ID`,
+    `tbl_menus`.`icon`
 FROM `auditmoduledb`.`tbl_menus`
 WHERE `User_Group_ID` = p_User_Group_ID;
 end if;
@@ -989,8 +991,8 @@ p_Flag char(1),
 p_Compliance_Xref_ID int ,
 p_Comp_Category varchar(45),
 p_Compliance_Title varchar(450),
-p_Comp_Description varchar(450),
-p_compl_def_consequence varchar(450),
+p_Comp_Description varchar(800),
+p_compl_def_consequence varchar(800),
 p_Is_Header tinyint,
 p_level int(3),
 p_Comp_Order int(3),
@@ -1376,47 +1378,141 @@ end/
 delimiter ;
 
 
-Drop Procedure if exists `sp_getAllCompanyBrnachAssignedtoAuditor`;
-Delimiter /
-create procedure   sp_getAllCompanyBrnachAssignedtoAuditor
-(
-p_Auditor_ID int 
-)
-begin  
- 
-select * from tbl_org_hier where 
-Org_Hier_ID IN(Select Org_Hier_ID from tbl_branch_auditor_mapping where Auditor_ID=p_Auditor_ID) 
-Union
-select * from tbl_org_hier where 
-Org_Hier_ID IN(
-Select distinct Parent_Company_ID from tbl_org_hier where 
-Org_Hier_ID in (Select Org_Hier_ID from tbl_branch_auditor_mapping where Auditor_ID=p_Auditor_ID));
-end/
+Drop Procedure if exists sp_getActs;
+delimiter /
+create procedure sp_getActs()
+begin
+SELECT `tbl_compliance_xref`.`Compliance_Xref_ID`,
+    `tbl_compliance_xref`.`Comp_Category`,
+    `tbl_compliance_xref`.`Comp_Description`,
+    `tbl_compliance_xref`.`Is_Header`,
+    `tbl_compliance_xref`.`level`,
+    `tbl_compliance_xref`.`Comp_Order`,
+    `tbl_compliance_xref`.`Risk_Category`,
+    `tbl_compliance_xref`.`Risk_Description`,
+    `tbl_compliance_xref`.`Version`,
+    `tbl_compliance_xref`.`Effective_Start_Date`,
+    `tbl_compliance_xref`.`Effective_End_Date`,
+    `tbl_compliance_xref`.`Country_ID`,
+    `tbl_compliance_xref`.`State_ID`,
+    `tbl_compliance_xref`.`City_ID`,
+    `tbl_compliance_xref`.`Last_Updated_Date`,
+    `tbl_compliance_xref`.`User_ID`,
+    `tbl_compliance_xref`.`Is_Active`,
+    `tbl_compliance_xref`.`Compliance_Title`,
+    `tbl_compliance_xref`.`Compliance_Parent_ID`
+FROM `auditmoduledb`.`tbl_compliance_xref`
+where Comp_Category='Act' and `tbl_compliance_xref`.`level`=1;
+end /
 delimiter ;
 
-
-
-
-
-
-Drop Procedure if exists `sp_getComplianceXrefData`;
-Delimiter /
-create procedure sp_getComplianceXrefData
-(
-p_Org_Hier_ID int 
-)
-select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID  from tbl_compliance_xref 
-inner join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
-where 
-tbl_compliance_xref.Compliance_Xref_ID IN(Select Compliance_Xref_ID from tbl_compliance_branch_mapping where Org_Hier_ID=p_Org_Hier_ID) 
-Union
-select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID from tbl_compliance_xref 
-left join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
-where 
-tbl_compliance_xref.Compliance_Xref_ID IN(
-Select distinct  Compliance_Parent_ID from tbl_compliance_xref where 
-tbl_compliance_xref.Compliance_Xref_ID in (Select Compliance_Xref_ID from tbl_compliance_branch_mapping  
-where Org_Hier_ID=p_Org_Hier_ID));
-end/
+Drop Procedure if exists sp_getSections;
+delimiter /
+create procedure sp_getSections(p_Compliance_Parent_ID int)
+begin
+if(p_Compliance_Parent_ID=0)
+then
+SELECT `tbl_compliance_xref`.`Compliance_Xref_ID`,
+    `tbl_compliance_xref`.`Comp_Category`,
+    `tbl_compliance_xref`.`Comp_Description`,
+    `tbl_compliance_xref`.`Is_Header`,
+    `tbl_compliance_xref`.`level`,
+    `tbl_compliance_xref`.`Comp_Order`,
+    `tbl_compliance_xref`.`Risk_Category`,
+    `tbl_compliance_xref`.`Risk_Description`,
+    `tbl_compliance_xref`.`Version`,
+    `tbl_compliance_xref`.`Effective_Start_Date`,
+    `tbl_compliance_xref`.`Effective_End_Date`,
+    `tbl_compliance_xref`.`Country_ID`,
+    `tbl_compliance_xref`.`State_ID`,
+    `tbl_compliance_xref`.`City_ID`,
+    `tbl_compliance_xref`.`Last_Updated_Date`,
+    `tbl_compliance_xref`.`User_ID`,
+    `tbl_compliance_xref`.`Is_Active`,
+    `tbl_compliance_xref`.`Compliance_Title`,
+    `tbl_compliance_xref`.`Compliance_Parent_ID`
+FROM `auditmoduledb`.`tbl_compliance_xref`
+where Comp_Category='Section' and `tbl_compliance_xref`.`level`=2;
+else
+SELECT `tbl_compliance_xref`.`Compliance_Xref_ID`,
+  `tbl_compliance_xref`.`Compliance_Title`
+  FROM `auditmoduledb`.`tbl_compliance_xref`
+  where Comp_Category='Section' and `tbl_compliance_xref`.`level`=2 and Compliance_Parent_ID=p_Compliance_Parent_ID;
+end if;
+end /
 delimiter ;
 
+Drop Procedure if exists sp_getRules;
+delimiter /
+create procedure sp_getRules(p_Compliance_Parent_ID int)
+begin
+if(p_Compliance_Parent_ID=0)
+then
+SELECT `tbl_compliance_xref`.`Compliance_Xref_ID`,
+    `tbl_compliance_xref`.`Comp_Category`,
+    `tbl_compliance_xref`.`Comp_Description`,
+    `tbl_compliance_xref`.`Is_Header`,
+    `tbl_compliance_xref`.`level`,
+    `tbl_compliance_xref`.`Comp_Order`,
+    `tbl_compliance_xref`.`Risk_Category`,
+    `tbl_compliance_xref`.`Risk_Description`,
+    `tbl_compliance_xref`.`Recurrence`,
+    `tbl_compliance_xref`.`Form`,
+    `tbl_compliance_xref`.`Type`,
+    `tbl_compliance_xref`.`Is_Best_Practice`,
+    `tbl_compliance_xref`.`Version`,
+    `tbl_compliance_xref`.`Effective_Start_Date`,
+    `tbl_compliance_xref`.`Effective_End_Date`,
+    `tbl_compliance_xref`.`Country_ID`,
+    `tbl_compliance_xref`.`State_ID`,
+    `tbl_compliance_xref`.`City_ID`,
+    `tbl_compliance_xref`.`Last_Updated_Date`,
+    `tbl_compliance_xref`.`User_ID`,
+    `tbl_compliance_xref`.`Is_Active`,
+    `tbl_compliance_xref`.`Compliance_Title`,
+    `tbl_compliance_xref`.`Compliance_Parent_ID`,
+    `tbl_compliance_xref`.`compl_def_consequence`
+FROM `auditmoduledb`.`tbl_compliance_xref`
+where Comp_Category='Rule' and `tbl_compliance_xref`.`level`=3;
+else
+SELECT `tbl_compliance_xref`.`Compliance_Xref_ID`,
+  `tbl_compliance_xref`.`Compliance_Title`
+  FROM `auditmoduledb`.`tbl_compliance_xref`
+  where Comp_Category='Rule' and `tbl_compliance_xref`.`level`=3 and Compliance_Parent_ID=p_Compliance_Parent_ID;
+  end if;
+end /
+delimiter ;
+
+Drop Procedure if exists sp_getAuditorforBranch;
+delimiter /
+create procedure sp_getAuditorforBranch(p_Branch_Id int)
+begin
+SELECT `tbl_branch_auditor_mapping`.`Branch_Allocation_ID`,
+    `tbl_branch_auditor_mapping`.`Auditor_ID`
+FROM `auditmoduledb`.`tbl_branch_auditor_mapping`
+where  `tbl_branch_auditor_mapping`.`Org_Hier_ID`=p_Branch_Id ;
+end /
+delimiter ;
+
+Drop Procedure if exists sp_insertActandRuleforBranch;
+delimiter /
+create procedure sp_insertActandRuleforBranch(p_Compliance_Xref_ID int,p_Org_Hier_ID int,p_Auditor_ID int,p_User_ID int)
+begin
+INSERT INTO `auditmoduledb`.`tbl_compliance_audit`
+(`Compliance_Xref_ID`,
+`Org_Hier_ID`,
+`Auditor_ID`,
+`User_ID`,
+`Is_Active`,
+`Last_Updated_Date`)
+VALUES(p_Compliance_Xref_ID,p_Org_Hier_ID,p_Auditor_ID,p_User_ID,now());
+end /
+
+
+Drop Procedure if exists sp_getRuleforBranch;
+delimiter /
+create procedure sp_getRuleforBranch(p_Compliance_Xref_ID int,p_Org_ID int)
+begin
+select Compliance_Xref_ID,Compliance_Title from tbl_compliance_xref where Compliance_Parent_ID=p_Compliance_Xref_ID and
+Compliance_Xref_ID in (select Compliance_Xref_ID from tbl_compliance_audit where p_Org_ID);
+end/

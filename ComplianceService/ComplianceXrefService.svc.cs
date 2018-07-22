@@ -65,18 +65,51 @@ namespace ComplianceService
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();            
         }
-        public string GetSections()
+        public string GetSections(int parentid)
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
-            DataSet ds = helper.getSection();
+            DataSet ds = helper.getSection(parentid);
             UtilityHelper utilityHelper = new UtilityHelper();
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();
         }
-        public string GetRules()
+        public string GetRules(int parentid)
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
-            DataSet ds = helper.getRules();
+            DataSet ds = helper.getRules(parentid);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            ds = utilityHelper.ConvertNullsToEmptyString(ds);
+            return ds.GetXml();
+        }
+
+       public int GetAuditorId(int Branchid)
+       {
+            ComplianceXrefHelper helper = new ComplianceXrefHelper();
+            return helper.getAuditorforBranch(Branchid);
+       }
+
+       public bool inseretActandRuleforBranch(ComplianceAudit audit,int[] ruleid)
+        {
+            bool res = false;
+            ComplianceXrefHelper helper = new ComplianceXrefHelper();
+            foreach(int id in ruleid)
+            {
+                audit.Compliance_Xref_Id = id;
+                res=helper.insertActAndRuleforBranch(audit);
+            }
+            return res;
+            
+        }
+
+        public string getRuleforBranch(int sectionid,int branchid)
+        {
+            return Bindruleforbranch(sectionid, branchid);
+        }
+
+        private string Bindruleforbranch(int sectionid, int branchid)
+        {
+            ComplianceXrefHelper helper = new ComplianceXrefHelper();
+            DataSet ds = helper.getRuleforBranch(sectionid,branchid);
             UtilityHelper utilityHelper = new UtilityHelper();
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();

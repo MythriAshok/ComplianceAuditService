@@ -5,21 +5,33 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
     <script language="javascript" type="text/javascript">
         function GetState(_CountryId) {
+            debugger;
             var procemessage = "<option value='0'> Please wait...</option>";
-            $("#ddlstate").html(procemessage).show();
-            var url = "/ManageOrganizationController/AddGroupCompany";
-
+            alert(procemessage);
+            $("#branch_State_Id").html(procemessage).show();
+            var url = "/ManageOrganizationController/getstate";
+            alert(url);
             $.ajax({
                 url: url,
                 data: { countryid: _CountryId },
                 cache: false,
                 type: "POST",
-                success: function (data) {
-                    var markup = "<option value='0'>Select State</option>";
-                    for (var x = 0; x < data.length; x++) {
-                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                dataType: 'application/json',
+                contentType: 'application/json', 
+                //success: function (data) {
+                //    var markup = "<option value='0'>Select State</option>";
+                //    for (var x = 0; x < data.length; x++) {
+                //        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                //    }
+                //    $("#branch_State_Id").html(markup).show();    
+                success: function (result) {
+                    $("#Compliance_State_ID").html("");
+                    $.each($.parseJSON(result), function (i, state) {
+                        $("#Compliance_State_ID").append
+                            ($('<option> </option>)').val(state.stateId).html(state.StateName)
+                        )
                     }
-                    $("#ddlstate").html(markup).show();
+                    )
                 },
                 error: function (reponse) {
                     alert("error : " + reponse);

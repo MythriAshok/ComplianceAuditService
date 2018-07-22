@@ -26,9 +26,9 @@ namespace Compliance.DataObject
         public string Type { get; set; }
         public bool Is_Best_Practice { get; set; }
         public int Version { get; set; }
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         public DateTime Effective_Start_Date { get; set; }
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Date)]
         public DateTime Effective_End_Date { get; set; }
         public int Country_ID { get; set; }
         public int State_ID { get; set; }

@@ -7,7 +7,6 @@ using System.Text;
 using Compliance.DataAccess;
 using Compliance.DataObject;
 using System.Data;
-
 using System.Net;
 using System.Net.Mail;
 
@@ -34,5 +33,14 @@ namespace ComplianceService
         //    result = userHelper.updatePassword(user);
         //    return result;
         //}
+
+        public string getmenulist(int groupid)
+        {
+            MenusHelper helper = new MenusHelper();
+            DataSet ds=helper.getMenus(groupid);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            ds = utilityHelper.ConvertNullsToEmptyString(ds);
+            return ds.GetXml();
+        }
     }
 }
