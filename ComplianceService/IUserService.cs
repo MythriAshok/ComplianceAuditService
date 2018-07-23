@@ -57,5 +57,9 @@ namespace ComplianceService
         bool DeleteGroup(int Groupid);
         [OperationContract]
         bool DeleteRole(int Roleid);
-    }    
+
+        [OperationContract]
+        string Login(string emailid, string password);
+
+    }
 }

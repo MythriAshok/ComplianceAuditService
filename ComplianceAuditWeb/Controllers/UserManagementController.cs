@@ -349,5 +349,28 @@ namespace ComplianceAuditWeb.Controllers
             return View("CreateUser");
         }
 
+        public ActionResult Login()
+        {
+            User user = new User();
+            return PartialView("~/Views/Shared/_Login.cshtml", user);
+        }
+
+        [HttpPost]
+        public ActionResult Login(User user)
+        {
+            UserService.UserServiceClient client = new UserService.UserServiceClient();
+            string xmldata = client.Login(user.EmailId, user.UserPassword);
+
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+
+            if (ds.Tables.Count > 0)
+            {
+                return RedirectToAction("ListofCompliance", "ComplianceManagement");
+            }
+            return View();
+
+        }
+
     }
 }

@@ -190,6 +190,7 @@
     </None>
     <Content Include="Content\assets\css\bootstrap.css" />
     <Content Include="Content\assets\css\font-awesome.css" />
+    <Content Include="Content\assets\css\loginpage.css" />
     <Content Include="Content\assets\css\pagecontrols.css" />
     <Content Include="Content\assets\css\pagestyle.css" />
     <Content Include="Content\assets\css\style.css" />
@@ -428,6 +429,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_Login.cshtml" />
+    <Content Include="Views\Shared\_HomeLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

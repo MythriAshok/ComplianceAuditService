@@ -146,6 +146,12 @@ namespace ComplianceAuditWeb.UserService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteRole", ReplyAction="http://tempuri.org/IUserService/DeleteRoleResponse")]
         System.Threading.Tasks.Task<bool> DeleteRoleAsync(int Roleid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Login", ReplyAction="http://tempuri.org/IUserService/LoginResponse")]
+        string Login(string emailid, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Login", ReplyAction="http://tempuri.org/IUserService/LoginResponse")]
+        System.Threading.Tasks.Task<string> LoginAsync(string emailid, string password);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -349,6 +355,14 @@ namespace ComplianceAuditWeb.UserService {
         
         public System.Threading.Tasks.Task<bool> DeleteRoleAsync(int Roleid) {
             return base.Channel.DeleteRoleAsync(Roleid);
+        }
+        
+        public string Login(string emailid, string password) {
+            return base.Channel.Login(emailid, password);
+        }
+        
+        public System.Threading.Tasks.Task<string> LoginAsync(string emailid, string password) {
+            return base.Channel.LoginAsync(emailid, password);
         }
     }
 }
