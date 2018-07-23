@@ -4,44 +4,55 @@
 
     ViewBag.Title = "Add Company Branch";
 }
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-<script language="javascript" type="text/javascript">
-    function GetState(_CountryId) {
-        debugger;
-        var procemessage = "<option value='0'> Please wait...</option>";
-        alert(procemessage);
-        $("#branch_State_Id").html(procemessage).show();
-        var url = "/ComplianceManagement/getstate";
-        alert(url);
-        $.ajax({
-            url: url,
-            data: { countryid: _CountryId },
-            cache: false,
-            type: "POST",
-            dataType: 'application/json',
-            contentType: 'application/json',
-            //success: function (data) {
-            //    var markup = "<option value='0'>Select State</option>";
-            //    for (var x = 0; x < data.length; x++) {
-            //        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
-            //    }
-            //    $("#branch_State_Id").html(markup).show();
-            success: function (result) {
-                $("#branch_State_Id").html("");
-                $.each($.parseJSON(result), function (i, state) {
-                    $("#branch_State_Id").append
-                        ($('<option> </option>)').val(state.stateId).html(state.StateName)
-                        )
+@section scripts{
+    <script language="javascript" type="text/javascript">
+        function GetState(_CountryId) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#branch_State_Id").html(procemessage).show();
+            var url = "/Common/getstate";
+            alert(url);
+            $.ajax({
+                url: url,
+                data: { countryid: _CountryId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>Select State</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#branch_State_Id").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
                 }
-                )
-            },
-            error: function (reponse) {
-                alert("error : " + reponse);
-            }
-        });
+            });
 
-    }
-</script>
+        }
+        function GetCity(_StateId) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#branch_City_Id").html(procemessage).show();
+            var url = "/Common/getcity";
+            $.ajax({
+                url: url,
+                data: { stateid: _StateId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>Select State</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#branch_City_Id").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+
+        }
+    </script>
+}
 <ul class="breadcrumb ML15">
     <li><a href="">Branch Management</a></li>
     <li>Add Company Branch</li>
@@ -157,7 +168,7 @@
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
                 @Html.Label("Country", new { @class = "floating-label" })
-                @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country, new { @onchange = "GetState(this.value);" ,@class = "inputMaterial ui - autocomplete - input" })
             </div>
         </div>
         <div class="clearfix"></div>
@@ -165,7 +176,7 @@
             <div class="input-field">
 
                 @Html.LabelFor(m => m.State, new { @class = "floating-label" })
-                @Html.DropDownListFor(m => m.branch.State_Id, Model.State, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.DropDownListFor(m => m.branch.State_Id, Model.State, new { @onchange = "GetCity(this.value);", @class = "inputMaterial ui - autocomplete - input" })
             </div>
         </div>   <div class="col-xs-4 subSelect ">
             <div class="input-field">

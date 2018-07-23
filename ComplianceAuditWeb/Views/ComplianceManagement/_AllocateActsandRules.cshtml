@@ -7,7 +7,7 @@
 }
 <ul class="breadcrumb ML15">
     <li><a href="">Compliance Management</a></li>
-    <li>Add Act</li>
+    <li>Manage Rules</li>
 </ul>
 <h2 class="ML15">Assign Rule to Company Branch</h2>
 
@@ -16,7 +16,7 @@
         function GetBranch(_CompanyId) {
             var procemessage = "<option value='0'> Please wait...</option>";
             $("#BranchId").html(procemessage).show();
-            var url = "/ComplianceManagement/getbranch";
+            var url = "/Common/getbranch";
 
             $.ajax({
                 url: url,

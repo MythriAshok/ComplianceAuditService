@@ -1,8 +1,6 @@
 ﻿@model ComplianceAuditWeb.Models.ComplianceViewModel
 
 @{
-    /**/
-
     ViewBag.Title = "Add Acts Page";
 }
 <ul class="breadcrumb ML15">
@@ -15,8 +13,7 @@
         function GetState(_CountryId) {
             var procemessage = "<option value='0'> Please wait...</option>";
             $("#Compliance_State_ID").html(procemessage).show();
-            var url = "/ComplianceManagement/getstate";
-
+            var url = "/Common/getstate";
             $.ajax({
                 url: url,
                 data: { countryid: _CountryId },
@@ -38,8 +35,7 @@
         function GetCity(_StateId) {
             var procemessage = "<option value='0'> Please wait...</option>";
             $("#Compliance_City_ID").html(procemessage).show();
-            var url = "/ComplianceManagement/getcity";
-
+            var url = "/Common/getcity";
             $.ajax({
                 url: url,
                 data: { stateid: _StateId },
@@ -58,8 +54,7 @@
             });
 
         }
-    </script>
-    
+    </script>   
 }
 
 
