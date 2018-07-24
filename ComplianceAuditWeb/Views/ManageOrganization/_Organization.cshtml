@@ -1,8 +1,10 @@
 ﻿@model ComplianceAuditWeb.Models.OrganizationViewModel
+   
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@section scripts{
+@section scripts
+    {
     <script language="javascript" type="text/javascript">
         function GetState(_CountryId) {
             var procemessage = "<option value='0'> Please wait...</option>";
@@ -24,8 +26,8 @@
                     alert("error : " + reponse);
                 }
             });
-
         }
+        
         function GetCity(_StateId) {
             var procemessage = "<option value='0'> Please wait...</option>";
             $("#branch_City_Id").html(procemessage).show();
@@ -46,6 +48,7 @@
                     alert("error : " + reponse);
                 }
             });
+        }
 
 </script>
 <ul class="breadcrumb ML15">
@@ -212,20 +215,15 @@
             <div class="input-field">
 
 
-                // if (Model.State != null)
-                // {
+              
 
                 @Html.LabelFor(m => m.State, new { @class = "floating-label" })
                 @Html.DropDownListFor(m => m.branch.State_Id, Model.State, new { @onchange = "GetCity(this.value);", @class = "inputMaterial ui - autocomplete - input" })
-                @*// }
-
-
-                // if (Model.City != null)
-                //{
+            
 
                 @Html.LabelFor(m => m.City, new { @class = "floating-label" })
                 @Html.DropDownListFor(m => m.branch.City_Id, Model.City, new { @class = "inputMaterial ui - autocomplete - input" })
-                @*// }*@
+          
 
         </div>
 
@@ -255,6 +253,7 @@
 </div>
 
 }
+    }
 
 
 

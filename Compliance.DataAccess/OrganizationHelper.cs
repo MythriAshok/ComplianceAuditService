@@ -473,7 +473,7 @@ namespace Compliance.DataAccess
             return dsGroupCompaniesList;
         }
 
-        public DataSet getCompanyList()
+        public DataSet getSpecificCompanyList(int GroupCompanyID)
         {
             DataSet dsCompaniesList = new DataSet();
             try
@@ -481,6 +481,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getCompaniesList", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", GroupCompanyID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsCompaniesList);
             }
