@@ -23,12 +23,16 @@ namespace Compliance.DataObject
         public string Auditing_Frequency { get; set; }
         public string Website { get; set; }
 
+        public string Company_EmailID { get; set; }
 
         [RegularExpression("^(\\+?d{10})$", ErrorMessage = "Please enter a proper Phone number.")]
         [DataType(DataType.PhoneNumber)]
-        [Display(Name = "Contact Number", Prompt = "(1234567890")]
-        public string Company_EmailID { get; set; }
+        [Display(Name = "Contact Number1", Prompt = "(1234567890")]
         public string Company_ContactNumber1 { get; set; }
+
+        [RegularExpression("^(\\+?d{10})$", ErrorMessage = "Please enter a proper Phone number.")]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Contact Number2", Prompt = "(1234567890")]
         public string Company_ContactNumber2  { get; set; }
         public bool Is_Active  { get; set; }
     }

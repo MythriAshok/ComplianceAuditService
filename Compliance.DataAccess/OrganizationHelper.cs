@@ -139,7 +139,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Flag", Flag);
                     cmd.Parameters.AddWithValue("p_Org_Hier_ID", org.Organization_Id);
                     cmd.Parameters.AddWithValue("p_Company_Name", org.Company_Name);
-                    cmd.Parameters.AddWithValue("p_Company_ID", org.Company_Id);
+                    cmd.Parameters.AddWithValue("p_Company_Code", org.Company_Id);
                     cmd.Parameters.AddWithValue("p_Parent_Company_ID", org.Parent_Company_Id);
                     cmd.Parameters.AddWithValue("p_Description", org.Description);
                     cmd.Parameters.AddWithValue("p_level", org.Level);

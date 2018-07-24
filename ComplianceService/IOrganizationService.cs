@@ -49,12 +49,12 @@ namespace ComplianceService
         string GetBranchList();
         [OperationContract]
 
-        string getGroupCompanyListDropDown();
+        //string getGroupCompanyListDropDown();
 
-        [OperationContract]
+        //[OperationContract]
 
-        string getCompanyListDropDown(int groupcompanyID);
-        [OperationContract]
+        //string getCompanyListDropDown(int groupcompanyID);
+        //[OperationContract]
 
 
         bool DeactivateGroupCompany(int OrgID);

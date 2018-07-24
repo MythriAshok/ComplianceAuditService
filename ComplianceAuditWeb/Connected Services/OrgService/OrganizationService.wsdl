@@ -85,18 +85,6 @@
   <wsdl:message name="IOrganizationService_GetBranchList_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetBranchListResponse" />
   </wsdl:message>
-  <wsdl:message name="IOrganizationService_getGroupCompanyListDropDown_InputMessage">
-    <wsdl:part name="parameters" element="tns:getGroupCompanyListDropDown" />
-  </wsdl:message>
-  <wsdl:message name="IOrganizationService_getGroupCompanyListDropDown_OutputMessage">
-    <wsdl:part name="parameters" element="tns:getGroupCompanyListDropDownResponse" />
-  </wsdl:message>
-  <wsdl:message name="IOrganizationService_getCompanyListDropDown_InputMessage">
-    <wsdl:part name="parameters" element="tns:getCompanyListDropDown" />
-  </wsdl:message>
-  <wsdl:message name="IOrganizationService_getCompanyListDropDown_OutputMessage">
-    <wsdl:part name="parameters" element="tns:getCompanyListDropDownResponse" />
-  </wsdl:message>
   <wsdl:message name="IOrganizationService_DeactivateGroupCompany_InputMessage">
     <wsdl:part name="parameters" element="tns:DeactivateGroupCompany" />
   </wsdl:message>
@@ -209,14 +197,6 @@
     <wsdl:operation name="GetBranchList">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GetBranchList" message="tns:IOrganizationService_GetBranchList_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GetBranchListResponse" message="tns:IOrganizationService_GetBranchList_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="getGroupCompanyListDropDown">
-      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/getGroupCompanyListDropDown" message="tns:IOrganizationService_getGroupCompanyListDropDown_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/getGroupCompanyListDropDownResponse" message="tns:IOrganizationService_getGroupCompanyListDropDown_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="getCompanyListDropDown">
-      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/getCompanyListDropDown" message="tns:IOrganizationService_getCompanyListDropDown_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/getCompanyListDropDownResponse" message="tns:IOrganizationService_getCompanyListDropDown_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="DeactivateGroupCompany">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/DeactivateGroupCompany" message="tns:IOrganizationService_DeactivateGroupCompany_InputMessage" />
@@ -371,24 +351,6 @@
     </wsdl:operation>
     <wsdl:operation name="GetBranchList">
       <soap:operation soapAction="http://tempuri.org/IOrganizationService/GetBranchList" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getGroupCompanyListDropDown">
-      <soap:operation soapAction="http://tempuri.org/IOrganizationService/getGroupCompanyListDropDown" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="getCompanyListDropDown">
-      <soap:operation soapAction="http://tempuri.org/IOrganizationService/getCompanyListDropDown" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
