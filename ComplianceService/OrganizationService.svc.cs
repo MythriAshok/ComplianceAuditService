@@ -518,21 +518,21 @@ namespace ComplianceService
 
 
 
-        //public string GetCompaniesList()
-        //{
-        //    return BindCompaniesList();
-        //}
-        ///// <summary>
-        ///// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
-        ///// </summary>
-        ///// <returns></returns>
-        //private string BindCompaniesList()
-        //{
-        //    OrganizationHelper OrganizationHelper = new OrganizationHelper();
-        //    DataSet dsCompanies = OrganizationHelper.getCompanyList();
-        //    string xmlCompaniesList = dsCompanies.GetXml();
-        //    return xmlCompaniesList;
-        //}
+        ////public string GetCompaniesList()
+        ////{
+        ////    return BindCompaniesList();
+        ////}
+        /////// <summary>
+        /////// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
+        /////// </summary>
+        /////// <returns></returns>
+        ////private string BindCompaniesList()
+        ////{
+        ////    OrganizationHelper OrganizationHelper = new OrganizationHelper();
+        ////    DataSet dsCompanies = OrganizationHelper.getCompanyList();
+        ////    string xmlCompaniesList = dsCompanies.GetXml();
+        ////    return xmlCompaniesList;
+        ////}
 
 
         public string GetBranchList()
