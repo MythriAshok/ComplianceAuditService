@@ -358,17 +358,23 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
-            UserService.UserServiceClient client = new UserService.UserServiceClient();
-            string xmldata = client.Login(user.EmailId, user.UserPassword);
-
-            DataSet ds = new DataSet();
-            ds.ReadXml(new StringReader(xmldata));
-
-            if (ds.Tables.Count > 0)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("ListofCompliance", "ComplianceManagement");
+                UserService.UserServiceClient client = new UserService.UserServiceClient();
+                string xmldata = client.Login(user.EmailId, user.UserPassword);
+
+                DataSet ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+
+                if (ds.Tables.Count > 0)
+                {
+                    Session["UserId"] = ds.Tables[0].Rows[0]["User_ID"];
+                    return RedirectToAction("ListofCompliance", "ComplianceManagement");
+                }
             }
-            return View();
+            else
+                ModelState.AddModelError("", " There was an error with your E-Mail/Password combination. Please try again.");
+            return View("~/Views/Shared/_Login.cshtml",user);
 
         }
 

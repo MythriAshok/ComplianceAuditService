@@ -202,7 +202,7 @@
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
                 @Html.Label("Country", new { @class = "floating-label" })
-                @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country, new { @onchange = "GetState(this.value);" })
+                @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country, new { @onchange = "GetState(this.value);", @class = "inputMaterial ui - autocomplete - input" })
             </div>
         </div>
         <div class="clearfix"></div>
@@ -210,20 +210,20 @@
             <div class="input-field">
 
 
-                // if (Model.State != null)
-                // {
+                @*// if (Model.State != null)
+                // {*@
 
                 @Html.LabelFor(m => m.State, new { @class = "floating-label" })
                 @Html.DropDownListFor(m => m.branch.State_Id, Model.State, new { @onchange = "GetCity(this.value);", @class = "inputMaterial ui - autocomplete - input" })
-                // }
+                @*// }
 
 
                 // if (Model.City != null)
-                //{
+                //{*@
 
                 @Html.LabelFor(m => m.City, new { @class = "floating-label" })
                 @Html.DropDownListFor(m => m.branch.City_Id, Model.City, new { @class = "inputMaterial ui - autocomplete - input" })
-                // }
+                @*// }*@
 
             </div>
 

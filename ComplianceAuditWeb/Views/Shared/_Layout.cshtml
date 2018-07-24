@@ -39,7 +39,7 @@
         <div class="clearfix"></div>
     </div>
     <footer class="footer">
-        
+    @Html.Partial("~/Views/Shared/_Footer.cshtml") 
     </footer>
 
     <script>
@@ -79,11 +79,11 @@ $(function(){
 });
     </script>
 
-    <style>
+    @*<style>
         body {
             overflow-y: hidden;
         }
-    </style>
+    </style>*@
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
 @RenderSection("scripts", required: false)
