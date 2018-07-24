@@ -12,6 +12,8 @@
     <script src="~/Content/assets/js/bootstrap.js"></script>
     <script src="~/Content/assets/js/jquery.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
 </head>
 <body>
     <div class="sidebar sidebar-collapsed">
@@ -37,7 +39,7 @@
         <div class="clearfix"></div>
     </div>
     <footer class="footer">
-        
+    @Html.Partial("~/Views/Shared/_Footer.cshtml") 
     </footer>
 
     <script>
@@ -77,11 +79,11 @@ $(function(){
 });
     </script>
 
-    <style>
+    @*<style>
         body {
             overflow-y: hidden;
         }
-    </style>
+    </style>*@
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
 @RenderSection("scripts", required: false)

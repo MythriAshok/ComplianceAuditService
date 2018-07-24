@@ -209,5 +209,24 @@ namespace ComplianceService
             UserGroupHelper helper = new UserGroupHelper();
             return helper.DeleteGroup(Groupid);
         }
+
+        public string Login(string emailid, string password)
+        {
+            return GetLoginData(emailid, password);
+        }
+
+        private string GetLoginData(string emailid, string password)
+        {
+            UserHelper helper = new UserHelper();
+            User user = new User();
+            user.EmailId = emailid;
+            user.UserPassword = password;
+
+            DataSet ds = helper.getLoginData(user);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            ds = utilityHelper.ConvertNullsToEmptyString(ds);
+            string xmldata = ds.GetXml();
+            return xmldata;
+        }
     }
 }

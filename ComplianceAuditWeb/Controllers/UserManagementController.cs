@@ -21,7 +21,7 @@ namespace ComplianceAuditWeb.Controllers
 
        //GET:insertRoles
         [HttpGet]
-        public ActionResult insertRoles()
+        public ActionResult AddRoles()
         {
             RolesViewModel rolesView = new RolesViewModel();
             rolesView.roles = new Roles();
@@ -42,7 +42,7 @@ namespace ComplianceAuditWeb.Controllers
 
         //Post:insertRoles
         [HttpPost]
-        public ActionResult insertRoles(RolesViewModel rolesView)
+        public ActionResult AddRoles(RolesViewModel rolesView)
         {           
             UserService.UserServiceClient client = new UserService.UserServiceClient();
             int roleid=client.insertRoles(rolesView.roles);                        
@@ -96,7 +96,7 @@ namespace ComplianceAuditWeb.Controllers
         }
 
         [HttpGet]
-        public ActionResult UserGroup()
+        public ActionResult AddUserGroup()
         {
             UserGroupViewModel GroupView = new UserGroupViewModel();
             GroupView.Group = new UserGroup();
@@ -116,7 +116,7 @@ namespace ComplianceAuditWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult UserGroup(UserGroupViewModel model)
+        public ActionResult AddUserGroup(UserGroupViewModel model)
         {
             UserService.UserServiceClient Client = new UserService.UserServiceClient();           
             Client.insertGroups(model.Group);            
@@ -347,6 +347,35 @@ namespace ComplianceAuditWeb.Controllers
             UserService.UserServiceClient client = new UserService.UserServiceClient();
             client.DeleteGroup(GroupId);
             return View("CreateUser");
+        }
+
+        public ActionResult Login()
+        {
+            User user = new User();
+            return PartialView("~/Views/Shared/_Login.cshtml", user);
+        }
+
+        [HttpPost]
+        public ActionResult Login(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                UserService.UserServiceClient client = new UserService.UserServiceClient();
+                string xmldata = client.Login(user.EmailId, user.UserPassword);
+
+                DataSet ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+
+                if (ds.Tables.Count > 0)
+                {
+                    Session["UserId"] = ds.Tables[0].Rows[0]["User_ID"];
+                    return RedirectToAction("ListofCompliance", "ComplianceManagement");
+                }
+            }
+            else
+                ModelState.AddModelError("", " There was an error with your E-Mail/Password combination. Please try again.");
+            return View("~/Views/Shared/_Login.cshtml",user);
+
         }
 
     }

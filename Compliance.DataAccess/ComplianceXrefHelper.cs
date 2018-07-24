@@ -189,7 +189,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getAuditorforBranch", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", BranchId);
+                cmd.Parameters.AddWithValue("p_Branch_Id", BranchId);
                 Auditorid = Convert.ToInt32(cmd.ExecuteScalar());
             }
             catch

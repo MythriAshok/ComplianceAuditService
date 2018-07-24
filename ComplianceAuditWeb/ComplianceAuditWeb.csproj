@@ -190,6 +190,7 @@
     </None>
     <Content Include="Content\assets\css\bootstrap.css" />
     <Content Include="Content\assets\css\font-awesome.css" />
+    <Content Include="Content\assets\css\loginpage.css" />
     <Content Include="Content\assets\css\pagecontrols.css" />
     <Content Include="Content\assets\css\pagestyle.css" />
     <Content Include="Content\assets\css\style.css" />
@@ -359,6 +360,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AuditManagementController.cs" />
+    <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\ComplianceManagementController.cs" />
     <Compile Include="Controllers\ManageAccessController.cs" />
     <Compile Include="Controllers\ManageOrganizationController.cs" />
@@ -428,6 +430,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_Login.cshtml" />
+    <Content Include="Views\Shared\_HomeLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -437,6 +441,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Common\" />
     <Folder Include="Views\ManageAccess\" />
   </ItemGroup>
   <ItemGroup>

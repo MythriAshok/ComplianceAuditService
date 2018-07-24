@@ -1,45 +1,188 @@
 ﻿@model ComplianceAuditWeb.Models.AllocateActandRuleViewModel
-@{ Layout = "~/Views/Shared/_Layout1.cshtml";}
+
+@{
+    /**/
+
+    ViewBag.Title = "Add Acts Page";
+}
+<ul class="breadcrumb ML15">
+    <li><a href="">Compliance Management</a></li>
+    <li>Manage Rules</li>
+</ul>
+<h2 class="ML15">Assign Rule to Company Branch</h2>
+
 @section scripts{
-    <script>
-        $(function () {
-            alert("alert");
+    <script language="javascript" type="text/javascript">
+        function GetBranch(_CompanyId) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#BranchId").html(procemessage).show();
+            var url = "/Common/getbranch";
+
+            $.ajax({
+                url: url,
+                data: { compid: _CompanyId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>Select Branch</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#BranchId").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+
+        }
+        function GetSection(_ActId) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#SectionId").html(procemessage).show();
+            var url = "/ComplianceManagement/getSection";
+
+            $.ajax({
+                url: url,
+                data: { actid: _ActId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>Select Section</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#SectionId").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+        function GetRules(_sectioId) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#Rulelist").html(procemessage).show();
+            var url = "/ComplianceManagement/getRules";
+
+            $.ajax({
+                url: url,
+                data: { secid: _sectioId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup;
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#Rulelist").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+            GetallocatedRules(_sectioId);
+        }
+        function GetallocatedRules(_sectioId, ) {
+            var _branchId = $('#BranchId').val();            
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#selectedid").html(procemessage).show();
+            var url = "/ComplianceManagement/getallocatedrules";
+
+            $.ajax({
+                url: url,
+                data: { secid: _sectioId, branchid: _branchId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup;
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#selectedid").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+
+        }
             $("#ShiftRight,#ShiftLeft").click(function (event) {
                 var ID = $(event.target).attr("ID");
-                var ChooseFrom = ID == "ShiftRight" ? "#ChooseLeft" : "#ChooseRight";
-                var moveTo = ID == "ShiftRight" ? "#ChooseRight" : "#ChooseLeft";
+                var ChooseFrom = ID == "ShiftRight" ? "#Rulelist" : "#selectedid";
+                var moveTo = ID == "ShiftRight" ? "#selectedid" : "#Rulelist";
                 var SelectData = $(ChooseFrom + " :selected");
                 $(moveTo).append(SelectData);
                 SelectData.remove;
             });
-        });
     </script>
+
 }
 
 @using (Html.BeginForm())
 {
-    @Html.DropDownListFor(model => model.CompanyId, Model.Companylist)
-    @Html.DropDownListFor(model => model.BranchId, Model.BranchList)
-    @Html.DropDownListFor(model => model.ActId, Model.Actdropdownlist)
-    @Html.DropDownListFor(model => model.SectionId, Model.Sectionlist)
-    <br/>
-    @Html.ListBox("ChooseLeft", Model.Rulelist, new { multiple = "multiple" })
-    <input id="ShiftRight" type="button" value=">>>" />
-    <input id="ShiftLeft" type="button" value="<<<" />
+    <div class="mid_content_sec">
+        <div class="col-xs-6 subSelect ">
+            <div class="input-field">
+                @Html.Label("Company", new { @class = "floating-label" })
+                @Html.DropDownListFor(model => model.CompanyId, Model.Companylist, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "GetBranch(this.value)" })
+            </div>
+        </div><div class="col-xs-6 subSelect ">
+            <div class="input-field">
+                @Html.Label("Branch", new { @class = "floating-label" })
+                @Html.DropDownListFor(model => model.BranchId, Model.BranchList, new { @class = "inputMaterial ui - autocomplete - input" })
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-xs-6 subSelect ">
+            <div class="input-field">
+                @Html.Label("Act", new { @class = "floating-label" })
+                @Html.DropDownListFor(model => model.ActId, Model.Actdropdownlist, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "GetSection(this.value)" })
+            </div>
+        </div>
+        <div class="col-xs-6 subSelect ">
+            <div class="input-field">
+                @Html.Label("Section", new { @class = "floating-label" })
+                @Html.DropDownListFor(model => model.SectionId, Model.Sectionlist, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "GetRules(this.value)" })
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-xs-6 subSelect ">
+            <div class="input-field">
+                @Html.Label("List of Rule", new { @class = "floating-label" })
+                @Html.ListBoxFor(model => model.Rulelist, Model.Rulelist, new { multiple = "multiple", @class = "inputMaterial ui - autocomplete - input", size = 10 })
+            </div>
+        </div>
+        <div class="col-xs-1 subSelect ">
+            <div class="input-field">
+                <input id="ShiftRight" type="button" value=">>>" />
+                <input id="ShiftLeft" type="button" value="<<<" />
+                </div>
+            </div>
+                <div class="col-xs-5 subSelect ">
+                    <div class="input-field">
+                        @Html.Label("Selected Rule", new { @class = "floating-label" })
+                        @Html.ListBoxFor(model => model.selectedid, Model.Selectedrule, new { @class = "inputMaterial ui - autocomplete - input", size = 10 })
+                    </div>
+                </div>
+                @*<div class="clearfix"></div>*@
+                <ul class="list-inline continueBtn">
+                    <li>
+                        @*<input type="submit" />*@
+                        <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Save<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
+                    </li>
+                </ul>
 
-    @Html.ListBoxFor(model=>model.Selectedrule,null, new { multiple = "multiple" })
-    <input type="submit" />
-}
-
-@*@foreach (var item in Model.Sectionlist) {
-        <tr>
-            @foreach (var rule in Model.Rulelist) {
-
+            </div>
             }
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-    }*@
+
+            @*@foreach (var item in Model.Sectionlist) {
+                <tr>
+                    @foreach (var rule in Model.Rulelist) {
+
+                    }
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+            }*@

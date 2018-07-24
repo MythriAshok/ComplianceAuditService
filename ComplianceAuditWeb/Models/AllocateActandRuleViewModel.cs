@@ -23,7 +23,8 @@ namespace ComplianceAuditWeb.Models
 
         public int SectionId { get; set; }
 
-        public int[] Selectedrule { get; set; }
+        public int[] selectedid { get; set; }
+        public List<SelectListItem> Selectedrule { get; set; }
 
     }
 }

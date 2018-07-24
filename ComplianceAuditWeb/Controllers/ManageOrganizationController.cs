@@ -647,7 +647,7 @@ namespace ComplianceAuditWeb.Controllers
             {
                 branchVM.City.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
             }
-            return View("AddBranch", branchVM);
+            return View("_Branch", branchVM);
         }
         [HttpPost]
         public ActionResult AddBranch(BranchViewModel branchVM)

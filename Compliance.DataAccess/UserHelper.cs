@@ -176,12 +176,12 @@ namespace Compliance.DataAccess
             DataSet dt = new DataSet();
             try
             {
+                conn = DBConnection.getconnection();
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("getLoginData", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getLoginData", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_User_ID", user.UserId);
                 cmd.Parameters.AddWithValue("p_Email_ID", user.EmailId);
-                cmd.Parameters.AddWithValue("p_UserPassword", user.UserPassword);
+                cmd.Parameters.AddWithValue("p_User_Password", user.UserPassword);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dt);
             }
