@@ -368,7 +368,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccessViewModel.cs" />
     <Compile Include="Models\AllocateActandRuleViewModel.cs" />
     <Compile Include="Models\AuditViewModel.cs" />
     <Compile Include="Models\BranchViewModel.cs" />

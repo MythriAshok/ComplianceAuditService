@@ -6,8 +6,8 @@
 </div>
 <div class="left_panel">
     <div class="top_panel">
-        <h3>           
-            @if(Session["username"]!=null)
+        <h3>
+            @if (Session["username"] != null)
             {
                 @Session["username"].ToString()<br />
                 <span>@Session["emailid"].ToString()</span>
@@ -21,4 +21,21 @@
             <li><a href="@menu.PathUrl">@menu.MenuName <span class="iconnew"><i class=""><img src="~/Content/assets/images/@menu.icon" alt="" /></i></span></a></li>
         }
     </ul>
-</div>
+
+    @*@foreach (var menu in Model)
+    {
+        if (menu.ParentMenuId == 0)
+        {
+            <ul>
+                <li><a href="@menu.PathUrl">@menu.MenuName <span class="iconnew"><i class=""><img src="~/Content/assets/images/@menu.icon" alt="" /></i></span></a></li>
+                @foreach (var item in Model)
+                {
+                    if (item.ParentMenuId == menu.Id)
+                    {
+                    <li><a href="@item.PathUrl">@item.MenuName <span class="iconnew"><i class=""><img src="~/Content/assets/images/@item.icon" alt="" /></i></span></a></li>
+                        }
+                 }
+            </ul>
+            }
+        }*@
+    </div>

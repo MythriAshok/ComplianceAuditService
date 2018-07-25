@@ -152,6 +152,12 @@ namespace ComplianceAuditWeb.UserService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/Login", ReplyAction="http://tempuri.org/IUserService/LoginResponse")]
         System.Threading.Tasks.Task<string> LoginAsync(string emailid, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/getmenulist", ReplyAction="http://tempuri.org/IUserService/getmenulistResponse")]
+        string getmenulist(int groupid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/getmenulist", ReplyAction="http://tempuri.org/IUserService/getmenulistResponse")]
+        System.Threading.Tasks.Task<string> getmenulistAsync(int groupid);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -363,6 +369,14 @@ namespace ComplianceAuditWeb.UserService {
         
         public System.Threading.Tasks.Task<string> LoginAsync(string emailid, string password) {
             return base.Channel.LoginAsync(emailid, password);
+        }
+        
+        public string getmenulist(int groupid) {
+            return base.Channel.getmenulist(groupid);
+        }
+        
+        public System.Threading.Tasks.Task<string> getmenulistAsync(int groupid) {
+            return base.Channel.getmenulistAsync(groupid);
         }
     }
 }
