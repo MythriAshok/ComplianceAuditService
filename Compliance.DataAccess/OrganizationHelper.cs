@@ -473,6 +473,28 @@ namespace Compliance.DataAccess
             return dsGroupCompaniesList;
         }
 
+        public DataSet getCompanyList()
+        {
+            DataSet dsCompaniesList = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getCompaniesList", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsCompaniesList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsCompaniesList;
+        }
+
         public DataSet getSpecificCompanyList(int GroupCompanyID)
         {
             DataSet dsCompaniesList = new DataSet();

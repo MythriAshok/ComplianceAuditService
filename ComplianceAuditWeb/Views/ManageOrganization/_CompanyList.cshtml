@@ -1,0 +1,14 @@
+﻿@model IEnumerable<ComplianceAuditWeb.Models.ListOfGroupCompanies>
+
+
+{
+}
+
+@using (Html.BeginForm())
+{
+    @Html.Label("Group Company")
+    @Html.DropDownListFor(, Model.GroupCompaniesList);
+}
+
+
+<input type="submit" value="Submit" class="btn btn-default" />

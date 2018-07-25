@@ -9,10 +9,16 @@
 </ul>
 <h2 class="ML15">List of Companies</h2>
 
+@*@using (Html.BeginForm())
+{
+    @Html.Partial("_CompanyList", Model);
 
+}*@
+ 
 
 <table class="table">
     <tr>
+       
         <th>
             @Html.DisplayNameFor(model => model.CompanyName)
         </th>
@@ -30,6 +36,8 @@
 
     @foreach (var item in Model)
     {
+        if (item.GroupCompanyID > 0)
+        {
         <tr>
             <td>
                 <center>
@@ -77,6 +85,12 @@
 
             </td>
         </tr>
+        }
+
+        else
+        {
+            @Html.Partial("_CompanyList", Model) 
+        }
     }
 
 </table>

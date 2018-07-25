@@ -43,18 +43,24 @@ namespace ComplianceService
        
         [OperationContract]
         string GetGroupCompaniesList();
+
         [OperationContract]
-        string GetCompaniesList(int OrgID);
+        string GetCompaniesList();
+
         [OperationContract]
         string GetBranchList();
+
         [OperationContract]
+        string GeSpecifictCompaniesList(int OrgID);
 
         //string getGroupCompanyListDropDown();
 
         //[OperationContract]
 
         //string getCompanyListDropDown(int groupcompanyID);
-        //[OperationContract]
+      [OperationContract]
+
+
 
 
         bool DeactivateGroupCompany(int OrgID);

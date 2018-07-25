@@ -163,9 +163,7 @@
   </xs:element>
   <xs:element name="GetCompaniesList">
     <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="OrgID" type="xs:int" />
-      </xs:sequence>
+      <xs:sequence />
     </xs:complexType>
   </xs:element>
   <xs:element name="GetCompaniesListResponse">
@@ -184,6 +182,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="GetBranchListResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GeSpecifictCompaniesList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OrgID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GeSpecifictCompaniesListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GeSpecifictCompaniesListResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

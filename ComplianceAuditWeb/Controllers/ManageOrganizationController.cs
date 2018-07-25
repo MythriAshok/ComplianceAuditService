@@ -82,43 +82,43 @@ namespace ComplianceAuditWeb.Controllers
             }
             return View("_Organization", organizationVM);
 }
-/// <summary>
-/// [HttpPost] Action method to add the group company
-/// </summary>
-/// <param name="organizationVM"></param>
-/// <returns>View</returns>
-[HttpPost]
+        /// <summary>
+        /// [HttpPost] Action method to add the group company
+        /// </summary>
+        /// <param name="organizationVM"></param>
+        /// <returns>View</returns>
+        [HttpPost]
         public ActionResult AddGroupCompany(OrganizationViewModel organizationVM)
         {
-            
-            OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
-            string strXMLStates =   organizationClient.GetStateList(organizationVM.branch.Country_Id);
-            DataSet dsStates = new DataSet();
-            dsStates.ReadXml(new StringReader(strXMLStates));
-            organizationVM.State = new List<SelectListItem>();
-            foreach (System.Data.DataRow row in dsStates.Tables[0].Rows)
+            if (ModelState.IsValid)
             {
-                organizationVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
-            }
+                OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
+                string strXMLStates = organizationClient.GetStateList(organizationVM.branch.Country_Id);
+                DataSet dsStates = new DataSet();
+                dsStates.ReadXml(new StringReader(strXMLStates));
+                organizationVM.State = new List<SelectListItem>();
+                foreach (System.Data.DataRow row in dsStates.Tables[0].Rows)
+                {
+                    organizationVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
+                }
 
 
 
-            bool result = false;
-            organizationVM.organization.User_Id = 1;
-            organizationVM.organization.Is_Leaf = false;
-            organizationVM.organization.Level = 1;
-            organizationVM.organization.Is_Active = true;
-            organizationVM.organization.Is_Delete = false;
-            organizationVM.organization.Parent_Company_Id = 0;
-            result = organizationClient.insertOrganization(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
-            if (result != false)
-            {
-                return RedirectToAction("ListOfGroupCompanies");
+                bool result = false;
+                organizationVM.organization.User_Id = 1;
+                organizationVM.organization.Is_Leaf = false;
+                organizationVM.organization.Level = 1;
+                organizationVM.organization.Is_Active = true;
+                organizationVM.organization.Is_Delete = false;
+                organizationVM.organization.Parent_Company_Id = 0;
+                result = organizationClient.insertOrganization(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
+                if (result != false)
+                {
+                    return RedirectToAction("ListOfGroupCompanies");
+                }
+              
             }
-            else
-            {
-                return View();
-            }
+            return View();
         }
         /// <summary>
         /// Action method to update the Group company
@@ -209,20 +209,24 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult UpdateGroupCompany(OrganizationViewModel organizationVM)
         {
-            bool result = false;
-            OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
-            organizationVM.companydetails.Org_Hier_ID = organizationVM.organization.Organization_Id;
-            organizationVM.organization.Branch_Id = organizationVM.branch.Branch_Id;
-            result = organizationClient.updateOrganization(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
-            if (result != false)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("ListOfGroupCompanies");
+                bool result = false;
+                OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
+                organizationVM.companydetails.Org_Hier_ID = organizationVM.organization.Organization_Id;
+                organizationVM.organization.Branch_Id = organizationVM.branch.Branch_Id;
+                result = organizationClient.updateOrganization(organizationVM.organization, organizationVM.companydetails, organizationVM.branch);
+                if (result != false)
+                {
+                    return RedirectToAction("ListOfGroupCompanies");
+                }
+                else
+                {
+                    return RedirectToAction("ListOfGroupCompanies");
+                }
+
             }
-            else
-            {
-                return RedirectToAction("ListOfGroupCompanies");
-            }
-        
+            return View();
         }
         /// <summary>
         /// Action method to get group company
@@ -245,18 +249,18 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult DeactivateGroupCompany(OrganizationViewModel organizationVM)
         {
-            bool result = false;
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            result = organizationServiceClient.DeactivateGroupCompany(organizationVM.organization.Organization_Id);
-            if(result == true)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("ListOfGroupCompanies");
+                bool result = false;
+                OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                result = organizationServiceClient.DeactivateGroupCompany(organizationVM.organization.Organization_Id);
+                if (result == true)
+                {
+                    return RedirectToAction("ListOfGroupCompanies");
+                }
+              
             }
-            else
-            {
-                return View();
-
-            }
+            return View();
         }
 
         public ActionResult ActivateGroupCompany(int OrgID)
@@ -274,18 +278,18 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult ActivateGroupCompany(OrganizationViewModel organizationVM)
         {
-            bool result = false;
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            result = organizationServiceClient.ActivateGroupCompany(organizationVM.organization.Organization_Id);
-            if (result == true)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("ListOfGroupCompanies");
+                bool result = false;
+                OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                result = organizationServiceClient.ActivateGroupCompany(organizationVM.organization.Organization_Id);
+                if (result == true)
+                {
+                    return RedirectToAction("ListOfGroupCompanies");
+                }
+               
             }
-            else
-            {
-                return View();
-
-            }
+            return View();
         }
 
 
@@ -305,18 +309,17 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult DeleteGroupCompany(OrganizationViewModel organizationViewModel)
         {
-            bool result = false;
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            result = organizationServiceClient.DeleteGroupCompany(organizationViewModel.organization.Organization_Id);
-            if (result == true)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction("ListOfGroupCompanies");
+                bool result = false;
+                OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                result = organizationServiceClient.DeleteGroupCompany(organizationViewModel.organization.Organization_Id);
+                if (result == true)
+                {
+                    return RedirectToAction("ListOfGroupCompanies");
+                }
             }
-            else
-            {
-                return View();
-
-            }
+            return View();
         }
 
         [HttpGet]
@@ -889,28 +892,29 @@ namespace ComplianceAuditWeb.Controllers
         {
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
 
-            CompanyViewModel companyVM = new CompanyViewModel();
-            companyVM.organization = new Organization();
-            companyVM.organization.Organization_Id = 0;
-            companyVM.organization.User_Id = 1;
+            //CompanyViewModel companyVM = new CompanyViewModel();
+            //companyVM.organization = new Organization();
+            //companyVM.organization.Organization_Id = 0;
+            //companyVM.organization.User_Id = 1;
 
-            string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
-            DataSet dsGroupCompanyList = new DataSet();
-            dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
-            companyVM.GroupCompaniesList = new List<SelectListItem>();
-            foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
-            {
-                companyVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
-            }
+            //string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
+            //DataSet dsGroupCompanyList = new DataSet();
+            //dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
+            //companyVM.GroupCompaniesList = new List<SelectListItem>();
+            //foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
+            //{
+            //    companyVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+            //}
 
 
 
             List<ListOfGroupCompanies> companylist = new List<ListOfGroupCompanies>();
-            string strxmlCompanies = organizationservice.GetCompaniesList(companyVM.organization.Organization_Id);
+           // string strxmlCompanies = organizationservice.GeSpecifictCompaniesList(companyVM.organization.Organization_Id);
+            string strxmlC = organizationservice.GetCompaniesList();
 
 
             DataSet dsSpecificCompaniesList = new DataSet();
-            dsSpecificCompaniesList.ReadXml(new StringReader(strxmlCompanies));
+            dsSpecificCompaniesList.ReadXml(new StringReader(strxmlC));
             foreach (System.Data.DataRow row in dsSpecificCompaniesList.Tables[0].Rows)
             {
                 ListOfGroupCompanies listOfCompany = new ListOfGroupCompanies
@@ -923,7 +927,7 @@ namespace ComplianceAuditWeb.Controllers
                 //GroupCompanyLogo = row["Group_Company_Logo"].ToString(), IndustryType = row["Industry_Type"].ToString() };
                 companylist.Add(listOfCompany);
             }
-            return View(companylist);
+            return View("_CompanyList",companylist);
         }
         [HttpPost]
         public ActionResult ListOfCompanies(ListOfGroupCompanies ListOfGroupCompanies)
