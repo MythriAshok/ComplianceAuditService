@@ -481,7 +481,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getCompaniesList", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Org_Hier_ID", GroupCompanyID);
+                cmd.Parameters.AddWithValue("p_Parent_Company_ID", GroupCompanyID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsCompaniesList);
             }

@@ -44,8 +44,8 @@ namespace ComplianceService
         [OperationContract]
         string GetGroupCompaniesList();
         [OperationContract]
-        //string GetCompaniesList();
-        //[OperationContract]
+        string GetCompaniesList(int OrgID);
+        [OperationContract]
         string GetBranchList();
         [OperationContract]
 

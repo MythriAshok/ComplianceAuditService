@@ -906,7 +906,7 @@ namespace ComplianceAuditWeb.Controllers
 
 
             List<ListOfGroupCompanies> companylist = new List<ListOfGroupCompanies>();
-            string strxmlCompanies = organizationservice.GetCompaniesList();
+            string strxmlCompanies = organizationservice.GetCompaniesList(companyVM.organization.Organization_Id);
 
 
             DataSet dsSpecificCompaniesList = new DataSet();

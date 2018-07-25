@@ -67,6 +67,9 @@
                     @Html.Label("Group Comapny", new { @class = "floating-label" })
                     @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList ,new { @class = "inputMaterial ui - autocomplete - input" });
 
+                    @*@if(Model.GroupCompanyID!=0)
+                    {*@ 
+
                     @Html.Label("Company Name", new { @class = "floating-label" })
                     @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input" })
                 </div>
@@ -257,6 +260,8 @@
         </div>
 
     }
+                         
+
 }
 
 
