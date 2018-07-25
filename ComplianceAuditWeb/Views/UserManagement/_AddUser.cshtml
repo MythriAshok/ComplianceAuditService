@@ -79,17 +79,19 @@
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
             @Html.Label("Gender", new { @class = "floating-label" })<span style="color:red">*</span>
-                         
-                                               @Html.Label("Male", new { @class = "floating-label" })
-                                              @Html.RadioButtonFor(m => m.User.Gender, "Male", new { @class = "inputMaterial ui - autocomplete - input " })
-                                   
-                                              @Html.Label("Female", new { @class = "floating-label" })
-                                                  @Html.RadioButtonFor(m => m.User.Gender, "Female", new { @class = "inputMaterial ui - autocomplete - input " })
-                                             
-                                                       @Html.Label("Others", new { @class = "floating-label" })
-                                                       @Html.RadioButtonFor(m => m.User.Gender, "Others", new { @class = "inputMaterial ui - autocomplete - input " })
-                                               
-        </div>
+            <div class="input-field">
+                @Html.Label("Male", new { @class = "floating-label" })
+                @Html.RadioButtonFor(m => m.User.Gender, "Male", new { @class = "inputMaterial ui - autocomplete - input " })
+            </div>
+            <div class="input-field">
+                @Html.Label("Female", new { @class = "floating-label" })
+                @Html.RadioButtonFor(m => m.User.Gender, "Female", new { @class = "inputMaterial ui - autocomplete - input " })
+            </div>
+            <div class="input-field">
+                @Html.Label("Others", new { @class = "floating-label" })
+                @Html.RadioButtonFor(m => m.User.Gender, "Others", new { @class = "inputMaterial ui - autocomplete - input " })
+                </div>
+            </div>
         </div>
  
     <div class="col-xs-6 subSelect ">

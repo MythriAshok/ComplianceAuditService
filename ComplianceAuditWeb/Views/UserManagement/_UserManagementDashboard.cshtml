@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "_UserManagementDashboard";
+}
+
+<div class="new_section_box">
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">User Management:</h2>
+
+            <div class="col-sm-3 QueList">
+                <div class="queContainer">       
+                    <a href="@Url.Action("AddRoles","UserManagement")">
+                        <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                        <h3 class="PB25">Add Roles</h3>
+                    </a>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div class="col-sm-3 QueList">
+                <div class="queContainer">
+                    <a href="@Url.Action("AddUserGroup","UserManagement")">
+                        <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                        <h3 class="PB25">Add UserGroup</h3>
+                    </a>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div class="col-sm-3 QueList">
+                <div class="queContainer">
+                    <a href="@Url.Action("CreateUser","UserManagement")"">
+                        <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                        <h3 class="PB25">Add User</h3>
+                    </a>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div class="col-sm-3 QueList">
+                <div class="queContainer">
+                    <a href="@Url.Action("ListofUsers","UserManagement")"">
+                        <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                        <h3 class="PB25">ListofUsers</h3>
+                    </a>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+        </div>
+
+    </div>
+
+</div>

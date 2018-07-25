@@ -14,9 +14,9 @@ namespace ComplianceAuditWeb.Controllers
     public class UserManagementController : Controller
     {
         // GET: UserManagement
-        public ActionResult Index()
+        public ActionResult UserManagementdashboard()
         {
-            return View();
+            return View("_UserManagementDashboard");
         }
 
        //GET:insertRoles
