@@ -30,13 +30,14 @@
 
                     @Html.HiddenFor(m => m.organization.Organization_Id)
 
-                    @Html.LabelFor(m => m.organization.Company_Name, new { @class = "floating-label" })
-                    @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input" })
+                    @Html.LabelFor(m => m.organization.Company_Name, new { @class = "floating-label", Style = "font-size:15px" })
+
+                    @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input", Style = "font-size:20px" })
 
                 </div>
             </center>
         </div>
-
+        <div class="clearfix"></div>
         <ul class="list-inline continueBtn">
             <li>
                 @*<input type="submit" value="Activate" class="btn btn-default" />*@

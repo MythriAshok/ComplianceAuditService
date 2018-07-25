@@ -65,10 +65,13 @@ Branch_Coordinates1,Branch_Coordinates2,Branch_CoordinateURL) values ('IndraNaga
 
 select * from tbl_branch_location;
 
+
 insert into tbl_org_hier (Company_Name, Company_Code, Parent_Company_ID, Description, level, Is_Leaf,Industry_Type,Last_Updated_Date,Location_ID,
 User_ID,Is_Active,Is_Delete) values('Paajaka IT Service ',25, 0, 'Description', 1, 0, 'IT Service', now(),1, 1, 1, 0);
 
 select * from tbl_org_hier;
+
+
 
 insert into tbl_company_details(Org_Hier_ID,Formal_Name,Calender_StartDate,Calender_EndDate,Auditing_Frequency,Website,Company_Email_ID,
 Company_ContactNumber1,Company_ContactNumber2) values(1, 'PaajakaConsulting IT Service', ('2018-05-23 00:00:00'), ('2018-06-23 00:00:00'),'Quarterly','abc.com', 'abcd.com',
