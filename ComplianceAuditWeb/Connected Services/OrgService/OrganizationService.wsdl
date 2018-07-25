@@ -85,6 +85,12 @@
   <wsdl:message name="IOrganizationService_GetBranchList_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetBranchListResponse" />
   </wsdl:message>
+  <wsdl:message name="IOrganizationService_GeSpecifictCompaniesList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GeSpecifictCompaniesList" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GeSpecifictCompaniesList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GeSpecifictCompaniesListResponse" />
+  </wsdl:message>
   <wsdl:message name="IOrganizationService_DeactivateGroupCompany_InputMessage">
     <wsdl:part name="parameters" element="tns:DeactivateGroupCompany" />
   </wsdl:message>
@@ -197,6 +203,10 @@
     <wsdl:operation name="GetBranchList">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GetBranchList" message="tns:IOrganizationService_GetBranchList_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GetBranchListResponse" message="tns:IOrganizationService_GetBranchList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GeSpecifictCompaniesList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GeSpecifictCompaniesList" message="tns:IOrganizationService_GeSpecifictCompaniesList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GeSpecifictCompaniesListResponse" message="tns:IOrganizationService_GeSpecifictCompaniesList_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="DeactivateGroupCompany">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/DeactivateGroupCompany" message="tns:IOrganizationService_DeactivateGroupCompany_InputMessage" />
@@ -351,6 +361,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetBranchList">
       <soap:operation soapAction="http://tempuri.org/IOrganizationService/GetBranchList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GeSpecifictCompaniesList">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/GeSpecifictCompaniesList" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -516,23 +516,18 @@ namespace ComplianceService
             return xmlGroupCompaniesList;
         }
 
+        public string GetCompaniesList()
+        {
+            return BindCompaniesList();
+        }
+        private string BindCompaniesList()
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsGroupCompanies = OrganizationHelper.getCompanyList();
+            string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
+            return xmlGroupCompaniesList;
+        }
 
-
-        ////public string GetCompaniesList()
-        ////{
-        ////    return BindCompaniesList();
-        ////}
-        /////// <summary>
-        /////// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
-        /////// </summary>
-        /////// <returns></returns>
-        ////private string BindCompaniesList()
-        ////{
-        ////    OrganizationHelper OrganizationHelper = new OrganizationHelper();
-        ////    DataSet dsCompanies = OrganizationHelper.getCompanyList();
-        ////    string xmlCompaniesList = dsCompanies.GetXml();
-        ////    return xmlCompaniesList;
-        ////}
 
 
         public string GetBranchList()
@@ -553,6 +548,25 @@ namespace ComplianceService
 
 
 
+
+       
+
+
+        public string GeSpecifictCompaniesList(int OrgID)
+        {
+            return BindSpecificCompaniesList(OrgID);
+        }
+        /// <summary>
+        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
+        /// </summary>
+        /// <returns></returns>
+        private string BindSpecificCompaniesList(int OrgID)
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsCompanies = OrganizationHelper.getSpecificCompanyList(OrgID);
+            string xmlCompaniesList = dsCompanies.GetXml();
+            return xmlCompaniesList;
+        }
 
         //public string GetSpecificCompaniesList(int GroupCompanyID)
         //{
