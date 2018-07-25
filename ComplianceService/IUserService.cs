@@ -61,5 +61,8 @@ namespace ComplianceService
         [OperationContract]
         string Login(string emailid, string password);
 
+        [OperationContract]
+        string getmenulist(int groupid);
+
     }
 }

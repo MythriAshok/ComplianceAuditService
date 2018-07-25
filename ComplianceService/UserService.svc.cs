@@ -228,5 +228,18 @@ namespace ComplianceService
             string xmldata = ds.GetXml();
             return xmldata;
         }
+
+        public string getmenulist(int groupid)
+        {
+            return getmenus(groupid);
+        }
+            private string getmenus(int groupid)
+        {
+            MenusHelper helper = new MenusHelper();
+            DataSet ds = helper.getMenus(groupid);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            ds = utilityHelper.ConvertNullsToEmptyString(ds);
+            return ds.GetXml();
+        }
     }
 }

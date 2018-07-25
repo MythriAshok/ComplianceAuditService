@@ -369,6 +369,12 @@ namespace ComplianceAuditWeb.Controllers
                 if (ds.Tables.Count > 0)
                 {
                     Session["UserId"] = ds.Tables[0].Rows[0]["User_ID"];
+                    string fullname = ds.Tables[0].Rows[0]["First_Name"].ToString() + ds.Tables[0].Rows[0]["Middle_Name"].ToString() + ds.Tables[0].Rows[0]["Last_Name"].ToString();
+                    Session["username"] = fullname;
+                    Session["emailid"] = ds.Tables[0].Rows[0]["Email_ID"];
+                    Session["CompanyId"] = ds.Tables[0].Rows[0]["Company_ID"];
+                    Session["Last_Login"] = ds.Tables[0].Rows[0]["Last_Login"];
+                    Session["Usergroupid"] = 2; /*ds.Tables[0].Rows[0][];*/
                     return RedirectToAction("ListofCompliance", "ComplianceManagement");
                 }
             }

@@ -12,10 +12,7 @@ namespace ComplianceService
     [ServiceContract]
     public interface IAccessService
     {
-        [OperationContract]
-        void DoWork();
-        [OperationContract]
-        string getmenulist(int groupid);
+
         [OperationContract]
         int GetLoginData(User user);
     }

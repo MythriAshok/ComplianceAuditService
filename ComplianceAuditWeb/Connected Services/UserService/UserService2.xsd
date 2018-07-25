@@ -326,4 +326,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="getmenulist">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="groupid" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getmenulistResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getmenulistResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

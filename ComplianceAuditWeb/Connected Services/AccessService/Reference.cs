@@ -15,18 +15,6 @@ namespace ComplianceAuditWeb.AccessService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="AccessService.IAccessService")]
     public interface IAccessService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccessService/DoWork", ReplyAction="http://tempuri.org/IAccessService/DoWorkResponse")]
-        void DoWork();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccessService/DoWork", ReplyAction="http://tempuri.org/IAccessService/DoWorkResponse")]
-        System.Threading.Tasks.Task DoWorkAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccessService/getmenulist", ReplyAction="http://tempuri.org/IAccessService/getmenulistResponse")]
-        string getmenulist(int groupid);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccessService/getmenulist", ReplyAction="http://tempuri.org/IAccessService/getmenulistResponse")]
-        System.Threading.Tasks.Task<string> getmenulistAsync(int groupid);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAccessService/GetLoginData", ReplyAction="http://tempuri.org/IAccessService/GetLoginDataResponse")]
         int GetLoginData(Compliance.DataObject.User user);
         
@@ -59,22 +47,6 @@ namespace ComplianceAuditWeb.AccessService {
         
         public AccessServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
-        }
-        
-        public void DoWork() {
-            base.Channel.DoWork();
-        }
-        
-        public System.Threading.Tasks.Task DoWorkAsync() {
-            return base.Channel.DoWorkAsync();
-        }
-        
-        public string getmenulist(int groupid) {
-            return base.Channel.getmenulist(groupid);
-        }
-        
-        public System.Threading.Tasks.Task<string> getmenulistAsync(int groupid) {
-            return base.Channel.getmenulistAsync(groupid);
         }
         
         public int GetLoginData(Compliance.DataObject.User user) {

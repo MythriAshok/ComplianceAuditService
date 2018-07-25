@@ -368,7 +368,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccessViewModel.cs" />
     <Compile Include="Models\AllocateActandRuleViewModel.cs" />
     <Compile Include="Models\AuditViewModel.cs" />
     <Compile Include="Models\BranchViewModel.cs" />
@@ -433,6 +432,8 @@
     <Content Include="Views\Shared\_Login.cshtml" />
     <Content Include="Views\Shared\_HomeLayout.cshtml" />
     <Content Include="Views\UserManagement\_UserManagementDashboard.cshtml" />
+    <Content Include="Views\ManageOrganization\_CompanyList.cshtml" />
+    <Content Include="Views\ManageOrganization\_Companydashboard.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

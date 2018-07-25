@@ -16,9 +16,6 @@ namespace ComplianceService
     // NOTE: In order to launch WCF Test Client for testing this service, please select AccessService.svc or AccessService.svc.cs at the Solution Explorer and start debugging.
     public class AccessService : IAccessService
     {
-        public void DoWork()
-        {
-        }
         public int GetLoginData(User user)
         {
             UserHelper userHelper = new UserHelper();
@@ -34,13 +31,6 @@ namespace ComplianceService
         //    return result;
         //}
 
-        public string getmenulist(int groupid)
-        {
-            MenusHelper helper = new MenusHelper();
-            DataSet ds=helper.getMenus(groupid);
-            UtilityHelper utilityHelper = new UtilityHelper();
-            ds = utilityHelper.ConvertNullsToEmptyString(ds);
-            return ds.GetXml();
-        }
+    
     }
 }

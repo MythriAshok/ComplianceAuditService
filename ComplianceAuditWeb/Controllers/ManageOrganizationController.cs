@@ -57,7 +57,7 @@ namespace ComplianceAuditWeb.Controllers
             dsStates.ReadXml(new StringReader(strXMLStates));
             dsCities.ReadXml(new StringReader(strXMLCities));
             organizationVM.Country = new List<SelectListItem>();
-            
+
             foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
             {
                 organizationVM.Country.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
@@ -81,11 +81,11 @@ namespace ComplianceAuditWeb.Controllers
                 }
             }
             return View("_Organization", organizationVM);
-}
+        }
         /// <summary>
         /// [HttpPost] Action method to add the group company
         /// </summary>
-        /// <param name="organizationVM"></param>
+        /// <param name="object of OrganizationViewModel"></param>
         /// <returns>View</returns>
         [HttpPost]
         public ActionResult AddGroupCompany(OrganizationViewModel organizationVM)
@@ -116,7 +116,7 @@ namespace ComplianceAuditWeb.Controllers
                 {
                     return RedirectToAction("ListOfGroupCompanies");
                 }
-              
+
             }
             return View();
         }
@@ -128,20 +128,20 @@ namespace ComplianceAuditWeb.Controllers
         [HttpGet]
         public ActionResult UpdateGroupCompany(int OrgID)
         {
-           
+
             OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
             string strxmlUpdatedData = organizationClient.getGroupCompany(OrgID);
             DataSet dsUpdatedData = new DataSet();
             dsUpdatedData.ReadXml(new StringReader(strxmlUpdatedData));
             OrganizationViewModel organizationViewModel = new OrganizationViewModel();
-            organizationViewModel.organization  = new Organization();
+            organizationViewModel.organization = new Organization();
             organizationViewModel.companydetails = new CompanyDetails();
             organizationViewModel.branch = new BranchLocation();
-           
+
             organizationViewModel.organization.Organization_Id = OrgID;
-            organizationViewModel.organization.Organization_Id =Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Org_Hier_ID"]);
+            organizationViewModel.organization.Organization_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Org_Hier_ID"]);
             organizationViewModel.organization.Company_Name = dsUpdatedData.Tables[0].Rows[0]["Company_Name"].ToString();
-            organizationViewModel. organization.Description = dsUpdatedData.Tables[0].Rows[0]["Description"].ToString();
+            organizationViewModel.organization.Description = dsUpdatedData.Tables[0].Rows[0]["Description"].ToString();
             organizationViewModel.organization.Industry_Type = dsUpdatedData.Tables[0].Rows[0]["Industry_Type"].ToString();
             //organizationViewModel.organization.Is_Active =(Boolean) dsUpdatedData.Tables[0].Rows[0]["Is_Active"];
             organizationViewModel.organization.Last_Updated_Date = Convert.ToDateTime(dsUpdatedData.Tables[0].Rows[0]["Last_Updated_Date"]);
@@ -232,7 +232,7 @@ namespace ComplianceAuditWeb.Controllers
         /// Action method to get group company
         /// </summary>
         /// <returns>view</returns>
-      
+
         [HttpGet]
         public ActionResult DeactivateGroupCompany(int OrgID)
         {
@@ -258,7 +258,7 @@ namespace ComplianceAuditWeb.Controllers
                 {
                     return RedirectToAction("ListOfGroupCompanies");
                 }
-              
+
             }
             return View();
         }
@@ -287,7 +287,7 @@ namespace ComplianceAuditWeb.Controllers
                 {
                     return RedirectToAction("ListOfGroupCompanies");
                 }
-               
+
             }
             return View();
         }
@@ -387,7 +387,7 @@ namespace ComplianceAuditWeb.Controllers
             companyVM.organization.Parent_Company_Id = companyVM.GroupCompanyID;
 
             result = organizationClient.insertCompany(companyVM.organization, companyVM.companydetails, companyVM.branch);
-            
+
             if (result != false)
             {
                 return RedirectToAction("ListOfCompanies");
@@ -493,7 +493,7 @@ namespace ComplianceAuditWeb.Controllers
         }
 
 
-       
+
 
         [HttpGet]
         public ActionResult DeactivateCompany(int OrgID)
@@ -506,7 +506,7 @@ namespace ComplianceAuditWeb.Controllers
             dsData.ReadXml(new StringReader(strxmlData));
             organizationViewModel.organization.Organization_Id = OrgID;
             organizationViewModel.organization.Company_Name = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-            return View("DeactivateGroupCompany",organizationViewModel);
+            return View("DeactivateGroupCompany", organizationViewModel);
         }
         [HttpPost]
         public ActionResult DeactivateCompany(OrganizationViewModel organizationVM)
@@ -535,7 +535,7 @@ namespace ComplianceAuditWeb.Controllers
             dsData.ReadXml(new StringReader(strxmlData));
             organizationViewModel.organization.Organization_Id = OrgID;
             organizationViewModel.organization.Company_Name = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-            return View("ActivateGroupCompany",organizationViewModel);
+            return View("ActivateGroupCompany", organizationViewModel);
         }
         [HttpPost]
         public ActionResult ActivateCompany(OrganizationViewModel organizationVM)
@@ -565,7 +565,7 @@ namespace ComplianceAuditWeb.Controllers
             dsData.ReadXml(new StringReader(strxmlData));
             organizationViewModel.organization.Organization_Id = OrgID;
             organizationViewModel.organization.Company_Name = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-            return View("DeleteGroupCompany",organizationViewModel);
+            return View("DeleteGroupCompany", organizationViewModel);
         }
         [HttpPost]
         public ActionResult DeleteCompany(OrganizationViewModel organizationViewModel)
@@ -752,7 +752,7 @@ namespace ComplianceAuditWeb.Controllers
             }
 
         }
-      
+
 
         [HttpGet]
         public ActionResult DeactivateBranch(int OrgID)
@@ -765,7 +765,7 @@ namespace ComplianceAuditWeb.Controllers
             dsData.ReadXml(new StringReader(strxmlData));
             organizationViewModel.organization.Organization_Id = OrgID;
             organizationViewModel.organization.Company_Name = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-            return View("DeactivateGroupCompany",organizationViewModel);
+            return View("DeactivateGroupCompany", organizationViewModel);
         }
         [HttpPost]
         public ActionResult DeactivateBranch(OrganizationViewModel organizationVM)
@@ -794,7 +794,7 @@ namespace ComplianceAuditWeb.Controllers
             dsData.ReadXml(new StringReader(strxmlData));
             organizationViewModel.organization.Organization_Id = OrgID;
             organizationViewModel.organization.Company_Name = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-            return View("ActivateGroupCompany",organizationViewModel);
+            return View("ActivateGroupCompany", organizationViewModel);
         }
         [HttpPost]
         public ActionResult ActivateBranch(OrganizationViewModel organizationVM)
@@ -836,7 +836,7 @@ namespace ComplianceAuditWeb.Controllers
             dsData.ReadXml(new StringReader(strxmlData));
             organizationViewModel.organization.Organization_Id = OrgID;
             organizationViewModel.organization.Company_Name = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-            return View("DeleteGroupCompany",organizationViewModel);
+            return View("DeleteGroupCompany", organizationViewModel);
         }
         [HttpPost]
         public ActionResult DeleteBranch(OrganizationViewModel organizationViewModel)
@@ -865,20 +865,21 @@ namespace ComplianceAuditWeb.Controllers
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
             string strxmlGroupCompanies = organizationservice.GetGroupCompaniesList();
 
-           
+
             DataSet dsGroupCompaniesList = new DataSet();
             dsGroupCompaniesList.ReadXml(new StringReader(strxmlGroupCompanies));
-            foreach(System.Data.DataRow row in dsGroupCompaniesList.Tables[0].Rows)
+            foreach (System.Data.DataRow row in dsGroupCompaniesList.Tables[0].Rows)
             {
                 ListOfGroupCompanies listOfGroup = new ListOfGroupCompanies
-                { OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
+                {
+                    OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
                     CompanyName = row["Company_Name"].ToString(),
-                    IsActive =Convert.ToBoolean(Convert.ToInt32( row["Is_Active"]))
+                    IsActive = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"]))
 
                 };
                 //GroupCompanyLogo = row["Group_Company_Logo"].ToString(), IndustryType = row["Industry_Type"].ToString() };
                 grouplist.Add(listOfGroup);
-            }          
+            }
             return View(grouplist);
         }
         [HttpPost]
@@ -909,7 +910,7 @@ namespace ComplianceAuditWeb.Controllers
 
 
             List<ListOfGroupCompanies> companylist = new List<ListOfGroupCompanies>();
-           // string strxmlCompanies = organizationservice.GeSpecifictCompaniesList(companyVM.organization.Organization_Id);
+            // string strxmlCompanies = organizationservice.GeSpecifictCompaniesList(companyVM.organization.Organization_Id);
             string strxmlC = organizationservice.GetCompaniesList();
 
 
@@ -927,7 +928,7 @@ namespace ComplianceAuditWeb.Controllers
                 //GroupCompanyLogo = row["Group_Company_Logo"].ToString(), IndustryType = row["Industry_Type"].ToString() };
                 companylist.Add(listOfCompany);
             }
-            return View("_CompanyList",companylist);
+            return View("_CompanyList", companylist);
         }
         [HttpPost]
         public ActionResult ListOfCompanies(ListOfGroupCompanies ListOfGroupCompanies)
@@ -964,14 +965,50 @@ namespace ComplianceAuditWeb.Controllers
         {
             return View("ListOfBranches");
         }
-
-        public JsonResult getstate(int countryid)
+        [HttpGet]
+        public ActionResult SelectGroupCompany()
         {
-            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
-            string strXMLStates = client.GetStateList(countryid);          
-            return Json(strXMLStates);
+            Models.ListOfGroupCompanies model = new ListOfGroupCompanies();
+            model.GroupCompaniesList=new List<SelectListItem>();
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+            string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
+            DataSet dsGroupCompanyList = new DataSet();
+            dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
+            model.GroupCompaniesList.Add(new SelectListItem() { Text ="--Select GroupCompany--" , Value = "0" });
+            foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
+            {
+                model.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+            }
+            return View("_CompanyList", model);
+        }
+        [HttpPost]
+        public ActionResult SelectGroupCompany(ListOfGroupCompanies model)
+        {           
+            return RedirectToAction("ListofCompany",routeValues:new { GroupCompanyid = model.GroupCompanyID });
+        }
+        public ActionResult ListofCompany(int GroupCompanyid)
+        {
+            List<ListOfGroupCompanies> companylist = new List<ListOfGroupCompanies>();
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+            string strxmlCompanies = organizationservice.GeSpecifictCompaniesList(GroupCompanyid);
+
+            DataSet dsSpecificCompaniesList = new DataSet();
+            dsSpecificCompaniesList.ReadXml(new StringReader(strxmlCompanies));
+            foreach (System.Data.DataRow row in dsSpecificCompaniesList.Tables[0].Rows)
+            {
+                ListOfGroupCompanies listOfCompany = new ListOfGroupCompanies
+                {
+                    OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
+                    CompanyName = row["Company_Name"].ToString(),
+                    IsActive = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"]))
+
+                };
+                companylist.Add(listOfCompany);
+
+            }
+            return View("_Companydashboard", companylist);
+
         }
 
     }
-
 }
