@@ -13,7 +13,7 @@ namespace Compliance.DataAccess
     /// <summary>
     /// This is a static method which returns the Mysql connection.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Mysql closed connection</returns>
         static public MySqlConnection getconnection()
         {              
                 MySqlConnection conn = new MySqlConnection("Server = 127.0.0.1; Port = 3306; Database = auditmoduledb; Uid = root; Pwd = Ovi@1996");
