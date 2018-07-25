@@ -698,7 +698,7 @@ body {
 }
 
 .continueBtn {
- 	margin: 83px 25px 10px 15px;
+ 	margin: 10px 25px 10px 15px;
     text-align: center;
     list-style: none;
     border-top: solid 1px #eee;
@@ -825,17 +825,18 @@ button.btn.primary-button {
 	margin-top:15px;
 }
 
-.input-field label {
-    font-weight: normal;
-    position: absolute;
-    color: #808080;
-    pointer-events: none;
-    left: 23px;
-    top: 17px;
-    transition: 0.2s ease all;
-    -moz-transition: 0.2s ease all;
-    -webkit-transition: 0.2s ease all;
-}
+    .input-field label {
+        font-weight: normal;
+        position: absolute;
+        color: #808080;
+        pointer-events: none;
+        left: 23px;
+        padding-left: 8px;
+        top: 17px;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+    }
 
 .subSelect label {
     top: -4px;
