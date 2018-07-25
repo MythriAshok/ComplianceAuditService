@@ -353,6 +353,10 @@ WHERE User_Group_ID= p_User_Group_ID;
 end /
 Delimiter ;
 
+
+
+
+
 Drop Procedure if exists `sp_getCountry`;
 Delimiter /
 create procedure sp_getCountry()
@@ -409,29 +413,49 @@ p_Branch_Coordinates1 varchar (100),
 p_Branch_Coordinates2 varchar (100),
 p_Branch_CoordinateURL varchar (100)
 )
-
 begin
 if(p_Flag = 'I')then
-
-insert into tbl_branch_location(Location_ID,Location_Name,Address,Country_ID,State_ID,City_ID,
-Postal_Code,Branch_Coordinates1,Branch_Coordinates2,Branch_CoordinateURL)
-
-values(p_Location_ID,p_Location_Name,p_Address,p_Country_ID,p_State_ID,p_City_ID,
-p_Postal_Code,p_Branch_Coordinates1,p_Branch_Coordinates2,p_Branch_CoordinateURL);
+insert into tbl_branch_location
+(
+Location_ID,
+Location_Name,
+Address,
+Country_ID,
+State_ID,
+City_ID,
+Postal_Code,
+Branch_Coordinates1,
+Branch_Coordinates2,
+Branch_CoordinateURL
+)
+values
+(
+p_Location_ID,
+p_Location_Name,
+p_Address,
+p_Country_ID,
+p_State_ID,
+p_City_ID,
+p_Postal_Code,
+p_Branch_Coordinates1,
+p_Branch_Coordinates2,
+p_Branch_CoordinateURL
+);
 select last_insert_id();
-
 else
 update tbl_branch_location set
-
-Location_Name=p_Location_Name,Address=p_Address,Country_ID=p_Country_ID,State_ID=p_State_ID,City_ID=p_City_ID,
+Location_Name=p_Location_Name,
+Address=p_Address,
+Country_ID=p_Country_ID,
+State_ID=p_State_ID,
+City_ID=p_City_ID,
 Postal_Code=p_Postal_Code,
-Branch_Coordinates1= p_Branch_Coordinates1,Branch_Coordinates2=p_Branch_Coordinates2,
+Branch_Coordinates1= p_Branch_Coordinates1,
+Branch_Coordinates2=p_Branch_Coordinates2,
 Branch_CoordinateURL= p_Branch_CoordinateURL
 where Location_ID=p_Location_ID;
 select last_insert_id();
-
 end if;
-
 end/
 Delimiter ;
 
@@ -448,8 +472,10 @@ then
 select
 LocationID, 
 Location_Name, 
-Address,Country_ID, 
-State_ID,Postal_Code, 
+Address,
+Country_ID, 
+State_ID,
+Postal_Code, 
 Branch_Coordinates1,  
 Branch_Coordinates2,  
 Branch_CoordinatesURL 
@@ -490,7 +516,7 @@ create procedure sp_insertupdateOrganizationHier
  p_Flag char(1),
  p_Org_Hier_ID int,
  p_Company_Name varchar(45),
- p_Company_ID int,
+ p_Company_Code int,
  p_Parent_Company_ID int,
  p_Description varchar(45),
  p_level int,

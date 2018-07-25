@@ -211,7 +211,8 @@ namespace ComplianceAuditWeb.Controllers
                 //{
                 //}
                 int key = formCollection.Count;
-                int rulecount = Convert.ToInt32(formCollection[key-1]);
+                string str = Convert.ToString(key - 1);
+                int rulecount = Convert.ToInt32(formCollection[str]);
                 for (int index = 0; index < rulecount; index++)
 
                 //{

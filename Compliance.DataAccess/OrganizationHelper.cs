@@ -139,7 +139,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Flag", Flag);
                     cmd.Parameters.AddWithValue("p_Org_Hier_ID", org.Organization_Id);
                     cmd.Parameters.AddWithValue("p_Company_Name", org.Company_Name);
-                    cmd.Parameters.AddWithValue("p_Company_ID", org.Company_Id);
+                    cmd.Parameters.AddWithValue("p_Company_Code", org.Company_Id);
                     cmd.Parameters.AddWithValue("p_Parent_Company_ID", org.Parent_Company_Id);
                     cmd.Parameters.AddWithValue("p_Description", org.Description);
                     cmd.Parameters.AddWithValue("p_level", org.Level);
@@ -473,7 +473,7 @@ namespace Compliance.DataAccess
             return dsGroupCompaniesList;
         }
 
-        public DataSet getCompanyList()
+        public DataSet getSpecificCompanyList(int GroupCompanyID)
         {
             DataSet dsCompaniesList = new DataSet();
             try
@@ -481,6 +481,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getCompaniesList", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", GroupCompanyID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsCompaniesList);
             }

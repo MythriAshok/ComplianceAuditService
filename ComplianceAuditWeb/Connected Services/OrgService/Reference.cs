@@ -93,18 +93,6 @@ namespace ComplianceAuditWeb.OrgService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetBranchList", ReplyAction="http://tempuri.org/IOrganizationService/GetBranchListResponse")]
         System.Threading.Tasks.Task<string> GetBranchListAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getGroupCompanyListDropDown", ReplyAction="http://tempuri.org/IOrganizationService/getGroupCompanyListDropDownResponse")]
-        string getGroupCompanyListDropDown();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getGroupCompanyListDropDown", ReplyAction="http://tempuri.org/IOrganizationService/getGroupCompanyListDropDownResponse")]
-        System.Threading.Tasks.Task<string> getGroupCompanyListDropDownAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getCompanyListDropDown", ReplyAction="http://tempuri.org/IOrganizationService/getCompanyListDropDownResponse")]
-        string getCompanyListDropDown(int groupcompanyID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getCompanyListDropDown", ReplyAction="http://tempuri.org/IOrganizationService/getCompanyListDropDownResponse")]
-        System.Threading.Tasks.Task<string> getCompanyListDropDownAsync(int groupcompanyID);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/DeactivateGroupCompany", ReplyAction="http://tempuri.org/IOrganizationService/DeactivateGroupCompanyResponse")]
         bool DeactivateGroupCompany(int OrgID);
         
@@ -295,22 +283,6 @@ namespace ComplianceAuditWeb.OrgService {
         
         public System.Threading.Tasks.Task<string> GetBranchListAsync() {
             return base.Channel.GetBranchListAsync();
-        }
-        
-        public string getGroupCompanyListDropDown() {
-            return base.Channel.getGroupCompanyListDropDown();
-        }
-        
-        public System.Threading.Tasks.Task<string> getGroupCompanyListDropDownAsync() {
-            return base.Channel.getGroupCompanyListDropDownAsync();
-        }
-        
-        public string getCompanyListDropDown(int groupcompanyID) {
-            return base.Channel.getCompanyListDropDown(groupcompanyID);
-        }
-        
-        public System.Threading.Tasks.Task<string> getCompanyListDropDownAsync(int groupcompanyID) {
-            return base.Channel.getCompanyListDropDownAsync(groupcompanyID);
         }
         
         public bool DeactivateGroupCompany(int OrgID) {
