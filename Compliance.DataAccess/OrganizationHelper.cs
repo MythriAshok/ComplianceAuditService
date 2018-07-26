@@ -479,7 +479,7 @@ namespace Compliance.DataAccess
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getCompaniesList", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getCompanieyList", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsCompaniesList);
@@ -501,7 +501,7 @@ namespace Compliance.DataAccess
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getCompaniesList", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getCompanyLists", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Parent_Company_ID", GroupCompanyID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);

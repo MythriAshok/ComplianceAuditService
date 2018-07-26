@@ -11,7 +11,11 @@ namespace Compliance.DataObject
         [Required]
         public string Company_Name { get; set; }
         public int Company_Id { get; set; }
+        
+
         public int Parent_Company_Id { get; set; }
+        [Required]
+
         public string Description { get; set; }
         public int Level { get; set; }
         public bool Is_Leaf { get; set; }

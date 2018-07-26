@@ -268,7 +268,7 @@
                 @if (Model.organization.Organization_Id != 0)
                 {
                     button = "Update";
-                    @Html.ActionLink("Delete", "DeleteCompanyCompany", new { Orgid = Model.organization.Organization_Id })
+                    @Html.ActionLink("Delete", "DeleteCompany", new { Orgid = Model.organization.Organization_Id })
 
                 }
                 @*<input type="submit" value="@button" class="btn btn-default" />*@

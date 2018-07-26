@@ -434,6 +434,7 @@
     <Content Include="Views\UserManagement\_UserManagementDashboard.cshtml" />
     <Content Include="Views\ManageOrganization\_CompanyList.cshtml" />
     <Content Include="Views\ManageOrganization\_Companydashboard.cshtml" />
+    <Content Include="Views\ManageOrganization\UpdateCompany.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
