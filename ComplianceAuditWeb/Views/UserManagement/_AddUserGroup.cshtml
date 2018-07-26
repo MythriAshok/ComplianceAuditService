@@ -6,7 +6,7 @@
     ViewBag.Title = "Add UserGroup Page";
 }
 <ul class="breadcrumb ML15">
-    <li><a href="">User Management</a></li>
+    <li><a href="/UserManagement/UserManagementdashboard">User Management</a></li>
     <li>Add UserGroup</li>
 </ul>
 <h2 class="ML15">Add UserGroup</h2>
@@ -16,7 +16,7 @@
 <div class="mid_content_sec">
     @Html.AntiForgeryToken()
 
-    <div class="col-xs-10 subSelect ">
+    <div class="col-xs-6 subSelect ">
         <div class="input-field">
             @Html.Label("GroupName", new { @class = "floating-label" })
             @if (Model.Group.UserGroupId > 0)
@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="clearfix"></div>
-    <div class="col-xs-10 subSelect ">
+    <div class="col-xs-6 subSelect ">
         <div class="input-field">
             @Html.Label("GroupDescription", new { @class = "floating-label" })
             @Html.TextBoxFor(model => model.Group.UserGroupDescription, new { @class = "inputMaterial ui - autocomplete - input" })
@@ -38,13 +38,13 @@
         </div>
     </div>
     <div class="clearfix"></div>
-    @Html.HiddenFor(model => model.Role)
-    <div class="col-xs-10 subSelect ">
+
+    <div class="col-xs-6 subSelect ">
         <div class="input-field">
             @if (Model.Roles != null)
             {
-                @Html.Label("Role", new { @class = "floating-label" })
-                @Html.DropDownListFor(model => model.Group.UserRoleId, Model.Roles, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.Label("Role", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(model => model.Group.UserRoleId, Model.Roles, new { @class = "inputMaterialSelect ui - autocomplete - input " })
             }
         </div>
     </div>
@@ -60,6 +60,8 @@
 
             @*<input type="submit" value=@button class="btn btn-default" />*@
             <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">@button<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
+            <input type="submit" value="Reset" class="btn primary-button" />
+            <input type="submit" value="Cancel" class="btn primary-button" />
         </li>
     </ul>
 </div>

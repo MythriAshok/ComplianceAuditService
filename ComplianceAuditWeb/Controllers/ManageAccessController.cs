@@ -181,11 +181,13 @@ namespace ComplianceAuditWeb.Controllers
             DataSet ds = new DataSet();
             string xmlmenu = client.getmenulist(Convert.ToInt32(Session["Usergroupid"]));
             ds.ReadXml(new StringReader(xmlmenu));
-            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            if (ds.Tables.Count > 0)
             {
-                menues.Add(new Menus { MenuName = Convert.ToString(row["Menu_Name"]), PathUrl = Convert.ToString(row["Page_URL"]), icon = Convert.ToString(row["icon"]), ParentMenuId = Convert.ToInt32(row["Parent_MenuID"]) });
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    menues.Add(new Menus { MenuName = Convert.ToString(row["Menu_Name"]), PathUrl = Convert.ToString(row["Page_URL"]), icon = Convert.ToString(row["icon"]), ParentMenuId = Convert.ToInt32(row["Parent_MenuID"]) });
+                }
             }
-
             return PartialView("~/Views/Shared/_Menu.cshtml", menues);
         }
 

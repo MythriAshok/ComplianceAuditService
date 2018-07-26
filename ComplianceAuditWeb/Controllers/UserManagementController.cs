@@ -32,12 +32,14 @@ namespace ComplianceAuditWeb.Controllers
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             rolesView.privilege = new List<SelectListItem>();
-            if (ds!=null)
+            if (ds.Tables.Count > 0)
+            {
                 foreach (System.Data.DataRow row in ds.Tables[0].Rows)
                 {
 
-                rolesView.privilege.Add(new SelectListItem() { Text = row["Privilege_Name"].ToString(), Value = row["Privilege_ID"].ToString() });
-                }            
+                    rolesView.privilege.Add(new SelectListItem() { Text = row["Privilege_Name"].ToString(), Value = row["Privilege_ID"].ToString() });
+                }
+            }
             return View("_AddRole", rolesView);
         }
 
@@ -74,18 +76,24 @@ namespace ComplianceAuditWeb.Controllers
             dsrole.Clear();
             xmldata = client.getRolePrivilege(rolesView.roles.RoleId);
             dsrole.ReadXml(new StringReader(xmldata));
-            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            if (ds.Tables.Count > 0)
             {
-                bool selected = false;
-                foreach (System.Data.DataRow roleid in dsrole.Tables[0].Rows)
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
                 {
-                    if (Convert.ToInt32(roleid["Privilege_ID"]) == Convert.ToInt32(row["Privilege_ID"]))
+                    bool selected = false;
+                    if (dsrole.Tables.Count > 0)
                     {
-                        selected = true;
-                        break;
+                        foreach (System.Data.DataRow roleid in dsrole.Tables[0].Rows)
+                        {
+                            if (Convert.ToInt32(roleid["Privilege_ID"]) == Convert.ToInt32(row["Privilege_ID"]))
+                            {
+                                selected = true;
+                                break;
+                            }
+                        }
                     }
+                    rolesView.privilege.Add(new SelectListItem() { Text = row["Privilege_Name"].ToString(), Value = row["Privilege_ID"].ToString(), Selected = selected });
                 }
-                rolesView.privilege.Add(new SelectListItem() { Text = row["Privilege_Name"].ToString(), Value = row["Privilege_ID"].ToString(),Selected=selected });
             }
             return View("_AddRole", rolesView);
         }
@@ -116,9 +124,12 @@ namespace ComplianceAuditWeb.Controllers
             ds.ReadXml(new StringReader(xmldata));
             GroupView.Roles = new List<SelectListItem>();
             GroupView.Roles.Add(new SelectListItem { Text = "--Select Roles--", Value = "0" });
-            foreach(System.Data.DataRow row in ds.Tables[0].Rows)
+            if (ds.Tables.Count > 0)
             {
-                GroupView.Roles.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    GroupView.Roles.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
+                }
             }
             GroupView.Role = new List<SelectListItem>();
             return View("_AddUserGroup", GroupView);
@@ -152,11 +163,13 @@ namespace ComplianceAuditWeb.Controllers
             DataSet dsrole = new DataSet();
             dsrole.ReadXml(new StringReader(xmldata));
             model.Roles = new List<SelectListItem>();
-            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            if (dsrole.Tables.Count > 0)
             {
-                model.Roles.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.Roles.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
+                }
             }
-
             return View("_AddUserGroup", model);
         }
 
@@ -184,6 +197,7 @@ namespace ComplianceAuditWeb.Controllers
             Groups.ReadXml(new StringReader(xmlGroups));
             userviewmodel.UserGroupList = new List<SelectListItem>();
             //userviewmodel.UserGroupList.Add(new SelectListItem { Text = "--Select--", Value = "0" });
+            //if
             foreach (System.Data.DataRow row in Groups.Tables[0].Rows)
             {
                 userviewmodel.UserGroupList.Add(new SelectListItem { Text = row["User_Group_Name"].ToString(), Value =row["User_Group_ID"].ToString() });
@@ -336,13 +350,17 @@ namespace ComplianceAuditWeb.Controllers
             return View("_ListofUsers", userlist);
         }
 
-        //public ActionResult ListofRoles()
-        //{
-        //    UserService.UserServiceClient client = new UserService.UserServiceClient();
-        //    //string xmldata = client.getr(0);
+        public ActionResult ListofRoles()
+        {
+            UserService.UserServiceClient client = new UserService.UserServiceClient();
+            string xmldata = client.GetRoles(0);
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            RolesViewModel model = new RolesViewModel();
+            List<RolesViewModel> roles = new List<RolesViewModel>();
 
-        //    return View("_ListofRoles",);
-        //}
+            return View("_ListofRoles", roles);
+        }
 
         public ActionResult DeleteUser(int UserId)
         {
@@ -388,7 +406,7 @@ namespace ComplianceAuditWeb.Controllers
                 if (ds.Tables.Count > 0)
                 {
                     Session["UserId"] = ds.Tables[0].Rows[0]["User_ID"];
-                    string fullname = ds.Tables[0].Rows[0]["First_Name"].ToString() + ds.Tables[0].Rows[0]["Middle_Name"].ToString() + ds.Tables[0].Rows[0]["Last_Name"].ToString();
+                    string fullname = ds.Tables[0].Rows[0]["First_Name"].ToString() + " " + ds.Tables[0].Rows[0]["Last_Name"].ToString();
                     Session["username"] = fullname;
                     Session["emailid"] = ds.Tables[0].Rows[0]["Email_ID"];
                     Session["CompanyId"] = ds.Tables[0].Rows[0]["Company_ID"];

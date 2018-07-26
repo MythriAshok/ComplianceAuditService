@@ -332,7 +332,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Code\Commonhelper.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Connected Services\AccessService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -375,6 +374,7 @@
     <Compile Include="Models\ComplianceViewModel.cs" />
     <Compile Include="Models\ListofComplianceViewModel.cs" />
     <Compile Include="Models\ListOfGroupCompanies.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\OrganizationViewModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\RolesViewModel.cs" />
@@ -434,6 +434,9 @@
     <Content Include="Views\UserManagement\_UserManagementDashboard.cshtml" />
     <Content Include="Views\ManageOrganization\_CompanyList.cshtml" />
     <Content Include="Views\ManageOrganization\_Companydashboard.cshtml" />
+    <Content Include="Views\UserManagement\_AddUser - Copy.cshtml" />
+    <Content Include="Views\UserManagement\_ListofRoles.cshtml" />
+    <Content Include="Views\UserManagement\_ListofUsers.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
