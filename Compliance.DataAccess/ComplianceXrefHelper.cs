@@ -240,7 +240,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getRuleforBranch", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", branchid);
+                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", sectionid);
                 cmd.Parameters.AddWithValue("p_Org_ID", branchid);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(ds);

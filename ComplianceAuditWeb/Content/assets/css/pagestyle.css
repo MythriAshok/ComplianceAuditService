@@ -942,7 +942,7 @@ button.btn.primary-button {
     color: #555;
 }
 
-.inputMaterial, .autoInputMaterial {
+.inputMaterial, .autoInputMaterial, input[type="date" i] {
     padding: 20px 10px 6px 0px;
     display: block;
     width: 100%;
