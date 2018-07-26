@@ -11,6 +11,7 @@ namespace Compliance.DataObject
     {
         public int Compliance_Xref_ID { get; set; }
         public string Comp_Category { get; set; }
+        [Required]
         public string Compliance_Title { get; set; }
         public string Comp_Description { get; set; }
         public string compl_def_consequence { get; set; }

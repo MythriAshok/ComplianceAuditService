@@ -8,6 +8,7 @@ using Compliance.DataObject;
 using System.Xml;
 using System.Data;
 using System.IO;
+using System.Configuration;
 
 namespace ComplianceAuditWeb.Controllers
 {
@@ -43,11 +44,15 @@ namespace ComplianceAuditWeb.Controllers
         //Post:insertRoles
         [HttpPost]
         public ActionResult AddRoles(RolesViewModel rolesView)
-        {           
-            UserService.UserServiceClient client = new UserService.UserServiceClient();
-            int roleid=client.insertRoles(rolesView.roles);                        
-            client.insertRolePrivilege(roleid, rolesView.PrivilegeId);                                
-            return View("CreateUser");
+        {
+            if (ModelState.IsValid)
+            {
+                UserService.UserServiceClient client = new UserService.UserServiceClient();
+                int roleid = client.insertRoles(rolesView.roles);
+                client.insertRolePrivilege(roleid, rolesView.PrivilegeId);
+                return View("CreateUser");
+            }
+            return View("_AddRole", rolesView);
         }
 
         [HttpGet]
@@ -88,11 +93,15 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult updateRoles(RolesViewModel model)
         {
-            UserService.UserServiceClient client = new UserService.UserServiceClient();
-            client.updateRoles(model.roles);
-            client.DeleteRolePrivilege(model.roles.RoleId);
-            client.insertRolePrivilege(model.roles.RoleId, model.PrivilegeId);
-            return View("_AddRole",model);
+            if (ModelState.IsValid)
+            {
+                UserService.UserServiceClient client = new UserService.UserServiceClient();
+                client.updateRoles(model.roles);
+                client.DeleteRolePrivilege(model.roles.RoleId);
+                client.insertRolePrivilege(model.roles.RoleId, model.PrivilegeId);
+                return View("_AddRole", model);
+            }
+            return View("_AddRole", model);
         }
 
         [HttpGet]
@@ -118,9 +127,13 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult AddUserGroup(UserGroupViewModel model)
         {
-            UserService.UserServiceClient Client = new UserService.UserServiceClient();           
-            Client.insertGroups(model.Group);            
-            return View("CreateUser");
+            if (ModelState.IsValid)
+            {
+                UserService.UserServiceClient Client = new UserService.UserServiceClient();
+                Client.insertGroups(model.Group);
+                return View("CreateUser");
+            }
+                return View("_AddUserGroup", model);
         }
 
         [HttpGet]
@@ -139,7 +152,6 @@ namespace ComplianceAuditWeb.Controllers
             DataSet dsrole = new DataSet();
             dsrole.ReadXml(new StringReader(xmldata));
             model.Roles = new List<SelectListItem>();
-            //GroupView.Roles.Add(new SelectListItem { Text = "--Select Roles--", Value = "0" });
             foreach (System.Data.DataRow row in ds.Tables[0].Rows)
             {
                 model.Roles.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
@@ -151,13 +163,17 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult Updateusergroup(UserGroupViewModel model)
         {
-            UserService.UserServiceClient Client = new UserService.UserServiceClient();
-            Client.updateGroups(model.Group);
-            return View();
+            if (ModelState.IsValid)
+            {
+                UserService.UserServiceClient Client = new UserService.UserServiceClient();
+                Client.updateGroups(model.Group);
+                return View();
+            }
+            return View("_AddUserGroup", model);
         }
 
         [HttpGet]
-        public ActionResult CreateUser()
+        public ActionResult AddUser()
         {           
             UserViewModel userviewmodel = new UserViewModel();
             userviewmodel.User = new User();
@@ -185,40 +201,40 @@ namespace ComplianceAuditWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateUser(UserViewModel model)
+        public ActionResult AddUser(UserViewModel model)
         {
-            UserService.UserServiceClient Client = new UserService.UserServiceClient();
-            if (ModelState.IsValid)
-            {               
-                string res = Client.insertUser(model.User);
-                if (res != "EXISTS")
+                UserService.UserServiceClient Client = new UserService.UserServiceClient();
+                if (ModelState.IsValid)
                 {
-                    model.User.UserId = Convert.ToInt32(res);
-                    Client.insertUserGroupmember(model.User.UserId, model.UserGroupID);
-                    Client.insertUserRole(model.User.UserId, model.RoleID);
-                    return View("CreateUser");
+                    string res = Client.insertUser(model.User);
+                    if (res != "EXISTS")
+                    {
+                        model.User.UserId = Convert.ToInt32(res);
+                        Client.insertUserGroupmember(model.User.UserId, model.UserGroupID);
+                        Client.insertUserRole(model.User.UserId, model.RoleID);
+                        return View("CreateUser");
+                    }
+                    else
+                        ModelState.AddModelError("", "UserName is already Exists");
                 }
-                else
-                    ModelState.AddModelError("","UserName is already Exists");
-            }
-            model.User.UserId = 0;
-            string xmlGroups = Client.GetUserGroup(0);
-            DataSet Groups = new DataSet();
-            Groups.ReadXml(new StringReader(xmlGroups));
-            model.UserGroupList = new List<SelectListItem>();
-            foreach (System.Data.DataRow row in Groups.Tables[0].Rows)
-            {
-                model.UserGroupList.Add(new SelectListItem { Text = row["User_Group_Name"].ToString(), Value = row["User_Group_ID"].ToString() });
-            }
-            string xmlRoles = Client.GetRoles(0);
-            DataSet dsRoles = new DataSet();
-            dsRoles.ReadXml(new StringReader(xmlRoles));
-            model.RolesList = new List<SelectListItem>();
-            foreach (System.Data.DataRow row in dsRoles.Tables[0].Rows)
-            {
-                model.RolesList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
-            }
-            return View("_AddUser",model);
+                model.User.UserId = 0;
+                string xmlGroups = Client.GetUserGroup(0);
+                DataSet Groups = new DataSet();
+                Groups.ReadXml(new StringReader(xmlGroups));
+                model.UserGroupList = new List<SelectListItem>();
+                foreach (System.Data.DataRow row in Groups.Tables[0].Rows)
+                {
+                    model.UserGroupList.Add(new SelectListItem { Text = row["User_Group_Name"].ToString(), Value = row["User_Group_ID"].ToString() });
+                }
+                string xmlRoles = Client.GetRoles(0);
+                DataSet dsRoles = new DataSet();
+                dsRoles.ReadXml(new StringReader(xmlRoles));
+                model.RolesList = new List<SelectListItem>();
+                foreach (System.Data.DataRow row in dsRoles.Tables[0].Rows)
+                {
+                    model.RolesList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
+                }            
+            return View("_AddUser", model);
         }
 
         [HttpGet]
@@ -293,13 +309,16 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult UpdateUser(UserViewModel model)
         {
-            UserService.UserServiceClient Client = new UserService.UserServiceClient();
-            model.User.IsActive = true;
-            Client.updateUser(model.User);
-            Client.UpdateUserGroupMember(model.User.UserId);           
-            Client.insertUserGroupmember(model.User.UserId, model.UserGroupID);
-            Client.UpdateUserRole(model.User.UserId);
-            Client.insertUserRole(model.User.UserId, model.RoleID);
+            if (ModelState.IsValid)
+            {
+                UserService.UserServiceClient Client = new UserService.UserServiceClient();
+                model.User.IsActive = true;
+                Client.updateUser(model.User);
+                Client.UpdateUserGroupMember(model.User.UserId);
+                Client.insertUserGroupmember(model.User.UserId, model.UserGroupID);
+                Client.UpdateUserRole(model.User.UserId);
+                Client.insertUserRole(model.User.UserId, model.RoleID);
+            }
             return View("CreateUser");
         }
        
@@ -351,12 +370,12 @@ namespace ComplianceAuditWeb.Controllers
 
         public ActionResult Login()
         {
-            User user = new User();
+            LoginViewModel user = new LoginViewModel();
             return PartialView("~/Views/Shared/_Login.cshtml", user);
         }
 
         [HttpPost]
-        public ActionResult Login(User user)
+        public ActionResult Login(LoginViewModel user)
         {
             if (ModelState.IsValid)
             {
@@ -377,9 +396,11 @@ namespace ComplianceAuditWeb.Controllers
                     Session["Usergroupid"] = 2; /*ds.Tables[0].Rows[0][];*/
                     return RedirectToAction("ListofCompliance", "ComplianceManagement");
                 }
+                else
+                    ModelState.AddModelError("",ConfigurationManager.AppSettings["Login_error"]);
             }
             else
-                ModelState.AddModelError("", " There was an error with your E-Mail/Password combination. Please try again.");
+                ModelState.AddModelError("",ConfigurationManager.AppSettings["Login_error_null"]);
             return View("~/Views/Shared/_Login.cshtml",user);
 
         }
