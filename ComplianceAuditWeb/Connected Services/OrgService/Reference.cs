@@ -99,6 +99,12 @@ namespace ComplianceAuditWeb.OrgService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GeSpecifictCompaniesList", ReplyAction="http://tempuri.org/IOrganizationService/GeSpecifictCompaniesListResponse")]
         System.Threading.Tasks.Task<string> GeSpecifictCompaniesListAsync(int OrgID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getCompanyListsforBranch", ReplyAction="http://tempuri.org/IOrganizationService/getCompanyListsforBranchResponse")]
+        string getCompanyListsforBranch(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getCompanyListsforBranch", ReplyAction="http://tempuri.org/IOrganizationService/getCompanyListsforBranchResponse")]
+        System.Threading.Tasks.Task<string> getCompanyListsforBranchAsync(int OrgID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/DeactivateGroupCompany", ReplyAction="http://tempuri.org/IOrganizationService/DeactivateGroupCompanyResponse")]
         bool DeactivateGroupCompany(int OrgID);
         
@@ -297,6 +303,14 @@ namespace ComplianceAuditWeb.OrgService {
         
         public System.Threading.Tasks.Task<string> GeSpecifictCompaniesListAsync(int OrgID) {
             return base.Channel.GeSpecifictCompaniesListAsync(OrgID);
+        }
+        
+        public string getCompanyListsforBranch(int OrgID) {
+            return base.Channel.getCompanyListsforBranch(OrgID);
+        }
+        
+        public System.Threading.Tasks.Task<string> getCompanyListsforBranchAsync(int OrgID) {
+            return base.Channel.getCompanyListsforBranchAsync(OrgID);
         }
         
         public bool DeactivateGroupCompany(int OrgID) {

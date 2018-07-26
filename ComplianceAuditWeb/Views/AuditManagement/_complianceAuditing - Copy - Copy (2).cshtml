@@ -4,7 +4,6 @@
     ViewBag.Title = "ComplianceAuditing";
 }
 
-<h2>insertComplianceAudit</h2>
 @using (Html.BeginForm())
 {
     int rulecount = 0;
@@ -28,7 +27,7 @@
                 <tr>
                     @if (Model.Section[j].Compliance_Xref_ID == Model.Rules[i].Compliance_Parent_ID)
                     {
-                       
+
                     <td>
                         <i class="fa fa-leanpub"></i> @Html.DisplayFor(m => m.Rules[i].Compliance_Title)
                     </td>
@@ -91,8 +90,8 @@
                             @Html.HiddenFor(m => m.Rules[i].compl_def_consequence)
                             @Html.HiddenFor(m => m.Rules[i].Comp_Description)*@
 
-                    }
-                        }
+                }
+            }
 
                         @*@Html.HiddenFor(m => m.Section[j].Form)
                             @Html.HiddenFor(m => m.Section[j].City_ID)
@@ -100,7 +99,7 @@
                             @Html.HiddenFor(m => m.Section[j].Compliance_Xref_ID)
                             @Html.HiddenFor(m => m.Section[j].compl_def_consequence)
                             @Html.HiddenFor(m => m.Section[j].Comp_Description)*@
-                        }
+        }
 
                         @*@Html.HiddenFor(m => m.complianceXrefList[Act].Form)
                             @Html.HiddenFor(m => m.complianceXrefList[Act].City_ID)
@@ -111,7 +110,7 @@
 
 
 
-                        }
+    }
 
 
 
@@ -122,7 +121,10 @@
                     </table>
 
 @Html.Hidden(rulecount.ToString());
-    <input type="submit" value="Save" class="btn btn-default" />
+
+    { Session["rulecount"] = rulecount; };
+
+   <input type="submit" value="Save" class="btn btn-default" />
 }
 
 

@@ -760,7 +760,7 @@ namespace ComplianceAuditWeb.Controllers
             }
 
 
-            branchViewModel.GroupCompanyID = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Parent_Company_ID"]);
+            branchViewModel.GroupCompanyID = 36;//Convert.ToInt32((BranchViewModel) Session["GroupCompanyID"]);
 
             string strXMLGroupCompanyList = organizationClient.GetGroupCompaniesList();
             DataSet dsGroupCompanyList = new DataSet();
@@ -773,7 +773,8 @@ namespace ComplianceAuditWeb.Controllers
 
             branchViewModel.CompanyID = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Parent_Company_ID"]);
 
-            string strXMLCompanyList = organizationClient.GeSpecifictCompaniesList(branchViewModel.CompanyID);
+            string strXMLCompanyList = organizationClient.getCompanyListsforBranch(branchViewModel.CompanyID);
+           // string strXMLCompanyList = organizationClient.GeSpecifictCompaniesList(branchViewModel.CompanyID);
             DataSet dsCompanyList = new DataSet();
             dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
             branchViewModel.CompaniesList = new List<SelectListItem>();
@@ -783,7 +784,7 @@ namespace ComplianceAuditWeb.Controllers
             }
 
 
-            return View(branchViewModel);
+            return View("_Branch",branchViewModel);
         }
 
         [HttpPost]

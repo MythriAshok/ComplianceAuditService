@@ -518,6 +518,31 @@ namespace Compliance.DataAccess
             return dsCompaniesList;
         }
 
+
+
+        public DataSet getCompanyListsforBranch(int GroupCompanyID)
+        {
+            DataSet dsCompaniesList = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getCompanyListsforBranch", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", GroupCompanyID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsCompaniesList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsCompaniesList;
+        }
+
         public DataSet getBranchList()
         {
             DataSet dsBranchList = new DataSet();

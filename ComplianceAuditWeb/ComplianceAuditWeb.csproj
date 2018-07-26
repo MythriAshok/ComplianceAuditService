@@ -375,6 +375,7 @@
     <Compile Include="Models\ComplianceViewModel.cs" />
     <Compile Include="Models\ListofComplianceViewModel.cs" />
     <Compile Include="Models\ListOfGroupCompanies.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\OrganizationViewModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\RolesViewModel.cs" />

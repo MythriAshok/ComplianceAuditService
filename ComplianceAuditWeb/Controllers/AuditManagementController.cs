@@ -212,8 +212,10 @@ namespace ComplianceAuditWeb.Controllers
                 //}
                 int key = formCollection.Count;
                 string str = Convert.ToString(key - 1);
-                int rulecount = Convert.ToInt32(formCollection[str]);
-                for (int index = 0; index < rulecount; index++)
+
+                int rulecount =Convert.ToInt32(Session["rulecount"]);
+              //  int rulecount1 = Convert.ToInt32(formCollection[str]);
+                for (int index = 1; index <= rulecount; index++)
 
                 //{
                 //    if (formCollection[index].ToString().Contains("complianceAuditList"))
@@ -225,23 +227,23 @@ namespace ComplianceAuditWeb.Controllers
                     auditm.complianceAudit = new ComplianceAudit();
                     //string str = formCollection["complianceAuditList["+ counter + "].Audit_Status"];
                     // auditm.complianceAudit.Audit_Status = formCollection["complianceAuditList[" + counter + "].Audit_Status"];
-                    audit.Audit_Status = formCollection["complianceAuditList[" + counter + "].Audit_Status"];
-                    audit.Audit_Date = Convert.ToDateTime(formCollection["complianceAuditList[" + counter + "].Audit_Date"]);
-                    audit.Audit_Remarks = formCollection["complianceAuditList[" + counter + "].Audit_Remarks"];
-                    audit.Penalty_nc = formCollection["complianceAuditList[" + counter + "].Penalty_nc"];
-                    audit.Compliance_Xref_Id = Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Xref_ID"]);
+                    audit.Audit_Status = formCollection["complianceAuditList[" + index + "].Audit_Status"];
+                    audit.Audit_Date = Convert.ToDateTime(formCollection["complianceAuditList[" + index + "].Audit_Date"]);
+                    audit.Audit_Remarks = formCollection["complianceAuditList[" + index + "].Audit_Remarks"];
+                    audit.Penalty_nc = formCollection["complianceAuditList[" + index + "].Penalty_nc"];
+                    audit.Compliance_Xref_Id = Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Xref_ID"]);
                     audit.Auditor_Id = 1;// Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Auditor_ID"]);
-                    audit.Audit_ArteFacts = formCollection["complianceAuditList[" + counter + "].Audit_ArteFacts"];
-                    audit.Compliance_Audit_Id =  Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Audit_Id"]);
+                    audit.Audit_ArteFacts = formCollection["complianceAuditList[" + index + "].Audit_ArteFacts"];
+                    audit.Compliance_Audit_Id =  Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Audit_Id"]);
                     audit.Compliance_Options_Id = 1;// Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Options_Id"]);
-                    audit.Compliance_Schedule_Instance = Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
+                    audit.Compliance_Schedule_Instance = Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Schedule_Instance"]);
                     // audit.Is_Active = Convert.ToBoolean(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
                     //audit.Last_Update_dDate = Convert.ToDateTime(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
                     audit.Org_Hier_Id = 17; // Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
-                    audit.Reviewer_Comments = formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"];
-                    audit.Reviewer_Id = Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
+                    audit.Reviewer_Comments = formCollection["complianceAuditList[" + index + "].Compliance_Schedule_Instance"];
+                    audit.Reviewer_Id = Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Schedule_Instance"]);
                     audit.User_Id = 1;// Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
-                    audit.Version = Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
+                    audit.Version = Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Schedule_Instance"]);
 
                     //OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
                     //CompanyName = row["Company_Name"].ToString(),
@@ -249,7 +251,7 @@ namespace ComplianceAuditWeb.Controllers
 
                     auditdata.Add(audit);
 
-                        counter++;
+                        //counter++;
 
                     //}
 

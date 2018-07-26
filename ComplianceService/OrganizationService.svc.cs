@@ -162,23 +162,23 @@ namespace ComplianceService
             return xmlOrganization; 
         }
 
-        public string getGroupCompanyForBranch(int OrgID)
-        {
-            return bindGroupCompanyForBranch(OrgID);
-        }
-        /// <summary>
-        /// A private method in the service layer that interacts with Organization helper class to bind the Organization data from the database
-        /// </summary>
-        /// <param name="orgID">binds the data of Organization w.r.t specific OrganizationID</param>
-        /// <returns>xmlstring</returns>
-        private string bindGroupCompanyForBranch(int orgID)
-        {
-            Organization org = new Organization();
-            OrganizationHelper orgHelper = new OrganizationHelper();
-            DataSet dsOrganization = orgHelper.getBranch(orgID);
-            string xmlOrganization = dsOrganization.GetXml();
-            return xmlOrganization; 
-        }
+        //public string getGroupCompanyForBranch(int OrgID)
+        //{
+        //    return bindGroupCompanyForBranch(OrgID);
+        //}
+        ///// <summary>
+        ///// A private method in the service layer that interacts with Organization helper class to bind the Organization data from the database
+        ///// </summary>
+        ///// <param name="orgID">binds the data of Organization w.r.t specific OrganizationID</param>
+        ///// <returns>xmlstring</returns>
+        //private string bindGroupCompanyForBranch(int orgID)
+        //{
+        //    Organization org = new Organization();
+        //    OrganizationHelper orgHelper = new OrganizationHelper();
+        //    DataSet dsOrganization = orgHelper.getBranch(orgID);
+        //    string xmlOrganization = dsOrganization.GetXml();
+        //    return xmlOrganization; 
+        //}
         /// <summary>
         /// A method in the service layer that interacts with organization helper class to insert the Company details into the database
         /// </summary>
@@ -546,9 +546,22 @@ namespace ComplianceService
             return xmlGroupCompaniesList;
         }
 
+    public string getCompanyListsforBranch(int OrgID)
+        {
+            return bindCompanyListsforBranch(OrgID);
+}
+private string bindCompanyListsforBranch(int OrgID)
+{
+    OrganizationHelper OrganizationHelper = new OrganizationHelper();
+    DataSet dsGroupCompanies = OrganizationHelper.getCompanyListsforBranch(OrgID);
+    string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
+    return xmlGroupCompaniesList;
+}
 
 
-        public string GetBranchList()
+
+
+public string GetBranchList()
         {
             return BindBranchList();
         }
