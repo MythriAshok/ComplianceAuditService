@@ -5,14 +5,14 @@
 }
 <h2 class="ML15">Add Role</h2>
 <ul class="breadcrumb ML15">
-    <li><a href="">User Management</a></li>
+    <li><a href="/UserManagement/UserManagementdashboard">User Management</a></li>
     <li>Add Role</li>
 </ul>
 @using (Html.BeginForm())
 {
 <div class="mid_content_sec">
     @Html.AntiForgeryToken()
-    <div class="col-xs-10 subSelect ">
+    <div class="col-xs-4 subSelect ">
         <div class="input-field">
             @Html.Label("RoleName:", new { @class = "floating-label" })  <span style="color:red">*</span>
             @if (Model.roles.RoleId > 0)
@@ -25,7 +25,7 @@
         </div>
     </div>
     <div class="clearfix"></div>
-    <div class="col-xs-10 subSelect ">
+    <div class="col-xs-4 subSelect ">
         <div class="input-field">
             @Html.Label("IsGroupRole", new { @class = "floating-label" })
             @Html.CheckBoxFor(model => model.roles.IsGroupRole, new { @class = "inputMaterial ui-autocomplete-input", autocomplete = "off" })
@@ -38,8 +38,8 @@
         <div class="input-field">
             @if (Model.privilege != null)
             {
-                @Html.Label("Privilege", new { @class = "floating-label" })
-                @Html.ListBoxFor(m => m.PrivilegeId, Model.privilege, new { @class = "inputMaterial ui-autocomplete-input", autocomplete = "off" })
+                @Html.Label("Privilege", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.ListBoxFor(m => m.PrivilegeId, Model.privilege, new { @class = "inputMaterialSelect ui - autocomplete - input ", autocomplete = "off" })
                 <span id="loading_data_icon"></span>
             }
         </div>
@@ -54,6 +54,8 @@
                 @Html.ActionLink("Delete", "Deleterole", routeValues: new { RoleId = Model.roles.RoleId })
             }
             <input type="submit" value=@button class="btn primary-button" />
+            <input type="submit" value="Reset" class="btn primary-button" />
+            <input type="submit" value="Cancel" class="btn primary-button" />
             @*<button type="submit" class="btn primary-button" id="btnProceed" name="Button" value=@button onclick="return ShowHide()">Add Company<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>*@
 
         </li>
@@ -61,3 +63,4 @@
 </div>
 }
 
+@*@Html.Action("","")*@
