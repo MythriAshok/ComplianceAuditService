@@ -188,7 +188,7 @@ namespace ComplianceAuditWeb.Controllers
                 auditViewModel.complianceAuditList.Add(new ComplianceAudit { Compliance_Xref_Id = item.Compliance_Xref_ID });
             }
 
-            return View("addComplianceAudit", auditViewModel);
+            return View("_complianceAuditing - Copy - Copy (2)", auditViewModel);
         }
         [HttpPost]
         public ActionResult addComplianceAudit(FormCollection formCollection)
@@ -252,9 +252,11 @@ namespace ComplianceAuditWeb.Controllers
 
                     auditdata.Add(audit);
 
-                        //counter++;
+                    //counter++;
 
                     //}
+
+
 
 
 

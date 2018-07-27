@@ -18,9 +18,17 @@ namespace ComplianceAuditWeb.Models
         public ComplianceAudit complianceAudit { get; set; }
         public List<ComplianceAudit> complianceAuditList { get; set; }
         public IEnumerable<ComplianceAudit> AuditList { get; set; }
-        
+
         public List<SelectListItem> MappedCompany { get; set; }
         public List<SelectListItem> MappedBranch { get; set; }
+        // public List<SelectListItem> auditlists { get; set; }
 
+
+        public enum AuditStatus
+        {
+            Complianced,
+            NotComplianced,
+            PartaillyComplianced
+        }
     }
 }
