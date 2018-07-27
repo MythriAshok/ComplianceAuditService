@@ -14,7 +14,7 @@ namespace Compliance.DataObject
         
 
         public int Parent_Company_Id { get; set; }
-        [Required]
+      
 
         public string Description { get; set; }
         public int Level { get; set; }

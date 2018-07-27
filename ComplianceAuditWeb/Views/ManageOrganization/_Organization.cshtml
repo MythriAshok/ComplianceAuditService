@@ -53,15 +53,16 @@
 
     </script>
 }
-<h2 class="ML15">Add Group Company</h2>
+<h2 class="ML15">Manage Group Company</h2>
 <ul class="breadcrumb ML15">
     <li><a href="">Group Management</a></li>
-    <li>Add Group Company</li>
+    <li> Group Company</li>
 </ul>
 @using (Html.BeginForm())
 {
 <div class="mid_content_sec">
     @Html.AntiForgeryToken()
+    @Html.ValidationMessage("Error")
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
@@ -153,6 +154,8 @@
 
     @*@Html.LabelFor(m => m.organization.Last_Updated_Date);*@
     @Html.HiddenFor(m => m.organization.Last_Updated_Date)
+
+    @Html.HiddenFor(m=>m.companydetails.Company_Details_ID)
     @Html.HiddenFor(m => m.organization.Company_Id)
 
 

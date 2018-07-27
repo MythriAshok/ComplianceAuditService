@@ -7,8 +7,8 @@
 }
 
 <ul class="breadcrumb ML15">
-    <li><a href="">Group Management</a></li>
-    <li>Activate Company</li>
+    <li><a href="">Company Management</a></li>
+    <li>Activate </li>
 </ul>
 <center>
     <h2 class="ML15">Are you sure you want to activate?</h2>
@@ -31,7 +31,7 @@
 
                 @*@Html.LabelFor(m => m.CompanyName, new { @class = "floating-label", Style = "font-size:15px" })*@
 
-                @Html.Label("Selected Company Name")
+                @*@Html.Label("Selected Company Name")*@
                 @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly", @Style="text-align:center" })
 
             </div>

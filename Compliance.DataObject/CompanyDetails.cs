@@ -20,18 +20,15 @@ namespace Compliance.DataObject
         [Display(Name = "End Date")]
         [DataType(DataType.Date)]
         public DateTime Calender_EndDate  { get; set; }
-        [Required]
         public string Auditing_Frequency { get; set; }
-        [Required]
         public string Website { get; set; }
-        [Required]
         public string Company_EmailID { get; set; }
 
-        [RegularExpression("^(\\+?d{10})$", ErrorMessage = "Please enter a proper Phone number.")]
+     //   [RegularExpression("^(\\+?d{10})$", ErrorMessage = "Please enter a proper Phone number.")]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Contact Number1", Prompt = "(1234567890")]
         public string Company_ContactNumber1 { get; set; }
-        [RegularExpression("^(\\+?d{10})$", ErrorMessage = "Please enter a proper Phone number.")]
+      //  [RegularExpression("^(\\+?d{10})$", ErrorMessage = "Please enter a proper Phone number.")]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Contact Number2", Prompt = "(1234567890")]
         public string Company_ContactNumber2 { get; set; }
