@@ -58,6 +58,7 @@ namespace ComplianceAuditWeb.Controllers
             dsStates.ReadXml(new StringReader(strXMLStates));
             dsCities.ReadXml(new StringReader(strXMLCities));
             organizationVM.Country = new List<SelectListItem>();
+            organizationVM.Country.Add(new SelectListItem { Text = "--Select Country--", Value = "0" });
 
             foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
             {
@@ -66,6 +67,8 @@ namespace ComplianceAuditWeb.Controllers
             if (dsStates.Tables.Count > 0)
             {
                 organizationVM.State = new List<SelectListItem>();
+                organizationVM.State.Add(new SelectListItem { Text = "--Select State--", Value = "0" });
+
                 foreach (System.Data.DataRow row in dsStates.Tables[0].Rows)
                 {
                     organizationVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
@@ -76,6 +79,8 @@ namespace ComplianceAuditWeb.Controllers
             if (dsCities.Tables.Count > 0)
             {
                 organizationVM.City = new List<SelectListItem>();
+                organizationVM.City.Add(new SelectListItem { Text = "--Select City--", Value = "0" });
+
                 foreach (System.Data.DataRow row in dsCities.Tables[0].Rows)
                 {
                     organizationVM.City.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
@@ -148,7 +153,7 @@ namespace ComplianceAuditWeb.Controllers
         {
 
             OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
-            string strxmlUpdatedData = organizationClient.getGroupCompany(OrgID);
+            string strxmlUpdatedData = organizationClient.getGroupOrganization(OrgID);
             DataSet dsUpdatedData = new DataSet();
             dsUpdatedData.ReadXml(new StringReader(strxmlUpdatedData));
             OrganizationViewModel organizationViewModel = new OrganizationViewModel();
@@ -259,7 +264,7 @@ namespace ComplianceAuditWeb.Controllers
             // organizationViewModel.organization = new Organization();
 
             OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            string strxmlData = organizationServiceClient.getGroupCompany(OrgID);
+            string strxmlData = organizationServiceClient.getGroupOrganization(OrgID);
             DataSet dsData = new DataSet();
             dsData.ReadXml(new StringReader(strxmlData));
             orgActivateDeactivateViewModel.CompanyID = OrgID;
@@ -290,7 +295,7 @@ namespace ComplianceAuditWeb.Controllers
             
            // organizationViewModel.organization = new Organization();
             OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            string strxmlData = organizationServiceClient.getGroupCompany(OrgID);
+            string strxmlData = organizationServiceClient.getGroupOrganization(OrgID);
             DataSet dsData = new DataSet();
             dsData.ReadXml(new StringReader(strxmlData));
             orgActivateDeactivateViewModel.CompanyID = OrgID;
@@ -323,7 +328,7 @@ namespace ComplianceAuditWeb.Controllers
             OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
             
             OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            string strxmlData = organizationServiceClient.getGroupCompany(OrgID);
+            string strxmlData = organizationServiceClient.getGroupOrganization(OrgID);
             DataSet dsData = new DataSet();
             dsData.ReadXml(new StringReader(strxmlData));
             orgActivateDeactivateViewModel.CompanyID = OrgID;
@@ -369,6 +374,8 @@ namespace ComplianceAuditWeb.Controllers
             DataSet dsGroupCompanyList = new DataSet();
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
             companyVM.GroupCompaniesList = new List<SelectListItem>();
+            companyVM.GroupCompaniesList.Add(new SelectListItem { Text = "--Select Group Company--", Value = "0" });
+
             foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
             {
                 companyVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
@@ -386,6 +393,8 @@ namespace ComplianceAuditWeb.Controllers
             dsStates.ReadXml(new StringReader(strXMLStates));
             dsCities.ReadXml(new StringReader(strXMLCities));
             companyVM.Country = new List<SelectListItem>();
+            companyVM.Country.Add(new SelectListItem { Text = "--Select Country--", Value = "0" });
+
             foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
             {
                 companyVM.Country.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
@@ -393,6 +402,8 @@ namespace ComplianceAuditWeb.Controllers
 
 
             companyVM.State = new List<SelectListItem>();
+            companyVM.State.Add(new SelectListItem { Text = "--Select State--", Value = "0" });
+
             foreach (System.Data.DataRow row in dsStates.Tables[0].Rows)
             {
                 companyVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
@@ -400,6 +411,8 @@ namespace ComplianceAuditWeb.Controllers
 
 
             companyVM.City = new List<SelectListItem>();
+            companyVM.City.Add(new SelectListItem { Text = "--Select City--", Value = "0" });
+
             foreach (System.Data.DataRow row in dsCities.Tables[0].Rows)
             {
                 companyVM.City.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
@@ -653,6 +666,8 @@ namespace ComplianceAuditWeb.Controllers
             DataSet dsGroupCompanyList = new DataSet();
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
             branchVM.GroupCompaniesList = new List<SelectListItem>();
+            branchVM.GroupCompaniesList.Add(new SelectListItem { Text = "--Select Group Company--", Value = "0" });
+
             foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
             {
                 branchVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
@@ -663,6 +678,8 @@ namespace ComplianceAuditWeb.Controllers
             DataSet dsCompanyList = new DataSet();
             dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
             branchVM.CompaniesList = new List<SelectListItem>();
+            branchVM.CompaniesList.Add(new SelectListItem { Text = "--Select Company--", Value = "0" });
+
             foreach (System.Data.DataRow row in dsCompanyList.Tables[0].Rows)
             {
                 branchVM.CompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
@@ -682,6 +699,8 @@ namespace ComplianceAuditWeb.Controllers
             dsStates.ReadXml(new StringReader(strXMLStates));
             dsCities.ReadXml(new StringReader(strXMLCities));
             branchVM.Country = new List<SelectListItem>();
+            branchVM.Country.Add(new SelectListItem { Text = "--Select Country--", Value = "0" });
+
             foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
             {
                 branchVM.Country.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
@@ -689,6 +708,8 @@ namespace ComplianceAuditWeb.Controllers
 
 
             branchVM.State = new List<SelectListItem>();
+            branchVM.State.Add(new SelectListItem { Text = "--Select State--", Value = "0" });
+
             foreach (System.Data.DataRow row in dsStates.Tables[0].Rows)
             {
                 branchVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
@@ -696,6 +717,8 @@ namespace ComplianceAuditWeb.Controllers
 
 
             branchVM.City = new List<SelectListItem>();
+            branchVM.City.Add(new SelectListItem { Text = "--Select City--", Value = "0" });
+
             foreach (System.Data.DataRow row in dsCities.Tables[0].Rows)
             {
                 branchVM.City.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });

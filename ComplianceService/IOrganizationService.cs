@@ -55,8 +55,8 @@ namespace ComplianceService
 
         //string getGroupCompanyListDropDown();
 
-        //[OperationContract]
-
+        [OperationContract]
+        string getGroupOrganization(int OrgID);
         //string getCompanyListDropDown(int groupcompanyID);
         [OperationContract]
         string getCompanyListsforBranch(int OrgID);

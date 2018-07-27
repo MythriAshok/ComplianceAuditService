@@ -91,6 +91,12 @@
   <wsdl:message name="IOrganizationService_GeSpecifictCompaniesList_OutputMessage">
     <wsdl:part name="parameters" element="tns:GeSpecifictCompaniesListResponse" />
   </wsdl:message>
+  <wsdl:message name="IOrganizationService_getGroupOrganization_InputMessage">
+    <wsdl:part name="parameters" element="tns:getGroupOrganization" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_getGroupOrganization_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getGroupOrganizationResponse" />
+  </wsdl:message>
   <wsdl:message name="IOrganizationService_getCompanyListsforBranch_InputMessage">
     <wsdl:part name="parameters" element="tns:getCompanyListsforBranch" />
   </wsdl:message>
@@ -213,6 +219,10 @@
     <wsdl:operation name="GeSpecifictCompaniesList">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GeSpecifictCompaniesList" message="tns:IOrganizationService_GeSpecifictCompaniesList_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GeSpecifictCompaniesListResponse" message="tns:IOrganizationService_GeSpecifictCompaniesList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getGroupOrganization">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/getGroupOrganization" message="tns:IOrganizationService_getGroupOrganization_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/getGroupOrganizationResponse" message="tns:IOrganizationService_getGroupOrganization_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="getCompanyListsforBranch">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/getCompanyListsforBranch" message="tns:IOrganizationService_getCompanyListsforBranch_InputMessage" />
@@ -380,6 +390,15 @@
     </wsdl:operation>
     <wsdl:operation name="GeSpecifictCompaniesList">
       <soap:operation soapAction="http://tempuri.org/IOrganizationService/GeSpecifictCompaniesList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGroupOrganization">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/getGroupOrganization" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

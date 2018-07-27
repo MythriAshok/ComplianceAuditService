@@ -24,7 +24,7 @@ namespace Compliance.DataObject
         public string Auditing_Frequency { get; set; }
         [Required]
         public string Website { get; set; }
-
+        [Required]
         public string Company_EmailID { get; set; }
 
         [RegularExpression("^(\\+?d{10})$", ErrorMessage = "Please enter a proper Phone number.")]
