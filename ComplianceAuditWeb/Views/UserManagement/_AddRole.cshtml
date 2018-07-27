@@ -36,10 +36,10 @@
     <div class="clearfix"></div>
     <div class="col-xs-10 subSelect ">
         <div class="input-field">
-            @if (Model.privilege != null)
+            @if (Model.Privilege != null)
             {
                 @Html.Label("Privilege", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.ListBoxFor(m => m.PrivilegeId, Model.privilege, new { @class = "inputMaterialSelect ui - autocomplete - input ", autocomplete = "off" })
+                @Html.ListBoxFor(m => m.PrivilegeId, Model.Privilege, new { @class = "inputMaterialSelect ui - autocomplete - input ", autocomplete = "off" })
                 <span id="loading_data_icon"></span>
             }
         </div>

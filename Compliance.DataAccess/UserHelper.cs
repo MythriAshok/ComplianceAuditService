@@ -134,6 +134,31 @@ namespace Compliance.DataAccess
             return dtUser;
         }
 
+        public DataSet getAllUser(int CompanyId)
+        {
+            DataSet dtUser = new DataSet();
+            try
+            {
+                conn = DBConnection.getconnection();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getAllUser", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("P_Company_ID", CompanyId);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtUser);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return dtUser;
+        }
+
 
         //public int insertLoginData(User user, char Flag)
         //{

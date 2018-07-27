@@ -86,5 +86,22 @@ namespace ComplianceAuditWeb.Controllers
             return Json(company, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult dashboard(int pid)
+        {
+            List<Menus> menues = new List<Menus>();
+            UserService.UserServiceClient client = new UserService.UserServiceClient();
+            DataSet ds = new DataSet();
+            string xmlmenu = client.getmenulist(Convert.ToInt32(Session["Usergroupid"]), pid);
+            ds.ReadXml(new StringReader(xmlmenu));
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    menues.Add(new Menus { MenuName = Convert.ToString(row["Menu_Name"]), PathUrl = Convert.ToString(row["Page_URL"]), icon = Convert.ToString(row["icon"]), ParentMenuId = Convert.ToInt32(row["Parent_MenuID"]) });
+                }
+            }
+            return View("~/Views/Shared/_Dashboard.cshtml", menues);
+        }
+
     }
 }

@@ -54,6 +54,31 @@ namespace Compliance.DataAccess
 
             return dtUser;
         }
+
+        public DataSet getAllRole(int roleid)
+        {
+            DataSet dtUser = new DataSet();
+            try
+            {
+                conn = DBConnection.getconnection();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getRole", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Role_ID", roleid);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtUser);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return dtUser;
+        }
         /// <summary>
         /// 
         /// </summary>

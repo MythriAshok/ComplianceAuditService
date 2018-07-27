@@ -26,11 +26,13 @@ namespace ComplianceAuditWeb.Controllers
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
             string strXMLCountries = organizationservice.GetCountryList();           
             DataSet dsCountries = new DataSet();
-            dsCountries.ReadXml(new StringReader(strXMLCountries));       
-            
-            foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
+            dsCountries.ReadXml(new StringReader(strXMLCountries));
+            if (dsCountries.Tables.Count > 0)
             {
-                model.Countrylist.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
+                foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
+                {
+                    model.Countrylist.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
+                }
             }
             string strXMLStates = organizationservice.GetStateList(0);
             string strXMLCities = organizationservice.GetCityList(0);

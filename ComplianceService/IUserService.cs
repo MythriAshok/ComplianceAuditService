@@ -19,6 +19,8 @@ namespace ComplianceService
         [OperationContract]
         string getUser(int Userid);
         [OperationContract]
+        string getAllUser(int Companyid);
+        [OperationContract]
         string getUserAssignedGroup(int Userid);
         [OperationContract]
         string getUserRoles(int Userid);
@@ -30,6 +32,8 @@ namespace ComplianceService
         bool updateRoles(Roles Role);
         [OperationContract]
         string GetRoles(int flag);
+        [OperationContract]
+        string GetAllRoles(int roleid);
         [OperationContract]
         bool insertRolePrivilege(int Roleid, int[] Privilegeid);
         [OperationContract]
@@ -62,7 +66,10 @@ namespace ComplianceService
         string Login(string emailid, string password);
 
         [OperationContract]
-        string getmenulist(int groupid);
+        string getmenulist(int usergroupid,int parentmenuid);
+
+        [OperationContract]
+        string getmenu();
 
     }
 }
