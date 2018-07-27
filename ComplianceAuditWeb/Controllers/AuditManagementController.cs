@@ -244,6 +244,7 @@ namespace ComplianceAuditWeb.Controllers
                     audit.Reviewer_Id = Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Schedule_Instance"]);
                     audit.User_Id = 1;// Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
                     audit.Version = Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Schedule_Instance"]);
+                    audit.Is_Active = true;//formCollection["complianceAuditList[" + index + "].Is_Active"];
 
                     //OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
                     //CompanyName = row["Company_Name"].ToString(),

@@ -1,4 +1,4 @@
-﻿@model ComplianceAuditWeb.Models.OrganizationViewModel
+﻿@model ComplianceAuditWeb.Models.OrgActivateDeactivateViewModel
 
 @{
     ViewBag.Title = "ActivateGroupCompany";
@@ -17,6 +17,7 @@
 {
     @Html.AntiForgeryToken()
 
+
     <div class="mid_content_sec">
 
         <div class="col-xs-4 subSelect "></div>
@@ -24,11 +25,10 @@
             <div class="input-field">
 
 
+                @Html.HiddenFor(m => m.CompanyID)
 
-                @Html.HiddenFor(m => m.organization.Organization_Id)
-
-                @Html.LabelFor(m => m.organization.Company_Name, new { @class = "floating-label" })
-                @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.LabelFor(m => m.CompanyName, new { @class = "floating-label" })
+                @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly", @Style = "text-align:center" })
 
             </div>
         </center>
@@ -37,7 +37,7 @@
     <ul class="list-inline continueBtn">
         <li>
             @*<input type="submit" value="Activate" class="btn btn-default" />*@
-            <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Delete<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
+            <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit" onclick="DeleteGroupCompany">Delete<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
             <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Cancel<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
         </li>
     </ul>

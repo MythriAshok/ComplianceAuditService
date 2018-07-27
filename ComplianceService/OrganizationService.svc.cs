@@ -69,15 +69,15 @@ namespace ComplianceService
         {
             int insertOrganizationID = 0;
             int inserBranchID = 0;
-            int insertCompanyDetailsID = 0;
+           // int insertCompanyDetailsID = 0;
             bool updateResult = false;
             try
             {
                 OrganizationHelper organizationhelper = new OrganizationHelper();
                 inserBranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
                 insertOrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
-                insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
-                if (inserBranchID > 0 || insertOrganizationID > 0 || insertCompanyDetailsID > 0)
+               // insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
+                if (inserBranchID > 0 || insertOrganizationID > 0 ) //insertCompanyDetailsID > 0)
                 {
                     updateResult = true;
                 }
@@ -155,9 +155,13 @@ namespace ComplianceService
         /// <returns>xmlstring</returns>
         private string bindGroupCompany(int orgID)
         {
-            Organization org = new Organization();
+           // Organization org = new Organization();
             OrganizationHelper orgHelper = new OrganizationHelper();
             DataSet dsOrganization = orgHelper.getOrganizationHier(orgID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsOrganization = utilityHelper.ConvertNullsToEmptyString(dsOrganization);
+
+
             string xmlOrganization = dsOrganization.GetXml();
             return xmlOrganization; 
         }
@@ -266,6 +270,9 @@ namespace ComplianceService
             Organization org = new Organization();
             OrganizationHelper orgHelper = new OrganizationHelper();
             DataSet dsCompany = orgHelper.getOrganizationHier(orgID);
+
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCompany= utilityHelper.ConvertNullsToEmptyString(dsCompany);
             string xmlCompany = dsCompany.GetXml();
             return xmlCompany;
         }
@@ -397,6 +404,9 @@ namespace ComplianceService
             Organization org = new Organization();
             OrganizationHelper orgHelper = new OrganizationHelper();
             DataSet dsBranch = orgHelper.getBranch(orgID);
+
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsBranch= utilityHelper.ConvertNullsToEmptyString(dsBranch);
             string xmlBranch = dsBranch.GetXml();
             return xmlBranch;
         }

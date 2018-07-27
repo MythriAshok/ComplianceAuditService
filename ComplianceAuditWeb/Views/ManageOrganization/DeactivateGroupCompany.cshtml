@@ -1,4 +1,4 @@
-﻿@model ComplianceAuditWeb.Models.OrganizationViewModel
+﻿@model ComplianceAuditWeb.Models.OrgActivateDeactivateViewModel
 
 @{
     ViewBag.Title = "ActivateGroupCompany";
@@ -25,11 +25,16 @@
 
 
 
-                @Html.HiddenFor(m => m.organization.Organization_Id)
+                @*@Html.HiddenFor(m => m.organization.Organization_Id)
 
                 @Html.LabelFor(m => m.organization.Company_Name, new { @class = "floating-label" })
-                @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input" })*@
 
+
+                @Html.HiddenFor(m=>m.CompanyID)
+
+                @Html.Label("Company Name")
+                @Html.TextBoxFor(m=>m.CompanyName, new  { @class = "inputMaterial ui - autocomplete - input", @readonly= "readonly" })
             </div>
         </center>
     </div>
@@ -37,7 +42,9 @@
         <ul class="list-inline continueBtn">
             <li>
                 @*<input type="submit" value="Activate" class="btn btn-default" />*@
-                <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Dectivate<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
+
+
+                <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit" onclick="DeactivateGroupCompany">Dectivate<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
                 <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Cancel<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
             </li>
         </ul>
