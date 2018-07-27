@@ -13,7 +13,7 @@ namespace ComplianceService
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "UserService" in code, svc and config file together.
     // NOTE: In order to launch WCF Test Client for testing this service, please select UserService.svc or UserService.svc.cs at the Solution Explorer and start debugging.
     public class UserService : IUserService
-    {        
+    {
         public string insertUser(User Objuser)
         {
             UserHelper helper = new UserHelper();
@@ -41,11 +41,23 @@ namespace ComplianceService
             string xmldata = ds.GetXml();
             return xmldata;
         }
+        public string getAllUser(int Companyid)
+        {
+            return BindUser(Companyid);
+        }
+
+        private string BindgetAllUser(int Companyid)
+        {
+            UserHelper helper = new UserHelper();
+            DataSet userGroups = helper.getAllUser(Companyid);
+            string xmlgroups = userGroups.GetXml();
+            return xmlgroups;
+        }
         public string GetUserGroup(int Groupid)
         {
             return BindUserGroup(Groupid);
         }
-       
+
         private string BindUserGroup(int Groupid)
         {
             UserGroupHelper helper = new UserGroupHelper();
@@ -53,13 +65,13 @@ namespace ComplianceService
             string xmlgroups = userGroups.GetXml();
             return xmlgroups;
         }
-        public bool insertUserGroupmember(int Userid,int[] Groupid)
+        public bool insertUserGroupmember(int Userid, int[] Groupid)
         {
             bool res = false;
             UserHelper helper = new UserHelper();
             foreach (var item in Groupid)
             {
-               res = helper.insertUserGroupmember(item, Userid);
+                res = helper.insertUserGroupmember(item, Userid);
             }
             return res;
         }
@@ -85,33 +97,46 @@ namespace ComplianceService
             string xmlroles = roles.GetXml();
             return xmlroles;
         }
+        public string GetAllRoles(int roleid)
+        {
+            return BindAllRole(roleid);
+        }
+        private string BindAllRole(int roleid)
+        {
+            UserRolesHelper helper = new UserRolesHelper();
+            DataSet roles = helper.getAllRole(roleid);
+            string xmlroles = roles.GetXml();
+            return xmlroles;
+        }
+
+      
 
         public int insertRoles(Roles Role)
         {
             UserRolesHelper helper = new UserRolesHelper();
             Role.IsActive = true;
-            int res=helper.insertUpdateRole(Role, 'I');
+            int res = helper.insertUpdateRole(Role, 'I');
             return res;
         }
-       
+
         public bool updateRoles(Roles Role)
         {
-            bool result=false;
+            bool result = false;
             UserRolesHelper helper = new UserRolesHelper();
-            int res=helper.insertUpdateRole(Role, 'U');
+            int res = helper.insertUpdateRole(Role, 'U');
             if (res > 0)
                 result = true;
             return result;
         }
 
-        public bool insertRolePrivilege(int Roleid,int[] Privilegeid)
+        public bool insertRolePrivilege(int Roleid, int[] Privilegeid)
         {
             bool res = false;
             UserRolesHelper helper = new UserRolesHelper();
             foreach (var item in Privilegeid)
             {
-              res=helper.insertRolePrivilege(Roleid, item);
-            }          
+                res = helper.insertRolePrivilege(Roleid, item);
+            }
             return res;
         }
         public string getRolePrivilege(int Roleid)
@@ -140,13 +165,13 @@ namespace ComplianceService
         {
             UserGroupHelper helper = new UserGroupHelper();
             ObjGroup.IsActive = true;
-            bool res=helper.insertupdateUser(ObjGroup, 'I');
+            bool res = helper.insertupdateUser(ObjGroup, 'I');
             return res;
         }
         public bool updateGroups(UserGroup ObjGroup)
         {
             UserGroupHelper helper = new UserGroupHelper();
-            bool res=helper.insertupdateUser(ObjGroup, 'U');
+            bool res = helper.insertupdateUser(ObjGroup, 'U');
             return res;
         }
         public string getUserRoles(int Userid)
@@ -156,7 +181,7 @@ namespace ComplianceService
         private string BindUserRole(int Userid)
         {
             UserHelper helper = new UserHelper();
-            DataSet ds= helper.getUserRole(Userid);
+            DataSet ds = helper.getUserRole(Userid);
             string xmldata = ds.GetXml();
             return xmldata;
         }
@@ -175,7 +200,7 @@ namespace ComplianceService
         public bool DeleteUser(int Userid)
         {
             UserHelper helper = new UserHelper();
-            bool res=helper.DeleteUser(Userid);
+            bool res = helper.DeleteUser(Userid);
             return res;
         }
 
@@ -189,7 +214,7 @@ namespace ComplianceService
         {
             UserHelper helper = new UserHelper();
             return helper.DeleteUserRole(Userid);
-            
+
         }
 
         public bool DeleteRolePrivilege(int Roleid)
@@ -229,14 +254,28 @@ namespace ComplianceService
             return xmldata;
         }
 
-        public string getmenulist(int groupid)
+        public string getmenulist(int usergroupid, int parentmenuid)
         {
-            return getmenus(groupid);
+            return bindmenuslist(usergroupid, parentmenuid);
         }
-            private string getmenus(int groupid)
+        private string bindmenuslist(int groupid, int parentmenuid)
         {
             MenusHelper helper = new MenusHelper();
-            DataSet ds = helper.getMenus(groupid);
+            DataSet ds = helper.getMenus(groupid, parentmenuid);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            ds = utilityHelper.ConvertNullsToEmptyString(ds);
+            return ds.GetXml();
+        }
+
+        public string getmenu()
+        {
+            return bindmenu();
+        }
+
+        private string bindmenu()
+        {
+            MenusHelper helper = new MenusHelper();
+            DataSet ds = helper.getMenusList();
             UtilityHelper utilityHelper = new UtilityHelper();
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();

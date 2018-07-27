@@ -1,38 +1,40 @@
 ﻿@model IEnumerable<ComplianceAuditWeb.Models.RolesViewModel>
+@{ Layout = null;}
+<div >
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>Role Name</th>
+            <th>IsGroupRole</th>
+            <th>Status</th>
+            <th>Privilege</th>
+        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(linkText: item.roles.RoleName,actionName:"updateRoles", routeValues: new { Roleid = item.roles.RoleId })            
-            @Html.DisplayFor(modelItem => item.roles.RoleName)
-            @Html.DisplayFor(modelItem => item.roles.IsGroupRole)
-        </td>
-        @*<td>
-            @if (item.roles.IsActive)
-            {@Html.ActionLink("Deactive", "DeactivateRole", new { Roleid = item.roles.RoleId })}
-        else
-        { @Html.ActionLink("Deactive", "DeactivateRole", new { Roleid = item.roles.RoleId })}
-        </td>*@
-    </tr>
-    <tr>
-        @foreach (var row in item.privilege)
+        @foreach (var item in Model)
         {
-            if (row.Selected)
-            {
-             <td>
-                @Html.Display(row.Text)
-             </td>
-            }
+            <tr>
+                <td>
+                    @Html.ActionLink(linkText: item.roles.RoleName, actionName: "updateRoles", routeValues: new { Roleid = item.roles.RoleId })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.roles.IsGroupRole)
+                </td>
+                <td>
+                    @if (item.roles.IsActive)
+                    {@Html.ActionLink("Deactive", "DeactivateRole", new { Roleid = item.roles.RoleId })}
+                else
+                { @Html.ActionLink("Deactive", "DeactivateRole", new { Roleid = item.roles.RoleId })}
+                </td>
+                <td>
 
+                    @foreach (var row in item.Privilege)
+                    {
+                        @Html.DisplayFor(modelItem => row.Text)<br />
+                    }
+                </td>
+            </tr>
         }
-    </tr>           
-}
-</table>
+    </table>
+</div>

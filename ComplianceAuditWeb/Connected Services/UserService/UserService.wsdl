@@ -26,6 +26,12 @@
   <wsdl:message name="IUserService_getUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:getUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IUserService_getAllUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:getAllUser" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_getAllUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getAllUserResponse" />
+  </wsdl:message>
   <wsdl:message name="IUserService_getUserAssignedGroup_InputMessage">
     <wsdl:part name="parameters" element="tns:getUserAssignedGroup" />
   </wsdl:message>
@@ -61,6 +67,12 @@
   </wsdl:message>
   <wsdl:message name="IUserService_GetRoles_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetRolesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetAllRoles_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllRoles" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetAllRoles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllRolesResponse" />
   </wsdl:message>
   <wsdl:message name="IUserService_insertRolePrivilege_InputMessage">
     <wsdl:part name="parameters" element="tns:insertRolePrivilege" />
@@ -152,6 +164,12 @@
   <wsdl:message name="IUserService_getmenulist_OutputMessage">
     <wsdl:part name="parameters" element="tns:getmenulistResponse" />
   </wsdl:message>
+  <wsdl:message name="IUserService_getmenu_InputMessage">
+    <wsdl:part name="parameters" element="tns:getmenu" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_getmenu_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getmenuResponse" />
+  </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="insertUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/insertUser" message="tns:IUserService_insertUser_InputMessage" />
@@ -164,6 +182,10 @@
     <wsdl:operation name="getUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/getUser" message="tns:IUserService_getUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/getUserResponse" message="tns:IUserService_getUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getAllUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/getAllUser" message="tns:IUserService_getAllUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/getAllUserResponse" message="tns:IUserService_getAllUser_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="getUserAssignedGroup">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/getUserAssignedGroup" message="tns:IUserService_getUserAssignedGroup_InputMessage" />
@@ -188,6 +210,10 @@
     <wsdl:operation name="GetRoles">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetRoles" message="tns:IUserService_GetRoles_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetRolesResponse" message="tns:IUserService_GetRoles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllRoles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetAllRoles" message="tns:IUserService_GetAllRoles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetAllRolesResponse" message="tns:IUserService_GetAllRoles_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="insertRolePrivilege">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/insertRolePrivilege" message="tns:IUserService_insertRolePrivilege_InputMessage" />
@@ -249,6 +275,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/getmenulist" message="tns:IUserService_getmenulist_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/getmenulistResponse" message="tns:IUserService_getmenulist_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="getmenu">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/getmenu" message="tns:IUserService_getmenu_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/getmenuResponse" message="tns:IUserService_getmenu_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IUserService" type="tns:IUserService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -272,6 +302,15 @@
     </wsdl:operation>
     <wsdl:operation name="getUser">
       <soap:operation soapAction="http://tempuri.org/IUserService/getUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllUser">
+      <soap:operation soapAction="http://tempuri.org/IUserService/getAllUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -326,6 +365,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetRoles">
       <soap:operation soapAction="http://tempuri.org/IUserService/GetRoles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllRoles">
+      <soap:operation soapAction="http://tempuri.org/IUserService/GetAllRoles" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -461,6 +509,15 @@
     </wsdl:operation>
     <wsdl:operation name="getmenulist">
       <soap:operation soapAction="http://tempuri.org/IUserService/getmenulist" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getmenu">
+      <soap:operation soapAction="http://tempuri.org/IUserService/getmenu" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

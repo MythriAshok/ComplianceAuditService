@@ -16,7 +16,6 @@ namespace ComplianceAuditWeb.Models
       public List<SelectListItem> RolesList { get; set; }
       public int[] RoleID { get; set; }
       [DataType(DataType.Password)]
-      public int ConformPassword { get; set; }
-      
+      public int ConformPassword { get; set; }        
     }
 }

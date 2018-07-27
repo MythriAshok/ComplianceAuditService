@@ -44,6 +44,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="getAllUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Companyid" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getAllUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getAllUserResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="getUserAssignedGroup">
     <xs:complexType>
       <xs:sequence>
@@ -126,6 +140,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="GetRolesResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllRoles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="roleid" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllRolesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAllRolesResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -329,7 +357,8 @@
   <xs:element name="getmenulist">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="groupid" type="xs:int" />
+        <xs:element minOccurs="0" name="usergroupid" type="xs:int" />
+        <xs:element minOccurs="0" name="parentmenuid" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -337,6 +366,18 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="getmenulistResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getmenu">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getmenuResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getmenuResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

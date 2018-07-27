@@ -11,7 +11,7 @@ namespace ComplianceAuditWeb.Models
     {
         public Roles roles { get; set; }
 
-        public List<SelectListItem> privilege { get; set; }
+        public List<SelectListItem> Privilege { get; set; }
 
         public int[] PrivilegeId { get; set; }
 

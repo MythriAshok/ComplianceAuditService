@@ -28,7 +28,7 @@ namespace Compliance.DataAccess
         /// </summary>
         /// <param name="User_Group_ID">UserGroupId is a type of int</param>
         /// <returns>Dataset of Menus Table</returns>
-        public DataSet getMenus(int User_Group_ID)
+        public DataSet getMenus(int User_Group_ID, int Parent_MenuID)
         {
             DataSet dtMenu = new DataSet();
             try
@@ -38,6 +38,29 @@ namespace Compliance.DataAccess
                 MySqlCommand cmd = new MySqlCommand("sp_getMenus", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_User_Group_ID", User_Group_ID);
+                cmd.Parameters.AddWithValue("p_Parent_MenuID", Parent_MenuID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtMenu);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dtMenu;
+        }
+        public DataSet getMenusList()
+        {
+            DataSet dtMenu = new DataSet();
+            try
+            {
+                conn = DBConnection.getconnection();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getMenulist", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtMenu);
             }

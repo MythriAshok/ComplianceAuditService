@@ -18,7 +18,7 @@
     <ul>
         @foreach (var menu in Model)
         {
-            <li><a href="@menu.PathUrl">@menu.MenuName <span class="iconnew"><i class=""><img src="~/Content/assets/images/@menu.icon" alt="" /></i></span></a></li>
+            <li><a href="@menu.PathUrl?pid=@menu.Id">@menu.MenuName <span class="iconnew"><i class=""><img src="~/Content/assets/images/@menu.icon" alt="" /></i></span></a></li>
         }
     </ul>
 

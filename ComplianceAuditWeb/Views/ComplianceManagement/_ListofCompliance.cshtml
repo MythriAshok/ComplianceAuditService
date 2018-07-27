@@ -1,8 +1,6 @@
 ﻿@model ComplianceAuditWeb.Models.ListofComplianceViewModel
 
 @{
-    /**/
-
     ViewBag.Title = "Manage Compliance Page";
 }
 <ul class="breadcrumb ML15">
@@ -11,95 +9,117 @@
 </ul>
 <h2 class="ML15">Manage Compliance</h2>
 @section scripts{
-    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="~/Content/font-awesome.css" rel="stylesheet" />
-    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">*@
+<script src="~/Content/bootstrap-3.3.7-dist/js/jquery.min.js"></script>
+<script src="~/Content/bootstrap-3.3.7-dist/js/jquery-ui.min.js"></script>
+<script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/main.css" rel="stylesheet" />
+    <script src="~/Content/assets/js/jquery.simpleaccordion.js"></script>
     <script>
-        $(function () {
-            $(".btn-bootstrap-dialog").click(function () {
-                var $buttonClicked = $(this);
-                var options = {
-                    "backdrop": "static",
-                    keyboard: true
-                };
-                $.ajax({
-                    type: "GET",
-                    url: $(this).data("url"),
-                    contentType: "application/json; charset=utf-8",
-                    datatype: "json",
-                    success: function (data) {
-                        debugger;
-                        $('#myModalContent').html(data);
-                        $('#myModal').modal(options);
-                        $('#myModal').modal('show');
-                    },
-                    error: function () {
-                        alert("Content load failed.");
-                    }
-                });
+
+        $(".btn-bootstrap-dialog").click(function () {
+            var $buttonClicked = $(this);
+            var options = {
+                "backdrop": "static",
+                keyboard: true
+            };
+            $.ajax({
+                type: "GET",
+                url: $(this).data("url"),
+                contentType: "application/json; charset=utf-8",
+                datatype: "json",
+                success: function (data) {
+                    debugger;
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function () {
+                    alert("Content load failed.");
+                }
             });
         });
 
-            $("#accordion").accordion({
-                collapsible: true,
-                heightStyle: "content"
-            });
+        $(document).ready(function () {
+            $('[data-behavior=accordion]').simpleAccordion({ cbOpen: accOpen, cbClose: accClose });
+        });
+        function accClose(e, $this) {
+            $this.find('span').fadeIn(200);
+        }
+
+        function accOpen(e, $this) {
+            $this.find('span').fadeOut(200)
+        }
+
     </script>
 }
+<div class="mid_content_sec">
     <p>
         @Html.ActionLink("Create New Act", "CreateActs")
     </p>
 
-    <div class="container">
-        <div id="accordion">
-            @foreach (var Act in Model.Actslist)
-            {
-                <h3><i class="fa fa-legal"></i>@Html.DisplayFor(modelItem => Act.Compliance_Title)</h3>
-                <div>
-                    @foreach (var section in Model.Sectionlist)
-                    {
-                        if (Act.Compliance_Xref_ID == section.Compliance_Parent_ID)
+
+    @foreach (var Act in Model.Actslist)
+    {
+        <div class="accordion-group" data-behavior="accordion">
+            <p class="accordion-header default-open"><i class="fa fa-legal"></i>&nbsp;@Html.DisplayFor(modelItem => Act.Compliance_Title)</p>
+            <div class="accordion-body">
+                @foreach (var section in Model.Sectionlist)
+                {
+                    <div class="accordion-group" data-behavior="accordion" data-multiple="true">
+                        @if (Act.Compliance_Xref_ID == section.Compliance_Parent_ID)
                         {
-                            string divid = "section" + @Html.DisplayFor(modelitem => section.Compliance_Xref_ID);
-                            string datatarget = "#" + divid;
                             //if (section.Compliance_Title != "RuleSection")
                             //{
-                            <button type="button" class="btn btn-info" data-toggle="collapse" data-target=@datatarget>
+                            <p class="accordion-header" id="subheader">
                                 <i class="fa fa-book"></i>@Html.DisplayFor(modelItem => section.Compliance_Title)
-                            </button>
-                            //  }
-                            <div id=@divid class="collapse in">
+                            </p>
+                            //}
+                            <div class="accordion-body" id="subbody">
                                 @foreach (var Rule in Model.Rulelist)
                                 {
+
                                     if (section.Compliance_Xref_ID == Rule.Compliance_Parent_ID)
                                     {
-                                        <i class="fa fa-leanpub"></i>
-                                        @Html.DisplayFor(modelItem => Rule.Compliance_Title)
-                                        <br />
-                                    }
-                                }
+                                        <p>
+                                            <i class="fa fa-leanpub"></i>
+                                            @Html.DisplayFor(modelItem => Rule.Compliance_Title)
+                                        </p>
 
-                                <button id="Add" class="btn-bootstrap-dialog" data-url='@Url.Action("CreateRules", "ComplianceManagement", new { Parentid = section.Compliance_Xref_ID })'><span class="fa fa-leanpub"></span>Add New Rule</button>
+                                    }
+
+
+                                }
+                                <ul class="list-inline accordinBtn">
+                                    <li>
+                                        <button class="btn-bootstrap-dialog" data-url='@Url.Action("CreateRules", "ComplianceManagement", new { Parentid = section.Compliance_Xref_ID })'><span class="fa fa-leanpub"></span>Add Rule</button>
+                                    </li>
+                                </ul>
                             </div>
                         }
-                    }
-                    <button id="Add" class="btn-bootstrap-dialog" data-url='@Url.Action("CreateSection","ComplianceManagement",new { Parentid = Act.Compliance_Xref_ID})'><span class="fa fa-book"></span>Add New Section</button>
-                </div>
-            }
+                    </div>
+                }
+                <ul class="list-inline accordinBtn">
+                    <li>
+                        <button class="btn-bootstrap-dialog" data-url='@Url.Action("CreateSection","ComplianceManagement",new { Parentid = Act.Compliance_Xref_ID})'><span class="fa fa-book"></span>Add Section</button>
+                    </li>
+                </ul>
+            </div>
         </div>
+    }
 
-        <div id='myModal' class="modal fade" role="dialog" aria-hidden="true">
-            <div class="modal-dialog-centered" style="width:900px;height:400px; padding:10px;">
-                <div class="modal-content" style="overflow:scroll; padding:10px;">                    
-                    <div id='myModalContent' class="modal-body" style=" padding:10px">
-                    </div>                  
+
+    <div id='myModal' class="modal fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog-centered" style="width:900px;height:400px; padding:10px;">
+            <div class="modal-content" style="overflow:scroll; padding:10px;">
+                <div id='myModalContent' class="modal-body" style=" padding:10px">
                 </div>
             </div>
         </div>
     </div>
+</div>
+

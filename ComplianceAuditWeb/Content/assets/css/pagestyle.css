@@ -710,13 +710,14 @@ body {
 	padding:0;
 }
 
-.list-inline .btn {
+.list-inline .btn{
     padding: 8px 15px;
     color: #fff;
     font-size: 14px;
     text-transform: uppercase;
     box-shadow: none;
 }
+
 
 button.btn.primary-button {
     background: #FF0000;

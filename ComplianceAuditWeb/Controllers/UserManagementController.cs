@@ -15,9 +15,21 @@ namespace ComplianceAuditWeb.Controllers
     public class UserManagementController : Controller
     {
         // GET: UserManagement
-        public ActionResult UserManagementdashboard()
+        public ActionResult UserManagementdashboard(int pid)
         {
-            return View("_UserManagementDashboard");
+            List<Menus> menues = new List<Menus>();
+            UserService.UserServiceClient client = new UserService.UserServiceClient();
+            DataSet ds = new DataSet();
+            string xmlmenu = client.getmenulist(Convert.ToInt32(Session["Usergroupid"]),pid);
+            ds.ReadXml(new StringReader(xmlmenu));
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    menues.Add(new Menus { MenuName = Convert.ToString(row["Menu_Name"]), PathUrl = Convert.ToString(row["Page_URL"]), icon = Convert.ToString(row["icon"]), ParentMenuId = Convert.ToInt32(row["Parent_MenuID"]) });
+                }
+            }
+            return View("_UserManagementDashboard",menues);
         }
 
        //GET:insertRoles
@@ -31,13 +43,13 @@ namespace ComplianceAuditWeb.Controllers
             string xmldata = client.GetPrivilege();
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
-            rolesView.privilege = new List<SelectListItem>();
+            rolesView.Privilege = new List<SelectListItem>();
             if (ds.Tables.Count > 0)
             {
                 foreach (System.Data.DataRow row in ds.Tables[0].Rows)
                 {
 
-                    rolesView.privilege.Add(new SelectListItem() { Text = row["Privilege_Name"].ToString(), Value = row["Privilege_ID"].ToString() });
+                    rolesView.Privilege.Add(new SelectListItem() { Text = row["Privilege_Name"].ToString(), Value = row["Privilege_ID"].ToString() });
                 }
             }
             return View("_AddRole", rolesView);
@@ -65,15 +77,15 @@ namespace ComplianceAuditWeb.Controllers
             rolesView.roles.RoleId = Roleid;
             UserService.UserServiceClient client = new UserService.UserServiceClient();
             DataSet dsrole = new DataSet();
-            string xmldata=client.GetRoles(Roleid);
+            string xmldata=client.GetAllRoles(Roleid);
             dsrole.ReadXml(new StringReader(xmldata));
             rolesView.roles.RoleName = Convert.ToString(dsrole.Tables[0].Rows[0]["Role_Name"]);
-            rolesView.roles.IsGroupRole = Convert.ToBoolean(dsrole.Tables[0].Rows[0]["Is_Group_Role"]);
+            rolesView.roles.IsGroupRole = Convert.ToBoolean(Convert.ToInt32(dsrole.Tables[0].Rows[0]["Is_Group_Role"]));
             xmldata = client.GetPrivilege();
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
-            rolesView.privilege = new List<SelectListItem>();
-            dsrole.Clear();
+            rolesView.Privilege = new List<SelectListItem>();
+            dsrole = new DataSet();
             xmldata = client.getRolePrivilege(rolesView.roles.RoleId);
             dsrole.ReadXml(new StringReader(xmldata));
             if (ds.Tables.Count > 0)
@@ -92,7 +104,7 @@ namespace ComplianceAuditWeb.Controllers
                             }
                         }
                     }
-                    rolesView.privilege.Add(new SelectListItem() { Text = row["Privilege_Name"].ToString(), Value = row["Privilege_ID"].ToString(), Selected = selected });
+                    rolesView.Privilege.Add(new SelectListItem() { Text = row["Privilege_Name"].ToString(), Value = row["Privilege_ID"].ToString(), Selected = selected });
                 }
             }
             return View("_AddRole", rolesView);
@@ -131,7 +143,17 @@ namespace ComplianceAuditWeb.Controllers
                     GroupView.Roles.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
                 }
             }
-            GroupView.Role = new List<SelectListItem>();
+            ds = new DataSet();
+            GroupView.Featurelist = new List<SelectListItem>();
+            xmldata = Client.getmenu();
+            ds.ReadXml(new StringReader(xmldata));
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    GroupView.Featurelist.Add(new SelectListItem { Text = row["Menu_Name"].ToString(), Value = row["Menu_ID"].ToString() });
+                }
+            }
             return View("_AddUserGroup", GroupView);
         }
 
@@ -206,11 +228,16 @@ namespace ComplianceAuditWeb.Controllers
             DataSet dsRoles = new DataSet();
             dsRoles.ReadXml(new StringReader(xmlRoles));
             userviewmodel.RolesList= new List<SelectListItem>();
+
             //userviewmodel.RolesList.Add(new SelectListItem { Text = "--Select--", Value = "0" });
-            foreach (System.Data.DataRow row in dsRoles.Tables[0].Rows)
+            if (dsRoles.Tables.Count > 0)
             {
-                userviewmodel.RolesList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
+                foreach (System.Data.DataRow row in dsRoles.Tables[0].Rows)
+                {
+                    userviewmodel.RolesList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
+                }
             }
+
             return View("_AddUser", userviewmodel);
         }
 
@@ -339,13 +366,24 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult ListofUsers()
         {
             UserService.UserServiceClient client = new UserService.UserServiceClient();
-            string xmldata = client.getUser(0);
+            string xmldata = client.getUser(Convert.ToInt32(Session["GroupCompanyId"]));
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             List<User> userlist = new List<User>();
-            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            if (ds.Tables.Count > 0)
             {
-                userlist.Add(new User { UserId=Convert.ToInt32(row["User_ID"]),FirstName =Convert.ToString(row["First_Name"]), LastName = Convert.ToString(row["Last_Name"]), EmailId = Convert.ToString(row["Email_ID"]) });
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    userlist.Add(new User { UserId = Convert.ToInt32(row["User_ID"]),
+                        FirstName = Convert.ToString(row["First_Name"]),
+                        MiddleName= Convert.ToString(row["Middle_Name"]),
+                        Gender= Convert.ToString(row["Gender"]),
+                        ContactNumber= Convert.ToString(row["Contact_Number"]),
+                        LastLogin= Convert.ToDateTime(row["Last_Login"]),
+                        IsActive= Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
+                        LastName = Convert.ToString(row["Last_Name"]),
+                        EmailId = Convert.ToString(row["Email_ID"]) });
+                }
             }
             return View("_ListofUsers", userlist);
         }
@@ -353,11 +391,39 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult ListofRoles()
         {
             UserService.UserServiceClient client = new UserService.UserServiceClient();
-            string xmldata = client.GetRoles(0);
+            string xmldata = client.GetAllRoles(0);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             RolesViewModel model = new RolesViewModel();
+            model.roles = new Roles();
+            model.Privilege = new List<SelectListItem>();
             List<RolesViewModel> roles = new List<RolesViewModel>();
+            DataSet dsprivilege = new DataSet();
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model = new RolesViewModel();
+                    model.roles = new Roles();
+                    model.Privilege = new List<SelectListItem>();
+                    model.roles.RoleId = Convert.ToInt32(row["Role_ID"]);
+                    model.roles.RoleName = Convert.ToString(row["Role_Name"]);
+                    model.roles.IsGroupRole = Convert.ToBoolean(Convert.ToInt32(row["Is_Group_Role"]));
+                    model.roles.IsActive = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"]));
+                    xmldata = client.getRolePrivilege(model.roles.RoleId);
+                    dsprivilege.ReadXml(new StringReader(xmldata));
+                    if (dsprivilege.Tables.Count > 0)
+                    {
+                        foreach (System.Data.DataRow item in dsprivilege.Tables[0].Rows)
+                        {
+                            model.Privilege.Add(new SelectListItem { Text = Convert.ToString(item["Privilege_Name"]), Value = Convert.ToString(item["Privilege_ID"]) });
+                        }
+                    }
+                    xmldata = string.Empty;
+                    dsprivilege.Clear();
+                    roles.Add(model);
+                }
+            }
 
             return View("_ListofRoles", roles);
         }
@@ -409,7 +475,7 @@ namespace ComplianceAuditWeb.Controllers
                     string fullname = ds.Tables[0].Rows[0]["First_Name"].ToString() + " " + ds.Tables[0].Rows[0]["Last_Name"].ToString();
                     Session["username"] = fullname;
                     Session["emailid"] = ds.Tables[0].Rows[0]["Email_ID"];
-                    Session["CompanyId"] = ds.Tables[0].Rows[0]["Company_ID"];
+                    Session["GroupCompanyId"] = ds.Tables[0].Rows[0]["Company_ID"];
                     Session["Last_Login"] = ds.Tables[0].Rows[0]["Last_Login"];
                     Session["Usergroupid"] = 2; /*ds.Tables[0].Rows[0][];*/
                     return RedirectToAction("ListofCompliance", "ComplianceManagement");
