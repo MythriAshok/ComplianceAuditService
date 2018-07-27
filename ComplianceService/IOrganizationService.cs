@@ -55,14 +55,14 @@ namespace ComplianceService
 
         //string getGroupCompanyListDropDown();
 
-        //[OperationContract]
-
+        [OperationContract]
+        string getGroupOrganization(int OrgID);
         //string getCompanyListDropDown(int groupcompanyID);
-      [OperationContract]
+        [OperationContract]
+        string getCompanyListsforBranch(int OrgID);
 
 
-
-
+        [OperationContract]
         bool DeactivateGroupCompany(int OrgID);
         [OperationContract]
         bool DeleteGroupCompany(int OrgID);

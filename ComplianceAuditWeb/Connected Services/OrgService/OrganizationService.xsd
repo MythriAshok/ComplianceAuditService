@@ -199,6 +199,34 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="getGroupOrganization">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OrgID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getGroupOrganizationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getGroupOrganizationResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getCompanyListsforBranch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OrgID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getCompanyListsforBranchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getCompanyListsforBranchResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="DeactivateGroupCompany">
     <xs:complexType>
       <xs:sequence>

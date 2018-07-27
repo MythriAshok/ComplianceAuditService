@@ -180,6 +180,29 @@ namespace Compliance.DataAccess
             try
             {
                 conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getGroupHierJoin", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", OrgID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsOrganization);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsOrganization; 
+        }
+
+        public DataSet getOrganizationGroup(int OrgID)
+        {
+            DataSet dsOrganization = new DataSet();
+            try
+            {
+                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getOrganizationHierJoin", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID", OrgID);
@@ -194,7 +217,7 @@ namespace Compliance.DataAccess
             {
                 conn.Close();
             }
-            return dsOrganization;
+            return dsOrganization; 
         }
 
         public DataSet getBranch(int OrgID)
@@ -479,7 +502,7 @@ namespace Compliance.DataAccess
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getCompaniesList", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getCompanieyList", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsCompaniesList);
@@ -501,9 +524,34 @@ namespace Compliance.DataAccess
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getCompaniesList", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getCompanyLists", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Parent_Company_ID", GroupCompanyID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsCompaniesList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsCompaniesList;
+        }
+
+
+
+        public DataSet getCompanyListsforBranch(int GroupCompanyID)
+        {
+            DataSet dsCompaniesList = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getCompanyListsforBranch", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", GroupCompanyID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsCompaniesList);
             }
