@@ -5,8 +5,8 @@
 }
 
 <ul class="breadcrumb ML15">
-    <li><a href="">Group Management</a></li>
-    <li>Delete Company</li>
+    <li><a href="">Company Management</a></li>
+    <li>Delete </li>
 </ul>
 <center>
     <h2 class="ML15">Are you sure you want to delete?</h2>
@@ -27,7 +27,7 @@
 
                 @Html.HiddenFor(m => m.CompanyID)
 
-                @Html.LabelFor(m => m.CompanyName, new { @class = "floating-label" })
+                @*@Html.LabelFor(m => m.CompanyName, new { @class = "floating-label" })*@
                 @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly", @Style = "text-align:center" })
 
             </div>

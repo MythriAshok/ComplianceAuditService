@@ -262,6 +262,7 @@ namespace ComplianceService
         try
         {
             OrganizationHelper organizationhelper = new OrganizationHelper();
+                
             inserBranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
             insertOrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
             insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');

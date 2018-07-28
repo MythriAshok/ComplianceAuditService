@@ -53,15 +53,16 @@
 
     </script>
 }
-<h2 class="ML15">Add Group Company</h2>
+<h2 class="ML15">Manage Group Company</h2>
 <ul class="breadcrumb ML15">
     <li><a href="">Group Management</a></li>
-    <li>Add Group Company</li>
+    <li> Group Company</li>
 </ul>
 @using (Html.BeginForm())
 {
 <div class="mid_content_sec">
     @Html.AntiForgeryToken()
+    @Html.ValidationMessage("Error")
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
@@ -153,6 +154,8 @@
 
     @*@Html.LabelFor(m => m.organization.Last_Updated_Date);*@
     @Html.HiddenFor(m => m.organization.Last_Updated_Date)
+
+    @Html.HiddenFor(m=>m.companydetails.Company_Details_ID)
     @Html.HiddenFor(m => m.organization.Company_Id)
 
 
@@ -285,7 +288,7 @@
             @*<input type="submit" value="@button" class="btn primary-button" />*@
             <input type="submit" value="@button" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
             <input type="reset" value="Reset" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
-            @Html.ActionLink("Cancel", "CancelGroupCompany", new { Orgid = Model.organization.Organization_Id }, new { @class = "btn primary-button" });
+            @Html.ActionLink("Cancel", "AddGroupCompany", new { Orgid = Model.organization.Organization_Id }, new { @class = "btn primary-button" });
 
             @*<button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="@button">Create<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>*@
         </li>

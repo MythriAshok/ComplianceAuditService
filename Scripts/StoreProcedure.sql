@@ -1345,7 +1345,7 @@ Drop Procedure if exists sp_getLoginData;
 delimiter /
 create procedure sp_getLoginData
 (
-p_User_ID int ,
+
 p_Email_ID varchar(100),
 p_User_Password varchar(10)
 )

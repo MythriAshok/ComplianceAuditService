@@ -180,7 +180,7 @@ namespace Compliance.DataAccess
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getGroupHierJoin", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getOrganizationHierJoin", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID", OrgID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
@@ -203,7 +203,7 @@ namespace Compliance.DataAccess
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getOrganizationHierJoin", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getGroupHierJoin", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID", OrgID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);

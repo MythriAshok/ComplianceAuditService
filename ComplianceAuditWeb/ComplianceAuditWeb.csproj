@@ -440,6 +440,7 @@
     <Content Include="Views\UserManagement\_ListofUsers.cshtml" />
     <Content Include="Views\ManageOrganization\UpdateCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_GroupCompanyDashboard.cshtml" />
+    <Content Include="Views\ManageOrganization\UpdateBranch.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -61,20 +61,66 @@ values('pass','ovi','hathwar','p','ovi','8971089120','1','Female',1,now());
 select * from tbl_user;
 
 insert into tbl_Branch_Location(Location_Name,Address,Country_ID,State_ID,City_ID,Postal_Code,
-Branch_Coordinates1,Branch_Coordinates2,Branch_CoordinateURL) values ('IndraNagar','#196',1, 1, 2,572008,'22.36','22.236','abc.com');
+Branch_Coordinates1,Branch_Coordinates2,Branch_CoordinateURL) values ('IndraNagar','#196',1, 1, 2,'572008','22.36','22.236','abc.com');
+
+
+insert into tbl_Branch_Location(Location_Name,Address,Country_ID,State_ID,City_ID,Postal_Code,
+Branch_Coordinates1,Branch_Coordinates2,Branch_CoordinateURL) values ('Jayanagar','#196',1, 1, 2,'456321','22.36','22.236','info.com');
+
+
+insert into tbl_branch_location
+(Location_Name,Address,Country_ID,State_ID,City_ID,Postal_Code,Branch_Coordinates1,Branch_Coordinates2,Branch_CoordinateURL)
+values('Wilson Garden','#196 6th block',1,1,1,'563302','2.36','2.36','abc.com');
+
+
+insert into tbl_branch_location
+(Location_Name,Address,Country_ID,State_ID,City_ID,Postal_Code,Branch_Coordinates1,Branch_Coordinates2,Branch_CoordinateURL)
+values('Malleshwaram','#196 6th block',1,1,2,'563302','2.36','2.36','abc.com');
+
+
+insert into tbl_branch_location
+(Location_Name,Address,Country_ID,State_ID,City_ID,Postal_Code,Branch_Coordinates1,Branch_Coordinates2,Branch_CoordinateURL)
+values('Jalahalli','#196 6th block',1,1,1,'563302','2.36','2.36','abc.com');
 
 select * from tbl_branch_location;
 
 
+
 insert into tbl_org_hier (Company_Name, Company_Code, Parent_Company_ID, Description, level, Is_Leaf,Industry_Type,Last_Updated_Date,Location_ID,
-User_ID,Is_Active,Is_Delete) values('Paajaka IT Service ',25, 0, 'Description', 1, 0, 'IT Service', now(),1, 1, 1, 0);
+User_ID,Is_Active,Is_Delete) values('Paajaka IT Service ',25, 0, 'Description', 1, 0, 'IT', now(),1, 1, 1, 0);
+
+insert into tbl_org_hier (Company_Name, Company_Code, Parent_Company_ID, Description, level, Is_Leaf,Industry_Type,Last_Updated_Date,Location_ID,
+User_ID,Is_Active,Is_Delete) values('Adhaani Group ',001, 0, 'Description', 1, 0, 'IT', now(),1, 1, 1, 0);
+
+insert into tbl_org_hier (Company_Name, Company_Code, Parent_Company_ID, Description, level, Is_Leaf,Industry_Type,Last_Updated_Date,Location_ID,
+User_ID,Is_Active,Is_Delete) values('Adhaani Company1 ',002, 2, 'Description', 2, 0, 'IT', now(),1, 1, 1, 0);
+
+insert into tbl_org_hier (Company_Name, Company_Code, Parent_Company_ID, Description, level, Is_Leaf,Industry_Type,Last_Updated_Date,Location_ID,
+User_ID,Is_Active,Is_Delete) values('Adhaani Company2 ',003, 2, 'Description', 2, 0, 'IT', now(),1, 1, 1, 0);
+
+insert into tbl_org_hier (Company_Name, Company_Code, Parent_Company_ID, Description, level, Is_Leaf,Industry_Type,Last_Updated_Date,Location_ID,
+User_ID,Is_Active,Is_Delete) values('Adhaani Branch1',004, 3, 'Description', 3, 1, 'IT', now(),1, 1, 1, 0);
+
+insert into tbl_org_hier (Company_Name, Company_Code, Parent_Company_ID, Description, level, Is_Leaf,Industry_Type,Last_Updated_Date,Location_ID,
+User_ID,Is_Active,Is_Delete) values('Adhaani Branch2 ',005, 3, 'Description', 3, 1, 'IT', now(),1, 1, 1, 0);
+
+insert into tbl_org_hier (Company_Name, Company_Code, Parent_Company_ID, Description, level, Is_Leaf,Industry_Type,Last_Updated_Date,Location_ID,
+User_ID,Is_Active,Is_Delete) values('Adhaani Branch3',006, 4, 'Description', 3, 1, 'IT ', now(),1, 1, 1, 0);
 
 select * from tbl_org_hier;
 
 
 
-insert into tbl_company_details(Org_Hier_ID,Formal_Name,Calender_StartDate,Calender_EndDate,Auditing_Frequency,Website,Company_Email_ID,
-Company_ContactNumber1,Company_ContactNumber2) values(1, 'PaajakaConsulting IT Service', ('2018-05-23 00:00:00'), ('2018-06-23 00:00:00'),'Quarterly','abc.com', 'abcd.com',
+insert into tbl_company_details
+(Org_Hier_ID,Formal_Name,Calender_StartDate,Calender_EndDate,Auditing_Frequency,Website,Company_Email_ID,
+Company_ContactNumber1,Company_ContactNumber2)
+ values(3, 'Adhaani Company1', ('2018-05-23 00:00:00'), ('2018-06-23 00:00:00'),'Quarterly','abc.com', 'abcd.com',
+'266092','8971089120');
+
+insert into tbl_company_details
+(Org_Hier_ID,Formal_Name,Calender_StartDate,Calender_EndDate,Auditing_Frequency,Website,Company_Email_ID,
+Company_ContactNumber1,Company_ContactNumber2)
+ values(4, 'Adhaani Company2', ('2018-05-23 00:00:00'), ('2018-06-23 00:00:00'),'Quarterly','abc.com', 'abcd.com',
 '266092','8971089120');
 
 select * from tbl_Company_Details;

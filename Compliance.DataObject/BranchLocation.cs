@@ -8,9 +8,8 @@ namespace Compliance.DataObject
    public class BranchLocation
     {
         public int Branch_Id { get; set; }
-        [Required]
+      
         public string Branch_Name { get; set; }
-        [Required]
         public string Address { get; set; }
         [Required]
 
@@ -21,7 +20,6 @@ namespace Compliance.DataObject
         [Required]
 
         public int City_Id { get; set; }
-        [Required]
         public string Postal_Code { get; set; }
         public string Branch_Coordinates1 { get; set; }
         public string Branch_Coordinates2 { get; set; }

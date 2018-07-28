@@ -1,0 +1,36 @@
+﻿@model ComplianceAuditWeb.Models.BranchViewModel
+
+@{
+    ViewBag.Title = "UpdateBranch";
+}
+
+<h2>UpdateBranch</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        <h4>OrganizationViewModel</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div>
+            <div>
+
+                @*@Html.LabelFor(m => m.organization.Is_Active);
+                    @Html.CheckBoxFor(m => m.organization.Is_Active);*@
+
+
+
+
+
+                @Html.Partial("_Branch", Model);
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
