@@ -12,6 +12,9 @@
 </ul>
 <h2 class="ML15">List of Branches</h2>
 
+<div style="text-align:right;margin-right: 10px">
+    @Html.ActionLink("Create New", "AddBranch")
+</div>
 
 <table class="table">
     <tr>
@@ -19,8 +22,8 @@
             @Html.DisplayNameFor(model => model.CompanyName)
         </th>
         @*<th>
-            @Html.DisplayNameFor(model => model.OrganizationID)
-        </th>*@
+                @Html.DisplayNameFor(model => model.OrganizationID)
+            </th>*@
         <th>
             @Html.DisplayNameFor(model => model.IsActive)
         </th>
@@ -37,12 +40,12 @@
                 @*@Html.DisplayFor(modelItem => item.CompanyName)*@
                 @*@Html.DisplayFor(modelItem => item.GroupCompanyLogo)*@
                 @Html.HiddenFor(modelItem => item.OrganizationID)
-                
+
                 <center>
                     @Html.ActionLink(item.CompanyName, "UpdateBranch", new { Orgid = item.OrganizationID })
                 </center>
             </td>
-           
+
             <td>
                 <center>
 
@@ -68,9 +71,9 @@
                 else
                 {
                     <center>
-                    @Html.ActionLink("Activate", "ActivateBranch", new { Orgid = item.OrganizationID })
-                    <br />
-                    @Html.ActionLink("Delete", "DeleteBranch", new { Orgid = item.OrganizationID })
+                        @Html.ActionLink("Activate", "ActivateBranch", new { Orgid = item.OrganizationID })
+                        <br />
+                        @Html.ActionLink("Delete", "DeleteBranch", new { Orgid = item.OrganizationID })
 
                     </center>
 
@@ -84,9 +87,7 @@
     }
 
 </table>
-<center>
-<div>
-    @Html.ActionLink("Create New", "AddBranch")
-</div>
-</center>
+
+
+
 

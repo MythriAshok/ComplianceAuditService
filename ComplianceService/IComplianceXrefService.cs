@@ -33,7 +33,7 @@ namespace ComplianceService
         [OperationContract]
         string getRuleforBranch(int sectionid, int branchid);
         [OperationContract]
-        bool inseretActandRuleforBranch(ComplianceAudit audit, int[] ruleid);
+        bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid);
 
     }
 }

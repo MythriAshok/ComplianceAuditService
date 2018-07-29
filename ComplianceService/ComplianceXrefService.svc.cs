@@ -88,14 +88,13 @@ namespace ComplianceService
             return helper.getAuditorforBranch(Branchid);
        }
 
-       public bool inseretActandRuleforBranch(ComplianceAudit audit,int[] ruleid)
+       public bool inseretActandRuleforBranch(int orgid,int[] ruleid,int userid)
         {
             bool res = false;
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
             foreach(int id in ruleid)
-            {
-                audit.Compliance_Xref_Id = id;
-                res=helper.insertActAndRuleforBranch(audit);
+            {                
+                res=helper.insertActAndRuleforBranch(orgid,id,'I', userid);
             }
             return res;
             

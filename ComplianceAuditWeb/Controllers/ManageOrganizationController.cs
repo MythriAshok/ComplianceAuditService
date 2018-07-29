@@ -117,7 +117,8 @@ namespace ComplianceAuditWeb.Controllers
             }
 
 
-
+            organizationVM.organization.Industry_Type = "IT";
+            organizationVM.branch.Branch_CoordinatesURL = "www.loc.in";
             bool result = false;
             organizationVM.organization.User_Id = 1;
             organizationVM.organization.Is_Leaf = false;
@@ -471,7 +472,7 @@ namespace ComplianceAuditWeb.Controllers
             companyVM.organization.Company_Name = dsUpdatedData.Tables[0].Rows[0]["Company_Name"].ToString();
             companyVM.organization.Description = dsUpdatedData.Tables[0].Rows[0]["Description"].ToString();
             companyVM.organization.Industry_Type = dsUpdatedData.Tables[0].Rows[0]["Industry_Type"].ToString();
-            //organizationViewModel.organization.Is_Active =(Boolean) dsUpdatedData.Tables[0].Rows[0]["Is_Active"];
+            companyVM.organization.Is_Active = Convert.ToBoolean(Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Is_Active"]));
             companyVM.organization.Last_Updated_Date = Convert.ToDateTime(dsUpdatedData.Tables[0].Rows[0]["Last_Updated_Date"]);
             companyVM.organization.Branch_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Location_ID"]);
             companyVM.organization.User_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["User_ID"]);

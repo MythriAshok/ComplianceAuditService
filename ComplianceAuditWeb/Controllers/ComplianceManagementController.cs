@@ -360,13 +360,13 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult AllocateActandRule(AllocateActandRuleViewModel model)
         {
+            
             ComplianceAudit audit = new ComplianceAudit();
-            ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
-            audit.Auditor_Id=client.GetAuditorId(model.BranchId);
-            audit.Org_Hier_Id = model.BranchId;
-            audit.User_Id = 1;
-            client.inseretActandRuleforBranch(audit, model.selectedid);
-            return View();
+            ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();          
+            int Org_Hier_Id = model.BranchId;
+            int User_Id = Convert.ToInt32(Session["UserId"]);
+            client.inseretActandRuleforBranch(Org_Hier_Id, model.selectedid, User_Id);
+            return RedirectToAction("AllocateActandRule");
         }
         
         public JsonResult getSection(string actid)

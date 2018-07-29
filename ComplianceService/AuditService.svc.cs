@@ -141,6 +141,8 @@ namespace ComplianceService
         {
             ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
             DataSet dsCompliance = complianceAuditHelper.getComlianceXrefDataForSeletedBranch(OrgID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCompliance = utilityHelper.ConvertNullsToEmptyString(dsCompliance);
             string strxmlCompliance = dsCompliance.GetXml();
             return strxmlCompliance;
         }

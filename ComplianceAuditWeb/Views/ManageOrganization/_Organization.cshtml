@@ -103,23 +103,23 @@
         </div>
     </div>
 
-    <div class="col-xs-6 subSelect ">
-        <div class="input-field">
-            @Html.Label("Industry Type", new { @class = "floating-label" })<span style="color:red">*</span>
+    @*<div class="col-xs-6 subSelect ">
+            <div class="input-field">
+                @Html.Label("Industry Type", new { @class = "floating-label" })<span style="color:red">*</span>
 
-            @Html.DropDownListFor(m => m.organization.Industry_Type, new SelectList
-                    (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.IndustryType))),
-                    "Select Industry Type", new { @class = "inputMaterial ui - autocomplete - input" })
-            @Html.ValidationMessageFor(m => m.organization.Industry_Type, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(m => m.organization.Industry_Type, new SelectList
+                        (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.IndustryType))),
+                        "Select Industry Type", new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(m => m.organization.Industry_Type, "", new { @class = "text-danger" })
 
+            </div>
         </div>
-    </div>
-    <div class="col-xs-6 subSelect ">
-        <div class="input-field">
-            @Html.Label("Location URL", new { @class = "floating-label" })<span style="color:red">*</span>
-            @Html.TextBoxFor(m => m.branch.Branch_CoordinatesURL, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Branch_CoordinatesURL"] })
-        </div>
-    </div>
+        <div class="col-xs-6 subSelect ">
+            <div class="input-field">
+                @Html.Label("Location URL", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.TextBoxFor(m => m.branch.Branch_CoordinatesURL, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Branch_CoordinatesURL"] })
+            </div>
+        </div>*@
 
     <div class="clearfix"></div>
 
