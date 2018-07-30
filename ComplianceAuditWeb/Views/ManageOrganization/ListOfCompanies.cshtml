@@ -9,7 +9,9 @@
 </ul>
 <h2 class="ML15">List of Companies</h2>
 
-
+<div style="text-align:right;margin-right: 10px">
+    @Html.ActionLink("Create New", "AddCompany")
+</div>
  
 
 <table class="table">
@@ -27,7 +29,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Logo)
         </th>
-        <th></th>
+    <th>Manage</th>
     </tr>
 
     @foreach (var item in Model)
@@ -64,7 +66,7 @@
                     <center>
                         @Html.ActionLink("Deactivate", "DeactivateCompany", new { Orgid = item.OrganizationID })
                         <br />
-                        @Html.ActionLink("Delete", "DeleteCompany", new { Orgid = item.OrganizationID });
+                        @Html.ActionLink("Delete", "DeleteCompany", new { Orgid = item.OrganizationID })
                     </center>
                 }
                 else
@@ -72,7 +74,7 @@
                     <center>
                         @Html.ActionLink("Activate", "ActivateCompany", new { Orgid = item.OrganizationID })
                         <br />
-                        @Html.ActionLink("Delete", "DeleteCompany", new { Orgid = item.OrganizationID });
+                        @Html.ActionLink("Delete", "DeleteCompany", new { Orgid = item.OrganizationID })
 
                     </center>
                 }
@@ -88,8 +90,5 @@
     
 
 </table>
-<center>
-    <div>
-        @Html.ActionLink("Create New", "AddCompany")
-    </div>
-</center>
+
+

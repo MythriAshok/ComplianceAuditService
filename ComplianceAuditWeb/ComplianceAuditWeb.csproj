@@ -198,12 +198,17 @@
     <Content Include="Content\assets\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\assets\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\assets\images\about_icon.png" />
+    <Content Include="Content\assets\images\accordion-closed.png" />
+    <Content Include="Content\assets\images\accordion-opened.png" />
     <Content Include="Content\assets\images\acts.png" />
+    <Content Include="Content\assets\images\adduser.JPG" />
     <Content Include="Content\assets\images\audit_tool.png" />
     <Content Include="Content\assets\images\company1.JPG" />
     <Content Include="Content\assets\images\company2.JPG" />
     <Content Include="Content\assets\images\contact_icon.png" />
     <Content Include="Content\assets\images\content_icon.png" />
+    <Content Include="Content\assets\images\deleteuser.jpg" />
+    <Content Include="Content\assets\images\edituser.JPG" />
     <Content Include="Content\assets\images\heding_corner.png" />
     <Content Include="Content\assets\images\help_icon.png" />
     <Content Include="Content\assets\images\icon1.png" />
@@ -213,8 +218,17 @@
     <Content Include="Content\assets\images\kpi_alert.png" />
     <Content Include="Content\assets\images\kpi_funnel.png" />
     <Content Include="Content\assets\images\logo_new.png" />
+    <Content Include="Content\assets\images\manageActs.png" />
+    <Content Include="Content\assets\images\manageBranch.png" />
+    <Content Include="Content\assets\images\manageCompany.png" />
+    <Content Include="Content\assets\images\manageGroup.png" />
+    <Content Include="Content\assets\images\manageGroupCompany.png" />
+    <Content Include="Content\assets\images\ManageRoles.png" />
+    <Content Include="Content\assets\images\manageRules.png" />
+    <Content Include="Content\assets\images\manageUsers.png" />
     <Content Include="Content\assets\images\plugin.png" />
     <Content Include="Content\assets\images\product_icon.png" />
+    <Content Include="Content\assets\images\Reports.png" />
     <Content Include="Content\assets\images\rules.png" />
     <Content Include="Content\assets\images\sections.png" />
     <Content Include="Content\assets\images\settings_icon.png" />
@@ -317,6 +331,7 @@
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.css.map" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.min.css.map" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\JavaScript.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -441,6 +456,7 @@
     <Content Include="Views\ManageOrganization\UpdateCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_GroupCompanyDashboard.cshtml" />
     <Content Include="Views\ManageOrganization\UpdateBranch.cshtml" />
+    <Content Include="Views\Shared\Logout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -448,7 +448,7 @@ Delimiter ;
 
 Drop Procedure if exists `sp_getCompanyListsforBranch`;
 Delimiter /
-create procedure sp_getCompanyLists(p_Org_Hier_ID int)
+create procedure sp_getCompanyListsforBranch(p_Org_Hier_ID int)
 begin 
 if( p_Org_Hier_ID=0)
 then
@@ -1112,7 +1112,6 @@ Drop Procedure if exists sp_getLoginData;
 delimiter /
 create procedure sp_getLoginData
 (
-p_User_ID int ,
 p_Email_ID varchar(100),
 p_User_Password varchar(10)
 )

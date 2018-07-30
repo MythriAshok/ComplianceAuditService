@@ -158,9 +158,9 @@
     </div>
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
-            @Html.Label("Industry Type", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.Label("Branch Type", new { @class = "floating-label" })<span style="color:red">*</span>
             @Html.DropDownListFor(m => m.organization.Industry_Type, new SelectList
-                    (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.IndustryType))),
+                    (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.BranchType))),
                     "Select Industry Type", new { @class = "inputMaterial ui - autocomplete - input" })
 
         </div>

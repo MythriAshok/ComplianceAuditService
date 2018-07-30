@@ -35,7 +35,6 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Is_Header", xref.Is_Header);
                     cmd.Parameters.AddWithValue("p_level", xref.level);
                     cmd.Parameters.AddWithValue("p_Comp_Order", xref.Comp_Order);
-                    cmd.Parameters.AddWithValue("p_Option_ID", xref.Option_ID);
                     cmd.Parameters.AddWithValue("p_Risk_Category", xref.Risk_Category);
                     cmd.Parameters.AddWithValue("p_Risk_Description", xref.Risk_Description);
                     cmd.Parameters.AddWithValue("p_Recurrence", xref.Recurrence);
@@ -203,18 +202,19 @@ namespace Compliance.DataAccess
             return Auditorid;
         }
 
-        public bool insertActAndRuleforBranch(ComplianceAudit audit)
+        public bool insertActAndRuleforBranch(int orgid,int ruleid,char flag,int userid)
         {
             bool res = false;
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_insertActandRuleforBranch", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_insertupdateComplianceBranchMapping", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Auditor_ID", audit.Auditor_Id);
-                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", audit.Compliance_Xref_Id);
-                cmd.Parameters.AddWithValue("p_Org_Hier_ID", audit.Org_Hier_Id);
-                cmd.Parameters.AddWithValue("p_User_ID", audit.User_Id);
+                cmd.Parameters.AddWithValue("p_Flag", flag);                
+                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", ruleid);
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", orgid);
+                cmd.Parameters.AddWithValue("p_UpdatedByLogin_ID", userid);
+                cmd.Parameters.AddWithValue("p_Is_Active", 1);
                 int count=cmd.ExecuteNonQuery();
                 if(count>0)
                 {

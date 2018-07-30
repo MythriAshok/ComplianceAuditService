@@ -22,7 +22,7 @@ namespace ComplianceAuditWeb.Controllers
         {
             string selectedcompanyid = "17";
 
-            int AuditorID = 1;
+            int AuditorID = 4;
             ComplianceAudit complianceAudit = new ComplianceAudit();
             AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
             List<AuditViewModel> auditViewModelsList = new List<AuditViewModel>();
@@ -79,7 +79,7 @@ namespace ComplianceAuditWeb.Controllers
         [HttpGet]
         public ActionResult addComplianceAudit()
         {
-            int ComplianceBrachID = 18;
+            int ComplianceBrachID = 4;
             AuditViewModel auditViewModel = new AuditViewModel();
             AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
             List<AuditViewModel> auditViewModelsList = new List<AuditViewModel>();

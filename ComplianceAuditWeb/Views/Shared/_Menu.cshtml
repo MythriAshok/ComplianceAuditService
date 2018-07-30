@@ -13,12 +13,12 @@
                 <span>@Session["emailid"].ToString()</span>
             }
         </h3>
-        <p><a href="#"><a href="#">Logout</a></p>
+        <p><a href="/UserManagement/Logout">Logout</a></p>
     </div>
     <ul>
         @foreach (var menu in Model)
         {
-            <li><a href="@menu.PathUrl?pid=@menu.Id">@menu.MenuName <span class="iconnew"><i class=""><img src="~/Content/assets/images/@menu.icon" alt="" /></i></span></a></li>
+            <li><a href="@menu.PathUrl?pid=@menu.Id">@menu.MenuName <span class="iconnew"><img style="width:30px;height:30px" src="~/Content/assets/images/@menu.icon" alt="" /></span></a></li>
         }
     </ul>
 

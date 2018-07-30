@@ -76,10 +76,10 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         System.Threading.Tasks.Task<string> getRuleforBranchAsync(int sectionid, int branchid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranchResponse")]
-        bool inseretActandRuleforBranch(Compliance.DataObject.ComplianceAudit audit, int[] ruleid);
+        bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranchResponse")]
-        System.Threading.Tasks.Task<bool> inseretActandRuleforBranchAsync(Compliance.DataObject.ComplianceAudit audit, int[] ruleid);
+        System.Threading.Tasks.Task<bool> inseretActandRuleforBranchAsync(int orgid, int[] ruleid, int userid);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -189,12 +189,12 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
             return base.Channel.getRuleforBranchAsync(sectionid, branchid);
         }
         
-        public bool inseretActandRuleforBranch(Compliance.DataObject.ComplianceAudit audit, int[] ruleid) {
-            return base.Channel.inseretActandRuleforBranch(audit, ruleid);
+        public bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid) {
+            return base.Channel.inseretActandRuleforBranch(orgid, ruleid, userid);
         }
         
-        public System.Threading.Tasks.Task<bool> inseretActandRuleforBranchAsync(Compliance.DataObject.ComplianceAudit audit, int[] ruleid) {
-            return base.Channel.inseretActandRuleforBranchAsync(audit, ruleid);
+        public System.Threading.Tasks.Task<bool> inseretActandRuleforBranchAsync(int orgid, int[] ruleid, int userid) {
+            return base.Channel.inseretActandRuleforBranchAsync(orgid, ruleid, userid);
         }
     }
 }

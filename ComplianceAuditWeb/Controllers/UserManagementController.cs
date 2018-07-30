@@ -478,7 +478,7 @@ namespace ComplianceAuditWeb.Controllers
                     Session["GroupCompanyId"] = ds.Tables[0].Rows[0]["Company_ID"];
                     Session["Last_Login"] = ds.Tables[0].Rows[0]["Last_Login"];
                     Session["Usergroupid"] = 2; /*ds.Tables[0].Rows[0][];*/
-                    return RedirectToAction("ListofCompliance", "ComplianceManagement");
+                    return RedirectToAction("dashboard", "common",new { pid=23});
                 }
                 else
                     ModelState.AddModelError("",ConfigurationManager.AppSettings["Login_error"]);
@@ -488,6 +488,11 @@ namespace ComplianceAuditWeb.Controllers
             return View("~/Views/Shared/_Login.cshtml",user);
 
         }
+
+        public ActionResult Logout()
+        {
+            return View("~/Views/Shared/Logout.cshtml");
+        }       
 
     }
 }

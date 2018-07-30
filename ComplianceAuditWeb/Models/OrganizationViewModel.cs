@@ -32,6 +32,13 @@ namespace ComplianceAuditWeb.Models
            Manufacturing
         }
 
+        public enum BranchType
+        {
+            SalesOffice,
+            Manufacturing,
+            Service,
+            HeadQuater
+        }
 
 
     }
