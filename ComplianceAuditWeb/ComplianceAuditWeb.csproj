@@ -365,7 +365,6 @@
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\ComplianceManagementController.cs" />
     <Compile Include="Controllers\ManageAccessController.cs" />
-    <Compile Include="Controllers\ManageOrganizationController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -379,6 +378,7 @@
     <Compile Include="Models\ListofComplianceViewModel.cs" />
     <Compile Include="Models\ListOfGroupCompanies.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Controllers\ManageOrganizationController.cs" />
     <Compile Include="Models\OrgActivateDeactivateViewModel.cs" />
     <Compile Include="Models\OrganizationViewModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />

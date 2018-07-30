@@ -35,6 +35,8 @@ namespace ComplianceAuditWeb.Controllers
 
             auditViewModel.MappedCompany = new List<SelectListItem>();
 
+            auditViewModel.MappedCompany.Add(new SelectListItem { Text = "--Select Company--", Value = "0" });
+
             if (dsCompany.Tables.Count > 0)
             {
                 foreach (System.Data.DataRow row in dsCompany.Tables[0].Rows)
