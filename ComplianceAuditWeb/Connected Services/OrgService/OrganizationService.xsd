@@ -13,7 +13,7 @@
   <xs:element name="insertOrganizationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="insertOrganizationResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="insertOrganizationResult" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -59,7 +59,7 @@
   <xs:element name="insertCompanyResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="insertCompanyResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="insertCompanyResult" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

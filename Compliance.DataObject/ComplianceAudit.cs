@@ -19,7 +19,8 @@ namespace Compliance.DataObject
 
         public int Compliance_Xref_Id { get; set; }
         public int Org_Hier_Id { get; set; }
-        public int Compliance_Options_Id { get; set; }
+        public int Company_ID { get; set; }
+       // public int Compliance_Options_Id { get; set; }
         public int Auditor_Id { get; set; }
         public int User_Id { get; set; }
         public string Audit_Status { get; set; }

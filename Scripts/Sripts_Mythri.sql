@@ -468,6 +468,11 @@ select Company_Name, Org_Hier_ID,Industry_Type,Is_Active from tbl_org_hier where
 end/
 Delimiter ;
 
+
+
+
+
+
 Drop Procedure if exists `sp_getGroupCompaniesListDropDown`;
 Delimiter /
 create procedure sp_getGroupCompaniesListDropDown()
@@ -612,7 +617,7 @@ p_Audit_Date datetime,
 p_Version int,
 p_Reviewer_ID int,
 p_Review_Comments varchar(500),
-p_Audit_Status varchar(10),
+p_Audit_Status varchar(450),
 p_Compliance_Xref_ID int ,
 p_Org_Hier_ID int ,
 p_Auditor_ID int,
@@ -1172,6 +1177,7 @@ end/
 delimiter ;
 
 
+
 drop procedure if exists sp_getComplianceXrefData;
 delimiter /
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getComplianceXrefData`
@@ -1197,6 +1203,10 @@ end/
 delimiter ;
 
 
+
+
+
+
 drop procedure if exists sp_getAllCompanyBrnachAssignedtoAuditor;
 delimiter /
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getAllCompanyBrnachAssignedtoAuditor`
@@ -1216,4 +1226,31 @@ delimiter ;
 
 
 
+drop procedure if exists `sp_getBranchesAssignedforAuditor`;
+delimiter /
+create procedure sp_getBranchesAssignedforAuditor(p_Auditor_ID int)
+begin
+select * from tbl_org_hier where 
+Org_Hier_ID IN(Select Org_Hier_ID from tbl_branch_auditor_mapping where Auditor_ID=p_Auditor_ID) ;
+end/
 
+
+
+Drop Procedure if exists `sp_getSpecificBranchList`;
+Delimiter /
+create procedure sp_getSpecificBranchList(p_Parent_Company_ID int)
+begin  
+select Company_Name, Org_Hier_ID,Industry_Type,Is_Active from tbl_org_hier where level=3 and Is_Delete = 0
+ and Parent_Company_ID= p_Parent_Company_ID ;
+end/
+Delimiter ;
+
+
+
+
+
+
+
+
+ALTER TABLE `auditmoduledb`.`tbl_compliance_audit` 
+CHANGE COLUMN `Audit_Status` `Audit_Status` VARCHAR(450) NULL DEFAULT NULL ;

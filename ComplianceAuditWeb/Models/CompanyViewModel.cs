@@ -19,6 +19,7 @@ namespace ComplianceAuditWeb.Models
 
         public List<SelectListItem> GroupCompaniesList { get; set; }
         public int GroupCompanyID { get; set; }
+        public string GroupCompanyName { get; set; }
 
 
 

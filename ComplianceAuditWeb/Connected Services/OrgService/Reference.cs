@@ -16,10 +16,10 @@ namespace ComplianceAuditWeb.OrgService {
     public interface IOrganizationService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertOrganization", ReplyAction="http://tempuri.org/IOrganizationService/insertOrganizationResponse")]
-        bool insertOrganization(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch);
+        int insertOrganization(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertOrganization", ReplyAction="http://tempuri.org/IOrganizationService/insertOrganizationResponse")]
-        System.Threading.Tasks.Task<bool> insertOrganizationAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch);
+        System.Threading.Tasks.Task<int> insertOrganizationAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updateOrganization", ReplyAction="http://tempuri.org/IOrganizationService/updateOrganizationResponse")]
         bool updateOrganization(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch);
@@ -34,10 +34,10 @@ namespace ComplianceAuditWeb.OrgService {
         System.Threading.Tasks.Task<string> getGroupCompanyAsync(int orgID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertCompany", ReplyAction="http://tempuri.org/IOrganizationService/insertCompanyResponse")]
-        bool insertCompany(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch);
+        int insertCompany(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertCompany", ReplyAction="http://tempuri.org/IOrganizationService/insertCompanyResponse")]
-        System.Threading.Tasks.Task<bool> insertCompanyAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch);
+        System.Threading.Tasks.Task<int> insertCompanyAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updateCompany", ReplyAction="http://tempuri.org/IOrganizationService/updateCompanyResponse")]
         bool updateCompany(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch);
@@ -199,11 +199,11 @@ namespace ComplianceAuditWeb.OrgService {
                 base(binding, remoteAddress) {
         }
         
-        public bool insertOrganization(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch) {
+        public int insertOrganization(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch) {
             return base.Channel.insertOrganization(org, company, branch);
         }
         
-        public System.Threading.Tasks.Task<bool> insertOrganizationAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch) {
+        public System.Threading.Tasks.Task<int> insertOrganizationAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch) {
             return base.Channel.insertOrganizationAsync(org, company, branch);
         }
         
@@ -223,11 +223,11 @@ namespace ComplianceAuditWeb.OrgService {
             return base.Channel.getGroupCompanyAsync(orgID);
         }
         
-        public bool insertCompany(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch) {
+        public int insertCompany(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch) {
             return base.Channel.insertCompany(org, company, branch);
         }
         
-        public System.Threading.Tasks.Task<bool> insertCompanyAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch) {
+        public System.Threading.Tasks.Task<int> insertCompanyAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch) {
             return base.Channel.insertCompanyAsync(org, company, branch);
         }
         

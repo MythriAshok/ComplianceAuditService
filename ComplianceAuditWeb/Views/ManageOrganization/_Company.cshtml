@@ -66,10 +66,27 @@
 <div class="mid_content_sec">
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
+
+            @if ((Session["CompanyName"]) != null)
+            
+            {
+                @Html.Label("Group Company")
+
+                @*Model.GroupCompanyID = Convert.ToInt32(Session["CompanyID"]);
+                @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })*@
+                Model.GroupCompanyID = Convert.ToInt32(Session["CompanyID"]);
+                Model.GroupCompanyName = Session["CompanyName"].ToString();
+                @Html.TextBoxFor(m=>m.GroupCompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
+                @Html.HiddenFor(m=>m.GroupCompanyID)
+            }
+            else {
+
             @Html.Label("Group Comapny", new { @class = "floating-label" })<span style="color:red">*</span>
             @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input" })
+            }
         </div>
     </div>
+            
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
 

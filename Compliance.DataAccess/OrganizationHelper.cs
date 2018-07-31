@@ -46,7 +46,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.Add("p_Branch_Coordinates2", MySqlDbType.VarChar, 100).Value = branchLocation.Branch_Coordinates2;
                     cmd.Parameters.Add("p_Branch_CoordinateURL", MySqlDbType.VarChar, 100).Value = branchLocation.Branch_CoordinatesURL;
                     object objbranchlocationid = cmd.ExecuteScalar();
-                    if (objbranchlocationid != null)
+                    if (Convert.ToInt32(objbranchlocationid) > 0)
                     {
                         BranchLocationId = Convert.ToInt32(objbranchlocationid);
                     }
@@ -152,7 +152,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Is_Delete", org.Is_Delete);
                     MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                     object objorganizationid = cmd.ExecuteScalar();
-                    if (objorganizationid != null)
+                    if (Convert.ToInt32(objorganizationid) != 0)
                     {
                         OrganizationId = Convert.ToInt32(objorganizationid);
                     }

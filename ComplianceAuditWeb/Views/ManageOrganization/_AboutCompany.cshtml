@@ -1,0 +1,59 @@
+﻿@model ComplianceAuditWeb.Models.AboutCompanyViewModel
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+}
+
+<h2 class="ML15">Manage Group Company</h2>
+<ul class="breadcrumb ML15">
+    <li><a href="">Group Management</a></li>
+    <li> Group Company</li>
+</ul>
+
+@using (Html.BeginForm())
+{
+<div class="mid_content_sec">
+    <div class="col-xs-6 subSelect ">
+        <div class="input-field">
+            @Html.Label("Company Name", new { @class = "floating-label" })
+            @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
+        </div>
+    </div>
+   
+
+    <div class="clearfix"></div>
+
+    <div class="col-xs-12 subSelect ">
+        <div class="input-field">
+            @Html.Label("Company Description", new { @class = "floating-label" })
+            @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
+
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.CompanyID)
+    @Html.HiddenFor(m => m.ParentCompanyID)
+
+</div>
+        <ul class="list-inline continueBtn">
+            <li>
+                @Html.ActionLink("Modify Group Company", "UpdateGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+                @if (Convert.ToInt32(Session["ParentCompanyID"]) == 0)
+                {
+                    <input type="submit" value="Add Company" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+                }
+                else
+                {
+                    <input type="submit" value="Add Branch" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+                }
+            </li>
+        </ul>
+
+
+
+}
+
+
+
+

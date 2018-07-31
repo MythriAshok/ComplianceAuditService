@@ -26,7 +26,7 @@ namespace ComplianceService
         /// <param name="company">data object of CompanyDetails</param>
         /// <param name="branch">data object of BranchLocation</param>
         /// <returns>boolean value</returns>
-        public bool insertOrganization(Organization org, CompanyDetails company, BranchLocation branch)
+        public int insertOrganization(Organization org, CompanyDetails company, BranchLocation branch)
         {
             int OrganizationID = 0;
             int BranchLocationID = 0;
@@ -41,6 +41,7 @@ namespace ComplianceService
                 {
                     org.Branch_Id = BranchLocationID;
                     OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
+                    org.Organization_Id = OrganizationID;
                     //if (OrganizationID > 0)
                     //{
                     //    company.Org_Hier_ID = OrganizationID;
@@ -56,7 +57,7 @@ namespace ComplianceService
             {
                 throw;
             }
-            return insertResult;
+            return org.Organization_Id;
         }
         /// <summary>
         /// A method to in the sevice layer that interacts with Organization helper class to update the Organization details in the database
@@ -77,7 +78,7 @@ namespace ComplianceService
                 inserBranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
                 insertOrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
                 // insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
-                if (inserBranchID > 0 || insertOrganizationID > 0) //insertCompanyDetailsID > 0)
+                if (inserBranchID > 0 && insertOrganizationID > 0) //insertCompanyDetailsID > 0)
                 {
                     updateResult = true;
                 }
@@ -215,7 +216,7 @@ namespace ComplianceService
     /// <param name="company">data object of CompanyDetails</param>
     /// <param name="branch">data object of BranchLocation</param>
     /// <returns>boolean value</returns>
-    public bool insertCompany(Organization org, CompanyDetails company, BranchLocation branch)
+    public int insertCompany(Organization org, CompanyDetails company, BranchLocation branch)
     {
         int OrganizationID = 0;
         int BranchLocationID = 0;
@@ -229,22 +230,24 @@ namespace ComplianceService
             {
                 org.Branch_Id = BranchLocationID;
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
+                    org.Organization_Id = OrganizationID;
                 if (OrganizationID > 0)
                 {
                     company.Org_Hier_ID = OrganizationID;
                     CompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'I');
                 }
             }
-            if (BranchLocationID > 0 || OrganizationID > 0)
-            {
-                insertResult = true;
+                if (BranchLocationID > 0 && OrganizationID > 0)
+
+                {
+                    insertResult = true;
             }
         }
         catch
         {
             throw;
         }
-        return insertResult;
+        return org.Organization_Id;
     }
     /// <summary>
     /// A method to in the sevice layer that interacts with Organization helper class to update the Company details in the database

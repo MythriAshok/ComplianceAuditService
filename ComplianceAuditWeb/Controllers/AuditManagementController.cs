@@ -20,9 +20,9 @@ namespace ComplianceAuditWeb.Controllers
         }
         public ActionResult addCompanyBranch()
         {
-            string selectedcompanyid = "17";
+            string selectedcompanyid = "0";
 
-            int AuditorID = 4;
+            int AuditorID = 1;
             ComplianceAudit complianceAudit = new ComplianceAudit();
             AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
             List<AuditViewModel> auditViewModelsList = new List<AuditViewModel>();
@@ -53,6 +53,8 @@ namespace ComplianceAuditWeb.Controllers
             dsBranch.ReadXml(new StringReader(strxmlBranch));
 
             auditViewModel.MappedBranch = new List<SelectListItem>();
+            auditViewModel.MappedBranch.Add(new SelectListItem { Text = "--Select Branch--", Value = "0" });
+
 
             if (dsCompany.Tables.Count > 0)
             {
@@ -60,26 +62,28 @@ namespace ComplianceAuditWeb.Controllers
                 {
                     if (row["Parent_Company_ID"].ToString() == selectedcompanyid)
                     {
-
                         auditViewModel.MappedBranch.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
                     }
                 }
             }
-
+            auditViewModel.complianceAudit = new ComplianceAudit();
+            auditViewModel.complianceAudit.Auditor_Id = AuditorID;
             return View(auditViewModel);
         }
         [HttpPost]
         public ActionResult addCompanyBranch(AuditViewModel auditViewModel)
         {
+
+            Session["ComplianceBranchID"] = auditViewModel.complianceAudit.Company_ID;
+            Session["AuditorID"] =auditViewModel.complianceAudit.Auditor_Id;
+            Session["OrgHierID"] = auditViewModel.complianceAudit.Org_Hier_Id;
             return RedirectToAction("addComplianceAudit");
         }
-
-
-
         [HttpGet]
         public ActionResult addComplianceAudit()
         {
-            int ComplianceBrachID = 4;
+            //int ComplianceBrachID = 18;
+            int ComplianceBrachID =Convert.ToInt32( Session["ComplianceBranchID"]);
             AuditViewModel auditViewModel = new AuditViewModel();
             AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
             List<AuditViewModel> auditViewModelsList = new List<AuditViewModel>();
@@ -99,6 +103,8 @@ namespace ComplianceAuditWeb.Controllers
 
             foreach (System.Data.DataRow row in dsComplianceXrefData.Tables[0].Rows)
             {
+               // int id = (row["id"] == DBNull.Value) ? 0 : Convert.ToInt32(row["id"]);
+
                 if (row["level"].ToString() == "1")
                 {
                     auditViewModel.complianceXrefList.Add(new ComplianceXref()
@@ -157,6 +163,7 @@ namespace ComplianceAuditWeb.Controllers
                 {
                     auditViewModel.Rules.Add(new ComplianceXref()
                     {
+
                         Compliance_Xref_ID = Convert.ToInt32(row["Compliance_Xref_ID"]),
                         Compliance_Parent_ID = Convert.ToInt32(row["Compliance_Parent_ID"]),
                         Compliance_Title = Convert.ToString(row["Compliance_Title"]),
@@ -234,14 +241,14 @@ namespace ComplianceAuditWeb.Controllers
                     audit.Audit_Remarks = formCollection["complianceAuditList[" + index + "].Audit_Remarks"];
                     audit.Penalty_nc = formCollection["complianceAuditList[" + index + "].Penalty_nc"];
                     audit.Compliance_Xref_Id = Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Xref_ID"]);
-                    audit.Auditor_Id = 1;// Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Auditor_ID"]);
+                    audit.Auditor_Id = Convert.ToInt32(Session["AuditorID"]);//1;// Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Auditor_ID"]);
                     audit.Audit_ArteFacts = formCollection["complianceAuditList[" + index + "].Audit_ArteFacts"];
                     audit.Compliance_Audit_Id =  Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Audit_Id"]);
-                    audit.Compliance_Options_Id = 1;// Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Options_Id"]);
+                   // audit.Compliance_Options_Id = 1;// Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Options_Id"]);
                     audit.Compliance_Schedule_Instance = Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Schedule_Instance"]);
                     // audit.Is_Active = Convert.ToBoolean(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
                     //audit.Last_Update_dDate = Convert.ToDateTime(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
-                    audit.Org_Hier_Id = 17; // Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
+                    audit.Org_Hier_Id =Convert.ToInt32( Session["ComplianceBranchID"]);// 17; // Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
                     audit.Reviewer_Comments = formCollection["complianceAuditList[" + index + "].Compliance_Schedule_Instance"];
                     audit.Reviewer_Id = Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Schedule_Instance"]);
                     audit.User_Id = 1;// Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);

@@ -1,0 +1,38 @@
+﻿@model ComplianceAuditWeb.Models.AboutCompanyViewModel
+@{
+    /**/
+
+    ViewBag.Title = "_AboutChildCompany";
+}
+
+
+@using (Html.BeginForm())
+{
+<div class="mid_content_sec">
+    <div class="col-xs-6 subSelect ">
+        <div class="input-field">
+            @Html.Label("Company Name")
+            @Html.TextBoxFor(m => m.CompanyName)
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class="col-xs-12 subSelect ">
+        <div class="input-field">
+            @Html.Label("Company Description")
+            @Html.TextAreaFor(m => m.CompanyDescription)
+
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.CompanyID)
+
+    <ul class="list-inline continueBtn">
+        <li>
+            @Html.ActionLink("Modify Company", "UpdateCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+            <input type="submit" value="Add Company" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+        </li>
+    </ul>
+</div>
+            }
+
+
