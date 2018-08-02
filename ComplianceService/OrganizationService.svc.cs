@@ -26,7 +26,7 @@ namespace ComplianceService
         /// <param name="company">data object of CompanyDetails</param>
         /// <param name="branch">data object of BranchLocation</param>
         /// <returns>boolean value</returns>
-        public int insertOrganization(Organization org, CompanyDetails company, BranchLocation branch)
+        public int insertOrganization(Organization org,  BranchLocation branch)
         {
             int OrganizationID = 0;
             int BranchLocationID = 0;
@@ -66,7 +66,7 @@ namespace ComplianceService
         /// <param name="company">data object of CompanyDetails</param>
         /// <param name="branch">data object of BranchLocation</param>
         /// <returns>boolean value</returns>
-        public bool updateOrganization(Organization org, CompanyDetails company, BranchLocation branch)
+        public bool updateOrganization(Organization org,  BranchLocation branch)
         {
             int insertOrganizationID = 0;
             int inserBranchID = 0;
@@ -638,18 +638,34 @@ namespace ComplianceService
         return xmlCompaniesList;
     }
 
-    //public string GetSpecificCompaniesList(int GroupCompanyID)
-    //{
-    //    return BindSpecificCompaniesList(GroupCompanyID);
-    //}
-    //private string BindSpecificCompaniesList(int groupcompanyID)
-    //{
-    //    OrganizationHelper OrganizationHelper = new OrganizationHelper();
-    //    DataSet dsGroupCompanies = OrganizationHelper.getSpecificCompanyList(groupcompanyID);
-    //    string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
-    //    return xmlGroupCompaniesList;
-    //}
-}
+        public string GeSpecifictBranchList(int CompanyID)
+        {
+            return BindSpecificBranchList(CompanyID);
+        }
+        /// <summary>
+        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
+        /// </summary>
+        /// <returns></returns>
+        private string BindSpecificBranchList(int CompanyID)
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsCompanies = OrganizationHelper.getSpecificBranchList(CompanyID);
+            string xmlCompaniesList = dsCompanies.GetXml();
+            return xmlCompaniesList;
+        }
+
+        //public string GetSpecificCompaniesList(int GroupCompanyID)
+        //{
+        //    return BindSpecificCompaniesList(GroupCompanyID);
+        //}
+        //private string BindSpecificCompaniesList(int groupcompanyID)
+        //{
+        //    OrganizationHelper OrganizationHelper = new OrganizationHelper();
+        //    DataSet dsGroupCompanies = OrganizationHelper.getSpecificCompanyList(groupcompanyID);
+        //    string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
+        //    return xmlGroupCompaniesList;
+        //}
+    }
 }
 
 

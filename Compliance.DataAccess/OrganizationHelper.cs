@@ -384,6 +384,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Company_Email_ID", details.Company_EmailID);
                     cmd.Parameters.AddWithValue("p_Company_ContactNumber1", details.Company_ContactNumber1);
                     cmd.Parameters.AddWithValue("p_Company_ContactNumber2", details.Company_ContactNumber2);
+                  //  cmd.Parameters.AddWithValue("p_Compliance_Audit_Type", details.Compliance_Audit_Type);
                     cmd.Parameters.AddWithValue("p_Is_Active", details.Is_Active);
                     object objcompanydetailsid = cmd.ExecuteScalar();
                     if (objcompanydetailsid != null)
@@ -540,7 +541,28 @@ namespace Compliance.DataAccess
             }
             return dsCompaniesList;
         }
-
+        public DataSet getSpecificBranchList(int CompanyID)
+        {
+            DataSet dsSpecificBranchList = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getSpecificBranchList", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Parent_Company_ID", CompanyID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsSpecificBranchList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsSpecificBranchList;
+        }
 
 
         public DataSet getCompanyListsforBranch(int GroupCompanyID)

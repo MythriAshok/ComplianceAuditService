@@ -521,6 +521,7 @@ p_Website varchar(45),
 p_Company_Email_ID varchar(45),
 p_Company_ContactNumber1 varchar(45),
 p_Company_ContactNumber2 varchar(45),
+
 p_Is_Active bit
 )
 begin
@@ -535,7 +536,9 @@ Auditing_Frequency,
 Website, 
 Company_Email_ID,
 Company_ContactNumber1,
-Company_ContactNumber2)
+Company_ContactNumber2
+
+)
 values
 (
 p_Org_Hier_ID,
@@ -546,7 +549,9 @@ p_Auditing_Frequency,
 p_Website, 
 p_Company_Email_ID,
 p_Company_ContactNumber1,
-p_Company_ContactNumber2);
+p_Company_ContactNumber2
+
+);
 select last_insert_id();
 else 
 update tbl_company_details set
@@ -560,6 +565,8 @@ Website= p_Website,
 Company_Email_ID= p_Company_Email_ID,
 Company_ContactNumber1=p_Company_ContactNumber1,
 Company_ContactNumber2=p_Company_ContactNumber2
+
+
 where Company_Details_ID=p_Company_Details_ID;
 select last_insert_id();
 end if;
@@ -1250,6 +1257,8 @@ Delimiter ;
 
 
 
+ALTER TABLE `auditmoduledb`.`tbl_company_details` 
+ADD COLUMN `Compliance_Audit_Type` VARCHAR(100) NULL AFTER `Company_ContactNumber2`;
 
 
 ALTER TABLE `auditmoduledb`.`tbl_compliance_audit` 

@@ -11,12 +11,13 @@ namespace Compliance.DataObject
       
         public string Branch_Name { get; set; }
         public string Address { get; set; }
-
+        [Required]
         public int Country_Id { get; set; }
-
+        [Required]
         public int State_Id { get; set; }
 
         public int City_Id { get; set; }
+        [Required]
         public string Postal_Code { get; set; }
         public string Branch_Coordinates1 { get; set; }
         public string Branch_Coordinates2 { get; set; }

@@ -13,9 +13,9 @@ namespace ComplianceService
     public interface IOrganizationService
     {
         [OperationContract]
-        int insertOrganization(Organization org, CompanyDetails company, BranchLocation branch);
+        int insertOrganization(Organization org, BranchLocation branch);
         [OperationContract]
-        bool updateOrganization(Organization org, CompanyDetails company, BranchLocation branch);
+        bool updateOrganization(Organization org, BranchLocation branch);
         [OperationContract]
         string getGroupCompany(int orgID);
 
@@ -89,6 +89,9 @@ namespace ComplianceService
         [OperationContract]
 
         string getBranch(int OrgID);
+        [OperationContract]
+
+        string GeSpecifictBranchList(int CompanyID);
 
     }
 }

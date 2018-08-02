@@ -8,6 +8,7 @@ namespace Compliance.DataObject
    public class Organization
     {
         public int Organization_Id { get; set; }
+        [Required]
         public string Company_Name { get; set; }
         public int Company_Id { get; set; }
         

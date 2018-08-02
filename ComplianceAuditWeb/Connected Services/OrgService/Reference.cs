@@ -16,16 +16,16 @@ namespace ComplianceAuditWeb.OrgService {
     public interface IOrganizationService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertOrganization", ReplyAction="http://tempuri.org/IOrganizationService/insertOrganizationResponse")]
-        int insertOrganization(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch);
+        int insertOrganization(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertOrganization", ReplyAction="http://tempuri.org/IOrganizationService/insertOrganizationResponse")]
-        System.Threading.Tasks.Task<int> insertOrganizationAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch);
+        System.Threading.Tasks.Task<int> insertOrganizationAsync(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updateOrganization", ReplyAction="http://tempuri.org/IOrganizationService/updateOrganizationResponse")]
-        bool updateOrganization(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch);
+        bool updateOrganization(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updateOrganization", ReplyAction="http://tempuri.org/IOrganizationService/updateOrganizationResponse")]
-        System.Threading.Tasks.Task<bool> updateOrganizationAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch);
+        System.Threading.Tasks.Task<bool> updateOrganizationAsync(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getGroupCompany", ReplyAction="http://tempuri.org/IOrganizationService/getGroupCompanyResponse")]
         string getGroupCompany(int orgID);
@@ -170,6 +170,12 @@ namespace ComplianceAuditWeb.OrgService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getBranch", ReplyAction="http://tempuri.org/IOrganizationService/getBranchResponse")]
         System.Threading.Tasks.Task<string> getBranchAsync(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GeSpecifictBranchList", ReplyAction="http://tempuri.org/IOrganizationService/GeSpecifictBranchListResponse")]
+        string GeSpecifictBranchList(int CompanyID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GeSpecifictBranchList", ReplyAction="http://tempuri.org/IOrganizationService/GeSpecifictBranchListResponse")]
+        System.Threading.Tasks.Task<string> GeSpecifictBranchListAsync(int CompanyID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -199,20 +205,20 @@ namespace ComplianceAuditWeb.OrgService {
                 base(binding, remoteAddress) {
         }
         
-        public int insertOrganization(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch) {
-            return base.Channel.insertOrganization(org, company, branch);
+        public int insertOrganization(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch) {
+            return base.Channel.insertOrganization(org, branch);
         }
         
-        public System.Threading.Tasks.Task<int> insertOrganizationAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch) {
-            return base.Channel.insertOrganizationAsync(org, company, branch);
+        public System.Threading.Tasks.Task<int> insertOrganizationAsync(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch) {
+            return base.Channel.insertOrganizationAsync(org, branch);
         }
         
-        public bool updateOrganization(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch) {
-            return base.Channel.updateOrganization(org, company, branch);
+        public bool updateOrganization(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch) {
+            return base.Channel.updateOrganization(org, branch);
         }
         
-        public System.Threading.Tasks.Task<bool> updateOrganizationAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch) {
-            return base.Channel.updateOrganizationAsync(org, company, branch);
+        public System.Threading.Tasks.Task<bool> updateOrganizationAsync(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch) {
+            return base.Channel.updateOrganizationAsync(org, branch);
         }
         
         public string getGroupCompany(int orgID) {
@@ -405,6 +411,14 @@ namespace ComplianceAuditWeb.OrgService {
         
         public System.Threading.Tasks.Task<string> getBranchAsync(int OrgID) {
             return base.Channel.getBranchAsync(OrgID);
+        }
+        
+        public string GeSpecifictBranchList(int CompanyID) {
+            return base.Channel.GeSpecifictBranchList(CompanyID);
+        }
+        
+        public System.Threading.Tasks.Task<string> GeSpecifictBranchListAsync(int CompanyID) {
+            return base.Channel.GeSpecifictBranchListAsync(CompanyID);
         }
     }
 }
