@@ -488,7 +488,6 @@ namespace ComplianceAuditWeb.Controllers
             return View("~/Views/Shared/_Login.cshtml",user);
 
         }
-
         public ActionResult Logout()
         {
             return View("~/Views/Shared/Logout.cshtml");
