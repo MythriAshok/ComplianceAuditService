@@ -332,6 +332,8 @@
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.css.map" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.min.css.map" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\JavaScript.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -457,6 +459,7 @@
     <Content Include="Views\ManageOrganization\_GroupCompanyDashboard.cshtml" />
     <Content Include="Views\ManageOrganization\UpdateBranch.cshtml" />
     <Content Include="Views\Shared\Logout.cshtml" />
+    <Content Include="Views\ComplianceManagement\SMEDashboard.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
