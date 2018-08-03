@@ -46,10 +46,10 @@ namespace ComplianceAuditWeb.OrgService {
         System.Threading.Tasks.Task<bool> updateCompanyAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation branch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertBranch", ReplyAction="http://tempuri.org/IOrganizationService/insertBranchResponse")]
-        bool insertBranch(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch);
+        int insertBranch(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertBranch", ReplyAction="http://tempuri.org/IOrganizationService/insertBranchResponse")]
-        System.Threading.Tasks.Task<bool> insertBranchAsync(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch);
+        System.Threading.Tasks.Task<int> insertBranchAsync(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updateBranch", ReplyAction="http://tempuri.org/IOrganizationService/updateBranchResponse")]
         bool updateBranch(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch);
@@ -176,6 +176,12 @@ namespace ComplianceAuditWeb.OrgService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GeSpecifictBranchList", ReplyAction="http://tempuri.org/IOrganizationService/GeSpecifictBranchListResponse")]
         System.Threading.Tasks.Task<string> GeSpecifictBranchListAsync(int CompanyID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetVendors", ReplyAction="http://tempuri.org/IOrganizationService/GetVendorsResponse")]
+        string GetVendors(int CompanyID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetVendors", ReplyAction="http://tempuri.org/IOrganizationService/GetVendorsResponse")]
+        System.Threading.Tasks.Task<string> GetVendorsAsync(int CompanyID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -245,11 +251,11 @@ namespace ComplianceAuditWeb.OrgService {
             return base.Channel.updateCompanyAsync(org, company, branch);
         }
         
-        public bool insertBranch(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch) {
+        public int insertBranch(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch) {
             return base.Channel.insertBranch(org, branch);
         }
         
-        public System.Threading.Tasks.Task<bool> insertBranchAsync(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch) {
+        public System.Threading.Tasks.Task<int> insertBranchAsync(Compliance.DataObject.Organization org, Compliance.DataObject.BranchLocation branch) {
             return base.Channel.insertBranchAsync(org, branch);
         }
         
@@ -419,6 +425,14 @@ namespace ComplianceAuditWeb.OrgService {
         
         public System.Threading.Tasks.Task<string> GeSpecifictBranchListAsync(int CompanyID) {
             return base.Channel.GeSpecifictBranchListAsync(CompanyID);
+        }
+        
+        public string GetVendors(int CompanyID) {
+            return base.Channel.GetVendors(CompanyID);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetVendorsAsync(int CompanyID) {
+            return base.Channel.GetVendorsAsync(CompanyID);
         }
     }
 }

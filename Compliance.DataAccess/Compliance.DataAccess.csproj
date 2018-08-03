@@ -61,6 +61,7 @@
     <Compile Include="UserHelper.cs" />
     <Compile Include="UserPrivilegeHelper.cs" />
     <Compile Include="UserRolesHelper.cs" />
+    <Compile Include="VendorHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

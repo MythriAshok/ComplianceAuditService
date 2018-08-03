@@ -188,6 +188,13 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Connected Services\VendorService\VendorService.disco" />
+    <None Include="Connected Services\VendorService\configuration91.svcinfo" />
+    <None Include="Connected Services\VendorService\configuration.svcinfo" />
+    <None Include="Connected Services\VendorService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Content\assets\css\font-awesome.css" />
     <Content Include="Content\assets\css\loginpage.css" />
     <Content Include="Content\assets\css\main.css" />
@@ -331,6 +338,19 @@
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.css.map" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.min.css.map" />
+    <None Include="Connected Services\VendorService\VendorService.wsdl" />
+    <None Include="Connected Services\VendorService\VendorService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\VendorService\VendorService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\VendorService\VendorService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\VendorService\VendorService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\JavaScript.js" />
@@ -376,6 +396,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\VendorService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AuditManagementController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\ComplianceManagementController.cs" />
@@ -401,6 +426,7 @@
     <Compile Include="Models\RolesViewModel.cs" />
     <Compile Include="Models\UserGroupViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
+    <Compile Include="Models\VendorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -461,6 +487,10 @@
     <Content Include="Views\ManageOrganization\_AboutCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_AboutChildCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_BranchDashboard.cshtml" />
+    <Content Include="Views\ManageOrganization\_Vendor.cshtml" />
+    <Content Include="Views\ManageOrganization\_AssignVendorToBranch.cshtml" />
+    <Content Include="Views\Common\_UploadFiles.cshtml" />
+    <Content Include="Views\ManageOrganization\_UploadFiles.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -470,9 +500,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UploadedFiles\" />
     <Folder Include="Views\AboutCompany\" />
-    <Folder Include="Views\Common\" />
     <Folder Include="Views\ManageAccess\" />
+    <Folder Include="Views\ManageVendor\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Compliance.DataObject\Compliance.DataObject.csproj">
@@ -493,6 +524,7 @@
     <WCFMetadataStorage Include="Connected Services\ComplianceXrefService\" />
     <WCFMetadataStorage Include="Connected Services\OrgService\" />
     <WCFMetadataStorage Include="Connected Services\UserService\" />
+    <WCFMetadataStorage Include="Connected Services\VendorService\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

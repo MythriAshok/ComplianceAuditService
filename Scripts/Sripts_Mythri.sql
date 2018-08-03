@@ -1183,7 +1183,7 @@ update tbl_org_hier set Is_Active = 1 where Org_Hier_ID=p_Org_Hier_ID;
 end/
 delimiter ;
 
-
+call sp_getComplianceXrefData(19);
 
 drop procedure if exists sp_getComplianceXrefData;
 delimiter /
@@ -1197,7 +1197,8 @@ tbl_compliance_xref.*,
 tbl_compliance_branch_mapping.Org_Hier_ID  from tbl_compliance_xref 
 inner join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
 where 
-tbl_compliance_xref.Compliance_Xref_ID IN(Select Compliance_Xref_ID from tbl_compliance_branch_mapping where Org_Hier_ID=p_Org_Hier_ID) 
+tbl_compliance_xref.Compliance_Xref_ID IN(Select Compliance_Xref_ID from tbl_compliance_branch_mapping where Org_Hier_ID=18) 
+and tbl_compliance_xref.Effective_Start_Date >= Now() and tbl_compliance_xref.Effective_End_Date <= now()
 Union
 select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID from tbl_compliance_xref 
 left join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
@@ -1205,14 +1206,15 @@ where
 tbl_compliance_xref.Compliance_Xref_ID IN(
 Select distinct  Compliance_Parent_ID from tbl_compliance_xref where 
 tbl_compliance_xref.Compliance_Xref_ID in (Select Compliance_Xref_ID from tbl_compliance_branch_mapping  
-where Org_Hier_ID=p_Org_Hier_ID));
+where Org_Hier_ID=18)) 
+and tbl_compliance_xref.Effective_Start_Date >= Now() and tbl_compliance_xref.Effective_End_Date <= now() ;
 end/
 delimiter ;
 
 
 
 
-
+call sp_getAllCompanyBrnachAssignedtoAuditor(1);
 
 drop procedure if exists sp_getAllCompanyBrnachAssignedtoAuditor;
 delimiter /
@@ -1246,11 +1248,156 @@ end/
 Drop Procedure if exists `sp_getSpecificBranchList`;
 Delimiter /
 create procedure sp_getSpecificBranchList(p_Parent_Company_ID int)
-begin  
+begin 
+if(p_Parent_Company_ID=0)
+then
+select Company_Name, Org_Hier_ID,Industry_Type,Is_Active from tbl_org_hier where level=3 and Is_Delete = 0;
+else
+ 
 select Company_Name, Org_Hier_ID,Industry_Type,Is_Active from tbl_org_hier where level=3 and Is_Delete = 0
  and Parent_Company_ID= p_Parent_Company_ID ;
+ end if;
 end/
 Delimiter ;
+
+
+
+Drop Procedure if exists `sp_insertupdateVendorMaster`;
+Delimiter /
+create procedure sp_insertupdateVendorMaster
+(
+p_Flag char(1),
+p_Vendor_ID int,
+p_Vendor_Name varchar(100),
+p_Contact_Person varchar(100),
+p_Contact_Number varchar(100),
+p_Start_Date datetime,
+p_End_Date datetime,
+p_Vendor_Type varchar(50),
+p_Website varchar(100),
+p_Auditing_Frequency varchar(50),
+p_Last_Updated_Date datetime,
+p_Is_Active bit,
+p_Is_Delete bit,
+p_Company_ID int ,
+p_User_ID int 
+)
+begin
+if(p_Flag = 'I')then
+insert into tbl_vendor_master
+(
+Vendor_ID ,
+Vendor_Name ,
+Contact_Person,
+Contact_Number,
+Start_Date ,
+End_Date ,
+Vendor_Type ,
+Website ,
+Auditing_Frequency ,
+Last_Updated_Date ,
+Is_Active,
+Is_Delete ,
+Company_ID  ,
+User_ID 
+)
+values
+(
+p_Vendor_ID ,
+p_Vendor_Name ,
+p_Contact_Person,
+p_Contact_Number,
+p_Start_Date ,
+p_End_Date ,
+p_Vendor_Type ,
+p_Website ,
+p_Auditing_Frequency ,
+now(),
+p_Is_Active,
+p_Is_Delete ,
+p_Company_ID  ,
+p_User_ID
+);
+select last_insert_id();
+else
+update tbl_vendor_master set
+Vendor_ID= p_Vendor_ID ,
+Vendor_Name= p_Vendor_Name,
+Contact_Person = p_Contact_Person,
+Contact_Number = p_Contact_Number,
+Start_Date = p_Start_Date,
+End_Date = p_End_Date,
+Vendor_Type = p_Vendor_Type,
+Website =p_Website,
+Auditing_Frequency = p_Auditing_Frequency,
+Last_Updated_Date = now(),
+Is_Active = p_Is_Active,
+Is_Delete = p_Is_Delete,
+Company_ID =p_Company_ID ,
+User_ID =p_User_ID;
+select last_insert_id();
+end if;
+end/
+Delimiter ;
+
+
+
+DROP procedure IF EXISTS `auditmoduledb`.`sp_getVendorList`;
+
+DELIMITER $$
+USE `auditmoduledb`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getVendorList`(p_Company_ID int)
+begin
+if(p_Company_ID=0)
+then
+select Vendor_ID,Vendor_Name from tbl_vendor_master where Is_Delete=0 and Is_Active=1 ;
+else
+select Vendor_ID,Vendor_Name from tbl_vendor_master where Is_Delete=0 and Is_Active=1 and Company_ID=p_Company_ID;
+end if;
+end$$
+
+DELIMITER ;
+
+
+
+
+Drop Procedure if exists `sp_insertupdateVendorForBranch`;
+Delimiter /
+create procedure sp_insertupdateVendorForBranch
+(
+p_Flag char(1),
+p_Vendor_Branch_ID int,
+p_Vendor_ID int,
+p_Branch_ID int 
+)
+begin
+if(p_Flag = 'I')then
+insert into tbl_vendor_branch_mapping
+(
+Vendor_ID ,
+Branch_ID
+)
+values
+(
+p_Vendor_ID ,
+p_Branch_ID 
+);
+select last_insert_id();
+else
+update tbl_vendor_branch_mapping set
+Vendor_ID= p_Vendor_ID ,
+Branch_ID =p_Branch_ID; 
+select last_insert_id();
+end if;
+end/
+Delimiter ;
+
+
+
+
+
+
+
 
 
 
@@ -1263,3 +1410,43 @@ ADD COLUMN `Compliance_Audit_Type` VARCHAR(100) NULL AFTER `Company_ContactNumbe
 
 ALTER TABLE `auditmoduledb`.`tbl_compliance_audit` 
 CHANGE COLUMN `Audit_Status` `Audit_Status` VARCHAR(450) NULL DEFAULT NULL ;
+
+
+
+
+
+
+
+
+drop procedure if exists sp_getComplianceXrefData;
+delimiter /
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getComplianceXrefData`
+(
+p_Org_Hier_ID int 
+)
+begin
+select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID  from tbl_compliance_xref 
+inner join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
+where 
+tbl_compliance_xref.Compliance_Xref_ID IN(Select Compliance_Xref_ID from tbl_compliance_branch_mapping where Org_Hier_ID=p_Org_Hier_ID) 
+
+Union
+select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID from tbl_compliance_xref 
+left join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
+where 
+tbl_compliance_xref.Compliance_Xref_ID IN(
+Select distinct  Compliance_Parent_ID from tbl_compliance_xref where 
+tbl_compliance_xref.Compliance_Xref_ID in (Select Compliance_Xref_ID from tbl_compliance_branch_mapping  
+where Org_Hier_ID=p_Org_Hier_ID)) 
+
+union 
+select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID from tbl_compliance_xref 
+left join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
+where 
+tbl_compliance_xref.Compliance_Xref_ID IN(
+select tbl_compliance_xref.Compliance_Parent_ID from tbl_compliance_xref where tbl_compliance_xref.Compliance_Xref_ID IN(
+Select distinct  Compliance_Parent_ID from tbl_compliance_xref where 
+tbl_compliance_xref.Compliance_Xref_ID in (Select Compliance_Xref_ID from tbl_compliance_branch_mapping  
+where Org_Hier_ID=p_Org_Hier_ID)));
+end/
+delimiter ;

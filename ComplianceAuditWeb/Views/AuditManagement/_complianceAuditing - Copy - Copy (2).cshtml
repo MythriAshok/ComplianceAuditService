@@ -30,11 +30,11 @@
 
 
     int rulecount = 0;
-    <div class="mid_content_sec">
 
-        <div class="accordion-group" data-behavior="accordion">
 
-            <div class="accordion-body">
+        <div >
+
+            <div >
 
                 <table>
                     @for (int Act = 0; Act < Model.complianceXrefList.Count; Act++)
@@ -42,11 +42,11 @@
 
                         <tr>
                             <td>
-                                <p class="accordion-header default-open">
+                                
                                     <i class="fa fa-legal">
                                     </i>
                                     @Html.DisplayFor(m => m.complianceXrefList[Act].Compliance_Title)
-                                </p>
+                              
                             </td>
                         </tr>
                         for (int j = 0; j < Model.Section.Count; j++)
@@ -57,11 +57,11 @@
                             {
                                 <tr>
                                     <td>
-                                        <p class="accordion-header default-open">
-                                            &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-legal"></i>
+
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-bell"></i>
 
                                             @Html.DisplayFor(m => m.Section[j].Compliance_Title)
-                                        </p>
+                                      
                                     </td>
                                 </tr>
 
@@ -71,19 +71,18 @@
                                         @if (Model.Section[j].Compliance_Xref_ID == Model.Rules[i].Compliance_Parent_ID)
                                         {
                                             <td>
-                                                <p class="accordion-header default-open">
+                                                
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <i class="fa fa-leanpub"></i>
                                                     @Html.DisplayFor(m => m.Rules[i].Compliance_Title)
-                                                </p>
+                                           
                                             </td>
-                                            {
-                                                rulecount = rulecount + 1;
-                                                Model.complianceAuditList[rulecount].Compliance_Xref_Id = Model.Rules[i].Compliance_Xref_ID;
-                                            }
-                                         
+
+                                            Model.complianceAuditList[rulecount].Compliance_Xref_Id = Model.Rules[i].Compliance_Xref_ID;
+
+
                                             <td>
-                                                <div class="clearfix"></div>
+                                           
 
                                                 <div class="col-xs-offset-6 subSelect ">
                                                     <div class="input-field">
@@ -109,7 +108,7 @@
                                             </td>
                                           
                                             <td>
-                                                <div class="clearfix"></div>
+
 
                                                 <div class="col-xs-10 subSelect ">
                                                     <div class="input-field">
@@ -127,7 +126,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="clearfix"></div>
+                                             
                                                 <div class="col-xs-12 subSelect ">
                                                     <div class="input-field">
                                                         @Html.Label("Remarks")
@@ -150,6 +149,8 @@
                                                 @Html.HiddenFor(m => m.complianceAuditList[rulecount].Reviewer_Comments)
                                                 @Html.HiddenFor(m => m.complianceAuditList[rulecount].Version)
                                             </td>
+                                            rulecount = rulecount + 1;
+
                                         }
                                     </tr>
                                     @*@Html.HiddenFor(m => m.Rules[i].Form)
@@ -179,15 +180,8 @@
             </div>
         </div>
 
-    </div>
-    <div id='myModal' class="modal fade" role="dialog" aria-hidden="true">
-        <div class="modal-dialog-centered" style="width:900px;height:400px; padding:10px;">
-            <div class="modal-content" style="overflow:scroll; padding:10px;">
-                <div id='myModalContent' class="modal-body" style=" padding:10px">
-                </div>
-            </div>
-        </div>
-    </div>
+
+    
     @Html.Hidden(rulecount.ToString());
     { Session["rulecount"] = rulecount; };
     <input type="submit" value="Save" class="btn btn-default" />

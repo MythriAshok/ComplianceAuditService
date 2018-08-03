@@ -42,6 +42,7 @@
       <xs:element minOccurs="0" name="Company_ContactNumber2" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Company_Details_ID" type="xs:int" />
       <xs:element minOccurs="0" name="Company_EmailID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Compliance_Audit_Type" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Formal_Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Industry_Type" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Is_Active" type="xs:boolean" />

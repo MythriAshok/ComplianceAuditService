@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Compliance.DataObject;
 using System.Data;
 using System.IO;
+using System.Configuration;
 
 namespace ComplianceAuditWeb.Controllers
 {
@@ -102,6 +103,24 @@ namespace ComplianceAuditWeb.Controllers
             return Json(company, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult getspecificvendors(string compid)
+        {
+            List<SelectListItem> vendors = new List<SelectListItem>();
+            int ID = Convert.ToInt32(compid);
+            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+            string xmldata = organizationServiceClient.GetVendors(ID);
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            vendors = new List<SelectListItem>();
+            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            {
+                vendors.Add(new SelectListItem { Text = Convert.ToString(row["Vendor_Name"]), Value = Convert.ToString(row["Vendor_ID"]) });
+            }
+            return Json(vendors, JsonRequestBehavior.AllowGet);
+        }
+
+
         public ActionResult dashboard(int pid)
         {
             List<Menus> menues = new List<Menus>();
@@ -118,6 +137,46 @@ namespace ComplianceAuditWeb.Controllers
             }
             return View("~/Views/Shared/_Dashboard.cshtml", menues);
         }
+        [HttpGet]
+        public ActionResult UploadFile()
+        {
+            return View("_UploadFiles");
+        }
 
+        [HttpPost]
+        public ActionResult UploadFile(HttpPostedFileBase file)
+        {
+            if (ModelState.IsValid)
+            {
+                if (file != null && file.ContentLength > 0)
+                {
+                    try
+                    {
+                        string fileName = Path.GetFileName(file.FileName);
+                        //string path = Path.Combine(Server.MapPath("~/UploadedFiles"), fileName);
+                        string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()),fileName);
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            ViewBag.Message = "The File Already Exists in System";
+                        }
+                        else
+                        {
+                            file.SaveAs(filePath);
+                            ViewBag.Message = "File Uploaded Successfully";
+
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        ViewBag.Message = "ERROR:" + exception.Message.ToString();
+                    }
+                }
+                else
+                {
+                    ViewBag.Message = "Specify the file";
+                }
+            }
+            return View("View");
+        }
     }
 }

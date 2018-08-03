@@ -68,17 +68,17 @@ namespace ComplianceService
         /// <returns>boolean value</returns>
         public bool updateOrganization(Organization org,  BranchLocation branch)
         {
-            int insertOrganizationID = 0;
-            int inserBranchID = 0;
+            int OrganizationID = 0;
+            int BranchID = 0;
             // int insertCompanyDetailsID = 0;
             bool updateResult = false;
             try
             {
                 OrganizationHelper organizationhelper = new OrganizationHelper();
-                inserBranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
-                insertOrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
+                BranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
+                OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
                 // insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
-                if (inserBranchID > 0 && insertOrganizationID > 0) //insertCompanyDetailsID > 0)
+                if (BranchID > 0 && OrganizationID > 0) //insertCompanyDetailsID > 0)
                 {
                     updateResult = true;
                 }
@@ -362,7 +362,7 @@ namespace ComplianceService
     /// <param name="org">data object of Organization</param>
     /// <param name="branch">data object of BranchLocation</param>
     /// <returns>boolean value</returns>
-    public bool insertBranch(Organization org, BranchLocation branch)
+    public int insertBranch(Organization org, BranchLocation branch)
     {
         int OrganizationID = 0;
         int BranchLocationID = 0;
@@ -375,6 +375,7 @@ namespace ComplianceService
             {
                 org.Branch_Id = BranchLocationID;
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
+                org.Organization_Id = OrganizationID;
             }
             if (BranchLocationID != 0 && OrganizationID != 0)
             {
@@ -385,7 +386,7 @@ namespace ComplianceService
         {
             throw;
         }
-        return insertResult;
+        return OrganizationID;
     }
     /// <summary>
     /// A method to in the sevice layer that interacts with Organization helper class to update the Branch details in the database
@@ -395,15 +396,15 @@ namespace ComplianceService
     /// <returns>boolean value</returns>
     public bool updateBranch(Organization org, BranchLocation branch)
     {
-        int insertOrganizationID = 0;
-        int inserBranchID = 0;
+        int OrganizationID = 0;
+        int BranchID = 0;
         bool updateResult = false;
         try
         {
             OrganizationHelper organizationhelper = new OrganizationHelper();
-            inserBranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
-            insertOrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
-            if (inserBranchID != 0 || insertOrganizationID != 0)
+            BranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
+            OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
+            if (BranchID != 0 && OrganizationID != 0)
             {
                 updateResult = true;
             }
@@ -665,6 +666,23 @@ namespace ComplianceService
         //    string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
         //    return xmlGroupCompaniesList;
         //}
+
+
+
+
+
+
+        public string GetVendors(int CompanyID)
+        {
+            return BindVendor(CompanyID);
+        }
+        private string BindVendor(int CompanyID)
+        {
+            VendorHelper vendorhelper = new VendorHelper();
+            DataSet vendors = vendorhelper.getVendorList(CompanyID);
+            string xmlroles = vendors.GetXml();
+            return xmlroles;
+        }
     }
 }
 
