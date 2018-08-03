@@ -130,6 +130,20 @@ namespace ComplianceService
 
 
 
+             public string getSpecificBranchList(int CompID)
+        {
+            return bindSpecificBranchList(CompID);
+        }
+
+        private string bindSpecificBranchList(int CompID)
+        {
+            ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
+            DataSet dsCompliance = complianceAuditHelper.getSpecificBranchList(CompID);
+            string strxmlCompliance = dsCompliance.GetXml();
+            return strxmlCompliance;
+        }
+        
+
 
 
         public string getComplianceXref(int OrgID)
@@ -141,8 +155,8 @@ namespace ComplianceService
         {
             ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
             DataSet dsCompliance = complianceAuditHelper.getComlianceXrefDataForSeletedBranch(OrgID);
-            UtilityHelper utilityHelper = new UtilityHelper();
-            dsCompliance = utilityHelper.ConvertNullsToEmptyString(dsCompliance);
+           // UtilityHelper utilityHelper = new UtilityHelper();
+           // dsCompliance = utilityHelper.ConvertNullsToEmptyString(dsCompliance);
             string strxmlCompliance = dsCompliance.GetXml();
             return strxmlCompliance;
         }

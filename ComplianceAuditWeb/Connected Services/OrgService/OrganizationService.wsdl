@@ -163,6 +163,12 @@
   <wsdl:message name="IOrganizationService_getBranch_OutputMessage">
     <wsdl:part name="parameters" element="tns:getBranchResponse" />
   </wsdl:message>
+  <wsdl:message name="IOrganizationService_GeSpecifictBranchList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GeSpecifictBranchList" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GeSpecifictBranchList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GeSpecifictBranchListResponse" />
+  </wsdl:message>
   <wsdl:portType name="IOrganizationService">
     <wsdl:operation name="insertOrganization">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertOrganization" message="tns:IOrganizationService_insertOrganization_InputMessage" />
@@ -267,6 +273,10 @@
     <wsdl:operation name="getBranch">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/getBranch" message="tns:IOrganizationService_getBranch_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/getBranchResponse" message="tns:IOrganizationService_getBranch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GeSpecifictBranchList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GeSpecifictBranchList" message="tns:IOrganizationService_GeSpecifictBranchList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GeSpecifictBranchListResponse" message="tns:IOrganizationService_GeSpecifictBranchList_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IOrganizationService" type="tns:IOrganizationService">
@@ -498,6 +508,15 @@
     </wsdl:operation>
     <wsdl:operation name="getBranch">
       <soap:operation soapAction="http://tempuri.org/IOrganizationService/getBranch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GeSpecifictBranchList">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/GeSpecifictBranchList" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

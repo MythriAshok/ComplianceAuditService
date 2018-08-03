@@ -39,7 +39,7 @@ namespace Compliance.DataAccess
                         cmd.Parameters.AddWithValue("p_Audit_Status", audit.Audit_Status);
                         cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", audit.Compliance_Xref_Id) ;
                         cmd.Parameters.AddWithValue("p_Org_Hier_ID", audit.Org_Hier_Id);
-                        cmd.Parameters.AddWithValue("p_Compliance_Opt_Xref_ID", audit.Compliance_Options_Id);
+                      //  cmd.Parameters.AddWithValue("p_Compliance_Opt_Xref_ID", audit.Compliance_Options_Id);
                         cmd.Parameters.AddWithValue("p_Auditor_ID", audit.Auditor_Id);
                         cmd.Parameters.AddWithValue("p_User_ID", audit.User_Id) ;
                         cmd.Parameters.AddWithValue("p_Is_Active", audit.Is_Active);
@@ -163,6 +163,30 @@ namespace Compliance.DataAccess
                 conn.Close();
             }
             return dsComplianceXrefData; 
+        }
+
+
+        public DataSet getSpecificBranchList(int OrgID)
+        {
+            DataSet dsSpecificBranchList = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getSpecificBranchList", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Parent_Company_ID", OrgID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsSpecificBranchList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsSpecificBranchList;
         }
     }
 }

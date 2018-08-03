@@ -68,6 +68,12 @@ namespace ComplianceAuditWeb.AuditService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getComplianceXref", ReplyAction="http://tempuri.org/IAuditService/getComplianceXrefResponse")]
         System.Threading.Tasks.Task<string> getComplianceXrefAsync(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getSpecificBranchList", ReplyAction="http://tempuri.org/IAuditService/getSpecificBranchListResponse")]
+        string getSpecificBranchList(int CompID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getSpecificBranchList", ReplyAction="http://tempuri.org/IAuditService/getSpecificBranchListResponse")]
+        System.Threading.Tasks.Task<string> getSpecificBranchListAsync(int CompID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -167,6 +173,14 @@ namespace ComplianceAuditWeb.AuditService {
         
         public System.Threading.Tasks.Task<string> getComplianceXrefAsync(int OrgID) {
             return base.Channel.getComplianceXrefAsync(OrgID);
+        }
+        
+        public string getSpecificBranchList(int CompID) {
+            return base.Channel.getSpecificBranchList(CompID);
+        }
+        
+        public System.Threading.Tasks.Task<string> getSpecificBranchListAsync(int CompID) {
+            return base.Channel.getSpecificBranchListAsync(CompID);
         }
     }
 }

@@ -44,6 +44,9 @@ namespace ComplianceService
         [OperationContract]
 
        string getComplianceXref(int OrgID);
+        [OperationContract]
+
+        string getSpecificBranchList(int CompID);
 
     }
 }

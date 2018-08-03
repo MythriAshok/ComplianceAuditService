@@ -123,4 +123,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="getSpecificBranchList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CompID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getSpecificBranchListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getSpecificBranchListResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

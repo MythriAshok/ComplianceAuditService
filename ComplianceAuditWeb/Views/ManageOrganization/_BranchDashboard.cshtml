@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ComplianceAuditWeb.Models.ListOfGroupCompanies>
+
+<div class="new_section_box">
+    <div class="tab-content">
+        <div id="home" class="tab-pane fade in active">
+            <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">User Management:</h2>
+            @foreach (var item in Model)
+            {
+                <div class="col-sm-3 QueList">
+                    <div class="queContainer">
+                        <a href="@Url.Action("AboutBranch", "ManageOrganization",new { Orgid = item.OrganizationID })">
+                            <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                            <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
+                        </a>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            }
+
+            <div class="clearfix"></div>
+
+        </div>
+
+    </div>
+
+</div>
+

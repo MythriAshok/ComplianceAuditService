@@ -61,6 +61,12 @@
   <wsdl:message name="IAuditService_getComplianceXref_OutputMessage">
     <wsdl:part name="parameters" element="tns:getComplianceXrefResponse" />
   </wsdl:message>
+  <wsdl:message name="IAuditService_getSpecificBranchList_InputMessage">
+    <wsdl:part name="parameters" element="tns:getSpecificBranchList" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_getSpecificBranchList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getSpecificBranchListResponse" />
+  </wsdl:message>
   <wsdl:portType name="IAuditService">
     <wsdl:operation name="DoWork">
       <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/DoWork" message="tns:IAuditService_DoWork_InputMessage" />
@@ -97,6 +103,10 @@
     <wsdl:operation name="getComplianceXref">
       <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/getComplianceXref" message="tns:IAuditService_getComplianceXref_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/getComplianceXrefResponse" message="tns:IAuditService_getComplianceXref_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getSpecificBranchList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/getSpecificBranchList" message="tns:IAuditService_getSpecificBranchList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/getSpecificBranchListResponse" message="tns:IAuditService_getSpecificBranchList_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IAuditService" type="tns:IAuditService">
@@ -175,6 +185,15 @@
     </wsdl:operation>
     <wsdl:operation name="getComplianceXref">
       <soap:operation soapAction="http://tempuri.org/IAuditService/getComplianceXref" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSpecificBranchList">
+      <soap:operation soapAction="http://tempuri.org/IAuditService/getSpecificBranchList" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

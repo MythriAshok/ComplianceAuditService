@@ -20,6 +20,7 @@ namespace ComplianceAuditWeb.Models
         public List<SelectListItem> City { get; set; }
 
         public List<SelectListItem> CompaniesList { get; set; }
+        public string ChildCompanyName { get; set; }
         public List<SelectListItem> GroupCompaniesList { get; set; }
         public int CompanyID { get; set; }
         public int GroupCompanyID { get; set; }

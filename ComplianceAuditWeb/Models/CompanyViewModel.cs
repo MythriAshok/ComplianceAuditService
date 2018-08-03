@@ -19,6 +19,11 @@ namespace ComplianceAuditWeb.Models
 
         public List<SelectListItem> GroupCompaniesList { get; set; }
         public int GroupCompanyID { get; set; }
+        public string GroupCompanyName { get; set; }
+        //public string[] TpeofAuditList { get; set; }
+
+        //public List<SelectListItem> ComplianceAuditTypeList { get; set; }
+        //public int[] ComplianceAuditTypeID { get; set; }
 
 
 
@@ -34,5 +39,11 @@ namespace ComplianceAuditWeb.Models
             IT,
             Manufacturing
         }
+
+        //public enum AuditType
+        //{
+        //    LabourAudit,
+        //    StatutoryAudit
+        //}
     }
 }

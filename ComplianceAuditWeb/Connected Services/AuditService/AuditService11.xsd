@@ -13,8 +13,8 @@
       <xs:element minOccurs="0" name="Audit_Remarks" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Audit_Status" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Auditor_Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Company_ID" type="xs:int" />
       <xs:element minOccurs="0" name="Compliance_Audit_Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Compliance_Options_Id" type="xs:int" />
       <xs:element minOccurs="0" name="Compliance_Schedule_Instance" type="xs:int" />
       <xs:element minOccurs="0" name="Compliance_Xref_Id" type="xs:int" />
       <xs:element minOccurs="0" name="Is_Active" type="xs:boolean" />

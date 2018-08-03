@@ -75,8 +75,8 @@
     </div>
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
-            @Html.LabelFor(m => m.branch.Address, new { @class = "floating-label" })<span style="color:red">*</span>
-            @Html.TextBoxFor(m => m.branch.Address, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Address"] })
+            @Html.LabelFor(m => m.branch.Address, new { @class = "floating-label" })
+            @Html.TextBoxFor(m => m.branch.Address, new { @class = "inputMaterial ui - autocomplete - input",  })
             @Html.ValidationMessageFor(m => m.branch.Address, "", new { @class = "text-danger" })
 
         </div>
@@ -84,7 +84,7 @@
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
             @Html.Label("Postal Code", new { @class = "floating-label" })<span style="color:red">*</span>
-            @Html.TextBoxFor(m => m.branch.Postal_Code, new { @class = "inputMaterial ui - autocomplete - input" })
+            @Html.TextBoxFor(m => m.branch.Postal_Code, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Postal_Code"] })
             @Html.ValidationMessageFor(m => m.branch.Postal_Code, "", new { @class = "text-danger" })
 
         </div>
@@ -97,7 +97,7 @@
     <div class="col-xs-12 subSelect ">
         <div class="input-field">
 
-            @Html.Label("Company Description", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.Label("Company Description", new { @class = "floating-label" })
             @Html.TextAreaFor(m => m.organization.Description, new { @class = "inputMaterial ui - autocomplete - input" })
 
         </div>
@@ -126,7 +126,7 @@
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
             @Html.Label("Country", new { @class = "floating-label" })<span style="color:red">*</span>
-            @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country, new { @onchange = "GetState(this.value);", @class = "inputMaterial ui - autocomplete - input" })
+            @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country, new { @onchange = "GetState(this.value);", @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Country_ID"] })
         </div>
     </div>
     <div class="col-xs-4 subSelect ">
@@ -136,13 +136,13 @@
 
 
             @Html.LabelFor(m => m.State, new { @class = "floating-label" })<span style="color:red">*</span>
-            @Html.DropDownListFor(m => m.branch.State_Id, Model.State, new { @onchange = "GetCity(this.value);", @class = "inputMaterial ui - autocomplete - input" })
+            @Html.DropDownListFor(m => m.branch.State_Id, Model.State, new { @onchange = "GetCity(this.value);", @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["State_ID"] })
         </div>
     </div>
 
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
-            @Html.LabelFor(m => m.City, new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.LabelFor(m => m.City, new { @class = "floating-label" })
             @Html.DropDownListFor(m => m.branch.City_Id, Model.City, new { @class = "inputMaterial ui - autocomplete - input" })
 
         </div>
@@ -155,7 +155,6 @@
     @*@Html.LabelFor(m => m.organization.Last_Updated_Date);*@
     @Html.HiddenFor(m => m.organization.Last_Updated_Date)
 
-    @Html.HiddenFor(m=>m.companydetails.Company_Details_ID)
     @Html.HiddenFor(m => m.organization.Company_Id)
 
 

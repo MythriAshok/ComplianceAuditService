@@ -5,24 +5,22 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="org" nillable="true" type="q1:Organization" />
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="company" nillable="true" type="q2:CompanyDetails" />
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="branch" nillable="true" type="q3:BranchLocation" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="branch" nillable="true" type="q2:BranchLocation" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="insertOrganizationResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="insertOrganizationResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="insertOrganizationResult" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="updateOrganization">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="org" nillable="true" type="q4:Organization" />
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="company" nillable="true" type="q5:CompanyDetails" />
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="branch" nillable="true" type="q6:BranchLocation" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="org" nillable="true" type="q3:Organization" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="branch" nillable="true" type="q4:BranchLocation" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -50,25 +48,25 @@
   <xs:element name="insertCompany">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="org" nillable="true" type="q7:Organization" />
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="company" nillable="true" type="q8:CompanyDetails" />
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="branch" nillable="true" type="q9:BranchLocation" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="org" nillable="true" type="q5:Organization" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="company" nillable="true" type="q6:CompanyDetails" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="branch" nillable="true" type="q7:BranchLocation" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="insertCompanyResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="insertCompanyResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="insertCompanyResult" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="updateCompany">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="org" nillable="true" type="q10:Organization" />
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="company" nillable="true" type="q11:CompanyDetails" />
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="branch" nillable="true" type="q12:BranchLocation" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="org" nillable="true" type="q8:Organization" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="company" nillable="true" type="q9:CompanyDetails" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="branch" nillable="true" type="q10:BranchLocation" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -82,8 +80,8 @@
   <xs:element name="insertBranch">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="org" nillable="true" type="q13:Organization" />
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="branch" nillable="true" type="q14:BranchLocation" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="org" nillable="true" type="q11:Organization" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="branch" nillable="true" type="q12:BranchLocation" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -97,8 +95,8 @@
   <xs:element name="updateBranch">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="org" nillable="true" type="q15:Organization" />
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="branch" nillable="true" type="q16:BranchLocation" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="org" nillable="true" type="q13:Organization" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="branch" nillable="true" type="q14:BranchLocation" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -364,6 +362,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="getBranchResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GeSpecifictBranchList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CompanyID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GeSpecifictBranchListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GeSpecifictBranchListResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
