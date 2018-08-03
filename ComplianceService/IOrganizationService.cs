@@ -27,7 +27,7 @@ namespace ComplianceService
         
 
         [OperationContract]
-        bool insertBranch(Organization org,  BranchLocation branch);
+        int insertBranch(Organization org,  BranchLocation branch);
         [OperationContract]
         bool updateBranch(Organization org, BranchLocation branch);
 
@@ -92,6 +92,9 @@ namespace ComplianceService
         [OperationContract]
 
         string GeSpecifictBranchList(int CompanyID);
+        [OperationContract]
+
+        string GetVendors(int CompanyID);
 
     }
 }

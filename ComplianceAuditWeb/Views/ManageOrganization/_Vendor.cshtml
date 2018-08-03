@@ -1,0 +1,199 @@
+﻿@model ComplianceAuditWeb.Models.VendorViewModel
+@using System.Configuration;
+@{
+    /**/
+
+    ViewBag.Title = "Add Vendor";
+}
+@section scripts{
+    <script language="javascript" type="text/javascript">
+        function GetCompany(_Groupcompid) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#CompanyID").html(procemessage).show();
+            var url = "/Common/getcompany";
+
+            $.ajax({
+                url: url,
+                data: { groupcompid: _Groupcompid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>Select Company</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#CompanyID").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+    </script>
+}
+<ul class="breadcrumb ML15">
+    <li><a href="">Vendor Management</a></li>
+    <li> Vendor</li>
+</ul>
+<h2 class="ML15">Add Vendor</h2>
+
+@using (Html.BeginForm())
+{
+<div class="mid_content_sec">
+
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @if ((Session["CompanyName"]) != null)
+
+            {
+
+                @Html.Label("Company")
+
+
+                Model.GroupCompanyID = Convert.ToInt32(Session["ParentCompanyID"]);
+                Model.CompanyID = Convert.ToInt32(Session["CompanyID"]);
+                Model.ChildCompanyName = Session["CompanyName"].ToString();
+                @Html.TextBoxFor(m => m.ChildCompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
+                @Html.HiddenFor(m => m.GroupCompanyID)
+                @Html.HiddenFor(m => m.CompanyID)
+
+            }
+            else
+            {
+                @*<div class="col-xs-4 subSelect ">
+                                <div class="input-field">
+                                    @Html.Label("GroupCompany", new { @class = "floating-label" })
+                                @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "GetCompany(this.value)" })
+                        </div>
+                    </div>*@
+
+
+
+
+
+
+
+                @Html.Label("Company", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(m => m.CompanyID, Model.CompaniesList, new { @class = "inputMaterial ui - autocomplete - input" })
+
+            }
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Vendor Name", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.TextBoxFor(m => m.vendor.VendorName, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Company_Name"] })
+            <span id="loading_data_icon"></span>
+        </div>
+    </div>
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+
+            @Html.Label("Contact Person", new { @class = "floating-label" })
+            @Html.TextBoxFor(m => m.vendor.ContactPerson, new { @class = "inputMaterial ui - autocomplete - input" })
+            <span id="loading_data_icon"></span>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Contact Number", new { @class = "floating-label" })
+            @Html.TextBoxFor(m => m.vendor.ContactNumber, new { @class = "inputMaterial ui - autocomplete - input" })
+            <span id="loading_data_icon"></span>
+        </div>
+    </div>
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Website", new { @class = "floating-label" })
+            @Html.TextBoxFor(m => m.vendor.VendorWebsite, new { @class = "inputMaterial ui - autocomplete - input" })
+            <span id="loading_data_icon"></span>
+        </div>
+    </div>
+
+
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Vendor Type", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.DropDownListFor(m => m.vendor.VendorType, new SelectList
+(Enum.GetValues(typeof(ComplianceAuditWeb.Models.VendorViewModel.VendorType))),
+"Select Vendor Type", new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Industry_Type"] })
+
+        </div>
+    </div>
+
+
+    <div class="clearfix"></div>
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Auditing Frequency")
+            @Html.DropDownListFor(m => m.vendor.VendorAuditingFrequency, new SelectList
+                (Enum.GetValues(typeof(ComplianceAuditWeb.Models.VendorViewModel.AuditingFrequency))),
+                "Select Vendor Auditing Freequency");
+
+        </div>
+    </div>
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+
+            @Html.Label("Start Date")
+            @Html.EditorFor(m => m.vendor.VendorStartDate)
+        </div>
+    </div>
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+
+            @Html.Label("End Date")
+            @Html.EditorFor(m => m.vendor.VendorEndDate)
+        </div>
+    </div>
+
+    @Html.HiddenFor(m => m.vendor.VendorID)
+    @Html.HiddenFor(m => m.vendor.UserID)
+    @Html.HiddenFor(m => m.vendor.OrgCompanyID)
+    @Html.HiddenFor(m => m.vendor.LastUpdatedDate)
+    @Html.HiddenFor(m => m.vendor.IsActive)
+    @Html.HiddenFor(m => m.vendor.IsDelete)
+
+
+    <ul class="list-inline continueBtn">
+        <li>
+
+            @{string button = "save";}
+            @if (Model.vendor.VendorID != 0)
+            {
+                button = "Update";
+            }
+            <input type="submit" value="@button" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+
+            <input type="reset" value="Reset" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+            @Html.ActionLink("Cancel", "AddBranch", new { VendorID = Model.vendor.VendorID }, new { @class = "btn primary-button" })
+
+            @*<input type="submit" value="Reset" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+
+                <input type="submit" value="Delete" class="btn primary-button"  ><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>*@
+
+
+            @*<button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="@button">Create<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>*@
+        </li>
+    </ul>
+
+
+</div>
+        }
+
+
+
+

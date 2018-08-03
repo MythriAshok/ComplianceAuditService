@@ -1,0 +1,154 @@
+﻿@model ComplianceAuditWeb.Models.BranchViewModel
+@using System.Configuration;
+@{
+    /**/
+
+    ViewBag.Title = "Add Company Vendor";
+}
+@section scripts{
+
+    <script language="javascript" type="text/javascript">
+        function GetCompany(_Groupcompid) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#CompanyID").html(procemessage).show();
+            var url = "/Common/getcompany";
+
+            $.ajax({
+                url: url,
+                data: { groupcompid: _Groupcompid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>Select Company</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#CompanyID").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+    </script>
+
+    <script language="javascript" type="text/javascript">
+        function GetBranch(_CompanyId) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#BranchID").html(procemessage).show();
+            var url = "/Common/getspecificbranch";
+            alert(url);
+            $.ajax({
+                url: url,
+                data: { compid: _CompanyId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>Select Branch</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#BranchID").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+            GetVendor(_CompanyId);
+        }
+    </script>
+
+    <script language="javascript" type="text/javascript">
+        function GetVendor(_CompanyId), {
+            var _branchId = $('#BranchID').val();
+                //var procemessage = "<option value='0'> Please wait...</option>";
+                //$("#selectedid").html(procemessage).show();
+                var url = "/Common/getspecificvendors";
+
+                $.ajax({
+                    url: url,
+                    data: { compid: _CompanyId, branchid: _branchId },
+                    cache: false,
+                    type: "POST",
+                    success: function (data) {
+                        var markup;
+                        for (var x = 0; x < data.length; x++) {
+                            markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                        }
+                        $("#VendorID").html(markup).show();
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+
+            }
+
+    </script>
+}
+
+<ul class="breadcrumb ML15">
+    <li><a href="">Vendor Branch Management</a></li>
+    <li> Branch</li>
+</ul>
+@*<h2 class="ML15">Add Company Branch</h2>*@
+
+@using (Html.BeginForm())
+{
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("GroupCompany", new { @class = "floating-label" })
+            @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "GetCompany(this.value)" })
+        </div>
+    </div>
+
+
+
+    <div class="col-xs-6 subSelect ">
+        <div class="input-field">
+            @Html.Label("Company", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.DropDownListFor(m => m.CompanyID, Model.CompaniesList, new { @class = "inputMaterial ui - autocomplete - input",
+           @onchange = "GetVendor(this.value)"
+       })
+        </div>
+    </div>
+
+    <div class="col-xs-6 subSelect ">
+        <div class="input-field">
+            @Html.Label("Branch", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.DropDownListFor(m => m.BranchID, Model.BranchList, new { @class = "inputMaterial ui - autocomplete - input" })
+        </div>
+    </div>
+
+    <div class="col-xs-6 subSelect ">
+        <div class="input-field">
+
+            @*@Html.Label(ConfigurationManager.AppSettings["vendors"], new { @class = "floating-label" })*@
+            @Html.Label("Vendors")
+            @Html.ListBoxFor(m => m.VendorID, Model.VendorList, new { @class = "inputMaterialSelect ui - autocomplete - input ", size = "4", placeholder = ConfigurationManager.AppSettings["Roles"] })
+
+
+        </div>
+    </div>
+
+
+
+    <ul class="list-inline continueBtn">
+        <li>
+
+            @{string button = "save";}
+            @*@if (Model.branch.Branch_Id != 0)
+            {
+                button = "Update";
+            }*@
+            <input type="submit" value="@button" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+
+            @*<input type="reset" value="Reset" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+            @Html.ActionLink("Cancel", "AddBranch", new { Orgid = Model.organization.Organization_Id }, new { @class = "btn primary-button" })*@
+
+
+
+        </li>
+    </ul>
+
+}

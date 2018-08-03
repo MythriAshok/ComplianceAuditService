@@ -242,6 +242,8 @@ namespace ComplianceAuditWeb.Controllers
                     audit.Penalty_nc = formCollection["complianceAuditList[" + index + "].Penalty_nc"];
                     audit.Compliance_Xref_Id = Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Xref_ID"]);
                     audit.Auditor_Id = Convert.ToInt32(Session["AuditorID"]);//1;// Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Auditor_ID"]);
+
+
                     audit.Audit_ArteFacts = formCollection["complianceAuditList[" + index + "].Audit_ArteFacts"];
                     audit.Compliance_Audit_Id =  Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Audit_Id"]);
                    // audit.Compliance_Options_Id = 1;// Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Options_Id"]);

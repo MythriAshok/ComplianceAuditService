@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e3d74d70-e10f-4f00-a18e-425d00cb3b45" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:56172/VendorService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="VendorService.disco" MetadataType="Disco" ID="b5b0441f-49fa-47f7-bd4f-e2f139f21bd8" SourceId="1" SourceUrl="http://localhost:56172/VendorService.svc?disco" />
+    <MetadataFile FileName="VendorService1.xsd" MetadataType="Schema" ID="03538233-45c7-480b-a318-bfb9d27b1265" SourceId="1" SourceUrl="http://localhost:56172/VendorService.svc?xsd=xsd0" />
+    <MetadataFile FileName="VendorService.wsdl" MetadataType="Wsdl" ID="d1a75579-b389-4f7d-a250-53fd767b165a" SourceId="1" SourceUrl="http://localhost:56172/VendorService.svc?wsdl" />
+    <MetadataFile FileName="VendorService2.xsd" MetadataType="Schema" ID="360fa3db-b146-47c9-a73f-5ba1cc5f393c" SourceId="1" SourceUrl="http://localhost:56172/VendorService.svc?xsd=xsd2" />
+    <MetadataFile FileName="VendorService3.xsd" MetadataType="Schema" ID="36048df5-1e46-493e-abe2-b03189d86099" SourceId="1" SourceUrl="http://localhost:56172/VendorService.svc?xsd=xsd3" />
+    <MetadataFile FileName="VendorService.xsd" MetadataType="Schema" ID="3e852d31-baa0-45ab-81de-33c27a6f2ce7" SourceId="1" SourceUrl="http://localhost:56172/VendorService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

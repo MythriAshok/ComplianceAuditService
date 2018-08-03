@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Compliance.DataObject" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Compliance.DataObject" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="VendorMaster">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ContactNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContactPerson" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsDelete" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LastUpdatedDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="OrgCompanyID" type="xs:int" />
+      <xs:element minOccurs="0" name="UserID" type="xs:int" />
+      <xs:element minOccurs="0" name="VendorAuditingFrequency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VendorEndDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="VendorID" type="xs:int" />
+      <xs:element minOccurs="0" name="VendorName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VendorStartDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="VendorType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VendorWebsite" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="VendorMaster" nillable="true" type="tns:VendorMaster" />
+</xs:schema>

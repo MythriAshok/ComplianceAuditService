@@ -24,6 +24,11 @@ namespace ComplianceAuditWeb.Models
         public List<SelectListItem> GroupCompaniesList { get; set; }
         public int CompanyID { get; set; }
         public int GroupCompanyID { get; set; }
+        public List<SelectListItem> BranchList { get; set; }
+        public int BranchID { get; set; }
+
+        public List<SelectListItem> VendorList { get; set; }
+        public int[] VendorID { get; set; }
 
 
     }

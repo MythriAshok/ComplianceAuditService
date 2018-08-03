@@ -88,7 +88,7 @@
   <xs:element name="insertBranchResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="insertBranchResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="insertBranchResult" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -376,6 +376,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="GeSpecifictBranchListResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetVendors">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CompanyID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetVendorsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetVendorsResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
