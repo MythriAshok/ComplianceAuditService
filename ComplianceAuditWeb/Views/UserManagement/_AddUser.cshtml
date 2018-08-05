@@ -11,7 +11,7 @@
 </ul>
 <h2 class="ML15">Add User</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("AddUser", "UserManagement", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 <div class="mid_content_sec">
     @Html.AntiForgeryToken()
@@ -29,7 +29,6 @@
         <div class="input-field">
             @Html.Label("MiddleName", new { @class = "floating-label" })<span style="color:red">&nbsp;</span>
             @Html.TextBoxFor(m => m.User.MiddleName, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["MiddleName"] })
-            @Html.ValidationMessageFor(m => m.User.FirstName, "", new { @class = "text-danger" })
         </div>
     </div>
 
@@ -81,30 +80,36 @@
             @Html.ValidationMessageFor(m => m.ConformPassword, "", new { @class = "text-danger" })
         </div>
     </div>
-        <div class="col-xs-1 subSelect ">
-            <div class="input-field">
-                @Html.Label(ConfigurationManager.AppSettings["Gender"], new { @class = "floating-label" })<span style="color:red">*</span>
-            </div>
+    <div class="col-xs-1 subSelect ">
+        <div class="input-field">
+            @Html.Label(ConfigurationManager.AppSettings["Gender"], new { @class = "floating-label" })<span style="color:red">*</span>
         </div>
-        <div class="col-xs-1 subSelect ">
-            <div class="input-field">
-                @Html.Label(ConfigurationManager.AppSettings["Male"], new { @class = "floating-label" })
-                @Html.RadioButtonFor(m => m.User.Gender, "Male", new { @class = "inputMaterial ui - autocomplete - input " })
-            </div>
+    </div>
+    <div class="col-xs-1 subSelect ">
+        <div class="input-field">
+            @Html.Label(ConfigurationManager.AppSettings["Male"], new { @class = "floating-label" })
+            @Html.RadioButtonFor(m => m.User.Gender, "Male", new { @class = "inputMaterial ui - autocomplete - input " })
         </div>
-        <div class="col-xs-1 subSelect ">
-            <div class="input-field">
-                @Html.Label(ConfigurationManager.AppSettings["Female"], new { @class = "floating-label" })
-                @Html.RadioButtonFor(m => m.User.Gender, "Female", new { @class = "inputMaterial ui - autocomplete - input " })
-            </div>
+    </div>
+    <div class="col-xs-1 subSelect ">
+        <div class="input-field">
+            @Html.Label(ConfigurationManager.AppSettings["Female"], new { @class = "floating-label" })
+            @Html.RadioButtonFor(m => m.User.Gender, "Female", new { @class = "inputMaterial ui - autocomplete - input " })
         </div>
-        <div class="col-xs-1 subSelect ">
+    </div>
+    @*<div class="col-xs-1 subSelect ">
             <div class="input-field">
                 @Html.Label(ConfigurationManager.AppSettings["Others"], new { @class = "floating-label" })
                 @Html.RadioButtonFor(m => m.User.Gender, "Others", new { @class = "inputMaterial ui - autocomplete - input " })
             </div>
+        </div>*@
+    <div class="col-xs-3 subSelect ">
+        <div class="input-field">
+            <label for="file">Upload File:</label>
+            <input type="file" name="file" id="file" />
+            @Html.ValidationMessageFor(m=>m.User.photo, "", new { @class = "text-danger" })
         </div>
-   
+    </div>
     <div class="clearfix"></div>
     <div class="col-xs-6 subSelect ">
         <div class="input-field">
@@ -137,10 +142,10 @@
             <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">@button<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
 
             <input type="reset" value="Reset" class="btn primary-button" />
-            <input type="button" value="Cancel" class="btn primary-button" onclick=""/>
+            <input type="button" value="Cancel" class="btn primary-button" onclick="" />
         </li>
     </ul>
 </div>
-        }
+}
 
 

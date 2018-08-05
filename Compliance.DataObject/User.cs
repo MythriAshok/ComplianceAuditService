@@ -23,6 +23,7 @@ namespace Compliance.DataObject
         public string ContactNumber { get; set; }
         [Required]
         public string Gender { get; set; }
+        public string photo { get; set; }
         public bool IsActive { get; set; }
         public DateTime LastLogin { get; set; }
     }

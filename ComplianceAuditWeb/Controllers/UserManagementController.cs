@@ -242,12 +242,17 @@ namespace ComplianceAuditWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddUser(UserViewModel model)
+        public ActionResult AddUser(UserViewModel model, HttpPostedFileBase file)
         {
                 UserService.UserServiceClient Client = new UserService.UserServiceClient();
                 if (ModelState.IsValid)
                 {
-                    string res = Client.insertUser(model.User);
+                CommonController common = new CommonController();
+                model.User.photo = Path.GetFileName(file.FileName);
+                string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName(file.FileName));
+                string message= common.UploadFile(file, filePath);
+                ModelState.AddModelError("User.Photo", message); 
+                string res = Client.insertUser(model.User);
                     if (res != "EXISTS")
                     {
                         model.User.UserId = Convert.ToInt32(res);
@@ -256,7 +261,7 @@ namespace ComplianceAuditWeb.Controllers
                         return View("CreateUser");
                     }
                     else
-                        ModelState.AddModelError("", "UserName is already Exists");
+                        ModelState.AddModelError("User.EmailId", "UserName is already Exists");
                 }
                 model.User.UserId = 0;
                 string xmlGroups = Client.GetUserGroup(0);
@@ -366,7 +371,7 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult ListofUsers()
         {
             UserService.UserServiceClient client = new UserService.UserServiceClient();
-            string xmldata = client.getUser(Convert.ToInt32(Session["GroupCompanyId"]));
+            string xmldata = client.getAllUser(Convert.ToInt32(Session["GroupCompanyId"]));
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             List<User> userlist = new List<User>();
@@ -382,7 +387,9 @@ namespace ComplianceAuditWeb.Controllers
                         LastLogin= Convert.ToDateTime(row["Last_Login"]),
                         IsActive= Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
                         LastName = Convert.ToString(row["Last_Name"]),
-                        EmailId = Convert.ToString(row["Email_ID"]) });
+                        EmailId = Convert.ToString(row["Email_ID"]) ,
+                    photo= Convert.ToString(row["Photo"])
+                    });
                 }
             }
             return View("_ListofUsers", userlist);

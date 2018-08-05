@@ -105,11 +105,15 @@ namespace ComplianceAuditWeb.Controllers
         /// <param name="object of OrganizationViewModel"></param>
         /// <returns>View</returns>
         [HttpPost]
-        public ActionResult AddGroupCompany(OrganizationViewModel organizationVM)
+        public ActionResult AddGroupCompany(OrganizationViewModel organizationVM, HttpPostedFileBase file)
         {
-             if (ModelState.IsValid)
-             {
-
+           if (ModelState.IsValid)
+           {
+            CommonController common = new CommonController();
+            organizationVM.organization.logo = Path.GetFileName(file.FileName);
+            string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName(file.FileName));
+            string message = common.UploadFile(file, filePath);
+            //ModelState.AddModelError(".Photo", message);
             OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
             string strXMLStates = organizationClient.GetStateList(organizationVM.branch.Country_Id);
             DataSet dsStates = new DataSet();
@@ -138,6 +142,7 @@ namespace ComplianceAuditWeb.Controllers
                 Session["CompanyDescription"] = organizationVM.organization.Description;
                 Session["ParentCompanyID"] = organizationVM.organization.Parent_Company_Id;
                 Session["CompanyID"] = id;
+                Session["CompanyLogo"] = organizationVM.organization.logo;
                
                // return RedirectToAction("dashboard", "common", new { pid = 6 });
                 return RedirectToAction("AboutCompany");
@@ -1202,6 +1207,7 @@ namespace ComplianceAuditWeb.Controllers
             aboutCompanyViewModel.CompanyDescription = Convert.ToString(Session["CompanyDescription"]);
             aboutCompanyViewModel.CompanyName = Convert.ToString(Session["CompanyName"]);
             aboutCompanyViewModel.ParentCompanyID = Convert.ToInt32(Session["ParentCompanyID"]);
+            aboutCompanyViewModel.CompanyLogo = Convert.ToString(Session["CompanyLogo"]);
 
             return View("_AboutCompany",aboutCompanyViewModel);
         }

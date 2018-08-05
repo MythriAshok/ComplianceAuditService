@@ -7,6 +7,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model=>model.photo)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.FirstName)
         </th>
         <th>
@@ -39,6 +42,10 @@
             @*<td>
                     @Html.CheckBox("chkdeactive")
                 </td>*@
+            <td>
+                @{string source = "/UploadedFiles/" + item.photo;}
+                <img src=@source alt="" height="50px" width="50px" />               
+            </td>
             <td>
                 @Html.ActionLink(linkText: item.FirstName, actionName: "UpdateUser", routeValues: new { UserId = item.UserId }, htmlAttributes: null)
             </td>

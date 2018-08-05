@@ -43,7 +43,7 @@ namespace ComplianceService
         }
         public string getAllUser(int Companyid)
         {
-            return BindUser(Companyid);
+            return BindgetAllUser(Companyid);
         }
 
         private string BindgetAllUser(int Companyid)
