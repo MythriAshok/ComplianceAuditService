@@ -35,13 +35,72 @@
       <xs:sequence>
         <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="VendorID" nillable="true" type="q3:ArrayOfint" />
         <xs:element minOccurs="0" name="OrgCompanyID" type="xs:int" />
+        <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="IsActive" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="insertVendorForBranchResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="insertVendorForBranchResult" type="xs:int" />
+        <xs:element minOccurs="0" name="insertVendorForBranchResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeactivateVendorForCompany">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="VendorID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeactivateVendorForCompanyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DeactivateVendorForCompanyResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActivateVendorForCompany">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="VendorID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActivateVendorForCompanyResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ActivateVendorForCompanyResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeactivateVendorForBranch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="VendorBranchID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeactivateVendorForBranchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="DeactivateVendorForBranchResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActivateVendorForBranch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="VendorBranchID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ActivateVendorForBranchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ActivateVendorForBranchResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

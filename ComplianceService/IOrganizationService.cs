@@ -95,6 +95,22 @@ namespace ComplianceService
         [OperationContract]
 
         string GetVendors(int CompanyID);
+        [OperationContract]
+
+
+        string GeSpecifictVendorList(int BranchID);
+        [OperationContract]
+
+        string GetAllVendors(int VendorID);
+        [OperationContract]
+
+        string GetAllVendorsAssignedForBranch(int BranchVendorID);
+        [OperationContract]
+
+        int insertVendor(Organization org, CompanyDetails company);
+        [OperationContract]
+
+        bool updateVendor(Organization org, CompanyDetails company);
 
     }
 }

@@ -55,23 +55,79 @@ namespace ComplianceService
             return VendorID;
         }
 
-        public int insertVendorForBranch(int[] VendorID, int OrgCompanyID)
+        public bool insertVendorForBranch(int[] VendorID, int OrgCompanyID,DateTime StartDate, Nullable<DateTime> EndDate, bool IsActive)
         {
-            int VendorBranchID = 0;
             bool insertResult = false;
             try
             {
                 VendorHelper vendorhelper = new VendorHelper();
                 foreach (var item in VendorID)
                 {
-                    insertResult =Convert.ToBoolean( vendorhelper.insertVendorForBranch(item, OrgCompanyID, 'I'));
+                    insertResult =Convert.ToBoolean( vendorhelper.insertVendorForBranch(item, OrgCompanyID, 'I',StartDate,EndDate,IsActive));
                 }
             }
             catch
             {
                 throw;
             }
-            return VendorBranchID;
+            return insertResult;
+        }
+
+        public string DeactivateVendorForCompany(int VendorID)
+        {
+            string vendor = "";
+            VendorHelper vendorHelper = new VendorHelper();
+            vendor=Convert.ToString( vendorHelper.DeactivateVendorForCompany(VendorID));
+            if(vendor != null)
+            {
+                return vendor;
+            }
+            else
+            {
+                return "Not deactivated";
+            }
+        }
+        public string ActivateVendorForCompany(int VendorID)
+        {
+            string vendor = "";
+            VendorHelper vendorHelper = new VendorHelper();
+            vendor = Convert.ToString(vendorHelper.ActivateVendorForCompany(VendorID));
+            if (vendor != null)
+            {
+                return vendor;
+            }
+            else
+            {
+                return "Not activated";
+            }
+        }
+        public string DeactivateVendorForBranch(int VendorBranchID)
+        {
+            string vendor = "";
+            VendorHelper vendorHelper = new VendorHelper();
+            vendor = Convert.ToString(vendorHelper.DeactivateVendorForBranch(VendorBranchID));
+            if (vendor != null)
+            {
+                return vendor;
+            }
+            else
+            {
+                return "Not deactivated";
+            }
+        }
+        public string ActivateVendorForBranch(int BranchID)
+        {
+            string vendor = "";
+            VendorHelper vendorHelper = new VendorHelper();
+            vendor = Convert.ToString(vendorHelper.ActivateVendorForBranch(BranchID));
+            if (vendor != null)
+            {
+                return vendor;
+            }
+            else
+            {
+                return "Not deactivated";
+            }
         }
 
     }

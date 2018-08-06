@@ -5,7 +5,7 @@ using System.Web;
 using Compliance.DataObject;
 using System.Data;
 using System.Web.Mvc;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace ComplianceAuditWeb.Models
 {
@@ -29,6 +29,17 @@ namespace ComplianceAuditWeb.Models
 
         public List<SelectListItem> VendorList { get; set; }
         public int[] VendorID { get; set; }
+        public int VendorsID { get; set; }
+        public string VendorName { get; set; }
+        [Display(Name = "Start Date")]
+        [DataType(DataType.Date)]
+        public DateTime VendorStartDate { get; set; }
+        [Display(Name = "End Date")]
+        [DataType(DataType.Date)]
+        public Nullable< DateTime> VendorEndDate { get; set; }
+        public bool IsVendorActive { get; set; }
+
+
 
 
     }

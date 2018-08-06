@@ -35,19 +35,14 @@ namespace ComplianceService
             try
             {
                 OrganizationHelper organizationhelper = new OrganizationHelper();
-
-                BranchLocationID = organizationhelper.insertupdateBranchLocation(branch, 'I');
-                if (BranchLocationID > 0)
+                OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
+                if (OrganizationID > 0)
                 {
-                    org.Branch_Id = BranchLocationID;
-                    OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
-                    org.Organization_Id = OrganizationID;
-                    //if (OrganizationID > 0)
-                    //{
-                    //    company.Org_Hier_ID = OrganizationID;
-                    //    CompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'I');
-                    //}
+                    branch.Org_Hier_ID = OrganizationID;
+                    BranchLocationID = organizationhelper.insertupdateBranchLocation(branch, 'I');
                 }
+             
+              
                 if (BranchLocationID > 0 && OrganizationID > 0)
                 {
                     insertResult = true;
@@ -57,7 +52,7 @@ namespace ComplianceService
             {
                 throw;
             }
-            return org.Organization_Id;
+            return OrganizationID;
         }
         /// <summary>
         /// A method to in the sevice layer that interacts with Organization helper class to update the Organization details in the database
@@ -75,8 +70,9 @@ namespace ComplianceService
             try
             {
                 OrganizationHelper organizationhelper = new OrganizationHelper();
-                BranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
+
+                BranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
                 // insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
                 if (BranchID > 0 && OrganizationID > 0) //insertCompanyDetailsID > 0)
                 {
@@ -225,19 +221,21 @@ namespace ComplianceService
         try
         {
             OrganizationHelper organizationhelper = new OrganizationHelper();
-            BranchLocationID = organizationhelper.insertupdateBranchLocation(branch, 'I');
-            if (BranchLocationID > 0)
-            {
-                org.Branch_Id = BranchLocationID;
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
-                    org.Organization_Id = OrganizationID;
+                if (OrganizationID > 0)
+                {
+                    branch.Org_Hier_ID = OrganizationID;
+                    BranchLocationID = organizationhelper.insertupdateBranchLocation(branch, 'I');
+           
+                
+                 
                 if (OrganizationID > 0)
                 {
                     company.Org_Hier_ID = OrganizationID;
                     CompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'I');
                 }
             }
-                if (BranchLocationID > 0 && OrganizationID > 0)
+                if (BranchLocationID > 0 && OrganizationID > 0 && CompanyDetailsID>0)
 
                 {
                     insertResult = true;
@@ -247,7 +245,7 @@ namespace ComplianceService
         {
             throw;
         }
-        return org.Organization_Id;
+        return OrganizationID;
     }
     /// <summary>
     /// A method to in the sevice layer that interacts with Organization helper class to update the Company details in the database
@@ -265,9 +263,9 @@ namespace ComplianceService
         try
         {
             OrganizationHelper organizationhelper = new OrganizationHelper();
-                
-            inserBranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
             insertOrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
+
+            inserBranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
             insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
             if (inserBranchID > 0 || insertOrganizationID > 0 || insertCompanyDetailsID > 0)
             {
@@ -370,12 +368,13 @@ namespace ComplianceService
         try
         {
             OrganizationHelper organizationhelper = new OrganizationHelper();
-            BranchLocationID = organizationhelper.insertupdateBranchLocation(branch, 'I');
-            if (BranchLocationID > 0)
-            {
-                org.Branch_Id = BranchLocationID;
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
-                org.Organization_Id = OrganizationID;
+
+            if (OrganizationID > 0)
+            {
+                    branch.Org_Hier_ID = OrganizationID;
+                    BranchLocationID = organizationhelper.insertupdateBranchLocation(branch, 'I');
+
             }
             if (BranchLocationID != 0 && OrganizationID != 0)
             {
@@ -402,8 +401,9 @@ namespace ComplianceService
         try
         {
             OrganizationHelper organizationhelper = new OrganizationHelper();
-            BranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
-            OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
+                OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
+
+                BranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
             if (BranchID != 0 && OrganizationID != 0)
             {
                 updateResult = true;
@@ -490,14 +490,72 @@ namespace ComplianceService
     }
 
 
+        public int insertVendor(Organization org, CompanyDetails company)
+        {
+            int OrganizationID = 0;
+            int CompanyDetailsID = 0;
+            bool insertResult = false;
+            try
+            {
+                OrganizationHelper organizationhelper = new OrganizationHelper();
+                OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
+                
 
 
+                    if (OrganizationID > 0)
+                    {
+                        company.Org_Hier_ID = OrganizationID;
+                        CompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'I');
+                    }
+                
+                if ( OrganizationID > 0 && CompanyDetailsID > 0)
 
-    /// <summary>
-    /// A method in the service layer  that interacts with bindCountry method,to fetch the Country list from the database.
-    /// </summary>
-    /// <returns>BindCountry method which has xml string value</returns>
-    public string GetCountryList()
+                {
+                    insertResult = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            return OrganizationID;
+        }
+        /// <summary>
+        /// A method to in the sevice layer that interacts with Organization helper class to update the Company details in the database
+        /// </summary>
+        /// <param name="org">data object of Organization</param>
+        /// <param name="company">data object of CompanyDetails</param>
+        /// <param name="branch">data object of BranchLocation</param>
+        /// <returns>boolean value</returns>
+        public bool updateVendor(Organization org, CompanyDetails company)
+        {
+            int insertOrganizationID = 0;
+            int insertCompanyDetailsID = 0;
+            bool updateResult = false;
+            try
+            {
+                OrganizationHelper organizationhelper = new OrganizationHelper();
+                insertOrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
+
+                insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
+                if ( insertOrganizationID > 0 || insertCompanyDetailsID > 0)
+                {
+                    updateResult = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            return updateResult;
+        }
+
+
+        /// <summary>
+        /// A method in the service layer  that interacts with bindCountry method,to fetch the Country list from the database.
+        /// </summary>
+        /// <returns>BindCountry method which has xml string value</returns>
+        public string GetCountryList()
     {
         return BindCountry();
     }
@@ -574,19 +632,19 @@ namespace ComplianceService
         return xmlGroupCompaniesList;
     }
 
-    public string GetCompaniesList()
-    {
-        return BindCompaniesList();
-    }
-    private string BindCompaniesList()
-    {
-        OrganizationHelper OrganizationHelper = new OrganizationHelper();
-        DataSet dsGroupCompanies = OrganizationHelper.getCompanyList();
-        string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
-        return xmlGroupCompaniesList;
-    }
+        public string GetCompaniesList()
+        {
+            return BindCompaniesList();
+        }
+        private string BindCompaniesList()
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsGroupCompanies = OrganizationHelper.getCompanyList();
+            string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
+            return xmlGroupCompaniesList;
+        }
 
-    public string getCompanyListsforBranch(int OrgID)
+        public string getCompanyListsforBranch(int OrgID)
     {
         return bindCompanyListsforBranch(OrgID);
     }
@@ -601,21 +659,18 @@ namespace ComplianceService
 
 
 
-    public string GetBranchList()
-    {
-        return BindBranchList();
-    }
-    /// <summary>
-    /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
-    /// </summary>
-    /// <returns></returns>
-    private string BindBranchList()
-    {
-        OrganizationHelper OrganizationHelper = new OrganizationHelper();
-        DataSet dsBranches = OrganizationHelper.getBranchList();
-        string xmlBranchList = dsBranches.GetXml();
-        return xmlBranchList;
-    }
+        public string GetBranchList()
+        {
+            return BindBranchList();
+        }
+
+        private string BindBranchList()
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsBranches = OrganizationHelper.getBranchList();
+            string xmlBranchList = dsBranches.GetXml();
+            return xmlBranchList;
+        }
 
 
 
@@ -623,7 +678,7 @@ namespace ComplianceService
 
 
 
-    public string GeSpecifictCompaniesList(int OrgID)
+        public string GeSpecifictCompaniesList(int OrgID)
     {
         return BindSpecificCompaniesList(OrgID);
     }
@@ -643,10 +698,7 @@ namespace ComplianceService
         {
             return BindSpecificBranchList(CompanyID);
         }
-        /// <summary>
-        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
-        /// </summary>
-        /// <returns></returns>
+      
         private string BindSpecificBranchList(int CompanyID)
         {
             OrganizationHelper OrganizationHelper = new OrganizationHelper();
@@ -683,6 +735,48 @@ namespace ComplianceService
             string xmlroles = vendors.GetXml();
             return xmlroles;
         }
+
+
+        public string GeSpecifictVendorList(int BranchID)
+        {
+            return BindSpecificVendorList(BranchID);
+        }
+
+        private string BindSpecificVendorList(int BranchID)
+        {
+            VendorHelper vendorhelper = new VendorHelper();
+            DataSet dsVendors = vendorhelper.getVendorListForBRanch(BranchID);
+            string xmlVendorsList = dsVendors.GetXml();
+            return xmlVendorsList;
+        }
+
+
+        public string GetAllVendors(int VendorID)
+        {
+            return BindAllVendor(VendorID);
+        }
+        private string BindAllVendor(int VendorID)
+        {
+            VendorHelper vendorhelper = new VendorHelper();
+            DataSet vendors = vendorhelper.getcompleteVendorList(VendorID);
+            string xmlvendors = vendors.GetXml();
+            return xmlvendors;
+        }
+
+
+        public string GetAllVendorsAssignedForBranch(int BranchVendorID)
+        {
+            return BindAllVendorAssignedForBranch(BranchVendorID);
+        }
+        private string BindAllVendorAssignedForBranch(int BranchVendorID)
+        {
+            VendorHelper vendorhelper = new VendorHelper();
+            DataSet vendors = vendorhelper.getcompleteVendorListassignedToBranch(BranchVendorID);
+            string xmlvendors = vendors.GetXml();
+            return xmlvendors;
+        }
+
+
     }
 }
 

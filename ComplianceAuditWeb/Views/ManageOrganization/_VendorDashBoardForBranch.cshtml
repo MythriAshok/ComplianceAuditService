@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ComplianceAuditWeb.Models.ListOfGroupCompanies>
+﻿@model IEnumerable<ComplianceAuditWeb.Models.BranchViewModel>
 
 <div class="new_section_box">
     <div class="tab-content">
@@ -8,10 +8,9 @@
             {
                 <div class="col-sm-3 QueList">
                     <div class="queContainer">
-                        @*@item.OrganizationID = @Session["BranchID"];*@
-                        <a href="@Url.Action("AboutBranch", "ManageOrganization",new { id = item.OrganizationID })">
+                        <a href="@Url.Action("AssignVendorForBranch", "ManageOrganization",new { VendorID = item.VendorsID })">
                             <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
-                            <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
+                            <h3 class="PB25"> @Html.DisplayFor(modelItem => item.VendorName)</h3>
                         </a>
                         <div class="clearfix"></div>
                     </div>
@@ -25,4 +24,6 @@
     </div>
 
 </div>
+
+
 

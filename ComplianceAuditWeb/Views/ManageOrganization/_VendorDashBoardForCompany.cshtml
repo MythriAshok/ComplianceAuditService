@@ -8,8 +8,7 @@
             {
                 <div class="col-sm-3 QueList">
                     <div class="queContainer">
-                        @*@item.OrganizationID = @Session["BranchID"];*@
-                        <a href="@Url.Action("AboutBranch", "ManageOrganization",new { id = item.OrganizationID })">
+                        <a href="@Url.Action("AboutVendor", "ManageOrganization",new { id = item.OrganizationID })">
                             <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
                             <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
                         </a>
@@ -25,4 +24,5 @@
     </div>
 
 </div>
+
 

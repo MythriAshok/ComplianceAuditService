@@ -393,4 +393,76 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GeSpecifictVendorList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BranchID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GeSpecifictVendorListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GeSpecifictVendorListResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllVendors">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="VendorID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllVendorsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAllVendorsResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllVendorsAssignedForBranch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BranchVendorID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllVendorsAssignedForBranchResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAllVendorsAssignedForBranchResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="insertVendor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="org" nillable="true" type="q15:Organization" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="company" nillable="true" type="q16:CompanyDetails" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="insertVendorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="insertVendorResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="updateVendor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="org" nillable="true" type="q17:Organization" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="company" nillable="true" type="q18:CompanyDetails" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="updateVendorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="updateVendorResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

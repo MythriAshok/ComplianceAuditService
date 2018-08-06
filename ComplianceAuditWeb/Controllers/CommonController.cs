@@ -115,7 +115,7 @@ namespace ComplianceAuditWeb.Controllers
             vendors = new List<SelectListItem>();
             foreach (System.Data.DataRow row in ds.Tables[0].Rows)
             {
-                vendors.Add(new SelectListItem { Text = Convert.ToString(row["Vendor_Name"]), Value = Convert.ToString(row["Vendor_ID"]) });
+                vendors.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
             }
             return Json(vendors, JsonRequestBehavior.AllowGet);
         }

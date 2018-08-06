@@ -1,0 +1,61 @@
+﻿@model ComplianceAuditWeb.Models.BranchViewModel
+
+@{
+    ViewBag.Title = "";
+}
+@section scripts{
+<script language="javascript" type="text/javascript">
+        function GetBranch(_CompanyId) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#BranchID").html(procemessage).show();
+            var url = "/Common/getspecificbranch";
+            alert(url);
+            $.ajax({
+                url: url,
+                data: { compid: _CompanyId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>Select Branch</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#BranchID").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+            GetVendor(_CompanyId);
+        }
+</script>
+    }
+
+
+<h2 class="ML15"></h2>
+<ul class="breadcrumb ML15">
+    <li><a href=""></a></li>
+    <li></li>
+</ul>
+<div class="mid_content_sec">
+    @using (Html.BeginForm())
+    {
+        <div class="col-xs-10 subSelect ">
+            <div class="input-field">
+
+                @Html.Label(" Company")
+                @Html.DropDownListFor(model => model.CompanyID, Model.CompaniesList, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "GetBranch(this.value)" })
+
+                @Html.Label(" Branch")
+                @Html.DropDownListFor(model => model.BranchID, Model.BranchList, new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
+
+
+
+
+            </div>
+        </div>
+    }
+</div>
+
+
+

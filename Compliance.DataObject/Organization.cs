@@ -21,13 +21,14 @@ namespace Compliance.DataObject
         public bool Is_Leaf { get; set; }
         public bool Is_Delete { get; set; }
         public string Industry_Type { get; set; }
-        public int Branch_Id { get; set; }
+       
 
         public int User_Id { get; set; }
 
         public DateTime Last_Updated_Date { get; set; }
         public bool Is_Active { get; set; }
+        public bool Is_Vendor { get; set; }
 
-      
+
     }
 }

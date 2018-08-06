@@ -84,7 +84,7 @@
     </script>
 
 
-    <script language="javascript" type="text/javascript">
+    @*<script language="javascript" type="text/javascript">
         function GetVendor(_CompanyId) {
             var procemessage = "<option value='0'> Please wait...</option>";
             $("#VendorID").html(procemessage).show();
@@ -110,7 +110,7 @@
             });
 
         }
-    </script>
+    </script>*@
 }
 <ul class="breadcrumb ML15">
     <li><a href="">Branch Management</a></li>
@@ -297,22 +297,6 @@
         </div>
 
 
-
-        @if (Session["CompanyID"] == null)
-        {
-            <div class="col-xs-6 subSelect ">
-                <div class="input-field">
-
-                    @*@Html.Label(ConfigurationManager.AppSettings["Roles"], new { @class = "floating-label" })*@
-                    @Html.Label("Vendors")
-                    @Html.ListBoxFor(m => m.VendorID, Model.VendorList, new { @class = "inputMaterialSelect ui - autocomplete - input ", size = "4", placeholder = ConfigurationManager.AppSettings["Roles"] })
-
-
-                    <span id="loading_data_icon"></span>
-                </div>
-            </div>
-        }
-
         <div class="clearfix"></div>
 
         <ul class="list-inline continueBtn">
@@ -330,10 +314,10 @@
 
                 @*<input type="submit" value="Reset" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
 
-                    <input type="submit" value="Delete" class="btn primary-button"  ><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>*@
+                    <input type="submit" value="Delete" class="btn primary-button"  ><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
 
 
-                @*<button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="@button">Create<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>*@
+                <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="@button">Create<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>*@
             </li>
         </ul>
 

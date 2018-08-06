@@ -418,6 +418,7 @@
     <Compile Include="Models\GroupCompanyViewModel.cs" />
     <Compile Include="Models\ListofComplianceViewModel.cs" />
     <Compile Include="Models\ListOfGroupCompanies.cs" />
+    <Compile Include="Models\ListOfVendors.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Controllers\ManageOrganizationController.cs" />
     <Compile Include="Models\OrgActivateDeactivateViewModel.cs" />
@@ -426,6 +427,7 @@
     <Compile Include="Models\RolesViewModel.cs" />
     <Compile Include="Models\UserGroupViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
+    <Compile Include="Models\VendorActivateDeactivateViewModel.cs" />
     <Compile Include="Models\VendorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -491,6 +493,14 @@
     <Content Include="Views\ManageOrganization\_AssignVendorToBranch.cshtml" />
     <Content Include="Views\Common\_UploadFiles.cshtml" />
     <Content Include="Views\ManageOrganization\_UploadFiles.cshtml" />
+    <Content Include="Views\ManageOrganization\_VendorDashBoardForCompany.cshtml" />
+    <Content Include="Views\ManageOrganization\_VendorDashBoardForBranch.cshtml" />
+    <Content Include="Views\ManageOrganization\_BranchListForVendors.cshtml" />
+    <Content Include="Views\ManageOrganization\_DeactivateVendorForCompany.cshtml" />
+    <Content Include="Views\ManageOrganization\_DeactivateVendorForBranch.cshtml" />
+    <Content Include="Views\ManageOrganization\_ActivateVendorForCompany.cshtml" />
+    <Content Include="Views\ManageOrganization\_ActivateVendorForBranch.cshtml" />
+    <Content Include="Views\ManageOrganization\_AboutVendor.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

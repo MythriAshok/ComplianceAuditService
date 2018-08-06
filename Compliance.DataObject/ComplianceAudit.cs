@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Compliance.DataObject
@@ -11,6 +12,7 @@ namespace Compliance.DataObject
         public string Penalty_nc { get; set; }
         public string Audit_Remarks { get; set; }
         public string Audit_ArteFacts { get; set; }
+        [DataType(DataType.Date)]
         public DateTime Audit_Date { get; set; }
         public int Version { get; set; }
         public int Reviewer_Id { get; set; }
