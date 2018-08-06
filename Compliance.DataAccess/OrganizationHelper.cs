@@ -151,6 +151,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_User_ID", org.User_Id);
                     cmd.Parameters.AddWithValue("p_Is_Active", org.Is_Active);
                     cmd.Parameters.AddWithValue("p_Is_Delete", org.Is_Delete);
+                    cmd.Parameters.AddWithValue("p_logo", org.logo);
                     MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                     object objorganizationid = cmd.ExecuteScalar();
                     if (Convert.ToInt32(objorganizationid) != 0)

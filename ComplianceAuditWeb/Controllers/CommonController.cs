@@ -55,8 +55,8 @@ namespace ComplianceAuditWeb.Controllers
         {
             List<SelectListItem> branch = new List<SelectListItem>();
             int ID = Convert.ToInt32(compid);
-            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
-            string xmldata = client.GetBranchList();
+            AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
+            string xmldata = auditServiceClient.getSpecificBranchList(ID);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             branch = new List<SelectListItem>();
@@ -144,19 +144,19 @@ namespace ComplianceAuditWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadFile(HttpPostedFileBase file)
+        public string UploadFile(HttpPostedFileBase file,string filePath)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 if (file != null && file.ContentLength > 0)
                 {
                     try
                     {
-                        string fileName = Path.GetFileName(file.FileName);
+                    string fileName = Path.GetFileName(file.FileName);
                         //string path = Path.Combine(Server.MapPath("~/UploadedFiles"), fileName);
-                        string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()),fileName);
+                        //string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()),fileName);
                         if (System.IO.File.Exists(filePath))
-                        {
+                        {                        
                             ViewBag.Message = "The File Already Exists in System";
                         }
                         else
@@ -175,8 +175,9 @@ namespace ComplianceAuditWeb.Controllers
                 {
                     ViewBag.Message = "Specify the file";
                 }
-            }
-            return View("View");
+            //}
+            //return View("View");
+            return ViewBag.Message;
         }
     }
 }

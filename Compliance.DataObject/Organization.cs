@@ -27,6 +27,7 @@ namespace Compliance.DataObject
 
         public DateTime Last_Updated_Date { get; set; }
         public bool Is_Active { get; set; }
+        public string logo { get; set; }
         public bool Is_Vendor { get; set; }
 
 

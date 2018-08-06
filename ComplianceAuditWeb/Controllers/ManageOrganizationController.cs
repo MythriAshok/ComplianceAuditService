@@ -106,11 +106,15 @@ namespace ComplianceAuditWeb.Controllers
         /// <param name="object of OrganizationViewModel"></param>
         /// <returns>View</returns>
         [HttpPost]
-        public ActionResult AddGroupCompany(OrganizationViewModel organizationVM)
+        public ActionResult AddGroupCompany(OrganizationViewModel organizationVM, HttpPostedFileBase file)
         {
-             if (ModelState.IsValid)
-             {
-
+           if (ModelState.IsValid)
+           {
+            CommonController common = new CommonController();
+            organizationVM.organization.logo = Path.GetFileName(file.FileName);
+            string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName(file.FileName));
+            string message = common.UploadFile(file, filePath);
+            //ModelState.AddModelError(".Photo", message);
             OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
             string strXMLStates = organizationClient.GetStateList(organizationVM.branch.Country_Id);
             DataSet dsStates = new DataSet();
@@ -136,14 +140,13 @@ namespace ComplianceAuditWeb.Controllers
             id = organizationClient.insertOrganization(organizationVM.organization, organizationVM.branch);
             if (id != 0)
             {
-                    //Session["CompanyName"] = organizationVM.organization.Company_Name;
-                    //Session["CompanyDescription"] = organizationVM.organization.Description;
-                    //Session["ParentCompanyID"] = organizationVM.organization.Parent_Company_Id;
-                    //Session["CompanyID"] = id;
-
-                    // return RedirectToAction("dashboard", "common", new { pid = 6 });
-                    //TempData["id"] = id;
-                return RedirectToAction("AboutCompany",new { id= id });
+                Session["CompanyName"] = organizationVM.organization.Company_Name;
+                Session["CompanyDescription"] = organizationVM.organization.Description;
+                Session["ParentCompanyID"] = organizationVM.organization.Parent_Company_Id;
+                Session["CompanyID"] = id;
+               
+               // return RedirectToAction("dashboard", "common", new { pid = 6 });
+                return RedirectToAction("AboutCompany");
             }
             else
             {
@@ -1331,21 +1334,10 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult AboutCompany(int id)
         {
             AboutCompanyViewModel aboutCompanyViewModel = new AboutCompanyViewModel();
-            //int id = Convert.ToInt32(TempData["ID"]);
-         
-            //aboutCompanyViewModel.CompanyID =Convert.ToInt32( Session["CompanyID"]);
-            //aboutCompanyViewModel.CompanyDescription = Convert.ToString(Session["CompanyDescription"]);
-            //aboutCompanyViewModel.CompanyName = Convert.ToString(Session["CompanyName"]);
-            //aboutCompanyViewModel.ParentCompanyID = Convert.ToInt32(Session["ParentCompanyID"]);
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            string aboutcompany = organizationServiceClient.getCompanyListsforBranch(id);
-            DataSet dsaboutCompany = new DataSet();
-            dsaboutCompany.ReadXml(new StringReader( aboutcompany));
-            aboutCompanyViewModel.CompanyID = Convert.ToInt32(dsaboutCompany.Tables[0].Rows[0]["Org_Hier_ID"]);
-            aboutCompanyViewModel.CompanyDescription = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["Description"]);
-            aboutCompanyViewModel.ParentCompanyID = Convert.ToInt32(dsaboutCompany.Tables[0].Rows[0]["Parent_Company_ID"]);
-            aboutCompanyViewModel.CompanyName = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["Company_Name"]);
-
+            aboutCompanyViewModel.CompanyID =Convert.ToInt32( Session["CompanyID"]);
+            aboutCompanyViewModel.CompanyDescription = Convert.ToString(Session["CompanyDescription"]);
+            aboutCompanyViewModel.CompanyName = Convert.ToString(Session["CompanyName"]);
+            aboutCompanyViewModel.ParentCompanyID = Convert.ToInt32(Session["ParentCompanyID"]);
 
             return View("_AboutCompany",aboutCompanyViewModel);
         }
