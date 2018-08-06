@@ -181,10 +181,30 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Connected Services\UserService\UserService.wsdl" />
+    <None Include="Connected Services\UserService\UserService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\UserService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\UserService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\UserService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\VendorService\VendorService.disco" />
     <None Include="Connected Services\VendorService\configuration91.svcinfo" />
     <None Include="Connected Services\VendorService\configuration.svcinfo" />
     <None Include="Connected Services\VendorService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\UserService\UserService.disco" />
+    <None Include="Connected Services\UserService\configuration91.svcinfo" />
+    <None Include="Connected Services\UserService\configuration.svcinfo" />
+    <None Include="Connected Services\UserService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -362,7 +382,9 @@
     <Content Include="UploadedFiles\ojeshwini.jpg" />
     <Content Include="Views\ManageOrganization\ListOfGroupCompanies.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -382,6 +404,11 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Connected Services\OrgService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Connected Services\UserService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -482,8 +509,9 @@
     <Content Include="Views\ManageOrganization\_Vendor.cshtml" />
     <Content Include="Views\ManageOrganization\_AssignVendorToBranch.cshtml" />
     <Content Include="Views\Common\_UploadFiles.cshtml" />
-    <Content Include="Views\ComplianceManagement\_SMEDashboard.cshtml" />
+    <Content Include="Views\ComplianceManagement\_SMESelectCompany.cshtml" />
     <Content Include="Views\ComplianceManagement\_AssignRules.cshtml" />
+    <Content Include="Views\ComplianceManagement\_SMEdashboard.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -515,6 +543,7 @@
     <WCFMetadataStorage Include="Connected Services\AuditService\" />
     <WCFMetadataStorage Include="Connected Services\ComplianceXrefService\" />
     <WCFMetadataStorage Include="Connected Services\OrgService\" />
+    <WCFMetadataStorage Include="Connected Services\UserService\" />
     <WCFMetadataStorage Include="Connected Services\VendorService\" />
   </ItemGroup>
   <PropertyGroup>

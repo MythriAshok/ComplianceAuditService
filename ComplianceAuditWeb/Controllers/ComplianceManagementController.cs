@@ -25,7 +25,7 @@ namespace ComplianceAuditWeb.Controllers
             model.Countrylist = new List<SelectListItem>();
             model.Countrylist.Add(new SelectListItem() { Text = "--Select Country--", Value = "0" });
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
-            string strXMLCountries = organizationservice.GetCountryList();           
+            string strXMLCountries = organizationservice.GetCountryList();
             DataSet dsCountries = new DataSet();
             dsCountries.ReadXml(new StringReader(strXMLCountries));
             if (dsCountries.Tables.Count > 0)
@@ -59,24 +59,24 @@ namespace ComplianceAuditWeb.Controllers
                     model.Citylist.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
                 }
             }
-            return View("_AddActs",model);
+            return View("_AddActs", model);
         }
         [HttpPost]
         public ActionResult CreateActs(ComplianceViewModel model)
         {
-             if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
                 model.Compliance.User_ID = 1;
-                 model.Compliance.Compliance_Parent_ID = client.insertActs(model.Compliance);
-                if (model.Compliance.Compliance_Parent_ID>0)
+                model.Compliance.Compliance_Parent_ID = client.insertActs(model.Compliance);
+                if (model.Compliance.Compliance_Parent_ID > 0)
                 {
                     model.Compliance.Compliance_Title = "RuleSection";
                     client.insertSection(model.Compliance);
-                   return RedirectToAction("ListofCompliance");
+                    return RedirectToAction("ListofCompliance");
                 }
             }
-            return View("_AddActs",model);
+            return View("_AddActs", model);
         }
 
         [HttpGet]
@@ -84,10 +84,10 @@ namespace ComplianceAuditWeb.Controllers
         {
             List<ComplianceXref> model = new List<ComplianceXref>();
             ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
-            string xmldata=client.GetActs();
+            string xmldata = client.GetActs();
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
-            foreach(System.Data.DataRow row in ds.Tables[0].Rows)
+            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
             {
                 model.Add(new ComplianceXref
                 {
@@ -117,7 +117,7 @@ namespace ComplianceAuditWeb.Controllers
                     Type = Convert.ToString(row["Type"]),
                     Version = Convert.ToInt32(row["Version"])
                 });
-            }           
+            }
             return View();
         }
 
@@ -212,7 +212,7 @@ namespace ComplianceAuditWeb.Controllers
                     model.Citylist.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
                 }
             }
-            return PartialView("_AddRules",model);
+            return PartialView("_AddRules", model);
         }
 
         [HttpPost]
@@ -277,9 +277,9 @@ namespace ComplianceAuditWeb.Controllers
                     });
                 }
             }
-                return View("_ListofCompliance", model);            
+            return View("_ListofCompliance", model);
         }
-        private List<ComplianceXref> bindCompliancelist(DataTable dt,List<ComplianceXref> model)
+        private List<ComplianceXref> bindCompliancelist(DataTable dt, List<ComplianceXref> model)
         {
             foreach (System.Data.DataRow row in dt.Rows)
             {
@@ -303,10 +303,10 @@ namespace ComplianceAuditWeb.Controllers
                     Risk_Category = Convert.ToString(row["Risk_Category"]),
                     Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
                     Risk_Description = Convert.ToString(row["Risk_Description"]),
-                    Version = Convert.ToInt32(row["Version"])                   
+                    Version = Convert.ToInt32(row["Version"])
                 });
             }
-                return model;
+            return model;
         }
         [HttpGet]
         //public ActionResult AllocateActandRule()
@@ -379,7 +379,7 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         //public ActionResult AllocateActandRule(AllocateActandRuleViewModel model)
         //{
-            
+
         //    ComplianceAudit audit = new ComplianceAudit();
         //    ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();          
         //    int Org_Hier_Id = model.BranchId;
@@ -387,8 +387,8 @@ namespace ComplianceAuditWeb.Controllers
         //    client.inseretActandRuleforBranch(Org_Hier_Id, model.selectedid, User_Id);
         //    return RedirectToAction("AllocateActandRule");
         //}        
-      
-        public JsonResult getallocatedrules(string secid,string branchid)
+
+        public JsonResult getallocatedrules(string secid, string branchid)
         {
             ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
             int sectionID = Convert.ToInt32(secid);
@@ -412,12 +412,12 @@ namespace ComplianceAuditWeb.Controllers
         }
 
         [HttpGet]
-        public ActionResult AssignRules(int Branchid)
+        public ActionResult AssignRules(string Branchid, string User)
         {
             Session["Branch_Id"] = Branchid;
             return View("_AssignRules");
         }
-            public JsonResult GetJsTree3Data()
+        public JsonResult GetJsTree3Data()
         {
             var root = new treenode() //Create our root node and ensure it is opened
             {
@@ -480,19 +480,19 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult AssignRules(string selectedItems)
         {
             List<treenode> ruleslist = (new JavaScriptSerializer()).Deserialize<List<treenode>>(selectedItems);
-            int[] rules=null;
+            int[] rules = null;
             int i = 0;
             int userid = Convert.ToInt32(Session["User_Id"]);
             int orgid = Convert.ToInt32(Session["Branch_Id"]);
-            foreach(var item in ruleslist)
+            foreach (var item in ruleslist)
             {
-                rules[i++]=Convert.ToInt32(item.id);
+                rules[i++] = Convert.ToInt32(item.id);
             }
             ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
             client.inseretActandRuleforBranch(orgid, rules, userid);
             return View("_SMEDashboard");
         }
-      
+        [HttpGet]
         public ActionResult SMEdashboard()
         {
 
@@ -509,12 +509,26 @@ namespace ComplianceAuditWeb.Controllers
                     model.Companylist.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
                 }
             }
-            ViewBag.Branch = new List<SelectListItem>() { new SelectListItem { Text = "--Select Branch--", Value = "0" } };
-            model.BranchList= new List<SelectListItem>() { new SelectListItem { Text = "--Select Branch--", Value = "0" } };
+            xmldata = client.GetBranchList();
+            ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            if (ds.Tables.Count > 0)
+            {
+                model.BranchList = new List<SelectListItem>() { new SelectListItem { Text = "--Select Branch--", Value = "0" } };
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                }
+            }
             ViewBag.vendor = new List<SelectListItem>() { new SelectListItem { Text = "--Select Vendor--", Value = "0" } };
-            model.VendorList= new List<SelectListItem>() { new SelectListItem { Text = "--Select Vendor--", Value = "0" } };
-            return View("_SMEDashboard",model);
+            model.VendorList = new List<SelectListItem>() { new SelectListItem { Text = "--Select Vendor--", Value = "0" } };
+            return View("_SMEDashboard", model);
         }
 
-        }
+        //[HttpPost]
+        //public ActionResult SMEdashboard(AllocateActandRuleViewModel model)
+        //{
+        //    return RedirectToAction("AssignRules", new { BranchId = model.BranchId });
+        //}
+    }
 }
