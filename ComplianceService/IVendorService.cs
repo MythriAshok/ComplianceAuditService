@@ -19,6 +19,16 @@ namespace ComplianceService
         int updateVendor(VendorMaster vendor);
 
         [OperationContract]
-        int insertVendorForBranch(int[] VendorID, int OrgCompanyID);
+        bool insertVendorForBranch(int[] VendorID, int OrgCompanyID, DateTime StartDate,Nullable< DateTime> EndDate, bool IsActive);
+        [OperationContract]
+        string DeactivateVendorForCompany(int VendorID);
+        [OperationContract]
+        string ActivateVendorForCompany(int VendorID);
+        [OperationContract]
+        string DeactivateVendorForBranch(int VendorBranchID);
+        [OperationContract]
+        string ActivateVendorForBranch(int VendorBranchID);
+
+
     }
 }

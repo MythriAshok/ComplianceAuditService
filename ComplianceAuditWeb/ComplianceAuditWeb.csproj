@@ -379,7 +379,6 @@
     <None Include="Scripts\_references.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="UploadedFiles\ojeshwini.jpg" />
     <Content Include="Views\ManageOrganization\ListOfGroupCompanies.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
     <Content Include="Web.config">
@@ -422,7 +421,6 @@
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\ComplianceManagementController.cs" />
     <Compile Include="Controllers\ManageAccessController.cs" />
-    <Compile Include="Controllers\ManageVendorController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -436,6 +434,7 @@
     <Compile Include="Models\GroupCompanyViewModel.cs" />
     <Compile Include="Models\ListofComplianceViewModel.cs" />
     <Compile Include="Models\ListOfGroupCompanies.cs" />
+    <Compile Include="Models\ListOfVendors.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Controllers\ManageOrganizationController.cs" />
     <Compile Include="Models\OrgActivateDeactivateViewModel.cs" />
@@ -445,6 +444,7 @@
     <Compile Include="Models\treenode.cs" />
     <Compile Include="Models\UserGroupViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
+    <Compile Include="Models\VendorActivateDeactivateViewModel.cs" />
     <Compile Include="Models\VendorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -509,6 +509,18 @@
     <Content Include="Views\ManageOrganization\_Vendor.cshtml" />
     <Content Include="Views\ManageOrganization\_AssignVendorToBranch.cshtml" />
     <Content Include="Views\Common\_UploadFiles.cshtml" />
+    <Content Include="Views\ManageOrganization\_UploadFiles.cshtml" />
+    <Content Include="Views\ManageOrganization\_VendorDashBoardForCompany.cshtml" />
+    <Content Include="Views\ManageOrganization\_VendorDashBoardForBranch.cshtml" />
+    <Content Include="Views\ManageOrganization\_BranchListForVendors.cshtml" />
+    <Content Include="Views\ManageOrganization\_DeactivateVendorForCompany.cshtml" />
+    <Content Include="Views\ManageOrganization\_DeactivateVendorForBranch.cshtml" />
+    <Content Include="Views\ManageOrganization\_ActivateVendorForCompany.cshtml" />
+    <Content Include="Views\ManageOrganization\_ActivateVendorForBranch.cshtml" />
+    <Content Include="Views\ManageOrganization\_AboutVendor.cshtml" />
+    <Content Include="Views\ManageOrganization\_BranchDashboard - Copy.cshtml" />
+    <Content Include="Views\ManageOrganization\_DashBoardBranch.cshtml" />
+    <Content Include="Views\ManageOrganization\_DashBoardGroupCompany.cshtml" />
     <Content Include="Views\ComplianceManagement\_SMESelectCompany.cshtml" />
     <Content Include="Views\ComplianceManagement\_AssignRules.cshtml" />
     <Content Include="Views\ComplianceManagement\_SMEdashboard.cshtml" />
@@ -521,6 +533,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="UploadedFiles\" />
     <Folder Include="Views\AboutCompany\" />
     <Folder Include="Views\ManageAccess\" />
     <Folder Include="Views\ManageVendor\" />

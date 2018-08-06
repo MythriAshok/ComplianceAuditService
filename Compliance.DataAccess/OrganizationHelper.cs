@@ -35,6 +35,7 @@ namespace Compliance.DataAccess
                     MySqlCommand cmd = new MySqlCommand("sp_insertupdateBranchLocation", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add("p_Flag", MySqlDbType.VarChar, 1).Value = Flag;
+                    cmd.Parameters.Add("p_Org_Hier_ID", MySqlDbType.Int32).Value = branchLocation.Org_Hier_ID;
                     cmd.Parameters.Add("p_Location_ID", MySqlDbType.Int32).Value = branchLocation.Branch_Id;
                     cmd.Parameters.Add("p_Location_Name", MySqlDbType.VarChar, 75).Value = branchLocation.Branch_Name;
                     cmd.Parameters.Add("p_Address", MySqlDbType.VarChar, 450).Value = branchLocation.Address;
@@ -146,7 +147,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Is_Leaf", org.Is_Leaf);
                     cmd.Parameters.AddWithValue("p_Industry_Type", org.Industry_Type);
                     cmd.Parameters.AddWithValue("p_Last_Updated_Date", org.Last_Updated_Date);
-                    cmd.Parameters.AddWithValue("p_Location_ID", org.Branch_Id);
+                    cmd.Parameters.AddWithValue("p_Is_Vendor", org.Is_Vendor);
                     cmd.Parameters.AddWithValue("p_User_ID", org.User_Id);
                     cmd.Parameters.AddWithValue("p_Is_Active", org.Is_Active);
                     cmd.Parameters.AddWithValue("p_Is_Delete", org.Is_Delete);
@@ -376,7 +377,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Flag", Flag);
                     cmd.Parameters.AddWithValue("p_Company_Details_ID", details.Company_Details_ID);
                     cmd.Parameters.AddWithValue("p_Org_Hier_ID", details.Org_Hier_ID);
-                    cmd.Parameters.AddWithValue("p_Industry_Type", details.Industry_Type);
+                  //  cmd.Parameters.AddWithValue("p_Industry_Type", details.Industry_Type);
                     cmd.Parameters.AddWithValue("p_Formal_Name", details.Formal_Name);
                     cmd.Parameters.AddWithValue("p_Calender_StartDate", details.Calender_StartDate);
                     cmd.Parameters.AddWithValue("p_Calender_EndDate", details.Calender_EndDate);

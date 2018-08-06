@@ -60,15 +60,38 @@ namespace Compliance.DataAccess
 
 
 
-        public DataSet getVendorList(int CompanyID)
+        public DataSet getVendorList(int PCompanyID)
         {
             DataSet dsVendorList = new DataSet();
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getVendorList", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getSpecificVendorList", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Company_ID", CompanyID);
+                cmd.Parameters.AddWithValue("p_Parent_Company_ID", PCompanyID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsVendorList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return dsVendorList;
+        }
+     public DataSet getcompleteVendorList(int VendorID)
+        {
+            DataSet dsVendorList = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getcompleteVendorList", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Vendor_ID", VendorID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsVendorList);
             }
@@ -84,7 +107,34 @@ namespace Compliance.DataAccess
             return dsVendorList;
         }
 
-        public int insertVendorForBranch(int VendorID, int OrgCompanyID, char Flag)
+     public DataSet getcompleteVendorListassignedToBranch(int BranchVendorID)
+        {
+            DataSet dsVendorList = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_sp_getcompleteVendorListassignedToBranch", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Vender_Branch_ID", BranchVendorID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsVendorList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return dsVendorList;
+        }
+
+
+
+
+        public int insertVendorForBranch(int VendorID, int OrgCompanyID, char Flag, DateTime StartDate,Nullable< DateTime> EndDate, bool IsActive)
         {
             int VendorBranchID = 0;
             bool res = false;
@@ -96,14 +146,14 @@ namespace Compliance.DataAccess
                 cmd.Parameters.AddWithValue("p_Flag", Flag);
                 // cmd.Parameters.AddWithValue("Vendor_Branch_ID", Flag); 
                 cmd.Parameters.AddWithValue("p_Vendor_Branch_ID", VendorBranchID);
-
                 cmd.Parameters.AddWithValue("p_Vendor_ID", VendorID);
                 cmd.Parameters.AddWithValue("p_Branch_ID", OrgCompanyID);
-
-
-
+                cmd.Parameters.AddWithValue("p_Start_Date", StartDate);
+                cmd.Parameters.AddWithValue("p_End_Date", EndDate);
+                cmd.Parameters.AddWithValue("p_Is_Active", IsActive);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 object objvendorbranchid = cmd.ExecuteScalar();
-                if (Convert.ToInt32(objvendorbranchid) != 0)
+                if (objvendorbranchid != null)
                 {
                     VendorBranchID = Convert.ToInt32(objvendorbranchid);
                 }
@@ -125,6 +175,130 @@ namespace Compliance.DataAccess
             return VendorBranchID;
         }
 
+        public DataSet getVendorListForBRanch(int BranchID)
+        {
+            DataSet dsVendorList = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getVendorListForBranch", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Branch_ID", BranchID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsVendorList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
 
+            return dsVendorList;
+        }
+
+        public bool DeactivateVendorForCompany(int VendorID)
+        {
+            bool vendorForCompany = false;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_DeactivateVendorForCompany", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Vendor_ID", VendorID);
+                int resultCount = cmd.ExecuteNonQuery();
+                if (resultCount > 0)
+                {
+                    vendorForCompany = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return vendorForCompany;
+        }
+
+        public bool ActivateVendorForCompany(int VendorID)
+        {
+            bool vendorForCompany = false;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_ActivateVendorForCompany", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Vendor_ID", VendorID);
+                int resultCount = cmd.ExecuteNonQuery();
+                if (resultCount > 0)
+                {
+                    vendorForCompany = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return vendorForCompany;
+        }
+        public bool DeactivateVendorForBranch(int BranchVendorID)
+        {
+            bool vendorForCompany = false;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_DeactivateVendorForBranch", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Vendor_Branch_ID", BranchVendorID);
+                int resultCount = cmd.ExecuteNonQuery();
+                if (resultCount > 0)
+                {
+                    vendorForCompany = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return vendorForCompany;
+        }
+        public bool ActivateVendorForBranch(int VendorBranchID)
+        {
+            bool vendorForCompany = false;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_ActivateVendorForBranch", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Vendor_Branch_ID", VendorBranchID);
+                int resultCount = cmd.ExecuteNonQuery();
+                if (resultCount > 0)
+                {
+                    vendorForCompany = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return vendorForCompany;
+        }
     }
 }

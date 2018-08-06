@@ -20,6 +20,13 @@ namespace ComplianceAuditWeb.Models
         public List<SelectListItem> GroupCompaniesList { get; set; }
         public int GroupCompanyID { get; set; }
         public string GroupCompanyName { get; set; }
+
+        public List<SelectListItem> CompaniesList { get; set; }
+        public int CompanyID { get; set; }
+        public string CompanyName { get; set; }
+        public string ChildCompanyName { get; set; }
+
+
         //public string[] TpeofAuditList { get; set; }
 
         //public List<SelectListItem> ComplianceAuditTypeList { get; set; }

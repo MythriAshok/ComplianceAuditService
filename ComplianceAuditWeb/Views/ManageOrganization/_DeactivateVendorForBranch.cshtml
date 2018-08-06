@@ -1,0 +1,54 @@
+﻿@model ComplianceAuditWeb.Models.VendorActivateDeactivateViewModel
+
+
+
+<ul class="breadcrumb ML15">
+    <li><a href="">Vendor Management</a></li>
+    <li>Deactivate </li>
+</ul>
+<center>
+    <h2 class="ML15">Are you sure you want to deactivate?</h2>
+</center>
+@using (Html.BeginForm())
+
+
+{
+    @Html.AntiForgeryToken()
+
+    <div class="mid_content_sec">
+
+        <div class="col-xs-4 subSelect "></div>
+        <center>
+            <div class="input-field">
+
+
+
+                @*@Html.HiddenFor(m => m.organization.Organization_Id)
+
+                    @Html.LabelFor(m => m.organization.Company_Name, new { @class = "floating-label" })
+                    @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input" })*@
+
+
+                @Html.HiddenFor(m => m.VendorBranchID)
+
+                @*@Html.Label("Company Name")*@
+                @Html.TextBoxFor(m => m.VendorName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly", @Style = "text-align:center" })
+            </div>
+        </center>
+    </div>
+
+    <ul class="list-inline continueBtn">
+        <li>
+            @*<input type="submit" value="Activate" class="btn btn-default" />*@
+
+
+            <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit" onclick="DeactivateGroupCompany">Dectivate<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
+            <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Cancel<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
+        </li>
+    </ul>
+
+
+}
+
+
+

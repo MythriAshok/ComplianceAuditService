@@ -28,10 +28,34 @@ namespace ComplianceAuditWeb.VendorService {
         System.Threading.Tasks.Task<int> updateVendorAsync(Compliance.DataObject.VendorMaster vendor);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/insertVendorForBranch", ReplyAction="http://tempuri.org/IVendorService/insertVendorForBranchResponse")]
-        int insertVendorForBranch(int[] VendorID, int OrgCompanyID);
+        bool insertVendorForBranch(int[] VendorID, int OrgCompanyID, System.DateTime StartDate, System.Nullable<System.DateTime> EndDate, bool IsActive);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/insertVendorForBranch", ReplyAction="http://tempuri.org/IVendorService/insertVendorForBranchResponse")]
-        System.Threading.Tasks.Task<int> insertVendorForBranchAsync(int[] VendorID, int OrgCompanyID);
+        System.Threading.Tasks.Task<bool> insertVendorForBranchAsync(int[] VendorID, int OrgCompanyID, System.DateTime StartDate, System.Nullable<System.DateTime> EndDate, bool IsActive);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/DeactivateVendorForCompany", ReplyAction="http://tempuri.org/IVendorService/DeactivateVendorForCompanyResponse")]
+        string DeactivateVendorForCompany(int VendorID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/DeactivateVendorForCompany", ReplyAction="http://tempuri.org/IVendorService/DeactivateVendorForCompanyResponse")]
+        System.Threading.Tasks.Task<string> DeactivateVendorForCompanyAsync(int VendorID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/ActivateVendorForCompany", ReplyAction="http://tempuri.org/IVendorService/ActivateVendorForCompanyResponse")]
+        string ActivateVendorForCompany(int VendorID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/ActivateVendorForCompany", ReplyAction="http://tempuri.org/IVendorService/ActivateVendorForCompanyResponse")]
+        System.Threading.Tasks.Task<string> ActivateVendorForCompanyAsync(int VendorID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/DeactivateVendorForBranch", ReplyAction="http://tempuri.org/IVendorService/DeactivateVendorForBranchResponse")]
+        string DeactivateVendorForBranch(int VendorBranchID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/DeactivateVendorForBranch", ReplyAction="http://tempuri.org/IVendorService/DeactivateVendorForBranchResponse")]
+        System.Threading.Tasks.Task<string> DeactivateVendorForBranchAsync(int VendorBranchID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/ActivateVendorForBranch", ReplyAction="http://tempuri.org/IVendorService/ActivateVendorForBranchResponse")]
+        string ActivateVendorForBranch(int VendorBranchID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/ActivateVendorForBranch", ReplyAction="http://tempuri.org/IVendorService/ActivateVendorForBranchResponse")]
+        System.Threading.Tasks.Task<string> ActivateVendorForBranchAsync(int VendorBranchID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -77,12 +101,44 @@ namespace ComplianceAuditWeb.VendorService {
             return base.Channel.updateVendorAsync(vendor);
         }
         
-        public int insertVendorForBranch(int[] VendorID, int OrgCompanyID) {
-            return base.Channel.insertVendorForBranch(VendorID, OrgCompanyID);
+        public bool insertVendorForBranch(int[] VendorID, int OrgCompanyID, System.DateTime StartDate, System.Nullable<System.DateTime> EndDate, bool IsActive) {
+            return base.Channel.insertVendorForBranch(VendorID, OrgCompanyID, StartDate, EndDate, IsActive);
         }
         
-        public System.Threading.Tasks.Task<int> insertVendorForBranchAsync(int[] VendorID, int OrgCompanyID) {
-            return base.Channel.insertVendorForBranchAsync(VendorID, OrgCompanyID);
+        public System.Threading.Tasks.Task<bool> insertVendorForBranchAsync(int[] VendorID, int OrgCompanyID, System.DateTime StartDate, System.Nullable<System.DateTime> EndDate, bool IsActive) {
+            return base.Channel.insertVendorForBranchAsync(VendorID, OrgCompanyID, StartDate, EndDate, IsActive);
+        }
+        
+        public string DeactivateVendorForCompany(int VendorID) {
+            return base.Channel.DeactivateVendorForCompany(VendorID);
+        }
+        
+        public System.Threading.Tasks.Task<string> DeactivateVendorForCompanyAsync(int VendorID) {
+            return base.Channel.DeactivateVendorForCompanyAsync(VendorID);
+        }
+        
+        public string ActivateVendorForCompany(int VendorID) {
+            return base.Channel.ActivateVendorForCompany(VendorID);
+        }
+        
+        public System.Threading.Tasks.Task<string> ActivateVendorForCompanyAsync(int VendorID) {
+            return base.Channel.ActivateVendorForCompanyAsync(VendorID);
+        }
+        
+        public string DeactivateVendorForBranch(int VendorBranchID) {
+            return base.Channel.DeactivateVendorForBranch(VendorBranchID);
+        }
+        
+        public System.Threading.Tasks.Task<string> DeactivateVendorForBranchAsync(int VendorBranchID) {
+            return base.Channel.DeactivateVendorForBranchAsync(VendorBranchID);
+        }
+        
+        public string ActivateVendorForBranch(int VendorBranchID) {
+            return base.Channel.ActivateVendorForBranch(VendorBranchID);
+        }
+        
+        public System.Threading.Tasks.Task<string> ActivateVendorForBranchAsync(int VendorBranchID) {
+            return base.Channel.ActivateVendorForBranchAsync(VendorBranchID);
         }
     }
 }

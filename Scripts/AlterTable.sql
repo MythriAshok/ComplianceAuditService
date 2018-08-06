@@ -59,3 +59,52 @@ ALTER TABLE `auditmoduledb`.`tbl_menus`
 DROP COLUMN `User_Group_ID`,
 DROP INDEX `User_Group_ID` ;
 
+
+ALTER TABLE `auditmoduledb`.`tbl_company_details` 
+ADD COLUMN `Compliance_Audit_Type` VARCHAR(100) NULL AFTER `Company_ContactNumber2`;
+
+
+ALTER TABLE `auditmoduledb`.`tbl_compliance_audit` 
+CHANGE COLUMN `Audit_Status` `Audit_Status` VARCHAR(450) NULL DEFAULT NULL ;
+
+
+
+
+alter table tbl_org_hier drop foreign key  `tbl_org_hier_ibfk_2`;
+
+
+alter table tbl_org_hier add foreign key  fk_User(User_ID) references tbl_user(User_ID);
+
+
+alter table tbl_org_hier drop column Location_ID;
+alter table tbl_branch_location add column Org_Hier_ID int;
+
+alter  table tbl_branch_location add foreign key fk_OrgID(Org_Hier_ID) references tbl_org_hier(Org_Hier_ID);
+
+alter table tbl_org_hier add column Is_Vendor bit;
+
+drop table tbl_vendor_branch_mapping;
+
+drop table if exists tbl_vendor_branch_mapping;
+create table tbl_vendor_branch_mapping
+(
+Vendor_Branch_ID int primary key auto_increment not null,
+Branch_ID int not null,
+foreign key (Branch_ID) references tbl_org_hier(Org_Hier_ID),
+Vendor_ID int not null,
+foreign key (Vendor_ID) references tbl_org_hier(Org_Hier_ID),
+Start_Date datetime,
+End_Date datetime,
+Is_Active bit
+);
+
+alter table tbl_compliance_xref add column Audit_Type varchar (100) null after compl_def_consequence;
+
+alter table tbl_user add column Photo varchar (100) null default null;
+
+
+alter table tbl_org_hier add column logo varchar (100) null default null;
+
+
+
+

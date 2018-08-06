@@ -33,25 +33,48 @@
         }
     </script>
 }
+<ul class="breadcrumb ML15">
+    <li><a href="">Auditing Management</a></li>
+    <li> Auditing</li>
+</ul>
 
 @using (Html.BeginForm())
 {
+<div class="mid_content_sec">
+    <div class="col-xs-5 subSelect ">
+        <div class="input-field">
 
-@Html.Label("Company")
-@Html.DropDownListFor(m => m.complianceAudit.Org_Hier_Id, Model.MappedCompany, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "GetBranch(this.value)" })
+            @Html.Label("Company")
+            @Html.DropDownListFor(m => m.complianceAudit.Org_Hier_Id, Model.MappedCompany, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "GetBranch(this.value)" })
+
+            <span id="loading_data_icon"></span>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="col-xs-5 subSelect ">
+        <div class="input-field">
+
+            @Html.Label("Branch")
+            @Html.DropDownListFor(m => m.complianceAudit.Company_ID, Model.MappedBranch)
+            <span id="loading_data_icon"></span>
+        </div>
+    </div>
 
 
+    @Html.HiddenFor(m => m.complianceAudit.Company_ID)
+    @Html.HiddenFor(m => m.complianceAudit.Auditor_Id)
 
+    <div class="clearfix"></div>
 
+    <ul class="list-inline continueBtn">
+        <li>
 
-@Html.Label("Branch")
-@Html.DropDownListFor(m => m.complianceAudit.Company_ID, Model.MappedBranch)
+            <input type="submit" value="Start Auditing" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
 
-@Html.HiddenFor(m => m.complianceAudit.Company_ID)
-    @Html.HiddenFor(m=>m.complianceAudit.Auditor_Id)
+        </li>
+    </ul>
+</div>
 
-
-<input type="submit" value="Get Rules" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
-
-
-}
+        }
+       

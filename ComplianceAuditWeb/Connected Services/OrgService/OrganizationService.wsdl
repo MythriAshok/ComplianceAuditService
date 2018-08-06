@@ -175,6 +175,36 @@
   <wsdl:message name="IOrganizationService_GetVendors_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetVendorsResponse" />
   </wsdl:message>
+  <wsdl:message name="IOrganizationService_GeSpecifictVendorList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GeSpecifictVendorList" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GeSpecifictVendorList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GeSpecifictVendorListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetAllVendors_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllVendors" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetAllVendors_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllVendorsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetAllVendorsAssignedForBranch_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllVendorsAssignedForBranch" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetAllVendorsAssignedForBranch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllVendorsAssignedForBranchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_insertVendor_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertVendor" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_insertVendor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertVendorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_updateVendor_InputMessage">
+    <wsdl:part name="parameters" element="tns:updateVendor" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_updateVendor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:updateVendorResponse" />
+  </wsdl:message>
   <wsdl:portType name="IOrganizationService">
     <wsdl:operation name="insertOrganization">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertOrganization" message="tns:IOrganizationService_insertOrganization_InputMessage" />
@@ -287,6 +317,26 @@
     <wsdl:operation name="GetVendors">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GetVendors" message="tns:IOrganizationService_GetVendors_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GetVendorsResponse" message="tns:IOrganizationService_GetVendors_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GeSpecifictVendorList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GeSpecifictVendorList" message="tns:IOrganizationService_GeSpecifictVendorList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GeSpecifictVendorListResponse" message="tns:IOrganizationService_GeSpecifictVendorList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllVendors">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GetAllVendors" message="tns:IOrganizationService_GetAllVendors_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GetAllVendorsResponse" message="tns:IOrganizationService_GetAllVendors_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllVendorsAssignedForBranch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GetAllVendorsAssignedForBranch" message="tns:IOrganizationService_GetAllVendorsAssignedForBranch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GetAllVendorsAssignedForBranchResponse" message="tns:IOrganizationService_GetAllVendorsAssignedForBranch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="insertVendor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertVendor" message="tns:IOrganizationService_insertVendor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/insertVendorResponse" message="tns:IOrganizationService_insertVendor_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="updateVendor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/updateVendor" message="tns:IOrganizationService_updateVendor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/updateVendorResponse" message="tns:IOrganizationService_updateVendor_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IOrganizationService" type="tns:IOrganizationService">
@@ -536,6 +586,51 @@
     </wsdl:operation>
     <wsdl:operation name="GetVendors">
       <soap:operation soapAction="http://tempuri.org/IOrganizationService/GetVendors" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GeSpecifictVendorList">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/GeSpecifictVendorList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllVendors">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/GetAllVendors" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllVendorsAssignedForBranch">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/GetAllVendorsAssignedForBranch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="insertVendor">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/insertVendor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateVendor">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/updateVendor" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

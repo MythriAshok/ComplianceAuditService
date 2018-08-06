@@ -26,6 +26,30 @@
   <wsdl:message name="IVendorService_insertVendorForBranch_OutputMessage">
     <wsdl:part name="parameters" element="tns:insertVendorForBranchResponse" />
   </wsdl:message>
+  <wsdl:message name="IVendorService_DeactivateVendorForCompany_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateVendorForCompany" />
+  </wsdl:message>
+  <wsdl:message name="IVendorService_DeactivateVendorForCompany_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateVendorForCompanyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVendorService_ActivateVendorForCompany_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActivateVendorForCompany" />
+  </wsdl:message>
+  <wsdl:message name="IVendorService_ActivateVendorForCompany_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActivateVendorForCompanyResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVendorService_DeactivateVendorForBranch_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateVendorForBranch" />
+  </wsdl:message>
+  <wsdl:message name="IVendorService_DeactivateVendorForBranch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeactivateVendorForBranchResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVendorService_ActivateVendorForBranch_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActivateVendorForBranch" />
+  </wsdl:message>
+  <wsdl:message name="IVendorService_ActivateVendorForBranch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActivateVendorForBranchResponse" />
+  </wsdl:message>
   <wsdl:portType name="IVendorService">
     <wsdl:operation name="insertVendor">
       <wsdl:input wsaw:Action="http://tempuri.org/IVendorService/insertVendor" message="tns:IVendorService_insertVendor_InputMessage" />
@@ -38,6 +62,22 @@
     <wsdl:operation name="insertVendorForBranch">
       <wsdl:input wsaw:Action="http://tempuri.org/IVendorService/insertVendorForBranch" message="tns:IVendorService_insertVendorForBranch_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IVendorService/insertVendorForBranchResponse" message="tns:IVendorService_insertVendorForBranch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateVendorForCompany">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVendorService/DeactivateVendorForCompany" message="tns:IVendorService_DeactivateVendorForCompany_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVendorService/DeactivateVendorForCompanyResponse" message="tns:IVendorService_DeactivateVendorForCompany_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActivateVendorForCompany">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVendorService/ActivateVendorForCompany" message="tns:IVendorService_ActivateVendorForCompany_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVendorService/ActivateVendorForCompanyResponse" message="tns:IVendorService_ActivateVendorForCompany_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateVendorForBranch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVendorService/DeactivateVendorForBranch" message="tns:IVendorService_DeactivateVendorForBranch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVendorService/DeactivateVendorForBranchResponse" message="tns:IVendorService_DeactivateVendorForBranch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActivateVendorForBranch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVendorService/ActivateVendorForBranch" message="tns:IVendorService_ActivateVendorForBranch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVendorService/ActivateVendorForBranchResponse" message="tns:IVendorService_ActivateVendorForBranch_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IVendorService" type="tns:IVendorService">
@@ -62,6 +102,42 @@
     </wsdl:operation>
     <wsdl:operation name="insertVendorForBranch">
       <soap:operation soapAction="http://tempuri.org/IVendorService/insertVendorForBranch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateVendorForCompany">
+      <soap:operation soapAction="http://tempuri.org/IVendorService/DeactivateVendorForCompany" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateVendorForCompany">
+      <soap:operation soapAction="http://tempuri.org/IVendorService/ActivateVendorForCompany" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeactivateVendorForBranch">
+      <soap:operation soapAction="http://tempuri.org/IVendorService/DeactivateVendorForBranch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateVendorForBranch">
+      <soap:operation soapAction="http://tempuri.org/IVendorService/ActivateVendorForBranch" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

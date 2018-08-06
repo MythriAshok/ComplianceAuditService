@@ -57,7 +57,8 @@ p_City_ID int,
 p_Postal_Code int,
 p_Branch_Coordinates1 varchar (100),
 p_Branch_Coordinates2 varchar (100),
-p_Branch_CoordinateURL varchar (100)
+p_Branch_CoordinateURL varchar (100),
+p_Org_Hier_ID int
 )
 begin
 if(p_Flag = 'I')then
@@ -72,7 +73,8 @@ City_ID,
 Postal_Code,
 Branch_Coordinates1,
 Branch_Coordinates2,
-Branch_CoordinateURL
+Branch_CoordinateURL,
+Org_Hier_ID
 )
 values
 (
@@ -85,7 +87,8 @@ p_City_ID,
 p_Postal_Code,
 p_Branch_Coordinates1,
 p_Branch_Coordinates2,
-p_Branch_CoordinateURL
+p_Branch_CoordinateURL,
+p_Org_Hier_ID
 );
 select last_insert_id();
 else
@@ -98,7 +101,8 @@ City_ID=p_City_ID,
 Postal_Code=p_Postal_Code,
 Branch_Coordinates1= p_Branch_Coordinates1,
 Branch_Coordinates2=p_Branch_Coordinates2,
-Branch_CoordinateURL= p_Branch_CoordinateURL
+Branch_CoordinateURL= p_Branch_CoordinateURL,
+Org_Hier_ID=p_Org_Hier_ID
 where Location_ID=p_Location_ID;
 select last_insert_id();
 end if;
@@ -124,7 +128,8 @@ State_ID,
 Postal_Code, 
 Branch_Coordinates1,  
 Branch_Coordinates2,  
-Branch_CoordinatesURL 
+Branch_CoordinatesURL ,
+Org_Hier_ID
 from tbl_branch_location;
 else
 select
@@ -136,7 +141,8 @@ State_ID,
 Postal_Code, 
 Branch_Coordinates1,  
 Branch_Coordinates2,  
-Branch_CoordinatesURL 
+Branch_CoordinatesURL,
+Org_Hier_ID 
 from tbl_branch_location
 where City_ID = p_City_ID and Country_ID = p_Country_ID and State_ID = p_State_ID;
 end if;
@@ -169,10 +175,11 @@ create procedure sp_insertupdateOrganizationHier
  p_Is_Leaf tinyint,
  p_Industry_Type varchar(45),
  p_Last_Updated_Date datetime,
- p_Location_ID int,
+
  p_User_ID int,
  p_Is_Active bit,
- p_Is_Delete bit
+ p_Is_Delete bit,
+ p_Is_Vendor bit
 )
 begin
 if(p_Flag = 'I')then
@@ -186,10 +193,11 @@ level,
 Is_Leaf, 
 Industry_Type, 
 Last_Updated_Date,
-Location_ID, 
+
 User_ID, 
 Is_Active,
-Is_Delete)
+Is_Delete,
+Is_Vendor)
 values
 (
 p_Company_Name,
@@ -200,14 +208,15 @@ p_level,
 p_Is_Leaf,
 p_Industry_Type,
 now(),
-p_Location_ID,
+
 p_User_ID,
 p_Is_Active,
-p_Is_Delete);
+p_Is_Delete,
+p_Is_Vendor);
 select last_insert_id();
 else
 update tbl_org_hier
-inner join tbl_Branch_Location on tbl_Branch_Location.Location_ID = tbl_Org_Hier.Location_ID
+inner join tbl_Branch_Location on tbl_Branch_Location.Org_Hier_ID = tbl_Org_Hier.Org_Hier_ID
 inner join tbl_Company_Details on tbl_Company_Details.Org_Hier_ID = tbl_Org_Hier.Org_Hier_ID
 set
 tbl_org_hier.Org_Hier_ID=p_Org_Hier_ID,
@@ -219,9 +228,11 @@ level=p_level,
 Is_Leaf=p_Is_Leaf, 
 Industry_Type=p_Industry_Type,
 Last_Updated_Date=now(),
-tbl_org_hier.Location_ID=p_Location_ID, 
+ 
 User_ID=p_User_ID,
-Is_Active=p_Is_Active
+Is_Active=p_Is_Active,
+Is_Delete = p_Is_Delete,
+Is_Vendor = p_Is_Vendor
 where tbl_org_hier.Org_Hier_ID=p_Org_Hier_ID ;
 select last_insert_id();
 end if;
@@ -246,9 +257,10 @@ level,
 Is_Leaf,
 Industry_Type,
 Last_Updated_Date,
-tbl_org_hier.Location_ID, 
+ 
 User_ID, 
-Is_Active 
+Is_Active ,
+Is_Vendor
 from tbl_org_hier;
 else 
 select tbl_org_hier.Org_Hier_ID,
@@ -260,10 +272,11 @@ level,
 Is_Leaf, 
 Industry_Type, 
 Last_Updated_Date,
-tbl_org_hier.Location_ID,
+
 User_ID, 
 Is_Active,
 Is_Delete,
+Is_Vendor,
 tbl_company_details.Company_Details_ID,
 tbl_company_details.Org_Hier_ID, 
 Formal_Name, 
@@ -275,6 +288,7 @@ Company_Email_ID,
 Company_ContactNumber1,
 Company_ContactNumber2,
 tbl_branch_location.Location_ID,
+tbl_branch_location.Org_Hier_ID,
 Location_Name,
 Address,
 Country_ID,
@@ -286,7 +300,7 @@ Branch_Coordinates2,
 Branch_CoordinateURL
 from tbl_org_hier 
 inner join  tbl_company_Details  on tbl_company_details.Org_Hier_ID = tbl_org_hier.Org_Hier_ID
-inner join tbl_branch_location on tbl_branch_location.Location_ID = tbl_org_hier.Location_ID
+inner join tbl_branch_location on tbl_branch_location.Org_Hier_ID = tbl_org_hier.Org_Hier_ID
 where tbl_org_hier.Org_Hier_ID= p_Org_Hier_ID;
 End If;
 end/
@@ -311,9 +325,10 @@ level,
 Is_Leaf,
 Industry_Type,
 Last_Updated_Date,
-tbl_org_hier.Location_ID, 
+ 
 User_ID, 
-Is_Active 
+Is_Active,
+Is_Vendor 
 from tbl_org_hier;
 else 
 select tbl_org_hier.Org_Hier_ID,
@@ -325,11 +340,13 @@ level,
 Is_Leaf, 
 Industry_Type, 
 Last_Updated_Date,
-tbl_org_hier.Location_ID,
+
 User_ID, 
 Is_Active,
 Is_Delete,
+Is_Vendor,
 tbl_branch_location.Location_ID,
+tbl_branch_location.Org_Hier_ID,
 Location_Name,
 Address,
 Country_ID,
@@ -340,7 +357,7 @@ Branch_Coordinates1,
 Branch_Coordinates2,
 Branch_CoordinateURL
 from tbl_org_hier 
-inner join tbl_branch_location on tbl_branch_location.Location_ID = tbl_org_hier.Location_ID
+inner join tbl_branch_location on tbl_branch_location.Org_Hier_ID = tbl_org_hier.Org_Hier_ID
 where tbl_org_hier.Org_Hier_ID= p_Org_Hier_ID;
 End If;
 end/
@@ -374,9 +391,10 @@ level,
 Is_Leaf, 
 Industry_Type, 
 Last_Updated_Date,
-tbl_org_hier.Location_ID, 
+
 User_ID, 
-Is_Active 
+Is_Active ,
+Is_Vendor
 from 
 tbl_org_hier;
 else 
@@ -390,14 +408,23 @@ level,
 Is_Leaf, 
 Industry_Type, 
 Last_Updated_Date,
-tbl_org_hier.Location_ID, 
+ 
 User_ID, 
 Is_Active,
 Is_Delete,
-tbl_branch_location.Location_ID,Location_Name,Address,Country_ID,State_ID,City_ID,Postal_Code,Branch_Coordinates1,Branch_Coordinates2,
+Is_Vendor,
+tbl_branch_location.Org_Hier_ID,
+Location_Name,
+Address,
+Country_ID,
+State_ID,
+City_ID,
+Postal_Code,
+Branch_Coordinates1,
+Branch_Coordinates2,
 Branch_CoordinateURL
 from tbl_org_hier 
-inner join tbl_branch_location on tbl_branch_location.Location_ID = tbl_org_hier.Location_ID
+inner join tbl_branch_location on tbl_branch_location.Org_Hier_ID = tbl_org_hier.Org_Hier_ID
 where tbl_org_hier.Org_Hier_ID= p_Org_Hier_ID;
 End If;
 end/
@@ -1251,10 +1278,10 @@ create procedure sp_getSpecificBranchList(p_Parent_Company_ID int)
 begin 
 if(p_Parent_Company_ID=0)
 then
-select Company_Name, Org_Hier_ID,Industry_Type,Is_Active from tbl_org_hier where level=3 and Is_Delete = 0;
+select Company_Name, Org_Hier_ID,Industry_Type,Is_Active,logo from tbl_org_hier where level=3 and Is_Delete = 0;
 else
  
-select Company_Name, Org_Hier_ID,Industry_Type,Is_Active from tbl_org_hier where level=3 and Is_Delete = 0
+select Company_Name, Org_Hier_ID,Industry_Type,Is_Active ,logofrom tbl_org_hier where level=3 and Is_Delete = 0
  and Parent_Company_ID= p_Parent_Company_ID ;
  end if;
 end/
@@ -1342,22 +1369,59 @@ Delimiter ;
 
 
 
-DROP procedure IF EXISTS `auditmoduledb`.`sp_getVendorList`;
+Drop Procedure if exists `sp_getSpecificVendorList`;
+Delimiter /
+create procedure sp_getSpecificVendorList(p_Parent_Company_ID int)
+begin 
+if(p_Parent_Company_ID=0)
+then
+select Company_Name, Org_Hier_ID,Industry_Type,Is_Active, Is_Vendor from tbl_org_hier where level=3 and Is_Vendor=1 and Is_Delete = 0;
+else
+ 
+select Company_Name, Org_Hier_ID,Industry_Type,Is_Active, Is_Vendor from tbl_org_hier where level=3 and Is_Vendor=1  and Is_Delete = 0
+ and Parent_Company_ID= p_Parent_Company_ID ;
+ end if;
+end/
+Delimiter ;
+
+
+
+DROP procedure IF EXISTS `auditmoduledb`.`sp_getcompleteVendorList`;
 
 DELIMITER $$
 USE `auditmoduledb`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getVendorList`(p_Company_ID int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getcompleteVendorList`(p_Vendor_ID int)
 begin
-if(p_Company_ID=0)
+if(p_Vendor_ID=0)
 then
 select Vendor_ID,Vendor_Name from tbl_vendor_master where Is_Delete=0 and Is_Active=1 ;
 else
-select Vendor_ID,Vendor_Name from tbl_vendor_master where Is_Delete=0 and Is_Active=1 and Company_ID=p_Company_ID;
+select Vendor_ID,Vendor_Name from tbl_vendor_master where Is_Delete=0 and Is_Active=1 and Vendor_ID=p_Vendor_ID;
 end if;
 end$$
 
 DELIMITER ;
 
+
+DROP procedure IF EXISTS `auditmoduledb`.`sp_getcompleteVendorListassignedToBranch`;
+
+DELIMITER $$
+USE `auditmoduledb`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getcompleteVendorListassignedToBranch`(p_Vendor_Branch_ID int)
+begin
+if(p_Vendor_Branch_ID=0)
+then
+select Vendor_Branch_ID,tbl_vendor_branch_mapping.Vendor_ID,Vendor_Name, tbl_vendor_branch_mapping.Is_Active from tbl_vendor_branch_mapping
+inner join tbl_vendor_master on tbl_vendor_master.Vendor_ID = tbl_vendor_branch_mapping.Vendor_ID
+ where  tbl_vendor_branch_mapping.Is_Active=1 ;
+else
+select Vendor_Branch_ID,tbl_vendor_branch_mapping.Vendor_ID,Vendor_Name, tbl_vendor_branch_mapping.Is_Active from tbl_vendor_branch_mapping
+inner join tbl_vendor_master on tbl_vendor_master.Vendor_ID = tbl_vendor_branch_mapping.Vendor_ID
+ where  tbl_vendor_branch_mapping.Is_Active=1 ;
+ end if;
+end$$
+
+DELIMITER ;
 
 
 
@@ -1368,48 +1432,117 @@ create procedure sp_insertupdateVendorForBranch
 p_Flag char(1),
 p_Vendor_Branch_ID int,
 p_Vendor_ID int,
-p_Branch_ID int 
+p_Branch_ID int,
+p_Start_Date datetime,
+p_End_Date datetime,
+p_Is_Active bit 
 )
 begin
 if(p_Flag = 'I')then
 insert into tbl_vendor_branch_mapping
 (
+Vendor_Branch_ID ,
 Vendor_ID ,
-Branch_ID
+Branch_ID,
+Start_Date,
+End_Date,
+Is_Active
 )
 values
 (
+p_Vendor_Branch_ID ,
 p_Vendor_ID ,
-p_Branch_ID 
+p_Branch_ID,
+p_Start_Date,
+p_End_Date ,
+p_Is_Active 
 );
 select last_insert_id();
 else
 update tbl_vendor_branch_mapping set
 Vendor_ID= p_Vendor_ID ,
-Branch_ID =p_Branch_ID; 
+Branch_ID =p_Branch_ID,
+Start_Date=p_Start_Date,
+End_Date=p_End_Date ,
+Is_Active=p_Is_Active 
+where Vendor_Branch_ID =p_Vendor_Branch_ID;
 select last_insert_id();
 end if;
 end/
 Delimiter ;
 
 
+DROP procedure IF EXISTS `auditmoduledb`.`sp_getVendorListForBranch`;
+
+DELIMITER $$
+USE `auditmoduledb`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getVendorListForBranch`(p_Branch_ID int)
+begin
+if(p_Branch_ID=0)
+then
+select tbl_vendor_branch_mapping.Vendor_ID from tbl_vendor_branch_mapping where  tbl_vendor_branch_mapping.Is_Active=1 ;
+else
+select Vendor_Branch_ID, tbl_vendor_branch_mapping.Vendor_ID,tbl_vendor_branch_mapping.Is_Active,Vendor_Name from tbl_vendor_branch_mapping 
+inner join tbl_vendor_master on tbl_vendor_master.Vendor_ID = tbl_vendor_branch_mapping.Vendor_ID
+ where  tbl_vendor_branch_mapping.Is_Active=1 and Branch_ID=p_Branch_ID; 
+
+end if;
+end$$
+
+DELIMITER ;
+
+drop procedure if exists sp_ActivateVendorForCompany;
+delimiter /
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ActivateVendorForCompany`(
+p_Vendor_ID int
+)
+begin
+update tbl_vendor_master set 
+Is_Active = 0 ,
+Start_Date= now() where Vendor_ID=p_Vendor_ID;
+end/
+
+
+drop procedure if exists sp_DeactivateVendorForCompany;
+delimiter /
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_DeactivateVendorForCompany`(
+p_Vendor_ID int
+)
+begin
+update tbl_vendor_master set 
+Is_Active = 0 ,
+End_Date= now() where Vendor_ID=p_Vendor_ID;
+end/
+
+
+drop procedure if exists sp_DeactivateVendorForBranch;
+delimiter /
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_DeactivateVendorForBranch`(
+p_Vendor_Branch_ID int
+
+)
+begin
+update tbl_vendor_branch_mapping set 
+Is_Active = 0,
+Effective_End_Date= now()
+ where Vendor_Branch_ID = p_Vendor_Branch_ID ;
+end/
+
+
+drop procedure if exists sp_ActivateVendorForBranch;
+delimiter /
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ActivateVendorForBranch`(
+p_Vendor_Branch_ID int
+)
+begin
+update tbl_vendor_branch_mapping set 
+Is_Active = 1,
+Effective_Start_Date= now()
+ where Vendor_Branch_ID = p_Vendor_Branch_ID ;
+end/
 
 
 
-
-
-
-
-
-
-
-
-ALTER TABLE `auditmoduledb`.`tbl_company_details` 
-ADD COLUMN `Compliance_Audit_Type` VARCHAR(100) NULL AFTER `Company_ContactNumber2`;
-
-
-ALTER TABLE `auditmoduledb`.`tbl_compliance_audit` 
-CHANGE COLUMN `Audit_Status` `Audit_Status` VARCHAR(450) NULL DEFAULT NULL ;
 
 
 
@@ -1429,6 +1562,7 @@ select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID  from tbl
 inner join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
 where 
 tbl_compliance_xref.Compliance_Xref_ID IN(Select Compliance_Xref_ID from tbl_compliance_branch_mapping where Org_Hier_ID=p_Org_Hier_ID) 
+and tbl_compliance_xref.Effective_Start_Date <=Now() and tbl_compliance_xref.Effective_End_Date >= Now()
 
 Union
 select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID from tbl_compliance_xref 
@@ -1437,7 +1571,9 @@ where
 tbl_compliance_xref.Compliance_Xref_ID IN(
 Select distinct  Compliance_Parent_ID from tbl_compliance_xref where 
 tbl_compliance_xref.Compliance_Xref_ID in (Select Compliance_Xref_ID from tbl_compliance_branch_mapping  
-where Org_Hier_ID=p_Org_Hier_ID)) 
+where Org_Hier_ID=p_Org_Hier_ID))
+and tbl_compliance_xref.Effective_Start_Date <=Now() and tbl_compliance_xref.Effective_End_Date >= Now() 
+
 
 union 
 select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID from tbl_compliance_xref 
@@ -1447,6 +1583,21 @@ tbl_compliance_xref.Compliance_Xref_ID IN(
 select tbl_compliance_xref.Compliance_Parent_ID from tbl_compliance_xref where tbl_compliance_xref.Compliance_Xref_ID IN(
 Select distinct  Compliance_Parent_ID from tbl_compliance_xref where 
 tbl_compliance_xref.Compliance_Xref_ID in (Select Compliance_Xref_ID from tbl_compliance_branch_mapping  
-where Org_Hier_ID=p_Org_Hier_ID)));
+where Org_Hier_ID=p_Org_Hier_ID)))
+and tbl_compliance_xref.Effective_Start_Date <=Now() and tbl_compliance_xref.Effective_End_Date >= Now();
+
+
 end/
 delimiter ;
+
+delimiter /
+create procedure sp_aboutPage
+(
+p_Org_Hier_ID int
+)
+begin
+select Org_Hier_ID,Company_Name,Company_Description from tbl_org_hier
+where Org_Hier_ID = p_OrgHier_ID;
+end/
+
+

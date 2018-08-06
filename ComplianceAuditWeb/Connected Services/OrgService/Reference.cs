@@ -182,6 +182,36 @@ namespace ComplianceAuditWeb.OrgService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetVendors", ReplyAction="http://tempuri.org/IOrganizationService/GetVendorsResponse")]
         System.Threading.Tasks.Task<string> GetVendorsAsync(int CompanyID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GeSpecifictVendorList", ReplyAction="http://tempuri.org/IOrganizationService/GeSpecifictVendorListResponse")]
+        string GeSpecifictVendorList(int BranchID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GeSpecifictVendorList", ReplyAction="http://tempuri.org/IOrganizationService/GeSpecifictVendorListResponse")]
+        System.Threading.Tasks.Task<string> GeSpecifictVendorListAsync(int BranchID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetAllVendors", ReplyAction="http://tempuri.org/IOrganizationService/GetAllVendorsResponse")]
+        string GetAllVendors(int VendorID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetAllVendors", ReplyAction="http://tempuri.org/IOrganizationService/GetAllVendorsResponse")]
+        System.Threading.Tasks.Task<string> GetAllVendorsAsync(int VendorID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetAllVendorsAssignedForBranch", ReplyAction="http://tempuri.org/IOrganizationService/GetAllVendorsAssignedForBranchResponse")]
+        string GetAllVendorsAssignedForBranch(int BranchVendorID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetAllVendorsAssignedForBranch", ReplyAction="http://tempuri.org/IOrganizationService/GetAllVendorsAssignedForBranchResponse")]
+        System.Threading.Tasks.Task<string> GetAllVendorsAssignedForBranchAsync(int BranchVendorID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertVendor", ReplyAction="http://tempuri.org/IOrganizationService/insertVendorResponse")]
+        int insertVendor(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertVendor", ReplyAction="http://tempuri.org/IOrganizationService/insertVendorResponse")]
+        System.Threading.Tasks.Task<int> insertVendorAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updateVendor", ReplyAction="http://tempuri.org/IOrganizationService/updateVendorResponse")]
+        bool updateVendor(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updateVendor", ReplyAction="http://tempuri.org/IOrganizationService/updateVendorResponse")]
+        System.Threading.Tasks.Task<bool> updateVendorAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -433,6 +463,46 @@ namespace ComplianceAuditWeb.OrgService {
         
         public System.Threading.Tasks.Task<string> GetVendorsAsync(int CompanyID) {
             return base.Channel.GetVendorsAsync(CompanyID);
+        }
+        
+        public string GeSpecifictVendorList(int BranchID) {
+            return base.Channel.GeSpecifictVendorList(BranchID);
+        }
+        
+        public System.Threading.Tasks.Task<string> GeSpecifictVendorListAsync(int BranchID) {
+            return base.Channel.GeSpecifictVendorListAsync(BranchID);
+        }
+        
+        public string GetAllVendors(int VendorID) {
+            return base.Channel.GetAllVendors(VendorID);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetAllVendorsAsync(int VendorID) {
+            return base.Channel.GetAllVendorsAsync(VendorID);
+        }
+        
+        public string GetAllVendorsAssignedForBranch(int BranchVendorID) {
+            return base.Channel.GetAllVendorsAssignedForBranch(BranchVendorID);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetAllVendorsAssignedForBranchAsync(int BranchVendorID) {
+            return base.Channel.GetAllVendorsAssignedForBranchAsync(BranchVendorID);
+        }
+        
+        public int insertVendor(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company) {
+            return base.Channel.insertVendor(org, company);
+        }
+        
+        public System.Threading.Tasks.Task<int> insertVendorAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company) {
+            return base.Channel.insertVendorAsync(org, company);
+        }
+        
+        public bool updateVendor(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company) {
+            return base.Channel.updateVendor(org, company);
+        }
+        
+        public System.Threading.Tasks.Task<bool> updateVendorAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company) {
+            return base.Channel.updateVendorAsync(org, company);
         }
     }
 }

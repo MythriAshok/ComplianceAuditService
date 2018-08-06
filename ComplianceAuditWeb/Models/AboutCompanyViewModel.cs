@@ -12,6 +12,7 @@ namespace ComplianceAuditWeb.Models
         public string CompanyDescription { get; set; }
         public string CompanyLogo { get; set; }
         public int ParentCompanyID { get; set; }
+        public string Website { get; set; }
+    }
 
     }
-}

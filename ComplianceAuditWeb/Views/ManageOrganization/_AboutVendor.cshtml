@@ -1,0 +1,55 @@
+﻿@model ComplianceAuditWeb.Models.AboutCompanyViewModel
+@{
+    /**/
+
+    ViewBag.Title = "_AboutChildCompany";
+}
+
+<h2 class="ML15">Manage Vendor</h2>
+<ul class="breadcrumb ML15">
+    <li><a href="">Vendor Management</a></li>
+    <li> About Vendor</li>
+</ul>
+@using (Html.BeginForm())
+{
+<div class="mid_content_sec">
+    <div class="col-xs-6 subSelect ">
+        <div class="input-field">
+            @Html.Label("Vendor Name")
+            @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
+        </div>
+    </div>
+
+    <div class="col-xs-6 subSelect ">
+        <div class="input-field">
+            @Html.Label("Website")
+            @Html.TextBoxFor(m => m.Website, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
+
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="clearfix"></div>
+
+    <div class="col-xs-12 subSelect ">
+        <div class="input-field">
+            @Html.Label("Description")
+            @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
+
+        </div>
+    </div>
+
+    @Html.HiddenFor(m => m.CompanyID)
+    @Html.HiddenFor(m => m.ParentCompanyID)
+
+    <ul class="list-inline continueBtn">
+        <li>
+            @Html.ActionLink("Modify Vendor", "UpdateVendor", new { id = Model.CompanyID }, new { @class = "btn primary-button" })
+            <input type="submit" value="List of Vendors" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+        </li>
+    </ul>
+</div>
+}
+
+
+

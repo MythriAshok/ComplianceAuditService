@@ -59,7 +59,7 @@
     <li>Companies</li>
 </ul>
 <h2 class="ML15">Add  Company</h2>
-@using (Html.BeginForm())
+@using (Html.BeginForm("AddCompany", "ManageOrganization", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
     @*@Html.ValidationMessage("Error")*@
@@ -68,6 +68,7 @@
         <div class="input-field">
 
             @if ((Session["CompanyName"]) != null)
+
 
             {
                 @Html.Label("Group Company")
@@ -121,7 +122,7 @@
         <div class="input-field">
             @Html.Label("Industry Type", new { @class = "floating-label" })<span style="color:red">*</span>
 
-            @Html.DropDownListFor(m => m.companydetails.Industry_Type, new SelectList
+            @Html.DropDownListFor(m => m.organization.Industry_Type, new SelectList
                     (Enum.GetValues(typeof(ComplianceAuditWeb.Models.CompanyViewModel.IndustryType))),
                     "Select Industry Type", new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Industry_Type"] })
 
@@ -134,15 +135,11 @@
     @*@Html.LabelFor(m => m.organization.Last_Updated_Date);*@
     @Html.HiddenFor(m => m.organization.Last_Updated_Date)
     @Html.HiddenFor(m => m.organization.Company_Id)
-
-
-
-
+    @Html.HiddenFor(m => m.organization.Is_Vendor)
     @Html.HiddenFor(m => m.organization.User_Id)
-
     @Html.HiddenFor(m => m.organization.Parent_Company_Id)
-
     @Html.HiddenFor(m => m.organization.Level)
+    @Html.HiddenFor(m => m.branch.Org_Hier_ID)
 
 
 
@@ -316,6 +313,14 @@
         </div>
     </div>
 
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            <label for="file">Upload File:</label>
+            <input type="file" name="file" id="file" />
+            @Html.ValidationMessageFor(m => m.organization.logo, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
 
 
 
