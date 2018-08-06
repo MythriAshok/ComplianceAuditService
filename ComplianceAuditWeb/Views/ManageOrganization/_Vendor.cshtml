@@ -37,7 +37,7 @@
 </ul>
 <h2 class="ML15">Add Vendor</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("AddVendor", "ManageOrganization", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 <div class="mid_content_sec">
 
@@ -195,7 +195,14 @@
     @Html.HiddenFor(m => m.organization.Company_Id)
     @Html.HiddenFor(m => m.companydetails.Company_Details_ID)
 
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            <label for="file">Upload File:</label>
+            <input type="file" name="file" id="file" />
+            @Html.ValidationMessageFor(m => m.organization.logo, "", new { @class = "text-danger" })
 
+        </div>
+    </div>
 
     <ul class="list-inline continueBtn">
         <li>

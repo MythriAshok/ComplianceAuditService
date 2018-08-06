@@ -96,4 +96,15 @@ foreign key (Vendor_ID) references tbl_org_hier(Org_Hier_ID),
 Start_Date datetime,
 End_Date datetime,
 Is_Active bit
-)
+);
+
+alter table tbl_compliance_xref add column Audit_Type varchar (100) null after compl_def_consequence;
+
+alter table tbl_user add column Photo varchar (100) null default null;
+
+
+alter table tbl_org_hier add column logo varchar (100) null default null;
+
+
+
+

@@ -1278,10 +1278,10 @@ create procedure sp_getSpecificBranchList(p_Parent_Company_ID int)
 begin 
 if(p_Parent_Company_ID=0)
 then
-select Company_Name, Org_Hier_ID,Industry_Type,Is_Active from tbl_org_hier where level=3 and Is_Delete = 0;
+select Company_Name, Org_Hier_ID,Industry_Type,Is_Active,logo from tbl_org_hier where level=3 and Is_Delete = 0;
 else
  
-select Company_Name, Org_Hier_ID,Industry_Type,Is_Active from tbl_org_hier where level=3 and Is_Delete = 0
+select Company_Name, Org_Hier_ID,Industry_Type,Is_Active ,logofrom tbl_org_hier where level=3 and Is_Delete = 0
  and Parent_Company_ID= p_Parent_Company_ID ;
  end if;
 end/

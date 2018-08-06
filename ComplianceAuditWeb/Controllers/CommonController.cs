@@ -15,7 +15,7 @@ namespace ComplianceAuditWeb.Controllers
         // GET: Common
 
         public JsonResult getstate(string countryid)
-        {
+            {
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
             int ID = Convert.ToInt32(countryid);
             List<SelectListItem> state = new List<SelectListItem>();
@@ -34,7 +34,7 @@ namespace ComplianceAuditWeb.Controllers
 
 
         public JsonResult getcity(string stateid)
-        {
+            {
             List<SelectListItem> cities = new List<SelectListItem>();
             int ID = Convert.ToInt32(stateid);
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();

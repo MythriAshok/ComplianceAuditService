@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Compliance.DataObject.Organization>
+
+
+<p style="text-align:right">
+    @Html.ActionLink("Add Group company", actionName: "AddGroupCompany")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.logo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Company_Name)
+        </th>
+       
+        
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @*<td>
+                    @Html.CheckBox("chkdeactive")
+                </td>*@
+            <td>
+                @{string source = "/UploadedFiles/" + item.logo;}
+                <img src=@source alt="" height="50px" width="50px" />
+            </td>
+            <td>
+                @Html.ActionLink(linkText: item.Company_Name, actionName: "UpdateUser", routeValues: new { UserId = item.Organization_Id }, htmlAttributes: null)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "UpdateUser", new { id=item.UserId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.UserId }) |*@
+                @Html.ActionLink("Delete", "Delete", new { id = item.Organization_Id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@*<div class="new_section_box">
+        <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+                <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">User Management:</h2>
+                @foreach (var item in Model)
+                {
+                    <div class="col-sm-3 QueList">
+                        <div class="queContainer">
+
+                            <a href="@Url.Action("UpdateUser","UserManagement", routeValues: new { UserId = item.UserId })">
+                                <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                                <h3 class="PB25"> @Html.DisplayFor(modelItem => item.FirstName)</h3>
+                                <h4 class="PB25">@Html.DisplayFor(modelitem => item.LastName)</h4>
+                            </a>
+                            <h4 class="PB25">@Html.DisplayFor(modelitem => item.EmailId)</h4>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                }
+                <div class="clearfix"></div>
+
+            </div>
+
+        </div>
+
+    </div>*@

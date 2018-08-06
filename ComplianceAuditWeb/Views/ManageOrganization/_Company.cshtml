@@ -59,7 +59,7 @@
     <li>Companies</li>
 </ul>
 <h2 class="ML15">Add  Company</h2>
-@using (Html.BeginForm())
+@using (Html.BeginForm("AddCompany", "ManageOrganization", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
     @*@Html.ValidationMessage("Error")*@
@@ -68,7 +68,7 @@
         <div class="input-field">
 
             @if ((Session["CompanyName"]) != null)
-          
+
 
             {
                 @Html.Label("Group Company")
@@ -313,6 +313,14 @@
         </div>
     </div>
 
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            <label for="file">Upload File:</label>
+            <input type="file" name="file" id="file" />
+            @Html.ValidationMessageFor(m => m.organization.logo, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
 
 
 
