@@ -1449,7 +1449,7 @@ namespace ComplianceAuditWeb.Controllers
 
 
         [HttpGet]
-        public ActionResult SelectBranch()
+        public ActionResult SelectCompanyForVendor()
         {
             int id = 0;
 
@@ -1477,9 +1477,9 @@ namespace ComplianceAuditWeb.Controllers
             return View("_BranchList", model);
         }
         [HttpPost]
-        public ActionResult SelectBranch(ListOfGroupCompanies model)
+        public ActionResult SelectCompanyForVendor(ListOfGroupCompanies model)
         {
-            return RedirectToAction("VendorList", routeValues: new { Companyid = model.CompanyID });
+            return RedirectToAction("CompanyVendorsList", routeValues: new {id = model.CompanyID });
         }
 
 
