@@ -484,7 +484,7 @@ namespace ComplianceAuditWeb.Controllers
                     Session["emailid"] = ds.Tables[0].Rows[0]["Email_ID"];
                     Session["GroupCompanyId"] = ds.Tables[0].Rows[0]["Company_ID"];
                     Session["Last_Login"] = ds.Tables[0].Rows[0]["Last_Login"];
-                    Session["Usergroupid"] = 2; /*ds.Tables[0].Rows[0][];*/
+                    Session["Usergroupid"] = 1; /*ds.Tables[0].Rows[0][];*/
                     return RedirectToAction("dashboard", "common",new { pid=6});
                 }
                 else
