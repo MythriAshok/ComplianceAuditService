@@ -9,7 +9,7 @@
                 <div class="col-sm-3 QueList">
                     <div class="queContainer">
                         <a href="@Url.Action("UpdateCompany", "ManageOrganization",new { Orgid = item.OrganizationID })">
-                            <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                            <span class="qIcon"><img src="/UploadedFiles/@item.Logo" alt="" style="height:60px;width:75px"></span>
                             <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
                         </a>
                         <div class="clearfix"></div>

@@ -153,13 +153,6 @@
     <None Include="Connected Services\OrgService\OrganizationService2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\UserService\UserService.disco" />
-    <None Include="Connected Services\UserService\configuration91.svcinfo" />
-    <None Include="Connected Services\UserService\configuration.svcinfo" />
-    <None Include="Connected Services\UserService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <None Include="Connected Services\AccessService\AccessService.disco" />
     <None Include="Connected Services\AccessService\configuration91.svcinfo" />
     <None Include="Connected Services\AccessService\configuration.svcinfo" />
@@ -188,10 +181,30 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Connected Services\UserService\UserService.wsdl" />
+    <None Include="Connected Services\UserService\UserService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\UserService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\UserService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\UserService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\VendorService\VendorService.disco" />
     <None Include="Connected Services\VendorService\configuration91.svcinfo" />
     <None Include="Connected Services\VendorService\configuration.svcinfo" />
     <None Include="Connected Services\VendorService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\UserService\UserService.disco" />
+    <None Include="Connected Services\UserService\configuration91.svcinfo" />
+    <None Include="Connected Services\UserService\configuration.svcinfo" />
+    <None Include="Connected Services\UserService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -264,6 +277,16 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Content\themes\default-dark\32px.png" />
+    <Content Include="Content\themes\default-dark\40px.png" />
+    <Content Include="Content\themes\default-dark\style.css" />
+    <Content Include="Content\themes\default-dark\style.min.css" />
+    <Content Include="Content\themes\default-dark\throbber.gif" />
+    <Content Include="Content\themes\default\32px.png" />
+    <Content Include="Content\themes\default\40px.png" />
+    <Content Include="Content\themes\default\style.css" />
+    <Content Include="Content\themes\default\style.min.css" />
+    <Content Include="Content\themes\default\throbber.gif" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -306,20 +329,7 @@
     <Content Include="images\video.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Connected Services\UserService\UserService.wsdl" />
-    <None Include="Connected Services\UserService\UserService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\UserService\UserService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\UserService\UserService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Properties\DataSources\Compliance.DataObject.UserGroup.datasource" />
-    <None Include="Connected Services\UserService\UserService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -351,7 +361,12 @@
     <None Include="Connected Services\VendorService\VendorService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Content\themes\default\Thumbs.db" />
+    <Content Include="Content\themes\default-dark\Thumbs.db" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile3.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\JavaScript.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -361,13 +376,17 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jstree.js" />
+    <Content Include="Scripts\jstree.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <None Include="Scripts\_references.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Views\ManageOrganization\ListOfGroupCompanies.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -425,6 +444,7 @@
     <Compile Include="Models\OrganizationViewModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\RolesViewModel.cs" />
+    <Compile Include="Models\treenode.cs" />
     <Compile Include="Models\UserGroupViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Models\VendorActivateDeactivateViewModel.cs" />
@@ -492,7 +512,6 @@
     <Content Include="Views\ManageOrganization\_Vendor.cshtml" />
     <Content Include="Views\ManageOrganization\_AssignVendorToBranch.cshtml" />
     <Content Include="Views\Common\_UploadFiles.cshtml" />
-    <Content Include="Views\ManageOrganization\_UploadFiles.cshtml" />
     <Content Include="Views\ManageOrganization\_VendorDashBoardForCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_VendorDashBoardForBranch.cshtml" />
     <Content Include="Views\ManageOrganization\_BranchListForVendors.cshtml" />
@@ -504,6 +523,9 @@
     <Content Include="Views\ManageOrganization\_BranchDashboard - Copy.cshtml" />
     <Content Include="Views\ManageOrganization\_DashBoardBranch.cshtml" />
     <Content Include="Views\ManageOrganization\_DashBoardGroupCompany.cshtml" />
+    <Content Include="Views\ComplianceManagement\_SMESelectCompany.cshtml" />
+    <Content Include="Views\ComplianceManagement\_AssignRules.cshtml" />
+    <Content Include="Views\ComplianceManagement\_SMEdashboard.cshtml" />
     <Content Include="Views\ManageOrganization\_BranchList.cshtml" />
     <Content Include="Views\ManageOrganization\_VendorList.cshtml" />
     <None Include="Web.Debug.config">

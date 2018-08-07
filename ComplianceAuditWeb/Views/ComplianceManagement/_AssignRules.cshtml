@@ -1,0 +1,63 @@
+﻿@{
+    /**/
+
+    ViewBag.Title = "Assign Rules";
+}
+
+@section scripts{
+    <link href="~/Content/themes/default/style.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jstree.js"></script>
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <script>
+        $('#actjstree').on('changed.jstree', function (e, data) {
+
+            var i, j;
+            var selectedItems = [];
+            for (i = 0, j = data.selected.length; i < j; i++) {
+
+                //Fetch the Id.
+                var id = data.selected[i];
+                var selectednode = data.instance.get_node(data.selected[i]);
+                if (selectednode.original.categorytype == "Rule") {
+                    selectedItems.push({
+                        text: data.instance.get_node(data.selected[i]).text,
+                        id: id,
+                        //categorytype: data.instance.get_node(dat.selected[i]).orginal.categorytype
+                    });
+                }
+                $('#selectedItems').val(JSON.stringify(selectedItems));
+                alert(selectedItems);
+            }
+        });
+        $(function () {
+            $('#actjstree').jstree({
+                'plugins': ["checkbox"],
+                'core': {
+                    'data': {
+                        'url': '/ComplianceManagement/GetJsTree3Data',
+                        'dataType': 'json'
+                    },
+                }
+            });
+        });
+    </script>
+}
+@using (Html.BeginForm("AssignRules", "ComplianceManagement", FormMethod.Post))
+{
+    <div class="mid_content_sec">
+        <div class="col-xs-8 subSelect ">
+            <div id="actjstree"></div>
+        </div>
+        <div class="clearfix"></div>
+        <ul class="list-inline continueBtn">
+            <li>
+                <input type="hidden" name="selectedItems" id="selectedItems" />
+                <input type="submit" value="Apply" class="btn primary-button" />
+                <input type="reset" value="Reset" class="btn primary-button" />
+                <input type="button" value="Cancel" class="btn primary-button" />
+            </li>
+        </ul>
+    </div>
+}

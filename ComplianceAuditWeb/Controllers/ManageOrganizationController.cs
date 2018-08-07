@@ -206,7 +206,7 @@ namespace ComplianceAuditWeb.Controllers
             //organizationViewModel.companydetails.Formal_Name = dsUpdatedData.Tables[0].Rows[0]["Formal_Name"].ToString();
             //organizationViewModel.companydetails.Industry_Type = dsUpdatedData.Tables[0].Rows[0]["Industry_Type"].ToString();
             //organizationViewModel.companydetails.Website = dsUpdatedData.Tables[0].Rows[0]["Website"].ToString();
-           // organizationViewModel.branch.Branch_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Location_ID"]);
+           organizationViewModel.branch.Branch_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Location_ID"]);
             organizationViewModel.branch.Address = dsUpdatedData.Tables[0].Rows[0]["Address"].ToString();
             organizationViewModel.branch.Branch_Coordinates1 = dsUpdatedData.Tables[0].Rows[0]["Branch_Coordinates1"].ToString();
             organizationViewModel.branch.Branch_Coordinates2 = dsUpdatedData.Tables[0].Rows[0]["Branch_Coordinates2"].ToString();
@@ -266,15 +266,15 @@ namespace ComplianceAuditWeb.Controllers
             bool result = false;
             OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
             //organizationVM.companydetails.Org_Hier_ID = organizationVM.organization.Organization_Id;
-           // organizationVM.organization.Branch_Id = organizationVM.branch.Branch_Id;
+            organizationVM.branch.Org_Hier_ID = organizationVM.organization.Organization_Id;
             result = organizationClient.updateOrganization(organizationVM.organization,  organizationVM.branch);
             if (result != false)
             {
-                return RedirectToAction("ListOfGroupCompanies");
+                return RedirectToAction("GroupCompanyList");
             }
             else
             {
-                return RedirectToAction("ListOfGroupCompanies");
+                return RedirectToAction("UpdateGroupCompany",new { OrgID= organizationVM.organization.Organization_Id });
             }
 
         }
@@ -596,7 +596,7 @@ namespace ComplianceAuditWeb.Controllers
             bool result = false;
             OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
             companyVM.companydetails.Org_Hier_ID = companyVM.organization.Organization_Id;
-            //companyVM.organization.Branch_Id = companyVM.branch.Branch_Id;
+            companyVM.branch.Org_Hier_ID = companyVM.organization.Organization_Id;
             companyVM.organization.Level = 2;
             companyVM.organization.Parent_Company_Id = companyVM.GroupCompanyID;
             result = organizationClient.updateCompany(companyVM.organization, companyVM.companydetails, companyVM.branch);
@@ -967,7 +967,7 @@ namespace ComplianceAuditWeb.Controllers
         {
             bool result = false;
             OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
-            //BranchVM.organization.Branch_Id = BranchVM.branch.Branch_Id;
+            BranchVM.branch.Org_Hier_ID = BranchVM.organization.Organization_Id;
             result =  organizationClient.updateBranch(BranchVM.organization, BranchVM.branch);
             if (result != false)
             {
@@ -1235,6 +1235,7 @@ namespace ComplianceAuditWeb.Controllers
             bool result = false;
             OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
             //BranchVM.organization.Branch_Id = BranchVM.branch.Branch_Id;
+            vendorViewModel.companydetails.Org_Hier_ID = vendorViewModel.organization.Organization_Id;
             result = organizationClient.updateVendor(vendorViewModel.organization, vendorViewModel.companydetails);
             if (result != false)
             {
@@ -1497,6 +1498,7 @@ namespace ComplianceAuditWeb.Controllers
             aboutCompanyViewModel.CompanyName = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["Company_Name"]);
             aboutCompanyViewModel.ParentCompanyID = Convert.ToInt32(dsaboutCompany.Tables[0].Rows[0]["Parent_Company_ID"]);
             aboutCompanyViewModel.Is_Active =Convert.ToBoolean(Convert.ToInt32( dsaboutCompany.Tables[0].Rows[0]["Is_Active"]));
+            aboutCompanyViewModel.CompanyLogo = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["logo"]);
             //aboutCompanyViewModel.CompanyID =Convert.ToInt32( Session["CompanyID"]);
             //aboutCompanyViewModel.CompanyDescription = Convert.ToString(Session["CompanyDescription"]);
             //aboutCompanyViewModel.CompanyName = Convert.ToString(Session["CompanyName"]);
@@ -1545,6 +1547,7 @@ namespace ComplianceAuditWeb.Controllers
             aboutCompanyViewModel.CompanyDescription = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["Description"]);
             aboutCompanyViewModel.CompanyName = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["Company_Name"]);
             aboutCompanyViewModel.ParentCompanyID = Convert.ToInt32(dsaboutCompany.Tables[0].Rows[0]["Parent_Company_ID"]);
+            aboutCompanyViewModel.CompanyLogo = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["logo"]);
             //aboutCompanyViewModel.CompanyID = Convert.ToInt32(Session["CompanyID"]);
             //aboutCompanyViewModel.CompanyDescription = Convert.ToString(Session["CompanyDescription"]);
             //aboutCompanyViewModel.CompanyName = Convert.ToString(Session["CompanyName"]);
@@ -1599,8 +1602,8 @@ namespace ComplianceAuditWeb.Controllers
                     OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
                     CompanyName = row["Company_Name"].ToString(),
                     // ParentCompanyID = Convert.ToInt32(row["Parent_Company_ID"])
-                    IsActive = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"]))
-
+                    IsActive = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
+                    Logo=Convert.ToString(row["logo"])                 
                 };
                 branchlist.Add(listOfBranch);
 
@@ -1628,8 +1631,8 @@ namespace ComplianceAuditWeb.Controllers
             aboutCompanyViewModel.CompanyDescription = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["Description"]);
             aboutCompanyViewModel.CompanyName = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["Company_Name"]);
             aboutCompanyViewModel.ParentCompanyID = Convert.ToInt32(dsaboutCompany.Tables[0].Rows[0]["Parent_Company_ID"]);
+            aboutCompanyViewModel.CompanyLogo = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["logo"]);
 
-            
             return View("_AboutVendor", aboutCompanyViewModel);
         }
 
@@ -1662,7 +1665,8 @@ namespace ComplianceAuditWeb.Controllers
                     OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
                     CompanyName = row["Company_Name"].ToString(),
                     // ParentCompanyID = Convert.ToInt32(row["Parent_Company_ID"])
-                    IsActive = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"]))
+                    IsActive = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
+                    Logo = Convert.ToString(row["logo"])
 
                 };
                 vendorlist.Add(listOfVendors);
@@ -1692,8 +1696,9 @@ namespace ComplianceAuditWeb.Controllers
                     OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
                     CompanyName = row["Company_Name"].ToString(),
                     // ParentCompanyID = Convert.ToInt32(row["Parent_Company_ID"])
-                    IsActive = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"]))
-
+                    IsActive = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
+                    Logo = Convert.ToString(row["logo"])
+                    
                 };
                 branchvendorlist.Add(listOfVendors);
 
@@ -1819,7 +1824,9 @@ namespace ComplianceAuditWeb.Controllers
                     OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
                     CompanyName = row["Company_Name"].ToString(),
                     // ParentCompanyID = Convert.ToInt32(row["Parent_Company_ID"])
-                    IsActive = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"]))
+                    IsActive = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
+                    Logo=Convert.ToString(row["logo"])
+
 
                 };
         branchlist.Add(listOfBranch);
