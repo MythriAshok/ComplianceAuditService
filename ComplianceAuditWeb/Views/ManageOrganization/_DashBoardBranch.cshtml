@@ -24,8 +24,8 @@
                     @Html.CheckBox("chkdeactive")
                 </td>*@
             <td>
-                @{string source = "/UploadedFiles/" + item.logo;}
-                <img src=@source alt="" height="50px" width="50px" />
+
+                <img src="UploadedFiles/@item.logo" alt="" height="60px" width="80px" />
             </td>
             <td>
                 @Html.ActionLink(linkText: item.Company_Name, actionName: "UpdateUser", routeValues: new { UserId = item.Organization_Id }, htmlAttributes: null)
