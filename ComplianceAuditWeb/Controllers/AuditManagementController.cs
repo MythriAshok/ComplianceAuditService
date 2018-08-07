@@ -128,6 +128,7 @@ namespace ComplianceAuditWeb.Controllers
                         Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
                         //Recurrence = Convert.ToString(row["Recurrence"]),
                         Risk_Description = Convert.ToString(row["Risk_Description"]),
+                      //  Audit_Type = Convert.ToString(row["Audit_Type"]),
                         //Type = Convert.ToString(row["Type"]),
                     });
                 }
@@ -155,6 +156,8 @@ namespace ComplianceAuditWeb.Controllers
                         Recurrence = Convert.ToString(row["Recurrence"]),
                         Risk_Description = Convert.ToString(row["Risk_Description"]),
                         Type = Convert.ToString(row["Type"]),
+                       // Audit_Type = Convert.ToString(row["Audit_Type"]),
+
 
 
                     });
@@ -184,6 +187,7 @@ namespace ComplianceAuditWeb.Controllers
                         Recurrence = Convert.ToString(row["Recurrence"]),
                         Risk_Description = Convert.ToString(row["Risk_Description"]),
                         Type = Convert.ToString(row["Type"]),
+                      //  Audit_Type = Convert.ToString(row["Audit_Type"]),
 
                     });
                 }
@@ -243,7 +247,7 @@ namespace ComplianceAuditWeb.Controllers
                     audit.Compliance_Xref_Id = Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Xref_ID"]);
                     audit.Auditor_Id = Convert.ToInt32(Session["AuditorID"]);//1;// Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Auditor_ID"]);
 
-
+                   
                     audit.Audit_ArteFacts = formCollection["complianceAuditList[" + index + "].Audit_ArteFacts"];
                     audit.Compliance_Audit_Id =  Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Audit_Id"]);
                    // audit.Compliance_Options_Id = 1;// Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Options_Id"]);

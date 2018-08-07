@@ -38,5 +38,7 @@ namespace Compliance.DataObject
         public int User_ID { get; set; }
         public bool Is_Active { get; set; }
 
+        public string Audit_Type { get; set; }
+
     }
 }

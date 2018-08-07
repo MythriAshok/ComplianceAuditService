@@ -504,6 +504,8 @@
     <Content Include="Views\ManageOrganization\_BranchDashboard - Copy.cshtml" />
     <Content Include="Views\ManageOrganization\_DashBoardBranch.cshtml" />
     <Content Include="Views\ManageOrganization\_DashBoardGroupCompany.cshtml" />
+    <Content Include="Views\ManageOrganization\_BranchList.cshtml" />
+    <Content Include="Views\ManageOrganization\_VendorList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

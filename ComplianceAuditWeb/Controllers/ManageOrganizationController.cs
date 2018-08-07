@@ -116,7 +116,7 @@ namespace ComplianceAuditWeb.Controllers
             string message = common.UploadFile(file, filePath);
             ModelState.AddModelError("org_hier.logo", message);
 
-
+                
                 OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
             string strXMLStates = organizationClient.GetStateList(organizationVM.branch.Country_Id);
             DataSet dsStates = new DataSet();
@@ -128,9 +128,6 @@ namespace ComplianceAuditWeb.Controllers
             }
 
 
-            //organizationVM.organization.Industry_Type = "IT";
-            //organizationVM.branch.Branch_CoordinatesURL = "www.loc.in";
-            //bool result = false;
             int id = 0;
             organizationVM.organization.User_Id = 1;
             organizationVM.organization.Is_Leaf = false;
@@ -172,17 +169,22 @@ namespace ComplianceAuditWeb.Controllers
         /// <param name="OrgID"></param>
         /// <returns>view</returns>
         [HttpGet]
-        public ActionResult UpdateGroupCompany(int OrgID)
+        public ActionResult UpdateGroupCompany(int OrgID, HttpPostedFileBase file, FileUpload fileupload )
         {
+            
+            OrganizationViewModel organizationViewModel = new OrganizationViewModel();
+
+            
+
 
             OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
             string strxmlUpdatedData = organizationClient.getGroupOrganization(OrgID);
             DataSet dsUpdatedData = new DataSet();
             dsUpdatedData.ReadXml(new StringReader(strxmlUpdatedData));
-            OrganizationViewModel organizationViewModel = new OrganizationViewModel();
             organizationViewModel.organization = new Organization();
            // organizationViewModel.companydetails = new CompanyDetails();
             organizationViewModel.branch = new BranchLocation();
+            
 
             organizationViewModel.organization.Organization_Id = OrgID;
             organizationViewModel.organization.Organization_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Org_Hier_ID"]);
@@ -211,6 +213,10 @@ namespace ComplianceAuditWeb.Controllers
             organizationViewModel.branch.Branch_CoordinatesURL = dsUpdatedData.Tables[0].Rows[0]["Branch_CoordinateURL"].ToString();
             organizationViewModel.branch.Branch_Name = dsUpdatedData.Tables[0].Rows[0]["Location_Name"].ToString();
             organizationViewModel.branch.Postal_Code = dsUpdatedData.Tables[0].Rows[0]["Postal_Code"].ToString();
+            organizationViewModel.organization.logo = dsUpdatedData.Tables[0].Rows[0]["logo"].ToString();
+           
+
+
 
             organizationViewModel.branch.Country_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Country_ID"]);
             DataSet dsCountries = new DataSet();
@@ -534,6 +540,7 @@ namespace ComplianceAuditWeb.Controllers
             companyVM.branch.Branch_CoordinatesURL = dsUpdatedData.Tables[0].Rows[0]["Branch_CoordinateURL"].ToString();
             companyVM.branch.Branch_Name = dsUpdatedData.Tables[0].Rows[0]["Location_Name"].ToString();
             companyVM.branch.Postal_Code = dsUpdatedData.Tables[0].Rows[0]["Postal_Code"].ToString();
+            companyVM.organization.logo = dsUpdatedData.Tables[0].Rows[0]["logo"].ToString();
 
             companyVM.branch.Country_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Country_ID"]);
             DataSet dsCountries = new DataSet();
@@ -610,8 +617,7 @@ namespace ComplianceAuditWeb.Controllers
         [HttpGet]
         public ActionResult DeactivateCompany(int OrgID)
         {
-            // OrganizationViewModel organizationViewModel = new OrganizationViewModel();
-            //organizationViewModel.organization = new Organization();
+           
             OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
             OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
             string strxmlData = organizationServiceClient.getGroupCompany(OrgID);
@@ -890,10 +896,11 @@ namespace ComplianceAuditWeb.Controllers
             branchViewModel.branch.Branch_Name = dsUpdatedData.Tables[0].Rows[0]["Location_Name"].ToString();
             branchViewModel.branch.Postal_Code = dsUpdatedData.Tables[0].Rows[0]["Postal_Code"].ToString();
 
+            branchViewModel.organization.logo = dsUpdatedData.Tables[0].Rows[0]["logo"].ToString();
 
 
-     
-           
+
+
             branchViewModel.branch.Country_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Country_ID"]);
             DataSet dsCountries = new DataSet();
             string strXMLCountries = organizationClient.GetCountryList();
@@ -1188,8 +1195,9 @@ namespace ComplianceAuditWeb.Controllers
             ViewModel.companydetails.Company_ContactNumber1 = dsUpdatedData.Tables[0].Rows[0]["Company_ContactNumber1"].ToString();
             ViewModel.companydetails.Company_ContactNumber2 = dsUpdatedData.Tables[0].Rows[0]["Company_ContactNumber2"].ToString();
             ViewModel.companydetails.Company_EmailID = dsUpdatedData.Tables[0].Rows[0]["Company_Email_ID"].ToString();
-           // ViewModel.companydetails.Formal_Name = dsUpdatedData.Tables[0].Rows[0]["Formal_Name"].ToString();
+            // ViewModel.companydetails.Formal_Name = dsUpdatedData.Tables[0].Rows[0]["Formal_Name"].ToString();
 
+            ViewModel.organization.logo = dsUpdatedData.Tables[0].Rows[0]["logo"].ToString();
 
 
 
@@ -1357,6 +1365,9 @@ namespace ComplianceAuditWeb.Controllers
         {
             return View("ListOfBranches");
         }
+
+
+
         [HttpGet]
         public ActionResult SelectGroupCompany()
         {
@@ -1400,6 +1411,79 @@ namespace ComplianceAuditWeb.Controllers
             }
             return View("_Companydashboard", companylist);
         }
+
+        [HttpGet]
+        public ActionResult SelectCompany()
+        {
+            int id = 0;
+
+            Models.ListOfGroupCompanies model = new ListOfGroupCompanies();
+            model.GroupCompaniesList = new List<SelectListItem>();
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+            string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
+            DataSet dsGroupCompanyList = new DataSet();
+            dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
+            model.GroupCompaniesList.Add(new SelectListItem() { Text = "--Select GroupCompany--", Value = "0" });
+            foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
+            {
+                model.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+            }
+            string strXMLCompanyList = organizationservice.GeSpecifictCompaniesList(id);
+            DataSet dsCompanyList = new DataSet();
+            dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
+            model.CompaniesList = new List<SelectListItem>();
+            model.CompaniesList.Add(new SelectListItem { Text = "--Select Company--", Value = "0" });
+
+            foreach (System.Data.DataRow row in dsCompanyList.Tables[0].Rows)
+            {
+                model.CompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+            }
+            return View("_BranchList", model);
+        }
+        [HttpPost]
+        public ActionResult SelectCompany(ListOfGroupCompanies model)
+        {
+            return RedirectToAction("BranchList", routeValues: new { id = model.CompanyID });
+        }
+
+
+
+        [HttpGet]
+        public ActionResult SelectBranch()
+        {
+            int id = 0;
+
+            Models.ListOfGroupCompanies model = new ListOfGroupCompanies();
+            model.GroupCompaniesList = new List<SelectListItem>();
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+            string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
+            DataSet dsGroupCompanyList = new DataSet();
+            dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
+            model.GroupCompaniesList.Add(new SelectListItem() { Text = "--Select GroupCompany--", Value = "0" });
+            foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
+            {
+                model.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+            }
+            string strXMLCompanyList = organizationservice.GeSpecifictCompaniesList(id);
+            DataSet dsCompanyList = new DataSet();
+            dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
+            model.CompaniesList = new List<SelectListItem>();
+            model.CompaniesList.Add(new SelectListItem { Text = "--Select Company--", Value = "0" });
+
+            foreach (System.Data.DataRow row in dsCompanyList.Tables[0].Rows)
+            {
+                model.CompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+            }
+            return View("_BranchList", model);
+        }
+        [HttpPost]
+        public ActionResult SelectBranch(ListOfGroupCompanies model)
+        {
+            return RedirectToAction("VendorList", routeValues: new { Companyid = model.CompanyID });
+        }
+
+
+
         [HttpGet]
         public ActionResult AboutCompany(int id)
         {
@@ -1412,6 +1496,7 @@ namespace ComplianceAuditWeb.Controllers
             aboutCompanyViewModel.CompanyDescription = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["Description"]);
             aboutCompanyViewModel.CompanyName = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["Company_Name"]);
             aboutCompanyViewModel.ParentCompanyID = Convert.ToInt32(dsaboutCompany.Tables[0].Rows[0]["Parent_Company_ID"]);
+            aboutCompanyViewModel.Is_Active =Convert.ToBoolean(Convert.ToInt32( dsaboutCompany.Tables[0].Rows[0]["Is_Active"]));
             //aboutCompanyViewModel.CompanyID =Convert.ToInt32( Session["CompanyID"]);
             //aboutCompanyViewModel.CompanyDescription = Convert.ToString(Session["CompanyDescription"]);
             //aboutCompanyViewModel.CompanyName = Convert.ToString(Session["CompanyName"]);
@@ -1745,7 +1830,215 @@ namespace ComplianceAuditWeb.Controllers
             return View("_DashBoardGroupCompany", branchlist);
 }
 
+
+
+        public ActionResult DeactivateVendorUnderCompany(int OrgID)
+        {
+            //OrganizationViewModel organizationViewModel = new OrganizationViewModel();
+            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+            // organizationViewModel.organization = new Organization();
+
+            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+            string strxmlData = organizationServiceClient.getCompanyListsforBranch(OrgID);
+            DataSet dsData = new DataSet();
+            dsData.ReadXml(new StringReader(strxmlData));
+            orgActivateDeactivateViewModel.CompanyID = OrgID;
+            orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+            return View("_DeacvtivateVendorForCompany",orgActivateDeactivateViewModel);
+        }
+        [HttpPost]
+        public ActionResult DeactivateVendorUnderCompany(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                bool result = false;
+               // OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+                result = Convert.ToBoolean(vendorServiceClient.DeactivateVendorForCompany(orgActivateDeactivateViewModel.CompanyID));
+                if (result == true)
+                {
+                    return RedirectToAction("VendorList");
+                }
+
+            }
+            return View();
+        }
+    
+
+    public ActionResult DeactivateVendorUnderBranch(int OrgID)
+    {
+        //OrganizationViewModel organizationViewModel = new OrganizationViewModel();
+        OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+        // organizationViewModel.organization = new Organization();
+
+        OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+
+            string strxmlData = organizationServiceClient.getCompanyListsforBranch(OrgID);
+           
+            DataSet dsData = new DataSet();
+        dsData.ReadXml(new StringReader(strxmlData));
+        orgActivateDeactivateViewModel.CompanyID = OrgID;
+        orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+        return View("_DeacvtivateVendorForBranch", orgActivateDeactivateViewModel);
+    }
+    [HttpPost]
+    public ActionResult DeactivateVendorUnderBranch(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
+    {
+        if (ModelState.IsValid)
+        {
+            bool result = false;
+            // OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+            result = Convert.ToBoolean(vendorServiceClient.DeactivateVendorForBranch(orgActivateDeactivateViewModel.CompanyID));
+            if (result == true)
+            {
+                return RedirectToAction("VendorList");
+            }
+
+        }
+        return View();
     }
 
 
+
+        public ActionResult ActivateVendorUnderCompany(int OrgID)
+        {
+            //OrganizationViewModel organizationViewModel = new OrganizationViewModel();
+            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+            // organizationViewModel.organization = new Organization();
+
+            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+
+            string strxmlData = organizationServiceClient.getCompanyListsforBranch(OrgID);
+
+            DataSet dsData = new DataSet();
+            dsData.ReadXml(new StringReader(strxmlData));
+            orgActivateDeactivateViewModel.CompanyID = OrgID;
+            orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+            return View("_AcvtivateVendorForCompany", orgActivateDeactivateViewModel);
+        }
+        [HttpPost]
+        public ActionResult ActivateVendorUnderCompany(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                bool result = false;
+                // OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+                result = Convert.ToBoolean(vendorServiceClient.ActivateVendorForCompany(orgActivateDeactivateViewModel.CompanyID));
+                if (result == true)
+                {
+                    return RedirectToAction("VendorList");
+                }
+
+            }
+            return View();
+        }
+        public ActionResult ActivateVendorUnderBranch(int OrgID)
+        {
+            //OrganizationViewModel organizationViewModel = new OrganizationViewModel();
+            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+            // organizationViewModel.organization = new Organization();
+
+            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+
+            string strxmlData = organizationServiceClient.getCompanyListsforBranch(OrgID);
+
+            DataSet dsData = new DataSet();
+            dsData.ReadXml(new StringReader(strxmlData));
+            orgActivateDeactivateViewModel.CompanyID = OrgID;
+            orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+            return View("_AcvtivateVendorForBranch", orgActivateDeactivateViewModel);
+        }
+        [HttpPost]
+        public ActionResult ActivateVendorUnderBranch(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                bool result = false;
+                // OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+                result = Convert.ToBoolean(vendorServiceClient.ActivateVendorForBranch(orgActivateDeactivateViewModel.CompanyID));
+                if (result == true)
+                {
+                    return RedirectToAction("VendorList");
+                }
+
+            }
+            return View();
+        }
+        public ActionResult DeleteVendorUnderCompany(int OrgID)
+        {
+            //OrganizationViewModel organizationViewModel = new OrganizationViewModel();
+            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+            // organizationViewModel.organization = new Organization();
+
+            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+
+            string strxmlData = organizationServiceClient.getCompanyListsforBranch(OrgID);
+
+            DataSet dsData = new DataSet();
+            dsData.ReadXml(new StringReader(strxmlData));
+            orgActivateDeactivateViewModel.CompanyID = OrgID;
+            orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+            return View("_DeleteVendorForCompany", orgActivateDeactivateViewModel);
+        }
+        [HttpPost]
+        public ActionResult DeleteVendorUnderCompany(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                bool result = false;
+                // OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+                result = Convert.ToBoolean(vendorServiceClient.DeactivateVendorForCompany(orgActivateDeactivateViewModel.CompanyID));
+                if (result == true)
+                {
+                    return RedirectToAction("VendorList");
+                }
+
+            }
+            return View();
+        }
+        public ActionResult DeleteVendorUnderBranch(int OrgID)
+        {
+            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+
+            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+
+            string strxmlData = organizationServiceClient.getCompanyListsforBranch(OrgID);
+
+            DataSet dsData = new DataSet();
+            dsData.ReadXml(new StringReader(strxmlData));
+            orgActivateDeactivateViewModel.CompanyID = OrgID;
+            orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+            return View("_DeleteVendorForBranch", orgActivateDeactivateViewModel);
+        }
+        [HttpPost]
+        public ActionResult DeleteVendorUnderBranch(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                bool result = false;
+                VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+                result = Convert.ToBoolean(vendorServiceClient.DeactivateVendorForBranch(orgActivateDeactivateViewModel.CompanyID));
+                if (result == true)
+                {
+                    return RedirectToAction("VendorList");
+                }
+
+            }
+            return View();
+        }
+
+    }
+
 }
+
+
+
