@@ -43,6 +43,7 @@ end/
 Delimiter ;
 
 
+
 Drop Procedure if exists `sp_insertupdateBranchLocation`;
 Delimiter /
 create procedure sp_insertupdateBranchLocation
@@ -306,8 +307,6 @@ End If;
 end/
 Delimiter ;
 
-
-
 Drop Procedure if exists `sp_getGroupHierJoin`;
 Delimiter /
 create procedure sp_getGroupHierJoin
@@ -362,15 +361,6 @@ where tbl_org_hier.Org_Hier_ID= p_Org_Hier_ID;
 End If;
 end/
 Delimiter ;
-
-
-
-
-
-
-
-
-
 
 
 
@@ -430,31 +420,12 @@ End If;
 end/
 Delimiter ;
 
-
 Drop Procedure if exists `sp_getGroupCompaniesList`;
 Delimiter /
 create procedure sp_getGroupCompaniesList()
 begin  
 
 select Company_Name, Org_Hier_ID,Industry_Type,Is_Active, logo from tbl_org_hier where Parent_Company_ID=0 and Is_Delete = 0;
-end/
-Delimiter ;
-
-
-Drop Procedure if exists `sp_getCompaniesList`;
-Delimiter /
-create procedure sp_getCompaniesList(p_Parent_Company_ID int)
-begin  
-select Company_Name, Org_Hier_ID,Industry_Type,Is_Active, logo from tbl_org_hier where level= 2 and Parent_Company_ID=p_Parent_Company_ID;
-end/
-Delimiter ;
-
-
-Drop Procedure if exists `sp_getCompanieyList`;
-Delimiter /
-create procedure sp_getCompanieyList()
-begin  
-select Company_Name, Org_Hier_ID,Industry_Type,Is_Active from tbl_org_hier where level= 2 and Is_Delete=0 ;
 end/
 Delimiter ;
 
@@ -472,7 +443,6 @@ end/
 Delimiter ;
 
 
-
 Drop Procedure if exists `sp_getCompanyListsforBranch`;
 Delimiter /
 create procedure sp_getCompanyListsforBranch(p_Org_Hier_ID int)
@@ -485,20 +455,6 @@ select * from tbl_org_hier where Org_Hier_ID=p_Org_Hier_ID ;
 end if;
 end/
 Delimiter ;
-
-
-Drop Procedure if exists `sp_getBranchList`;
-Delimiter /
-create procedure sp_getBranchList()
-begin  
-select Company_Name, Org_Hier_ID,Industry_Type,Is_Active from tbl_org_hier where level=3 and Is_Delete = 0;
-end/
-Delimiter ;
-
-
-
-
-
 
 Drop Procedure if exists `sp_getGroupCompaniesListDropDown`;
 Delimiter /
@@ -1147,46 +1103,6 @@ Select @@IDENTITY;
 END/
 delimiter ;
 
-Drop Procedure if exists sp_getLoginData;
-delimiter /
-create procedure sp_getLoginData
-(
-p_Email_ID varchar(100),
-p_User_Password varchar(10)
-)
-begin
-select * from tbl_user where Email_ID= p_Email_ID and User_Password = p_User_Password;
-end/
-delimiter ;
-
-Drop Procedure if exists sp_fetchchangePassword;
-delimiter /
-create procedure sp_fetchchangePassword
-(
-p_User_ID int,
-p_Email_ID varchar(100),
-p_User_Password varchar(10)
-)
-begin
-select User_ID from tbl_user where Email_ID= p_Email_ID and User_Password=p_User_Password;
-end/
-delimiter ;
-
-
-Drop Procedure if exists sp_updatePassword;
-delimiter /
-create procedure sp_updatePassword
-(
-p_User_ID int,
-p_Email_ID varchar(100),
-p_User_Password varchar(10)
-)
-begin
-update tbl_user set User_Password = p_User_Password where User_ID = p_User_ID;
-end/
-delimiter ; 
-
-
 drop procedure if exists sp_DeactivateOrgHier;
 delimiter /
 create procedure sp_DeactivateOrgHier
@@ -1210,38 +1126,6 @@ update tbl_org_hier set Is_Active = 1 where Org_Hier_ID=p_Org_Hier_ID;
 end/
 delimiter ;
 
-call sp_getComplianceXrefData(19);
-
-drop procedure if exists sp_getComplianceXrefData;
-delimiter /
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getComplianceXrefData`
-(
-p_Org_Hier_ID int 
-)
-begin
-select 
-tbl_compliance_xref.*,
-tbl_compliance_branch_mapping.Org_Hier_ID  from tbl_compliance_xref 
-inner join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
-where 
-tbl_compliance_xref.Compliance_Xref_ID IN(Select Compliance_Xref_ID from tbl_compliance_branch_mapping where Org_Hier_ID=18) 
-and tbl_compliance_xref.Effective_Start_Date >= Now() and tbl_compliance_xref.Effective_End_Date <= now()
-Union
-select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID from tbl_compliance_xref 
-left join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
-where 
-tbl_compliance_xref.Compliance_Xref_ID IN(
-Select distinct  Compliance_Parent_ID from tbl_compliance_xref where 
-tbl_compliance_xref.Compliance_Xref_ID in (Select Compliance_Xref_ID from tbl_compliance_branch_mapping  
-where Org_Hier_ID=18)) 
-and tbl_compliance_xref.Effective_Start_Date >= Now() and tbl_compliance_xref.Effective_End_Date <= now() ;
-end/
-delimiter ;
-
-
-
-
-call sp_getAllCompanyBrnachAssignedtoAuditor(1);
 
 drop procedure if exists sp_getAllCompanyBrnachAssignedtoAuditor;
 delimiter /
@@ -1259,7 +1143,6 @@ Select distinct Parent_Company_ID from tbl_org_hier where
 Org_Hier_ID in (Select Org_Hier_ID from tbl_branch_auditor_mapping where Auditor_ID=p_Auditor_ID));
 end/
 delimiter ;
-
 
 
 drop procedure if exists `sp_getBranchesAssignedforAuditor`;
@@ -1288,87 +1171,6 @@ end/
 Delimiter ;
 
 
-
-Drop Procedure if exists `sp_insertupdateVendorMaster`;
-Delimiter /
-create procedure sp_insertupdateVendorMaster
-(
-p_Flag char(1),
-p_Vendor_ID int,
-p_Vendor_Name varchar(100),
-p_Contact_Person varchar(100),
-p_Contact_Number varchar(100),
-p_Start_Date datetime,
-p_End_Date datetime,
-p_Vendor_Type varchar(50),
-p_Website varchar(100),
-p_Auditing_Frequency varchar(50),
-p_Last_Updated_Date datetime,
-p_Is_Active bit,
-p_Is_Delete bit,
-p_Company_ID int ,
-p_User_ID int 
-)
-begin
-if(p_Flag = 'I')then
-insert into tbl_vendor_master
-(
-Vendor_ID ,
-Vendor_Name ,
-Contact_Person,
-Contact_Number,
-Start_Date ,
-End_Date ,
-Vendor_Type ,
-Website ,
-Auditing_Frequency ,
-Last_Updated_Date ,
-Is_Active,
-Is_Delete ,
-Company_ID  ,
-User_ID 
-)
-values
-(
-p_Vendor_ID ,
-p_Vendor_Name ,
-p_Contact_Person,
-p_Contact_Number,
-p_Start_Date ,
-p_End_Date ,
-p_Vendor_Type ,
-p_Website ,
-p_Auditing_Frequency ,
-now(),
-p_Is_Active,
-p_Is_Delete ,
-p_Company_ID  ,
-p_User_ID
-);
-select last_insert_id();
-else
-update tbl_vendor_master set
-Vendor_ID= p_Vendor_ID ,
-Vendor_Name= p_Vendor_Name,
-Contact_Person = p_Contact_Person,
-Contact_Number = p_Contact_Number,
-Start_Date = p_Start_Date,
-End_Date = p_End_Date,
-Vendor_Type = p_Vendor_Type,
-Website =p_Website,
-Auditing_Frequency = p_Auditing_Frequency,
-Last_Updated_Date = now(),
-Is_Active = p_Is_Active,
-Is_Delete = p_Is_Delete,
-Company_ID =p_Company_ID ,
-User_ID =p_User_ID;
-select last_insert_id();
-end if;
-end/
-Delimiter ;
-
-
-
 Drop Procedure if exists `sp_getSpecificVendorList`;
 Delimiter /
 create procedure sp_getSpecificVendorList(p_Parent_Company_ID int)
@@ -1385,45 +1187,102 @@ end/
 Delimiter ;
 
 
-
-DROP procedure IF EXISTS `auditmoduledb`.`sp_getcompleteVendorList`;
-
-DELIMITER $$
-USE `auditmoduledb`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getcompleteVendorList`(p_Vendor_ID int)
+drop procedure if exists sp_getComplianceXrefData;
+delimiter /
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getComplianceXrefData`
+(
+p_Org_Hier_ID int 
+)
 begin
-if(p_Vendor_ID=0)
-then
-select Vendor_ID,Vendor_Name from tbl_vendor_master where Is_Delete=0 and Is_Active=1 ;
-else
-select Vendor_ID,Vendor_Name from tbl_vendor_master where Is_Delete=0 and Is_Active=1 and Vendor_ID=p_Vendor_ID;
-end if;
-end$$
+select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID  from tbl_compliance_xref 
+inner join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
+where 
+tbl_compliance_xref.Compliance_Xref_ID IN(Select Compliance_Xref_ID from tbl_compliance_branch_mapping where Org_Hier_ID=p_Org_Hier_ID) 
+and tbl_compliance_xref.Effective_Start_Date <=Now() and tbl_compliance_xref.Effective_End_Date >= Now()
 
-DELIMITER ;
+Union
+select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID from tbl_compliance_xref 
+left join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
+where 
+tbl_compliance_xref.Compliance_Xref_ID IN(
+Select distinct  Compliance_Parent_ID from tbl_compliance_xref where 
+tbl_compliance_xref.Compliance_Xref_ID in (Select Compliance_Xref_ID from tbl_compliance_branch_mapping  
+where Org_Hier_ID=p_Org_Hier_ID))
+and tbl_compliance_xref.Effective_Start_Date <=Now() and tbl_compliance_xref.Effective_End_Date >= Now() 
 
 
-DROP procedure IF EXISTS `auditmoduledb`.`sp_getcompleteVendorListassignedToBranch`;
+union 
+select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID from tbl_compliance_xref 
+left join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
+where 
+tbl_compliance_xref.Compliance_Xref_ID IN(
+select tbl_compliance_xref.Compliance_Parent_ID from tbl_compliance_xref where tbl_compliance_xref.Compliance_Xref_ID IN(
+Select distinct  Compliance_Parent_ID from tbl_compliance_xref where 
+tbl_compliance_xref.Compliance_Xref_ID in (Select Compliance_Xref_ID from tbl_compliance_branch_mapping  
+where Org_Hier_ID=p_Org_Hier_ID)))
+and tbl_compliance_xref.Effective_Start_Date <=Now() and tbl_compliance_xref.Effective_End_Date >= Now();
 
-DELIMITER $$
-USE `auditmoduledb`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getcompleteVendorListassignedToBranch`(p_Vendor_Branch_ID int)
+
+end/
+delimiter ;
+
+
+drop procedure if exists sp_DeactivateVendorForBranch;
+delimiter /
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_DeactivateVendorForBranch`(
+p_Vendor_Branch_ID int
+
+)
 begin
-if(p_Vendor_Branch_ID=0)
-then
-select Vendor_Branch_ID,tbl_vendor_branch_mapping.Vendor_ID,Vendor_Name, tbl_vendor_branch_mapping.Is_Active from tbl_vendor_branch_mapping
-inner join tbl_vendor_master on tbl_vendor_master.Vendor_ID = tbl_vendor_branch_mapping.Vendor_ID
- where  tbl_vendor_branch_mapping.Is_Active=1 ;
-else
-select Vendor_Branch_ID,tbl_vendor_branch_mapping.Vendor_ID,Vendor_Name, tbl_vendor_branch_mapping.Is_Active from tbl_vendor_branch_mapping
-inner join tbl_vendor_master on tbl_vendor_master.Vendor_ID = tbl_vendor_branch_mapping.Vendor_ID
- where  tbl_vendor_branch_mapping.Is_Active=1 ;
- end if;
-end$$
-
-DELIMITER ;
+update tbl_vendor_branch_mapping set 
+Is_Active = 0,
+Effective_End_Date= now()
+ where Vendor_Branch_ID = p_Vendor_Branch_ID ;
+end/
 
 
+drop procedure if exists sp_ActivateVendorForBranch;
+delimiter /
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ActivateVendorForBranch`(
+p_Vendor_Branch_ID int
+)
+begin
+update tbl_vendor_branch_mapping set 
+Is_Active = 1,
+Effective_Start_Date= now()
+ where Vendor_Branch_ID = p_Vendor_Branch_ID ;
+end/
+
+drop procedure if exists sp_ActivateVendorForCompany;
+delimiter /
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ActivateVendorForCompany`(
+p_Org_Hier_ID int
+)
+begin
+update tbl_org_hier  
+
+inner join tbl_company_details on tbl_company_details.Org_Hier_ID = tbl_org_hier.Org_Hier_ID  
+set
+Is_Active = 1 ,
+Calender_StartDate = now() 
+where tbl_org_hier.Org_Hier_ID=p_Org_Hier_ID;
+end/
+
+
+drop procedure if exists sp_DeactivateVendorForCompany;
+delimiter /
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_DeactivateVendorForCompany`(
+p_Org_Hier_ID int
+)
+begin
+update tbl_org_hier  
+
+inner join tbl_company_details on tbl_company_details.Org_Hier_ID = tbl_org_hier.Org_Hier_ID  
+set
+Is_Active = 0 ,
+Calender_EndDate = now() 
+where tbl_org_hier.Org_Hier_ID=p_Org_Hier_ID;
+end/
 
 Drop Procedure if exists `sp_insertupdateVendorForBranch`;
 Delimiter /
@@ -1470,133 +1329,6 @@ select last_insert_id();
 end if;
 end/
 Delimiter ;
-
-
-DROP procedure IF EXISTS `auditmoduledb`.`sp_getVendorListForBranch`;
-
-DELIMITER $$
-USE `auditmoduledb`$$
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getVendorListForBranch`(p_Branch_ID int)
-begin
-if(p_Branch_ID=0)
-then
-select tbl_vendor_branch_mapping.Vendor_ID from tbl_vendor_branch_mapping where  tbl_vendor_branch_mapping.Is_Active=1 ;
-else
-select Vendor_Branch_ID, tbl_vendor_branch_mapping.Vendor_ID,tbl_vendor_branch_mapping.Is_Active,Vendor_Name from tbl_vendor_branch_mapping 
-inner join tbl_vendor_master on tbl_vendor_master.Vendor_ID = tbl_vendor_branch_mapping.Vendor_ID
- where  tbl_vendor_branch_mapping.Is_Active=1 and Branch_ID=p_Branch_ID; 
-
-end if;
-end$$
-
-DELIMITER ;
-
-drop procedure if exists sp_ActivateVendorForCompany;
-delimiter /
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ActivateVendorForCompany`(
-p_Org_Hier_ID int
-)
-begin
-update tbl_org_hier  
-
-inner join tbl_company_details on tbl_company_details.Org_Hier_ID = tbl_org_hier.Org_Hier_ID  
-set
-Is_Active = 1 ,
-Calender_StartDate = now() 
-where tbl_org_hier.Org_Hier_ID=p_Org_Hier_ID;
-end/
-
-
-drop procedure if exists sp_DeactivateVendorForCompany;
-delimiter /
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_DeactivateVendorForCompany`(
-p_Org_Hier_ID int
-)
-begin
-update tbl_org_hier  
-
-inner join tbl_company_details on tbl_company_details.Org_Hier_ID = tbl_org_hier.Org_Hier_ID  
-set
-Is_Active = 0 ,
-Calender_EndDate = now() 
-where tbl_org_hier.Org_Hier_ID=p_Org_Hier_ID;
-end/
-
-
-drop procedure if exists sp_DeactivateVendorForBranch;
-delimiter /
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_DeactivateVendorForBranch`(
-p_Vendor_Branch_ID int
-
-)
-begin
-update tbl_vendor_branch_mapping set 
-Is_Active = 0,
-Effective_End_Date= now()
- where Vendor_Branch_ID = p_Vendor_Branch_ID ;
-end/
-
-
-drop procedure if exists sp_ActivateVendorForBranch;
-delimiter /
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_ActivateVendorForBranch`(
-p_Vendor_Branch_ID int
-)
-begin
-update tbl_vendor_branch_mapping set 
-Is_Active = 1,
-Effective_Start_Date= now()
- where Vendor_Branch_ID = p_Vendor_Branch_ID ;
-end/
-
-
-
-
-
-
-
-
-
-
-
-drop procedure if exists sp_getComplianceXrefData;
-delimiter /
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getComplianceXrefData`
-(
-p_Org_Hier_ID int 
-)
-begin
-select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID  from tbl_compliance_xref 
-inner join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
-where 
-tbl_compliance_xref.Compliance_Xref_ID IN(Select Compliance_Xref_ID from tbl_compliance_branch_mapping where Org_Hier_ID=p_Org_Hier_ID) 
-and tbl_compliance_xref.Effective_Start_Date <=Now() and tbl_compliance_xref.Effective_End_Date >= Now()
-
-Union
-select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID from tbl_compliance_xref 
-left join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
-where 
-tbl_compliance_xref.Compliance_Xref_ID IN(
-Select distinct  Compliance_Parent_ID from tbl_compliance_xref where 
-tbl_compliance_xref.Compliance_Xref_ID in (Select Compliance_Xref_ID from tbl_compliance_branch_mapping  
-where Org_Hier_ID=p_Org_Hier_ID))
-and tbl_compliance_xref.Effective_Start_Date <=Now() and tbl_compliance_xref.Effective_End_Date >= Now() 
-
-
-union 
-select tbl_compliance_xref.*,tbl_compliance_branch_mapping.Org_Hier_ID from tbl_compliance_xref 
-left join tbl_compliance_branch_mapping on tbl_compliance_xref.Compliance_Xref_ID = tbl_compliance_branch_mapping.Compliance_Xref_ID
-where 
-tbl_compliance_xref.Compliance_Xref_ID IN(
-select tbl_compliance_xref.Compliance_Parent_ID from tbl_compliance_xref where tbl_compliance_xref.Compliance_Xref_ID IN(
-Select distinct  Compliance_Parent_ID from tbl_compliance_xref where 
-tbl_compliance_xref.Compliance_Xref_ID in (Select Compliance_Xref_ID from tbl_compliance_branch_mapping  
-where Org_Hier_ID=p_Org_Hier_ID)))
-and tbl_compliance_xref.Effective_Start_Date <=Now() and tbl_compliance_xref.Effective_End_Date >= Now();
-
-
-end/
-delimiter ;
 
 
 

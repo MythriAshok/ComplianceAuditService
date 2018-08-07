@@ -20,6 +20,12 @@
     @*@Html.Label("Company Name", new { @class = "floating-label" })*@
     <div class="clearfix"></div>
 
+
+    <center>
+        @Html.DisplayFor(m => m.CompanyLogo, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
+
+    </center>
+
     <center>
         @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
 
@@ -54,7 +60,16 @@
             {
 
                 @Html.ActionLink("Modify Group Company", "UpdateGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+                @Html.ActionLink("Delete", "DeleteGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+                if (Model.Is_Active == true)
+                {
+                    @Html.ActionLink("Deactivate", "DeactivateGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+                }
+                else
+                {
+                    @Html.ActionLink("Activate", "ActivateGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
 
+                }
 
 
                 <input type="submit" value="Add Company" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
@@ -62,6 +77,17 @@
             else
             {
                 @Html.ActionLink("Modify Company", "UpdateCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+                @Html.ActionLink("Delete", "DeleteCompany", new { id = Model.CompanyID }, new { @class = "btn primary-button" })
+                if (Model.Is_Active == true)
+                {
+                    @Html.ActionLink("Deactivate", "DeactivateCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+                }
+                else
+                {
+                    @Html.ActionLink("Activate", "ActivateCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+
+                }
+
 
                 <input type="submit" value="Add Branch" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
                 @*<input type="submit" value="Add Vendor" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>*@
@@ -69,6 +95,8 @@
                 @Html.ActionLink("Add Vendor", "AddVendor", new { id = Model.ParentCompanyID }, new { @class = "btn primary-button" })
 
             }
+          
+
         </li>
     </ul>
 

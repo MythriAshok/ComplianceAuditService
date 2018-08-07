@@ -498,7 +498,7 @@ namespace Compliance.DataAccess
             }
             return dsGroupCompaniesList;
         }
-
+        // no use of this
         public DataSet getCompanyList()
         {
             DataSet dsCompaniesList = new DataSet();

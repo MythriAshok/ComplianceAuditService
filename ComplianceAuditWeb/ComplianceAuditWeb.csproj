@@ -524,6 +524,8 @@
     <Content Include="Views\ComplianceManagement\_SMESelectCompany.cshtml" />
     <Content Include="Views\ComplianceManagement\_AssignRules.cshtml" />
     <Content Include="Views\ComplianceManagement\_SMEdashboard.cshtml" />
+    <Content Include="Views\ManageOrganization\_BranchList.cshtml" />
+    <Content Include="Views\ManageOrganization\_VendorList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
