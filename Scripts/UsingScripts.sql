@@ -105,7 +105,7 @@ Branch_Coordinates2=p_Branch_Coordinates2,
 Branch_CoordinateURL= p_Branch_CoordinateURL,
 Org_Hier_ID=p_Org_Hier_ID
 where Location_ID=p_Location_ID;
-select last_insert_id();
+select  row_count();
 end if;
 end/
 Delimiter ;
@@ -235,7 +235,7 @@ Is_Active=p_Is_Active,
 Is_Delete = p_Is_Delete,
 Is_Vendor = p_Is_Vendor
 where tbl_org_hier.Org_Hier_ID=p_Org_Hier_ID ;
-select last_insert_id();
+select row_count();
 end if;
 end/
 Delimiter ;
@@ -398,12 +398,13 @@ level,
 Is_Leaf, 
 Industry_Type, 
 Last_Updated_Date,
- log,
+ logo,
 User_ID, 
 Is_Active,
 Is_Delete,
 Is_Vendor,
 tbl_branch_location.Org_Hier_ID,
+Location_ID,
 Location_Name,
 Address,
 Country_ID,
@@ -420,12 +421,71 @@ End If;
 end/
 Delimiter ;
 
+Drop Procedure if exists `sp_getVendorJoin`;
+Delimiter /
+create procedure sp_getVendorJoin
+(
+p_Org_Hier_ID int 
+)
+begin  
+if(p_Org_Hier_ID = 0) then
+select
+Company_Name,
+Company_Code, 
+Parent_Company_ID, 
+Description,
+level,
+Is_Leaf,
+Industry_Type,
+Last_Updated_Date,
+ logo,
+User_ID, 
+Is_Active ,
+Is_Vendor
+from tbl_org_hier;
+else 
+select tbl_org_hier.Org_Hier_ID,
+Company_Name, 
+Company_COde, 
+Parent_Company_ID,
+Description,
+level,
+Is_Leaf, 
+Industry_Type, 
+Last_Updated_Date,
+logo,
+User_ID, 
+Is_Active,
+Is_Delete,
+Is_Vendor,
+tbl_company_details.Company_Details_ID,
+tbl_company_details.Org_Hier_ID, 
+Formal_Name, 
+Calender_StartDate,
+Calender_EndDate,
+Auditing_Frequency,
+Website,
+Company_Email_ID,
+Company_ContactNumber1,
+Company_ContactNumber2
+
+from tbl_org_hier 
+inner join  tbl_company_Details  on tbl_company_details.Org_Hier_ID = tbl_org_hier.Org_Hier_ID
+
+where tbl_org_hier.Org_Hier_ID= p_Org_Hier_ID;
+End If;
+end/
+Delimiter ;
+
+
+
 Drop Procedure if exists `sp_getGroupCompaniesList`;
 Delimiter /
 create procedure sp_getGroupCompaniesList()
 begin  
 
 select Company_Name, Org_Hier_ID,Industry_Type,Is_Active, logo from tbl_org_hier where Parent_Company_ID=0 and Is_Delete = 0;
+
 end/
 Delimiter ;
 
@@ -551,7 +611,7 @@ Company_ContactNumber2=p_Company_ContactNumber2
 
 
 where Company_Details_ID=p_Company_Details_ID;
-select last_insert_id();
+select row_count();
 end if;
 end/
 delimiter ;
@@ -1161,10 +1221,10 @@ create procedure sp_getSpecificBranchList(p_Parent_Company_ID int)
 begin 
 if(p_Parent_Company_ID=0)
 then
-select Company_Name, Org_Hier_ID,Industry_Type,Is_Active,logo from tbl_org_hier where level=3 and Is_Delete = 0;
+select Company_Name, Org_Hier_ID,Industry_Type,Is_Active,logo from tbl_org_hier where level=3 and Is_Delete = 0 and Is_Vendor=0;
 else
  
-select Company_Name, Org_Hier_ID,Industry_Type,Is_Active ,logo from tbl_org_hier where level=3 and Is_Delete = 0
+select Company_Name, Org_Hier_ID,Industry_Type,Is_Active ,logo from tbl_org_hier where level=3 and Is_Delete = 0 and Is_Vendor=0
  and Parent_Company_ID= p_Parent_Company_ID ;
  end if;
 end/

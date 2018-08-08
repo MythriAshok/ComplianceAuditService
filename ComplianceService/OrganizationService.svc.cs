@@ -75,9 +75,9 @@ namespace ComplianceService
                 BranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
                 // insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
                 if (BranchID > 0 && OrganizationID > 0) //insertCompanyDetailsID > 0)
-                {
+                //{
                     updateResult = true;
-                }
+               // }
             }
             catch
             {
@@ -267,7 +267,7 @@ namespace ComplianceService
 
             inserBranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
             insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
-            if (inserBranchID > 0 || insertOrganizationID > 0 || insertCompanyDetailsID > 0)
+            //if (inserBranchID > 0 || insertOrganizationID > 0 || insertCompanyDetailsID > 0)
             {
                 updateResult = true;
             }
@@ -404,7 +404,7 @@ namespace ComplianceService
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
 
                 BranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
-            if (BranchID != 0 && OrganizationID != 0)
+           // if (BranchID != 0 && OrganizationID != 0)
             {
                 updateResult = true;
             }
@@ -424,11 +424,7 @@ namespace ComplianceService
     {
         return bindBranch(OrgID);
     }
-    /// <summary>
-    /// A private method in the service layer that interacts with Organization helper class to bind the Organization data from the database
-    /// </summary>
-    /// <param name="orgID">binds the data of Organization w.r.t specific OrganizationID</param>
-    /// <returns>xmlstring</returns>
+  
     private string bindBranch(int orgID)
     {
         Organization org = new Organization();
@@ -440,8 +436,24 @@ namespace ComplianceService
         string xmlBranch = dsBranch.GetXml();
         return xmlBranch;
     }
+        public string getVendor(int OrgID)
+        {
+            return bindVendor(OrgID);
+        }
 
-    public bool DeactivateBranch(int OrgID)
+        private string bindVendor(int orgID)
+        {
+            Organization org = new Organization();
+            OrganizationHelper orgHelper = new OrganizationHelper();
+            DataSet dsBranch = orgHelper.getVendor(orgID);
+
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsBranch = utilityHelper.ConvertNullsToEmptyString(dsBranch);
+            string xmlBranch = dsBranch.GetXml();
+            return xmlBranch;
+        }
+
+        public bool DeactivateBranch(int OrgID)
     {
         bool status = false;
         OrganizationHelper organizationHelper = new OrganizationHelper();
@@ -538,7 +550,7 @@ namespace ComplianceService
                 insertOrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
 
                 insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
-                if ( insertOrganizationID > 0 || insertCompanyDetailsID > 0)
+               // if ( insertOrganizationID > 0 || insertCompanyDetailsID > 0)
                 {
                     updateResult = true;
                 }
@@ -651,8 +663,10 @@ namespace ComplianceService
     private string bindCompanyListsforBranch(int OrgID)
     {
         OrganizationHelper OrganizationHelper = new OrganizationHelper();
-        DataSet dsGroupCompanies = OrganizationHelper.getCompanyListsforBranch(OrgID);
-        string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
+            DataSet dsGroupCompanies = OrganizationHelper.getCompanyListsforBranch(OrgID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsGroupCompanies = utilityHelper.ConvertNullsToEmptyString(dsGroupCompanies);
+            string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
         return xmlGroupCompaniesList;
     }
 
@@ -668,6 +682,8 @@ namespace ComplianceService
         {
             OrganizationHelper OrganizationHelper = new OrganizationHelper();
             DataSet dsBranches = OrganizationHelper.getBranchList();
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsBranches = utilityHelper.ConvertNullsToEmptyString(dsBranches);
             string xmlBranchList = dsBranches.GetXml();
             return xmlBranchList;
         }
@@ -772,6 +788,7 @@ namespace ComplianceService
         {
             VendorHelper vendorhelper = new VendorHelper();
             DataSet vendors = vendorhelper.getcompleteVendorListassignedToBranch(BranchVendorID);
+
             string xmlvendors = vendors.GetXml();
             return xmlvendors;
         }

@@ -26,6 +26,7 @@
 
 
                 @Html.HiddenFor(m => m.CompanyID)
+                @Html.HiddenFor(m => m.ParentCompanyID)
 
                 @*@Html.LabelFor(m => m.CompanyName, new { @class = "floating-label" })*@
                 @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly", @Style = "text-align:center" })

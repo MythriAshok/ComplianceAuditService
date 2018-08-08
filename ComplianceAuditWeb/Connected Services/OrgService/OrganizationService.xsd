@@ -465,4 +465,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="getVendor">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OrgID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getVendorResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getVendorResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

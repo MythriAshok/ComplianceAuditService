@@ -15,6 +15,7 @@
       <xs:element minOccurs="0" name="Organization_Id" type="xs:int" />
       <xs:element minOccurs="0" name="Parent_Company_Id" type="xs:int" />
       <xs:element minOccurs="0" name="User_Id" type="xs:int" />
+      <xs:element minOccurs="0" name="logo" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Organization" nillable="true" type="tns:Organization" />

@@ -27,14 +27,15 @@
 
                 @*@Html.HiddenFor(m => m.organization.Organization_Id)
 
-                @Html.LabelFor(m => m.organization.Company_Name, new { @class = "floating-label" })
-                @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input" })*@
+        @Html.LabelFor(m => m.organization.Company_Name, new { @class = "floating-label" })
+        @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input" })*@
 
 
-                @Html.HiddenFor(m=>m.CompanyID)
+                @Html.HiddenFor(m => m.CompanyID)
+                @Html.HiddenFor(m => m.ParentCompanyID)
 
                 @*@Html.Label("Company Name")*@
-                @Html.TextBoxFor(m=>m.CompanyName, new  { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly", @Style = "text-align:center" })
+                @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly", @Style = "text-align:center" })
             </div>
         </center>
     </div>

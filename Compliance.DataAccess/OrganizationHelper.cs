@@ -246,6 +246,31 @@ namespace Compliance.DataAccess
         }
 
 
+        public DataSet getVendor(int OrgID)
+        {
+            DataSet dsVendor = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getVendorJoin", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", OrgID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsVendor);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsVendor;
+        }
+
+
+
         /// <summary>
         /// A method to delete the records of Organization table in the database
         /// </summary>
