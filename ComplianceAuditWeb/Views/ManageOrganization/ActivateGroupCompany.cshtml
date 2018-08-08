@@ -28,11 +28,12 @@
 
 
                 @Html.HiddenFor(m => m.CompanyID)
+                @Html.HiddenFor(m => m.ParentCompanyID)
 
                 @*@Html.LabelFor(m => m.CompanyName, new { @class = "floating-label", Style = "font-size:15px" })*@
 
                 @*@Html.Label("Selected Company Name")*@
-                @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly", @Style="text-align:center" })
+                @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly", @Style = "text-align:center" })
 
             </div>
         </center>

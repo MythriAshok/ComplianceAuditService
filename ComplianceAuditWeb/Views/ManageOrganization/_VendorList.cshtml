@@ -50,7 +50,7 @@
             <div class="input-field">
 
                 @Html.Label("Group Company")
-                @Html.DropDownListFor(model => model.GroupCompanyID, Model.GroupCompaniesList, new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.DropDownListFor(model => model.GroupCompanyID, Model.GroupCompaniesList, new { @onchange = "GetCompany(this.value);", @class = "inputMaterial ui - autocomplete - input" })
             </div>
         </div>
 

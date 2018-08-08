@@ -205,6 +205,12 @@
   <wsdl:message name="IOrganizationService_updateVendor_OutputMessage">
     <wsdl:part name="parameters" element="tns:updateVendorResponse" />
   </wsdl:message>
+  <wsdl:message name="IOrganizationService_getVendor_InputMessage">
+    <wsdl:part name="parameters" element="tns:getVendor" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_getVendor_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getVendorResponse" />
+  </wsdl:message>
   <wsdl:portType name="IOrganizationService">
     <wsdl:operation name="insertOrganization">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertOrganization" message="tns:IOrganizationService_insertOrganization_InputMessage" />
@@ -337,6 +343,10 @@
     <wsdl:operation name="updateVendor">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/updateVendor" message="tns:IOrganizationService_updateVendor_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/updateVendorResponse" message="tns:IOrganizationService_updateVendor_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getVendor">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/getVendor" message="tns:IOrganizationService_getVendor_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/getVendorResponse" message="tns:IOrganizationService_getVendor_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IOrganizationService" type="tns:IOrganizationService">
@@ -631,6 +641,15 @@
     </wsdl:operation>
     <wsdl:operation name="updateVendor">
       <soap:operation soapAction="http://tempuri.org/IOrganizationService/updateVendor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getVendor">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/getVendor" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

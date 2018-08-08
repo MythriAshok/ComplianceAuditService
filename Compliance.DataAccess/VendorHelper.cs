@@ -207,7 +207,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_DeactivateVendorForCompany", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Vendor_ID", VendorID);
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", VendorID);
                 int resultCount = cmd.ExecuteNonQuery();
                 if (resultCount > 0)
                 {
@@ -233,7 +233,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_ActivateVendorForCompany", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Vendor_ID", VendorID);
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", VendorID);
                 int resultCount = cmd.ExecuteNonQuery();
                 if (resultCount > 0)
                 {

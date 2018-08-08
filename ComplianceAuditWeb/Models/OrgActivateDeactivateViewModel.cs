@@ -11,7 +11,8 @@ namespace ComplianceAuditWeb.Models
     {
 
         public int CompanyID { get; set; }
-       
+        public int ParentCompanyID { get; set; }
+
         public string CompanyName { get; set; }
 
 

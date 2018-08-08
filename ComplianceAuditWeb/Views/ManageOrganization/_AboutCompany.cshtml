@@ -17,7 +17,8 @@
 <div class="mid_content_sec">
 
 
-    <h3 style="text-align:center;font-weight:100">        @Html.DisplayFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input" })</h3>
+    <h3 style="text-align:center;font-weight:100">   
+    @Html.DisplayFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input" })</h3>
 
     @*@Html.Label("Company Name", new { @class = "floating-label" })*@
     <div class="clearfix"></div>
@@ -51,7 +52,7 @@
             @if (Convert.ToInt32(Session["ParentCompanyID"]) == 0)
             {
 
-                @Html.ActionLink("Modify Group Company", "UpdateGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+                @Html.ActionLink("Modify", "UpdateGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
                 @Html.ActionLink("Delete", "DeleteGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
                 if (Model.Is_Active == true)
                 {
@@ -68,7 +69,7 @@
             }
             else
             {
-                @Html.ActionLink("Modify Company", "UpdateCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+                @Html.ActionLink("Modify", "UpdateCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
                 @Html.ActionLink("Delete", "DeleteCompany", new { id = Model.CompanyID }, new { @class = "btn primary-button" })
                 if (Model.Is_Active == true)
                 {
