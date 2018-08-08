@@ -2009,7 +2009,7 @@ namespace ComplianceAuditWeb.Controllers
                 result = Convert.ToBoolean(vendorServiceClient.DeactivateVendorForCompany(orgActivateDeactivateViewModel.CompanyID));
                 if (result == true)
                 {
-                    return RedirectToAction("CompanyVendorsList");
+                    return RedirectToAction("CompanyVendorsList", new { id = orgActivateDeactivateViewModel.ParentCompanyID });
                 }
 
             }
@@ -2082,7 +2082,7 @@ namespace ComplianceAuditWeb.Controllers
                 result = Convert.ToBoolean(vendorServiceClient.ActivateVendorForCompany(orgActivateDeactivateViewModel.CompanyID));
                 if (result == true)
                 {
-                    return RedirectToAction("CompanyVendorsList");
+                    return RedirectToAction("CompanyVendorsList", new { id = orgActivateDeactivateViewModel.ParentCompanyID});
                 }
 
             }
