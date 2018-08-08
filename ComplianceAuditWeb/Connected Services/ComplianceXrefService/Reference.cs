@@ -70,10 +70,10 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         System.Threading.Tasks.Task<int> GetAuditorIdAsync(int Branchid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/getRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/getRuleforBranchResponse")]
-        string getRuleforBranch(int sectionid, int branchid);
+        string getRuleforBranch(int branchid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/getRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/getRuleforBranchResponse")]
-        System.Threading.Tasks.Task<string> getRuleforBranchAsync(int sectionid, int branchid);
+        System.Threading.Tasks.Task<string> getRuleforBranchAsync(int branchid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranchResponse")]
         bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid);
@@ -181,12 +181,12 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
             return base.Channel.GetAuditorIdAsync(Branchid);
         }
         
-        public string getRuleforBranch(int sectionid, int branchid) {
-            return base.Channel.getRuleforBranch(sectionid, branchid);
+        public string getRuleforBranch(int branchid) {
+            return base.Channel.getRuleforBranch(branchid);
         }
         
-        public System.Threading.Tasks.Task<string> getRuleforBranchAsync(int sectionid, int branchid) {
-            return base.Channel.getRuleforBranchAsync(sectionid, branchid);
+        public System.Threading.Tasks.Task<string> getRuleforBranchAsync(int branchid) {
+            return base.Channel.getRuleforBranchAsync(branchid);
         }
         
         public bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid) {

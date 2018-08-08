@@ -5,5 +5,19 @@
     /**/
 
     Layout = null;
-    WebGrid grid = new WebGrid(Model.BranchList);
+    WebGrid grid1 = new WebGrid(Model.BranchList);
+    //WebGrid grid2 = new WebGrid(Model.VendorList);
 }
+<div class="col-xs-6 subSelect ">
+    <div class="input-field">
+        @grid1.GetHtml(columns:grid1.Columns(
+        grid1.Column(format: @<a href="/ComplianceManagement/AssignRules?Branchid=@item.Value">@item.Text</a>)))
+    </div>
+</div>
+
+@*<div class="col-xs-6 subSelect ">
+    <div class="input-field">
+        @grid2.GetHtml(columns:grid2.Columns(
+        grid2.Column(format: @<a href="/ComplianceManagement/AssignRules?Branchid=@item.Value">@item.Text</a>)))
+    </div>
+</div>*@

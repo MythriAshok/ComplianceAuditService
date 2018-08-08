@@ -14,24 +14,6 @@ namespace ComplianceAuditWeb.Controllers
 {
     public class UserManagementController : Controller
     {
-        // GET: UserManagement
-        public ActionResult UserManagementdashboard(int pid)
-        {
-            List<Menus> menues = new List<Menus>();
-            UserService.UserServiceClient client = new UserService.UserServiceClient();
-            DataSet ds = new DataSet();
-            string xmlmenu = client.getmenulist(Convert.ToInt32(Session["Usergroupid"]),pid);
-            ds.ReadXml(new StringReader(xmlmenu));
-            if (ds.Tables.Count > 0)
-            {
-                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
-                {
-                    menues.Add(new Menus { MenuName = Convert.ToString(row["Menu_Name"]), PathUrl = Convert.ToString(row["Page_URL"]), icon = Convert.ToString(row["icon"]), ParentMenuId = Convert.ToInt32(row["Parent_MenuID"]) });
-                }
-            }
-            return View("_UserManagementDashboard",menues);
-        }
-
        //GET:insertRoles
         [HttpGet]
         public ActionResult AddRoles()
@@ -69,6 +51,7 @@ namespace ComplianceAuditWeb.Controllers
             return View("_AddRole", rolesView);
         }
 
+        //Get:updateRoles
         [HttpGet]
         public ActionResult updateRoles(int Roleid)
         {
@@ -110,6 +93,7 @@ namespace ComplianceAuditWeb.Controllers
             return View("_AddRole", rolesView);
         }
 
+        //Post:updateRoles
         [HttpPost]
         public ActionResult updateRoles(RolesViewModel model)
         {
@@ -124,6 +108,7 @@ namespace ComplianceAuditWeb.Controllers
             return View("_AddRole", model);
         }
 
+        //Get:AddUserGroup
         [HttpGet]
         public ActionResult AddUserGroup()
         {
@@ -157,6 +142,7 @@ namespace ComplianceAuditWeb.Controllers
             return View("_AddUserGroup", GroupView);
         }
 
+        //Post:AddUserGroup
         [HttpPost]
         public ActionResult AddUserGroup(UserGroupViewModel model)
         {
@@ -166,9 +152,11 @@ namespace ComplianceAuditWeb.Controllers
                 Client.insertGroups(model.Group);
                 return View("CreateUser");
             }
-                return View("_AddUserGroup", model);
+            ModelState.AddModelError("", ConfigurationManager.AppSettings[""]);
+            return View("_AddUserGroup", model);
         }
 
+        //Get:Updateusergroup
         [HttpGet]
         public ActionResult Updateusergroup(int groupid)
         {
@@ -195,6 +183,7 @@ namespace ComplianceAuditWeb.Controllers
             return View("_AddUserGroup", model);
         }
 
+        //Post:Updateusergroup
         [HttpPost]
         public ActionResult Updateusergroup(UserGroupViewModel model)
         {
@@ -204,9 +193,11 @@ namespace ComplianceAuditWeb.Controllers
                 Client.updateGroups(model.Group);
                 return View();
             }
+            ModelState.AddModelError("", ConfigurationManager.AppSettings[""]);
             return View("_AddUserGroup", model);
         }
 
+        //Get:AddUser
         [HttpGet]
         public ActionResult AddUser()
         {           
@@ -219,7 +210,6 @@ namespace ComplianceAuditWeb.Controllers
             Groups.ReadXml(new StringReader(xmlGroups));
             userviewmodel.UserGroupList = new List<SelectListItem>();
             //userviewmodel.UserGroupList.Add(new SelectListItem { Text = "--Select--", Value = "0" });
-            //if
             foreach (System.Data.DataRow row in Groups.Tables[0].Rows)
             {
                 userviewmodel.UserGroupList.Add(new SelectListItem { Text = row["User_Group_Name"].ToString(), Value =row["User_Group_ID"].ToString() });
@@ -241,18 +231,22 @@ namespace ComplianceAuditWeb.Controllers
             return View("_AddUser", userviewmodel);
         }
 
+        //Post:AddUser
         [HttpPost]
         public ActionResult AddUser(UserViewModel model, HttpPostedFileBase file)
         {
                 UserService.UserServiceClient Client = new UserService.UserServiceClient();
                 if (ModelState.IsValid)
                 {
-                CommonController common = new CommonController();
-                model.User.photo = Path.GetFileName(file.FileName);
-                string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName(file.FileName));
-                string message= common.UploadFile(file, filePath);
-                ModelState.AddModelError("User.Photo", message); 
-                string res = Client.insertUser(model.User);
+                if (file != null && file.ContentLength > 0)
+                {
+                    CommonController common = new CommonController();
+                    model.User.photo = Path.GetFileName(file.FileName);
+                    string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName(file.FileName));
+                    string message = common.UploadFile(file, filePath);
+                    //ModelState.AddModelError("User.Photo", message); 
+                }
+                    string res = Client.insertUser(model.User);
                     if (res != "EXISTS")
                     {
                         model.User.UserId = Convert.ToInt32(res);
@@ -262,6 +256,7 @@ namespace ComplianceAuditWeb.Controllers
                     }
                     else
                         ModelState.AddModelError("User.EmailId", "UserName is already Exists");
+                
                 }
                 model.User.UserId = 0;
                 string xmlGroups = Client.GetUserGroup(0);
@@ -280,9 +275,11 @@ namespace ComplianceAuditWeb.Controllers
                 {
                     model.RolesList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
                 }            
+                
             return View("_AddUser", model);
         }
 
+        //Get:UpateUser
         [HttpGet]
         public ActionResult UpdateUser(int UserId)
         {
@@ -301,6 +298,7 @@ namespace ComplianceAuditWeb.Controllers
             model.User.EmailId = Convert.ToString(ds.Tables[0].Rows[0]["Email_ID"]);
             model.User.Gender = Convert.ToString(ds.Tables[0].Rows[0]["Gender"]);
             model.User.LastLogin = Convert.ToDateTime(ds.Tables[0].Rows[0]["Last_Login"]);
+            model.User.photo = Convert.ToString(ds.Tables[0].Rows[0]["Photo"]);
             //model.User.IsActive = Convert.ToBoolean(ds.Tables[0].Rows[0]["Is_Active"]);
             model.UserGroupList = new List<SelectListItem>();
             xmldata = Client.GetUserGroup(0);
@@ -352,11 +350,20 @@ namespace ComplianceAuditWeb.Controllers
             return View("_AddUser",model);
         }
 
+        //Post:UpateUser
         [HttpPost]
-        public ActionResult UpdateUser(UserViewModel model)
+        public ActionResult UpdateUser(UserViewModel model, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                if (file != null && file.ContentLength > 0)
+                {
+                    CommonController common = new CommonController();
+                    model.User.photo = Path.GetFileName(file.FileName);
+                    string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName(file.FileName));
+                    string message = common.UploadFile(file, filePath);
+                    ModelState.AddModelError("User.Photo", message); 
+                }
                 UserService.UserServiceClient Client = new UserService.UserServiceClient();
                 model.User.IsActive = true;
                 Client.updateUser(model.User);
@@ -365,9 +372,11 @@ namespace ComplianceAuditWeb.Controllers
                 Client.UpdateUserRole(model.User.UserId);
                 Client.insertUserRole(model.User.UserId, model.RoleID);
             }
-            return View("CreateUser");
+            ModelState.AddModelError("", ConfigurationManager.AppSettings[""]);
+            return View("");
         }
        
+        //
         public ActionResult ListofUsers()
         {
             UserService.UserServiceClient client = new UserService.UserServiceClient();
@@ -449,7 +458,7 @@ namespace ComplianceAuditWeb.Controllers
         {
             UserService.UserServiceClient client = new UserService.UserServiceClient();
             client.DeleteRole(RoleId);
-            return View("CreateUser");
+            return RedirectToAction("");
         }
 
         public ActionResult Deletegroup(int GroupId)

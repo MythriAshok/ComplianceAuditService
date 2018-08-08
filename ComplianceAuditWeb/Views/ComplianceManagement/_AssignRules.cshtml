@@ -28,7 +28,7 @@
                     });
                 }
                 $('#selectedItems').val(JSON.stringify(selectedItems));
-                alert(selectedItems);
+              
             }
         });
         $(function () {
@@ -55,8 +55,7 @@
             <li>
                 <input type="hidden" name="selectedItems" id="selectedItems" />
                 <input type="submit" value="Apply" class="btn primary-button" />
-                <input type="reset" value="Reset" class="btn primary-button" />
-                <input type="button" value="Cancel" class="btn primary-button" />
+                <input type="button" value="Cancel" class="btn primary-button" onclick=@Url.Action("SMEdashboard","ComplianceManagement") />
             </li>
         </ul>
     </div>

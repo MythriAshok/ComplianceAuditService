@@ -202,7 +202,7 @@ namespace Compliance.DataAccess
             return Auditorid;
         }
 
-        public bool insertActAndRuleforBranch(int orgid,int ruleid,char flag,int userid)
+        public bool insertActAndRuleforBranch(int orgid,int ruleid,int userid)
         {
             bool res = false;
             try
@@ -210,7 +210,6 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_insertupdateComplianceBranchMapping", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Flag", flag);                
                 cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", ruleid);
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID", orgid);
                 cmd.Parameters.AddWithValue("p_UpdatedByLogin_ID", userid);
@@ -232,15 +231,14 @@ namespace Compliance.DataAccess
             return res;
         }
 
-        public DataSet getRuleforBranch(int sectionid,int branchid)
+        public DataSet getRuleforBranch(int branchid)
         {
             DataSet ds = new DataSet();
             try
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getRuleforBranch", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", sectionid);
+                cmd.CommandType = CommandType.StoredProcedure;                
                 cmd.Parameters.AddWithValue("p_Org_ID", branchid);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(ds);

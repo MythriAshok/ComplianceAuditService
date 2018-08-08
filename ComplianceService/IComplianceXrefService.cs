@@ -31,7 +31,7 @@ namespace ComplianceService
         [OperationContract]
         int GetAuditorId(int Branchid);
         [OperationContract]
-        string getRuleforBranch(int sectionid, int branchid);
+        string getRuleforBranch(int branchid);
         [OperationContract]
         bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid);
 

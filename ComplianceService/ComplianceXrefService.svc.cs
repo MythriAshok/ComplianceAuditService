@@ -94,21 +94,21 @@ namespace ComplianceService
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
             foreach(int id in ruleid)
             {                
-                res=helper.insertActAndRuleforBranch(orgid,id,'I', userid);
+                res=helper.insertActAndRuleforBranch(orgid,id, userid);
             }
             return res;
             
         }
 
-        public string getRuleforBranch(int sectionid,int branchid)
+        public string getRuleforBranch(int branchid)
         {
-            return Bindruleforbranch(sectionid, branchid);
+            return Bindruleforbranch( branchid);
         }
 
-        private string Bindruleforbranch(int sectionid, int branchid)
+        private string Bindruleforbranch( int branchid)
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
-            DataSet ds = helper.getRuleforBranch(sectionid,branchid);
+            DataSet ds = helper.getRuleforBranch(branchid);
             UtilityHelper utilityHelper = new UtilityHelper();
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();

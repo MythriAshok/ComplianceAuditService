@@ -393,7 +393,7 @@ namespace ComplianceAuditWeb.Controllers
             ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
             int sectionID = Convert.ToInt32(secid);
             int BranchID = Convert.ToInt32(branchid);
-            string xmldata = client.getRuleforBranch(sectionID, BranchID);
+            string xmldata = client.getRuleforBranch(BranchID);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             List<SelectListItem> Rulelist = new List<SelectListItem>();
@@ -425,21 +425,28 @@ namespace ComplianceAuditWeb.Controllers
                 text = "Select All",
                 state = new Models.State(true, false, false)
             };
-
+            int orgid = Convert.ToInt32(Session["Branch_Id"]);
             //Create a basic structure of nodes
             var children = new List<treenode>();
             ComplianceXrefService.ComplianceXrefServiceClient xrefclient = new ComplianceXrefService.ComplianceXrefServiceClient();
+
             string xmldata = xrefclient.GetActs();
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
-            //  List<TreeViewnode> node = new List<TreeViewnode>();
+
             xmldata = xrefclient.GetRules(0);
             DataSet dsrules = new DataSet();
             dsrules.ReadXml(new StringReader(xmldata));
-            treenode act = new treenode();
+           
             xmldata = xrefclient.GetSections(0);
             DataSet dsection = new DataSet();
             dsection.ReadXml(new StringReader(xmldata));
+
+            xmldata = xrefclient.getRuleforBranch(orgid);
+            DataSet dsassigenedrule = new DataSet();
+            dsassigenedrule.ReadXml(new StringReader(xmldata));
+
+            treenode act = new treenode();
             if (ds.Tables.Count > 0)
             {
                 foreach (System.Data.DataRow row in ds.Tables[0].Rows)
@@ -455,12 +462,23 @@ namespace ComplianceAuditWeb.Controllers
 
                                 if (dsrules.Tables.Count > 0)
                                 {
-                                    foreach (System.Data.DataRow rules in dsrules.Tables[0].Rows)
+                                    foreach(System.Data.DataRow rules in dsrules.Tables[0].Rows)
                                     {
                                         if (section["Compliance_Xref_ID"].ToString() == rules["Compliance_Parent_ID"].ToString())
-                                        {
-                                            sec.children.Add(new treenode { id = rules["Compliance_Xref_ID"].ToString(), text = rules["Compliance_Title"].ToString(), icon = "fa fa-leanpub", state = new Models.State(false, false, false), categorytype = "Rule", children = new List<treenode>() });
+                                        {  
+                                            var rule=new treenode { id = rules["Compliance_Xref_ID"].ToString(), text = rules["Compliance_Title"].ToString(), icon = "fa fa-leanpub", state = new Models.State(false, false, false), categorytype = "Rule", children = new List<treenode>() };
+                                          
+                                            foreach (System.Data.DataRow assignrules in dsassigenedrule.Tables[0].Rows)
+                                            {
+                                                if(assignrules["Compliance_Xref_ID"].ToString() == rules["Compliance_Xref_ID"].ToString())
+                                                {
+                                                    rule.state = new Models.State(false, true, true);
+                                                    break;
+                                                }
+                                            }
+                                            sec.children.Add(rule);
                                         }
+                                        
                                     }
                                 }
                                 act.children.Add(sec);
@@ -480,9 +498,9 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult AssignRules(string selectedItems)
         {
             List<treenode> ruleslist = (new JavaScriptSerializer()).Deserialize<List<treenode>>(selectedItems);
-            int[] rules = null;
+            int[] rules=new int[ruleslist.Count];
             int i = 0;
-            int userid = Convert.ToInt32(Session["User_Id"]);
+            int userid = Convert.ToInt32(Session["UserId"]);
             int orgid = Convert.ToInt32(Session["Branch_Id"]);
             foreach (var item in ruleslist)
             {
@@ -490,7 +508,7 @@ namespace ComplianceAuditWeb.Controllers
             }
             ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
             client.inseretActandRuleforBranch(orgid, rules, userid);
-            return View("_SMEDashboard");
+            return RedirectToAction("SMEDashboard");
         }
         [HttpGet]
         public ActionResult SMEdashboard()
@@ -509,26 +527,44 @@ namespace ComplianceAuditWeb.Controllers
                     model.Companylist.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
                 }
             }
-            xmldata = client.GetBranchList();
+            Session["Company"] = model.Companylist;            
+            model.Branch = new List<Organization>();
+            model.Vendor = new List<Organization>();
+            return View("_SMEDashboard", model);
+        }
+
+        [HttpPost]
+        public ActionResult SMEdashboard(AllocateActandRuleViewModel model)
+        {
+            model.Companylist =(List<SelectListItem>) Session["Company"];
+            model.Branch = new List<Organization>();
+            model.BranchList = new List<SelectListItem>();
+            model.VendorList = new List<SelectListItem>();
+            AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
+            string xmldata = auditServiceClient.getSpecificBranchList(model.CompanyId);
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.Branch.Add(new Organization { Company_Name= Convert.ToString(row["Company_Name"]), Company_Id = Convert.ToInt32(row["Org_Hier_ID"] ) });
+                    //model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                }
+            }
+            
+            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+            xmldata = organizationServiceClient.GetVendors(model.CompanyId);
             ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             if (ds.Tables.Count > 0)
             {
-                model.BranchList = new List<SelectListItem>() { new SelectListItem { Text = "--Select Branch--", Value = "0" } };
                 foreach (System.Data.DataRow row in ds.Tables[0].Rows)
                 {
-                    model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                    model.VendorList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
                 }
             }
-            ViewBag.vendor = new List<SelectListItem>() { new SelectListItem { Text = "--Select Vendor--", Value = "0" } };
-            model.VendorList = new List<SelectListItem>() { new SelectListItem { Text = "--Select Vendor--", Value = "0" } };
             return View("_SMEDashboard", model);
         }
-
-        //[HttpPost]
-        //public ActionResult SMEdashboard(AllocateActandRuleViewModel model)
-        //{
-        //    return RedirectToAction("AssignRules", new { BranchId = model.BranchId });
-        //}
     }
 }

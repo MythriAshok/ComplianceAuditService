@@ -105,6 +105,10 @@
         </div>*@
     <div class="col-xs-3 subSelect ">
         <div class="input-field">
+            @if(Model.User.photo!=null)
+            {
+                <img src="/UploadedFiles/@Model.User.photo" alt="" />
+            }
             <label for="file">Upload File:</label>
             <input type="file" name="file" id="file" />
             @Html.ValidationMessageFor(m=>m.User.photo, "", new { @class = "text-danger" })
