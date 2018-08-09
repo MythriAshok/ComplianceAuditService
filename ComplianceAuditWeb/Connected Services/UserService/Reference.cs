@@ -166,10 +166,10 @@ namespace ComplianceAuditWeb.UserService {
         System.Threading.Tasks.Task<string> LoginAsync(string emailid, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/getmenulist", ReplyAction="http://tempuri.org/IUserService/getmenulistResponse")]
-        string getmenulist(int usergroupid, int parentmenuid);
+        string getmenulist(int userid, int parentmenuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/getmenulist", ReplyAction="http://tempuri.org/IUserService/getmenulistResponse")]
-        System.Threading.Tasks.Task<string> getmenulistAsync(int usergroupid, int parentmenuid);
+        System.Threading.Tasks.Task<string> getmenulistAsync(int userid, int parentmenuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/getmenu", ReplyAction="http://tempuri.org/IUserService/getmenuResponse")]
         string getmenu();
@@ -405,12 +405,12 @@ namespace ComplianceAuditWeb.UserService {
             return base.Channel.LoginAsync(emailid, password);
         }
         
-        public string getmenulist(int usergroupid, int parentmenuid) {
-            return base.Channel.getmenulist(usergroupid, parentmenuid);
+        public string getmenulist(int userid, int parentmenuid) {
+            return base.Channel.getmenulist(userid, parentmenuid);
         }
         
-        public System.Threading.Tasks.Task<string> getmenulistAsync(int usergroupid, int parentmenuid) {
-            return base.Channel.getmenulistAsync(usergroupid, parentmenuid);
+        public System.Threading.Tasks.Task<string> getmenulistAsync(int userid, int parentmenuid) {
+            return base.Channel.getmenulistAsync(userid, parentmenuid);
         }
         
         public string getmenu() {

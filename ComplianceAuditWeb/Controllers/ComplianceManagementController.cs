@@ -35,30 +35,26 @@ namespace ComplianceAuditWeb.Controllers
                     model.Countrylist.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
                 }
             }
-            string strXMLStates = organizationservice.GetStateList(0);
-            string strXMLCities = organizationservice.GetCityList(0);
-            DataSet dsStates = new DataSet();
-            DataSet dsCities = new DataSet();
-            dsStates.ReadXml(new StringReader(strXMLStates));
-            dsCities.ReadXml(new StringReader(strXMLCities));
-            if (dsStates.Tables.Count > 0)
-            {
+      
                 model.Statelist = new List<SelectListItem>();
                 model.Statelist.Add(new SelectListItem() { Text = "--Select State--", Value = "0" });
-                foreach (System.Data.DataRow row in dsStates.Tables[0].Rows)
-                {
-                    model.Statelist.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
-                }
-            }
-            if (dsCities.Tables.Count > 0)
-            {
+          
                 model.Citylist = new List<SelectListItem>();
                 model.Citylist.Add(new SelectListItem() { Text = "--Select City--", Value = "0" });
-                foreach (System.Data.DataRow row in dsCities.Tables[0].Rows)
-                {
-                    model.Citylist.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
-                }
-            }
+          
+
+            model.ActType = new List<SelectListItem>();
+            model.ActType.Add(new SelectListItem { Text = "--Select Act Type--", Value = "0" });
+            model.ActType.Add(new SelectListItem { Text = "Union Level", Value = "1" });
+            model.ActType.Add(new SelectListItem { Text = "State Level", Value = "2" });
+            //model.ActType.Add(new SelectListItem { Text = "City Level", Value = "3" });
+
+
+            model.AuditType = new List<SelectListItem>();
+            model.AuditType.Add(new SelectListItem { Text = "Labour Compliance", Value = "1" });
+            model.Compliance = new ComplianceXref();
+            model.Compliance.Compliance_Xref_ID = 0;
+
             return View("_AddActs", model);
         }
         [HttpPost]

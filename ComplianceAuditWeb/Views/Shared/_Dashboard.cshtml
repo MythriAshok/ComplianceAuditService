@@ -1,6 +1,6 @@
 ﻿
 @model IEnumerable < Compliance.DataObject.Menus>
-
+@{ int listcount = 0;}
 
 <div class="new_section_box">
     <div class="tab-content">
@@ -8,45 +8,49 @@
             <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h2>
             @foreach (var item in Model)
             {
+                listcount++;
                 <div class="col-sm-3 QueList">
                     <div class="queContainer">
                         <a href=@item.PathUrl>
-                            <span class="qIcon"><img src = "/Content/assets/images/@item.icon"  alt=""/></span>
+                            <span class="qIcon"><img src="/Content/assets/images/@item.icon" alt="" /></span>
                             <h3 class="PB25">@item.MenuName</h3>
                         </a>
-                        <div class="clearfix"></div>
                     </div>
                 </div>
+                if (listcount == 4)
+                {
+                    <div class="clearfix"></div>
+                }
             }
             @*<div class="col-sm-3 QueList">
-                <div class="queContainer">
-                    <a href="@Url.Action("AddUserGroup","UserManagement")">
-                        <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
-                        <h3 class="PB25">Add UserGroup</h3>
-                    </a>
-                    <div class="clearfix"></div>
-                </div>
+            <div class="queContainer">
+                <a href="@Url.Action("AddUserGroup","UserManagement")">
+                    <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                    <h3 class="PB25">Add UserGroup</h3>
+                </a>
+                <div class="clearfix"></div>
             </div>
+        </div>
 
-            <div class="col-sm-3 QueList">
-                <div class="queContainer">
-                    <a href="@Url.Action("AddUser","UserManagement")" ">
-                        <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
-                        <h3 class="PB25">Add User</h3>
-                    </a>
-                    <div class="clearfix"></div>
-                </div>
+        <div class="col-sm-3 QueList">
+            <div class="queContainer">
+                <a href="@Url.Action("AddUser","UserManagement")" ">
+                    <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                    <h3 class="PB25">Add User</h3>
+                </a>
+                <div class="clearfix"></div>
             </div>
+        </div>
 
-            <div class="col-sm-3 QueList">
-                <div class="queContainer">
-                    <a href="@Url.Action("ListofUsers","UserManagement")" ">
-                        <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
-                        <h3 class="PB25">ListofUsers</h3>
-                    </a>
-                    <div class="clearfix"></div>
-                </div>
-            </div>*@
+        <div class="col-sm-3 QueList">
+            <div class="queContainer">
+                <a href="@Url.Action("ListofUsers","UserManagement")" ">
+                    <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                    <h3 class="PB25">ListofUsers</h3>
+                </a>
+                <div class="clearfix"></div>
+            </div>
+        </div>*@
 
             <div class="clearfix"></div>
 

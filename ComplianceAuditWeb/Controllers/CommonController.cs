@@ -126,7 +126,7 @@ namespace ComplianceAuditWeb.Controllers
             List<Menus> menues = new List<Menus>();
             UserService.UserServiceClient client = new UserService.UserServiceClient();
             DataSet ds = new DataSet();
-            string xmlmenu = client.getmenulist(Convert.ToInt32(Session["Usergroupid"]), pid);
+            string xmlmenu = client.getmenulist(Convert.ToInt32(Session["UserId"]), pid);
             ds.ReadXml(new StringReader(xmlmenu));
             if (ds.Tables.Count > 0)
             {

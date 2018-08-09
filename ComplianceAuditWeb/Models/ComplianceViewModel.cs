@@ -15,9 +15,7 @@ namespace ComplianceAuditWeb.Models
 
         public List<SelectListItem> Citylist { get; set; }
 
-        public bool Is_StateLaw { get; set; }
-
-        public bool Is_RegionalLaw { get; set; }
+        public int ActTypeID { get; set; }
         public enum RiskCategory
         {
             High,
@@ -25,12 +23,10 @@ namespace ComplianceAuditWeb.Models
             Low
         }
 
-        public enum ActType
-        {
-            Union_Level,
-            State_Level,
-            Regional_Level
-        }
+        public List<SelectListItem> ActType { get; set; }
+        public List<SelectListItem> AuditType { get; set; }
+
+
     }
 
   

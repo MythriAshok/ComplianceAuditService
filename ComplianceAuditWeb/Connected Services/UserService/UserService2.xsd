@@ -357,7 +357,7 @@
   <xs:element name="getmenulist">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="usergroupid" type="xs:int" />
+        <xs:element minOccurs="0" name="userid" type="xs:int" />
         <xs:element minOccurs="0" name="parentmenuid" type="xs:int" />
       </xs:sequence>
     </xs:complexType>

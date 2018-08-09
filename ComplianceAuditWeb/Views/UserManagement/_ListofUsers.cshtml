@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Compliance.DataObject.User>
 
 
-<p style="text-align:right">
+<p style="text-align:right;margin-right:20px">
     @Html.ActionLink("Create New", actionName: "AddUser")
 </p>
 <table class="table">
@@ -27,13 +27,15 @@
         <th>
             @Html.DisplayNameFor(model => model.Gender)
         </th>
-        <th>
+        @*<th>
             @Html.DisplayNameFor(model => model.IsActive)
-        </th>
+        </th>*@
         <th>
             @Html.DisplayNameFor(model => model.LastLogin)
         </th>
-        <th></th>
+        <th>
+            Action
+        </th>
     </tr>
 
     @foreach (var item in Model)
@@ -65,9 +67,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Gender)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
+            </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.LastLogin)
             </td>

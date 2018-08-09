@@ -254,14 +254,14 @@ namespace ComplianceService
             return xmldata;
         }
 
-        public string getmenulist(int usergroupid, int parentmenuid)
+        public string getmenulist(int userid, int parentmenuid)
         {
-            return bindmenuslist(usergroupid, parentmenuid);
+            return bindmenuslist(userid, parentmenuid);
         }
-        private string bindmenuslist(int groupid, int parentmenuid)
+        private string bindmenuslist(int userid, int parentmenuid)
         {
             MenusHelper helper = new MenusHelper();
-            DataSet ds = helper.getMenus(groupid, parentmenuid);
+            DataSet ds = helper.getMenus(userid, parentmenuid);
             UtilityHelper utilityHelper = new UtilityHelper();
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();
