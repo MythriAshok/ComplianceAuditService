@@ -176,7 +176,7 @@ create procedure sp_insertupdateOrganizationHier
  p_Is_Leaf tinyint,
  p_Industry_Type varchar(45),
  p_Last_Updated_Date datetime,
-
+ p_logo varchar(100),
  p_User_ID int,
  p_Is_Active bit,
  p_Is_Delete bit,
@@ -194,7 +194,7 @@ level,
 Is_Leaf, 
 Industry_Type, 
 Last_Updated_Date,
-
+logo,
 User_ID, 
 Is_Active,
 Is_Delete,
@@ -209,7 +209,7 @@ p_level,
 p_Is_Leaf,
 p_Industry_Type,
 now(),
-
+p_logo,
 p_User_ID,
 p_Is_Active,
 p_Is_Delete,
@@ -217,8 +217,6 @@ p_Is_Vendor);
 select last_insert_id();
 else
 update tbl_org_hier
-inner join tbl_Branch_Location on tbl_Branch_Location.Org_Hier_ID = tbl_Org_Hier.Org_Hier_ID
-inner join tbl_Company_Details on tbl_Company_Details.Org_Hier_ID = tbl_Org_Hier.Org_Hier_ID
 set
 tbl_org_hier.Org_Hier_ID=p_Org_Hier_ID,
 Company_Name=p_Company_Name,
@@ -229,7 +227,7 @@ level=p_level,
 Is_Leaf=p_Is_Leaf, 
 Industry_Type=p_Industry_Type,
 Last_Updated_Date=now(),
- 
+ logo= p_logo,
 User_ID=p_User_ID,
 Is_Active=p_Is_Active,
 Is_Delete = p_Is_Delete,
@@ -343,20 +341,8 @@ logo,
 User_ID, 
 Is_Active,
 Is_Delete,
-Is_Vendor,
-tbl_branch_location.Location_ID,
-tbl_branch_location.Org_Hier_ID,
-Location_Name,
-Address,
-Country_ID,
-State_ID,
-City_ID,
-Postal_Code,
-Branch_Coordinates1,
-Branch_Coordinates2,
-Branch_CoordinateURL
+Is_Vendor
 from tbl_org_hier 
-inner join tbl_branch_location on tbl_branch_location.Org_Hier_ID = tbl_org_hier.Org_Hier_ID
 where tbl_org_hier.Org_Hier_ID= p_Org_Hier_ID;
 End If;
 end/
@@ -501,7 +487,6 @@ select * from tbl_org_hier where Parent_Company_ID=p_Parent_Company_ID ;
 end if;
 end/
 Delimiter ;
-
 
 Drop Procedure if exists `sp_getCompanyListsforBranch`;
 Delimiter /
@@ -1212,6 +1197,7 @@ begin
 select * from tbl_org_hier where 
 Org_Hier_ID IN(Select Org_Hier_ID from tbl_branch_auditor_mapping where Auditor_ID=p_Auditor_ID) ;
 end/
+delimiter ;
 
 
 
@@ -1299,6 +1285,7 @@ Is_Active = 0,
 Effective_End_Date= now()
  where Vendor_Branch_ID = p_Vendor_Branch_ID ;
 end/
+delimiter ;
 
 
 drop procedure if exists sp_ActivateVendorForBranch;
@@ -1312,6 +1299,7 @@ Is_Active = 1,
 Effective_Start_Date= now()
  where Vendor_Branch_ID = p_Vendor_Branch_ID ;
 end/
+delimiter ;
 
 drop procedure if exists sp_ActivateVendorForCompany;
 delimiter /
@@ -1327,7 +1315,7 @@ Is_Active = 1 ,
 Calender_StartDate = now() 
 where tbl_org_hier.Org_Hier_ID=p_Org_Hier_ID;
 end/
-
+delimiter ;
 
 drop procedure if exists sp_DeactivateVendorForCompany;
 delimiter /
@@ -1343,6 +1331,7 @@ Is_Active = 0 ,
 Calender_EndDate = now() 
 where tbl_org_hier.Org_Hier_ID=p_Org_Hier_ID;
 end/
+delimiter ;
 
 Drop Procedure if exists `sp_insertupdateVendorForBranch`;
 Delimiter /

@@ -12,48 +12,55 @@
 </ul>
 @using (Html.BeginForm())
 {
-    <h3 style="text-align:center;font-weight:100">
-        @Html.DisplayFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
-    </h3>
-
-    @*@Html.Label("Company Name", new { @class = "floating-label" })*@
-    <div class="clearfix"></div>
     <img src="/UploadedFiles/@Model.CompanyLogo" alt="" />
-
-
-    
-
     <div class="clearfix"></div>
 
-
-
-    @Html.Label("Company Description", new { @class = "floating-label" })
-    <div class="box">
-
-        @Html.DisplayFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input" })
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Vendor name")
+            @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
+        </div>
     </div>
 
-    @Html.HiddenFor(m => m.CompanyID)
-    @Html.HiddenFor(m => m.ParentCompanyID)
+    @*@Html.Label("Company Name", new { @class = "floating-label" })*@
 
-    <ul class="list-inline continueBtn">
-        <li>
-            @Html.ActionLink("Modify", "UpdateVendor", new { OrgID = Model.CompanyID }, new { @class = "btn primary-button" })
-            <input type="submit" value="List of Vendors" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
-            @Html.ActionLink("Delete", "DeleteVendor", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
-            @if (Model.Is_Active == true)
-            {
-            @Html.ActionLink("Deactivate", "DeactivateVendorUnderCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+
+
+
+    <div class="clearfix"></div>
+
+
+
+    <div class="col-xs-12 subSelect ">
+        <div class="input-field">
+
+
+            @Html.Label("Vendor Description", new { @class = "floating-label" })
+            @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input" })
+
+            </div>
+        </div>
+            @Html.HiddenFor(m => m.CompanyID)
+            @Html.HiddenFor(m => m.ParentCompanyID)
+
+            <ul class="list-inline continueBtn">
+                <li>
+                    @Html.ActionLink("Modify", "UpdateVendor", new { OrgID = Model.CompanyID }, new { @class = "btn primary-button" })
+                    <input type="submit" value="Cancel" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+                    @Html.ActionLink("Delete", "DeleteVendor", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+                    @if (Model.Is_Active == true)
+                    {
+                        @Html.ActionLink("Deactivate", "DeactivateVendorUnderCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Activate", "ActivateVendorUnderCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+
+                    }
+                </li>
+            </ul>
+
             }
-            else
-            {
-            @Html.ActionLink("Activate", "ActivateVendorUnderCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
-
-            }
-        </li>
-    </ul>
-
-}
 
 
 

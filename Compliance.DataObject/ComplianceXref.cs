@@ -19,7 +19,6 @@ namespace Compliance.DataObject
         public int level { get; set; }
         public int Comp_Order { get; set; }
         public int Compliance_Parent_ID { get; set; }
-        public int Option_ID { get; set; }
         public string Risk_Category { get; set; }
         public string Risk_Description { get; set; }
         public string Recurrence { get; set; }
@@ -31,13 +30,13 @@ namespace Compliance.DataObject
         public DateTime Effective_Start_Date { get; set; }
         [DataType(DataType.Date)]
         public DateTime Effective_End_Date { get; set; }
+        [Required]
         public int Country_ID { get; set; }
         public int State_ID { get; set; }
         public int City_ID { get; set; }
         public DateTime Last_Updated_Date { get; set; }
         public int User_ID { get; set; }
         public bool Is_Active { get; set; }
-
         public string Audit_Type { get; set; }
 
     }

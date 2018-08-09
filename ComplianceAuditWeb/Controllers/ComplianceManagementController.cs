@@ -110,7 +110,6 @@ namespace ComplianceAuditWeb.Controllers
                     Is_Active = Convert.ToBoolean(row["Is_Active"]),
                     Is_Best_Practice = Convert.ToBoolean(row["Is_Best_Practice"]),
                     Risk_Category = Convert.ToString(row["Risk_Category"]),
-                    Option_ID = Convert.ToInt32(row["Option_ID"]),
                     Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
                     Recurrence = Convert.ToString(row["Recurrence"]),
                     Risk_Description = Convert.ToString(row["Risk_Description"]),
@@ -472,7 +471,7 @@ namespace ComplianceAuditWeb.Controllers
                                             {
                                                 if(assignrules["Compliance_Xref_ID"].ToString() == rules["Compliance_Xref_ID"].ToString())
                                                 {
-                                                    rule.state = new Models.State(false, true, true);
+                                                    rule.state = new Models.State(false, false, true);
                                                     break;
                                                 }
                                             }

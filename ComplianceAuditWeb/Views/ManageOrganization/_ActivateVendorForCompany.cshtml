@@ -1,5 +1,4 @@
-﻿@model ComplianceAuditWeb.Models.VendorActivateDeactivateViewModel
-
+﻿@model ComplianceAuditWeb.Models.OrgActivateDeactivateViewModel
 
 
 <ul class="breadcrumb ML15">
@@ -23,12 +22,12 @@
 
 
 
-                @Html.HiddenFor(m => m.VendorID)
+                @Html.HiddenFor(m => m.CompanyID)
 
                 @*@Html.LabelFor(m => m.CompanyName, new { @class = "floating-label", Style = "font-size:15px" })*@
 
                 @*@Html.Label("Selected Company Name")*@
-                @Html.TextBoxFor(m => m.VendorName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly", @Style = "text-align:center" })
+                @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly", @Style = "text-align:center" })
 
             </div>
         </center>

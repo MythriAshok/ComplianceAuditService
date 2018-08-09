@@ -18,8 +18,10 @@ namespace Compliance.DataObject
         public string LastName { get; set; }
         [Required]
         [DataType(DataType.EmailAddress)]
+        [RegularExpression("^([a-zA-Z0- 9_/-/.]+)@([a-zA-Z0-9_/-/.]+)/.([a-zA-Z]{2, 5})$")]
         public string EmailId { get; set; }
         [Required]
+        [RegularExpression("^((/+)?(/d{2}[-]))?(/d{10}){1}?$")]
         public string ContactNumber { get; set; }
         [Required]
         public string Gender { get; set; }

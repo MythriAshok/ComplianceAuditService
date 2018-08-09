@@ -54,21 +54,21 @@
             @Html.ValidationMessageFor(model => model.Compliance.Effective_End_Date, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="col-xs-4 subSelect ">
+    @*<div class="col-xs-4 subSelect ">
         <div class="input-field">
             @Html.Label("Country", new { @class = "floating-label" })
 
             @Html.DropDownListFor(model => model.Compliance.Country_ID, Model.Countrylist, new { @class = "inputMaterial ui - autocomplete - input" })
             @Html.ValidationMessageFor(model => model.Compliance.Country_ID, "", new { @class = "text-danger" })
         </div>
-    </div>
+    </div>*@
     <div class="clearfix"></div>
-    <div class="col-xs-4 subSelect ">
+    @*<div class="col-xs-4 subSelect ">
         <div class="input-field">
-            @*@Html.Label("Is StateLaw", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Is StateLaw", htmlAttributes: new { @class = "control-label col-md-2" })
                 @Html.CheckBoxFor(model => model.Is_StateLaw, new { htmlAttributes = new { @class = "form-control" } })
                 if (Model.Is_StateLaw)
-                {*@
+                {
 
             @Html.Label("State", new { @class = "floating-label" })
 
@@ -78,10 +78,10 @@
     </div>
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
-            @*@Html.Label("Is Regional Law", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Is Regional Law", htmlAttributes: new { @class = "control-label col-md-2" })
                 @Html.CheckBoxFor(model => model.Is_RegionalLaw, new { htmlAttributes = new { @class = "form-control" } })
                 if (Model.Is_RegionalLaw)
-                {*@
+                {
             @Html.Label("City", new { @class = "floating-label" })
 
             @Html.DropDownListFor(model => model.Compliance.City_ID, Model.Citylist, new { @class = "inputMaterial ui - autocomplete - input" })
@@ -89,14 +89,14 @@
         </div>
     </div>
 
-    @*}
+    }
         }*@
     <div class="clearfix"></div>
     <ul class="list-inline continueBtn">
         <li>
             <div class="modal-footer">
                 <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Save<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
-                <input type="submit" value="Reset" class="btn primary-button" />
+                <input type="reset" value="Reset" class="btn primary-button" />
                 <button class="btn primary-button" data-dismiss="modal" id="btnCancel">Cancel</button>
             </div>
         </li>

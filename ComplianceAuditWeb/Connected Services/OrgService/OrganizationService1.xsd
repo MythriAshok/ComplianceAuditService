@@ -19,22 +19,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Organization" nillable="true" type="tns:Organization" />
-  <xs:complexType name="BranchLocation">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Branch_Coordinates1" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Branch_Coordinates2" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Branch_CoordinatesURL" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Branch_Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Branch_Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="City_Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Country_Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Org_Hier_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="Postal_Code" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="State_Id" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="BranchLocation" nillable="true" type="tns:BranchLocation" />
   <xs:complexType name="CompanyDetails">
     <xs:sequence>
       <xs:element minOccurs="0" name="Auditing_Frequency" nillable="true" type="xs:string" />
@@ -52,4 +36,20 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CompanyDetails" nillable="true" type="tns:CompanyDetails" />
+  <xs:complexType name="BranchLocation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Branch_Coordinates1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Branch_Coordinates2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Branch_CoordinatesURL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Branch_Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Branch_Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="City_Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Country_Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Org_Hier_ID" type="xs:int" />
+      <xs:element minOccurs="0" name="Postal_Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="State_Id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BranchLocation" nillable="true" type="tns:BranchLocation" />
 </xs:schema>

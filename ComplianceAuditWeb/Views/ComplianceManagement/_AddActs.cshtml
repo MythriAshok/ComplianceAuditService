@@ -5,7 +5,7 @@
 }
 <ul class="breadcrumb ML15">
     <li><a href="">Compliance Management</a></li>
-    <li>Add Act</li>
+    <li>Act</li>
 </ul>
 <h2 class="ML15">Add Act</h2>
 @section scripts{
@@ -54,6 +54,7 @@
             });
 
         }
+
     </script>   
 }
 
@@ -66,7 +67,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Compliance Title", new { @class = "floating-label" })
+                @Html.Label("Title", new { @class = "floating-label" })
 
                 @Html.TextBoxFor(model => model.Compliance.Compliance_Title, new { @class = "inputMaterial ui - autocomplete - input" })
                 <span id="loading_data_icon"></span>
@@ -75,10 +76,8 @@
         </div>
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Risk Category", new { @class = "floating-label" })
-
-                @Html.DropDownListFor(model => model.Compliance.Risk_Category, new SelectList(Enum.GetNames(typeof(ComplianceAuditWeb.Models.ComplianceViewModel.RiskCategory))), "--Select RiskCategory", new { @class = "inputMaterial ui - autocomplete - input" })
-                @Html.ValidationMessageFor(model => model.Compliance.Risk_Category, "", new { @class = "text-danger" })
+                @Html.Label("Act Type", new { @class = "floating-label" })
+                @Html.DropDownList("ActType", new SelectList(Enum.GetNames(typeof(ComplianceAuditWeb.Models.ComplianceViewModel.ActType)), new { @class = "inputMaterial ui - autocomplete - input" ,@onchange=""}))
             </div>
         </div>
         <div class="col-xs-4 subSelect ">
@@ -116,38 +115,35 @@
                 @Html.ValidationMessageFor(model => model.Compliance.Country_ID, "", new { @class = "text-danger" })
 
                 @*@Html.Label("Is StateLaw", new { @class = "floating-label" })
-                @Html.CheckBoxFor(model => model.Is_StateLaw,new { @class = "inputMaterial ui - autocomplete - input" })
-                if (Model.Is_StateLaw)
-                {*@
+                @Html.CheckBoxFor(model => model.Is_StateLaw,new { @class = "inputMaterial ui - autocomplete - input",@onclick="" })*@
+
             </div>
         </div>
 
 
 
-        <div class="col-xs-4 subSelect ">
+        @*<div class="col-xs-4 subSelect" id="state" >
             <div class="input-field">
                 @Html.Label("State", new { @class = "floating-label" })
 
                 @Html.DropDownListFor(model => model.Compliance.State_ID, Model.Statelist, new { @onchange = "GetCity(this.value)", @class = "inputMaterial ui - autocomplete - input" })
                 @Html.ValidationMessageFor(model => model.Compliance.State_ID, "", new { @class = "text-danger" })
 
-                @*@Html.Label("Is Regional Law", new { @class = "floating-label" })
+                @Html.Label("Is Regional Law", new { @class = "floating-label" })
                 @Html.CheckBoxFor(model => model.Is_RegionalLaw,new { @class = "inputMaterial ui - autocomplete - input" })
-                if (Model.Is_RegionalLaw)
-                {*@
+
             </div>
         </div>
         <div class="clearfix"></div>
-        <div class="col-xs-4 subSelect ">
+        <div class="col-xs-4 subSelect " id="city">
             <div class="input-field">
                 @Html.Label("City", new { @class = "floating-label" })
 
                 @Html.DropDownListFor(model => model.Compliance.City_ID, Model.Citylist, new { @class = "inputMaterial ui - autocomplete - input" })
                 @Html.ValidationMessageFor(model => model.Compliance.City_ID, "", new { @class = "text-danger" })
-                @*}
-                }*@
+
             </div>
-        </div>
+        </div>*@
 
         <div class="clearfix"></div>
         <ul class="list-inline continueBtn">
@@ -155,9 +151,9 @@
                 @*<input type="submit" value="Create" name="co.formAction" class="btn btn-default" />*@
 
                 <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Save<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
-                <input type="submit" value="Reset" class="btn primary-button" />
+                <input type="reset" value="Reset" class="btn primary-button" />
                 <input type="submit" value="Cancel" class="btn primary-button" />
             </li>
         </ul>
     </div>
-}
+            }
