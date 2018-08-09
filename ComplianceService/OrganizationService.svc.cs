@@ -26,7 +26,7 @@ namespace ComplianceService
         /// <param name="company">data object of CompanyDetails</param>
         /// <param name="branch">data object of BranchLocation</param>
         /// <returns>boolean value</returns>
-        public int insertOrganization(Organization org,  BranchLocation branch)
+        public int insertOrganization(Organization org)
         {
             int OrganizationID = 0;
             int BranchLocationID = 0;
@@ -36,14 +36,14 @@ namespace ComplianceService
             {
                 OrganizationHelper organizationhelper = new OrganizationHelper();
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
-                if (OrganizationID > 0)
-                {
-                    branch.Org_Hier_ID = OrganizationID;
-                    BranchLocationID = organizationhelper.insertupdateBranchLocation(branch, 'I');
-                }
+                ////if (OrganizationID > 0)
+                ////{
+                ////    branch.Org_Hier_ID = OrganizationID;
+                ////    BranchLocationID = organizationhelper.insertupdateBranchLocation(branch, 'I');
+                ////}
              
               
-                if (BranchLocationID > 0 && OrganizationID > 0)
+               // if (BranchLocationID > 0 && OrganizationID > 0)
                 {
                     insertResult = true;
                 }
@@ -61,7 +61,7 @@ namespace ComplianceService
         /// <param name="company">data object of CompanyDetails</param>
         /// <param name="branch">data object of BranchLocation</param>
         /// <returns>boolean value</returns>
-        public bool updateOrganization(Organization org,  BranchLocation branch)
+        public bool updateOrganization(Organization org)
         {
             int OrganizationID = 0;
             int BranchID = 0;
@@ -72,9 +72,9 @@ namespace ComplianceService
                 OrganizationHelper organizationhelper = new OrganizationHelper();
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
 
-                BranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
+              //  BranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
                 // insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
-                if (BranchID > 0 && OrganizationID > 0) //insertCompanyDetailsID > 0)
+               // if (BranchID > 0 && OrganizationID > 0) //insertCompanyDetailsID > 0)
                 //{
                     updateResult = true;
                // }
@@ -579,7 +579,9 @@ namespace ComplianceService
     {
         CountryHelper helper = new CountryHelper();
         DataSet dsCountries = helper.getCountry();
-        string xmlCountries = dsCountries.GetXml();
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCountries = utilityHelper.ConvertNullsToEmptyString(dsCountries);
+            string xmlCountries = dsCountries.GetXml();
         return xmlCountries;
     }
     /// <summary>
@@ -600,7 +602,9 @@ namespace ComplianceService
     {
         CountryHelper countryhelper = new CountryHelper();
         DataSet dsStates = countryhelper.getState(countryID);
-        string xmlStates = dsStates.GetXml();
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsStates = utilityHelper.ConvertNullsToEmptyString(dsStates);
+            string xmlStates = dsStates.GetXml();
         return xmlStates;
     }
     /// <summary>
@@ -621,7 +625,9 @@ namespace ComplianceService
     {
         CountryHelper countryhelper = new CountryHelper();
         DataSet dsCities = countryhelper.getCity(stateID);
-        string xmlCities = dsCities.GetXml();
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCities = utilityHelper.ConvertNullsToEmptyString(dsCities);
+            string xmlCities = dsCities.GetXml();
         return xmlCities;
     }
     /// <summary>
@@ -640,7 +646,9 @@ namespace ComplianceService
     {
         OrganizationHelper OrganizationHelper = new OrganizationHelper();
         DataSet dsGroupCompanies = OrganizationHelper.getGroupCompanyList();
-        string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsGroupCompanies = utilityHelper.ConvertNullsToEmptyString(dsGroupCompanies);
+            string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
         return xmlGroupCompaniesList;
     }
 
@@ -652,6 +660,8 @@ namespace ComplianceService
         {
             OrganizationHelper OrganizationHelper = new OrganizationHelper();
             DataSet dsGroupCompanies = OrganizationHelper.getCompanyList();
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsGroupCompanies = utilityHelper.ConvertNullsToEmptyString(dsGroupCompanies);
             string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
             return xmlGroupCompaniesList;
         }
@@ -706,7 +716,9 @@ namespace ComplianceService
     {
         OrganizationHelper OrganizationHelper = new OrganizationHelper();
         DataSet dsCompanies = OrganizationHelper.getSpecificCompanyList(OrgID);
-        string xmlCompaniesList = dsCompanies.GetXml();
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCompanies = utilityHelper.ConvertNullsToEmptyString(dsCompanies);
+            string xmlCompaniesList = dsCompanies.GetXml();
         return xmlCompaniesList;
     }
 
@@ -719,6 +731,8 @@ namespace ComplianceService
         {
             OrganizationHelper OrganizationHelper = new OrganizationHelper();
             DataSet dsCompanies = OrganizationHelper.getSpecificBranchList(CompanyID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCompanies = utilityHelper.ConvertNullsToEmptyString(dsCompanies);
             string xmlCompaniesList = dsCompanies.GetXml();
             return xmlCompaniesList;
         }
@@ -748,6 +762,8 @@ namespace ComplianceService
         {
             VendorHelper vendorhelper = new VendorHelper();
             DataSet vendors = vendorhelper.getVendorList(CompanyID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            vendors = utilityHelper.ConvertNullsToEmptyString(vendors);
             string xmlroles = vendors.GetXml();
             return xmlroles;
         }
@@ -762,6 +778,8 @@ namespace ComplianceService
         {
             VendorHelper vendorhelper = new VendorHelper();
             DataSet dsVendors = vendorhelper.getVendorListForBRanch(BranchID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsVendors = utilityHelper.ConvertNullsToEmptyString(dsVendors);
             string xmlVendorsList = dsVendors.GetXml();
             return xmlVendorsList;
         }
@@ -775,6 +793,8 @@ namespace ComplianceService
         {
             VendorHelper vendorhelper = new VendorHelper();
             DataSet vendors = vendorhelper.getcompleteVendorList(VendorID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            vendors = utilityHelper.ConvertNullsToEmptyString(vendors);
             string xmlvendors = vendors.GetXml();
             return xmlvendors;
         }
@@ -788,7 +808,8 @@ namespace ComplianceService
         {
             VendorHelper vendorhelper = new VendorHelper();
             DataSet vendors = vendorhelper.getcompleteVendorListassignedToBranch(BranchVendorID);
-
+            UtilityHelper utilityHelper = new UtilityHelper();
+            vendors = utilityHelper.ConvertNullsToEmptyString(vendors);
             string xmlvendors = vendors.GetXml();
             return xmlvendors;
         }

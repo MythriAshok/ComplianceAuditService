@@ -67,76 +67,69 @@
 }
 @using (Html.BeginForm(actionname, "ManageOrganization", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <div class="mid_content_sec">
-        @Html.AntiForgeryToken()
-        @Html.ValidationMessage("Error")
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="col-xs-4 subSelect ">
+<div class="mid_content_sec">
+    @Html.AntiForgeryToken()
+    @Html.ValidationMessage("Error")
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @*@using (Html.BeginForm("AddGroupCompany", "ManageOrganization"))
+                {*@
+            @Html.Label("Group Company Name", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input", size = "4", placeholder = ConfigurationManager.AppSettings["group Company Name"] })
+            @Html.ValidationMessageFor(m => m.organization.Company_Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            <label for="file">Upload Logo:</label>
+            <input type="file" name="file" id="file" />
+            @Html.ValidationMessageFor(m => m.organization.logo, "", new { @class = "text-danger" })
+            <img src="/UploadedFiles/@Model.organization.logo" alt="" />
+
+        </div>
+    </div>
+
+    @Html.HiddenFor(m => m.organization.Organization_Id)
+    <div class="clearfix"></div>
+
+    <div class="col-xs-12 subSelect ">
+        <div class="input-field">
+
+            @Html.Label("Group Company Description", new { @class = "floating-label" })
+            @Html.TextAreaFor(m => m.organization.Description, new { @class = "inputMaterial ui - autocomplete - input" })
+
+        </div>
+    </div>
+
+    @*<div class="col-xs-6 subSelect ">
             <div class="input-field">
-                @*@using (Html.BeginForm("AddGroupCompany", "ManageOrganization"))
-                    {*@
-                @Html.Label("Company Name", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input", size = "4", placeholder = ConfigurationManager.AppSettings["Company_Name"] })
-                @Html.ValidationMessageFor(m => m.organization.Company_Name, "", new { @class = "text-danger" })
+                @Html.Label("Industry Type", new { @class = "floating-label" })<span style="color:red">*</span>
+
+                @Html.DropDownListFor(m => m.organization.Industry_Type, new SelectList
+                        (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.IndustryType))),
+                        "Select Industry Type", new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(m => m.organization.Industry_Type, "", new { @class = "text-danger" })
+
             </div>
         </div>
-        <div class="col-xs-4 subSelect ">
+        <div class="col-xs-6 subSelect ">
             <div class="input-field">
-                @Html.LabelFor(m => m.branch.Address, new { @class = "floating-label" })
-                @Html.TextBoxFor(m => m.branch.Address, new { @class = "inputMaterial ui - autocomplete - input", })
-                @Html.ValidationMessageFor(m => m.branch.Address, "", new { @class = "text-danger" })
-
+                @Html.Label("Location URL", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.TextBoxFor(m => m.branch.Branch_CoordinatesURL, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Branch_CoordinatesURL"] })
             </div>
+        </div>*@
+
+    <div class="clearfix"></div>
+
+    @*<div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Country", new { @class = "floating-label" })
+            @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Country_ID"] })
         </div>
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @Html.Label("Postal Code", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.TextBoxFor(m => m.branch.Postal_Code, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Postal_Code"] })
-                @Html.ValidationMessageFor(m => m.branch.Postal_Code, "", new { @class = "text-danger" })
-
-            </div>
-        </div>
-
-
-        @Html.HiddenFor(m => m.organization.Organization_Id)
-        <div class="clearfix"></div>
-
-        <div class="col-xs-12 subSelect ">
-            <div class="input-field">
-
-                @Html.Label("Company Description", new { @class = "floating-label" })
-                @Html.TextAreaFor(m => m.organization.Description, new { @class = "inputMaterial ui - autocomplete - input" })
-
-            </div>
-        </div>
-
-        @*<div class="col-xs-6 subSelect ">
-                <div class="input-field">
-                    @Html.Label("Industry Type", new { @class = "floating-label" })<span style="color:red">*</span>
-
-                    @Html.DropDownListFor(m => m.organization.Industry_Type, new SelectList
-                            (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.IndustryType))),
-                            "Select Industry Type", new { @class = "inputMaterial ui - autocomplete - input" })
-                    @Html.ValidationMessageFor(m => m.organization.Industry_Type, "", new { @class = "text-danger" })
-
-                </div>
-            </div>
-            <div class="col-xs-6 subSelect ">
-                <div class="input-field">
-                    @Html.Label("Location URL", new { @class = "floating-label" })<span style="color:red">*</span>
-                    @Html.TextBoxFor(m => m.branch.Branch_CoordinatesURL, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Branch_CoordinatesURL"] })
-                </div>
-            </div>*@
-
-        <div class="clearfix"></div>
-
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @Html.Label("Country", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country, new { @onchange = "GetState(this.value);", @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Country_ID"] })
-            </div>
-        </div>
-        <div class="col-xs-4 subSelect ">
+    </div>*@
+    @*<div class="col-xs-4 subSelect ">
             <div class="input-field">
 
 
@@ -153,18 +146,10 @@
                 @Html.DropDownListFor(m => m.branch.City_Id, Model.City, new { @class = "inputMaterial ui - autocomplete - input" })
 
             </div>
-        </div>
+        </div>*@
 
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                <label for="file">Upload File:</label>
-                <input type="file" name="file" id="file" />
-                @Html.ValidationMessageFor(m => m.organization.logo, "", new { @class = "text-danger" })
-                <img src="/UploadedFiles/@Model.organization.logo" alt="" />
 
-            </div>
-        </div>
-    </div>
+</div>
 
 
     @*@Html.LabelFor(m => m.organization.Last_Updated_Date);*@
@@ -173,8 +158,8 @@
     @Html.HiddenFor(m => m.organization.Company_Id)
 
 
-    @Html.HiddenFor(m => m.branch.Branch_Id);
-    @Html.HiddenFor(m => m.branch.Org_Hier_ID);
+    @*@Html.HiddenFor(m => m.branch.Branch_Id);
+    @Html.HiddenFor(m => m.branch.Org_Hier_ID);*@
     @Html.HiddenFor(m => m.organization.Is_Active);
     @Html.HiddenFor(m => m.organization.Is_Delete);
     @Html.HiddenFor(m => m.organization.Is_Leaf);
@@ -268,7 +253,7 @@
         </div>
         <div class="clearfix"></div>*@
 
-    @Html.HiddenFor(m => m.branch.Branch_Id);
+    @*@Html.HiddenFor(m => m.branch.Branch_Id);*@
     @Html.HiddenFor(m => m.organization.Is_Active);
     @Html.HiddenFor(m => m.organization.Is_Delete);
     @Html.HiddenFor(m => m.organization.Is_Leaf);
