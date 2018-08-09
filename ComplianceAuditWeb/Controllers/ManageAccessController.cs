@@ -179,7 +179,7 @@ namespace ComplianceAuditWeb.Controllers
 
             UserService.UserServiceClient client = new UserService.UserServiceClient();
             DataSet ds = new DataSet();
-            string xmlmenu = client.getmenulist(Convert.ToInt32(Session["Usergroupid"]), 0);
+            string xmlmenu = client.getmenulist(Convert.ToInt32(Session["UserId"]), 0);
             ds.ReadXml(new StringReader(xmlmenu));
             if (ds.Tables.Count > 0)
             {
