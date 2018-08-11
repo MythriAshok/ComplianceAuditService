@@ -155,15 +155,15 @@ namespace Compliance.DataAccess
             return dtComplianceXref;
         }
 
-        public bool deleteComlianceXref(int Compliance_Xref_ID)
+        public bool deleteComlianceXref(int Org_Hier_ID)
         {
             bool resultComplianceXref = false;
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getComplianceXref", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_DeleteComplianceBranchMapping", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", Compliance_Xref_ID);
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", Org_Hier_ID);
                 int resultCount = cmd.ExecuteNonQuery();
                 if (resultCount > 0)
                 {

@@ -80,6 +80,12 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranchResponse")]
         System.Threading.Tasks.Task<bool> inseretActandRuleforBranchAsync(int orgid, int[] ruleid, int userid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/DeleteRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/DeleteRuleforBranchResponse")]
+        bool DeleteRuleforBranch(int orgid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/DeleteRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/DeleteRuleforBranchResponse")]
+        System.Threading.Tasks.Task<bool> DeleteRuleforBranchAsync(int orgid);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -195,6 +201,14 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         
         public System.Threading.Tasks.Task<bool> inseretActandRuleforBranchAsync(int orgid, int[] ruleid, int userid) {
             return base.Channel.inseretActandRuleforBranchAsync(orgid, ruleid, userid);
+        }
+        
+        public bool DeleteRuleforBranch(int orgid) {
+            return base.Channel.DeleteRuleforBranch(orgid);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteRuleforBranchAsync(int orgid) {
+            return base.Channel.DeleteRuleforBranchAsync(orgid);
         }
     }
 }

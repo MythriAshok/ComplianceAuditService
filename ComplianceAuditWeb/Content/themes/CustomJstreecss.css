@@ -1,0 +1,18 @@
+﻿body {
+}
+
+ul li ul li a {
+    color: firebrick;
+    font-weight: 800;
+
+}
+
+ul li ul li ul li a {
+    color:chocolate;
+    font-weight: 600;
+}
+
+ul li ul li ul li ul li a {
+    color: saddlebrown;
+    font-weight: 400;
+}

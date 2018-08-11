@@ -56,6 +56,12 @@ namespace ComplianceAuditWeb.VendorService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/ActivateVendorForBranch", ReplyAction="http://tempuri.org/IVendorService/ActivateVendorForBranchResponse")]
         System.Threading.Tasks.Task<string> ActivateVendorForBranchAsync(int VendorBranchID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/DeleteVendorForCompany", ReplyAction="http://tempuri.org/IVendorService/DeleteVendorForCompanyResponse")]
+        string DeleteVendorForCompany(int VendorID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/DeleteVendorForCompany", ReplyAction="http://tempuri.org/IVendorService/DeleteVendorForCompanyResponse")]
+        System.Threading.Tasks.Task<string> DeleteVendorForCompanyAsync(int VendorID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -139,6 +145,14 @@ namespace ComplianceAuditWeb.VendorService {
         
         public System.Threading.Tasks.Task<string> ActivateVendorForBranchAsync(int VendorBranchID) {
             return base.Channel.ActivateVendorForBranchAsync(VendorBranchID);
+        }
+        
+        public string DeleteVendorForCompany(int VendorID) {
+            return base.Channel.DeleteVendorForCompany(VendorID);
+        }
+        
+        public System.Threading.Tasks.Task<string> DeleteVendorForCompanyAsync(int VendorID) {
+            return base.Channel.DeleteVendorForCompanyAsync(VendorID);
         }
     }
 }

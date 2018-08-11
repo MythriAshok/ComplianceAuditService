@@ -1996,6 +1996,7 @@ namespace ComplianceAuditWeb.Controllers
             dsData.ReadXml(new StringReader(strxmlData));
             orgActivateDeactivateViewModel.CompanyID = OrgID;
             orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+            orgActivateDeactivateViewModel.ParentCompanyID =Convert.ToInt32( dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
             return View("_DeactivateVendorForCompany",orgActivateDeactivateViewModel);
         }
         [HttpPost]
@@ -2009,7 +2010,7 @@ namespace ComplianceAuditWeb.Controllers
                 result = Convert.ToBoolean(vendorServiceClient.DeactivateVendorForCompany(orgActivateDeactivateViewModel.CompanyID));
                 if (result == true)
                 {
-                    return RedirectToAction("CompanyVendorsList");
+                    return RedirectToAction("CompanyVendorsList", new { id = orgActivateDeactivateViewModel.ParentCompanyID });
                 }
 
             }
@@ -2082,7 +2083,7 @@ namespace ComplianceAuditWeb.Controllers
                 result = Convert.ToBoolean(vendorServiceClient.ActivateVendorForCompany(orgActivateDeactivateViewModel.CompanyID));
                 if (result == true)
                 {
-                    return RedirectToAction("CompanyVendorsList");
+                    return RedirectToAction("CompanyVendorsList", new { id = orgActivateDeactivateViewModel.ParentCompanyID});
                 }
 
             }
@@ -2137,7 +2138,8 @@ namespace ComplianceAuditWeb.Controllers
             dsData.ReadXml(new StringReader(strxmlData));
             orgActivateDeactivateViewModel.CompanyID = OrgID;
             orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-            return View("_DeleteVendorForCompany", orgActivateDeactivateViewModel);
+            orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
+            return View("_DeleteVendorUnderCompany", orgActivateDeactivateViewModel);
         }
         [HttpPost]
         public ActionResult DeleteVendorUnderCompany(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
@@ -2147,10 +2149,10 @@ namespace ComplianceAuditWeb.Controllers
                 bool result = false;
                 // OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
                 VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
-                result = Convert.ToBoolean(vendorServiceClient.DeactivateVendorForCompany(orgActivateDeactivateViewModel.CompanyID));
+                result = Convert.ToBoolean(vendorServiceClient.DeleteVendorForCompany(orgActivateDeactivateViewModel.CompanyID));
                 if (result == true)
                 {
-                    return RedirectToAction("CompanyVendorsList");
+                    return RedirectToAction("CompanyVendorsList", new { id = orgActivateDeactivateViewModel.ParentCompanyID });
                 }
 
             }

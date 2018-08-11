@@ -493,7 +493,7 @@ namespace ComplianceAuditWeb.Controllers
                     Session["emailid"] = ds.Tables[0].Rows[0]["Email_ID"];
                     Session["GroupCompanyId"] = ds.Tables[0].Rows[0]["Company_ID"];
                     Session["Last_Login"] = ds.Tables[0].Rows[0]["Last_Login"];
-                    return RedirectToAction("dashboard", "common",new { pid=6});
+                    return RedirectToAction("dashboard", "common",new { pid=18});
                 }
                 else
                     ModelState.AddModelError("",ConfigurationManager.AppSettings["Login_error"]);

@@ -87,6 +87,22 @@ namespace ComplianceService
                 return "Not deactivated";
             }
         }
+
+          public string DeleteVendorForCompany(int VendorID)
+        {
+            string vendor = "";
+            OrganizationHelper vendorHelper = new OrganizationHelper();
+            vendor=Convert.ToString( vendorHelper.deleteVendorUnderCompany(VendorID));
+            if(vendor != null)
+            {
+                return vendor;
+            }
+            else
+            {
+                return "Not deleted";
+            }
+        }
+
         public string ActivateVendorForCompany(int VendorID)
         {
             string vendor = "";

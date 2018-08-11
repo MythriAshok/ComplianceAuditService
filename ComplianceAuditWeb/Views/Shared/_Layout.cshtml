@@ -41,53 +41,68 @@
         <div class="clearfix"></div>
     </div>
     <footer class="footer">
-    @Html.Partial("~/Views/Shared/_Footer.cshtml") 
+        @Html.Partial("~/Views/Shared/_Footer.cshtml")
     </footer>
 
     <script>
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
-});
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
     </script>
 
 
 
     //
     <script>
-//$(function(){
-//    $('.queContainer').click(function(){
-//        $('.queContainer.active').addClass('active');
-//        $(this).toggleClass('active');
-//    });
-//});
-//</script>
+        //$(function(){
+        //    $('.queContainer').click(function(){
+        //        $('.queContainer.active').addClass('active');
+        //        $(this).toggleClass('active');
+        //    });
+        //});
+        //</script>
 
 
     <script>
 
-$('.toggle').on('click', function() {
-    $('.sidebar').toggleClass("sidebar-collapsed");
-	$('.main_body').toggleClass("new_width");
-});
+        $('.toggle').on('click', function () {
+            $('.sidebar').toggleClass("sidebar-collapsed");
+            $('.main_body').toggleClass("new_width");
+        });
+    </script>
+    <script>
+        //$(document).ready(function () {
+        //    $('[data-toggle="popover"]').popover();
+        //});
+        $(document).ready(function () {
+            $("[data-toggle='popover']").each(function () {
+                $(this).popover({
+                    title: $(this).data("valMsgFor"),
+                    content: $(this).text()
+                })
+                    .html("<i class='glyphicon glyphicon-question-sign text-danger'></i>");
+            }
+            );
+        });
+
     </script>
 
 
-
     <script>
-$(function(){
-    $('.homeBtn').click(function(){
-        $(this).toggleClass('active');
-    });
-});
+        $(function () {
+            $('.homeBtn').click(function () {
+                $(this).toggleClass('active');
+            });
+        });
     </script>
 
     @*<style>
-        body {
-            overflow-y: hidden;
-        }
-    </style>*@
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
-@RenderSection("scripts", required: false)
+            body {
+                overflow-y: hidden;
+            }
+        </style>*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 </html>

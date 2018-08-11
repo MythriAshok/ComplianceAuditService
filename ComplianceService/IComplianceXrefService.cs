@@ -34,6 +34,8 @@ namespace ComplianceService
         string getRuleforBranch(int branchid);
         [OperationContract]
         bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid);
+        [OperationContract]
+        bool DeleteRuleforBranch(int orgid);
 
     }
 }

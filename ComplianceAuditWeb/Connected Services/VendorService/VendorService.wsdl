@@ -50,6 +50,12 @@
   <wsdl:message name="IVendorService_ActivateVendorForBranch_OutputMessage">
     <wsdl:part name="parameters" element="tns:ActivateVendorForBranchResponse" />
   </wsdl:message>
+  <wsdl:message name="IVendorService_DeleteVendorForCompany_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteVendorForCompany" />
+  </wsdl:message>
+  <wsdl:message name="IVendorService_DeleteVendorForCompany_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteVendorForCompanyResponse" />
+  </wsdl:message>
   <wsdl:portType name="IVendorService">
     <wsdl:operation name="insertVendor">
       <wsdl:input wsaw:Action="http://tempuri.org/IVendorService/insertVendor" message="tns:IVendorService_insertVendor_InputMessage" />
@@ -78,6 +84,10 @@
     <wsdl:operation name="ActivateVendorForBranch">
       <wsdl:input wsaw:Action="http://tempuri.org/IVendorService/ActivateVendorForBranch" message="tns:IVendorService_ActivateVendorForBranch_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IVendorService/ActivateVendorForBranchResponse" message="tns:IVendorService_ActivateVendorForBranch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteVendorForCompany">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVendorService/DeleteVendorForCompany" message="tns:IVendorService_DeleteVendorForCompany_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVendorService/DeleteVendorForCompanyResponse" message="tns:IVendorService_DeleteVendorForCompany_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IVendorService" type="tns:IVendorService">
@@ -138,6 +148,15 @@
     </wsdl:operation>
     <wsdl:operation name="ActivateVendorForBranch">
       <soap:operation soapAction="http://tempuri.org/IVendorService/ActivateVendorForBranch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteVendorForCompany">
+      <soap:operation soapAction="http://tempuri.org/IVendorService/DeleteVendorForCompany" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

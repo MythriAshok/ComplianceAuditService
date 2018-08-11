@@ -28,7 +28,9 @@ namespace ComplianceService
         string DeactivateVendorForBranch(int VendorBranchID);
         [OperationContract]
         string ActivateVendorForBranch(int VendorBranchID);
+        [OperationContract]
 
+        string DeleteVendorForCompany(int VendorID);
 
     }
 }

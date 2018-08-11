@@ -14,6 +14,13 @@
             percentage.style.visibility = compliancePartial.value == "PartaillyComplianced" ? "visible" : "hidden";
         }
     </script>
+    <style>
+        .input-field {
+            position: relative;
+            margin-bottom: 5px;
+            margin-top: 0px;
+        }
+    </style>
 
 
 }
@@ -38,7 +45,7 @@
 
 
         <div class="col-xs-12 subSelect ">
-            <div class="input-field">
+            <div class="input-field" style="font-weight:800;color:brown;">
                 <i class="fa fa-legal"></i>
                 @Html.DisplayFor(m => m.complianceXrefList[Act].Compliance_Title, new { @class = "floating-label" })
                 <span id="loading_data_icon"></span>
@@ -53,7 +60,7 @@
             {
 
                 <div class="col-xs-12 subSelect ">
-                    <div class="input-field">
+                    <div class="input-field" style="font-weight:600;    color: chocolate;">
                         &nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-server"></i>
                         @Html.DisplayFor(m => m.Section[j].Compliance_Title, new { @class = "floating-label" })
                         <span id="loading_data_icon"></span>
@@ -69,7 +76,7 @@
                     {
 
                         <div class="col-xs-12 subSelect ">
-                            <div class="input-field">
+                            <div class="input-field" style=" color: #692c00;font-weight:bold">
                                 &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-book"></i>
                                 @Html.DisplayFor(m => m.Rules[i].Compliance_Title, new { @class = "floating-label" })
                                 <span id="loading_data_icon"></span>
@@ -86,63 +93,70 @@
 
                         <div class="clearfix"></div>
 
+                        <div  style="margin-left: 50px;">
+                            <div class="col-xs-4 subSelect ">
+
+                                <div class="input-field">
+                                    @Html.Label("Status")
+                                    @*@Html.EditorFor(m => m.complianceAuditList[rulecount].Audit_Status)*@
+                                    @*@Html.DropDownListFor(m=>m.complianceAuditList[rulecount].Audit_Status, Model.auditlists)*@
 
 
-                        <div class="col-xs-4 subSelect ">
 
-                            <div class="input-field">
-                                @Html.Label("Status")
-                                @*@Html.EditorFor(m => m.complianceAuditList[rulecount].Audit_Status)*@
-                                @*@Html.DropDownListFor(m=>m.complianceAuditList[rulecount].Audit_Status, Model.auditlists)*@
+                                    @Html.DropDownListFor(m => m.complianceAuditList[rulecount].Audit_Status, new SelectList
+                          (Enum.GetValues(typeof(ComplianceAuditWeb.Models.AuditViewModel.AuditStatus))),
+                          "Audit Status", new { @class = "inputMaterial ui - autocomplete - input", @onchange = "ShowHidedTextBox(this.value);" })
+                                    @Html.ValidationMessageFor(m => m.complianceAuditList[rulecount].Audit_Status, "", new { @class = "text-danger" })
 
+                                    <div id="percentage" style="visibility:hidden">
+                                        percentage of partially complianced:
+                                        <input type="text" id="percentageofpartial" />
 
-
-                                @Html.DropDownListFor(m => m.complianceAuditList[rulecount].Audit_Status, new SelectList
-                         (Enum.GetValues(typeof(ComplianceAuditWeb.Models.AuditViewModel.AuditStatus))),
-                         "Audit Status", new { @class = "inputMaterial ui - autocomplete - input" , @onchange = "ShowHidedTextBox(this.value);" })
-                                @Html.ValidationMessageFor(m => m.complianceAuditList[rulecount].Audit_Status, "", new { @class = "text-danger" })
-
-                                <div id="percentage" style="visibility:hidden">
-                                    percentage of partially complianced:
-                                    <input type="text" id="percentageofpartial" />
-
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        @*<div class="col-xs-4 subSelect ">
+                            @*<div class="col-xs-4 subSelect ">
 
-                            <div class="input-field">
+                                    <div class="input-field">
 
-                                @Html.DropDownListFor(m => m.complianceAuditList[rulecount].Audit_Status, new SelectList
-                         (Enum.GetValues(typeof(ComplianceAuditWeb.Models.AuditViewModel.AuditStatus))),
-                         "Audit Status", new { @class = "inputMaterial ui - autocomplete - input" , @onchange = "ShowHidedTextBox(this.value);" })
-                                @Html.ValidationMessageFor(m => m.complianceAuditList[rulecount].Audit_Status, "", new { @class = "text-danger" })
+                                        @Html.DropDownListFor(m => m.complianceAuditList[rulecount].Audit_Status, new SelectList
+                                 (Enum.GetValues(typeof(ComplianceAuditWeb.Models.AuditViewModel.AuditStatus))),
+                                 "Audit Status", new { @class = "inputMaterial ui - autocomplete - input" , @onchange = "ShowHidedTextBox(this.value);" })
+                                        @Html.ValidationMessageFor(m => m.complianceAuditList[rulecount].Audit_Status, "", new { @class = "text-danger" })
 
+                                    </div>
+                                </div>*@
+
+
+
+
+                            <div class="col-xs-4 subSelect ">
+                                <div class="input-field">
+                                    @Html.Label("Penalty")
+                                    @Html.TextBoxFor(m => m.complianceAuditList[rulecount].Penalty_nc, new { @class = "inputMaterial ui - autocomplete - input" })
+                                </div>
                             </div>
-                        </div>*@
 
-
-
-
-                        <div class="col-xs-4 subSelect ">
-                            <div class="input-field">
-                                @Html.Label("Penalty")
-                                @Html.TextBoxFor(m => m.complianceAuditList[rulecount].Penalty_nc, new { @class = "inputMaterial ui - autocomplete - input" })
+                            <div class="col-xs-4 subSelect ">
+                                <div class="input-field">
+                                    @Html.Label("Auditing Date")
+                                    @Html.EditorFor(m => m.complianceAuditList[rulecount].Audit_Date, new { @class = "inputMaterial ui - autocomplete - input" })
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col-xs-4 subSelect ">
-                            <div class="input-field">
-                                @Html.Label("Auditing Date")
-                                @Html.EditorFor(m => m.complianceAuditList[rulecount].Audit_Date, new { @class = "inputMaterial ui - autocomplete - input" })
+                            <div class="clearfix"></div>
+                            <div class="col-xs-8 subSelect ">
+                                <div class="input-field">
+                                    @Html.Label("Remarks")
+                                    @Html.TextAreaFor(m => m.complianceAuditList[rulecount].Audit_Remarks, new { @class = "inputMaterial ui - autocomplete - input" })
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="clearfix"></div>
-                        <div class="col-xs-8 subSelect ">
-                            <div class="input-field">
-                                @Html.Label("Remarks")
-                                @Html.TextAreaFor(m => m.complianceAuditList[rulecount].Audit_Remarks, new { @class = "inputMaterial ui - autocomplete - input" })
+                            <div class="col-xs-4 subSelect ">
+                                <div class="input-field">
+                                    @Html.Label("Upload Artifacts")
+                                    <input type="file" class="btn primary-button" />
+                                </div>
                             </div>
                         </div>
 
@@ -188,17 +202,19 @@
             @Html.HiddenFor(m => m.complianceXrefList[Act].Comp_Description)*@
     }
 
+    @Html.Hidden(rulecount.ToString())
+    @{ Session["rulecount"] = rulecount; }
+
 
 </div>
+    <ul class="list-inline continueBtn">
+        <li>
+            <input type="submit" value="Save" class="btn primary-button" /><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+        </li>
+    </ul>
 
+}
 
-
-
-                            @Html.Hidden(rulecount.ToString());
-                            { Session["rulecount"] = rulecount; };
-
-                            }
-                            <input type="submit" value="Save" class="btn primary-button" /><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
 
 
 

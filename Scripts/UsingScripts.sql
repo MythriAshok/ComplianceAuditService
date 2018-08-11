@@ -1273,6 +1273,45 @@ end/
 delimiter ;
 
 
+
+
+drop procedure if exists sp_DeleteVendorForBranch;
+delimiter /
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_DeactivateVendorForBranch`(
+p_Vendor_Branch_ID int
+
+)
+begin
+update tbl_vendor_branch_mapping set 
+Is_Delete = 0,
+End_Date= now()
+ where Vendor_Branch_ID = p_Vendor_Branch_ID ;
+end/
+delimiter ;
+
+drop procedure if exists sp_DeleteVendorForCompany;
+delimiter /
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_DeleteVendorForCompany`(
+p_Org_Hier_ID int
+
+)
+begin
+update tbl_org_hier set 
+Is_Delete = 0
+where tbl_org_hier.Org_Hier_ID = p_Org_Hier_ID;
+update tbl_company_details set
+tbl_company_details.Calender_EndDate= now()
+ where tbl_company_details.Org_Hier_ID = p_Org_Hier_ID;
+end/
+delimiter ;
+
+
+
+
+
+
+
+
 drop procedure if exists sp_DeactivateVendorForBranch;
 delimiter /
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_DeactivateVendorForBranch`(

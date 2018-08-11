@@ -268,6 +268,31 @@ namespace Compliance.DataAccess
             }
             return dsVendor;
         }
+        public bool deleteVendorUnderCompany(int Org_Hier_ID)
+        {
+            bool resultOrganization = false;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_DeleteVendorForCompany", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", Org_Hier_ID);
+                int resultCount = cmd.ExecuteNonQuery();
+                if (resultCount > 0)
+                {
+                    resultOrganization = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return resultOrganization;
+        }
 
 
 

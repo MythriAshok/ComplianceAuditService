@@ -113,5 +113,15 @@ namespace ComplianceService
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();
         }
+
+        public bool DeleteRuleforBranch(int orgid)
+        {
+            bool res = false;
+            ComplianceXrefHelper helper = new ComplianceXrefHelper();
+           
+                res = helper.deleteComlianceXref(orgid);
+            
+            return res;
+        }
     }
 }

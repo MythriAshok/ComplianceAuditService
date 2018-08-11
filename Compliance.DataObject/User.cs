@@ -18,7 +18,7 @@ namespace Compliance.DataObject
         public string LastName { get; set; }
         [Required]
         [DataType(DataType.EmailAddress)]
-        [RegularExpression("^([a-zA-Z0- 9_/-/.]+)@([a-zA-Z0-9_/-/.]+)/.([a-zA-Z]{2, 5})$")]
+        //[RegularExpression("^([a-zA-Z0- 9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)*(\\.[a-zA-Z]{2, 5})$",ErrorMessage="Please enter the valid email address.")]        
         public string EmailId { get; set; }
         [Required]
         [RegularExpression("^((/+)?(/d{2}[-]))?(/d{10}){1}?$")]

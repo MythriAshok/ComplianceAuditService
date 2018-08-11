@@ -462,13 +462,15 @@ namespace ComplianceAuditWeb.Controllers
                                         if (section["Compliance_Xref_ID"].ToString() == rules["Compliance_Parent_ID"].ToString())
                                         {  
                                             var rule=new treenode { id = rules["Compliance_Xref_ID"].ToString(), text = rules["Compliance_Title"].ToString(), icon = "fa fa-leanpub", state = new Models.State(false, false, false), categorytype = "Rule", children = new List<treenode>() };
-                                          
-                                            foreach (System.Data.DataRow assignrules in dsassigenedrule.Tables[0].Rows)
+                                            if (dsassigenedrule.Tables.Count > 0)
                                             {
-                                                if(assignrules["Compliance_Xref_ID"].ToString() == rules["Compliance_Xref_ID"].ToString())
+                                                foreach (System.Data.DataRow assignrules in dsassigenedrule.Tables[0].Rows)
                                                 {
-                                                    rule.state = new Models.State(false, false, true);
-                                                    break;
+                                                    if (assignrules["Compliance_Xref_ID"].ToString() == rules["Compliance_Xref_ID"].ToString())
+                                                    {
+                                                        rule.state = new Models.State(false, false, true);
+                                                        break;
+                                                    }
                                                 }
                                             }
                                             sec.children.Add(rule);
@@ -502,6 +504,7 @@ namespace ComplianceAuditWeb.Controllers
                 rules[i++] = Convert.ToInt32(item.id);
             }
             ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
+            client.DeleteRuleforBranch(orgid);
             client.inseretActandRuleforBranch(orgid, rules, userid);
             return RedirectToAction("SMEDashboard");
         }
