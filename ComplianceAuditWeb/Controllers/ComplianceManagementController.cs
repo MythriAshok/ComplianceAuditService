@@ -117,45 +117,12 @@ namespace ComplianceAuditWeb.Controllers
         }
 
         [HttpGet]
-        public ActionResult CreateSection(int parentid)
+        public ActionResult CreateSection(int parentid, int Audittypeid)
         {
             ComplianceViewModel model = new ComplianceViewModel();
             model.Compliance = new ComplianceXref();
             model.Compliance.Compliance_Parent_ID = parentid;
-            //model.Countrylist = new List<SelectListItem>();
-            //model.Countrylist.Add(new SelectListItem() { Text = "--Select Country--", Value = "0" });
-            //OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
-            //string strXMLCountries = organizationservice.GetCountryList();
-            //DataSet dsCountries = new DataSet();
-            //dsCountries.ReadXml(new StringReader(strXMLCountries));
-            //foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
-            //{
-            //    model.Countrylist.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
-            //}
-            //string strXMLStates = organizationservice.GetStateList(0);
-            //string strXMLCities = organizationservice.GetCityList(0);
-            //DataSet dsStates = new DataSet();
-            //DataSet dsCities = new DataSet();
-            //dsStates.ReadXml(new StringReader(strXMLStates));
-            //dsCities.ReadXml(new StringReader(strXMLCities));
-            //if (dsStates.Tables.Count > 0)
-            //{
-            //    model.Statelist = new List<SelectListItem>();
-            //    model.Statelist.Add(new SelectListItem() { Text = "--Select State--", Value = "0" });
-            //    foreach (System.Data.DataRow row in dsStates.Tables[0].Rows)
-            //    {
-            //        model.Statelist.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
-            //    }
-            //}
-            //if (dsCities.Tables.Count > 0)
-            //{
-            //    model.Citylist = new List<SelectListItem>();
-            //    model.Citylist.Add(new SelectListItem() { Text = "--Select City--", Value = "0" });
-            //    foreach (System.Data.DataRow row in dsCities.Tables[0].Rows)
-            //    {
-            //        model.Citylist.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
-            //    }
-            //}
+            model.Compliance.Audit_Type_ID = Audittypeid;
             return View("_AddSection", model);
         }
         [HttpPost]
@@ -168,45 +135,12 @@ namespace ComplianceAuditWeb.Controllers
         }
 
         [HttpGet]
-        public ActionResult CreateRules(int Parentid)
+        public ActionResult CreateRules(int Parentid,int Audittypeid)
         {
             ComplianceViewModel model = new ComplianceViewModel();
             model.Compliance = new ComplianceXref();
             model.Compliance.Compliance_Parent_ID = Parentid;
-            //model.Countrylist = new List<SelectListItem>();
-            //model.Countrylist.Add(new SelectListItem() { Text = "--Select Country--", Value = "0" });
-            //OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
-            //string strXMLCountries = organizationservice.GetCountryList();
-            //DataSet dsCountries = new DataSet();
-            //dsCountries.ReadXml(new StringReader(strXMLCountries));
-            //foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
-            //{
-            //    model.Countrylist.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
-            //}
-            //string strXMLStates = organizationservice.GetStateList(0);
-            //string strXMLCities = organizationservice.GetCityList(0);
-            //DataSet dsStates = new DataSet();
-            //DataSet dsCities = new DataSet();
-            //dsStates.ReadXml(new StringReader(strXMLStates));
-            //dsCities.ReadXml(new StringReader(strXMLCities));
-            //if (dsStates.Tables.Count > 0)
-            //{
-            //    model.Statelist = new List<SelectListItem>();
-            //    model.Statelist.Add(new SelectListItem() { Text = "--Select State--", Value = "0" });
-            //    foreach (System.Data.DataRow row in dsStates.Tables[0].Rows)
-            //    {
-            //        model.Statelist.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
-            //    }
-            //}
-            //if (dsCities.Tables.Count > 0)
-            //{
-            //    model.Citylist = new List<SelectListItem>();
-            //    model.Citylist.Add(new SelectListItem() { Text = "--Select City--", Value = "0" });
-            //    foreach (System.Data.DataRow row in dsCities.Tables[0].Rows)
-            //    {
-            //        model.Citylist.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
-            //    }
-            //}
+            model.Compliance.Audit_Type_ID = Audittypeid;       
             return PartialView("_AddRules", model);
         }
 
@@ -294,95 +228,15 @@ namespace ComplianceAuditWeb.Controllers
                     level = Convert.ToInt32(row["level"]),
                     State_ID = Convert.ToInt32(row["State_ID"]),
                     User_ID = Convert.ToInt32(row["User_ID"]),
-                    Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
-                    Risk_Category = Convert.ToString(row["Risk_Category"]),
-                    Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
-                    Risk_Description = Convert.ToString(row["Risk_Description"]),
-                    Version = Convert.ToInt32(row["Version"])
+                    Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),                    
+                    Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),                    
+                    Version = Convert.ToInt32(row["Version"]),
+                    Audit_Type_ID=Convert.ToInt32(row["Audit_Type_ID"])
                 });
             }
             return model;
         }
-        [HttpGet]
-        //public ActionResult AllocateActandRule()
-        //{
-        //    AllocateActandRuleViewModel model = new AllocateActandRuleViewModel();
-        //    OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
-        //    string xmldata=client.GetCompaniesList();
-        //    DataSet ds = new DataSet();
-        //    ds.ReadXml(new StringReader(xmldata));
-        //    model.Companylist = new List<SelectListItem>() { new SelectListItem { Text = "--Select Company--", Value = "0" } };
-        //    if (ds.Tables.Count > 0)
-        //    {
-        //        foreach (System.Data.DataRow row in ds.Tables[0].Rows)
-        //        {
-        //            model.Companylist.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
-        //        }
-        //    }
-        //   xmldata=client.GetBranchList();
-        //    ds = new DataSet();
-        //    ds.ReadXml(new StringReader(xmldata));
-        //    if (ds.Tables.Count > 0)
-        //    {
-        //        model.BranchList = new List<SelectListItem>() { new SelectListItem { Text = "--Select Branch--", Value = "0" } };
-        //        foreach (System.Data.DataRow row in ds.Tables[0].Rows)
-        //        {
-        //            model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
-        //        }
-        //    }
-        //    ComplianceXrefService.ComplianceXrefServiceClient xrefServiceClient = new ComplianceXrefService.ComplianceXrefServiceClient();
-        //    xmldata = xrefServiceClient.GetActs();
-        //    ds = new DataSet();
-        //    ds.ReadXml(new StringReader(xmldata));
-        //    if (ds.Tables.Count > 0)
-        //    {
-        //        model.Actdropdownlist = new List<SelectListItem>() { new SelectListItem { Text = "--Select Act--", Value = "0" } };
-        //        foreach (System.Data.DataRow row in ds.Tables[0].Rows)
-        //        {
-        //            model.Actdropdownlist.Add(new SelectListItem { Text = Convert.ToString(row["Compliance_Title"]), Value = Convert.ToString(row["Compliance_Xref_ID"]) });
-        //        }
-        //    }
-        //    //xmldata=  xrefServiceClient.GetSections(0);
-        //    //ds = new DataSet();
-        //    //ds.ReadXml(new StringReader(xmldata));
-        //    model.Sectionlist = new List<SelectListItem>() { new SelectListItem { Text = "--Select Section--", Value = "0" } };
-        //    ////model.Sectionlist = bindCompliancelist(ds.Tables[0], model.Sectionlist);
-        //    //foreach (System.Data.DataRow row in ds.Tables[0].Rows)
-        //    //{
-        //    //    model.Sectionlist.Add(new SelectListItem
-        //    //    {
-        //    //        Text = Convert.ToString(row["Compliance_Title"]),
-        //    //        Value = Convert.ToString(row["Compliance_Xref_ID"])
-        //    //    });
-        //    //}
-        //    //xmldata = xrefServiceClient.GetRules(0);
-        //    //ds = new DataSet();
-        //    //ds.ReadXml(new StringReader(xmldata));
-        //    model.Rulelist = new List<SelectListItem>();
-        //    //foreach (System.Data.DataRow row in ds.Tables[0].Rows)
-        //    //{
-        //    //    model.Rulelist.Add(new SelectListItem
-        //    //    {
-        //    //        Text = Convert.ToString(row["Compliance_Title"]),
-        //    //        Value = Convert.ToString(row["Compliance_Xref_ID"])
-        //    //    });
-        //    //}
-        //    model.Selectedrule = new List<SelectListItem>();
-        //    return View("_AllocateActsandRules", model);
-        //}
-
-        [HttpPost]
-        //public ActionResult AllocateActandRule(AllocateActandRuleViewModel model)
-        //{
-
-        //    ComplianceAudit audit = new ComplianceAudit();
-        //    ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();          
-        //    int Org_Hier_Id = model.BranchId;
-        //    int User_Id = Convert.ToInt32(Session["UserId"]);
-        //    client.inseretActandRuleforBranch(Org_Hier_Id, model.selectedid, User_Id);
-        //    return RedirectToAction("AllocateActandRule");
-        //}        
-
+        
         public JsonResult getallocatedrules(string secid, string branchid)
         {
             ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
@@ -525,7 +379,7 @@ namespace ComplianceAuditWeb.Controllers
                     model.Companylist.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
                 }
             }
-            Session["Company"] = model.Companylist;            
+            TempData["Company"] = model.Companylist;            
             model.Branch = new List<Organization>();
             model.Vendor = new List<Organization>();
             return View("_SMEDashboard", model);
@@ -534,7 +388,7 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult SMEdashboard(AllocateActandRuleViewModel model)
         {
-            model.Companylist =(List<SelectListItem>) Session["Company"];
+            model.Companylist =(List<SelectListItem>) TempData["Company"];
             model.Branch = new List<Organization>();
             model.BranchList = new List<SelectListItem>();
             model.VendorList = new List<SelectListItem>();

@@ -79,11 +79,14 @@ namespace ComplianceAuditWeb.Controllers
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             company = new List<SelectListItem>();
-            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            if (ds.Tables.Count > 0)
             {
-                company.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    company.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                }
             }
-
+            Session["Company"] = company;
             return Json(company, JsonRequestBehavior.AllowGet);
         }
 
