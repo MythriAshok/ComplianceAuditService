@@ -18,6 +18,8 @@ namespace ComplianceAuditWeb.Models
         public List<SelectListItem> CompaniesList { get; set; }
         public int CompanyID { get; set; }
 
+        public List<ListOfGroupCompanies> listOfGroups { get; set; }
+
 
     }
 }

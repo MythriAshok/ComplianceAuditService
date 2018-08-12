@@ -57,72 +57,73 @@
 
     </script>
 }
-<div class="mid_content_sec">
-    <p>
-        @Html.ActionLink("Create New Act", "CreateActs")
-    </p>
+    <div class="mid_content_sec">
 
-
-    @foreach (var Act in Model.Actslist)
-    {
-        <div class="accordion-group" data-behavior="accordion">
-            <p class="accordion-header default-open"><i class="fa fa-legal"></i>&nbsp;@Html.DisplayFor(modelItem => Act.Compliance_Title)</p>
-            <div class="accordion-body">
-                @foreach (var section in Model.Sectionlist)
-                {
-                    <div class="accordion-group" data-behavior="accordion" data-multiple="true">
-                        @if (Act.Compliance_Xref_ID == section.Compliance_Parent_ID)
-                        {
-                            //if (section.Compliance_Title != "RuleSection")
-                            //{
-                            <p class="accordion-header" id="subheader">
-                                <i class="fa fa-book"></i>@Html.DisplayFor(modelItem => section.Compliance_Title)
-                            </p>
-                            //}
-                            <div class="accordion-body" id="subbody">
-                                @foreach (var Rule in Model.Rulelist)
-                                {
-
-                                    if (section.Compliance_Xref_ID == Rule.Compliance_Parent_ID)
+        @foreach (var Act in Model.Actslist)
+        {
+            <div class="accordion-group" data-behavior="accordion">
+                <p class="accordion-header default-open"><i class="fa fa-legal"></i>&nbsp;@Html.DisplayFor(modelItem => Act.Compliance_Title)</p>
+                <div class="accordion-body">
+                    @foreach (var section in Model.Sectionlist)
+                    {
+                        <div class="accordion-group" data-behavior="accordion" data-multiple="true">
+                            @if (Act.Compliance_Xref_ID == section.Compliance_Parent_ID)
+                            {
+                                //if (section.Compliance_Title != "RuleSection")
+                                //{
+                                <p class="accordion-header" id="subheader">
+                                    <i class="fa fa-book"></i>@Html.DisplayFor(modelItem => section.Compliance_Title)
+                                </p>
+                                //}
+                                <div class="accordion-body" id="subbody">
+                                    @foreach (var Rule in Model.Rulelist)
                                     {
-                                        <p>
-                                            <i class="fa fa-leanpub"></i>
-                                            @Html.DisplayFor(modelItem => Rule.Compliance_Title)
-                                        </p>
+
+                                        if (section.Compliance_Xref_ID == Rule.Compliance_Parent_ID)
+                                        {
+                                            <p>
+                                                <i class="fa fa-leanpub"></i>
+                                                @Html.DisplayFor(modelItem => Rule.Compliance_Title)
+                                            </p>
+
+                                        }
+
 
                                     }
-
-
-                                }
-                                <ul class="list-inline accordinBtn">
-                                    <li>
-                                        <button class="btn-bootstrap-dialog" data-url='@Url.Action("CreateRules", "ComplianceManagement", new { Parentid = section.Compliance_Xref_ID })'><span class="fa fa-leanpub"></span>Add Rule</button>
-                                    </li>
-                                    <li>
-                                        <button class="btn-bootstrap-dialog" data-url='@Url.Action("CreateSection", "ComplianceManagement", new { Parentid = section.Compliance_Xref_ID })'><span class="fa fa-leanpub"></span>Add SubSection</button>
-                                    </li>
-                                </ul>
-                            </div>
-                        }
-                    </div>
-                }
-                <ul class="list-inline accordinBtn">
-                    <li>
-                        <button class="btn-bootstrap-dialog" data-url='@Url.Action("CreateSection","ComplianceManagement",new { Parentid = Act.Compliance_Xref_ID})'><span class="fa fa-book"></span>Add Section</button>
-                    </li>
-                </ul>
+                                    <ul class="list-inline accordinBtn">
+                                        <li>
+                                            <button class="btn-bootstrap-dialog" data-url='@Url.Action("CreateRules", "ComplianceManagement", new { Parentid = section.Compliance_Xref_ID,Audittypeid=section.Audit_Type_ID })'><span class="fa fa-leanpub"></span>Add Rule</button>
+                                        </li>
+                                        <li>
+                                            <button class="btn-bootstrap-dialog" data-url='@Url.Action("CreateSection", "ComplianceManagement", new { Parentid = section.Compliance_Xref_ID,Audittypeid=section.Audit_Type_ID })'><span class="fa fa-leanpub"></span>Add SubSection</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                    }
+                    <ul class="list-inline accordinBtn">
+                        <li>
+                            <button class="btn-bootstrap-dialog" data-url='@Url.Action("CreateSection","ComplianceManagement",new { Parentid = Act.Compliance_Xref_ID,Audittypeid=Act.Audit_Type_ID})'><span class="fa fa-book"></span>Add Section</button>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    }
+            <ul class="list-inline accordinBtn">
+                <li>
+                    @Html.ActionLink("Add Act", "CreateActs", new { @class = "btn primary-button" })
+                </li>
+            </ul>
+        }
 
 
-    <div id='myModal' class="modal fade" role="dialog" aria-hidden="true">
-        <div class="modal-dialog-centered" style="width:900px;height:400px; padding:10px;">
-            <div class="modal-content" style="overflow:scroll; padding:10px;">
-                <div id='myModalContent' class="modal-body" style=" padding:10px">
+        <div id='myModal' class="modal fade" role="dialog" aria-hidden="true">
+            <div class="modal-dialog-centered" style="width:900px;height:400px; padding:10px;">
+                <div class="modal-content" style="overflow:scroll; padding:10px;">
+                    <div id='myModalContent' class="modal-body" style=" padding:10px">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 

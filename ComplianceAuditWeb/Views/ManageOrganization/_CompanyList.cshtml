@@ -19,6 +19,36 @@
             </div>
         </div>
     }
+    <div class="clearfix"></div>
+    <div class="new_section_box">
+        <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+                <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Companies:</h2>
+                @if (Model.listOfGroups.Count!=0) {
+                foreach (var item in Model.listOfGroups)
+                {
+                    <div class="col-sm-3 QueList">
+                        <div class="queContainer">
+                            <a href="@Url.Action("AboutCompany", "ManageOrganization", new { id = item.OrganizationID })">
+                                <span class="qIcon"><img src="/UploadedFiles/@item.Logo" alt="" style="height:60px;width:75px"></span>
+                                <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
+                            </a>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    }}
+                else
+                {
+                    <h4> @ViewBag.Message</h4>
+                }
+
+                <div class="clearfix"></div>
+
+            </div>
+
+        </div>
+
     </div>
+</div>
 
 
