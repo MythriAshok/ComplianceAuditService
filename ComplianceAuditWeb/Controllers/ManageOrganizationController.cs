@@ -1664,6 +1664,10 @@ namespace ComplianceAuditWeb.Controllers
             //aboutCompanyViewModel.CompanyDescription = Convert.ToString(Session["CompanyDescription"]);
             //aboutCompanyViewModel.CompanyName = Convert.ToString(Session["CompanyName"]);
             Session["ParentCompanyID"]= aboutCompanyViewModel.ParentCompanyID ;
+            string companyListofGroupCompany = organizationServiceClient.GeSpecifictCompaniesList(aboutCompanyViewModel.ParentCompanyID)
+            DataSet companyList = new DataSet();
+            companyList.ReadXml(new StringReader(companyListofGroupCompany));
+        
 
             return View("_AboutCompany",aboutCompanyViewModel);
         }
