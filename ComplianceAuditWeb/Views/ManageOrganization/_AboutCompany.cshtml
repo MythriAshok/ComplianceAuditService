@@ -1,4 +1,5 @@
 ﻿@model ComplianceAuditWeb.Models.AboutCompanyViewModel
+@*@model dynamic*@
 @{
 
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,13 +17,19 @@
 
 @using (Html.BeginForm())
 {
+
     if (TempData["Success"] != null)
     {
         <center>
             <p class="alert alert-success" style="width:1000px" id=" successMessage">@TempData["Success"]</p>
         </center>
     }
+    if (Convert.ToInt32(Session["ParentCompanyID"]) != 0)
+    {
+        @Html.ActionLink("Create Company", "AddCompany", new { Orgid = Model.ParentCompanyID })
+        TempData["ParentCompanyID"] = Model.ParentCompanyID;
 
+    }
     <div class="mid_content_sec">
         <div class="col-xs-4 subSelect ">
             <img src="/UploadedFiles/@Model.CompanyLogo" alt="" style="height:200px;width:250px" />
@@ -45,6 +52,7 @@
                     @Html.Label("Compny name")
                     @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
                 </div>
+
                 @*</div>*@
             }
             @*@Html.Label("Company Name", new { @class = "floating-label" })
@@ -126,6 +134,88 @@
 
     </ul>
 
+    <table class="table">
+        <tr class="active">
+            <th class="active">
+                @Html.DisplayName("Company Name")
+            </th>
+            <th>
+                @Html.DisplayName("Industry Type")
+            </th>
+            <th>
+                @Html.DisplayName("Logo")
+            </th>
+            <th>
+                @Html.DisplayName("Modify")
+            </th>
+            @*<th></th>*@
+        </tr>
+
+        @foreach (var item in Model.AboutGroupCompany)
+        {
+            <tr class="info">
+                <td class="active">
+                    @*@Html.DisplayFor(modelItem => item.CompanyName)*@
+                    @*@Html.DisplayFor(modelItem => item.GroupCompanyLogo)*@
+                    @*<center>
+                            @Html.DisplayFor(modelItem => item.OrganizationID)
+                        </center>*@
+                    <br />
+                    <center>
+                        @Html.ActionLink(item.CompanyNameList, "AboutCompany", new { id = item.OrganizationID })
+                    </center>
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.OrganizationID)
+                    </td>*@
+                <td>
+                    <center>
+                        @Html.DisplayFor(modelItem => item.IndustryType)
+                    </center>
+                </td>
+
+                <td>
+                    <center>
+                        @Html.DisplayFor(modelItem => item.logo)
+                    </center>
+                </td>
+                @*<td>
+                        <center>
+                            @Html.DisplayFor(modelItem => item.CountryID)
+                        </center>
+                    </td>*@
+                @if (Convert.ToInt32(Session["ParentCompanyID"]) == 0)
+                {
+                    <td>
+
+
+                        <center>
+
+                            <a href="@Url.Action("UpdateCompany", "ManageOrganization", new { OrgID = item.OrganizationID })">
+
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </center>
+                    </td>
+                }
+                else
+                {
+                    <td>
+
+
+                        <center>
+
+                            <a href="@Url.Action("UpdateBranch", "ManageOrganization", new { OrgID = item.OrganizationID })">
+
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </center>
+                    </td>
+                }
+            </tr>
+        }
+
+    </table>
 
 
 }
