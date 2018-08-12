@@ -23,9 +23,11 @@ namespace ComplianceService
         [OperationContract]
         int UpdateRules(ComplianceXref compliance);
         [OperationContract]
-        string GetActs();
+        string GetActs(int complianceid);
         [OperationContract]
         string GetSections(int parentid);
+        [OperationContract]
+        string GetSpecificsection(int complianceid);
         [OperationContract]
         string GetRules(int parentid);
         [OperationContract]
@@ -36,6 +38,7 @@ namespace ComplianceService
         bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid);
         [OperationContract]
         bool DeleteRuleforBranch(int orgid);
-
+        [OperationContract]
+        string GetComplaince(int Audit_Type_ID);
     }
 }

@@ -1,19 +1,24 @@
 ﻿@model ComplianceAuditWeb.Models.ComplianceViewModel
 
 @{ Layout = null;}
-<div class="modal-header">
-    <h2>Add Rule</h2>
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-</div>
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+<h2>Add Rule</h2>
+
 
 @using (Html.BeginForm())
 {<div class="mid_content_sec">
+   
+    <p class="alert alert-warning">@TempData["Message"]</p>
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Compliance.Compliance_Parent_ID)
+    @Html.HiddenFor(model => model.Compliance.Audit_Type_ID)
+    @Html.HiddenFor(model => model.Compliance.Country_ID)
+    @Html.HiddenFor(model => model.Compliance.State_ID)
+    @Html.HiddenFor(model => model.Compliance.City_ID)
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
-            @Html.Label("Compliance Title", new { @class = "floating-label" })
+            @Html.Label("Compliance Title", new { @class = "floating-label" })<span style="color:red">*</span>
 
             @Html.TextBoxFor(model => model.Compliance.Compliance_Title, new { @class = "inputMaterial ui - autocomplete - input" })
             <span id="loading_data_icon"></span>
@@ -31,7 +36,7 @@
     </div>
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
-            @Html.Label("Risk Category", new { @class = "floating-label" })
+            @Html.Label("Risk Category", new { @class = "floating-label" })<span style="color:red">*</span>
 
             @Html.DropDownListFor(model => model.Compliance.Risk_Category, new SelectList(Enum.GetNames(typeof(ComplianceAuditWeb.Models.ComplianceViewModel.RiskCategory))), "--Select RiskCategory", new { @class = "inputMaterial ui - autocomplete - input" })
             @Html.ValidationMessageFor(model => model.Compliance.Risk_Category, "", new { @class = "text-danger" })
@@ -49,7 +54,7 @@
     </div>
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
-            @Html.Label("compliance def consequence", new { @class = "floating-label" })
+            @Html.Label("compliance def consequence", new { @class = "floating-label" })<span style="color:red">*</span>
 
             @Html.TextAreaFor(model => model.Compliance.compl_def_consequence, new { @class = "inputMaterial ui - autocomplete - input" })
             <span id="loading_data_icon"></span>
@@ -112,30 +117,30 @@
         </div>
     </div>
     @*<div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Country", new { @class = "floating-label" })
+            <div class="input-field">
+                @Html.Label("Country", new { @class = "floating-label" })
 
-            @Html.DropDownListFor(model => model.Compliance.Country_ID, Model.Countrylist, new { @class = "inputMaterial ui - autocomplete - input" })
-            @Html.ValidationMessageFor(model => model.Compliance.Country_ID, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.Compliance.Country_ID, Model.Countrylist, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.Compliance.Country_ID, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="clearfix"></div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("State", new { @class = "floating-label" })
+        <div class="clearfix"></div>
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("State", new { @class = "floating-label" })
 
-            @Html.DropDownListFor(model => model.Compliance.State_ID, Model.Statelist, new { @class = "inputMaterial ui - autocomplete - input" })
-            @Html.ValidationMessageFor(model => model.Compliance.State_ID, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.Compliance.State_ID, Model.Statelist, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.Compliance.State_ID, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("City", new { @class = "floating-label" })
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("City", new { @class = "floating-label" })
 
-            @Html.DropDownListFor(model => model.Compliance.City_ID, Model.Citylist, new { @class = "inputMaterial ui - autocomplete - input" })
-            @Html.ValidationMessageFor(model => model.Compliance.City_ID, "", new { @class = "text-danger" })
-        </div>
-    </div>*@
+                @Html.DropDownListFor(model => model.Compliance.City_ID, Model.Citylist, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.Compliance.City_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
     <div class="clearfix"></div>
     <ul class="list-inline continueBtn">
         <li>

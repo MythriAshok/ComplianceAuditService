@@ -58,7 +58,10 @@
     </script>
 }
     <div class="mid_content_sec">
-
+        @if (ViewBag.Message != null)
+        {
+            <p class="alert alert-success">@ViewBag.Message</p>
+        }
         @foreach (var Act in Model.Actslist)
         {
             <div class="accordion-group" data-behavior="accordion">
@@ -92,10 +95,10 @@
                                     }
                                     <ul class="list-inline accordinBtn">
                                         <li>
-                                            <button class="btn-bootstrap-dialog" data-url='@Url.Action("CreateRules", "ComplianceManagement", new { Parentid = section.Compliance_Xref_ID,Audittypeid=section.Audit_Type_ID })'><span class="fa fa-leanpub"></span>Add Rule</button>
+                                            <button class="btn-bootstrap-dialog" data-url='@Url.Action("CreateRules", "ComplianceManagement", new { Parentid = section.Compliance_Xref_ID })'><span class="fa fa-leanpub"></span>Add Rule</button>
                                         </li>
                                         <li>
-                                            <button class="btn-bootstrap-dialog" data-url='@Url.Action("CreateSection", "ComplianceManagement", new { Parentid = section.Compliance_Xref_ID,Audittypeid=section.Audit_Type_ID })'><span class="fa fa-leanpub"></span>Add SubSection</button>
+                                            <button class="btn-bootstrap-dialog" data-url='@Url.Action("CreateSection", "ComplianceManagement", new { Parentid = section.Compliance_Xref_ID })'><span class="fa fa-leanpub"></span>Add SubSection</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -104,18 +107,18 @@
                     }
                     <ul class="list-inline accordinBtn">
                         <li>
-                            <button class="btn-bootstrap-dialog" data-url='@Url.Action("CreateSection","ComplianceManagement",new { Parentid = Act.Compliance_Xref_ID,Audittypeid=Act.Audit_Type_ID})'><span class="fa fa-book"></span>Add Section</button>
+                            <button class="btn-bootstrap-dialog" data-url='@Url.Action("CreateSection","ComplianceManagement",new { Parentid = Act.Compliance_Xref_ID})'><span class="fa fa-book"></span>Add Section</button>
                         </li>
                     </ul>
                 </div>
             </div>
-            <ul class="list-inline accordinBtn">
-                <li>
-                    @Html.ActionLink("Add Act", "CreateActs", new { @class = "btn primary-button" })
-                </li>
-            </ul>
-        }
 
+        }
+        <ul class="list-inline accordinBtn">
+            <li>
+                @Html.ActionLink("Add Act", "CreateActs", new { @class = "btn primary-button" })
+            </li>
+        </ul>
 
         <div id='myModal' class="modal fade" role="dialog" aria-hidden="true">
             <div class="modal-dialog-centered" style="width:900px;height:400px; padding:10px;">

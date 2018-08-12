@@ -30,7 +30,6 @@
                     alert("error : " + reponse);
                 }
             });
-
         }
         function GetCity(_StateId) {
             var procemessage = "<option value='0'> Please wait...</option>";
@@ -52,7 +51,6 @@
                     alert("error : " + reponse);
                 }
             });
-
         }
 
         function Visible(_actype) {
@@ -61,10 +59,8 @@
             var city = document.getElementById("city");
             city.style.visibility = _actype > 2 ? "visible" : "hidden";            
         }
-
     </script>   
 }
-
 
 @using (Html.BeginForm())
 {
@@ -74,7 +70,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Title", new { @class = "floating-label" })
+                @Html.Label("Title", new { @class = "floating-label" })<span style="color:red">*</span>
 
                 @Html.TextBoxFor(model => model.Compliance.Compliance_Title, new { @class = "inputMaterial ui - autocomplete - input" })
                 <span id="loading_data_icon"></span>
@@ -83,7 +79,7 @@
         </div>
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Act Type", new { @class = "floating-label" })
+                @Html.Label("Act Type", new { @class = "floating-label" })<span style="color:red">*</span>
                 @*@Html.DropDownListFor(model => model.ActTypeID, new SelectList(Enum.GetNames(typeof(ComplianceAuditWeb.Models.ComplianceViewModel.ActType)), new { @onchange = "javascript:Visible(this.value); ", @class = "inputMaterial ui - autocomplete - input" }))*@
                 @Html.DropDownListFor(model => model.ActTypeID, Model.ActType, new { @onchange = "javascript:Visible(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
                 @Html.ValidationMessageFor(model => model.ActTypeID, "", new { @class = "text-danger" })
@@ -91,7 +87,7 @@
         </div>
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Compliance Type", new { @class = "floating-label" })
+                @Html.Label("Compliance Type", new { @class = "floating-label" })<span style="color:red">*</span>
                 @Html.DropDownListFor(model => model.Compliance.Audit_Type_ID, Model.AuditType, new { @class = "inputMaterial ui - autocomplete - input" })
                 @Html.ValidationMessageFor(model => model.Compliance.Audit_Type_ID, "", new { @class = "text-danger" })
             </div>
@@ -110,8 +106,9 @@
         <div class="clearfix"></div>
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Effective Start Date", new { @class = "floating-label" })
-                @Html.EditorFor(model => model.Compliance.Effective_Start_Date)
+                @Html.Label("Effective Start Date", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.TextBox("Compliance_Effective_Start_Date", String.Format("{0:d}", Model.Compliance.Effective_Start_Date.ToShortDateString()),new { @class = "datefield", type = "date"  })
+                @*@Html.EditorFor(model => model.Compliance.Effective_Start_Date)*@
                 <span id="loading_data_icon"></span>
                 @Html.ValidationMessageFor(model => model.Compliance.Effective_Start_Date, "", new { @class = "text-danger" })
             </div>
@@ -129,28 +126,17 @@
         }
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Country", new { @class = "floating-label" })
+                @Html.Label("Country", new { @class = "floating-label" })<span style="color:red">*</span>
                 @Html.DropDownListFor(model => model.Compliance.Country_ID, Model.Countrylist, new { @onchange = "javascript:GetState(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
                 @Html.ValidationMessageFor(model => model.Compliance.Country_ID, "", new { @class = "text-danger" })
-
-                @*@Html.Label("Is StateLaw", new { @class = "floating-label" })
-                @Html.CheckBoxFor(model => model.Is_StateLaw,new { @class = "inputMaterial ui - autocomplete - input",@onclick="" })*@
-
             </div>
         </div>
-
-
 
         <div class="col-xs-4 subSelect" id="state" style="visibility:hidden">
             <div class="input-field">
                 @Html.Label("State", new { @class = "floating-label" })
-
                 @Html.DropDownListFor(model => model.Compliance.State_ID, Model.Statelist, new { @onchange = "GetCity(this.value)", @class = "inputMaterial ui - autocomplete - input" })
                 @Html.ValidationMessageFor(model => model.Compliance.State_ID, "", new { @class = "text-danger" })
-
-                @*@Html.Label("Is Regional Law", new { @class = "floating-label" })
-                @Html.CheckBoxFor(model => model.Is_RegionalLaw,new { @class = "inputMaterial ui - autocomplete - input" })*@
-
             </div>
         </div>
         @*<div class="clearfix"></div>*@
@@ -168,11 +154,10 @@
         <ul class="list-inline continueBtn">
             <li>
                 @*<input type="submit" value="Create" name="co.formAction" class="btn btn-default" />*@
-
                 <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Save<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
                 <input type="reset" value="Reset" class="btn primary-button" />
                 <input type="submit" value="Cancel" class="btn primary-button" />
             </li>
         </ul>
     </div>
-            }
+}

@@ -9,10 +9,11 @@ namespace ComplianceAuditWeb.Models
     public class LoginViewModel
     {
         [Required]
-        [DataType(DataType.Password)]
+        [DataType(DataType.Password)]        
         public string UserPassword { get; set; }
         [Required]
         [DataType(DataType.EmailAddress)]
+        [EmailAddress]
         public string EmailId { get; set; }
     }
 }

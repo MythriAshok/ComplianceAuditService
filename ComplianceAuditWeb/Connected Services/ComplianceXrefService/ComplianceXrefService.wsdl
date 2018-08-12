@@ -50,6 +50,12 @@
   <wsdl:message name="IComplianceXrefService_GetSections_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetSectionsResponse" />
   </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_GetSpecificsection_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSpecificsection" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_GetSpecificsection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSpecificsectionResponse" />
+  </wsdl:message>
   <wsdl:message name="IComplianceXrefService_GetRules_InputMessage">
     <wsdl:part name="parameters" element="tns:GetRules" />
   </wsdl:message>
@@ -80,6 +86,12 @@
   <wsdl:message name="IComplianceXrefService_DeleteRuleforBranch_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteRuleforBranchResponse" />
   </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_GetComplaince_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetComplaince" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_GetComplaince_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetComplainceResponse" />
+  </wsdl:message>
   <wsdl:portType name="IComplianceXrefService">
     <wsdl:operation name="insertActs">
       <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/insertActs" message="tns:IComplianceXrefService_insertActs_InputMessage" />
@@ -109,6 +121,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/GetSections" message="tns:IComplianceXrefService_GetSections_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/GetSectionsResponse" message="tns:IComplianceXrefService_GetSections_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetSpecificsection">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/GetSpecificsection" message="tns:IComplianceXrefService_GetSpecificsection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/GetSpecificsectionResponse" message="tns:IComplianceXrefService_GetSpecificsection_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetRules">
       <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/GetRules" message="tns:IComplianceXrefService_GetRules_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/GetRulesResponse" message="tns:IComplianceXrefService_GetRules_OutputMessage" />
@@ -128,6 +144,10 @@
     <wsdl:operation name="DeleteRuleforBranch">
       <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/DeleteRuleforBranch" message="tns:IComplianceXrefService_DeleteRuleforBranch_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/DeleteRuleforBranchResponse" message="tns:IComplianceXrefService_DeleteRuleforBranch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetComplaince">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/GetComplaince" message="tns:IComplianceXrefService_GetComplaince_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/GetComplainceResponse" message="tns:IComplianceXrefService_GetComplaince_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IComplianceXrefService" type="tns:IComplianceXrefService">
@@ -195,6 +215,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetSpecificsection">
+      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/GetSpecificsection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetRules">
       <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/GetRules" style="document" />
       <wsdl:input>
@@ -233,6 +262,15 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteRuleforBranch">
       <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/DeleteRuleforBranch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetComplaince">
+      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/GetComplaince" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

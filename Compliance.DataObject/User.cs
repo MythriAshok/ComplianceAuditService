@@ -11,17 +11,19 @@ namespace Compliance.DataObject
         [Required]
         [DataType(DataType.Password)]
         public string UserPassword { get; set; }
-        [Required]
+        //[Required(false,"First Name is Required","",string)]
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         [Required]
         public string LastName { get; set; }
         [Required]
         [DataType(DataType.EmailAddress)]
+        [EmailAddress]
         //[RegularExpression("^([a-zA-Z0- 9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)*(\\.[a-zA-Z]{2, 5})$",ErrorMessage="Please enter the valid email address.")]        
         public string EmailId { get; set; }
         [Required]
-        [RegularExpression("^((/+)?(/d{2}[-]))?(/d{10}){1}?$")]
+        [Phone]
+        //[RegularExpression("^((/+)?(/d{2}[-]))?(/d{10}){1}?$")]
         public string ContactNumber { get; set; }
         [Required]
         public string Gender { get; set; }

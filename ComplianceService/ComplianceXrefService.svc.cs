@@ -57,10 +57,10 @@ namespace ComplianceService
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
             return helper.insertupdateComplianceXref(compliance,'U');
         }
-        public string GetActs()
+        public string GetActs(int complianceid)
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
-            DataSet ds=helper.getAct();
+            DataSet ds=helper.getAct(complianceid);
             UtilityHelper utilityHelper = new UtilityHelper();
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();            
@@ -69,6 +69,14 @@ namespace ComplianceService
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
             DataSet ds = helper.getSection(parentid);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            ds = utilityHelper.ConvertNullsToEmptyString(ds);
+            return ds.GetXml();
+        }
+        public string GetSpecificsection(int complianceid)
+        {
+            ComplianceXrefHelper helper = new ComplianceXrefHelper();
+            DataSet ds = helper.getSpecifiySection(complianceid);
             UtilityHelper utilityHelper = new UtilityHelper();
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();
@@ -123,5 +131,20 @@ namespace ComplianceService
             
             return res;
         }
+
+        public string GetComplaince(int Audit_Type_ID)
+        {
+            return BindCompaliance(Audit_Type_ID);
+        }
+        private string BindCompaliance(int Audit_Type_ID)
+        {
+            ComplianceXrefHelper helper = new ComplianceXrefHelper();
+            DataSet ds = helper.getComlianceXref(Audit_Type_ID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            ds = utilityHelper.ConvertNullsToEmptyString(ds);
+            return ds.GetXml();
+
+        }
+
     }
 }
