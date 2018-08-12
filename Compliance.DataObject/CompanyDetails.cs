@@ -16,11 +16,11 @@ namespace Compliance.DataObject
         public string Formal_Name { get; set; }
         [Display(Name = "Start Date")]
         [DataType(DataType.Date)]
-        public DateTime Calender_StartDate { get; set; }
+        public Nullable< DateTime> Calender_StartDate { get; set; }
 
         [Display(Name = "End Date")]
         [DataType(DataType.Date)]
-        public DateTime Calender_EndDate  { get; set; }
+        public Nullable<  DateTime> Calender_EndDate  { get; set; }
         [Required]
         public string Auditing_Frequency { get; set; }
         [Required]

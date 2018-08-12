@@ -16,54 +16,59 @@
 
 @using (Html.BeginForm())
 {
+    if (TempData["Success"] != null)
+    {
+        <center>
+            <p class="alert alert-success" style="width:1000px" id=" successMessage">@TempData["Success"]</p>
+        </center>
+    }
 
-    
-<div class="mid_content_sec">
-    <div class="col-xs-4 subSelect ">
-        <img src="/UploadedFiles/@Model.CompanyLogo" alt="" style="height:60px;width:60px" />
+    <div class="mid_content_sec">
+        <div class="col-xs-4 subSelect ">
+            <img src="/UploadedFiles/@Model.CompanyLogo" alt="" style="height:60px;width:60px" />
 
-    </div>
-    <div class="col-xs-8 subSelect ">
-        @if (Convert.ToInt32(Session["ParentCompanyID"]) == 0)
-        {
-
-            <div class="input-field">
-                @Html.Label("Group Company name")
-                @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
-            </div>
-
-        }
-        else
-        {
-            @*<div class="col-xs-4 subSelect ">*@
-            <div class="input-field">
-                @Html.Label("Compny name")
-                @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
-            </div>
-            @*</div>*@
-        }
-        @*@Html.Label("Company Name", new { @class = "floating-label" })
-
-
-
-
-        <div class="col-xs-12 subSelect ">*@
-
-        <div class="input-field">
-
-
-            @Html.Label("Company Description", new { @class = "floating-label" })
-            @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input" })
         </div>
-        <div class="clearfix"></div>
+        <div class="col-xs-8 subSelect ">
+            @if (Convert.ToInt32(Session["ParentCompanyID"]) == 0)
+            {
 
-        @Html.HiddenFor(m => m.CompanyID)
-        @Html.HiddenFor(m => m.ParentCompanyID)
+                <div class="input-field">
+                    @Html.Label("Group Company name")
+                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
+                </div>
 
-        @*</div>*@
+            }
+            else
+            {
+                @*<div class="col-xs-4 subSelect ">*@
+                <div class="input-field">
+                    @Html.Label("Compny name")
+                    @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
+                </div>
+                @*</div>*@
+            }
+            @*@Html.Label("Company Name", new { @class = "floating-label" })
 
 
-    </div>
+
+
+                <div class="col-xs-12 subSelect ">*@
+
+            <div class="input-field">
+
+
+                @Html.Label("Company Description", new { @class = "floating-label" })
+                @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input" })
+            </div>
+            <div class="clearfix"></div>
+
+            @Html.HiddenFor(m => m.CompanyID)
+            @Html.HiddenFor(m => m.ParentCompanyID)
+
+            @*</div>*@
+
+
+        </div>
     </div>
 
     <ul class="list-inline continueBtn">
@@ -123,7 +128,7 @@
 
 
 
-    }
+}
 
 
 
