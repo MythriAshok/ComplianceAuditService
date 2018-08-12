@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ComplianceAuditWeb.Models
 {
@@ -14,6 +15,10 @@ namespace ComplianceAuditWeb.Models
         public int ParentCompanyID { get; set; }
 
         public string CompanyName { get; set; }
+
+        public List<SelectListItem> CompaniesList { get; set; }
+        public int CompanyListID { get; set; }
+        public string CompanyNameList { get; set; }
 
 
     }

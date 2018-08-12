@@ -8,6 +8,90 @@ ADD UNIQUE INDEX `State_Code_UNIQUE` (`State_Code` ASC);
 ALTER TABLE `auditmoduledb`.`tbl_org_hier` 
 CHANGE COLUMN `Description` `Description` VARCHAR(1000) NULL DEFAULT NULL ;
 
+
+-- -----------------------------------------------------
+-- procedure sp_insertupdateOrganizationHier
+-- -----------------------------------------------------
+
+USE `auditmoduledb`;
+DROP procedure IF EXISTS `auditmoduledb`.`sp_insertupdateOrganizationHier`;
+
+DELIMITER $$
+USE `auditmoduledb`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_insertupdateOrganizationHier`(
+ p_Flag char(1),
+ p_Org_Hier_ID int,
+ p_Company_Name varchar(45),
+ p_Company_Code int,
+ p_Parent_Company_ID int,
+ p_Description varchar(1000),
+ p_level int,
+ p_Is_Leaf tinyint,
+ p_Industry_Type varchar(45),
+ p_Last_Updated_Date datetime,
+ p_logo varchar(100),
+ p_User_ID int,
+ p_Is_Active bit,
+ p_Is_Delete bit,
+ p_Is_Vendor bit
+)
+begin
+if(p_Flag = 'I')then
+insert into tbl_org_hier
+(
+Company_Name,
+Company_Code,
+Parent_Company_ID,
+Description,
+level,
+Is_Leaf, 
+Industry_Type, 
+Last_Updated_Date,
+logo,
+User_ID, 
+Is_Active,
+Is_Delete,
+Is_Vendor)
+values
+(
+p_Company_Name,
+p_Company_Code, 
+p_Parent_Company_ID, 
+p_Description, 
+p_level,
+p_Is_Leaf,
+p_Industry_Type,
+now(),
+p_logo,
+p_User_ID,
+p_Is_Active,
+p_Is_Delete,
+p_Is_Vendor);
+select last_insert_id();
+else
+update tbl_org_hier
+set
+tbl_org_hier.Org_Hier_ID=p_Org_Hier_ID,
+Company_Name=p_Company_Name,
+Company_Code=p_Company_Code,
+Parent_Company_ID=p_Parent_Company_ID,
+Description=p_Description,
+level=p_level,
+Is_Leaf=p_Is_Leaf, 
+Industry_Type=p_Industry_Type,
+Last_Updated_Date=now(),
+ logo= p_logo,
+User_ID=p_User_ID,
+Is_Active=p_Is_Active,
+Is_Delete = p_Is_Delete,
+Is_Vendor = p_Is_Vendor
+where tbl_org_hier.Org_Hier_ID=p_Org_Hier_ID ;
+select row_count();
+end if;
+end$$
+
+DELIMITER ;
+
 ALTER TABLE `auditmoduledb`.`tbl_user_group` 
 CHANGE COLUMN `User_Group_Description` `User_Group_Description` VARCHAR(450) NULL DEFAULT NULL ;
 
