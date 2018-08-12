@@ -16,9 +16,7 @@ namespace ComplianceAuditWeb.Models
 
         public string CompanyName { get; set; }
 
-        public List<SelectListItem> CompaniesList { get; set; }
-        public int CompanyListID { get; set; }
-        public string CompanyNameList { get; set; }
+       
 
 
     }
