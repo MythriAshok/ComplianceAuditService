@@ -1,0 +1,107 @@
+﻿@model ComplianceAuditWeb.Models.AllocateActandRuleViewModel
+
+@{
+    /**/
+
+    ViewBag.Title = "Add Acts Page";
+    WebGrid grid1 = new WebGrid(Model.Branch);
+    WebGrid grid2 = new WebGrid(Model.VendorList);
+}
+
+<ul class="breadcrumb ML15">
+    <li><a href="/Common/dashboard?pid=14">Compliance Management</a></li>
+    <li>Compliance Mapping</li>
+</ul>
+<h2 class="ML15">Compliance Mapping</h2>
+
+@*@section scripts{
+        <script language="javascript" type="text/javascript">
+            function GetBranch(_CompanyId) {
+                var procemessage = "<option value='0'> Please wait...</option>";
+                $("#BranchId").html(procemessage).show();
+                var url = "/Common/getspecificbranch";
+
+                $.ajax({
+                    url: url,
+                    data: { compid: _CompanyId },
+                    cache: false,
+                    type: "POST",
+                    success: function (data) {
+                        var markup = "<option value='0'>Select Branch</option>";
+                        for (var x = 0; x < data.length; x++) {
+                            markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                        }
+                        $("#BranchId").html(markup).show();
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+
+            }
+
+            function Getvendor(_CompanyId) {
+                var procemessage = "<option value='0'> Please wait...</option>";
+                $("#BranchId").html(procemessage).show();
+                var url = "/Common/getspecificvendors";
+
+                $.ajax({
+                    url: url,
+                    data: { compid: _CompanyId },
+                    cache: false,
+                    type: "POST",
+                    success: function (data) {
+                        var markup = "<option value='0'>Select Branch</option>";
+                        for (var x = 0; x < data.length; x++) {
+                            markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                        }
+                        $("#BranchId").html(markup).show();
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            }
+        </script>
+
+
+    }*@
+@using (Html.BeginForm())
+{
+    <div class="mid_content_sec">
+        <div class="col-xs-8 subSelect ">
+            <div class="input-field">
+                @Html.Label("Company", new { @class = "floating-label" })
+                @Html.DropDownListFor(model => model.CompanyId, Model.Companylist, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "this.form.submit()" })
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        @if (Model.BranchList != null)
+        {
+            <div class="col-xs-6 subSelect ">
+                <div class="input-field">
+                    @*@Html.Label("", new { @class = "floating-label" })*@
+                    @grid1.GetHtml(columns: grid1.Columns(
+                     grid1.Column("List of Branch", format: @<a href="/ComplianceManagement/AssignRules?Branchid=@item.Company_Id">@item.Company_Name</a>)))                
+                </div>
+            </div>
+        }
+        @if (Model.VendorList != null)
+        {
+            <div class="col-xs-6 subSelect ">
+                <div class="input-field">
+                    @*@Html.Label("List of Vendor", new { @class = "floating-label" })*@
+                    @grid2.GetHtml(columns:grid2.Columns(
+grid2.Column("List of Vendor", format: @<a href="/ComplianceManagement/AssignRules?Branchid=@item.Value">@item.Text</a>)))
+                </div>
+            </div>
+        }
+        @*<div class="col-xs-6 subSelect ">
+                <div class="input-field">
+                    @grid2.GetHtml(columns:grid2.Columns(
+                    grid2.Column(format: @<a href="/ComplianceManagement/AssignRules?Branchid=@item.Value">@item.Text</a>)))
+                </div>
+            </div>
+            <div class="clearfix"></div>*@
+    </div>
+}

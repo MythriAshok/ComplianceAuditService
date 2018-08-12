@@ -36,13 +36,12 @@ namespace ComplianceAuditWeb.Controllers
                 }
             }
       
-                model.Statelist = new List<SelectListItem>();
-                model.Statelist.Add(new SelectListItem() { Text = "--Select State--", Value = "0" });
+            model.Statelist = new List<SelectListItem>();
+            model.Statelist.Add(new SelectListItem() { Text = "--Select State--", Value = "0" });
           
-                model.Citylist = new List<SelectListItem>();
-                model.Citylist.Add(new SelectListItem() { Text = "--Select City--", Value = "0" });
+            model.Citylist = new List<SelectListItem>();
+            model.Citylist.Add(new SelectListItem() { Text = "--Select City--", Value = "0" });
           
-
             model.ActType = new List<SelectListItem>();
             model.ActType.Add(new SelectListItem { Text = "--Select Act Type--", Value = "0" });
             model.ActType.Add(new SelectListItem { Text = "Union Level", Value = "1" });
@@ -54,16 +53,21 @@ namespace ComplianceAuditWeb.Controllers
             model.AuditType.Add(new SelectListItem { Text = "Labour Compliance", Value = "1" });
             model.Compliance = new ComplianceXref();
             model.Compliance.Compliance_Xref_ID = 0;
-
+            TempData["Actmodel"] = model;
             return View("_AddActs", model);
         }
         [HttpPost]
         public ActionResult CreateActs(ComplianceViewModel model)
         {
+            if(model.Compliance.Effective_Start_Date==null)
+            {
+                model.Compliance.Effective_Start_Date = DateTime.MinValue;
+            }
             if (ModelState.IsValid)
             {
                 ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
-                model.Compliance.User_ID = 1;
+                model.Compliance.User_ID = Convert.ToInt32(Session["UserId"]);
+                model.Compliance.Effective_End_Date = DateTime.MaxValue;
                 model.Compliance.Compliance_Parent_ID = client.insertActs(model.Compliance);
                 if (model.Compliance.Compliance_Parent_ID > 0)
                 {
@@ -75,6 +79,7 @@ namespace ComplianceAuditWeb.Controllers
                 else
                     TempData["Message"] = "Not able to create the " + model.Compliance.Compliance_Title + "Act.";
             }
+            model = (ComplianceViewModel)TempData["Actmodel"];
             return View("_AddActs", model);
         }
 
@@ -312,10 +317,23 @@ namespace ComplianceAuditWeb.Controllers
         }
 
         [HttpGet]
-        public ActionResult AssignRules(string Branchid, string User)
+        public ActionResult AssignRules(string Branchid, string Branchname)
         {
+            AllocateActandRuleViewModel model = new AllocateActandRuleViewModel();
+            model.ActType.Add(new SelectListItem { Text = "--Select Act Type--", Value = "0" });
+            model.ActType.Add(new SelectListItem { Text = "Union Level", Value = "1" });
+            model.ActType.Add(new SelectListItem { Text = "State Level", Value = "2" });
+
+
+            model.AuditType = new List<SelectListItem>();
+            model.AuditType.Add(new SelectListItem { Text = "Labour Compliance", Value = "1" });
+
+            model.BranchId = Convert.ToInt32(Branchid);
+            model.Name = Branchname;
             Session["Branch_Id"] = Branchid;
-            return View("_AssignRules");
+
+
+            return View("_AssignRules",model);
         }
         public JsonResult GetJsTree3Data()
         {
@@ -441,8 +459,7 @@ namespace ComplianceAuditWeb.Controllers
         {
             model.Companylist =(List<SelectListItem>) TempData["Company"];
             model.Branch = new List<Organization>();
-            model.BranchList = new List<SelectListItem>();
-            model.VendorList = new List<SelectListItem>();
+            model.Vendor = new List<Organization>();
             AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
             string xmldata = auditServiceClient.getSpecificBranchList(model.CompanyId);
             DataSet ds = new DataSet();
@@ -464,7 +481,7 @@ namespace ComplianceAuditWeb.Controllers
             {
                 foreach (System.Data.DataRow row in ds.Tables[0].Rows)
                 {
-                    model.VendorList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                    model.Vendor.Add(new Organization { Company_Name = Convert.ToString(row["Company_Name"]), Company_Id = Convert.ToInt32(row["Org_Hier_ID"]) });
                 }
             }
             return View("_SMEDashboard", model);

@@ -4,7 +4,7 @@
     ViewBag.Title = "Add Acts Page";
 }
 <ul class="breadcrumb ML15">
-    <li><a href="">Compliance Management</a></li>
+    <a href="/Common/dashboard?pid=14">Compliance Management</a>
     <li>Act</li>
 </ul>
 <h2 class="ML15">Add Act</h2>
@@ -68,6 +68,10 @@
         @Html.AntiForgeryToken()
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @if (TempData["Message"] != null)
+        {
+        <p class="alert alert-warning">@TempData["Message"]</p>
+        }
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
                 @Html.Label("Title", new { @class = "floating-label" })<span style="color:red">*</span>
@@ -107,7 +111,7 @@
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
                 @Html.Label("Effective Start Date", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.TextBox("Compliance_Effective_Start_Date", String.Format("{0:d}", Model.Compliance.Effective_Start_Date.ToShortDateString()),new { @class = "datefield", type = "date"  })
+                @Html.TextBox("Compliance_Effective_Start_Date", String.Format("{0:d}", Model.Compliance.Effective_Start_Date.ToShortDateString()), new { @class = "datefield", type = "date" })
                 @*@Html.EditorFor(model => model.Compliance.Effective_Start_Date)*@
                 <span id="loading_data_icon"></span>
                 @Html.ValidationMessageFor(model => model.Compliance.Effective_Start_Date, "", new { @class = "text-danger" })
@@ -115,14 +119,14 @@
         </div>
         @if (Model.Compliance.Compliance_Xref_ID != 0)
         {
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @Html.Label("Effective End Date", new { @class = "floating-label" })
-                @Html.EditorFor(model => model.Compliance.Effective_End_Date)
-                <span id="loading_data_icon"></span>
-                @Html.ValidationMessageFor(model => model.Compliance.Effective_End_Date, "", new { @class = "text-danger" })
+            <div class="col-xs-4 subSelect ">
+                <div class="input-field">
+                    @Html.Label("Effective End Date", new { @class = "floating-label" })
+                    @Html.EditorFor(model => model.Compliance.Effective_End_Date)
+                    <span id="loading_data_icon"></span>
+                    @Html.ValidationMessageFor(model => model.Compliance.Effective_End_Date, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
         }
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
@@ -156,7 +160,7 @@
                 @*<input type="submit" value="Create" name="co.formAction" class="btn btn-default" />*@
                 <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Save<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
                 <input type="reset" value="Reset" class="btn primary-button" />
-                <input type="submit" value="Cancel" class="btn primary-button" />
+                <input type="button" value="Cancel" onclick="/Common/dashboard?pid=14" class="btn primary-button" />
             </li>
         </ul>
     </div>

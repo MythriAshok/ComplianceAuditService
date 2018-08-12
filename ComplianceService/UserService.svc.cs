@@ -49,8 +49,10 @@ namespace ComplianceService
         private string BindgetAllUser(int Companyid)
         {
             UserHelper helper = new UserHelper();
-            DataSet userGroups = helper.getAllUser(Companyid);
-            string xmlgroups = userGroups.GetXml();
+            DataSet users = helper.getAllUser(Companyid);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            users = utilityHelper.ConvertNullsToEmptyString(users);
+            string xmlgroups = users.GetXml();
             return xmlgroups;
         }
         public string GetUserGroup(int Groupid)
