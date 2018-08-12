@@ -536,6 +536,7 @@
     <Content Include="Views\ManageOrganization\_VendorList.cshtml" />
     <Content Include="Views\ComplianceManagement\AssignRules.cshtml" />
     <Content Include="Views\ManageOrganization\_DeleteVendorUnderCompany.cshtml" />
+    <Content Include="Views\ComplianceManagement\_AuditoraccessMapping.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

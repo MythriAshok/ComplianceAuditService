@@ -46,16 +46,22 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         System.Threading.Tasks.Task<int> UpdateRulesAsync(Compliance.DataObject.ComplianceXref compliance);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetActs", ReplyAction="http://tempuri.org/IComplianceXrefService/GetActsResponse")]
-        string GetActs();
+        string GetActs(int complianceid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetActs", ReplyAction="http://tempuri.org/IComplianceXrefService/GetActsResponse")]
-        System.Threading.Tasks.Task<string> GetActsAsync();
+        System.Threading.Tasks.Task<string> GetActsAsync(int complianceid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSections", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSectionsResponse")]
         string GetSections(int parentid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSections", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSectionsResponse")]
         System.Threading.Tasks.Task<string> GetSectionsAsync(int parentid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSpecificsection", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSpecificsectionResponse")]
+        string GetSpecificsection(int complianceid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSpecificsection", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSpecificsectionResponse")]
+        System.Threading.Tasks.Task<string> GetSpecificsectionAsync(int complianceid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetRules", ReplyAction="http://tempuri.org/IComplianceXrefService/GetRulesResponse")]
         string GetRules(int parentid);
@@ -86,6 +92,12 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/DeleteRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/DeleteRuleforBranchResponse")]
         System.Threading.Tasks.Task<bool> DeleteRuleforBranchAsync(int orgid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetComplaince", ReplyAction="http://tempuri.org/IComplianceXrefService/GetComplainceResponse")]
+        string GetComplaince(int Audit_Type_ID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetComplaince", ReplyAction="http://tempuri.org/IComplianceXrefService/GetComplainceResponse")]
+        System.Threading.Tasks.Task<string> GetComplainceAsync(int Audit_Type_ID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -155,12 +167,12 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
             return base.Channel.UpdateRulesAsync(compliance);
         }
         
-        public string GetActs() {
-            return base.Channel.GetActs();
+        public string GetActs(int complianceid) {
+            return base.Channel.GetActs(complianceid);
         }
         
-        public System.Threading.Tasks.Task<string> GetActsAsync() {
-            return base.Channel.GetActsAsync();
+        public System.Threading.Tasks.Task<string> GetActsAsync(int complianceid) {
+            return base.Channel.GetActsAsync(complianceid);
         }
         
         public string GetSections(int parentid) {
@@ -169,6 +181,14 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         
         public System.Threading.Tasks.Task<string> GetSectionsAsync(int parentid) {
             return base.Channel.GetSectionsAsync(parentid);
+        }
+        
+        public string GetSpecificsection(int complianceid) {
+            return base.Channel.GetSpecificsection(complianceid);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetSpecificsectionAsync(int complianceid) {
+            return base.Channel.GetSpecificsectionAsync(complianceid);
         }
         
         public string GetRules(int parentid) {
@@ -209,6 +229,14 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         
         public System.Threading.Tasks.Task<bool> DeleteRuleforBranchAsync(int orgid) {
             return base.Channel.DeleteRuleforBranchAsync(orgid);
+        }
+        
+        public string GetComplaince(int Audit_Type_ID) {
+            return base.Channel.GetComplaince(Audit_Type_ID);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetComplainceAsync(int Audit_Type_ID) {
+            return base.Channel.GetComplainceAsync(Audit_Type_ID);
         }
     }
 }

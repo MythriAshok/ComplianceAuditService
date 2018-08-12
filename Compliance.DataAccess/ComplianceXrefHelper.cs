@@ -64,7 +64,7 @@ namespace Compliance.DataAccess
             return ComplianceXref;
         }
 
-        public DataSet getComlianceXref(int Compliance_Xref_ID)
+        public DataSet getComlianceXref(int Audit_Type_ID)
         {
             DataSet dtComplianceXref = new DataSet();
             try
@@ -72,7 +72,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getComplianceXref", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", Compliance_Xref_ID);
+                cmd.Parameters.AddWithValue("p_Audit_Type_ID", Audit_Type_ID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtComplianceXref);
             }
@@ -87,7 +87,7 @@ namespace Compliance.DataAccess
             return dtComplianceXref;
         }
 
-        public DataSet getAct()
+        public DataSet getAct(int compliance_xref_ID)
         {
             DataSet dtComplianceXref = new DataSet();
             try
@@ -95,6 +95,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getActs", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", compliance_xref_ID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dtComplianceXref);
             }
@@ -131,7 +132,29 @@ namespace Compliance.DataAccess
             }
             return dtComplianceXref;
         }
-
+        
+             public DataSet getSpecifiySection(int complianceid)
+        {
+            DataSet dtComplianceXref = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getSpecifiySection", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", complianceid);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtComplianceXref);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dtComplianceXref;
+        }
         public DataSet getRules(int parentid)
         {
             DataSet dtComplianceXref = new DataSet();
