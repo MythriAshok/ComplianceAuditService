@@ -1464,11 +1464,11 @@ namespace ComplianceAuditWeb.Controllers
             }
             List<ListOfGroupCompanies> companylist = new List<ListOfGroupCompanies>();            
             string strxmlCompanies = organizationservice.GeSpecifictCompaniesList(model.GroupCompanyID);
-
             DataSet dsSpecificCompaniesList = new DataSet();
+            dsSpecificCompaniesList.ReadXml(new StringReader(strxmlCompanies));
             if (dsSpecificCompaniesList.Tables.Count > 0)
             {
-                dsSpecificCompaniesList.ReadXml(new StringReader(strxmlCompanies));
+                
                 foreach (System.Data.DataRow row in dsSpecificCompaniesList.Tables[0].Rows)
                 {
                     ListOfGroupCompanies listOfCompany = new ListOfGroupCompanies
