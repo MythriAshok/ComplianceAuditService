@@ -529,7 +529,6 @@
     <Content Include="Views\ManageOrganization\_BranchDashboard - Copy.cshtml" />
     <Content Include="Views\ManageOrganization\_DashBoardBranch.cshtml" />
     <Content Include="Views\ManageOrganization\_DashBoardGroupCompany.cshtml" />
-    <Content Include="Views\ComplianceManagement\_SMESelectCompany.cshtml" />
     <Content Include="Views\ComplianceManagement\_AssignRules.cshtml" />
     <Content Include="Views\ComplianceManagement\_SMEdashboard.cshtml" />
     <Content Include="Views\ManageOrganization\_BranchList.cshtml" />
@@ -537,6 +536,7 @@
     <Content Include="Views\ComplianceManagement\AssignRules.cshtml" />
     <Content Include="Views\ManageOrganization\_DeleteVendorUnderCompany.cshtml" />
     <Content Include="Views\ComplianceManagement\_AuditoraccessMapping.cshtml" />
+    <Content Include="Views\ComplianceManagement\_SMEdashboard - Copy.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -3,16 +3,14 @@
 @{
     /**/
 
-    ViewBag.Title = "Add Acts Page";
-    WebGrid grid1 = new WebGrid(Model.Branch);
-    WebGrid grid2 = new WebGrid(Model.VendorList);
+    ViewBag.Title = "Compliance Mapping";
 }
 
 <ul class="breadcrumb ML15">
-    <li><a href="">Compliance Management</a></li>
-    <li>SME Dashbord</li>
+    <li><a href="/Common/dashboard?pid=14">Compliance Management</a></li>
+    <li>Compliance Mapping</li>
 </ul>
-<h2 class="ML15">SME Dashborad</h2>
+<h2 class="ML15">Compliance Mapping</h2>
 
 @*@section scripts{
         <script language="javascript" type="text/javascript">
@@ -68,40 +66,83 @@
     }*@
 @using (Html.BeginForm())
 {
-    <div class="mid_content_sec">
-        <div class="col-xs-8 subSelect ">
-            <div class="input-field">
-                @Html.Label("Company", new { @class = "floating-label" })
-                @Html.DropDownListFor(model => model.CompanyId, Model.Companylist, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "this.form.submit()" })
-            </div>
+<div class="mid_content_sec">
+    <div class="col-xs-12 subSelect ">
+        <div class="input-field">
+            @Html.Label("Company", new { @class = "floating-label" })
+            @Html.DropDownListFor(model => model.CompanyId, Model.Companylist, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "this.form.submit()" })
         </div>
-        <div class="clearfix"></div>
-        @if (Model.BranchList != null)
-        {
-            <div class="col-xs-6 subSelect ">
-                <div class="input-field">
-                    @*@Html.Label("", new { @class = "floating-label" })*@
-                    @grid1.GetHtml(columns: grid1.Columns(
-                     grid1.Column("List of Branch", format: @<a href="/ComplianceManagement/AssignRules?Branchid=@item.Company_Id">@item.Company_Name</a>)))                
-                </div>
-            </div>
-        }
-        @if (Model.VendorList != null)
-        {
-            <div class="col-xs-6 subSelect ">
-                <div class="input-field">
-                    @*@Html.Label("List of Vendor", new { @class = "floating-label" })*@
-                    @grid2.GetHtml(columns:grid2.Columns(
-grid2.Column("List of Vendor", format: @<a href="/ComplianceManagement/AssignRules?Branchid=@item.Value">@item.Text</a>)))
-                </div>
-            </div>
-        }
-        @*<div class="col-xs-6 subSelect ">
-                <div class="input-field">
-                    @grid2.GetHtml(columns:grid2.Columns(
-                    grid2.Column(format: @<a href="/ComplianceManagement/AssignRules?Branchid=@item.Value">@item.Text</a>)))
-                </div>
-            </div>
-            <div class="clearfix"></div>*@
     </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-6 subSelect ">
+        @if (Model.Branch != null)
+        {
+            <div class="new_section_box">
+                <div class="tab-content">
+                    <div id="home" class="tab-pane fade in active">
+                        <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Branch:</h4>
+                        @if (TempData["Message"] != null)
+                        {
+                            <p class="alert alert-success">  @TempData["Message"] </p>
+                        }
+                        @foreach (var item in Model.Branch)
+                        {
+                            <div class="col-sm-3 QueList">
+                                <div class="queContainer">
+                                    <a href="@Url.Action("AssignRules", "ComplianceManagement",new { Branchid = item.Company_Id,Branchname=item.Company_Name  })">
+                                        <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                                        <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
+                                    </a>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        }
+                        <div class="clearfix"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-6 subSelect ">
+        @if (Model.Vendor != null)
+        {<div class="new_section_box">
+                <div class="tab-content">
+                    <div id="home" class="tab-pane fade in active">
+                        <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Vendor:</h4>
+                        @if (TempData["Message"] != null)
+                        {
+                            <p class="alert alert-success">  @TempData["Message"] </p>
+                        }
+                        @foreach (var item in Model.Vendor)
+                        {
+                            <div class="col-sm-3 QueList">
+                                <div class="queContainer">
+                                    <a href="@Url.Action("AssignRules", "ComplianceManagement",new { Branchid = item.Company_Id,Branchname=item.Company_Name })">
+                                        <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                                        <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
+                                    </a>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        }
+                        <div class="clearfix"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+    </div>
+    <div class="clearfix"></div>
+    <ul class="list-inline continueBtn">
+        <li>
+            <input type="button" value="Cancel" onclick="/Common/dashboard?pid=14" class="btn primary-button" />
+        </li>
+    </ul>
+</div>
 }
