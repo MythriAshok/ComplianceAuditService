@@ -5,10 +5,10 @@
     ViewBag.Title = "_AboutChildCompany";
 }
 <h2 class="ML15">Manage Company</h2>
-    <ul class="breadcrumb ML15">
-        <li><a href="/Common/dashboard?pid=9">Company Management</a></li>
-        <li> Company</li>
-    </ul>
+<ul class="breadcrumb ML15">
+    <li><a href="/Common/dashboard?pid=9">Company Management</a></li>
+    <li> Company</li>
+</ul>
 
 @using (Html.BeginForm())
 {
@@ -23,7 +23,7 @@
 
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
-            @Html.Label("Branch name")
+            @Html.Label("Branch Name")
             @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
         </div>
     </div>
@@ -74,5 +74,6 @@
     </ul>
 
 }
+
 
 

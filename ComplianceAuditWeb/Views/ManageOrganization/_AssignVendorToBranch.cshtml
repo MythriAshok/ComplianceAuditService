@@ -37,7 +37,7 @@
             var procemessage = "<option value='0'> Please wait...</option>";
             $("#BranchID").html(procemessage).show();
             var url = "/Common/getspecificbranch";
-            alert(url);
+           
             $.ajax({
                 url: url,
                 data: { compid: _CompanyId },
@@ -63,7 +63,7 @@
             var procemessage = "<option value='0'> Please wait...</option>";
             $("#VendorID").html(procemessage).show();
             var url = "/Common/getspecificvendors";
-            alert(url);
+         
             $.ajax({
                 url: url,
 
@@ -72,7 +72,7 @@
                 cache: false,
                 type: "POST",
                 success: function (data) {
-                    var markup = "<option value='0'></option>";
+                    var markup = "<option></option>";
                     for (var x = 0; x < data.length; x++) {
                         markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
                     }
@@ -151,16 +151,8 @@
 
         </div>
     </div>
-    <div class="col-xs-6 subSelect ">
-        <div class="input-field">
 
-            @*@Html.Label(ConfigurationManager.AppSettings["vendors"], new { @class = "floating-label" })*@
-            @Html.Label("Is Active")
-            @Html.CheckBoxFor(m => m.IsVendorActive, new { @class = "inputMaterialSelect ui - autocomplete - input ", size = "4", placeholder = ConfigurationManager.AppSettings["Roles"] })
-
-
-        </div>
-    </div>
+    @Html.HiddenFor(m => m.IsVendorActive);
 
 
 
@@ -172,7 +164,7 @@
                 {
                     button = "Update";
                 }*@
-            <input type="submit" value="Save" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+            <input type="submit" value="Save" class="btn primary-button" onclick="AssignVendorForBranch"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
 
             @*<input type="reset" value="Reset" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
                 @Html.ActionLink("Cancel", "AddBranch", new { Orgid = Model.organization.Organization_Id }, new { @class = "btn primary-button" })*@

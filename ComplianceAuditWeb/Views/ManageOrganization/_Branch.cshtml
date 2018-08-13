@@ -132,16 +132,17 @@
 
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
-            @if ((Session["CompanyName"]) != null)
+            @if ((TempData["CompanyName"]) != null)
 
             {
+                Model.ChildCompanyName = TempData["CompanyName"].ToString();
 
                 @Html.Label("Company")
 
 
                 Model.GroupCompanyID = Convert.ToInt32(Session["ParentCompanyID"]);
                 Model.CompanyID = Convert.ToInt32(Session["CompanyID"]);
-                Model.ChildCompanyName = Session["CompanyName"].ToString();
+                //Model.ChildCompanyName = Session["CompanyName"].ToString();
                 @Html.TextBoxFor(m => m.ChildCompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
                 @Html.HiddenFor(m => m.GroupCompanyID)
                 @Html.HiddenFor(m => m.CompanyID)

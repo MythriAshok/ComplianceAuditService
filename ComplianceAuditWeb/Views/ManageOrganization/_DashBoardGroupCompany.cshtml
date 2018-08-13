@@ -22,7 +22,7 @@
                 <div class="col-sm-3 QueList">
                     <div class="queContainer">
                         @*@item.OrganizationID = @Session["BranchID"];*@
-                        <a href="@Url.Action("AboutCompany", "ManageOrganization",new { id = item.OrganizationID })">
+                        <a href="@Url.Action("AboutGroupCompany", "ManageOrganization",new { id = item.OrganizationID })">
                             <span class="qIcon"><img src="/UploadedFiles/@item.Logo" style="height:50px;width:85px" /></span>
                             <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
                         </a>

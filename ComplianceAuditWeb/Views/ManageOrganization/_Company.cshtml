@@ -76,16 +76,19 @@
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
 
-                @if ((Session["CompanyName"]) != null)
+                @if ((TempData["GroupCompanyName"]) != null)
+
 
 
                 {
+                    Model.GroupCompanyName = TempData["GroupCompanyName"].ToString();
                     @Html.Label("Group Company")
 
                     @*Model.GroupCompanyID = Convert.ToInt32(Session["CompanyID"]);
-                        @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })*@
-                    Model.GroupCompanyID = Convert.ToInt32(Session["CompanyID"]);
-                    Model.GroupCompanyName = Session["CompanyName"].ToString();
+                    @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })*@
+                Model.GroupCompanyID = Convert.ToInt32(Session["CompanyID"]);
+                    //Model.GroupCompanyName = Session["CompanyName"].ToString();
+                    //Model.GroupCompanyName = TempData["CompanyName"].ToString();
                     @Html.TextBoxFor(m => m.GroupCompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
                     @Html.HiddenFor(m => m.GroupCompanyID)
                 }
@@ -324,7 +327,7 @@
 
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                <label for="file">Upload File:</label>
+                <label for="file">Upload Logo:</label>
                 <input type="file" name="file" id="file" />
                 @Html.ValidationMessageFor(m => m.organization.logo, "", new { @class = "text-danger" })
                 <img src="/UploadedFiles/@Model.organization.logo" alt="" />

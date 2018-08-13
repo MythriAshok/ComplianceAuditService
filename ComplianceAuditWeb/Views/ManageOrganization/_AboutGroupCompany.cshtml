@@ -1,0 +1,168 @@
+﻿@model ComplianceAuditWeb.Models.AboutCompanyViewModel
+@{
+    /**/
+
+    ViewBag.Title = "_AboutGroupCompany";
+}
+
+<h2>_AboutGroupCompany</h2>
+
+<h2 class="ML15">Manage Group Company</h2>
+<ul class="breadcrumb ML15">
+    <li><a href="/Common/dashboard?pid=6">Group Management</a></li>
+    <li> Group Company</li>
+</ul>
+
+@using (Html.BeginForm())
+{
+    if (TempData["Success"] != null)
+    {
+        <center>
+            <p class="alert alert-success" style="width:1000px" id=" successMessage">@TempData["Company"]@TempData["Success"]</p>
+        </center>
+    }
+
+
+    <div class="mid_content_sec">
+        <div class="col-xs-4 subSelect ">
+            <img src="/UploadedFiles/@Model.CompanyLogo" alt="" style="height:200px;width:250px" />
+
+        </div>
+        <div class="col-xs-8 subSelect ">
+            @*@if (Convert.ToInt32(Session["ParentCompanyID"]) == 0)*@
+
+
+            <div class="input-field">
+                @Html.Label("Group Company Name")
+                @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
+            </div>
+
+
+
+            @*@Html.Label("Company Name", new { @class = "floating-label" })
+
+
+
+
+                <div class="col-xs-12 subSelect ">*@
+
+            <div class="input-field">
+
+
+                @Html.Label("Group Company Description", new { @class = "floating-label" })
+                @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input" })
+            </div>
+            <div class="clearfix"></div>
+
+            @Html.HiddenFor(m => m.CompanyID)
+            @Html.HiddenFor(m => m.ParentCompanyID)
+
+            @*</div>*@
+
+
+        </div>
+    </div>
+
+    <ul class="list-inline continueBtn">
+
+
+        <li>
+            @Html.ActionLink("Modify", "UpdateGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+        </li>
+        <li>
+            @Html.ActionLink("Delete", "DeleteGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+            @if (Model.Is_Active == true)
+            {
+                @Html.ActionLink("Deactivate", "DeactivateGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+            }
+
+            else
+            {
+                @Html.ActionLink("Activate", "ActivateGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+
+            }
+        </li>
+        <li>
+            <input type="submit" value="Add Company" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+        </li>
+    </ul>
+    <h2 class="ML15">List of Companies</h2>
+
+    if (Model.AboutGroupCompany.Count > 0)
+
+
+    {
+        <table class="table">
+            <tr class="active">
+                <th class="active">
+                    @Html.DisplayName("Company Name")
+                </th>
+                <th>
+                    @Html.DisplayName("Industry Type")
+                </th>
+                <th>
+                    @Html.DisplayName("Logo")
+                </th>
+                <th>
+                    @Html.DisplayName("Modify")
+                </th>
+                @*<th></th>*@
+            </tr>
+
+            @foreach (var item in Model.AboutGroupCompany)
+            {
+                <tr class="info">
+                    <td class="active">
+                    
+                        <br />
+                        <center>
+                            @Html.ActionLink(item.CompanyNameList, "AboutCompany", new { id = item.OrganizationID })
+
+                        </center>
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.OrganizationID)
+                        </td>*@
+                    <td>
+                        <center>
+                            @Html.DisplayFor(modelItem => item.IndustryType)
+                        </center>
+                    </td>
+
+                    <td>
+                        <center>
+                            @Html.DisplayFor(modelItem => item.logo)
+                        </center>
+                    </td>
+                    @*<td>
+                            <center>
+                                @Html.DisplayFor(modelItem => item.CountryID)
+                            </center>
+                        </td>*@
+                    <td>
+
+
+                        <center>
+
+                            <a href="@Url.Action("UpdateCompany", "ManageOrganization", new { OrgID = item.OrganizationID })">
+
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </center>
+                    </td>
+
+
+                </tr>
+            }
+
+
+        </table>
+    }
+    else
+    {
+
+        <center>
+            <p class="alert alert-success" style="width:1000px" id=" successMessage">@ViewBag.Message</p>
+        </center>
+    }
+}
