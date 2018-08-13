@@ -8,6 +8,7 @@ using ComplianceAuditWeb.Models;
 using System.Data;
 using System.IO;
 using System.Web.Script.Serialization;
+using System.Configuration;
 
 namespace ComplianceAuditWeb.Controllers
 {
@@ -79,6 +80,8 @@ namespace ComplianceAuditWeb.Controllers
                 else
                     TempData["Message"] = "Not able to create the " + model.Compliance.Compliance_Title + "Act.";
             }
+            else
+                ModelState.AddModelError("", ConfigurationManager.AppSettings["Requried"]);
             model = (ComplianceViewModel)TempData["Actmodel"];
             return View("_AddActs", model);
         }
@@ -158,7 +161,8 @@ namespace ComplianceAuditWeb.Controllers
                 else
                     TempData["Message"] = "Not able to create successfully";
             }
-            ModelState.AddModelError("", "Please enter all requried fields");
+            else
+                ModelState.AddModelError("", ConfigurationManager.AppSettings["Requried"]);
             return View("_AddSection", model);
         }
 
@@ -198,7 +202,8 @@ namespace ComplianceAuditWeb.Controllers
                 else
                     TempData["Message"] = "Not able to Create " + model.Compliance.Compliance_Title + " Rule.";
             }
-            ModelState.AddModelError("", "Please enter all requried fields");
+            else
+                ModelState.AddModelError("", ConfigurationManager.AppSettings["Requried"]);
             return PartialView("_AddRules", model);
 
         }
@@ -320,6 +325,7 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult AssignRules(string Branchid, string Branchname)
         {
             AllocateActandRuleViewModel model = new AllocateActandRuleViewModel();
+            model.ActType = new List<SelectListItem>();
             model.ActType.Add(new SelectListItem { Text = "--Select Act Type--", Value = "0" });
             model.ActType.Add(new SelectListItem { Text = "Union Level", Value = "1" });
             model.ActType.Add(new SelectListItem { Text = "State Level", Value = "2" });
@@ -331,7 +337,7 @@ namespace ComplianceAuditWeb.Controllers
             model.BranchId = Convert.ToInt32(Branchid);
             model.Name = Branchname;
             Session["Branch_Id"] = Branchid;
-
+            Session["BranchName"] = Branchname;
 
             return View("_AssignRules",model);
         }
@@ -417,19 +423,26 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult AssignRules(string selectedItems)
         {
-            List<treenode> ruleslist = (new JavaScriptSerializer()).Deserialize<List<treenode>>(selectedItems);
-            int[] rules=new int[ruleslist.Count];
-            int i = 0;
-            int userid = Convert.ToInt32(Session["UserId"]);
-            int orgid = Convert.ToInt32(Session["Branch_Id"]);
-            foreach (var item in ruleslist)
+            if (selectedItems != string.Empty)
             {
-                rules[i++] = Convert.ToInt32(item.id);
+                List<treenode> ruleslist = (new JavaScriptSerializer()).Deserialize<List<treenode>>(selectedItems);
+                int[] rules = new int[ruleslist.Count];
+                int i = 0;
+                int userid = Convert.ToInt32(Session["UserId"]);
+                int orgid = Convert.ToInt32(Session["Branch_Id"]);
+                foreach (var item in ruleslist)
+                {
+                    rules[i++] = Convert.ToInt32(item.id);
+                }
+                ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
+                client.DeleteRuleforBranch(orgid);
+                client.inseretActandRuleforBranch(orgid, rules, userid);
+                TempData["Message"] = "Successfully assigned " + ruleslist.Count + "Rules to" + Session["BranchName"];
+                return RedirectToAction("AssignRules", new { Branchid = Convert.ToString(Session["Branch_Id"]), Branchname = Convert.ToString(Session["BranchName"]) });
             }
-            ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
-            client.DeleteRuleforBranch(orgid);
-            client.inseretActandRuleforBranch(orgid, rules, userid);
-            return RedirectToAction("SMEDashboard");
+            else
+               TempData["Error"]="Please select atleast one rule";
+            return RedirectToAction("AssignRules", new { Branchid = Convert.ToString(Session["Branch_Id"]), Branchname = Convert.ToString(Session["BranchName"]) });
         }
         [HttpGet]
         public ActionResult SMEdashboard()
@@ -448,7 +461,7 @@ namespace ComplianceAuditWeb.Controllers
                     model.Companylist.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
                 }
             }
-            TempData["Company"] = model.Companylist;            
+            Session["Company"] = model.Companylist;            
             model.Branch = new List<Organization>();
             model.Vendor = new List<Organization>();
             return View("_SMEDashboard", model);
@@ -457,7 +470,7 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult SMEdashboard(AllocateActandRuleViewModel model)
         {
-            model.Companylist =(List<SelectListItem>) TempData["Company"];
+            model.Companylist =(List<SelectListItem>) Session["Company"];
             model.Branch = new List<Organization>();
             model.Vendor = new List<Organization>();
             AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();

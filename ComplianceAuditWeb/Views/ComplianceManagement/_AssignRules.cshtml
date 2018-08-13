@@ -65,14 +65,23 @@
 @using (Html.BeginForm("AssignRules", "ComplianceManagement", FormMethod.Post))
 {
 <div class="mid_content_sec">
+    @if (TempData["Message"] != null)
+    {
+        <p class="alert alert-success">@TempData["Message"]</p>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <p class="alert alert-warning">@TempData["Error"]</p>
+    }
     <div class="col-xs-6 subSelect ">
         @Html.Label("Compliance Type", new { @class = "floating-label" })
-        @Html.DropDownListFor(model => model.AuditTypeID, Model.AuditType, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "LoadJSTree(this.value)" })        
+        @Html.DropDownListFor(model => model.AuditTypeID, Model.AuditType, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "LoadJSTree(this.value)" })
     </div>
     <div class="col-xs-6 subSelect ">
         @Html.Label("Act Type", new { @class = "floating-label" })
         @Html.DropDownListFor(model => model.ActTypeID, Model.ActType, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "LoadJSTree(this.value)" })
     </div>
+    <div class="clearfix"></div>
     <div class="clearfix"></div>
     <div class="col-xs-10 subSelect ">
         <div id="actjstree"></div>

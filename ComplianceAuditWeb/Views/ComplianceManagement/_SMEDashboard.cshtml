@@ -67,6 +67,8 @@
 @using (Html.BeginForm())
 {
 <div class="mid_content_sec">
+   
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="col-xs-12 subSelect ">
         <div class="input-field">
             @Html.Label("Company", new { @class = "floating-label" })
@@ -90,7 +92,7 @@
                             <div class="col-sm-3 QueList">
                                 <div class="queContainer">
                                     <a href="@Url.Action("AssignRules", "ComplianceManagement",new { Branchid = item.Company_Id,Branchname=item.Company_Name  })">
-                                        <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                                        <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
                                         <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
                                     </a>
                                     <div class="clearfix"></div>
@@ -106,7 +108,6 @@
             </div>
         }
     </div>
-    <div class="clearfix"></div>
     <div class="col-xs-6 subSelect ">
         @if (Model.Vendor != null)
         {<div class="new_section_box">
@@ -122,7 +123,7 @@
                             <div class="col-sm-3 QueList">
                                 <div class="queContainer">
                                     <a href="@Url.Action("AssignRules", "ComplianceManagement",new { Branchid = item.Company_Id,Branchname=item.Company_Name })">
-                                        <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                                        <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
                                         <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
                                     </a>
                                     <div class="clearfix"></div>
