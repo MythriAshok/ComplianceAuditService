@@ -6,29 +6,29 @@
 @section scripts{
     <script language="javascript" type="text/javascript">
 
-    function GetCompany(_Groupcompid) {
-    var procemessage = "<option value='0'> Please wait...</option>";
-    $("#CompanyID").html(procemessage).show();
-    var url = "/Common/getcompany";
+        function GetCompany(_Groupcompid) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#CompanyID").html(procemessage).show();
+            var url = "/Common/getcompany";
 
-    $.ajax({
-    url: url,
-    data: { groupcompid: _Groupcompid },
-    cache: false,
-    type: "POST",
-    success: function (data) {
-    var markup = "<option value='0'>Select Company</option>";
-    for (var x = 0; x < data.length; x++) {
-    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
-    }
-    $("#CompanyID").html(markup).show();
-    },
-    error: function (reponse) {
-    alert("error : " + reponse);
-    }
-    });
+            $.ajax({
+                url: url,
+                data: { groupcompid: _Groupcompid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>Select Company</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#CompanyID").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
 
-    }
+        }
 
 
 
@@ -38,10 +38,10 @@
 
 }
 
-<h2 class="ML15"></h2>
+<h2 class="ML15">Add Company Branch</h2>
 <ul class="breadcrumb ML15">
-    <li><a href="">Branch Management</a></li>
-    <li>Branch Dashboard</li>
+    <li><a href="/Common/dashboard?pid=9">Branch Management</a></li>
+    <li> Branch</li>
 </ul>
 <div class="mid_content_sec">
     @using (Html.BeginForm())
@@ -61,33 +61,33 @@
                 @Html.DropDownListFor(model => model.CompanyID, Model.CompaniesList, new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
             </div>
         </div>
-        @Html.HiddenFor(model=>model.CompaniesList)
-    <div class="clearfix"></div>
-    <div class="new_section_box">
-        <div class="tab-content">
-            <div id="home" class="tab-pane fade in active">
-                <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Branch</h2>
-                @foreach (var item in Model.listOfGroups)
-                {
-                    <div class="col-sm-3 QueList">
-                        <div class="queContainer">
-                            @*@item.OrganizationID = @Session["BranchID"];*@
-                            <a href="@Url.Action("AboutBranch", "ManageOrganization", new { id = item.OrganizationID })">
-                                <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
-                                <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
-                            </a>
-                            <div class="clearfix"></div>
+        @Html.HiddenFor(model => model.CompaniesList)
+        <div class="clearfix"></div>
+        <div class="new_section_box">
+            <div class="tab-content">
+                <div id="home" class="tab-pane fade in active">
+                    <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Branch</h2>
+                    @foreach (var item in Model.listOfGroups)
+                    {
+                        <div class="col-sm-3 QueList">
+                            <div class="queContainer">
+                                @*@item.OrganizationID = @Session["BranchID"];*@
+                                <a href="@Url.Action("AboutBranch", "ManageOrganization", new { id = item.OrganizationID })">
+                                    <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                                    <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
+                                </a>
+                                <div class="clearfix"></div>
+                            </div>
                         </div>
-                    </div>
-                }
+                    }
 
-                <div class="clearfix"></div>
+                    <div class="clearfix"></div>
+
+                </div>
 
             </div>
 
         </div>
-
-    </div>
     }
 </div>
 

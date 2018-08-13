@@ -14,11 +14,11 @@ namespace Compliance.DataObject
         //[Required]
         //public string Industry_Type { get; set; }
         public string Formal_Name { get; set; }
-        [Display(Name = "Start Date")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode =true)]
         [DataType(DataType.Date)]
         public Nullable< DateTime> Calender_StartDate { get; set; }
 
-        [Display(Name = "End Date")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public Nullable<  DateTime> Calender_EndDate  { get; set; }
         [Required]

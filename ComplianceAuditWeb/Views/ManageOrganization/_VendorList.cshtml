@@ -6,29 +6,29 @@
 @section scripts{
     <script language="javascript" type="text/javascript">
 
-    function GetCompany(_Groupcompid) {
-    var procemessage = "<option value='0'> Please wait...</option>";
-    $("#CompanyID").html(procemessage).show();
-    var url = "/Common/getcompany";
+        function GetCompany(_Groupcompid) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#CompanyID").html(procemessage).show();
+            var url = "/Common/getcompany";
 
-    $.ajax({
-    url: url,
-    data: { groupcompid: _Groupcompid },
-    cache: false,
-    type: "POST",
-    success: function (data) {
-    var markup = "<option value='0'>Select Company</option>";
-    for (var x = 0; x < data.length; x++) {
-    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
-    }
-    $("#CompanyID").html(markup).show();
-    },
-    error: function (reponse) {
-    alert("error : " + reponse);
-    }
-    });
+            $.ajax({
+                url: url,
+                data: { groupcompid: _Groupcompid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>Select Company</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#CompanyID").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
 
-    }
+        }
 
 
 
@@ -38,10 +38,11 @@
 
 }
 
-<h2 class="ML15"></h2>
+<h2 class="ML15"> Vendor List</h2>
+
 <ul class="breadcrumb ML15">
-    <li><a href=""></a></li>
-    <li></li>
+    <li><a href="/Common/dashboard?pid=9">Vendor Management</a></li>
+    <li> Vendor</li>
 </ul>
 <div class="mid_content_sec">
     @using (Html.BeginForm())

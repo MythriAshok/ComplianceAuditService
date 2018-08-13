@@ -36,8 +36,8 @@ namespace ComplianceAuditWeb.Models
         {
             SalesOffice,
             Manufacturing,
-            Service,
-            HeadQuater
+            Service
+           
         }
 
 

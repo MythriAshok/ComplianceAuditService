@@ -1,9 +1,9 @@
 ﻿@model ComplianceAuditWeb.Models.OrgActivateDeactivateViewModel
 
 
-
+<h2 class="ML15">Deactivate Vendor</h2>
 <ul class="breadcrumb ML15">
-    <li><a href="">Vendor Management</a></li>
+    <li><a href="/Common/dashboard?pid=6">Vendor Management</a></li>
     <li>Deactivate </li>
 </ul>
 <center>
@@ -25,8 +25,8 @@
 
                 @*@Html.HiddenFor(m => m.organization.Organization_Id)
 
-        @Html.LabelFor(m => m.organization.Company_Name, new { @class = "floating-label" })
-        @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input" })*@
+                    @Html.LabelFor(m => m.organization.Company_Name, new { @class = "floating-label" })
+                    @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input" })*@
 
 
                 @Html.HiddenFor(m => m.CompanyID)
@@ -43,9 +43,9 @@
             @*<input type="submit" value="Activate" class="btn btn-default" />*@
 
 
-            @*<button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit" onclick="DeactivateGroupCompany">Dectivate<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>*@
-           
-            @Html.ActionLink("Deactivate", "CompanyVendorsList", new { id = Model.ParentCompanyID }, new { @class = "btn primary-button" })
+            <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit" onclick="DeactivateVendorUnderCompany">Dectivate<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
+
+            @*@Html.ActionLink("Deactivate", "CompanyVendorsList", new { id = Model.ParentCompanyID }, new { @class = "btn primary-button" })*@
 
 
             <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Cancel<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>

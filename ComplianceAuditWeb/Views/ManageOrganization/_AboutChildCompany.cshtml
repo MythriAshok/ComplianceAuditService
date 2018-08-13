@@ -4,10 +4,20 @@
 
     ViewBag.Title = "_AboutChildCompany";
 }
-
+<h2 class="ML15">Manage Company</h2>
+    <ul class="breadcrumb ML15">
+        <li><a href="/Common/dashboard?pid=9">Company Management</a></li>
+        <li> Company</li>
+    </ul>
 
 @using (Html.BeginForm())
 {
+    if (TempData["Success"] != null)
+    {
+        <center>
+            <p class="alert alert-success" style="width:1000px" id=" successMessage">@TempData["Success"]</p>
+        </center>
+    }
     <img src="/UploadedFiles/@Model.CompanyLogo" alt="" />
     <div class="clearfix"></div>
 
