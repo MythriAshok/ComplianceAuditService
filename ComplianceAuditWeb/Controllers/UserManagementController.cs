@@ -46,8 +46,11 @@ namespace ComplianceAuditWeb.Controllers
                 UserService.UserServiceClient client = new UserService.UserServiceClient();
                 int roleid = client.insertRoles(rolesView.roles);
                 client.insertRolePrivilege(roleid, rolesView.PrivilegeId);
-                return View("CreateUser");
+                TempData["Message"] = "Created " + rolesView.roles.RoleName + " Succesfully.";
+                return RedirectToAction("AddRoles");
             }
+            else
+                ModelState.AddModelError("", ConfigurationManager.AppSettings["Requried"]);
             return View("_AddRole", rolesView);
         }
 
@@ -105,6 +108,8 @@ namespace ComplianceAuditWeb.Controllers
                 client.insertRolePrivilege(model.roles.RoleId, model.PrivilegeId);
                 return View("_AddRole", model);
             }
+            else
+                ModelState.AddModelError("", ConfigurationManager.AppSettings["Requried"]);
             return View("_AddRole", model);
         }
 
@@ -152,7 +157,8 @@ namespace ComplianceAuditWeb.Controllers
                 Client.insertGroups(model.Group);
                 return View("CreateUser");
             }
-            ModelState.AddModelError("", ConfigurationManager.AppSettings[""]);
+            else
+                ModelState.AddModelError("", ConfigurationManager.AppSettings["Requried"]);
             return View("_AddUserGroup", model);
         }
 
@@ -191,9 +197,10 @@ namespace ComplianceAuditWeb.Controllers
             {
                 UserService.UserServiceClient Client = new UserService.UserServiceClient();
                 Client.updateGroups(model.Group);
-                return View();
+                return View("ListofUsergroup");
             }
-            ModelState.AddModelError("", ConfigurationManager.AppSettings[""]);
+            else
+            ModelState.AddModelError("", ConfigurationManager.AppSettings["Requried"]);
             return View("_AddUserGroup", model);
         }
 
@@ -220,14 +227,14 @@ namespace ComplianceAuditWeb.Controllers
             userviewmodel.RolesList= new List<SelectListItem>();
 
             //userviewmodel.RolesList.Add(new SelectListItem { Text = "--Select--", Value = "0" });
-            if (dsRoles.Tables.Count > 0)
-            {
-                foreach (System.Data.DataRow row in dsRoles.Tables[0].Rows)
-                {
-                    userviewmodel.RolesList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
-                }
-            }
-
+            //if (dsRoles.Tables.Count > 0)
+            //{
+            //    foreach (System.Data.DataRow row in dsRoles.Tables[0].Rows)
+            //    {
+            //        userviewmodel.RolesList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
+            //    }
+            //}
+            TempData["UserGroup"] = userviewmodel.UserGroupList;
             return View("_AddUser", userviewmodel);
         }
 
@@ -251,30 +258,33 @@ namespace ComplianceAuditWeb.Controllers
                     {
                         model.User.UserId = Convert.ToInt32(res);
                         Client.insertUserGroupmember(model.User.UserId, model.UserGroupID);
-                        Client.insertUserRole(model.User.UserId, model.RoleID);
-                        return View("CreateUser");
+                    //Client.insertUserRole(model.User.UserId, model.RoleID);
+                    return RedirectToAction("ListofUsers");
                     }
                     else
                         ModelState.AddModelError("User.EmailId", "UserName is already Exists");
                 
                 }
+                else
+                ModelState.AddModelError("", ConfigurationManager.AppSettings["Requried"]);
                 model.User.UserId = 0;
-                string xmlGroups = Client.GetUserGroup(0);
-                DataSet Groups = new DataSet();
-                Groups.ReadXml(new StringReader(xmlGroups));
-                model.UserGroupList = new List<SelectListItem>();
-                foreach (System.Data.DataRow row in Groups.Tables[0].Rows)
-                {
-                    model.UserGroupList.Add(new SelectListItem { Text = row["User_Group_Name"].ToString(), Value = row["User_Group_ID"].ToString() });
-                }
-                string xmlRoles = Client.GetRoles(0);
-                DataSet dsRoles = new DataSet();
-                dsRoles.ReadXml(new StringReader(xmlRoles));
-                model.RolesList = new List<SelectListItem>();
-                foreach (System.Data.DataRow row in dsRoles.Tables[0].Rows)
-                {
-                    model.RolesList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
-                }            
+            model.UserGroupList = (List<SelectListItem>)TempData["UserGroup"];
+                //string xmlGroups = Client.GetUserGroup(0);
+                //DataSet Groups = new DataSet();
+                //Groups.ReadXml(new StringReader(xmlGroups));
+                //model.UserGroupList = new List<SelectListItem>();
+                //foreach (System.Data.DataRow row in Groups.Tables[0].Rows)
+                //{
+                //    model.UserGroupList.Add(new SelectListItem { Text = row["User_Group_Name"].ToString(), Value = row["User_Group_ID"].ToString() });
+                //}
+                //string xmlRoles = Client.GetRoles(0);
+                //DataSet dsRoles = new DataSet();
+                //dsRoles.ReadXml(new StringReader(xmlRoles));
+                //model.RolesList = new List<SelectListItem>();
+                //foreach (System.Data.DataRow row in dsRoles.Tables[0].Rows)
+                //{
+                //    model.RolesList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString() });
+                //}            
                 
             return View("_AddUser", model);
         }
@@ -326,27 +336,29 @@ namespace ComplianceAuditWeb.Controllers
                 }
             }
             model.RolesList = new List<SelectListItem>();
-            ds = new DataSet();
-            xmldata = Client.GetRoles(0);
-            ds.ReadXml(new StringReader(xmldata));
-            xmldata = Client.getUserRoles(model.User.UserId);
-            dsgroup = new DataSet();
-            dsgroup.ReadXml(new StringReader(xmldata));
-            if(ds.Tables.Count>0)
-            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
-            {
-                bool selected = false;
-                if(ds.Tables.Count>0)
-                foreach (System.Data.DataRow roleid in dsgroup.Tables[0].Rows)
-                {
-                    if (Convert.ToInt32(roleid["Role_ID"]) == Convert.ToInt32(row["Role_ID"]))
-                    {
-                        selected = true;
-                        break;
-                    }
-                }
-                model.RolesList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString(),Selected=selected});
-            }
+            //ds = new DataSet();
+            //xmldata = Client.GetRoles(0);
+            //ds.ReadXml(new StringReader(xmldata));
+            //xmldata = Client.getUserRoles(model.User.UserId);
+            //dsgroup = new DataSet();
+            //dsgroup.ReadXml(new StringReader(xmldata));
+            //if (ds.Tables.Count > 0)
+            //{
+            //    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            //    {
+            //        bool selected = false;
+            //        if (ds.Tables.Count > 0)
+            //            foreach (System.Data.DataRow roleid in dsgroup.Tables[0].Rows)
+            //            {
+            //                if (Convert.ToInt32(roleid["Role_ID"]) == Convert.ToInt32(row["Role_ID"]))
+            //                {
+            //                    selected = true;
+            //                    break;
+            //                }
+            //            }
+            //        model.RolesList.Add(new SelectListItem { Text = row["Role_Name"].ToString(), Value = row["Role_ID"].ToString(), Selected = selected });
+            //    }
+            //}
             return View("_AddUser",model);
         }
 
@@ -371,9 +383,11 @@ namespace ComplianceAuditWeb.Controllers
                 Client.insertUserGroupmember(model.User.UserId, model.UserGroupID);
                 Client.UpdateUserRole(model.User.UserId);
                 Client.insertUserRole(model.User.UserId, model.RoleID);
+                return View("ListofUsers");
             }
-            ModelState.AddModelError("", ConfigurationManager.AppSettings[""]);
-            return View("");
+            else
+                ModelState.AddModelError("", ConfigurationManager.AppSettings["Requried"]);
+            return View("ListofUsers");
         }
        
         //
@@ -397,7 +411,7 @@ namespace ComplianceAuditWeb.Controllers
                         IsActive= Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
                         LastName = Convert.ToString(row["Last_Name"]),
                         EmailId = Convert.ToString(row["Email_ID"]) ,
-                    photo= Convert.ToString(row["Photo"])
+                        photo= Convert.ToString(row["Photo"])
                     });
                 }
             }
@@ -493,7 +507,9 @@ namespace ComplianceAuditWeb.Controllers
                     Session["emailid"] = ds.Tables[0].Rows[0]["Email_ID"];
                     Session["GroupCompanyId"] = ds.Tables[0].Rows[0]["Company_ID"];
                     Session["Last_Login"] = ds.Tables[0].Rows[0]["Last_Login"];
-                    return RedirectToAction("dashboard", "common",new { pid=18});
+                    Session["photo"] = ds.Tables[0].Rows[0]["Photo"];
+                    return RedirectToAction("dashboard", "common",new { pid=0});
+                    //return View("~/Views/UserManagement/Landing_Page.cshtml");
                 }
                 else
                     ModelState.AddModelError("",ConfigurationManager.AppSettings["Login_error"]);

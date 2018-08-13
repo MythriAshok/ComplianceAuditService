@@ -1,6 +1,8 @@
 ﻿
 @model IEnumerable < Compliance.DataObject.Menus>
-@{ int listcount = 0;}
+@{ int listcount = 0;
+    /* string path = String.Empty;*/
+ }
 
 <div class="new_section_box">
     <div class="tab-content">
@@ -11,10 +13,22 @@
                 listcount++;
                 <div class="col-sm-3 QueList">
                     <div class="queContainer">
+                        @if (item.ParentMenuId == 0)
+                        {
+                            //path = string.Join(" ", item.PathUrl, "?pid=", item.Id);
+                            <a href=@item.PathUrl?pid=@item.Id>
+                                <span class="qIcon"><img src="/Content/assets/images/@item.icon" alt="" />@*<i class="fa fa-users fa-5x"></i>*@</span>
+                                <h3 class="PB25">@item.MenuName</h3>
+                            </a>
+                        }
+                        else
+                        {
+                            //path = @item.PathUrl;
+
                         <a href=@item.PathUrl>
                             <span class="qIcon"><img src="/Content/assets/images/@item.icon" alt="" /></span>
                             <h3 class="PB25">@item.MenuName</h3>
-                        </a>
+                        </a>}
                     </div>
                 </div>
                 if (listcount == 4)

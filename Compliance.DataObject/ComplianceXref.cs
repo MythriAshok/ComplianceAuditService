@@ -26,9 +26,11 @@ namespace Compliance.DataObject
         public string Type { get; set; }
         public bool Is_Best_Practice { get; set; }
         public int Version { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime Effective_Start_Date { get; set; }
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Effective_End_Date { get; set; }
         [Required]
         public int Country_ID { get; set; }

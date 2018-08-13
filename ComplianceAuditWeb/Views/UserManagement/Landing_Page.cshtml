@@ -1,0 +1,25 @@
+﻿
+
+@{
+    /**/
+
+    ViewBag.Title = "Welcome Page";
+}
+
+
+<div class="mid_content_sec">
+
+    <div class="col-xs-12 subSelect ">
+        <div class="input-field">
+            <p>
+                <h2 class="ML15">Welcome</h2><h3>@Session["username"],<br /></h3><p><span style="margin-left:60%">Last Login Date : @Session["Last_Login"]</span></p>
+
+                <img src="/UploadedFiles/@Session["photo"]" alt="" style="height:70px; width:70px; float:left" />
+
+                @Session["emailid"],
+            </p>
+        </div>
+        </div>
+
+
+        </div>
