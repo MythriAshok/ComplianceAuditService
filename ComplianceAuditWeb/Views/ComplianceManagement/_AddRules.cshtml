@@ -7,8 +7,9 @@
 
 @using (Html.BeginForm())
 {<div class="mid_content_sec">
-   
-    <p class="alert alert-warning">@TempData["Message"]</p>
+    @if (@TempData["Message"] != null)
+    {
+        <p class="alert alert-warning">@TempData["Message"]</p>}
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Compliance.Compliance_Parent_ID)
     @Html.HiddenFor(model => model.Compliance.Audit_Type_ID)
@@ -16,7 +17,7 @@
     @Html.HiddenFor(model => model.Compliance.State_ID)
     @Html.HiddenFor(model => model.Compliance.City_ID)
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="col-xs-4 subSelect ">
+    <div class="col-xs-8 subSelect ">
         <div class="input-field">
             @Html.Label("Compliance Title", new { @class = "floating-label" })<span style="color:red">*</span>
 
@@ -25,15 +26,7 @@
             @Html.ValidationMessageFor(model => model.Compliance.Compliance_Title, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Recurrence", new { @class = "floating-label" })
 
-            @Html.TextBoxFor(model => model.Compliance.Recurrence, new { @class = "inputMaterial ui - autocomplete - input" })
-            <span id="loading_data_icon"></span>
-            @Html.ValidationMessageFor(model => model.Compliance.Recurrence, "", new { @class = "text-danger" })
-        </div>
-    </div>
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
             @Html.Label("Risk Category", new { @class = "floating-label" })<span style="color:red">*</span>
@@ -43,22 +36,13 @@
         </div>
     </div>
     <div class="clearfix"></div>
-    <div class="col-xs-4 subSelect ">
+    <div class="col-xs-8 subSelect ">
         <div class="input-field">
             @Html.Label("Compliance Description", new { @class = "floating-label" })
 
             @Html.TextAreaFor(model => model.Compliance.Comp_Description, new { @class = "inputMaterial ui - autocomplete - input" })
             <span id="loading_data_icon"></span>
             @Html.ValidationMessageFor(model => model.Compliance.Comp_Description, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("compliance def consequence", new { @class = "floating-label" })<span style="color:red">*</span>
-
-            @Html.TextAreaFor(model => model.Compliance.compl_def_consequence, new { @class = "inputMaterial ui - autocomplete - input" })
-            <span id="loading_data_icon"></span>
-            @Html.ValidationMessageFor(model => model.Compliance.compl_def_consequence, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="col-xs-4 subSelect ">
@@ -71,6 +55,25 @@
         </div>
     </div>
     <div class="clearfix"></div>
+    <div class="col-xs-12 subSelect ">
+        <div class="input-field">
+            @Html.Label("compliance def consequence", new { @class = "floating-label" })<span style="color:red">*</span>
+
+            @Html.TextAreaFor(model => model.Compliance.compl_def_consequence, new { @class = "inputMaterial ui - autocomplete - input" })
+            <span id="loading_data_icon"></span>
+            @Html.ValidationMessageFor(model => model.Compliance.compl_def_consequence, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Recurrence", new { @class = "floating-label" })
+
+            @Html.TextBoxFor(model => model.Compliance.Recurrence, new { @class = "inputMaterial ui - autocomplete - input" })
+            <span id="loading_data_icon"></span>
+            @Html.ValidationMessageFor(model => model.Compliance.Recurrence, "", new { @class = "text-danger" })
+        </div>
+    </div>
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
             @Html.Label("Form", new { @class = "floating-label" })
@@ -89,25 +92,18 @@
             @Html.ValidationMessageFor(model => model.Compliance.Type, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Is Best Practice", new { @class = "floating-label" })
-            @Html.EditorFor(model => model.Compliance.Is_Best_Practice)
-            <span id="loading_data_icon"></span>
-            @Html.ValidationMessageFor(model => model.Compliance.Is_Best_Practice, "", new { @class = "text-danger" })
-        </div>
-    </div>
+
     <div class="clearfix"></div>
-    <div class="col-xs-4 subSelect ">
+    <div class="col-xs-6 subSelect ">
         <div class="input-field">
             @Html.Label("Effective Start Date", new { @class = "floating-label" })
-
-            @Html.EditorFor(model => model.Compliance.Effective_Start_Date, new { @class = "inputMaterial ui - autocomplete - input" })
+            @*@Html.TextBox("Compliance_Effective_Start_Date",Model.Compliance.Effective_Start_Date.ToShortDateString(), new { @class = "inputMaterial ui - autocomplete - input",type="date" })*@
+            @Html.EditorFor(model => model.Compliance.Effective_Start_Date, new { htmlAttributes = new { @class = "inputMaterial ui - autocomplete - input" } })
             <span id="loading_data_icon"></span>
             @Html.ValidationMessageFor(model => model.Compliance.Effective_Start_Date, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="col-xs-4 subSelect ">
+    <div class="col-xs-6 subSelect ">
         <div class="input-field">
             @Html.Label("Effective_End_Date", new { @class = "floating-label" })
 
@@ -116,32 +112,16 @@
             @Html.ValidationMessageFor(model => model.Compliance.Effective_End_Date, "", new { @class = "text-danger" })
         </div>
     </div>
-    @*<div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @Html.Label("Country", new { @class = "floating-label" })
 
-                @Html.DropDownListFor(model => model.Compliance.Country_ID, Model.Countrylist, new { @class = "inputMaterial ui - autocomplete - input" })
-                @Html.ValidationMessageFor(model => model.Compliance.Country_ID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @Html.Label("State", new { @class = "floating-label" })
-
-                @Html.DropDownListFor(model => model.Compliance.State_ID, Model.Statelist, new { @class = "inputMaterial ui - autocomplete - input" })
-                @Html.ValidationMessageFor(model => model.Compliance.State_ID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @Html.Label("City", new { @class = "floating-label" })
-
-                @Html.DropDownListFor(model => model.Compliance.City_ID, Model.Citylist, new { @class = "inputMaterial ui - autocomplete - input" })
-                @Html.ValidationMessageFor(model => model.Compliance.City_ID, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
     <div class="clearfix"></div>
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Is Best Practice", new { @class = "floating-label" })
+            @Html.EditorFor(model => model.Compliance.Is_Best_Practice)
+            <span id="loading_data_icon"></span>
+            @Html.ValidationMessageFor(model => model.Compliance.Is_Best_Practice, "", new { @class = "text-danger" })
+        </div>
+    </div>
     <ul class="list-inline continueBtn">
         <li>
             @*<input type="submit" value="Create" class="btn btn-default" />*@

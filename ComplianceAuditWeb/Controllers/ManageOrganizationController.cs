@@ -521,7 +521,7 @@ namespace ComplianceAuditWeb.Controllers
                 }
 
             }
-            Session["Logo"] = companyVM.organization.logo;
+            //Session["Logo"] = companyVM.organization.logo;
 
             return View("_Company", companyVM);
         }
@@ -1791,6 +1791,10 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult AboutCompany(int id)
         {
             AboutCompanyViewModel aboutCompanyViewModel = new AboutCompanyViewModel();
+
+            aboutCompanyViewModel.AboutBranch = new List<AboutCompanyViewModel>();
+            aboutCompanyViewModel.AboutCompany = new List<AboutCompanyViewModel>();
+            aboutCompanyViewModel.AboutGroupCompany = new List<AboutCompanyViewModel>();
             OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
             string aboutcompany = organizationServiceClient.getCompanyListsforBranch(id);
             DataSet dsaboutCompany = new DataSet();

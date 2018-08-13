@@ -6,78 +6,88 @@
     ViewBag.Title = "Add Company Branch";
 }
 @section scripts{
-    <script language="javascript" type="text/javascript">
-        function GetState(_CountryId) {
-            var procemessage = "<option value='0'> Please wait...</option>";
-            $("#branch_State_Id").html(procemessage).show();
-            var url = "/Common/getstate";
-            //alert(url);
-            $.ajax({
-                url: url,
-                data: { countryid: _CountryId },
-                cache: false,
-                type: "POST",
-                success: function (data) {
-                    var markup = "<option value='0'>Select State</option>";
-                    for (var x = 0; x < data.length; x++) {
-                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
-                    }
-                    $("#branch_State_Id").html(markup).show();
-                },
-                error: function (reponse) {
-                    alert("error : " + reponse);
+<script language="javascript" type="text/javascript">
+    function GetState(_CountryId) {
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("#branch_State_Id").html(procemessage).show();
+        var url = "/Common/getstate";
+        //alert(url);
+        $.ajax({
+            url: url,
+            data: { countryid: _CountryId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>Select State</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
                 }
-            });
+                $("#branch_State_Id").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
 
-        }
-        function GetCity(_StateId) {
-            var procemessage = "<option value='0'> Please wait...</option>";
-            $("#branch_City_Id").html(procemessage).show();
-            var url = "/Common/getcity";
-            $.ajax({
-                url: url,
-                data: { stateid: _StateId },
-                cache: false,
-                type: "POST",
-                success: function (data) {
-                    var markup = "<option value='0'>Select City</option>";
-                    for (var x = 0; x < data.length; x++) {
-                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
-                    }
-                    $("#branch_City_Id").html(markup).show();
-                },
-                error: function (reponse) {
-                    alert("error : " + reponse);
+    }
+    function GetCity(_StateId) {
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("#branch_City_Id").html(procemessage).show();
+        var url = "/Common/getcity";
+        $.ajax({
+            url: url,
+            data: { stateid: _StateId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>Select City</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
                 }
-            });
+                $("#branch_City_Id").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
 
-        }
+    }
 
-        function GetCompany(_Groupcompid) {
-            var procemessage = "<option value='0'> Please wait...</option>";
-            $("#CompanyID").html(procemessage).show();
-            var url = "/Common/getcompany";
+    function GetCompany(_Groupcompid) {
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("#CompanyID").html(procemessage).show();
+        var url = "/Common/getcompany";
 
-            $.ajax({
-                url: url,
-                data: { groupcompid: _Groupcompid },
-                cache: false,
-                type: "POST",
-                success: function (data) {
-                    var markup = "<option value='0'>Select Company</option>";
-                    for (var x = 0; x < data.length; x++) {
-                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
-                    }
-                    $("#CompanyID").html(markup).show();
-                },
-                error: function (reponse) {
-                    alert("error : " + reponse);
+        $.ajax({
+            url: url,
+            data: { groupcompid: _Groupcompid },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>Select Company</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
                 }
-            });
+                $("#CompanyID").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
 
+    }
+
+    <script type="text/javascript">
+        function ShowPreview(input) {
+            if (input.files && input.files[0]) {
+                var ImageDir = new FileReader();
+                ImageDir.onload = function (e) {
+            $('#impPrev').attr('src', e.target.result);
         }
-
-
+        ImageDir.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 
 
 
@@ -311,9 +321,9 @@
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
             <label for="file">Upload Logo:</label>
-            <input type="file" name="file" id="file" />
+            <input type="file" name="file" id="file" onchange="ShowPreview(this)" />
             @Html.ValidationMessageFor(m => m.organization.logo, "", new { @class = "text-danger" })
-            <img src="/UploadedFiles/@Model.organization.logo" alt="" />
+            <img src="/UploadedFiles/@Model.organization.logo" alt="" style="height:80px;width:80px" />
         </div>
     </div>
 

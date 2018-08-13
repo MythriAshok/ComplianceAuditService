@@ -507,7 +507,9 @@ namespace ComplianceAuditWeb.Controllers
                     Session["emailid"] = ds.Tables[0].Rows[0]["Email_ID"];
                     Session["GroupCompanyId"] = ds.Tables[0].Rows[0]["Company_ID"];
                     Session["Last_Login"] = ds.Tables[0].Rows[0]["Last_Login"];
-                    return RedirectToAction("dashboard", "common",new { pid=18});
+                    Session["photo"] = ds.Tables[0].Rows[0]["Photo"];
+                    return RedirectToAction("dashboard", "common",new { pid=0});
+                    //return View("~/Views/UserManagement/Landing_Page.cshtml");
                 }
                 else
                     ModelState.AddModelError("",ConfigurationManager.AppSettings["Login_error"]);
