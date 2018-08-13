@@ -54,11 +54,12 @@
 
     </script>
 }
+<h2 class="ML15">Add  Company</h2>
+
 <ul class="breadcrumb ML15">
-    <li><a href="">Company Management</a></li>
+    <li><a href="/Common/dashboard?pid=9">Company Management</a></li>
     <li>Companies</li>
 </ul>
-<h2 class="ML15">Add  Company</h2>
 
 @{string button = "save";
     string actionname = "AddCompany";}
@@ -337,12 +338,14 @@
         <ul class="list-inline continueBtn">
             <li>
 
-              
+
                 @*<input type="submit" value="@button" class="btn btn-default" />*@
 
                 <input type="submit" value="@button" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
                 <input type="reset" value="Reset" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
-                @Html.ActionLink("Cancel", "AddCompany", new { Orgid = Model.organization.Organization_Id }, new { @class = "btn primary-button" })
+                @*@Html.ActionLink("Cancel", "AddCompany", new { Orgid = Model.organization.Organization_Id }, new { @class = "btn primary-button" })*@
+                <a href="@Url.Action("dashboard","Common",new { pid=9})" class="btn primary-button">Cancel</a>
+
 
 
             </li>

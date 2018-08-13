@@ -15,9 +15,12 @@ namespace ComplianceAuditWeb.Models
         public int ParentCompanyID { get; set; }
         public string Website { get; set; }
         public bool Is_Active { get; set; }
+        public bool IsVendor { get; set; }
 
         public List<SelectListItem> CompaniesList { get; set; }
         public List<AboutCompanyViewModel> AboutGroupCompany { get; set; }
+        public List<AboutCompanyViewModel> AboutCompany { get; set; }
+        public List<AboutCompanyViewModel> AboutBranch { get; set; }
         public int CompanyListID { get; set; }
         public string CompanyNameList { get; set; }
         public int OrganizationID { get; set; }

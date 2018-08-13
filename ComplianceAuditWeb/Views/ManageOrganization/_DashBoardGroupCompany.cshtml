@@ -1,5 +1,10 @@
 ﻿@model IEnumerable<ComplianceAuditWeb.Models.ListOfGroupCompanies>
+<h2 class="ML15"> Group Company Dashboard</h2>
 
+<ul class="breadcrumb ML15">
+    <li><a href="/Common/dashboard?pid=6">Group Company Management</a></li>
+    <li>Group Companies</li>
+</ul>
 <div class="new_section_box">
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active">
@@ -7,10 +12,10 @@
 
             @if (TempData["Success"] != null)
             {
-            <center>
-              @*<p class="alert alert-success"  style="width:1000px">  @TempData["Company"]</p>*@
-                <p class="alert alert-success" style="width:1000px" id=" successMessage"> @TempData["Company"] @TempData["Success"] </p>
-            </center>
+                <center>
+                    @*<p class="alert alert-success"  style="width:1000px">  @TempData["Company"]</p>*@
+                    <p class="alert alert-success" style="width:1000px" id=" successMessage"> @TempData["Company"] @TempData["Success"] </p>
+                </center>
             }
             @foreach (var item in Model)
             {
