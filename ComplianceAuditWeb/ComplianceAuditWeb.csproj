@@ -217,6 +217,12 @@
     <Content Include="Content\assets\Dashboard Page.html" />
     <Content Include="Content\assets\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\assets\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\assets\images\11_acts.png" />
+    <Content Include="Content\assets\images\11_company.png" />
+    <Content Include="Content\assets\images\11_group.png" />
+    <Content Include="Content\assets\images\11_report.png" />
+    <Content Include="Content\assets\images\11_user.png" />
+    <Content Include="Content\assets\images\1audit_tool.png" />
     <Content Include="Content\assets\images\1_acts.png" />
     <Content Include="Content\assets\images\1_company.png" />
     <Content Include="Content\assets\images\1_group.png" />
