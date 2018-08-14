@@ -83,7 +83,6 @@ namespace ComplianceAuditWeb.Controllers
         [HttpGet]
         public ActionResult addComplianceAudit()
         {
-            //int ComplianceBrachID = 18;
             int ComplianceBrachID =Convert.ToInt32( Session["ComplianceBranchID"]);
             AuditViewModel auditViewModel = new AuditViewModel();
             AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
@@ -114,24 +113,24 @@ namespace ComplianceAuditWeb.Controllers
                             Compliance_Xref_ID = Convert.ToInt32(row["Compliance_Xref_ID"]),
                             Compliance_Parent_ID = Convert.ToInt32(row["Compliance_Parent_ID"]),
                             Compliance_Title = Convert.ToString(row["Compliance_Title"]),
-                            Comp_Category = Convert.ToString(row["Comp_Category"]),
-                            // Comp_Description = Convert.ToString(row["Comp_Description"]),
-                            //compl_def_consequence = Convert.ToString(row["compl_def_consequence"]),
-                            Country_ID = Convert.ToInt32(row["Country_ID"]),
-                            City_ID = Convert.ToInt32(row["City_ID"]),
-                            Effective_End_Date = Convert.ToDateTime(row["Effective_Start_Date"]),
-                            Effective_Start_Date = Convert.ToDateTime(row["Effective_End_Date"]),
-                            //Form = Convert.ToString(row["Form"]),
-                            //level = Convert.ToInt32(row["level"]),
-                            State_ID = Convert.ToInt32(row["State_ID"]),
-                            Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
-                            //Is_Best_Practice = Convert.ToBoolean(Convert.ToInt32(row["Is_Best_Practice"])),
-                            Risk_Category = Convert.ToString(row["Risk_Category"]),
-                            Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
-                            //Recurrence = Convert.ToString(row["Recurrence"]),
-                            Risk_Description = Convert.ToString(row["Risk_Description"]),
-                            //  Audit_Type = Convert.ToString(row["Audit_Type"]),
-                            //Type = Convert.ToString(row["Type"]),
+                            //Comp_Category = Convert.ToString(row["Comp_Category"]),
+                            //// Comp_Description = Convert.ToString(row["Comp_Description"]),
+                            ////compl_def_consequence = Convert.ToString(row["compl_def_consequence"]),
+                            //Country_ID = Convert.ToInt32(row["Country_ID"]),
+                            //City_ID = Convert.ToInt32(row["City_ID"]),
+                            //Effective_End_Date = Convert.ToDateTime(row["Effective_Start_Date"]),
+                            //Effective_Start_Date = Convert.ToDateTime(row["Effective_End_Date"]),
+                            ////Form = Convert.ToString(row["Form"]),
+                            ////level = Convert.ToInt32(row["level"]),
+                            //State_ID = Convert.ToInt32(row["State_ID"]),
+                            //Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
+                            ////Is_Best_Practice = Convert.ToBoolean(Convert.ToInt32(row["Is_Best_Practice"])),
+                            //Risk_Category = Convert.ToString(row["Risk_Category"]),
+                            //Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
+                            ////Recurrence = Convert.ToString(row["Recurrence"]),
+                            //Risk_Description = Convert.ToString(row["Risk_Description"]),
+                            ////  Audit_Type = Convert.ToString(row["Audit_Type"]),
+                            ////Type = Convert.ToString(row["Type"]),
                         });
                     }
                     else if (row["level"].ToString() == "2")
@@ -141,23 +140,23 @@ namespace ComplianceAuditWeb.Controllers
                             Compliance_Xref_ID = Convert.ToInt32(row["Compliance_Xref_ID"]),
                             Compliance_Parent_ID = Convert.ToInt32(row["Compliance_Parent_ID"]),
                             Compliance_Title = Convert.ToString(row["Compliance_Title"]),
-                            Comp_Category = Convert.ToString(row["Comp_Category"]),
-                            Comp_Description = Convert.ToString(row["Comp_Description"]),
-                            compl_def_consequence = Convert.ToString(row["compl_def_consequence"]),
-                            Country_ID = Convert.ToInt32(row["Country_ID"]),
-                            City_ID = Convert.ToInt32(row["City_ID"]),
-                            Effective_End_Date = Convert.ToDateTime(row["Effective_Start_Date"]),
-                            Effective_Start_Date = Convert.ToDateTime(row["Effective_End_Date"]),
-                            Form = Convert.ToString(row["Form"]),
-                            level = Convert.ToInt32(row["level"]),
-                            State_ID = Convert.ToInt32(row["State_ID"]),
-                            Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
-                            Is_Best_Practice = Convert.ToBoolean(Convert.ToInt32(row["Is_Best_Practice"])),
-                            Risk_Category = Convert.ToString(row["Risk_Category"]),
-                            Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
-                            Recurrence = Convert.ToString(row["Recurrence"]),
-                            Risk_Description = Convert.ToString(row["Risk_Description"]),
-                            Type = Convert.ToString(row["Type"]),
+                            //Comp_Category = Convert.ToString(row["Comp_Category"]),
+                            //Comp_Description = Convert.ToString(row["Comp_Description"]),
+                            //compl_def_consequence = Convert.ToString(row["compl_def_consequence"]),
+                            //Country_ID = Convert.ToInt32(row["Country_ID"]),
+                            //City_ID = Convert.ToInt32(row["City_ID"]),
+                            //Effective_End_Date = Convert.ToDateTime(row["Effective_Start_Date"]),
+                            //Effective_Start_Date = Convert.ToDateTime(row["Effective_End_Date"]),
+                            //Form = Convert.ToString(row["Form"]),
+                            //level = Convert.ToInt32(row["level"]),
+                            //State_ID = Convert.ToInt32(row["State_ID"]),
+                            //Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
+                            //Is_Best_Practice = Convert.ToBoolean(Convert.ToInt32(row["Is_Best_Practice"])),
+                            //Risk_Category = Convert.ToString(row["Risk_Category"]),
+                            //Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
+                            //Recurrence = Convert.ToString(row["Recurrence"]),
+                            //Risk_Description = Convert.ToString(row["Risk_Description"]),
+                            //Type = Convert.ToString(row["Type"]),
                             // Audit_Type = Convert.ToString(row["Audit_Type"]),
 
 
@@ -207,7 +206,7 @@ namespace ComplianceAuditWeb.Controllers
             return View("_complianceAuditing - Copy - Copy (2)", auditViewModel);
         }
         [HttpPost]
-        public ActionResult addComplianceAudit(FormCollection formCollection,HttpPostedFileBase file)
+        public ActionResult addComplianceAudit(FormCollection formCollection,HttpPostedFileBase file, string submit)
         {
           
             if (ModelState.IsValid)
@@ -232,7 +231,7 @@ namespace ComplianceAuditWeb.Controllers
 
                 int rulecount =Convert.ToInt32(Session["rulecount"]);
               //  int rulecount1 = Convert.ToInt32(formCollection[str]);
-                for (int index = 1; index <= rulecount; index++)
+                for (int index = 0; index < rulecount; index++)
 
                 //{
                 //    if (formCollection[index].ToString().Contains("complianceAuditList"))
@@ -269,12 +268,19 @@ namespace ComplianceAuditWeb.Controllers
                     audit.Reviewer_Comments = formCollection["complianceAuditList[" + index + "].Compliance_Schedule_Instance"];
                     audit.Reviewer_Id = Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Schedule_Instance"]);
                     audit.User_Id = 1;// Convert.ToInt32(formCollection["complianceAuditList[" + counter + "].Compliance_Schedule_Instance"]);
-                    audit.Version = Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Schedule_Instance"]);
                     audit.Is_Active = true;//formCollection["complianceAuditList[" + index + "].Is_Active"];
+                    audit.Version = Convert.ToInt32(formCollection["complianceAuditList[" + index + "].Compliance_Schedule_Instance"]);
 
-                    //OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
-                    //CompanyName = row["Company_Name"].ToString(),
-                    //IsActive = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"]))
+                    switch (submit)
+                    {
+                        case "Save as Draft":
+                            audit.Version = 0;
+
+                            break;
+                        case "Submit":
+                            audit.Version = 1;
+                            break;
+                    }
 
                     auditdata.Add(audit);
 
@@ -298,9 +304,13 @@ namespace ComplianceAuditWeb.Controllers
                 {
                     result = false;
                 }
+
+
+
+               
               
             }
-            return View();
+            return View("View");
 
         }
     }

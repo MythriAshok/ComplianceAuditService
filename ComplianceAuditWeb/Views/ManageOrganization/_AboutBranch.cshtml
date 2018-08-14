@@ -1,8 +1,6 @@
 ﻿@model ComplianceAuditWeb.Models.AboutCompanyViewModel
 @{
-    /**/
-
-    ViewBag.Title = "_AboutChildCompany";
+    ViewBag.Title = "Compliance Auditing";
 }
 <ul class="breadcrumb ML15">
     <li><a href="/Common/dashboard?pid=9">Branch Management</a></li>
@@ -86,14 +84,13 @@
 
 
 
-    <h2 class="ML15">List of Vendors assigned</h2>
 
 
 
     <div class="new_section_box">
         <div class="tab-content">
             <div id="home" class="tab-pane fade in active">
-                <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">User Management:</h2>
+                <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Vendors Assigned:</h2>
                 @if (TempData["Success"] != null)
                 {
                     <center>
@@ -109,7 +106,7 @@
                             <div class="queContainer">
                                 <a href="@Url.Action("AboutCompany", "ManageOrganization", new { id = item.OrganizationID })">
                                     <span class="qIcon"><img src="/UploadedFiles/@item.CompanyLogo" alt="" style="height:60px;width:75px"></span>
-                                    <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
+                                    <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyNameList)</h3>
                                 </a>
                                 <div class="clearfix"></div>
                             </div>

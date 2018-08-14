@@ -1,7 +1,7 @@
 ﻿@model ComplianceAuditWeb.Models.OrganizationViewModel
 @using System.Configuration;
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Compliance Auditing";
 }
 @section scripts
 {
@@ -68,7 +68,7 @@
     <li><a href="/Common/dashboard?pid=6">Group Management</a></li>
     <li> Group Company</li>
 </ul>
-<h2 class="ML15">Manage Group Company</h2>
+<h2 class="ML15">Add Group Company</h2>
 
 @{string button = "save";
     string actionname = "AddGroupCompany";}
@@ -88,7 +88,7 @@
                 @*@using (Html.BeginForm("AddGroupCompany", "ManageOrganization"))
                     {*@
                 @Html.Label("Group Company Name", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input", size = "4", placeholder = ConfigurationManager.AppSettings["group Company Name"] })
+                @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input", size = "4", placeholder = ConfigurationManager.AppSettings["Group Company Name"] })
                 @Html.ValidationMessageFor(m => m.organization.Company_Name, "", new { @class = "text-danger" })
             </div>
         </div>

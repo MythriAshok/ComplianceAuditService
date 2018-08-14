@@ -27,7 +27,7 @@ namespace ComplianceAuditWeb.Models
         public enum AuditStatus
         {
             Complianced,
-            NotComplianced,
+            NonCompliance,
             PartaillyComplianced
         }
     }

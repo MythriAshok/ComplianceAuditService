@@ -113,6 +113,9 @@ namespace ComplianceService
         bool updateVendor(Organization org, CompanyDetails company);
         [OperationContract]
         string getVendor(int OrgID);
+        [OperationContract]
+
+        string getDefaultCompanyDetails(int CompID);
 
     }
 }

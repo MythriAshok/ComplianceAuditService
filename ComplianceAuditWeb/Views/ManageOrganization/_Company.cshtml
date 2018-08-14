@@ -1,9 +1,7 @@
 ﻿@model ComplianceAuditWeb.Models.CompanyViewModel
 @using System.Configuration;
 @{
-    /**/
-
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Compliance Auditing";
 }
 @section scripts
     {
@@ -98,7 +96,7 @@
 
                     @*Model.GroupCompanyID = Convert.ToInt32(Session["CompanyID"]);
                         @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })*@
-                   // Model.GroupCompanyID = Convert.ToInt32(Session["CompanyID"]);
+                    // Model.GroupCompanyID = Convert.ToInt32(Session["CompanyID"]);
                     //Model.GroupCompanyName = Session["CompanyName"].ToString();
                     //Model.GroupCompanyName = TempData["CompanyName"].ToString();
                     @Html.TextBoxFor(m => m.GroupCompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
@@ -219,7 +217,7 @@
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
                 @Html.Label("Contact Number1", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.TextBoxFor(m => m.companydetails.Company_ContactNumber1, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.TextBoxFor(m => m.companydetails.Company_ContactNumber1, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings[" Contact Number 1"] })
             </div>
         </div>
         <div class="col-xs-4 subSelect ">
@@ -287,7 +285,7 @@
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
                 @Html.Label("Postal Code", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.TextBoxFor(m => m.branch.Postal_Code, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.TextBoxFor(m => m.branch.Postal_Code, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Postal_Code"] })
             </div>
         </div>
         <div class="clearfix"></div>
@@ -296,7 +294,7 @@
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
                 @Html.Label("Country", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country, new { @onchange = "GetState(this.value);", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country, new { @onchange = "GetState(this.value);", @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Country_ID"] })
             </div>
         </div>
 

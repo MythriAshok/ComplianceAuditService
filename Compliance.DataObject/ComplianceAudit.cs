@@ -27,6 +27,7 @@ namespace Compliance.DataObject
         public int User_Id { get; set; }
         public string Audit_Status { get; set; }
         public bool Is_Active { get; set; }
+        public decimal Part_Compliance_Percent { get; set; }
 
     }
 }

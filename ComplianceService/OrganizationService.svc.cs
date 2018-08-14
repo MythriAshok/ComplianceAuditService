@@ -814,7 +814,23 @@ namespace ComplianceService
             return xmlvendors;
         }
 
-
+        public string getDefaultCompanyDetails(int CompID)
+        {
+            return bindDefaultCompanyDetails(CompID);
+        }
+        /// <summary>
+        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
+        /// </summary>
+        /// <returns></returns>
+        private string bindDefaultCompanyDetails(int CompID)
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsCompanies = OrganizationHelper.getDefaultCompanyLists(CompID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCompanies = utilityHelper.ConvertNullsToEmptyString(dsCompanies);
+            string xmlCompaniesList = dsCompanies.GetXml();
+            return xmlCompaniesList;
+        }
     }
 }
 

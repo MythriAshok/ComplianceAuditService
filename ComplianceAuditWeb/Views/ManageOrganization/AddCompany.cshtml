@@ -1,8 +1,7 @@
 ﻿@model ComplianceAuditWeb.Models.CompanyViewModel
 @{
-//ViewBag.Title = "AddCompany";
+    ViewBag.Title = "Compliance Auditing";
 }
-
 
 @using (Html.BeginForm())
 {
@@ -10,8 +9,8 @@
 
     <div>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div >
-            <div >
+        <div>
+            <div>
 
                 @*@Html.LabelFor(m => m.CountryList);
                     @Html.DropDownList("Country", Model.CountryList as SelectList);*@

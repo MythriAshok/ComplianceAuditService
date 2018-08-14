@@ -40,9 +40,10 @@ namespace Compliance.DataAccess
                         cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", audit.Compliance_Xref_Id) ;
                         cmd.Parameters.AddWithValue("p_Org_Hier_ID", audit.Org_Hier_Id);
                       //  cmd.Parameters.AddWithValue("p_Compliance_Opt_Xref_ID", audit.Compliance_Options_Id);
-                        cmd.Parameters.AddWithValue("p_Auditor_ID", audit.Auditor_Id);
-                        cmd.Parameters.AddWithValue("p_User_ID", audit.User_Id) ;
+                        cmd.Parameters.AddWithValue("p_Auditor_ID", audit.User_Id);
+                        //cmd.Parameters.AddWithValue("p_Auditor_ID", audit.User_Id) ;
                         cmd.Parameters.AddWithValue("p_Is_Active", audit.Is_Active);
+                        cmd.Parameters.AddWithValue("p_Part_Compliance_Percent", audit.Part_Compliance_Percent);
                         int objcomplianceauditid = cmd.ExecuteNonQuery();
                         if (objcomplianceauditid <= 0)
                         {

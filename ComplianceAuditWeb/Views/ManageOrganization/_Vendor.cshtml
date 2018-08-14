@@ -1,9 +1,7 @@
 ﻿@model ComplianceAuditWeb.Models.CompanyViewModel
 @using System.Configuration;
 @{
-    /**/
-
-    ViewBag.Title = "Add Vendor";
+    ViewBag.Title = "Compliance Auditing";
 }
 @section scripts{
     <script language="javascript" type="text/javascript">
@@ -97,14 +95,14 @@
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
                 @Html.Label("Vendor Name", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Company_Name"] })
+                @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Vendor Name"] })
                 <span id="loading_data_icon"></span>
             </div>
         </div>
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Vendor Description", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.TextBoxFor(m => m.organization.Description, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Company_Name"] })
+                @Html.Label("Vendor Description", new { @class = "floating-label" })
+                @Html.TextBoxFor(m => m.organization.Description, new { @class = "inputMaterial ui - autocomplete - input" })
                 <span id="loading_data_icon"></span>
             </div>
         </div>
@@ -160,7 +158,7 @@
 
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Auditing Frequency")
+                @Html.Label("Auditing Frequency")<span style="color:red">*</span>
                 @Html.DropDownListFor(m => m.companydetails.Auditing_Frequency, new SelectList
                     (Enum.GetValues(typeof(ComplianceAuditWeb.Models.CompanyViewModel.Auditingfrequency))),
                     "Select Vendor Auditing Freequency")
@@ -172,8 +170,8 @@
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
 
-                @Html.Label("Start Date")
-                @Html.EditorFor(m => m.companydetails.Calender_StartDate)
+                @Html.Label("Start Date")<span style="color:red">*</span>
+                @Html.EditorFor(m => m.companydetails.Calender_StartDate, new { placeholder = ConfigurationManager.AppSettings["Start Date"] })
             </div>
         </div>
 

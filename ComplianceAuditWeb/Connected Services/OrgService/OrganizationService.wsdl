@@ -211,6 +211,12 @@
   <wsdl:message name="IOrganizationService_getVendor_OutputMessage">
     <wsdl:part name="parameters" element="tns:getVendorResponse" />
   </wsdl:message>
+  <wsdl:message name="IOrganizationService_getDefaultCompanyDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:getDefaultCompanyDetails" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_getDefaultCompanyDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getDefaultCompanyDetailsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IOrganizationService">
     <wsdl:operation name="insertOrganization">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertOrganization" message="tns:IOrganizationService_insertOrganization_InputMessage" />
@@ -347,6 +353,10 @@
     <wsdl:operation name="getVendor">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/getVendor" message="tns:IOrganizationService_getVendor_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/getVendorResponse" message="tns:IOrganizationService_getVendor_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getDefaultCompanyDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/getDefaultCompanyDetails" message="tns:IOrganizationService_getDefaultCompanyDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/getDefaultCompanyDetailsResponse" message="tns:IOrganizationService_getDefaultCompanyDetails_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IOrganizationService" type="tns:IOrganizationService">
@@ -650,6 +660,15 @@
     </wsdl:operation>
     <wsdl:operation name="getVendor">
       <soap:operation soapAction="http://tempuri.org/IOrganizationService/getVendor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDefaultCompanyDetails">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/getDefaultCompanyDetails" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

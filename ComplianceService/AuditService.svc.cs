@@ -124,6 +124,8 @@ namespace ComplianceService
         {
             ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
             DataSet dsCompliance = complianceAuditHelper.sp_getAllCompanyBrnachAssignedtoAuditor(AuditotID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCompliance = utilityHelper.ConvertNullsToEmptyString(dsCompliance);
             string strxmlCompliance = dsCompliance.GetXml();
             return strxmlCompliance;
         }
@@ -139,6 +141,8 @@ namespace ComplianceService
         {
             ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
             DataSet dsCompliance = complianceAuditHelper.getSpecificBranchList(CompID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCompliance = utilityHelper.ConvertNullsToEmptyString(dsCompliance);
             string strxmlCompliance = dsCompliance.GetXml();
             return strxmlCompliance;
         }
@@ -156,7 +160,7 @@ namespace ComplianceService
             ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
             DataSet dsCompliance = complianceAuditHelper.getComlianceXrefDataForSeletedBranch(OrgID);
            // UtilityHelper utilityHelper = new UtilityHelper();
-           // dsCompliance = utilityHelper.ConvertNullsToEmptyString(dsCompliance);
+            //dsCompliance = utilityHelper.ConvertNullsToEmptyString(dsCompliance);
             string strxmlCompliance = dsCompliance.GetXml();
             return strxmlCompliance;
         }
