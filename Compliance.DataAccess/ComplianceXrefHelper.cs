@@ -87,6 +87,33 @@ namespace Compliance.DataAccess
             return dtComplianceXref;
         }
 
+        public DataSet getComlianceXrefonType(int Audit_Type_ID,int CountryID,int StateID,int CityID,int flag)
+        {
+            DataSet dtComplianceXref = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getComplianceXreftype", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Audit_Type_ID", Audit_Type_ID);
+                cmd.Parameters.AddWithValue("p_Country_ID", CountryID);
+                cmd.Parameters.AddWithValue("p_State_ID", StateID);
+                cmd.Parameters.AddWithValue("p_City_ID", CityID);
+                cmd.Parameters.AddWithValue("flag", flag);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dtComplianceXref);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dtComplianceXref;
+        }
+
         public DataSet getAct(int compliance_xref_ID)
         {
             DataSet dtComplianceXref = new DataSet();
@@ -277,6 +304,29 @@ namespace Compliance.DataAccess
             }
             return ds;
 
+        }
+
+        public DataSet getSpecificcompliance(int complianceid)
+        {            
+            DataSet ds = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("getspecificcompliance", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", complianceid);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(ds);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return ds;
         }
 
     }

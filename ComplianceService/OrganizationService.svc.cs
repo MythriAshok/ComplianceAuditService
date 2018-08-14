@@ -815,7 +815,22 @@ namespace ComplianceService
         }
 
 
+        public string getorglocation(int OrgID)
+        {
+            return Bindlocation(OrgID);
+        }
+        private string Bindlocation(int orgid)
+        {
+            OrganizationHelper helper = new OrganizationHelper();
+            DataSet vendors = helper.getBranchLocation(orgid);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            vendors = utilityHelper.ConvertNullsToEmptyString(vendors);
+            string xmlvendors = vendors.GetXml();
+            return xmlvendors;
+        }
     }
+
+
 }
 
 

@@ -218,6 +218,12 @@ namespace ComplianceAuditWeb.OrgService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getVendor", ReplyAction="http://tempuri.org/IOrganizationService/getVendorResponse")]
         System.Threading.Tasks.Task<string> getVendorAsync(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getorglocation", ReplyAction="http://tempuri.org/IOrganizationService/getorglocationResponse")]
+        string getorglocation(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getorglocation", ReplyAction="http://tempuri.org/IOrganizationService/getorglocationResponse")]
+        System.Threading.Tasks.Task<string> getorglocationAsync(int OrgID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -517,6 +523,14 @@ namespace ComplianceAuditWeb.OrgService {
         
         public System.Threading.Tasks.Task<string> getVendorAsync(int OrgID) {
             return base.Channel.getVendorAsync(OrgID);
+        }
+        
+        public string getorglocation(int OrgID) {
+            return base.Channel.getorglocation(OrgID);
+        }
+        
+        public System.Threading.Tasks.Task<string> getorglocationAsync(int OrgID) {
+            return base.Channel.getorglocationAsync(OrgID);
         }
     }
 }

@@ -64,7 +64,7 @@ namespace ComplianceAuditWeb.Controllers
             {
                 branch.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
             }
-
+            
             return Json(branch, JsonRequestBehavior.AllowGet);
         }
 

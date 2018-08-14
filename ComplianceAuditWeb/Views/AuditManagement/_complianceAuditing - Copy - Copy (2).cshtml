@@ -8,10 +8,13 @@
     {
     <script type="text/javascript">
 
-        function ShowHidedTextBox() {
-            var compliancePartial = document.getElementById("complianceAuditList_1__Audit_Status");
+        function ShowHidedTextBox(_value) {
+            var compliancePartial = /*document.getElementById("complianceAuditList_1__Audit_Status")*/_value;
+            alert(compliancePartial);
             var percentage = document.getElementById("percentage");
-            percentage.style.visibility = compliancePartial.value == "PartaillyComplianced" ? "visible" : "hidden";
+            alert(percentage);
+            alert(compliancePartial.value);
+            percentage.style.visibility = compliancePartial == "PartaillyComplianced" ? "visible" : "hidden";
         }
     </script>
     <style>
@@ -54,11 +57,8 @@
         <div class="clearfix"></div>
         for (int j = 0; j < Model.Section.Count; j++)
         {
-
-
             if (Model.complianceXrefList[Act].Compliance_Xref_ID == Model.Section[j].Compliance_Parent_ID)
             {
-
                 <div class="col-xs-12 subSelect ">
                     <div class="input-field" style="font-weight:600;    color: chocolate;">
                         &nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-server"></i>
@@ -68,13 +68,10 @@
                 </div>
                 <div class="clearfix"></div>
 
-
                 for (int i = 0; i < Model.Rules.Count(); i++)
                 {
-
                     if (Model.Section[j].Compliance_Xref_ID == Model.Rules[i].Compliance_Parent_ID)
                     {
-
                         <div class="col-xs-12 subSelect ">
                             <div class="input-field" style=" color: #692c00;font-weight:bold">
                                 &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-book"></i>
@@ -83,25 +80,15 @@
                             </div>
                         </div>
 
-
-
-
-
                         Model.complianceAuditList[rulecount].Compliance_Xref_Id = Model.Rules[i].Compliance_Xref_ID;
 
-
-
                         <div class="clearfix"></div>
-
                         <div  style="margin-left: 50px;">
                             <div class="col-xs-4 subSelect ">
-
                                 <div class="input-field">
                                     @Html.Label("Status")
                                     @*@Html.EditorFor(m => m.complianceAuditList[rulecount].Audit_Status)*@
                                     @*@Html.DropDownListFor(m=>m.complianceAuditList[rulecount].Audit_Status, Model.auditlists)*@
-
-
 
                                     @Html.DropDownListFor(m => m.complianceAuditList[rulecount].Audit_Status, new SelectList
                           (Enum.GetValues(typeof(ComplianceAuditWeb.Models.AuditViewModel.AuditStatus))),
@@ -109,9 +96,8 @@
                                     @Html.ValidationMessageFor(m => m.complianceAuditList[rulecount].Audit_Status, "", new { @class = "text-danger" })
 
                                     <div id="percentage" style="visibility:hidden">
-                                        percentage of partially complianced:
-                                        <input type="text" id="percentageofpartial" />
-
+                                        Percentage of Partially Complianced:
+                                        <input type="text" id="percentageofpartial"/>
                                     </div>
                                 </div>
                             </div>

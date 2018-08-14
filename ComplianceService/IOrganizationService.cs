@@ -114,6 +114,9 @@ namespace ComplianceService
         [OperationContract]
         string getVendor(int OrgID);
 
+        [OperationContract]
+        string getorglocation(int OrgID);
+
     }
 }
 

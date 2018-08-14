@@ -146,5 +146,32 @@ namespace ComplianceService
 
         }
 
+       public string GetcomplianceonType(int Audit_Type_Id, int countryId, int StateId, int cityId,int flag)
+        {
+            return BindCompalianceType(Audit_Type_Id,countryId,StateId,cityId,flag);
+        }
+
+        private string BindCompalianceType(int Audit_Type_Id, int countryId, int StateId, int cityId,int flag)
+        {
+            ComplianceXrefHelper helper = new ComplianceXrefHelper();
+            DataSet ds = helper.getComlianceXrefonType(Audit_Type_Id, countryId, StateId, cityId,flag);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            ds = utilityHelper.ConvertNullsToEmptyString(ds);
+            return ds.GetXml();
+
+        }
+        public string GetSpecificComplaince(int complianceId)
+        {
+            return bindspecificcompliance(complianceId);
+        }
+        private string bindspecificcompliance(int complianceid)
+        {
+            ComplianceXrefHelper helper = new ComplianceXrefHelper();
+            DataSet ds = helper.getSpecificcompliance(complianceid);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            ds = utilityHelper.ConvertNullsToEmptyString(ds);
+            return ds.GetXml();
+        }
+
     }
 }

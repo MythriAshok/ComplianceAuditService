@@ -502,6 +502,7 @@
     <Content Include="Views\ManageOrganization\_DeleteVendorUnderCompany.cshtml" />
     <Content Include="Views\ComplianceManagement\_AuditoraccessMapping.cshtml" />
     <Content Include="Views\ComplianceManagement\_SMEdashboard - Copy.cshtml" />
+    <Content Include="Views\ComplianceManagement\UpdateAct.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,13 +1,10 @@
 ﻿@model ComplianceAuditWeb.Models.ComplianceViewModel
 
 @{
-    ViewBag.Title = "Add Acts Page";
+    Layout = null;
 }
-<ul class="breadcrumb ML15">
-    <li><a href="/Common/dashboard?pid=14">Compliance Management</a></li>
-    <li>Act</li>
-</ul>
-<h2 class="ML15">Add Act</h2>
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+<h2 class="ML15">Update Act</h2>
 @section scripts{
     <script language="javascript" type="text/javascript">
         function GetState(_CountryId) {
@@ -57,9 +54,9 @@
             var state = document.getElementById("state");
             state.style.visibility = _actype >1 ? "visible" : "hidden";
             var city = document.getElementById("city");
-            city.style.visibility = _actype > 2 ? "visible" : "hidden";            
+            city.style.visibility = _actype > 2 ? "visible" : "hidden";
         }
-    </script>   
+    </script>
 }
 
 @using (Html.BeginForm())
@@ -70,7 +67,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @if (TempData["Message"] != null)
         {
-        <p class="alert alert-warning">@TempData["Message"]</p>
+            <p class="alert alert-warning">@TempData["Message"]</p>
         }
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
@@ -111,8 +108,8 @@
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
                 @Html.Label("Effective Start Date", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.TextBox("Compliance_Effective_Start_Date", String.Format("{0:d}", Model.Compliance.Effective_Start_Date.ToShortDateString()), new { @class = "datefield", type = "date" })
-                @*@Html.EditorFor(model => model.Compliance.Effective_Start_Date)*@
+                @*@Html.TextBox("Compliance_Effective_Start_Date", String.Format("{0:d}", Model.Compliance.Effective_Start_Date.ToShortDateString()), new { @class = "datefield", type = "date" })*@
+                @Html.EditorFor(model => model.Compliance.Effective_Start_Date, new { @class = "inputMaterial ui - autocomplete - input" })
                 <span id="loading_data_icon"></span>
                 @Html.ValidationMessageFor(model => model.Compliance.Effective_Start_Date, "", new { @class = "text-danger" })
             </div>
@@ -122,7 +119,7 @@
             <div class="col-xs-4 subSelect ">
                 <div class="input-field">
                     @Html.Label("Effective End Date", new { @class = "floating-label" })
-                    @Html.EditorFor(model => model.Compliance.Effective_End_Date)
+                    @Html.EditorFor(model => model.Compliance.Effective_End_Date, new { @class = "inputMaterial ui - autocomplete - input" })
                     <span id="loading_data_icon"></span>
                     @Html.ValidationMessageFor(model => model.Compliance.Effective_End_Date, "", new { @class = "text-danger" })
                 </div>
@@ -135,15 +132,24 @@
                 @Html.ValidationMessageFor(model => model.Compliance.Country_ID, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="col-xs-4 subSelect" id="state" style="visibility:hidden">
+        @{ string state = "hidden";}
+        @if (Model.Compliance.State_ID != 0)
+        {
+            state = "Visible";
+        }
+        <div class="col-xs-4 subSelect" id="state" style="visibility:@state">
             <div class="input-field">
                 @Html.Label("State", new { @class = "floating-label" })
                 @Html.DropDownListFor(model => model.Compliance.State_ID, Model.Statelist, new { @onchange = "GetCity(this.value)", @class = "inputMaterial ui - autocomplete - input" })
                 @Html.ValidationMessageFor(model => model.Compliance.State_ID, "", new { @class = "text-danger" })
             </div>
         </div>
+
         @*<div class="clearfix"></div>*@
+        @if (Model.Compliance.City_ID != 0)
+        {
+            state = "Visible";
+        }
         <div class="col-xs-4 subSelect " id="city" style="visibility:hidden">
             <div class="input-field">
                 @Html.Label("City", new { @class = "floating-label" })
@@ -158,10 +164,11 @@
         <ul class="list-inline continueBtn">
             <li>
                 @*<input type="submit" value="Create" name="co.formAction" class="btn btn-default" />*@
-                <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Save<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
+                <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Update<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
                 <input type="reset" value="Reset" class="btn primary-button" />
                 <a href="@Url.Action("dashboard","common",new { pid=14})" class="btn primary-button">Cancel</a>
             </li>
         </ul>
     </div>
 }
+

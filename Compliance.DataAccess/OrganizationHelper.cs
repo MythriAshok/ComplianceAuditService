@@ -68,7 +68,7 @@ namespace Compliance.DataAccess
         /// </summary>
         /// <param name="Branch_Location_Id"></param>
         /// <returns>dataset of BranchLocation</returns>
-        public DataSet getBranchLocation(int Branch_Location_Id)
+        public DataSet getBranchLocation(int orgid)
         {
             DataSet dsBranchLocation = new DataSet();
             try
@@ -76,7 +76,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getBranchLocation", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("p_Location_ID", MySqlDbType.Int32).Value = Branch_Location_Id;
+                cmd.Parameters.Add("p_Org_Hier_ID", MySqlDbType.Int32).Value = orgid;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsBranchLocation);
             }
