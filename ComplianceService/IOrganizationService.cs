@@ -117,6 +117,9 @@ namespace ComplianceService
 
         string getDefaultCompanyDetails(int CompID);
 
+        [OperationContract]
+        string getorglocation(int OrgID);
+
     }
 }
 

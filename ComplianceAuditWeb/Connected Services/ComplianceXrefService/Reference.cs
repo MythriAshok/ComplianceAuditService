@@ -98,6 +98,18 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetComplaince", ReplyAction="http://tempuri.org/IComplianceXrefService/GetComplainceResponse")]
         System.Threading.Tasks.Task<string> GetComplainceAsync(int Audit_Type_ID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetcomplianceonType", ReplyAction="http://tempuri.org/IComplianceXrefService/GetcomplianceonTypeResponse")]
+        string GetcomplianceonType(int Audit_Type_Id, int countryId, int StateId, int cityId, int flag);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetcomplianceonType", ReplyAction="http://tempuri.org/IComplianceXrefService/GetcomplianceonTypeResponse")]
+        System.Threading.Tasks.Task<string> GetcomplianceonTypeAsync(int Audit_Type_Id, int countryId, int StateId, int cityId, int flag);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSpecificComplaince", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSpecificComplainceResponse")]
+        string GetSpecificComplaince(int complianceId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSpecificComplaince", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSpecificComplainceResponse")]
+        System.Threading.Tasks.Task<string> GetSpecificComplainceAsync(int complianceId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -237,6 +249,22 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         
         public System.Threading.Tasks.Task<string> GetComplainceAsync(int Audit_Type_ID) {
             return base.Channel.GetComplainceAsync(Audit_Type_ID);
+        }
+        
+        public string GetcomplianceonType(int Audit_Type_Id, int countryId, int StateId, int cityId, int flag) {
+            return base.Channel.GetcomplianceonType(Audit_Type_Id, countryId, StateId, cityId, flag);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetcomplianceonTypeAsync(int Audit_Type_Id, int countryId, int StateId, int cityId, int flag) {
+            return base.Channel.GetcomplianceonTypeAsync(Audit_Type_Id, countryId, StateId, cityId, flag);
+        }
+        
+        public string GetSpecificComplaince(int complianceId) {
+            return base.Channel.GetSpecificComplaince(complianceId);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetSpecificComplainceAsync(int complianceId) {
+            return base.Channel.GetSpecificComplainceAsync(complianceId);
         }
     }
 }

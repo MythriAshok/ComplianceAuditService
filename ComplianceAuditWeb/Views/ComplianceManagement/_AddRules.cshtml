@@ -2,14 +2,20 @@
 
 @{ Layout = null;}
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h2>Add Rule</h2>
-
-
+@if (Model.Compliance.Compliance_Xref_ID != 0)
+{
+<h2>Update Rule</h2>
+}
+else
+{
+    <h2>Add Rule</h2>
+}
 @using (Html.BeginForm())
 {<div class="mid_content_sec">
     @if (@TempData["Message"] != null)
     {
-        <p class="alert alert-warning">@TempData["Message"]</p>}
+        <p class="alert alert-warning">@TempData["Message"]</p>
+    }
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Compliance.Compliance_Parent_ID)
     @Html.HiddenFor(model => model.Compliance.Audit_Type_ID)
@@ -19,7 +25,7 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="col-xs-8 subSelect ">
         <div class="input-field">
-            @Html.Label("Compliance Title", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.Label("Rule Title", new { @class = "floating-label" })<span style="color:red">*</span>
 
             @Html.TextBoxFor(model => model.Compliance.Compliance_Title, new { @class = "inputMaterial ui - autocomplete - input" })
             <span id="loading_data_icon"></span>
@@ -38,7 +44,7 @@
     <div class="clearfix"></div>
     <div class="col-xs-8 subSelect ">
         <div class="input-field">
-            @Html.Label("Compliance Description", new { @class = "floating-label" })
+            @Html.Label("Rule Description", new { @class = "floating-label" })
 
             @Html.TextAreaFor(model => model.Compliance.Comp_Description, new { @class = "inputMaterial ui - autocomplete - input" })
             <span id="loading_data_icon"></span>
@@ -57,14 +63,14 @@
     <div class="clearfix"></div>
     <div class="col-xs-12 subSelect ">
         <div class="input-field">
-            @Html.Label("compliance def consequence", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.Label("Non-compliance Consequence", new { @class = "floating-label" })<span style="color:red">*</span>
 
             @Html.TextAreaFor(model => model.Compliance.compl_def_consequence, new { @class = "inputMaterial ui - autocomplete - input" })
             <span id="loading_data_icon"></span>
             @Html.ValidationMessageFor(model => model.Compliance.compl_def_consequence, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="clearfix"></div>
+    @*<div class="clearfix"></div>
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
             @Html.Label("Recurrence", new { @class = "floating-label" })
@@ -91,7 +97,7 @@
             <span id="loading_data_icon"></span>
             @Html.ValidationMessageFor(model => model.Compliance.Type, "", new { @class = "text-danger" })
         </div>
-    </div>
+    </div>*@
 
     <div class="clearfix"></div>
     <div class="col-xs-6 subSelect ">

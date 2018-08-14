@@ -503,6 +503,7 @@
     <Content Include="Views\ManageOrganization\_DeleteVendorUnderCompany.cshtml" />
     <Content Include="Views\ComplianceManagement\_AuditoraccessMapping.cshtml" />
     <Content Include="Views\ComplianceManagement\_SMEdashboard - Copy.cshtml" />
+    <Content Include="Views\ComplianceManagement\UpdateAct.cshtml" />
     <Content Include="Views\ManageOrganization\_AboutGroupCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_AboutBranch.cshtml" />
     <None Include="Web.Debug.config">

@@ -11,7 +11,7 @@
     <li>Compliance Mapping</li>
 </ul>
 <h2 class="ML15">Compliance Mapping</h2>
-
+@{ int branchcount = 0;}
 @*@section scripts{
         <script language="javascript" type="text/javascript">
             function GetBranch(_CompanyId) {
@@ -66,7 +66,7 @@
     }*@
 @using (Html.BeginForm())
 {
-<div class="mid_content_sec">
+   <div class="mid_content_sec">
    
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="col-xs-12 subSelect ">
@@ -89,16 +89,23 @@
                         }
                         @foreach (var item in Model.Branch)
                         {
-                            <div class="col-sm-3 QueList">
+                            <div class="col-sm-6 QueList">
                                 <div class="queContainer">
-                                    <a href="@Url.Action("AssignRules", "ComplianceManagement",new { Branchid = item.Company_Id,Branchname=item.Company_Name  })">
+                                    <a href="@Url.Action("AssignRules", "ComplianceManagement", new { Branchid = item.Company_Id, Branchname = item.Company_Name })">
                                         <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
                                         <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
                                     </a>
+                                    @*@{branchcount = branchcount + 1;}*@
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
+                            @*if (branchcount % 2 == 0)
+                            {
+                                <div class="clearfix"></div>
+                            }*@
+
                         }
+
                         <div class="clearfix"></div>
 
                     </div>
@@ -120,9 +127,9 @@
                         }
                         @foreach (var item in Model.Vendor)
                         {
-                            <div class="col-sm-3 QueList">
+                            <div class="col-sm-4 QueList">
                                 <div class="queContainer">
-                                    <a href="@Url.Action("AssignRules", "ComplianceManagement",new { Branchid = item.Company_Id,Branchname=item.Company_Name })">
+                                    <a href="@Url.Action("AssignRules", "ComplianceManagement", new { Branchid = item.Company_Id, Branchname = item.Company_Name })">
                                         <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
                                         <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
                                     </a>
@@ -142,7 +149,7 @@
     <div class="clearfix"></div>
     <ul class="list-inline continueBtn">
         <li>
-            <input type="button" value="Cancel" onclick="/Common/dashboard?pid=14" class="btn primary-button" />
+            <a href="@Url.Action("dashboard","common",new { pid=14})" class="btn primary-button">Cancel</a>
         </li>
     </ul>
 </div>

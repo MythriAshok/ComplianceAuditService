@@ -8,11 +8,16 @@
     {
     <script type="text/javascript">
 
+        function ShowHidedTextBox(_value) {
+            var compliancePartial = /*document.getElementById("complianceAuditList_1__Audit_Status")*/_value;
+            alert(compliancePartial);
         function ShowHidedTextBox() {
           
             var compliancePartial = document.getElementById("complianceAuditList_1__Audit_Status");
             var percentage = document.getElementById("percentage");
-            percentage.style.visibility = compliancePartial.value == "PartaillyComplianced" ? "visible" : "hidden";
+            alert(percentage);
+            alert(compliancePartial.value);
+            percentage.style.visibility = compliancePartial == "PartaillyComplianced" ? "visible" : "hidden";
         }
     </script>
     <style>

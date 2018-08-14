@@ -40,5 +40,9 @@ namespace ComplianceService
         bool DeleteRuleforBranch(int orgid);
         [OperationContract]
         string GetComplaince(int Audit_Type_ID);
+        [OperationContract]
+        string GetcomplianceonType(int Audit_Type_Id,int countryId,int StateId,int cityId,int flag);
+        [OperationContract]
+        string GetSpecificComplaince(int complianceId);
     }
 }
