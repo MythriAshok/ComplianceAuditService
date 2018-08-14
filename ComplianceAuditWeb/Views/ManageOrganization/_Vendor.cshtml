@@ -31,12 +31,13 @@
         }
     </script>
 }
-<h2 class="ML15">Add Vendor</h2>
 
 <ul class="breadcrumb ML15">
     <li><a href="/Common/dashboard?pid=9">Vendor Management</a></li>
     <li> Vendor</li>
 </ul>
+<h2 class="ML15">Add Vendor</h2>
+
 @{string button = "save";
     string actionname = "AddVendor";}
 @if (Model.organization.Organization_Id != 0)
@@ -51,16 +52,16 @@
 
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @if ((Session["CompanyName"]) != null)
+                @if ((TempData["CompanyName"]) != null)
 
                 {
 
-                    @Html.Label("Company")
+                    @Html.Label("Company Name")
 
-
-                    Model.GroupCompanyID = Convert.ToInt32(Session["ParentCompanyID"]);
-                    Model.CompanyID = Convert.ToInt32(Session["CompanyID"]);
-                    Model.ChildCompanyName = Session["CompanyName"].ToString();
+                    Model.ChildCompanyName = TempData["CompanyName"].ToString();
+                    // Model.GroupCompanyID = Convert.ToInt32(Session["ParentCompanyID"]);
+                    //Model.CompanyID = Convert.ToInt32(Session["CompanyID"]);
+                    // Model.ChildCompanyName = Session["CompanyName"].ToString();
                     @Html.TextBoxFor(m => m.ChildCompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
                     @Html.HiddenFor(m => m.GroupCompanyID)
                     @Html.HiddenFor(m => m.CompanyID)
@@ -81,7 +82,7 @@
 
 
 
-                    @Html.Label("Company", new { @class = "floating-label" })<span style="color:red">*</span>
+                    @Html.Label("Company Name", new { @class = "floating-label" })<span style="color:red">*</span>
                     @Html.DropDownListFor(m => m.CompanyID, Model.CompaniesList, new { @class = "inputMaterial ui - autocomplete - input" })
 
                 }
@@ -103,7 +104,7 @@
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
                 @Html.Label("Vendor Description", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.TextAreaFor(m => m.organization.Description, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Company_Name"] })
+                @Html.TextBoxFor(m => m.organization.Description, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Company_Name"] })
                 <span id="loading_data_icon"></span>
             </div>
         </div>
@@ -112,8 +113,8 @@
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
 
-                @Html.Label("Contact Number1", new { @class = "floating-label" })
-                @Html.TextBoxFor(m => m.companydetails.Company_ContactNumber1, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.Label("Contact Number1", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.TextBoxFor(m => m.companydetails.Company_ContactNumber1, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Contact Number"] })
                 <span id="loading_data_icon"></span>
             </div>
         </div>

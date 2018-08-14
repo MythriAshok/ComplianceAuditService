@@ -64,11 +64,12 @@
         }
     </script>
 }
-<h2 class="ML15">Manage Group Company</h2>
 <ul class="breadcrumb ML15">
     <li><a href="/Common/dashboard?pid=6">Group Management</a></li>
     <li> Group Company</li>
 </ul>
+<h2 class="ML15">Manage Group Company</h2>
+
 @{string button = "save";
     string actionname = "AddGroupCompany";}
 @if (Model.organization.Organization_Id != 0)
@@ -114,50 +115,7 @@
             </div>
         </div>
 
-        @*<div class="col-xs-6 subSelect ">
-                <div class="input-field">
-                    @Html.Label("Industry Type", new { @class = "floating-label" })<span style="color:red">*</span>
 
-                    @Html.DropDownListFor(m => m.organization.Industry_Type, new SelectList
-                            (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.IndustryType))),
-                            "Select Industry Type", new { @class = "inputMaterial ui - autocomplete - input" })
-                    @Html.ValidationMessageFor(m => m.organization.Industry_Type, "", new { @class = "text-danger" })
-
-                </div>
-            </div>
-            <div class="col-xs-6 subSelect ">
-                <div class="input-field">
-                    @Html.Label("Location URL", new { @class = "floating-label" })<span style="color:red">*</span>
-                    @Html.TextBoxFor(m => m.branch.Branch_CoordinatesURL, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Branch_CoordinatesURL"] })
-                </div>
-            </div>*@
-
-        <div class="clearfix"></div>
-
-        @*<div class="col-xs-4 subSelect ">
-                <div class="input-field">
-                    @Html.Label("Country", new { @class = "floating-label" })
-                    @Html.DropDownListFor(m => m.branch.Country_Id, Model.Country, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Country_ID"] })
-                </div>
-            </div>*@
-        @*<div class="col-xs-4 subSelect ">
-                <div class="input-field">
-
-
-
-
-                    @Html.LabelFor(m => m.State, new { @class = "floating-label" })<span style="color:red">*</span>
-                    @Html.DropDownListFor(m => m.branch.State_Id, Model.State, new { @onchange = "GetCity(this.value);", @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["State_ID"] })
-                </div>
-            </div>
-
-            <div class="col-xs-4 subSelect ">
-                <div class="input-field">
-                    @Html.LabelFor(m => m.City, new { @class = "floating-label" })
-                    @Html.DropDownListFor(m => m.branch.City_Id, Model.City, new { @class = "inputMaterial ui - autocomplete - input" })
-
-                </div>
-            </div>*@
 
 
     </div>
@@ -183,110 +141,6 @@
 
 
     <div class="clearfix"></div>
-    @*<div class="col-xs-4 subSelect ">
-            <div class="input-field">
-
-                @Html.Label("Comoany Formal Name", new { @class = "floating-label" })
-                @Html.TextBoxFor(m => m.companydetails.Formal_Name, new { @class = "inputMaterial ui - autocomplete - input" })
-                @Html.ValidationMessageFor(m => m.companydetails.Formal_Name, "", new { @class = "text-danger" })
-
-            </div>
-        </div>*@
-    @*<div class="col-xs-4 subSelect ">
-            <div class="input-field">
-
-
-                @Html.LabelFor(m => m.companydetails.Website, new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.TextBoxFor(m => m.companydetails.Website, new { @class = "inputMaterial ui - autocomplete - input" })
-                @Html.ValidationMessageFor(m => m.companydetails.Website, "", new { @class = "text-danger" })
-
-            </div>
-        </div>*@
-
-    @*@Html.HiddenFor(m => m.companydetails.Company_Details_ID)*@
-
-    @*<div class="col-xs-4 subSelect ">
-            <div class="input-field">
-
-                @Html.Label("Company Email Address", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.TextBoxFor(m => m.companydetails.Company_EmailID, new { @class = "inputMaterial ui - autocomplete - input" })
-                @Html.ValidationMessageFor(m => m.companydetails.Company_EmailID, "", new { @class = "text-danger" })
-
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @Html.Label("Contact Number1", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.TextBoxFor(m => m.companydetails.Company_ContactNumber1, new { @class = "inputMaterial ui - autocomplete - input" })
-                @Html.ValidationMessageFor(m => m.companydetails.Company_ContactNumber1, "", new { @class = "text-danger" })
-
-            </div>
-        </div>
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @Html.Label("Contact Number2", new { @class = "floating-label" })
-                @Html.TextBoxFor(m => m.companydetails.Company_ContactNumber2, new { @class = "inputMaterial ui - autocomplete - input" })
-
-            </div>
-        </div>
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @Html.Label("Company Start Date", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.EditorFor(m => m.companydetails.Calender_StartDate, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @Html.Label("Company End Date", new { @class = "floating-label" })
-                @Html.EditorFor(m => m.companydetails.Calender_EndDate, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
-        </div>
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @Html.Label("Auditing Frequency", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.DropDownListFor(m => m.companydetails.Auditing_Frequency, new SelectList
-                        (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.AuditingFrequency))),
-                        "Select Auditing Freequency", new { @class = "inputMaterial ui - autocomplete - input" })
-
-                @Html.ValidationMessageFor(m => m.companydetails.Auditing_Frequency, "", new { @class = "text-danger" })
-
-            </div>
-        </div>
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @Html.Label("Location Name", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.TextBoxFor(m => m.branch.Branch_Name, new { @class = "inputMaterial ui - autocomplete - input" })
-                @Html.ValidationMessageFor(m => m.branch.Branch_Name, "", new { @class = "text-danger" })
-
-            </div>
-        </div>
-        <div class="clearfix"></div>*@
-
-    @*@Html.HiddenFor(m => m.branch.Branch_Id);*@
-    @Html.HiddenFor(m => m.organization.Is_Active);
-    @Html.HiddenFor(m => m.organization.Is_Delete);
-    @Html.HiddenFor(m => m.organization.Is_Leaf);
-    @Html.HiddenFor(m => m.organization.Level);
-
-
-
-    @*<div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @Html.Label("Branch Coordinates1", new { @class = "floating-label" })
-                @Html.TextBoxFor(m => m.branch.Branch_Coordinates1, new { @class = "inputMaterial ui - autocomplete - input" })
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @Html.Label("Branch Coordinates1", new { @class = "floating-label" })
-                @Html.TextBoxFor(m => m.branch.Branch_Coordinates2, new { @class = "inputMaterial ui - autocomplete - input" })
-            </div>
-        </div>*@
-
-
 
 
 

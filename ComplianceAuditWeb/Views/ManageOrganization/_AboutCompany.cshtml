@@ -26,7 +26,7 @@
 <h2 class="ML15">Manage Company</h2>
 <ul class="breadcrumb ML15">
     <li><a href="/Common/dashboard?pid=9">Company Management</a></li>
-    <li> Company</li>
+    <li>About Company</li>
 </ul>
 
 @using (Html.BeginForm())
@@ -36,13 +36,13 @@
     if (TempData["Success"] != null)
     {
         <center>
-            <p class="alert alert-success" style="width:1000px" id=" successMessage">@TempData["Company"]@TempData["Success"]</p>
+            <p id=" successMessage">@TempData["Company"]@TempData["Success"]</p>
         </center>
     }
     <div class="pull-right fa fa-pull-right" style="font-size:large">
-      
-        @Html.ActionLink("Create Company", "AddCompany", new { Orgid = Model.ParentCompanyID })
-      
+
+        <i class="fa fa-plus"></i><font style="font-size:14px; color:dimgray; font-family:Arial"> @Html.ActionLink("Create New", "AddCompany", new { Orgid = Model.ParentCompanyID }) </font>
+        
         @*@TempData["ParentCompanyID"] = Model.ParentCompanyID;*@
 
 
@@ -109,212 +109,79 @@
         <li>
             <input type="submit" value="Add Branch" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
         </li>
-        @*<input type="submit" value="Add Vendor" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>*@
         <li>
-            @Html.ActionLink("Add Vendor", "AddVendor", new { id = Model.ParentCompanyID }, new { @class = "btn primary-button" })
+            @*<input type="submit" value="Add Vendor" class="btn primary-button" onclick="AddVendor"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>*@
+
+            @Html.ActionLink("Add Vendor", "AddVendor", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+
         </li>
 
 
 
 
     </ul>
-    <h2 class="ML15">List of Branches</h2>
+
 
     if (Model.AboutCompany.Count > 0)
     {
-        <table class="table">
-            <tr class="active">
-                <th class="active">
-                    @Html.DisplayName("Branch Name")
-                </th>
-                <th>
-                    @Html.DisplayName("Branch Type")
-                </th>
-                <th>
-                    @Html.DisplayName("Logo")
-                </th>
-                <th>
-                    @Html.DisplayName("Modify")
-                </th>
-                @*<th></th>*@
-            </tr>
+    <div class="new_section_box">
+        <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+                <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Branches:</h2>
 
-            @foreach (var item in Model.AboutCompany)
-            {
-                <tr class="info">
-                    <td class="active">
-                        @*@Html.DisplayFor(modelItem => item.CompanyName)*@
-                        @*@Html.DisplayFor(modelItem => item.GroupCompanyLogo)*@
-                        @*<center>
-                                @Html.DisplayFor(modelItem => item.OrganizationID)
-                            </center>*@
-                        <br />
-                        <center>
-                            @Html.ActionLink(item.CompanyNameList, "AboutBranch", new { id = item.OrganizationID })
-
-                        </center>
-                    </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.OrganizationID)
-                        </td>*@
-                    <td>
-                        <center>
-                            @Html.DisplayFor(modelItem => item.IndustryType)
-                        </center>
-                    </td>
-
-                    <td>
-                        <center>
-                            @Html.DisplayFor(modelItem => item.logo)
-                        </center>
-                    </td>
-                    @*<td>
-                            <center>
-                                @Html.DisplayFor(modelItem => item.CountryID)
-                            </center>
-                        </td>*@
-                    @*@if (Convert.ToInt32(Session["ParentCompanyID"]) == 0)
-                        {*@
-                    <td>
-
-
-                        <center>
-
-                            <a href="@Url.Action("UpdateCompany", "ManageOrganization", new { OrgID = item.OrganizationID })">
-
-                                <i class="fa fa-edit"></i>
+                @foreach (var item in Model.AboutCompany)
+                {
+                    <div class="col-sm-3 QueList">
+                        <div class="queContainer">
+                            @*@item.OrganizationID = @Session["BranchID"];*@
+                            <a href="@Url.Action("AboutBranch", "ManageOrganization", new { id = item.OrganizationID })">
+                                <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
+                                <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyNameList)</h3>
                             </a>
-                        </center>
-                    </td>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                }
 
-                    @*else
-                        {
-                            <td>
+                <div class="clearfix"></div>
 
+            </div>
 
-                                <center>
+        </div>
 
-                                    <a href="@Url.Action("UpdateBranch", "ManageOrganization", new { OrgID = item.OrganizationID })">
-
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                </center>
-                            </td>
-                        }*@
-                </tr>
-            }
-
-        </table>
+    </div>
     }
-    else
-    {
-        <center>
-            <p class="alert alert-success" style="width:1000px" id=" successMessage">@ViewBag.Message</p>
-        </center>
-    }
-    <h2 class="ML15">List of Vendors</h2>
+
+
     if (Model.AboutBranch.Count > 0)
     {
-        <table class="table">
-            <tr class="active">
-                <th class="active">
-                    @Html.DisplayName("Vendor Name")
-                </th>
-                <th>
-                    @Html.DisplayName("Vendor Type")
-                </th>
-                <th>
-                    @Html.DisplayName("Logo")
-                </th>
-                <th>
-                    @Html.DisplayName("Modify")
-                </th>
-                @*<th></th>*@
-            </tr>
-
-            @foreach (var item in Model.AboutBranch)
-            {
-                <tr class="info">
-                    <td class="active">
-                        @*@Html.DisplayFor(modelItem => item.CompanyName)*@
-                        @*@Html.DisplayFor(modelItem => item.GroupCompanyLogo)*@
-                        @*<center>
-                                @Html.DisplayFor(modelItem => item.OrganizationID)
-                            </center>*@
-                        <br />
-                        <center>
-                            @Html.ActionLink(item.CompanyNameList, "AboutVendor", new { id = item.OrganizationID })
-
-                        </center>
-                    </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.OrganizationID)
-                        </td>*@
-                    <td>
-                        <center>
-                            @Html.DisplayFor(modelItem => item.IndustryType)
-                        </center>
-                    </td>
-
-                    <td>
-                        <center>
-                            @Html.DisplayFor(modelItem => item.logo)
-                        </center>
-                    </td>
-                    @*<td>
-                            <center>
-                                @Html.DisplayFor(modelItem => item.CountryID)
-                            </center>
-                        </td>*@
-                    @*@if (Convert.ToInt32(Session["ParentCompanyID"]) == 0)
-                        {*@
-                    <td>
-
-
-                        <center>
-
-                            <a href="@Url.Action("UpdateVendor", "ManageOrganization", new { OrgID = item.OrganizationID })">
-
-                                <i class="fa fa-edit"></i>
+    <div class="new_section_box">
+        <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+                <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Vendors:</h2>
+                @foreach (var item in Model.AboutBranch)
+                {
+                    <div class="col-sm-3 QueList">
+                        <div class="queContainer">
+                            <a href="@Url.Action("AboutVendor", "ManageOrganization", new { id = item.OrganizationID })">
+                                <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
+                                <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyNameList)</h3>
                             </a>
-                        </center>
-                    </td>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                }
 
-                    @*else
-                        {
-                            <td>
+                <div class="clearfix"></div>
 
+            </div>
 
-                                <center>
+        </div>
 
-                                    <a href="@Url.Action("UpdateBranch", "ManageOrganization", new { OrgID = item.OrganizationID })">
-
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                </center>
-                            </td>
-                        }*@
-                </tr>
-            }
-
-        </table>
-    }
-    else
-    {
-
-
-        <center>
-
-            <p class="alert alert-success" style="width:1000px" id=" successMessageForList">@ViewBag.MessageV</p>
-
-
-            @*<p class="alert alert-success" style="width:1000px" id=" successMessageForList">"No Companies Found!!!"</p>*@
-        </center>
+    </div>
+        }
 
     }
-
-
-}
 
 
 

@@ -100,97 +100,99 @@ namespace ComplianceAuditWeb.Controllers
             auditViewModel.Rules = new List<ComplianceXref>();
 
             auditViewModel.ComplianceXrefData = new ComplianceXref();
-
-
-            foreach (System.Data.DataRow row in dsComplianceXrefData.Tables[0].Rows)
+            if (dsComplianceXrefData.Tables.Count > 0)
             {
-               // int id = (row["id"] == DBNull.Value) ? 0 : Convert.ToInt32(row["id"]);
 
-                if (row["level"].ToString() == "1")
+                foreach (System.Data.DataRow row in dsComplianceXrefData.Tables[0].Rows)
                 {
-                    auditViewModel.complianceXrefList.Add(new ComplianceXref()
+                    // int id = (row["id"] == DBNull.Value) ? 0 : Convert.ToInt32(row["id"]);
+
+                    if (row["level"].ToString() == "1")
                     {
-                        Compliance_Xref_ID = Convert.ToInt32(row["Compliance_Xref_ID"]),
-                        Compliance_Parent_ID = Convert.ToInt32(row["Compliance_Parent_ID"]),
-                        Compliance_Title = Convert.ToString(row["Compliance_Title"]),
-                        Comp_Category = Convert.ToString(row["Comp_Category"]),
-                        // Comp_Description = Convert.ToString(row["Comp_Description"]),
-                        //compl_def_consequence = Convert.ToString(row["compl_def_consequence"]),
-                        Country_ID = Convert.ToInt32(row["Country_ID"]),
-                        City_ID = Convert.ToInt32(row["City_ID"]),
-                        Effective_End_Date = Convert.ToDateTime(row["Effective_Start_Date"]),
-                        Effective_Start_Date = Convert.ToDateTime(row["Effective_End_Date"]),
-                        //Form = Convert.ToString(row["Form"]),
-                        //level = Convert.ToInt32(row["level"]),
-                        State_ID = Convert.ToInt32(row["State_ID"]),
-                        Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
-                        //Is_Best_Practice = Convert.ToBoolean(Convert.ToInt32(row["Is_Best_Practice"])),
-                        Risk_Category = Convert.ToString(row["Risk_Category"]),
-                        Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
-                        //Recurrence = Convert.ToString(row["Recurrence"]),
-                        Risk_Description = Convert.ToString(row["Risk_Description"]),
-                      //  Audit_Type = Convert.ToString(row["Audit_Type"]),
-                        //Type = Convert.ToString(row["Type"]),
-                    });
-                }
-                else if (row["level"].ToString() == "2")
-                {
-                    auditViewModel.Section.Add(new ComplianceXref()
+                        auditViewModel.complianceXrefList.Add(new ComplianceXref()
+                        {
+                            Compliance_Xref_ID = Convert.ToInt32(row["Compliance_Xref_ID"]),
+                            Compliance_Parent_ID = Convert.ToInt32(row["Compliance_Parent_ID"]),
+                            Compliance_Title = Convert.ToString(row["Compliance_Title"]),
+                            Comp_Category = Convert.ToString(row["Comp_Category"]),
+                            // Comp_Description = Convert.ToString(row["Comp_Description"]),
+                            //compl_def_consequence = Convert.ToString(row["compl_def_consequence"]),
+                            Country_ID = Convert.ToInt32(row["Country_ID"]),
+                            City_ID = Convert.ToInt32(row["City_ID"]),
+                            Effective_End_Date = Convert.ToDateTime(row["Effective_Start_Date"]),
+                            Effective_Start_Date = Convert.ToDateTime(row["Effective_End_Date"]),
+                            //Form = Convert.ToString(row["Form"]),
+                            //level = Convert.ToInt32(row["level"]),
+                            State_ID = Convert.ToInt32(row["State_ID"]),
+                            Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
+                            //Is_Best_Practice = Convert.ToBoolean(Convert.ToInt32(row["Is_Best_Practice"])),
+                            Risk_Category = Convert.ToString(row["Risk_Category"]),
+                            Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
+                            //Recurrence = Convert.ToString(row["Recurrence"]),
+                            Risk_Description = Convert.ToString(row["Risk_Description"]),
+                            //  Audit_Type = Convert.ToString(row["Audit_Type"]),
+                            //Type = Convert.ToString(row["Type"]),
+                        });
+                    }
+                    else if (row["level"].ToString() == "2")
                     {
-                        Compliance_Xref_ID = Convert.ToInt32(row["Compliance_Xref_ID"]),
-                        Compliance_Parent_ID = Convert.ToInt32(row["Compliance_Parent_ID"]),
-                        Compliance_Title = Convert.ToString(row["Compliance_Title"]),
-                        Comp_Category = Convert.ToString(row["Comp_Category"]),
-                        Comp_Description = Convert.ToString(row["Comp_Description"]),
-                        compl_def_consequence = Convert.ToString(row["compl_def_consequence"]),
-                        Country_ID = Convert.ToInt32(row["Country_ID"]),
-                        City_ID = Convert.ToInt32(row["City_ID"]),
-                        Effective_End_Date = Convert.ToDateTime(row["Effective_Start_Date"]),
-                        Effective_Start_Date = Convert.ToDateTime(row["Effective_End_Date"]),
-                        Form = Convert.ToString(row["Form"]),
-                        level = Convert.ToInt32(row["level"]),
-                        State_ID = Convert.ToInt32(row["State_ID"]),
-                        Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
-                        Is_Best_Practice = Convert.ToBoolean(Convert.ToInt32(row["Is_Best_Practice"])),
-                        Risk_Category = Convert.ToString(row["Risk_Category"]),
-                        Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
-                        Recurrence = Convert.ToString(row["Recurrence"]),
-                        Risk_Description = Convert.ToString(row["Risk_Description"]),
-                        Type = Convert.ToString(row["Type"]),
-                       // Audit_Type = Convert.ToString(row["Audit_Type"]),
+                        auditViewModel.Section.Add(new ComplianceXref()
+                        {
+                            Compliance_Xref_ID = Convert.ToInt32(row["Compliance_Xref_ID"]),
+                            Compliance_Parent_ID = Convert.ToInt32(row["Compliance_Parent_ID"]),
+                            Compliance_Title = Convert.ToString(row["Compliance_Title"]),
+                            Comp_Category = Convert.ToString(row["Comp_Category"]),
+                            Comp_Description = Convert.ToString(row["Comp_Description"]),
+                            compl_def_consequence = Convert.ToString(row["compl_def_consequence"]),
+                            Country_ID = Convert.ToInt32(row["Country_ID"]),
+                            City_ID = Convert.ToInt32(row["City_ID"]),
+                            Effective_End_Date = Convert.ToDateTime(row["Effective_Start_Date"]),
+                            Effective_Start_Date = Convert.ToDateTime(row["Effective_End_Date"]),
+                            Form = Convert.ToString(row["Form"]),
+                            level = Convert.ToInt32(row["level"]),
+                            State_ID = Convert.ToInt32(row["State_ID"]),
+                            Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
+                            Is_Best_Practice = Convert.ToBoolean(Convert.ToInt32(row["Is_Best_Practice"])),
+                            Risk_Category = Convert.ToString(row["Risk_Category"]),
+                            Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
+                            Recurrence = Convert.ToString(row["Recurrence"]),
+                            Risk_Description = Convert.ToString(row["Risk_Description"]),
+                            Type = Convert.ToString(row["Type"]),
+                            // Audit_Type = Convert.ToString(row["Audit_Type"]),
 
 
 
-                    });
-                }
-                else
-                {
-                    auditViewModel.Rules.Add(new ComplianceXref()
+                        });
+                    }
+                    else
                     {
+                        auditViewModel.Rules.Add(new ComplianceXref()
+                        {
 
-                        Compliance_Xref_ID = Convert.ToInt32(row["Compliance_Xref_ID"]),
-                        Compliance_Parent_ID = Convert.ToInt32(row["Compliance_Parent_ID"]),
-                        Compliance_Title = Convert.ToString(row["Compliance_Title"]),
-                        Comp_Category = Convert.ToString(row["Comp_Category"]),
-                        Comp_Description = Convert.ToString(row["Comp_Description"]),
-                        compl_def_consequence = Convert.ToString(row["compl_def_consequence"]),
-                        Country_ID = Convert.ToInt32(row["Country_ID"]),
-                        City_ID = Convert.ToInt32(row["City_ID"]),
-                        Effective_End_Date = Convert.ToDateTime(row["Effective_Start_Date"]),
-                        Effective_Start_Date = Convert.ToDateTime(row["Effective_End_Date"]),
-                        Form = Convert.ToString(row["Form"]),
-                        level = Convert.ToInt32(row["level"]),
-                        State_ID = Convert.ToInt32(row["State_ID"]),
-                        Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
-                        Is_Best_Practice = Convert.ToBoolean(Convert.ToInt32(row["Is_Best_Practice"])),
-                        Risk_Category = Convert.ToString(row["Risk_Category"]),
-                        Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
-                        Recurrence = Convert.ToString(row["Recurrence"]),
-                        Risk_Description = Convert.ToString(row["Risk_Description"]),
-                        Type = Convert.ToString(row["Type"]),
-                      //  Audit_Type = Convert.ToString(row["Audit_Type"]),
+                            Compliance_Xref_ID = Convert.ToInt32(row["Compliance_Xref_ID"]),
+                            Compliance_Parent_ID = Convert.ToInt32(row["Compliance_Parent_ID"]),
+                            Compliance_Title = Convert.ToString(row["Compliance_Title"]),
+                            Comp_Category = Convert.ToString(row["Comp_Category"]),
+                            Comp_Description = Convert.ToString(row["Comp_Description"]),
+                            compl_def_consequence = Convert.ToString(row["compl_def_consequence"]),
+                            Country_ID = Convert.ToInt32(row["Country_ID"]),
+                            City_ID = Convert.ToInt32(row["City_ID"]),
+                            Effective_End_Date = Convert.ToDateTime(row["Effective_Start_Date"]),
+                            Effective_Start_Date = Convert.ToDateTime(row["Effective_End_Date"]),
+                            Form = Convert.ToString(row["Form"]),
+                            level = Convert.ToInt32(row["level"]),
+                            State_ID = Convert.ToInt32(row["State_ID"]),
+                            Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
+                            Is_Best_Practice = Convert.ToBoolean(Convert.ToInt32(row["Is_Best_Practice"])),
+                            Risk_Category = Convert.ToString(row["Risk_Category"]),
+                            Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
+                            Recurrence = Convert.ToString(row["Recurrence"]),
+                            Risk_Description = Convert.ToString(row["Risk_Description"]),
+                            Type = Convert.ToString(row["Type"]),
+                            //  Audit_Type = Convert.ToString(row["Audit_Type"]),
 
-                    });
+                        });
+                    }
                 }
             }
             auditViewModel.complianceAuditList = new List<ComplianceAudit>();

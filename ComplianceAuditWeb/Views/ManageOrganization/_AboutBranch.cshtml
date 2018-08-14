@@ -4,14 +4,25 @@
 
     ViewBag.Title = "_AboutChildCompany";
 }
-<h2 class="ML15">Manage Company</h2>
 <ul class="breadcrumb ML15">
-    <li><a href="/Common/dashboard?pid=9">Company Management</a></li>
-    <li> Company</li>
+    <li><a href="/Common/dashboard?pid=9">Branch Management</a></li>
+    <li>About Branch</li>
 </ul>
+<h2 class="ML15">Manage Branch</h2>
+
+
+
 
 @using (Html.BeginForm())
 {
+    <div class="pull-right fa fa-pull-right" style="font-size:large">
+
+        @Html.ActionLink("Create Branch", "AddBranch", new { Orgid = Model.ParentCompanyID })
+
+        @*@TempData["ParentCompanyID"] = Model.ParentCompanyID;*@
+
+
+    </div>
     if (TempData["Success"] != null)
     {
         <center>
@@ -72,6 +83,53 @@
 
         </li>
     </ul>
+
+
+
+    <h2 class="ML15">List of Vendors assigned</h2>
+
+
+
+    <div class="new_section_box">
+        <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+                <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">User Management:</h2>
+                @if (TempData["Success"] != null)
+                {
+                    <center>
+                        @*<p class="alert alert-success"  style="width:1000px">  @TempData["Company"]</p>*@
+                        <p id=" successMessage"> @TempData["Company"] @TempData["Success"] </p>
+                    </center>
+                }
+                @if (Model.AboutGroupCompany.Count > 0)
+                {
+                    foreach (var item in Model.AboutGroupCompany)
+                    {
+                        <div class="col-sm-3 QueList">
+                            <div class="queContainer">
+                                <a href="@Url.Action("AboutCompany", "ManageOrganization", new { id = item.OrganizationID })">
+                                    <span class="qIcon"><img src="/UploadedFiles/@item.CompanyLogo" alt="" style="height:60px;width:75px"></span>
+                                    <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
+                                </a>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <center>
+                        <p id=" successMessage">@ViewBag.Message</p>
+                    </center>
+                }
+
+                <div class="clearfix"></div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 }
 

@@ -45,13 +45,13 @@ namespace ComplianceAuditWeb.Models
     }
     public enum BranchAuditingfrequency
     {
-        Quaterly,
-        HalfYearly,
+        Quarterly,
+        Half_Yearly,
         Annually
     }
     public enum TypeOfBranch
     {
-        SalesOffice,
-        HeadOffice
+        Sales_Office,
+        Head_Office
     }
 }

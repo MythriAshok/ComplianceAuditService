@@ -2,6 +2,7 @@
 using Compliance.DataObject;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -145,6 +146,21 @@ namespace ComplianceService
                 return "Not deactivated";
             }
         }
+
+        public string GetAssignedVendorsforBranch(int BranchID)
+        {
+            return BindAssignedVendorsforBranch(BranchID);
+        }
+        private string BindAssignedVendorsforBranch(int BranchID)
+        {
+            OrganizationHelper vendorhelper = new OrganizationHelper();
+            DataSet vendors = vendorhelper.getVendorsForBranch(BranchID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            vendors = utilityHelper.ConvertNullsToEmptyString(vendors);
+            string xmlroles = vendors.GetXml();
+            return xmlroles;
+        }
+       
 
     }
 }

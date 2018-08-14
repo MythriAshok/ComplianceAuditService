@@ -1,16 +1,13 @@
 ﻿@model ComplianceAuditWeb.Models.AboutCompanyViewModel
 @{
-    /**/
 
-    ViewBag.Title = "_AboutGroupCompany";
 }
 
-<h2>_AboutGroupCompany</h2>
 
 <h2 class="ML15">Manage Group Company</h2>
 <ul class="breadcrumb ML15">
     <li><a href="/Common/dashboard?pid=6">Group Management</a></li>
-    <li> Group Company</li>
+    <li>About Group Company</li>
 </ul>
 
 @using (Html.BeginForm())
@@ -18,7 +15,7 @@
     if (TempData["Success"] != null)
     {
         <center>
-            <p class="alert alert-success" style="width:1000px" id=" successMessage">@TempData["Company"]@TempData["Success"]</p>
+            <p id=" successMessage">@TempData["Company"]@TempData["Success"]</p>
         </center>
     }
 
@@ -86,83 +83,42 @@
             <input type="submit" value="Add Company" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
         </li>
     </ul>
-    <h2 class="ML15">List of Companies</h2>
-
-    if (Model.AboutGroupCompany.Count > 0)
+    
 
 
-    {
-        <table class="table">
-            <tr class="active">
-                <th class="active">
-                    @Html.DisplayName("Company Name")
-                </th>
-                <th>
-                    @Html.DisplayName("Industry Type")
-                </th>
-                <th>
-                    @Html.DisplayName("Logo")
-                </th>
-                <th>
-                    @Html.DisplayName("Modify")
-                </th>
-                @*<th></th>*@
-            </tr>
-
-            @foreach (var item in Model.AboutGroupCompany)
-            {
-                <tr class="info">
-                    <td class="active">
-                    
-                        <br />
-                        <center>
-                            @Html.ActionLink(item.CompanyNameList, "AboutCompany", new { id = item.OrganizationID })
-
-                        </center>
-                    </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.OrganizationID)
-                        </td>*@
-                    <td>
-                        <center>
-                            @Html.DisplayFor(modelItem => item.IndustryType)
-                        </center>
-                    </td>
-
-                    <td>
-                        <center>
-                            @Html.DisplayFor(modelItem => item.logo)
-                        </center>
-                    </td>
-                    @*<td>
-                            <center>
-                                @Html.DisplayFor(modelItem => item.CountryID)
-                            </center>
-                        </td>*@
-                    <td>
-
-
-                        <center>
-
-                            <a href="@Url.Action("UpdateCompany", "ManageOrganization", new { OrgID = item.OrganizationID })">
-
-                                <i class="fa fa-edit"></i>
-                            </a>
-                        </center>
-                    </td>
-
-
-                </tr>
-            }
-
-
-        </table>
-    }
-    else
-    {
-
-        <center>
-            <p class="alert alert-success" style="width:1000px" id=" successMessage">@ViewBag.Message</p>
-        </center>
-    }
+    <div class="new_section_box">
+        <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+                <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Companies:</h2>
+                @if (TempData["Success"] != null)
+                {
+                    <center>
+                        @*<p class="alert alert-success"  style="width:1000px">  @TempData["Company"]</p>*@
+                        <p id=" successMessage"> @TempData["Company"] @TempData["Success"] </p>
+                    </center>
+                }
+                @if (Model.AboutGroupCompany.Count > 0)
+                {
+                    foreach (var item in Model.AboutGroupCompany)
+                    {
+                        <div class="col-sm-3 QueList">
+                            <div class="queContainer">
+                                <a href="@Url.Action("AboutCompany", "ManageOrganization", new { id = item.OrganizationID })">
+                                    <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
+                                    <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyNameList)</h3>
+                                </a>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <center>
+                        <p id=" successMessage">@ViewBag.Message</p>
+                    </center>
+                }
+            </div>
+        </div>
+    </div>
 }

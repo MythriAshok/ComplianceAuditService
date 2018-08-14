@@ -31,6 +31,8 @@ namespace ComplianceService
         [OperationContract]
 
         string DeleteVendorForCompany(int VendorID);
+        [OperationContract]
 
+        string GetAssignedVendorsforBranch(int BranchID);
     }
 }

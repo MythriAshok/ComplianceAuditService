@@ -22,7 +22,7 @@ namespace ComplianceAuditWeb.Models
         public enum AuditingFrequency
         {
             Quarterly,
-            HalfYearly,
+            Half_Yearly,
             Annaully
         }
 
@@ -34,7 +34,7 @@ namespace ComplianceAuditWeb.Models
 
         public enum BranchType
         {
-            SalesOffice,
+            Sales_Office,
             Manufacturing,
             Service
            
