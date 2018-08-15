@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<Compliance.DataObject.Organization>
-
+@{
+    ViewBag.Title = "Compliance Auditing";
+}
 
 <p style="text-align:right">
     @Html.ActionLink("Add Group company", actionName: "AddGroupCompany")
@@ -12,8 +14,8 @@
         <th>
             @Html.DisplayNameFor(model => model.Company_Name)
         </th>
-       
-        
+
+
         <th></th>
     </tr>
 

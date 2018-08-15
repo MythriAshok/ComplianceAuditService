@@ -1,7 +1,7 @@
 ﻿
 @model ComplianceAuditWeb.Models.AuditViewModel
 @{
-    ViewBag.Title = "ComplianceAuditing";
+    ViewBag.Title = "Compliance Auditing";
 }
 
 @section scripts
@@ -11,6 +11,9 @@
         function ShowHidedTextBox(_value) {
             var compliancePartial = /*document.getElementById("complianceAuditList_1__Audit_Status")*/_value;
             alert(compliancePartial);
+        function ShowHidedTextBox() {
+          
+            var compliancePartial = document.getElementById("complianceAuditList_1__Audit_Status");
             var percentage = document.getElementById("percentage");
             alert(percentage);
             alert(compliancePartial.value);
@@ -27,11 +30,11 @@
 
 
 }
-<h2 class="ML15">Add Compliance Audit</h2>
 <ul class="breadcrumb ML15">
     <li><a href="">Audit Management</a></li>
     <li>Auditing</li>
 </ul>
+<h2 class="ML15">Add Compliance Audit</h2>
 
 
 @using (Html.BeginForm())
@@ -41,161 +44,180 @@
 
     int rulecount = 0;
 
-<div class="mid_content_sec">
+    <div class="mid_content_sec">
 
-    @for (int Act = 0; Act < Model.complianceXrefList.Count; Act++)
-    {
-
-
-        <div class="col-xs-12 subSelect ">
-            <div class="input-field" style="font-weight:800;color:brown;">
-                <i class="fa fa-legal"></i>
-                @Html.DisplayFor(m => m.complianceXrefList[Act].Compliance_Title, new { @class = "floating-label" })
-                <span id="loading_data_icon"></span>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        for (int j = 0; j < Model.Section.Count; j++)
+        @for (int Act = 0; Act < Model.complianceXrefList.Count; Act++)
         {
-            if (Model.complianceXrefList[Act].Compliance_Xref_ID == Model.Section[j].Compliance_Parent_ID)
-            {
-                <div class="col-xs-12 subSelect ">
-                    <div class="input-field" style="font-weight:600;    color: chocolate;">
-                        &nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-server"></i>
-                        @Html.DisplayFor(m => m.Section[j].Compliance_Title, new { @class = "floating-label" })
-                        <span id="loading_data_icon"></span>
-                    </div>
+
+
+            <div class="col-xs-12 subSelect ">
+                <div class="input-field" style="font-weight:800;color:brown;">
+                    <i class="fa fa-legal"></i>
+                    @Html.DisplayFor(m => m.complianceXrefList[Act].Compliance_Title, new { @class = "floating-label" })
+                    <span id="loading_data_icon"></span>
                 </div>
-                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+            for (int j = 0; j < Model.Section.Count; j++)
+            {
 
-                for (int i = 0; i < Model.Rules.Count(); i++)
+
+                if (Model.complianceXrefList[Act].Compliance_Xref_ID == Model.Section[j].Compliance_Parent_ID)
                 {
-                    if (Model.Section[j].Compliance_Xref_ID == Model.Rules[i].Compliance_Parent_ID)
-                    {
-                        <div class="col-xs-12 subSelect ">
-                            <div class="input-field" style=" color: #692c00;font-weight:bold">
-                                &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-book"></i>
-                                @Html.DisplayFor(m => m.Rules[i].Compliance_Title, new { @class = "floating-label" })
-                                <span id="loading_data_icon"></span>
-                            </div>
+
+                    <div class="col-xs-12 subSelect ">
+                        <div class="input-field" style="font-weight:600;    color: chocolate;">
+                            &nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-server"></i>
+                            @Html.DisplayFor(m => m.Section[j].Compliance_Title, new { @class = "floating-label" })
+                            <span id="loading_data_icon"></span>
                         </div>
-
-                        Model.complianceAuditList[rulecount].Compliance_Xref_Id = Model.Rules[i].Compliance_Xref_ID;
-
-                        <div class="clearfix"></div>
-                        <div  style="margin-left: 50px;">
-                            <div class="col-xs-4 subSelect ">
-                                <div class="input-field">
-                                    @Html.Label("Status")
-                                    @*@Html.EditorFor(m => m.complianceAuditList[rulecount].Audit_Status)*@
-                                    @*@Html.DropDownListFor(m=>m.complianceAuditList[rulecount].Audit_Status, Model.auditlists)*@
-
-                                    @Html.DropDownListFor(m => m.complianceAuditList[rulecount].Audit_Status, new SelectList
-                          (Enum.GetValues(typeof(ComplianceAuditWeb.Models.AuditViewModel.AuditStatus))),
-                          "Audit Status", new { @class = "inputMaterial ui - autocomplete - input", @onchange = "ShowHidedTextBox(this.value);" })
-                                    @Html.ValidationMessageFor(m => m.complianceAuditList[rulecount].Audit_Status, "", new { @class = "text-danger" })
-
-                                    <div id="percentage" style="visibility:hidden">
-                                        Percentage of Partially Complianced:
-                                        <input type="text" id="percentageofpartial"/>
-                                    </div>
-                                </div>
-                            </div>
-                            @*<div class="col-xs-4 subSelect ">
-
-                                    <div class="input-field">
-
-                                        @Html.DropDownListFor(m => m.complianceAuditList[rulecount].Audit_Status, new SelectList
-                                 (Enum.GetValues(typeof(ComplianceAuditWeb.Models.AuditViewModel.AuditStatus))),
-                                 "Audit Status", new { @class = "inputMaterial ui - autocomplete - input" , @onchange = "ShowHidedTextBox(this.value);" })
-                                        @Html.ValidationMessageFor(m => m.complianceAuditList[rulecount].Audit_Status, "", new { @class = "text-danger" })
-
-                                    </div>
-                                </div>*@
+                    </div>
+                    <div class="clearfix"></div>
 
 
+                    for (int i = 0; i < Model.Rules.Count(); i++)
+                    {
 
+                        if (Model.Section[j].Compliance_Xref_ID == Model.Rules[i].Compliance_Parent_ID)
+                        {
 
-                            <div class="col-xs-4 subSelect ">
-                                <div class="input-field">
-                                    @Html.Label("Penalty")
-                                    @Html.TextBoxFor(m => m.complianceAuditList[rulecount].Penalty_nc, new { @class = "inputMaterial ui - autocomplete - input" })
+                            <div class="col-xs-12 subSelect ">
+                                <div class="input-field" style=" color: #692c00;font-weight:bold">
+                                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-book"></i>
+                                    @Html.DisplayFor(m => m.Rules[i].Compliance_Title, new { @class = "floating-label" })
+                                    <span id="loading_data_icon"></span>
                                 </div>
                             </div>
 
-                            <div class="col-xs-4 subSelect ">
-                                <div class="input-field">
-                                    @Html.Label("Auditing Date")
-                                    @Html.EditorFor(m => m.complianceAuditList[rulecount].Audit_Date, new { @class = "inputMaterial ui - autocomplete - input" })
-                                </div>
-                            </div>
+
+
+
+
+                            Model.complianceAuditList[rulecount].Compliance_Xref_Id = Model.Rules[i].Compliance_Xref_ID;
+
+
 
                             <div class="clearfix"></div>
-                            <div class="col-xs-8 subSelect ">
-                                <div class="input-field">
-                                    @Html.Label("Remarks")
-                                    @Html.TextAreaFor(m => m.complianceAuditList[rulecount].Audit_Remarks, new { @class = "inputMaterial ui - autocomplete - input" })
+
+                            <div style="margin-left: 50px;">
+                                <div class="col-xs-2 subSelect ">
+
+                                    <div class="input-field">
+                                        @Html.Label("Audit Status")<span style="color:red">*</span>
+                                        @*@Html.EditorFor(m => m.complianceAuditList[rulecount].Audit_Status)*@
+                                        @*@Html.DropDownListFor(m=>m.complianceAuditList[rulecount].Audit_Status, Model.auditlists)*@
+
+
+
+                                        @Html.DropDownListFor(m => m.complianceAuditList[rulecount].Audit_Status, new SelectList
+                              (Enum.GetValues(typeof(ComplianceAuditWeb.Models.AuditViewModel.AuditStatus))),
+                              "--Select Audit Status--", new { @class = "inputMaterial ui - autocomplete - input", @onchange = "ShowHidedTextBox(this.value);" })
+                                        @Html.ValidationMessageFor(m => m.complianceAuditList[rulecount].Audit_Status, "", new { @class = "text-danger" })
+
+
+                                    </div>
+                                </div>
+                                @*<div class="col-xs-4 subSelect ">
+
+                                        <div class="input-field">
+
+                                            @Html.DropDownListFor(m => m.complianceAuditList[rulecount].Audit_Status, new SelectList
+                                     (Enum.GetValues(typeof(ComplianceAuditWeb.Models.AuditViewModel.AuditStatus))),
+                                     "Audit Status", new { @class = "inputMaterial ui - autocomplete - input" , @onchange = "ShowHidedTextBox(this.value);" })
+                                            @Html.ValidationMessageFor(m => m.complianceAuditList[rulecount].Audit_Status, "", new { @class = "text-danger" })
+
+                                        </div>
+                                    </div>*@
+
+                                <div class="col-xs-2 subSelect ">
+                                    <div class="input-field">
+                                        @Html.Label("Percentage")<span style="color:red">*</span>
+                                        @Html.TextBoxFor(m => m.complianceAuditList[rulecount].Part_Compliance_Percent, new { @class = "inputMaterial ui - autocomplete - input" })
+                                    </div>
+                                </div>
+
+
+                                <div class="col-xs-2 subSelect ">
+                                    <div class="input-field">
+                                        @Html.Label("Penalty")
+                                        @Html.TextBoxFor(m => m.complianceAuditList[rulecount].Penalty_nc, new { @class = "inputMaterial ui - autocomplete - input" })
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-2 subSelect ">
+                                    <div class="input-field">
+                                        @Html.Label("Auditing Date")<span style="color:red">*</span>
+                                        @Html.EditorFor(m => m.complianceAuditList[rulecount].Audit_Date, new { @class = "inputMaterial ui - autocomplete - input" })
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-2 subSelect ">
+                                    <div class="input-field">
+                                        @Html.Label("Remarks")<span style="color:red">*</span>
+                                        @Html.TextBoxFor(m => m.complianceAuditList[rulecount].Audit_Remarks, new { @class = "inputMaterial ui - autocomplete - input" })
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-2 subSelect ">
+                                    <div class="input-field">
+                                        @Html.Label("Upload Artifacts")
+                                        <input type="file" />
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="col-xs-4 subSelect ">
-                                <div class="input-field">
-                                    @Html.Label("Upload Artifacts")
-                                    <input type="file" class="btn primary-button" />
-                                </div>
-                            </div>
-                        </div>
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Audit_ArteFacts)
 
-                        @Html.HiddenFor(m => m.complianceAuditList[rulecount].Audit_ArteFacts)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Compliance_Xref_Id)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Auditor_Id)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Compliance_Audit_Id)
+                            @*@Html.HiddenFor(m => m.complianceAuditList[rulecount].Compliance_Options_Id)*@
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].User_Id)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Org_Hier_Id)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Compliance_Schedule_Instance)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Is_Active)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Reviewer_Id)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Last_Update_dDate)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Reviewer_Comments)
+                            @Html.HiddenFor(m => m.complianceAuditList[rulecount].Version)
 
-                        @Html.HiddenFor(m => m.complianceAuditList[rulecount].Compliance_Xref_Id)
-                        @Html.HiddenFor(m => m.complianceAuditList[rulecount].Auditor_Id)
-                        @Html.HiddenFor(m => m.complianceAuditList[rulecount].Compliance_Audit_Id)
-                        @*@Html.HiddenFor(m => m.complianceAuditList[rulecount].Compliance_Options_Id)*@
-                        @Html.HiddenFor(m => m.complianceAuditList[rulecount].User_Id)
-                        @Html.HiddenFor(m => m.complianceAuditList[rulecount].Org_Hier_Id)
-                        @Html.HiddenFor(m => m.complianceAuditList[rulecount].Compliance_Schedule_Instance)
-                        @Html.HiddenFor(m => m.complianceAuditList[rulecount].Is_Active)
-                        @Html.HiddenFor(m => m.complianceAuditList[rulecount].Reviewer_Id)
-                        @Html.HiddenFor(m => m.complianceAuditList[rulecount].Last_Update_dDate)
-                        @Html.HiddenFor(m => m.complianceAuditList[rulecount].Reviewer_Comments)
-                        @Html.HiddenFor(m => m.complianceAuditList[rulecount].Version)
+                            rulecount = rulecount + 1;
 
-                        rulecount = rulecount + 1;
+                        }
 
+                        @*@Html.HiddenFor(m => m.Rules[i].Form)
+                            @Html.HiddenFor(m => m.Rules[i].City_ID)
+                            @Html.HiddenFor(m => m.Rules[i].Compliance_Parent_ID)
+                            @Html.HiddenFor(m => m.Rules[i].Compliance_Xref_ID)
+                            @Html.HiddenFor(m => m.Rules[i].compl_def_consequence)
+                            @Html.HiddenFor(m => m.Rules[i].Comp_Description)*@
                     }
-
-                    @*@Html.HiddenFor(m => m.Rules[i].Form)
-                        @Html.HiddenFor(m => m.Rules[i].City_ID)
-                        @Html.HiddenFor(m => m.Rules[i].Compliance_Parent_ID)
-                        @Html.HiddenFor(m => m.Rules[i].Compliance_Xref_ID)
-                        @Html.HiddenFor(m => m.Rules[i].compl_def_consequence)
-                        @Html.HiddenFor(m => m.Rules[i].Comp_Description)*@
                 }
+                @*@Html.HiddenFor(m => m.Section[j].Form)
+                    @Html.HiddenFor(m => m.Section[j].City_ID)
+                    @Html.HiddenFor(m => m.Section[j].Compliance_Parent_ID)
+                    @Html.HiddenFor(m => m.Section[j].Compliance_Xref_ID)
+                    @Html.HiddenFor(m => m.Section[j].compl_def_consequence)
+                    @Html.HiddenFor(m => m.Section[j].Comp_Description)*@
             }
-            @*@Html.HiddenFor(m => m.Section[j].Form)
-                @Html.HiddenFor(m => m.Section[j].City_ID)
-                @Html.HiddenFor(m => m.Section[j].Compliance_Parent_ID)
-                @Html.HiddenFor(m => m.Section[j].Compliance_Xref_ID)
-                @Html.HiddenFor(m => m.Section[j].compl_def_consequence)
-                @Html.HiddenFor(m => m.Section[j].Comp_Description)*@
+            @*@Html.HiddenFor(m => m.complianceXrefList[Act].Form)
+                @Html.HiddenFor(m => m.complianceXrefList[Act].City_ID)
+                @Html.HiddenFor(m => m.complianceXrefList[Act].Compliance_Parent_ID)
+                @Html.HiddenFor(m => m.complianceXrefList[Act].Compliance_Xref_ID)
+                @Html.HiddenFor(m => m.complianceXrefList[Act].compl_def_consequence)
+                @Html.HiddenFor(m => m.complianceXrefList[Act].Comp_Description)*@
         }
-        @*@Html.HiddenFor(m => m.complianceXrefList[Act].Form)
-            @Html.HiddenFor(m => m.complianceXrefList[Act].City_ID)
-            @Html.HiddenFor(m => m.complianceXrefList[Act].Compliance_Parent_ID)
-            @Html.HiddenFor(m => m.complianceXrefList[Act].Compliance_Xref_ID)
-            @Html.HiddenFor(m => m.complianceXrefList[Act].compl_def_consequence)
-            @Html.HiddenFor(m => m.complianceXrefList[Act].Comp_Description)*@
-    }
 
-    @Html.Hidden(rulecount.ToString())
-    @{ Session["rulecount"] = rulecount; }
+        @Html.Hidden(rulecount.ToString())
+        @{ Session["rulecount"] = rulecount; }
 
 
-</div>
+    </div>
+    <div class="clearfix"></div>
     <ul class="list-inline continueBtn">
         <li>
-            <input type="submit" value="Save" class="btn primary-button" /><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+            <input type="submit" name="submit" value="Save as Draft" class="btn primary-button" /><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+            <input type="submit" name="submit" value="Submit" class="btn primary-button" /><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
         </li>
     </ul>
 

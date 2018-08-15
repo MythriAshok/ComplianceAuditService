@@ -1,14 +1,15 @@
 ﻿@model ComplianceAuditWeb.Models.ListOfGroupCompanies
 
 @{
-    ViewBag.Title = "";
+    ViewBag.Title = "Compliance Auditing";
 }
-<h2 class="ML15">  Company List</h2>
 
 <ul class="breadcrumb ML15">
     <li><a href="/Common/dashboard?pid=9">Company Management</a></li>
     <li>Companies</li>
 </ul>
+<h2 class="ML15">Company List</h2>
+
 <div class="mid_content_sec">
     @using (Html.BeginForm())
     {

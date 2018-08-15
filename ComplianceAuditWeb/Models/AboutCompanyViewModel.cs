@@ -10,6 +10,7 @@ namespace ComplianceAuditWeb.Models
     {
         public int CompanyID { get; set; }
         public string  CompanyName { get; set; }
+        public string  GroupCompanyName { get; set; }
         public string CompanyDescription { get; set; }
         public string CompanyLogo { get; set; }
         public int ParentCompanyID { get; set; }

@@ -1,21 +1,20 @@
 ﻿@model ComplianceAuditWeb.Models.AboutCompanyViewModel
 @{
-    /**/
-
-    ViewBag.Title = "_AboutChildCompany";
+    ViewBag.Title = "Compliance Auditing";
 }
 
-<h2 class="ML15">Manage Vendor</h2>
 <ul class="breadcrumb ML15">
     <li><a href="/Common/dashboard?pid=9">Vendor Management</a></li>
     <li> About Vendor</li>
 </ul>
+<h2 class="ML15">Manage Vendor</h2>
+
 @using (Html.BeginForm())
 {
     if (TempData["Success"] != null)
     {
         <center>
-            <p class="alert alert-success" style="width:1000px" id=" successMessage">@TempData["Company"]@TempData["Success"]</p>
+            <p id=" successMessage">@TempData["Company"]@TempData["Success"]</p>
         </center>
     }
     <img src="/UploadedFiles/@Model.CompanyLogo" alt="" />

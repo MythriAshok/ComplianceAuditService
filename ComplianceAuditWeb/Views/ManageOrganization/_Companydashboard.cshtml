@@ -1,10 +1,13 @@
 ﻿@model IEnumerable<ComplianceAuditWeb.Models.ListOfGroupCompanies>
-<h2 class="ML15">  Company Dashboard</h2>
-
+@{
+    ViewBag.Title = "Compliance Auditing";
+}
 <ul class="breadcrumb ML15">
     <li><a href="/Common/dashboard?pid=9">Company Management</a></li>
     <li>Companies</li>
 </ul>
+<h2 class="ML15">  Company Dashboard</h2>
+
 <div class="new_section_box">
     <div class="tab-content">
         <div id="home" class="tab-pane fade in active">
@@ -13,7 +16,7 @@
             {
                 <center>
                     @*<p class="alert alert-success"  style="width:1000px">  @TempData["Company"]</p>*@
-                    <p class="alert alert-success" style="width:1000px" id=" successMessage"> @TempData["Company"] @TempData["Success"] </p>
+                    <p id=" successMessage"> @TempData["Company"] @TempData["Success"] </p>
                 </center>
             }
             @foreach (var item in Model)

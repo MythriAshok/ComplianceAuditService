@@ -56,6 +56,12 @@
   <wsdl:message name="IVendorService_DeleteVendorForCompany_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteVendorForCompanyResponse" />
   </wsdl:message>
+  <wsdl:message name="IVendorService_GetAssignedVendorsforBranch_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssignedVendorsforBranch" />
+  </wsdl:message>
+  <wsdl:message name="IVendorService_GetAssignedVendorsforBranch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssignedVendorsforBranchResponse" />
+  </wsdl:message>
   <wsdl:portType name="IVendorService">
     <wsdl:operation name="insertVendor">
       <wsdl:input wsaw:Action="http://tempuri.org/IVendorService/insertVendor" message="tns:IVendorService_insertVendor_InputMessage" />
@@ -88,6 +94,10 @@
     <wsdl:operation name="DeleteVendorForCompany">
       <wsdl:input wsaw:Action="http://tempuri.org/IVendorService/DeleteVendorForCompany" message="tns:IVendorService_DeleteVendorForCompany_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IVendorService/DeleteVendorForCompanyResponse" message="tns:IVendorService_DeleteVendorForCompany_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAssignedVendorsforBranch">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVendorService/GetAssignedVendorsforBranch" message="tns:IVendorService_GetAssignedVendorsforBranch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVendorService/GetAssignedVendorsforBranchResponse" message="tns:IVendorService_GetAssignedVendorsforBranch_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IVendorService" type="tns:IVendorService">
@@ -157,6 +167,15 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteVendorForCompany">
       <soap:operation soapAction="http://tempuri.org/IVendorService/DeleteVendorForCompany" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAssignedVendorsforBranch">
+      <soap:operation soapAction="http://tempuri.org/IVendorService/GetAssignedVendorsforBranch" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

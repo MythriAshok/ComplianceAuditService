@@ -1,7 +1,7 @@
 ﻿@model ComplianceAuditWeb.Models.ListOfGroupCompanies
 
 @{
-    ViewBag.Title = "";
+    ViewBag.Title = "Compliance Auditing";
 }
 @section scripts{
     <script language="javascript" type="text/javascript">
@@ -38,11 +38,12 @@
 
 }
 
-<h2 class="ML15">Add Company Branch</h2>
 <ul class="breadcrumb ML15">
     <li><a href="/Common/dashboard?pid=9">Branch Management</a></li>
-    <li> Branch</li>
+    <li> Branch List</li>
 </ul>
+<h2 class="ML15">Manage Branch</h2>
+
 <div class="mid_content_sec">
     @using (Html.BeginForm())
     {
@@ -67,19 +68,29 @@
             <div class="tab-content">
                 <div id="home" class="tab-pane fade in active">
                     <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Branch</h2>
-                    @foreach (var item in Model.listOfGroups)
+                    @if (Model.listOfGroups.Count != 0)
                     {
-                        <div class="col-sm-3 QueList">
-                            <div class="queContainer">
-                                @*@item.OrganizationID = @Session["BranchID"];*@
-                                <a href="@Url.Action("AboutBranch", "ManageOrganization", new { id = item.OrganizationID })">
-                                    <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
-                                    <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
-                                </a>
-                                <div class="clearfix"></div>
+                        foreach (var item in Model.listOfGroups)
+                        {
+                            <div class="col-sm-3 QueList">
+                                <div class="queContainer">
+                                    @*@item.OrganizationID = @Session["BranchID"];*@
+                                    <a href="@Url.Action("AboutBranch", "ManageOrganization", new { id = item.OrganizationID })">
+                                        <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                                        <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
+                                    </a>
+                                    <div class="clearfix"></div>
+                                </div>
                             </div>
-                        </div>
+                        }
                     }
+                    else
+                    {
+                        <h4> @ViewBag.Message</h4>
+                    }
+
+
+
 
                     <div class="clearfix"></div>
 

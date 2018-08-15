@@ -358,6 +358,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="UploadedFiles\adani.png" />
+    <Content Include="UploadedFiles\noimage.png" />
     <Content Include="UploadedFiles\tata.png" />
     <Content Include="Views\ManageOrganization\ListOfGroupCompanies.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
@@ -448,7 +449,7 @@
     <Content Include="Views\ManageOrganization\AddCompany.cshtml" />
     <Content Include="Views\UserManagement\insertRoles.cshtml" />
     <Content Include="Views\ManageOrganization\AddBranch.cshtml" />
-    <Content Include="Views\ManageOrganization\View.cshtml" />
+    <Content Include="Views\AuditManagement\View.cshtml" />
     <Content Include="Views\ManageOrganization\UpdateGroupCompany.cshtml" />
     <Content Include="Views\ManageOrganization\DeactivateGroupCompany.cshtml" />
     <Content Include="Views\ManageOrganization\DeleteGroupCompany.cshtml" />
@@ -509,6 +510,8 @@
     <Content Include="Views\ComplianceManagement\_AuditoraccessMapping.cshtml" />
     <Content Include="Views\ComplianceManagement\_SMEdashboard - Copy.cshtml" />
     <Content Include="Views\ComplianceManagement\UpdateAct.cshtml" />
+    <Content Include="Views\ManageOrganization\_AboutGroupCompany.cshtml" />
+    <Content Include="Views\ManageOrganization\_AboutBranch.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

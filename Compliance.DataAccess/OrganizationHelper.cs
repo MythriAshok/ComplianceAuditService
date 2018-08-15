@@ -570,6 +570,28 @@ namespace Compliance.DataAccess
             }
             return dsCompaniesList;
         }
+        public DataSet getDefaultCompanyLists(int CompanyID)
+        {
+            DataSet dsCompaniesList = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getDefaultCompanyLists", conn);
+        cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", CompanyID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+        adapter.Fill(dsCompaniesList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsCompaniesList;
+        }
 
         public DataSet getSpecificCompanyList(int GroupCompanyID)
         {
@@ -708,7 +730,30 @@ namespace Compliance.DataAccess
             }
             return dsCompaniesListDropDown;
         }
-       
+        public DataSet getVendorsForBranch(int BranchID)
+        {
+            DataSet dsSpecificVendorListForBranch = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getVendorsForBranch", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Branch_ID", BranchID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsSpecificVendorListForBranch);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsSpecificVendorListForBranch;
+        }
+
+
 
     }
 }

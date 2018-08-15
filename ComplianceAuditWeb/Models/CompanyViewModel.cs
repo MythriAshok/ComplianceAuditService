@@ -36,8 +36,8 @@ namespace ComplianceAuditWeb.Models
 
         public enum Auditingfrequency
         {
-            Quaterly,
-            HalfYearly,
+            Quarterly,
+            Half_Yearly,
             Annually
         }
 

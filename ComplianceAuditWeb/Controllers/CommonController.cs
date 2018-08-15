@@ -65,6 +65,14 @@ namespace ComplianceAuditWeb.Controllers
                 branch.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
             }
             
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    branch.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                }
+
+            }
             return Json(branch, JsonRequestBehavior.AllowGet);
         }
 
@@ -99,9 +107,12 @@ namespace ComplianceAuditWeb.Controllers
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             company = new List<SelectListItem>();
-            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            if (ds.Tables.Count > 0)
             {
-                company.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    company.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                }
             }
             return Json(company, JsonRequestBehavior.AllowGet);
         }
@@ -116,9 +127,12 @@ namespace ComplianceAuditWeb.Controllers
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             vendors = new List<SelectListItem>();
-            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            if (ds.Tables.Count > 0)
             {
-                vendors.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    vendors.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                }
             }
             return Json(vendors, JsonRequestBehavior.AllowGet);
         }
