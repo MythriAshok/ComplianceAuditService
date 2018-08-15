@@ -2,36 +2,45 @@
 @{ Layout = null;}
 
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h2>Add Section</h2>
-
-
-@using (Html.BeginForm())
+@{  string submit = "Save";}
+@if (Model.Compliance.Compliance_Xref_ID != 0)
 {
-    <div class="mid_content_sec">
+    <h2>Update Section</h2>
+    submit= "Update";
+}
+else
+{
+    submit = "Save";
+    <h2>Add Section</h2>
+}
 
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(model => model.Compliance.Compliance_Parent_ID)
-        @Html.HiddenFor(model => model.Compliance.Audit_Type_ID)
-        @Html.HiddenFor(model => model.Compliance.Country_ID)
-        @Html.HiddenFor(model => model.Compliance.State_ID)
-        @Html.HiddenFor(model => model.Compliance.City_ID)
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="col-xs-12 subSelect ">
-            <div class="input-field">
-                @Html.Label("Section Name", new { @class = "floating-label" })<span style="color:red">*</span>
+    @using (Html.BeginForm())
+    {
+        <div class="mid_content_sec">
 
-                @Html.TextBoxFor(model => model.Compliance.Compliance_Title, new { @class = "inputMaterial ui - autocomplete - input" })
-                @Html.ValidationMessageFor(model => model.Compliance.Compliance_Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        @*<div class="col-xs-5 subSelect ">
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Compliance.Compliance_Parent_ID)
+            @Html.HiddenFor(model => model.Compliance.Audit_Type_ID)
+            @Html.HiddenFor(model => model.Compliance.Country_ID)
+            @Html.HiddenFor(model => model.Compliance.State_ID)
+            @Html.HiddenFor(model => model.Compliance.City_ID)
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="col-xs-12 subSelect ">
                 <div class="input-field">
-                    @Html.Label("Risk Category", new { @class = "floating-label" })
+                    @Html.Label("Section Name", new { @class = "floating-label" })<span style="color:red">*</span>
 
-                    @Html.DropDownListFor(model => model.Compliance.Risk_Category, new SelectList(Enum.GetNames(typeof(ComplianceAuditWeb.Models.ComplianceViewModel.RiskCategory))), "--Select RiskCategory", new { @class = "inputMaterial ui - autocomplete - input" })
-                    @Html.ValidationMessageFor(model => model.Compliance.Risk_Category, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(model => model.Compliance.Compliance_Title, new { @class = "inputMaterial ui - autocomplete - input" })
+                    @Html.ValidationMessageFor(model => model.Compliance.Compliance_Title, "", new { @class = "text-danger" })
                 </div>
-            </div>*@
+            </div>
+            @*<div class="col-xs-5 subSelect ">
+                    <div class="input-field">
+                        @Html.Label("Risk Category", new { @class = "floating-label" })
+
+                        @Html.DropDownListFor(model => model.Compliance.Risk_Category, new SelectList(Enum.GetNames(typeof(ComplianceAuditWeb.Models.ComplianceViewModel.RiskCategory))), "--Select RiskCategory", new { @class = "inputMaterial ui - autocomplete - input" })
+                        @Html.ValidationMessageFor(model => model.Compliance.Risk_Category, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
             <div class="clearfix"></div>
             <div class="col-xs-12 subSelect ">
                 <div class="input-field">
@@ -41,71 +50,71 @@
                     @Html.ValidationMessageFor(model => model.Compliance.Comp_Description, "", new { @class = "text-danger" })
                 </div>
             </div>
-        <div class="clearfix"></div>
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @Html.Label("Effective Start Date", new { @class = "floating-label" })
-
-                @Html.EditorFor(model => model.Compliance.Effective_Start_Date, new { @class = "inputMaterial ui - autocomplete - input" })
-                @Html.ValidationMessageFor(model => model.Compliance.Effective_Start_Date, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @Html.Label("Effective End Date", new { @class = "floating-label" })
-
-                @Html.EditorFor(model => model.Compliance.Effective_End_Date, new { @class = "inputMaterial ui - autocomplete - input" })
-                @Html.ValidationMessageFor(model => model.Compliance.Effective_End_Date, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        @*<div class="col-xs-4 subSelect ">
+            <div class="clearfix"></div>
+            <div class="col-xs-4 subSelect ">
                 <div class="input-field">
-                    @Html.Label("Country", new { @class = "floating-label" })
+                    @Html.Label("Effective Start Date", new { @class = "floating-label" })
 
-                    @Html.DropDownListFor(model => model.Compliance.Country_ID, Model.Countrylist, new { @class = "inputMaterial ui - autocomplete - input" })
-                    @Html.ValidationMessageFor(model => model.Compliance.Country_ID, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-        <div class="clearfix"></div>
-        @*<div class="col-xs-4 subSelect ">
-                <div class="input-field">
-                    @Html.Label("Is StateLaw", htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.CheckBoxFor(model => model.Is_StateLaw, new { htmlAttributes = new { @class = "form-control" } })
-                        if (Model.Is_StateLaw)
-                        {
-
-                    @Html.Label("State", new { @class = "floating-label" })
-
-                    @Html.DropDownListFor(model => model.Compliance.State_ID, Model.Statelist, new { @class = "inputMaterial ui - autocomplete - input" })
-                    @Html.ValidationMessageFor(model => model.Compliance.State_ID, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Compliance.Effective_Start_Date, new { @class = "inputMaterial ui - autocomplete - input" })
+                    @Html.ValidationMessageFor(model => model.Compliance.Effective_Start_Date, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="col-xs-4 subSelect ">
                 <div class="input-field">
-                    @Html.Label("Is Regional Law", htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.CheckBoxFor(model => model.Is_RegionalLaw, new { htmlAttributes = new { @class = "form-control" } })
-                        if (Model.Is_RegionalLaw)
-                        {
-                    @Html.Label("City", new { @class = "floating-label" })
+                    @Html.Label("Effective End Date", new { @class = "floating-label" })
 
-                    @Html.DropDownListFor(model => model.Compliance.City_ID, Model.Citylist, new { @class = "inputMaterial ui - autocomplete - input" })
-                    @Html.ValidationMessageFor(model => model.Compliance.City_ID, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.Compliance.Effective_End_Date, new { @class = "inputMaterial ui - autocomplete - input" })
+                    @Html.ValidationMessageFor(model => model.Compliance.Effective_End_Date, "", new { @class = "text-danger" })
                 </div>
             </div>
+            @*<div class="col-xs-4 subSelect ">
+                    <div class="input-field">
+                        @Html.Label("Country", new { @class = "floating-label" })
 
-            }
-                }*@
-        <div class="clearfix"></div>
-        <ul class="list-inline continueBtn">
-            <li>
-                <div class="modal-footer">
-                    <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Save<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
-                    <input type="reset" value="Reset" class="btn primary-button" />
-                    <button class="btn primary-button" data-dismiss="modal" id="btnCancel">Cancel</button>
+                        @Html.DropDownListFor(model => model.Compliance.Country_ID, Model.Countrylist, new { @class = "inputMaterial ui - autocomplete - input" })
+                        @Html.ValidationMessageFor(model => model.Compliance.Country_ID, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+            <div class="clearfix"></div>
+            @*<div class="col-xs-4 subSelect ">
+                    <div class="input-field">
+                        @Html.Label("Is StateLaw", htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.CheckBoxFor(model => model.Is_StateLaw, new { htmlAttributes = new { @class = "form-control" } })
+                            if (Model.Is_StateLaw)
+                            {
+
+                        @Html.Label("State", new { @class = "floating-label" })
+
+                        @Html.DropDownListFor(model => model.Compliance.State_ID, Model.Statelist, new { @class = "inputMaterial ui - autocomplete - input" })
+                        @Html.ValidationMessageFor(model => model.Compliance.State_ID, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </li>
-        </ul>
-    </div>
-}
+                <div class="col-xs-4 subSelect ">
+                    <div class="input-field">
+                        @Html.Label("Is Regional Law", htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.CheckBoxFor(model => model.Is_RegionalLaw, new { htmlAttributes = new { @class = "form-control" } })
+                            if (Model.Is_RegionalLaw)
+                            {
+                        @Html.Label("City", new { @class = "floating-label" })
+
+                        @Html.DropDownListFor(model => model.Compliance.City_ID, Model.Citylist, new { @class = "inputMaterial ui - autocomplete - input" })
+                        @Html.ValidationMessageFor(model => model.Compliance.City_ID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                }
+                    }*@
+            <div class="clearfix"></div>
+            <ul class="list-inline continueBtn">
+                <li>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">@submit<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
+                        <input type="reset" value="Reset" class="btn primary-button" />
+                        <button class="btn primary-button" data-dismiss="modal" id="btnCancel">Cancel</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    }
 
 

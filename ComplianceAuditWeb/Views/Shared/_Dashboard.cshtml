@@ -16,8 +16,9 @@
                         @if (item.ParentMenuId == 0)
                         {
                             //path = string.Join(" ", item.PathUrl, "?pid=", item.Id);
+                            string image="1"+item.icon;
                             <a href=@item.PathUrl?pid=@item.Id>
-                                <span class="qIcon"><img src="/Content/assets/images/@item.icon" alt="" />@*<i class="fa fa-users fa-5x"></i>*@</span>
+                                <span class="qIcon"><img src="/Content/assets/images/@image" alt="" />@*<i class="fa fa-users fa-5x"></i>*@</span>
                                 <h3 class="PB25">@item.MenuName</h3>
                             </a>
                         }
