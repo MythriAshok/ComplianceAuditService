@@ -275,10 +275,12 @@ namespace ComplianceAuditWeb.Controllers
                     {
                         case "Save as Draft":
                             audit.Version = 0;
+                            ViewBag.Message = "Saved as draft";
 
                             break;
                         case "Submit":
                             audit.Version = 1;
+                            ViewBag.Message = "Subitted successfully";
                             break;
                     }
 
