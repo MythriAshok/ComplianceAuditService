@@ -84,41 +84,38 @@
         </li>
     </ul>
 
+    if (Model.AboutGroupCompany.Count > 0)
+    {
+
+        <div class="new_section_box">
+            <div class="tab-content">
+                <div id="home" class="tab-pane fade in active">
+                    <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Companies:</h2>
 
 
-    <div class="new_section_box">
-        <div class="tab-content">
-            <div id="home" class="tab-pane fade in active">
-                <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Companies:</h2>
-                @if (TempData["Success"] != null)
-                {
-                    <center>
-                        @*<p class="alert alert-success"  style="width:1000px">  @TempData["Company"]</p>*@
-                        <p id=" successMessage"> @TempData["Company"] @TempData["Success"] </p>
-                    </center>
-                }
-                @if (Model.AboutGroupCompany.Count > 0)
-                {
-                    foreach (var item in Model.AboutGroupCompany)
+                    @foreach (var item in Model.AboutGroupCompany)
                     {
-                        <div class="col-sm-3 QueList">
-                            <div class="queContainer">
-                                <a href="@Url.Action("AboutCompany", "ManageOrganization", new { id = item.OrganizationID })">
-                                    <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
-                                    <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyNameList)</h3>
-                                </a>
-                                <div class="clearfix"></div>
-                            </div>
+                    <div class="col-sm-3 QueList">
+                        <div class="queContainer">
+                            <a href="@Url.Action("AboutCompany", "ManageOrganization", new { id = item.OrganizationID })">
+                                <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
+                                <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyNameList)</h3>
+                            </a>
+                            <div class="clearfix"></div>
                         </div>
+                    </div>
                     }
-                }
-                else
-                {
-                    <center>
-                        <p id=" successMessage">@ViewBag.Message</p>
-                    </center>
-                }
+                    
+
+                </div>
             </div>
         </div>
-    </div>
+
+    }
+    else
+    {
+        <center>
+            <p id=" successMessage">@ViewBag.Message</p>
+        </center>
+    }
 }

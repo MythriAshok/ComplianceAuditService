@@ -888,12 +888,7 @@ namespace ComplianceAuditWeb.Controllers
                 //    , branchVM.VendorEndDate, branchVM.IsVendorActive);
                 if (id != 0)
                 {
-                    //Session["CompanyName"] = branchVM.organization.Company_Name;
-                    //Session["CompanyDescription"] = branchVM.organization.Description;
-                    //Session["CompanyID"] = id;
-                   // Session["ParentCompanyID"] = branchVM.organization.Parent_Company_Id;
-
-                    // TempData["id"] = id;
+                  
                     TempData["Success"] = "Branch created successfully";
                     return RedirectToAction("AboutBranch", new { id = id });
                 }
@@ -1294,6 +1289,8 @@ namespace ComplianceAuditWeb.Controllers
             {
                 vendorVM.CompaniesList=(List<SelectListItem>) TempData["CompanyList"];
                 return View("_Vendor", vendorVM);
+                ModelState.AddModelError("", ConfigurationManager.AppSettings["Requried"]);
+                return RedirectToAction("AddVendor");
             }
         }
 
@@ -2436,8 +2433,9 @@ namespace ComplianceAuditWeb.Controllers
                     {
                         TempData["VendorName"] = branchViewModel.VendorName;
                     }
-                    return RedirectToAction("BranchVendorsList" , new { id = branchViewModel.CompanyID});
-
+                    // return RedirectToAction("BranchVendorsList" , new { id = branchViewModel.CompanyID});
+                    ViewBag.Message = "Assigned successfully";
+                    return View("View");
                 }
                 //Session["GroupCompanyID"] = branchViewModel.GroupCompanyID;
                 //Session["CompanyID"] = branchViewModel.CompanyID;
