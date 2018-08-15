@@ -41,9 +41,9 @@ namespace ComplianceService
                 ////    branch.Org_Hier_ID = OrganizationID;
                 ////    BranchLocationID = organizationhelper.insertupdateBranchLocation(branch, 'I');
                 ////}
-             
-              
-               // if (BranchLocationID > 0 && OrganizationID > 0)
+
+
+                // if (BranchLocationID > 0 && OrganizationID > 0)
                 {
                     insertResult = true;
                 }
@@ -72,12 +72,12 @@ namespace ComplianceService
                 OrganizationHelper organizationhelper = new OrganizationHelper();
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
 
-              //  BranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
+                //  BranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
                 // insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
-               // if (BranchID > 0 && OrganizationID > 0) //insertCompanyDetailsID > 0)
+                // if (BranchID > 0 && OrganizationID > 0) //insertCompanyDetailsID > 0)
                 //{
-                    updateResult = true;
-               // }
+                updateResult = true;
+                // }
             }
             catch
             {
@@ -144,298 +144,298 @@ namespace ComplianceService
         public string getGroupCompany(int OrgID)
         {
             return bindGroupCompany(OrgID);
-    }
+        }
 
-    private string bindGroupCompany(int orgID)
-    {
-        // Organization org = new Organization();
-        OrganizationHelper orgHelper = new OrganizationHelper();
-        DataSet dsOrganization = orgHelper.getOrganizationHier(orgID);
-        UtilityHelper utilityHelper = new UtilityHelper();
-        dsOrganization = utilityHelper.ConvertNullsToEmptyString(dsOrganization);
-
-
-        string xmlOrganization = dsOrganization.GetXml();
-        return xmlOrganization;
-    }
-
-    public string getGroupOrganization(int OrgID)
-    {
-        return bindGroupOrg(OrgID);
-    }
-
-    private string bindGroupOrg(int orgID)
-    {
-        // Organization org = new Organization();
-        OrganizationHelper orgHelper = new OrganizationHelper();
-        DataSet dsOrganization = orgHelper.getOrganizationGroup(orgID);
-        UtilityHelper utilityHelper = new UtilityHelper();
-        dsOrganization = utilityHelper.ConvertNullsToEmptyString(dsOrganization);
-
-
-        string xmlOrganization = dsOrganization.GetXml();
-        return xmlOrganization;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-    //public string getGroupCompanyForBranch(int OrgID)
-    //{
-    //    return bindGroupCompanyForBranch(OrgID);
-    //}
-    ///// <summary>
-    ///// A private method in the service layer that interacts with Organization helper class to bind the Organization data from the database
-    ///// </summary>
-    ///// <param name="orgID">binds the data of Organization w.r.t specific OrganizationID</param>
-    ///// <returns>xmlstring</returns>
-    //private string bindGroupCompanyForBranch(int orgID)
-    //{
-    //    Organization org = new Organization();
-    //    OrganizationHelper orgHelper = new OrganizationHelper();
-    //    DataSet dsOrganization = orgHelper.getBranch(orgID);
-    //    string xmlOrganization = dsOrganization.GetXml();
-    //    return xmlOrganization; 
-    //}
-    /// <summary>
-    /// A method in the service layer that interacts with organization helper class to insert the Company details into the database
-    /// </summary>
-    /// <param name="org">data object of Organization</param>
-    /// <param name="company">data object of CompanyDetails</param>
-    /// <param name="branch">data object of BranchLocation</param>
-    /// <returns>boolean value</returns>
-    public int insertCompany(Organization org, CompanyDetails company, BranchLocation branch)
-    {
-        int OrganizationID = 0;
-        int BranchLocationID = 0;
-        int CompanyDetailsID = 0;
-        bool insertResult = false;
-        try
+        private string bindGroupCompany(int orgID)
         {
-            OrganizationHelper organizationhelper = new OrganizationHelper();
+            // Organization org = new Organization();
+            OrganizationHelper orgHelper = new OrganizationHelper();
+            DataSet dsOrganization = orgHelper.getOrganizationHier(orgID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsOrganization = utilityHelper.ConvertNullsToEmptyString(dsOrganization);
+
+
+            string xmlOrganization = dsOrganization.GetXml();
+            return xmlOrganization;
+        }
+
+        public string getGroupOrganization(int OrgID)
+        {
+            return bindGroupOrg(OrgID);
+        }
+
+        private string bindGroupOrg(int orgID)
+        {
+            // Organization org = new Organization();
+            OrganizationHelper orgHelper = new OrganizationHelper();
+            DataSet dsOrganization = orgHelper.getOrganizationGroup(orgID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsOrganization = utilityHelper.ConvertNullsToEmptyString(dsOrganization);
+
+
+            string xmlOrganization = dsOrganization.GetXml();
+            return xmlOrganization;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        //public string getGroupCompanyForBranch(int OrgID)
+        //{
+        //    return bindGroupCompanyForBranch(OrgID);
+        //}
+        ///// <summary>
+        ///// A private method in the service layer that interacts with Organization helper class to bind the Organization data from the database
+        ///// </summary>
+        ///// <param name="orgID">binds the data of Organization w.r.t specific OrganizationID</param>
+        ///// <returns>xmlstring</returns>
+        //private string bindGroupCompanyForBranch(int orgID)
+        //{
+        //    Organization org = new Organization();
+        //    OrganizationHelper orgHelper = new OrganizationHelper();
+        //    DataSet dsOrganization = orgHelper.getBranch(orgID);
+        //    string xmlOrganization = dsOrganization.GetXml();
+        //    return xmlOrganization; 
+        //}
+        /// <summary>
+        /// A method in the service layer that interacts with organization helper class to insert the Company details into the database
+        /// </summary>
+        /// <param name="org">data object of Organization</param>
+        /// <param name="company">data object of CompanyDetails</param>
+        /// <param name="branch">data object of BranchLocation</param>
+        /// <returns>boolean value</returns>
+        public int insertCompany(Organization org, CompanyDetails company, BranchLocation branch)
+        {
+            int OrganizationID = 0;
+            int BranchLocationID = 0;
+            int CompanyDetailsID = 0;
+            bool insertResult = false;
+            try
+            {
+                OrganizationHelper organizationhelper = new OrganizationHelper();
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
                 if (OrganizationID > 0)
                 {
                     branch.Org_Hier_ID = OrganizationID;
                     BranchLocationID = organizationhelper.insertupdateBranchLocation(branch, 'I');
-           
-                
-                 
-                if (OrganizationID > 0)
-                {
-                    company.Org_Hier_ID = OrganizationID;
-                    CompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'I');
+
+
+
+                    if (OrganizationID > 0)
+                    {
+                        company.Org_Hier_ID = OrganizationID;
+                        CompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'I');
+                    }
                 }
-            }
-                if (BranchLocationID > 0 && OrganizationID > 0 && CompanyDetailsID>0)
+                if (BranchLocationID > 0 && OrganizationID > 0 && CompanyDetailsID > 0)
 
                 {
                     insertResult = true;
+                }
             }
-        }
-        catch
-        {
-            throw;
-        }
-        return OrganizationID;
-    }
-    /// <summary>
-    /// A method to in the sevice layer that interacts with Organization helper class to update the Company details in the database
-    /// </summary>
-    /// <param name="org">data object of Organization</param>
-    /// <param name="company">data object of CompanyDetails</param>
-    /// <param name="branch">data object of BranchLocation</param>
-    /// <returns>boolean value</returns>
-    public bool updateCompany(Organization org, CompanyDetails company, BranchLocation branch)
-    {
-        int insertOrganizationID = 0;
-        int inserBranchID = 0;
-        int insertCompanyDetailsID = 0;
-        bool updateResult = false;
-        try
-        {
-            OrganizationHelper organizationhelper = new OrganizationHelper();
-            insertOrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
-
-            inserBranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
-            insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
-            //if (inserBranchID > 0 || insertOrganizationID > 0 || insertCompanyDetailsID > 0)
+            catch
             {
-                updateResult = true;
+                throw;
             }
+            return OrganizationID;
         }
-        catch
+        /// <summary>
+        /// A method to in the sevice layer that interacts with Organization helper class to update the Company details in the database
+        /// </summary>
+        /// <param name="org">data object of Organization</param>
+        /// <param name="company">data object of CompanyDetails</param>
+        /// <param name="branch">data object of BranchLocation</param>
+        /// <returns>boolean value</returns>
+        public bool updateCompany(Organization org, CompanyDetails company, BranchLocation branch)
         {
-            throw;
-        }
-        return updateResult;
-    }
-    /// <summary>
-    /// A public method in the service layer that interacts with the Organization helper class to fetch the data of groupcompany from the database
-    /// </summary>
-    /// <param name="OrgID">fetches the data of Organization w.r.t specofic OrganizationID</param>
-    /// <returns>xml string</returns>
-    public string getCompany(int OrgID)
-    {
-        return bindCompany(OrgID);
-    }
-    /// <summary>
-    /// A private method in the service layer that interacts with Organization helper class to bind the Organization data from the database
-    /// </summary>
-    /// <param name="orgID">binds the data of Organization w.r.t specific OrganizationID</param>
-    /// <returns>xmlstring</returns>
-    private string bindCompany(int orgID)
-    {
-        Organization org = new Organization();
-        OrganizationHelper orgHelper = new OrganizationHelper();
-        DataSet dsCompany = orgHelper.getOrganizationHier(orgID);
+            int insertOrganizationID = 0;
+            int inserBranchID = 0;
+            int insertCompanyDetailsID = 0;
+            bool updateResult = false;
+            try
+            {
+                OrganizationHelper organizationhelper = new OrganizationHelper();
+                insertOrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
 
-        UtilityHelper utilityHelper = new UtilityHelper();
-        dsCompany = utilityHelper.ConvertNullsToEmptyString(dsCompany);
-        string xmlCompany = dsCompany.GetXml();
-        return xmlCompany;
-    }
-
-    public bool DeactivateCompany(int OrgID)
-    {
-        bool status = false;
-        OrganizationHelper organizationHelper = new OrganizationHelper();
-        string result = organizationHelper.DeactivateGroupCompany(OrgID).ToString();
-        if (result != null)
-        {
-            status = true;
+                inserBranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
+                insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
+                //if (inserBranchID > 0 || insertOrganizationID > 0 || insertCompanyDetailsID > 0)
+                {
+                    updateResult = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            return updateResult;
         }
-        else
+        /// <summary>
+        /// A public method in the service layer that interacts with the Organization helper class to fetch the data of groupcompany from the database
+        /// </summary>
+        /// <param name="OrgID">fetches the data of Organization w.r.t specofic OrganizationID</param>
+        /// <returns>xml string</returns>
+        public string getCompany(int OrgID)
         {
-            status = false;
+            return bindCompany(OrgID);
         }
-        return status;
-    }
-
-    public bool ActivateCompany(int OrgID)
-    {
-        bool status = false;
-        OrganizationHelper organizationHelper = new OrganizationHelper();
-        string result = organizationHelper.ActivateGroupCompany(OrgID).ToString();
-        if (result != null)
+        /// <summary>
+        /// A private method in the service layer that interacts with Organization helper class to bind the Organization data from the database
+        /// </summary>
+        /// <param name="orgID">binds the data of Organization w.r.t specific OrganizationID</param>
+        /// <returns>xmlstring</returns>
+        private string bindCompany(int orgID)
         {
-            status = true;
+            Organization org = new Organization();
+            OrganizationHelper orgHelper = new OrganizationHelper();
+            DataSet dsCompany = orgHelper.getOrganizationHier(orgID);
+
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCompany = utilityHelper.ConvertNullsToEmptyString(dsCompany);
+            string xmlCompany = dsCompany.GetXml();
+            return xmlCompany;
         }
-        else
+
+        public bool DeactivateCompany(int OrgID)
         {
-            status = false;
+            bool status = false;
+            OrganizationHelper organizationHelper = new OrganizationHelper();
+            string result = organizationHelper.DeactivateGroupCompany(OrgID).ToString();
+            if (result != null)
+            {
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
+            return status;
         }
-        return status;
-    }
 
-    public bool DeleteCompany(int OrgID)
-    {
-        bool status = false;
-        OrganizationHelper organizationHelper = new OrganizationHelper();
-        string result = organizationHelper.DeleteGroupCompany(OrgID).ToString();
-        if (result != null)
+        public bool ActivateCompany(int OrgID)
         {
-            status = true;
+            bool status = false;
+            OrganizationHelper organizationHelper = new OrganizationHelper();
+            string result = organizationHelper.ActivateGroupCompany(OrgID).ToString();
+            if (result != null)
+            {
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
+            return status;
         }
-        else
+
+        public bool DeleteCompany(int OrgID)
         {
-            status = false;
+            bool status = false;
+            OrganizationHelper organizationHelper = new OrganizationHelper();
+            string result = organizationHelper.DeleteGroupCompany(OrgID).ToString();
+            if (result != null)
+            {
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
+            return status;
         }
-        return status;
-    }
 
 
 
-    /// <summary>
-    /// A method in the service layer that interacts with organization helper class to insert the Branch details into the database
-    /// </summary>
-    /// <param name="org">data object of Organization</param>
-    /// <param name="branch">data object of BranchLocation</param>
-    /// <returns>boolean value</returns>
-    public int insertBranch(Organization org, BranchLocation branch)
-    {
-        int OrganizationID = 0;
-        int BranchLocationID = 0;
-        bool insertResult = false;
-        try
+        /// <summary>
+        /// A method in the service layer that interacts with organization helper class to insert the Branch details into the database
+        /// </summary>
+        /// <param name="org">data object of Organization</param>
+        /// <param name="branch">data object of BranchLocation</param>
+        /// <returns>boolean value</returns>
+        public int insertBranch(Organization org, BranchLocation branch)
         {
-            OrganizationHelper organizationhelper = new OrganizationHelper();
+            int OrganizationID = 0;
+            int BranchLocationID = 0;
+            bool insertResult = false;
+            try
+            {
+                OrganizationHelper organizationhelper = new OrganizationHelper();
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
 
-            if (OrganizationID > 0)
-            {
+                if (OrganizationID > 0)
+                {
                     branch.Org_Hier_ID = OrganizationID;
                     BranchLocationID = organizationhelper.insertupdateBranchLocation(branch, 'I');
 
+                }
+                if (BranchLocationID != 0 && OrganizationID != 0)
+                {
+                    insertResult = true;
+                }
             }
-            if (BranchLocationID != 0 && OrganizationID != 0)
+            catch
             {
-                insertResult = true;
+                throw;
             }
+            return OrganizationID;
         }
-        catch
+        /// <summary>
+        /// A method to in the sevice layer that interacts with Organization helper class to update the Branch details in the database
+        /// </summary>
+        /// <param name="org">data object of Organization</param>
+        /// <param name="branch">data object of BranchLocation</param>
+        /// <returns>boolean value</returns>
+        public bool updateBranch(Organization org, BranchLocation branch)
         {
-            throw;
-        }
-        return OrganizationID;
-    }
-    /// <summary>
-    /// A method to in the sevice layer that interacts with Organization helper class to update the Branch details in the database
-    /// </summary>
-    /// <param name="org">data object of Organization</param>
-    /// <param name="branch">data object of BranchLocation</param>
-    /// <returns>boolean value</returns>
-    public bool updateBranch(Organization org, BranchLocation branch)
-    {
-        int OrganizationID = 0;
-        int BranchID = 0;
-        bool updateResult = false;
-        try
-        {
-            OrganizationHelper organizationhelper = new OrganizationHelper();
+            int OrganizationID = 0;
+            int BranchID = 0;
+            bool updateResult = false;
+            try
+            {
+                OrganizationHelper organizationhelper = new OrganizationHelper();
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
 
                 BranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
-           // if (BranchID != 0 && OrganizationID != 0)
-            {
-                updateResult = true;
+                // if (BranchID != 0 && OrganizationID != 0)
+                {
+                    updateResult = true;
+                }
             }
+            catch
+            {
+                throw;
+            }
+            return updateResult;
         }
-        catch
+        /// <summary>
+        /// A public method in the service layer that interacts with the Organization helper class to fetch the data of groupcompany from the database
+        /// </summary>
+        /// <param name="OrgID">fetches the data of Organization w.r.t specofic OrganizationID</param>
+        /// <returns>xml string</returns>
+        public string getBranch(int OrgID)
         {
-            throw;
+            return bindBranch(OrgID);
         }
-        return updateResult;
-    }
-    /// <summary>
-    /// A public method in the service layer that interacts with the Organization helper class to fetch the data of groupcompany from the database
-    /// </summary>
-    /// <param name="OrgID">fetches the data of Organization w.r.t specofic OrganizationID</param>
-    /// <returns>xml string</returns>
-    public string getBranch(int OrgID)
-    {
-        return bindBranch(OrgID);
-    }
-  
-    private string bindBranch(int orgID)
-    {
-        Organization org = new Organization();
-        OrganizationHelper orgHelper = new OrganizationHelper();
-        DataSet dsBranch = orgHelper.getBranch(orgID);
 
-        UtilityHelper utilityHelper = new UtilityHelper();
-        dsBranch = utilityHelper.ConvertNullsToEmptyString(dsBranch);
-        string xmlBranch = dsBranch.GetXml();
-        return xmlBranch;
-    }
+        private string bindBranch(int orgID)
+        {
+            Organization org = new Organization();
+            OrganizationHelper orgHelper = new OrganizationHelper();
+            DataSet dsBranch = orgHelper.getBranch(orgID);
+
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsBranch = utilityHelper.ConvertNullsToEmptyString(dsBranch);
+            string xmlBranch = dsBranch.GetXml();
+            return xmlBranch;
+        }
         public string getVendor(int OrgID)
         {
             return bindVendor(OrgID);
@@ -454,52 +454,52 @@ namespace ComplianceService
         }
 
         public bool DeactivateBranch(int OrgID)
-    {
-        bool status = false;
-        OrganizationHelper organizationHelper = new OrganizationHelper();
-        string result = organizationHelper.DeactivateGroupCompany(OrgID).ToString();
-        if (result != null)
         {
-            status = true;
+            bool status = false;
+            OrganizationHelper organizationHelper = new OrganizationHelper();
+            string result = organizationHelper.DeactivateGroupCompany(OrgID).ToString();
+            if (result != null)
+            {
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
+            return status;
         }
-        else
-        {
-            status = false;
-        }
-        return status;
-    }
 
-    public bool ActivateBranch(int OrgID)
-    {
-        bool status = false;
-        OrganizationHelper organizationHelper = new OrganizationHelper();
-        string result = organizationHelper.ActivateGroupCompany(OrgID).ToString();
-        if (result != null)
+        public bool ActivateBranch(int OrgID)
         {
-            status = true;
+            bool status = false;
+            OrganizationHelper organizationHelper = new OrganizationHelper();
+            string result = organizationHelper.ActivateGroupCompany(OrgID).ToString();
+            if (result != null)
+            {
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
+            return status;
         }
-        else
-        {
-            status = false;
-        }
-        return status;
-    }
 
-    public bool DeleteBranch(int OrgID)
-    {
-        bool status = false;
-        OrganizationHelper organizationHelper = new OrganizationHelper();
-        string result = organizationHelper.DeleteGroupCompany(OrgID).ToString();
-        if (result != null)
+        public bool DeleteBranch(int OrgID)
         {
-            status = true;
+            bool status = false;
+            OrganizationHelper organizationHelper = new OrganizationHelper();
+            string result = organizationHelper.DeleteGroupCompany(OrgID).ToString();
+            if (result != null)
+            {
+                status = true;
+            }
+            else
+            {
+                status = false;
+            }
+            return status;
         }
-        else
-        {
-            status = false;
-        }
-        return status;
-    }
 
 
         public int insertVendor(Organization org, CompanyDetails company)
@@ -511,16 +511,16 @@ namespace ComplianceService
             {
                 OrganizationHelper organizationhelper = new OrganizationHelper();
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
-                
 
 
-                    if (OrganizationID > 0)
-                    {
-                        company.Org_Hier_ID = OrganizationID;
-                        CompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'I');
-                    }
-                
-                if ( OrganizationID > 0 && CompanyDetailsID > 0)
+
+                if (OrganizationID > 0)
+                {
+                    company.Org_Hier_ID = OrganizationID;
+                    CompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'I');
+                }
+
+                if (OrganizationID > 0 && CompanyDetailsID > 0)
 
                 {
                     insertResult = true;
@@ -550,7 +550,7 @@ namespace ComplianceService
                 insertOrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
 
                 insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
-               // if ( insertOrganizationID > 0 || insertCompanyDetailsID > 0)
+                // if ( insertOrganizationID > 0 || insertCompanyDetailsID > 0)
                 {
                     updateResult = true;
                 }
@@ -568,89 +568,89 @@ namespace ComplianceService
         /// </summary>
         /// <returns>BindCountry method which has xml string value</returns>
         public string GetCountryList()
-    {
-        return BindCountry();
-    }
-    /// <summary>
-    /// A private method in the service layer that interacts with Country helper class to bind the Countries in the database
-    /// </summary>
-    /// <returns>xml string</returns>
-    private string BindCountry()
-    {
-        CountryHelper helper = new CountryHelper();
-        DataSet dsCountries = helper.getCountry();
+        {
+            return BindCountry();
+        }
+        /// <summary>
+        /// A private method in the service layer that interacts with Country helper class to bind the Countries in the database
+        /// </summary>
+        /// <returns>xml string</returns>
+        private string BindCountry()
+        {
+            CountryHelper helper = new CountryHelper();
+            DataSet dsCountries = helper.getCountry();
             UtilityHelper utilityHelper = new UtilityHelper();
             dsCountries = utilityHelper.ConvertNullsToEmptyString(dsCountries);
             string xmlCountries = dsCountries.GetXml();
-        return xmlCountries;
-    }
-    /// <summary>
-    /// A method in the service layer that interacts with the private method, BindState.
-    /// </summary>
-    /// <param name="countryID">Gets the list of states w.r.t specific CountryID</param>
-    /// <returns>xml string</returns>
-    public string GetStateList(int countryID)
-    {
-        return BindState(countryID);
-    }
-    /// <summary>
-    /// A private method in the service layer that interacts with Country helper class to bind the States from the database
-    /// </summary>
-    /// <param name="countryID">Gets the list of states w.r.t specific CountryID</param>
-    /// <returns>xml string</returns>
-    private string BindState(int countryID)
-    {
-        CountryHelper countryhelper = new CountryHelper();
-        DataSet dsStates = countryhelper.getState(countryID);
+            return xmlCountries;
+        }
+        /// <summary>
+        /// A method in the service layer that interacts with the private method, BindState.
+        /// </summary>
+        /// <param name="countryID">Gets the list of states w.r.t specific CountryID</param>
+        /// <returns>xml string</returns>
+        public string GetStateList(int countryID)
+        {
+            return BindState(countryID);
+        }
+        /// <summary>
+        /// A private method in the service layer that interacts with Country helper class to bind the States from the database
+        /// </summary>
+        /// <param name="countryID">Gets the list of states w.r.t specific CountryID</param>
+        /// <returns>xml string</returns>
+        private string BindState(int countryID)
+        {
+            CountryHelper countryhelper = new CountryHelper();
+            DataSet dsStates = countryhelper.getState(countryID);
             UtilityHelper utilityHelper = new UtilityHelper();
             dsStates = utilityHelper.ConvertNullsToEmptyString(dsStates);
             string xmlStates = dsStates.GetXml();
-        return xmlStates;
-    }
-    /// <summary>
-    /// A method in the service layer that interacts with the private method, BindCity.
-    /// </summary>
-    /// <param name="stateID">Gets the list of states w.r.t specific StateID</param>
-    /// <returns>xml string</returns>
-    public string GetCityList(int stateID)
-    {
-        return BindCity(stateID);
-    }
-    /// <summary>
-    /// A private method in the service layer that interacts with Country helper class to bind the Cities from the database
-    /// </summary>
-    /// <param name="stateID">Gets the list of cities w.r.t specific StateID</param>
-    /// <returns>xml string</returns>
-    private string BindCity(int stateID)
-    {
-        CountryHelper countryhelper = new CountryHelper();
-        DataSet dsCities = countryhelper.getCity(stateID);
+            return xmlStates;
+        }
+        /// <summary>
+        /// A method in the service layer that interacts with the private method, BindCity.
+        /// </summary>
+        /// <param name="stateID">Gets the list of states w.r.t specific StateID</param>
+        /// <returns>xml string</returns>
+        public string GetCityList(int stateID)
+        {
+            return BindCity(stateID);
+        }
+        /// <summary>
+        /// A private method in the service layer that interacts with Country helper class to bind the Cities from the database
+        /// </summary>
+        /// <param name="stateID">Gets the list of cities w.r.t specific StateID</param>
+        /// <returns>xml string</returns>
+        private string BindCity(int stateID)
+        {
+            CountryHelper countryhelper = new CountryHelper();
+            DataSet dsCities = countryhelper.getCity(stateID);
             UtilityHelper utilityHelper = new UtilityHelper();
             dsCities = utilityHelper.ConvertNullsToEmptyString(dsCities);
             string xmlCities = dsCities.GetXml();
-        return xmlCities;
-    }
-    /// <summary>
-    /// A method in the service layer that interacts with private method BindGroupCompanies to fetch the list of group companies present in the database
-    /// </summary>
-    /// <returns>xml string</returns>
-    public string GetGroupCompaniesList()
-    {
-        return BindGroupCompaniesList();
-    }
-    /// <summary>
-    /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
-    /// </summary>
-    /// <returns></returns>
-    private string BindGroupCompaniesList()
-    {
-        OrganizationHelper OrganizationHelper = new OrganizationHelper();
-        DataSet dsGroupCompanies = OrganizationHelper.getGroupCompanyList();
+            return xmlCities;
+        }
+        /// <summary>
+        /// A method in the service layer that interacts with private method BindGroupCompanies to fetch the list of group companies present in the database
+        /// </summary>
+        /// <returns>xml string</returns>
+        public string GetGroupCompaniesList()
+        {
+            return BindGroupCompaniesList();
+        }
+        /// <summary>
+        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
+        /// </summary>
+        /// <returns></returns>
+        private string BindGroupCompaniesList()
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsGroupCompanies = OrganizationHelper.getGroupCompanyList();
             UtilityHelper utilityHelper = new UtilityHelper();
             dsGroupCompanies = utilityHelper.ConvertNullsToEmptyString(dsGroupCompanies);
             string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
-        return xmlGroupCompaniesList;
-    }
+            return xmlGroupCompaniesList;
+        }
 
         public string GetCompaniesList()
         {
@@ -667,18 +667,18 @@ namespace ComplianceService
         }
 
         public string getCompanyListsforBranch(int OrgID)
-    {
-        return bindCompanyListsforBranch(OrgID);
-    }
-    private string bindCompanyListsforBranch(int OrgID)
-    {
-        OrganizationHelper OrganizationHelper = new OrganizationHelper();
+        {
+            return bindCompanyListsforBranch(OrgID);
+        }
+        private string bindCompanyListsforBranch(int OrgID)
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
             DataSet dsGroupCompanies = OrganizationHelper.getCompanyListsforBranch(OrgID);
             UtilityHelper utilityHelper = new UtilityHelper();
             dsGroupCompanies = utilityHelper.ConvertNullsToEmptyString(dsGroupCompanies);
             string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
-        return xmlGroupCompaniesList;
-    }
+            return xmlGroupCompaniesList;
+        }
 
 
 
@@ -705,28 +705,28 @@ namespace ComplianceService
 
 
         public string GeSpecifictCompaniesList(int OrgID)
-    {
-        return BindSpecificCompaniesList(OrgID);
-    }
-    /// <summary>
-    /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
-    /// </summary>
-    /// <returns></returns>
-    private string BindSpecificCompaniesList(int OrgID)
-    {
-        OrganizationHelper OrganizationHelper = new OrganizationHelper();
-        DataSet dsCompanies = OrganizationHelper.getSpecificCompanyList(OrgID);
+        {
+            return BindSpecificCompaniesList(OrgID);
+        }
+        /// <summary>
+        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
+        /// </summary>
+        /// <returns></returns>
+        private string BindSpecificCompaniesList(int OrgID)
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsCompanies = OrganizationHelper.getSpecificCompanyList(OrgID);
             UtilityHelper utilityHelper = new UtilityHelper();
             dsCompanies = utilityHelper.ConvertNullsToEmptyString(dsCompanies);
             string xmlCompaniesList = dsCompanies.GetXml();
-        return xmlCompaniesList;
-    }
+            return xmlCompaniesList;
+        }
 
         public string GeSpecifictBranchList(int CompanyID)
         {
             return BindSpecificBranchList(CompanyID);
         }
-      
+
         private string BindSpecificBranchList(int CompanyID)
         {
             OrganizationHelper OrganizationHelper = new OrganizationHelper();
@@ -831,7 +831,7 @@ namespace ComplianceService
             string xmlCompaniesList = dsCompanies.GetXml();
             return xmlCompaniesList;
         }
-    }
+
 
         public string getorglocation(int OrgID)
         {
@@ -848,9 +848,7 @@ namespace ComplianceService
         }
     }
 
-
 }
-
 
 
 

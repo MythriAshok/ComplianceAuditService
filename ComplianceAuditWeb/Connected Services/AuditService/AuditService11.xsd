@@ -20,6 +20,7 @@
       <xs:element minOccurs="0" name="Is_Active" type="xs:boolean" />
       <xs:element minOccurs="0" name="Last_Update_dDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Org_Hier_Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Part_Compliance_Percent" type="xs:decimal" />
       <xs:element minOccurs="0" name="Penalty_nc" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Reviewer_Comments" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Reviewer_Id" type="xs:int" />

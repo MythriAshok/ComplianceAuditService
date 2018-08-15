@@ -477,20 +477,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="getorglocation">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="OrgID" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="getorglocationResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="getorglocationResult" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="getDefaultCompanyDetails">
     <xs:complexType>
       <xs:sequence>
@@ -502,6 +488,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="getDefaultCompanyDetailsResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getorglocation">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OrgID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getorglocationResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getorglocationResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

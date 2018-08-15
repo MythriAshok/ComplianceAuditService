@@ -98,7 +98,7 @@
                 <label for="file">Upload Logo:</label>
                 <input type="file" name="file" id="file" onchange="ShowPreview(this)" />
                 @Html.ValidationMessageFor(m => m.organization.logo, "", new { @class = "text-danger" })
-                <img src="/UploadedFiles/@Model.organization.logo" alt="" style="height:80px;width:80px" />
+                <img id="impPrev" src="/UploadedFiles/@Model.organization.logo" alt="" style="height:80px;width:80px" />
 
             </div>
         </div>

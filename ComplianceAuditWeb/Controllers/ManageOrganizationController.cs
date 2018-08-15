@@ -1228,7 +1228,7 @@ namespace ComplianceAuditWeb.Controllers
                 }
             }
 
-
+            TempData["CompanyList"] = vendorVM.CompaniesList;
             // string strXMLCountries = organizationservice.GetCountryList();
             // string strXMLStates = organizationservice.GetStateList(countryID);
             //string strXMLCities = organizationservice.GetCityList(stateID);
@@ -1243,7 +1243,7 @@ namespace ComplianceAuditWeb.Controllers
         {
             if (vendorVM.companydetails.Calender_EndDate == null)
             {
-                vendorVM.companydetails.Calender_EndDate = DateTime.MaxValue;
+                vendorVM.companydetails.Calender_EndDate = DateTime.MaxValue.Date;
             }
             if (ModelState.IsValid)
             {
@@ -1292,7 +1292,8 @@ namespace ComplianceAuditWeb.Controllers
             }
             else
             {
-                return View("_Vendor");
+                vendorVM.CompaniesList=(List<SelectListItem>) TempData["CompanyList"];
+                return View("_Vendor", vendorVM);
             }
         }
 
