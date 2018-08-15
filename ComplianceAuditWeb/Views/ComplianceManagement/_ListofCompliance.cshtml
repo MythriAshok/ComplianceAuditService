@@ -65,14 +65,17 @@ float:right;
     <div class="mid_content_sec">
         @if (ViewBag.Message != null)
         {
-            <p class="alert alert-success">@ViewBag.Message</p>
+            @*<p class="alert alert-success">@ViewBag.Message</p>*@
+        <p id="successMessage">@ViewBag.Message</p>
         }
         @if (TempData["Error"] != null)
         {
-            <p class="alert alert-warning">@TempData["Error"]</p>}
-            <div style="margin-right:10px;text-align:right">
-                <span class="fa fa-plus"></span>@Html.ActionLink("Add Act", "CreateActs", new { @class = "btn primary-button" })
-            </div>
+            @*<p class="alert alert-warning">@TempData["Error"]</p>*@
+            <p style="color:red;">@TempData["Error"]</p>
+        }
+        <div style="margin-right:10px;text-align:right">
+            <span class="fa fa-plus"></span>@Html.ActionLink("Add Act", "CreateActs", new { @class = "btn primary-button" })
+        </div>
         @if (Model.Actslist != null)
         {
             foreach (var Act in Model.Actslist)
@@ -91,10 +94,10 @@ float:right;
                                 {
                                     //if (section.Compliance_Title != "RuleSection")
                                     //{
-                                <p class="accordion-header" id="subheader">
-                                    <i class="fa fa-book"></i>@Html.DisplayFor(modelItem => section.Compliance_Title)
-                                    <button class="btn-bootstrap-dialog" id="updatepopup" href='@Url.Action("Updatesection", "ComplianceManagement", new { id = section.Compliance_Xref_ID})'><i class="fa fa-edit"></i></button>
-                                </p>
+                                    <p class="accordion-header" id="subheader">
+                                        <i class="fa fa-book"></i>@Html.DisplayFor(modelItem => section.Compliance_Title)
+                                        <button class="btn-bootstrap-dialog" id="updatepopup" href='@Url.Action("Updatesection", "ComplianceManagement", new { id = section.Compliance_Xref_ID})'><i class="fa fa-edit"></i></button>
+                                    </p>
                                     //}
                                     <div class="accordion-body" id="subbody">
                                         @foreach (var Rule in Model.Rulelist)
@@ -102,12 +105,12 @@ float:right;
 
                                             if (section.Compliance_Xref_ID == Rule.Compliance_Parent_ID)
                                             {
-                                        <p>
-                                            <i class="fa fa-leanpub"></i>
-                                            @Html.DisplayFor(modelItem => Rule.Compliance_Title)
-                                            
-                                                <button class="btn-bootstrap-dialog" id="updaterulepopup" data-url='@Url.Action("UpdateRule", "ComplianceManagement", new { id = Rule.Compliance_Xref_ID})'><i class="fa fa-edit"></i></button>                                                
-                                        </p>
+                                                <p>
+                                                    <i class="fa fa-leanpub"></i>
+                                                    @Html.DisplayFor(modelItem => Rule.Compliance_Title)
+
+                                                    <button class="btn-bootstrap-dialog" id="updaterulepopup" data-url='@Url.Action("UpdateRule", "ComplianceManagement", new { id = Rule.Compliance_Xref_ID})'><i class="fa fa-edit"></i></button>
+                                                </p>
 
                                             }
 
@@ -137,7 +140,8 @@ float:right;
         }
         else
         {
-            <p class="alert alert-success">@TempData["Message"]</p>
+            @*<p class="alert alert-success">@TempData["Message"]</p>*@
+                <p id="successMessage">@TempData["Message"]</p>
         }
         <div class="clearfix"></div>
         <ul class="list-inline accordinBtn">

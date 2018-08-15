@@ -983,4 +983,5 @@ select {
 
 #successMessage{
     color:green;
+    text-align:center;
 }
