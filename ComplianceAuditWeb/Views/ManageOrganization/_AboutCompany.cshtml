@@ -22,7 +22,7 @@
 
 <ul class="breadcrumb ML15">
     <li><a href="/Common/dashboard?pid=9">Company Management</a></li>
-    <li>About Company</li>
+    <li>Manage Company</li>
 </ul>
 <h2 class="ML15">Manage Company</h2>
 
@@ -74,7 +74,7 @@
 
 
                 @Html.Label("Company Description", new { @class = "floating-label" })
-                @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input", @rows = 12 })
             </div>
             <div class="clearfix"></div>
 
@@ -88,12 +88,12 @@
     </div>
 
     <ul class="list-inline continueBtn">
-
+       
         <li>
             @Html.ActionLink("Modify", "UpdateCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
         </li>
         <li>
-            @Html.ActionLink("Delete", "DeleteCompany", new { id = Model.CompanyID }, new { @class = "btn primary-button" })
+            @Html.ActionLink("Delete", "DeleteCompany", new { OrgID = Model.CompanyID }, new { @class = "btn primary-button" })
             @if (Model.Is_Active == true)
             {
                 @Html.ActionLink("Deactivate", "DeactivateCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
@@ -103,6 +103,7 @@
                 @Html.ActionLink("Activate", "ActivateCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
 
             }
+            
 
         </li>
         <li>
@@ -114,19 +115,24 @@
             @Html.ActionLink("Add Vendor", "AddVendor", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
 
         </li>
+        <li>
+            @Html.ActionLink("Cancel", "SelectGroupCompany",new { Orgid = Model.CompanyID } , new { @class = "btn primary-button" })
+
+        </li>
 
 
 
 
     </ul>
 
+    <div class="col-xs-6 subSelect ">
 
-    if (Model.AboutCompany.Count > 0)
-    {
+        @if (Model.AboutCompany.Count > 0)
+        {
         <div class="new_section_box">
             <div class="tab-content">
                 <div id="home" class="tab-pane fade in active">
-                    <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Branches:</h2>
+                    <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Branches:</h4>
 
                     @foreach (var item in Model.AboutCompany)
                     {
@@ -149,48 +155,58 @@
             </div>
 
         </div>
-    }
-    else
-    {
+        }
+        else
+        {
         <center>
+            <div class="clearfix"></div>
+            <br />
+            <br />
             <p id=" successMessage">@ViewBag.Message</p>
         </center>
-    }
+        }
+        </div>
+        <div class="col-xs-6 subSelect ">
 
+            @if (Model.AboutBranch.Count > 0)
+            {
+                <div class="new_section_box">
+                    <div class="tab-content">
+                        <div id="home" class="tab-pane fade in active">
+                            <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Vendors:</h4>
+                            @foreach (var item in Model.AboutBranch)
+                            {
+                                <div class="col-sm-3 QueList">
+                                    <div class="queContainer">
+                                        <a href="@Url.Action("AboutVendor", "ManageOrganization", new { id = item.OrganizationID })">
+                                            <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
+                                            <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyNameList)</h3>
+                                        </a>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            }
 
-    if (Model.AboutBranch.Count > 0)
-    {
-        <div class="new_section_box">
-            <div class="tab-content">
-                <div id="home" class="tab-pane fade in active">
-                    <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Vendors:</h2>
-                    @foreach (var item in Model.AboutBranch)
-                    {
-                        <div class="col-sm-3 QueList">
-                            <div class="queContainer">
-                                <a href="@Url.Action("AboutVendor", "ManageOrganization", new { id = item.OrganizationID })">
-                                    <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
-                                    <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyNameList)</h3>
-                                </a>
-                                <div class="clearfix"></div>
-                            </div>
+                            <div class="clearfix"></div>
+
                         </div>
-                    }
 
-                    <div class="clearfix"></div>
+                    </div>
 
                 </div>
+            }
+            else
+            {
+                <center>
+                    <div class="clearfix"></div>
+                    <br />
+                    <br />
+                    <p id=" successMessage">@ViewBag.MessageV</p>
+                </center>
 
-            </div>
-
+            }
         </div>
-    }
-    <center>
-        <p id=" successMessage">@ViewBag.Message</p>
-    </center>
-
-}
-
+        }
 
 
 

@@ -63,109 +63,123 @@
             }
         }
     </script>
-}
-<ul class="breadcrumb ML15">
-    <li><a href="/Common/dashboard?pid=6">Group Management</a></li>
-    <li> Group Company</li>
-</ul>
-<h2 class="ML15">Add Group Company</h2>
 
-@{string button = "save";
-    string actionname = "AddGroupCompany";}
-@if (Model.organization.Organization_Id != 0)
-{
-    button = "Update";
-    actionname = "UpdateGroupCompany";
 }
-@using (Html.BeginForm(actionname, "ManageOrganization", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+@if (Model.organization.Organization_Id == 0)
 {
-    <div class="mid_content_sec">
-        @Html.AntiForgeryToken()
-        @Html.ValidationMessage("Error")
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @*@using (Html.BeginForm("AddGroupCompany", "ManageOrganization"))
-                    {*@
-                @Html.Label("Group Company Name", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input", size = "4", placeholder = ConfigurationManager.AppSettings["Group Company Name"] })
-                @Html.ValidationMessageFor(m => m.organization.Company_Name, "", new { @class = "text-danger" })
+    <ul class="breadcrumb ML15">
+        <li><a href="/Common/dashboard?pid=6">Group Management</a></li>
+        <li>Add Group Company</li>
+    </ul>
+    <h2 class="ML15">Add Group Company</h2>
+}
+
+    @{string button = "save";
+        string actionname = "AddGroupCompany";}
+
+
+    @if (Model.organization.Organization_Id != 0)
+    {
+        button = "Update";
+        actionname = "UpdateGroupCompany";
+        <ul class="breadcrumb ML15">
+            <li><a href="/Common/dashboard?pid=6">Group Management</a></li>
+            <li>Update Group Company</li>
+        </ul>
+        <h2 class="ML15">Update Group Company</h2>
+    }
+    @using (Html.BeginForm(actionname, "ManageOrganization", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="mid_content_sec">
+            @Html.AntiForgeryToken()
+            @Html.ValidationMessage("Error")
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="col-xs-4 subSelect ">
+                <div class="input-field">
+                    @*@using (Html.BeginForm("AddGroupCompany", "ManageOrganization"))
+                        {*@
+                    @Html.Label("Group Company Name", new { @class = "floating-label" })<span style="color:red">*</span>
+                    @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input", size = "4", placeholder = ConfigurationManager.AppSettings["Group Company Name"] })
+                    @Html.ValidationMessageFor(m => m.organization.Company_Name, "", new { @class = "text-danger" })
+                </div>
             </div>
+
+
+
+            <div class="col-xs-4 subSelect ">
+                <div class="input-field">
+                    <label for="file">Upload Logo:</label>
+                    <input type="file" name="file" id="file" onchange="ShowPreview(this)" />
+                    @Html.ValidationMessageFor(m => m.organization.logo, "", new { @class = "text-danger" })
+
+                    <img id="impPrev" src="/UploadedFiles/@Model.organization.logo" alt="" style="height:80px;width:80px" />
+                </div>
+            </div>
+
+            @Html.HiddenFor(m => m.organization.Organization_Id)
+            <div class="clearfix"></div>
+
+            <div class="col-xs-12 subSelect ">
+                <div class="input-field">
+
+                    @Html.Label("Group Company Description", new { @class = "floating-label" })
+                    @Html.TextAreaFor(m => m.organization.Description, new { @class = "inputMaterial ui - autocomplete - input" })
+
+                </div>
+            </div>
+
+
+
+
         </div>
 
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                <label for="file">Upload Logo:</label>
-                <input type="file" name="file" id="file" onchange="ShowPreview(this)" />
-                @Html.ValidationMessageFor(m => m.organization.logo, "", new { @class = "text-danger" })
-                <img src="/UploadedFiles/@Model.organization.logo" alt="" style="height:80px;width:80px" />
 
-            </div>
-        </div>
+        @*@Html.LabelFor(m => m.organization.Last_Updated_Date);*@
+        @Html.HiddenFor(m => m.organization.Last_Updated_Date)
 
-        @Html.HiddenFor(m => m.organization.Organization_Id)
+        @Html.HiddenFor(m => m.organization.Company_Id)
+
+
+        @*@Html.HiddenFor(m => m.branch.Branch_Id);
+            @Html.HiddenFor(m => m.branch.Org_Hier_ID);*@
+        @Html.HiddenFor(m => m.organization.Is_Active);
+        @Html.HiddenFor(m => m.organization.Is_Delete);
+        @Html.HiddenFor(m => m.organization.Is_Leaf);
+        @Html.HiddenFor(m => m.organization.Is_Vendor);
+        @Html.HiddenFor(m => m.organization.Level);
+
+
+
+        @Html.HiddenFor(m => m.organization.User_Id)
+
+
         <div class="clearfix"></div>
 
-        <div class="col-xs-12 subSelect ">
-            <div class="input-field">
-
-                @Html.Label("Group Company Description", new { @class = "floating-label" })
-                @Html.TextAreaFor(m => m.organization.Description, new { @class = "inputMaterial ui - autocomplete - input" })
-
-            </div>
-        </div>
 
 
 
 
-    </div>
-
-
-    @*@Html.LabelFor(m => m.organization.Last_Updated_Date);*@
-    @Html.HiddenFor(m => m.organization.Last_Updated_Date)
-
-    @Html.HiddenFor(m => m.organization.Company_Id)
-
-
-    @*@Html.HiddenFor(m => m.branch.Branch_Id);
-        @Html.HiddenFor(m => m.branch.Org_Hier_ID);*@
-    @Html.HiddenFor(m => m.organization.Is_Active);
-    @Html.HiddenFor(m => m.organization.Is_Delete);
-    @Html.HiddenFor(m => m.organization.Is_Leaf);
-    @Html.HiddenFor(m => m.organization.Is_Vendor);
-    @Html.HiddenFor(m => m.organization.Level);
+        <div class="clearfix"></div>
+        <ul class="list-inline continueBtn">
+            <li>
 
 
 
-    @Html.HiddenFor(m => m.organization.User_Id)
+                @*<input type="submit" value="@button" class="btn primary-button" />*@
+                <input type="submit" value="@button" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+                <input type="reset" value="Reset" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+                <a href="@Url.Action("dashboard","Common",new { pid=6})" class="btn primary-button">Cancel</a>
+                @*@Html.ActionLink("Cancel", new { Orgid = Model.organization.Organization_Id }, new { @class = "btn primary-button" });*@
 
-
-    <div class="clearfix"></div>
+                @*<button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="@button">Create<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>*@
+            </li>
+        </ul>
 
 
 
 
-
-    <div class="clearfix"></div>
-    <ul class="list-inline continueBtn">
-        <li>
-
-
-
-            @*<input type="submit" value="@button" class="btn primary-button" />*@
-            <input type="submit" value="@button" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
-            <input type="reset" value="Reset" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
-            <a href="@Url.Action("dashboard","Common",new { pid=6})" class="btn primary-button">Cancel</a>
-            @*@Html.ActionLink("Cancel", new { Orgid = Model.organization.Organization_Id }, new { @class = "btn primary-button" });*@
-
-            @*<button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="@button">Create<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>*@
-        </li>
-    </ul>
-
-
-
-
-}
+    }
 
 
 

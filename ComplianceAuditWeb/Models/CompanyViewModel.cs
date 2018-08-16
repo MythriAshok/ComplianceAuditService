@@ -44,7 +44,8 @@ namespace ComplianceAuditWeb.Models
         public enum IndustryType
         {
             IT,
-            Manufacturing
+            Manufacturing,
+            HeadQuarter
         }
 
         //public enum AuditType

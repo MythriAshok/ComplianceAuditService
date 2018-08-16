@@ -5,8 +5,8 @@
 }
 
 <ul class="breadcrumb ML15">
-    <li><a href="/Common/dashboard?pid=9">Group Company Management</a></li>
-    <li> Group Company</li>
+    <li><a href="/Common/dashboard?pid=9"> Management</a></li>
+    <li> Delete</li>
 </ul>
 <h2 class="ML15">Delete</h2>
 <center>
@@ -40,8 +40,10 @@
         <li>
             @*<input type="submit" value="Activate" class="btn btn-default" />*@
             <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit" onclick="DeleteGroupCompany">Delete<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
+            @*<a href="@Url.Action("dashboard","Common",new { pid=6})" class="btn primary-button">Cancel</a>*@
+
             <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Cancel<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
-        </li>
+      </li>
     </ul>
 
 

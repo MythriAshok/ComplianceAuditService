@@ -8,7 +8,7 @@
     <li><a href="/Common/dashboard?pid=6">Group Management</a></li>
     <li>About Group Company</li>
 </ul>
-<h2 class="ML15">Manage Group Company</h2>
+<h2 class="ML15">About Group Company</h2>
 
 @using (Html.BeginForm())
 {
@@ -47,7 +47,7 @@
 
 
                 @Html.Label("Group Company Description", new { @class = "floating-label" })
-                @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input", @rows = 12 })
             </div>
             <div class="clearfix"></div>
 
@@ -81,6 +81,10 @@
         </li>
         <li>
             <input type="submit" value="Add Company" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+        </li>
+        <li>
+            @Html.ActionLink("Cancel", "GroupCompanyList", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+
         </li>
     </ul>
 

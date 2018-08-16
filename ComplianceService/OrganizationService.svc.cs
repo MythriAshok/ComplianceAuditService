@@ -532,13 +532,7 @@ namespace ComplianceService
             }
             return OrganizationID;
         }
-        /// <summary>
-        /// A method to in the sevice layer that interacts with Organization helper class to update the Company details in the database
-        /// </summary>
-        /// <param name="org">data object of Organization</param>
-        /// <param name="company">data object of CompanyDetails</param>
-        /// <param name="branch">data object of BranchLocation</param>
-        /// <returns>boolean value</returns>
+    
         public bool updateVendor(Organization org, CompanyDetails company)
         {
             int insertOrganizationID = 0;
@@ -548,9 +542,7 @@ namespace ComplianceService
             {
                 OrganizationHelper organizationhelper = new OrganizationHelper();
                 insertOrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
-
                 insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
-                // if ( insertOrganizationID > 0 || insertCompanyDetailsID > 0)
                 {
                     updateResult = true;
                 }
@@ -561,20 +553,10 @@ namespace ComplianceService
             }
             return updateResult;
         }
-
-
-        /// <summary>
-        /// A method in the service layer  that interacts with bindCountry method,to fetch the Country list from the database.
-        /// </summary>
-        /// <returns>BindCountry method which has xml string value</returns>
         public string GetCountryList()
         {
             return BindCountry();
         }
-        /// <summary>
-        /// A private method in the service layer that interacts with Country helper class to bind the Countries in the database
-        /// </summary>
-        /// <returns>xml string</returns>
         private string BindCountry()
         {
             CountryHelper helper = new CountryHelper();
@@ -584,20 +566,11 @@ namespace ComplianceService
             string xmlCountries = dsCountries.GetXml();
             return xmlCountries;
         }
-        /// <summary>
-        /// A method in the service layer that interacts with the private method, BindState.
-        /// </summary>
-        /// <param name="countryID">Gets the list of states w.r.t specific CountryID</param>
-        /// <returns>xml string</returns>
         public string GetStateList(int countryID)
         {
             return BindState(countryID);
         }
-        /// <summary>
-        /// A private method in the service layer that interacts with Country helper class to bind the States from the database
-        /// </summary>
-        /// <param name="countryID">Gets the list of states w.r.t specific CountryID</param>
-        /// <returns>xml string</returns>
+      
         private string BindState(int countryID)
         {
             CountryHelper countryhelper = new CountryHelper();
