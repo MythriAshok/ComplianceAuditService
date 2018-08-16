@@ -6,9 +6,9 @@
 
 <h2>addComplianceAudit</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+@*@using (Html.BeginForm())
+{*@
+    @*@Html.AntiForgeryToken()*@
     
     <div class="form-horizontal">
         <h4>AuditViewModel</h4>
@@ -22,7 +22,7 @@
             </div>
         </div>
     </div>
-}
+@*}*@
 
 <div>
     @Html.ActionLink("Back to List", "Index")

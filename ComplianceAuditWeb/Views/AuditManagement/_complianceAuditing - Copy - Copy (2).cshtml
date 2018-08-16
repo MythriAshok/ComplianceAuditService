@@ -111,7 +111,7 @@
 
                                         @Html.DropDownListFor(m => m.complianceAuditList[rulecount].Audit_Status, new SelectList
                               (Enum.GetValues(typeof(ComplianceAuditWeb.Models.AuditViewModel.AuditStatus))),
-                              "--Select Audit Status--", new { @class = "inputMaterial ui - autocomplete - input", @onchange = "ShowHidedTextBox(this.value);" })
+                              "--Select Audit Status--", new { @class = "inputMaterial ui - autocomplete - input"})
                                         @Html.ValidationMessageFor(m => m.complianceAuditList[rulecount].Audit_Status, "", new { @class = "text-danger" })
 
 

@@ -4,7 +4,7 @@
     ViewBag.Title = "Add Rules";
 }
 <ul class="breadcrumb ML15">
-    <li><a href="">Compliance Management</a></li>
+    <li><a href="/Common/dashboard?pid=14">Compliance Management</a></li>
     <li>Add Rules</li>
 </ul>
 <h2 class="ML15">Add Rules</h2>
@@ -84,7 +84,7 @@ float:right;
 
                     <p class="accordion-header default-open">
                         <i class="fa fa-legal"></i>&nbsp;@Html.DisplayFor(modelItem => Act.Compliance_Title)
-                        <button class="btn-bootstrap-dialog" id="updatepopup" data-url='@Url.Action("UpdateAct", "ComplianceManagement",new { id=Act.Compliance_Xref_ID})'><i class="fa fa-edit"></i></button>
+                        <button class="btn-bootstrap-dialog" id="updatepopup" data-url="@Url.Action("UpdateAct", "ComplianceManagement",new { id=Act.Compliance_Xref_ID})"><i class="fa fa-edit"></i></button>
                     </p>
                     <div class="accordion-body">
                         @foreach (var section in Model.Sectionlist)

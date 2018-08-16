@@ -134,7 +134,7 @@
         <div class="input-field">
 
             @*@Html.Label(ConfigurationManager.AppSettings["vendors"], new { @class = "floating-label" })*@
-            @Html.Label("Vendor Start Date")
+            @Html.Label("Vendor Start Date")<span style="color:red">*</span>
             @Html.EditorFor(m => m.VendorStartDate, new { @class = "inputMaterialSelect ui - autocomplete - input " })
 
 
@@ -144,7 +144,7 @@
         <div class="input-field">
 
             @*@Html.Label(ConfigurationManager.AppSettings["vendors"], new { @class = "floating-label" })*@
-            @Html.Label("Vendor ENd Date")
+            @Html.Label("Vendor End Date")<span style="color:red">*</span>
             @Html.EditorFor(m => m.VendorEndDate, new { @class = "inputMaterialSelect ui - autocomplete - input " })
 
 

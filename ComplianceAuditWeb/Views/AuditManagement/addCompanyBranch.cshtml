@@ -58,7 +58,7 @@
             <div class="input-field">
 
                 @Html.Label("Branch")
-                @Html.DropDownListFor(m => m.complianceAudit.Company_ID, Model.MappedBranch)
+                @Html.DropDownListFor(m => m.complianceAudit.Company_ID, Model.MappedBranch,new { @class = "inputMaterial ui - autocomplete - input" })
                 <span id="loading_data_icon"></span>
             </div>
         </div>
