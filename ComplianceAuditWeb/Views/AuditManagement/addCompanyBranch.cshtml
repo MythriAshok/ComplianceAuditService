@@ -58,7 +58,7 @@
             <div class="input-field">
 
                 @Html.Label("Branch")
-                @Html.DropDownListFor(m => m.complianceAudit.Company_ID, Model.MappedBranch,new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.DropDownListFor(m => m.complianceAudit.Company_ID, Model.MappedBranch, new { @class = "inputMaterial ui - autocomplete - input" })
                 <span id="loading_data_icon"></span>
             </div>
         </div>
@@ -73,6 +73,8 @@
             <li>
 
                 <input type="submit" value="Start Auditing" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+                <a href="@Url.Action("dashboard","Common",new { pid=20})" class="btn primary-button">Cancel</a>
+
 
             </li>
         </ul>

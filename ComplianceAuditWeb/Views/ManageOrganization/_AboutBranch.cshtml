@@ -26,7 +26,7 @@
     if (TempData["Success"] != null)
     {
         <center>
-            <p class="alert alert-success" style="width:1000px" id=" successMessage">@TempData["Success"]</p>
+            <p  id=" successMessage">@TempData["Success"]</p>
         </center>
     }
     <img src="/UploadedFiles/@Model.CompanyLogo" alt="" />
@@ -38,13 +38,13 @@
             @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
         </div>
     </div>
-
-    <div class="col-xs-12 subSelect ">
+    <div class="clearfix"></div>
+    <div class="col-xs-10 subSelect ">
         <div class="input-field">
 
 
             @Html.Label("Branch Description", new { @class = "floating-label" })
-            @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input" })
+            @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input" , @rows=10})
 
         </div>
     </div>
@@ -108,7 +108,7 @@
                         </div>
                     </div>
                     }
-                    }
+                    
 
 
                     <div class="clearfix"></div>

@@ -61,7 +61,7 @@
             var procemessage = "<option value='0'> Please wait...</option>";
             $("#VendorID").html(procemessage).show();
             var url = "/Common/getspecificvendors";
-
+           
             $.ajax({
                 url: url,
 
@@ -70,7 +70,7 @@
                 cache: false,
                 type: "POST",
                 success: function (data) {
-                    var markup = "<option></option>";
+                    var markup = "<option='0'>Select Vendor</option>";
                     for (var x = 0; x < data.length; x++) {
                         markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
                     }
@@ -97,7 +97,7 @@
 {
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
-            @Html.Label("GroupCompany", new { @class = "floating-label" })
+            @Html.Label("Group Company Name", new { @class = "floating-label" })<span style="color:red">*</span>
             @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "GetCompany(this.value)" })
         </div>
     </div>
@@ -106,7 +106,7 @@
 
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
-            @Html.Label("Company", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.Label("Company Name", new { @class = "floating-label" })<span style="color:red">*</span>
             @Html.DropDownListFor(m => m.CompanyID, Model.CompaniesList, new { @class = "inputMaterial ui - autocomplete - input",
            @onchange = "GetBranch(this.value)"
        })
@@ -115,7 +115,7 @@
 
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
-            @Html.Label("Branch", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.Label("Branch Name", new { @class = "floating-label" })<span style="color:red">*</span>
             @Html.DropDownListFor(m => m.BranchID, Model.BranchList, new { @class = "inputMaterial ui - autocomplete - input" })
         </div>
     </div>
@@ -124,7 +124,7 @@
         <div class="input-field">
 
             @*@Html.Label(ConfigurationManager.AppSettings["vendors"], new { @class = "floating-label" })*@
-            @Html.Label("List of Vendors")
+            @Html.Label("List of Vendors")<span style="color:red">*</span>
             @Html.ListBoxFor(m => m.VendorID, Model.VendorList, new { @class = "inputMaterialSelect ui - autocomplete - input ", placeholder = ConfigurationManager.AppSettings["Roles"] })
 
 
@@ -144,7 +144,7 @@
         <div class="input-field">
 
             @*@Html.Label(ConfigurationManager.AppSettings["vendors"], new { @class = "floating-label" })*@
-            @Html.Label("Vendor End Date")<span style="color:red">*</span>
+            @Html.Label("Vendor End Date")
             @Html.EditorFor(m => m.VendorEndDate, new { @class = "inputMaterialSelect ui - autocomplete - input " })
 
 
@@ -160,9 +160,9 @@
 
             @*@{string button = "save";}*@
             @*@if (Model.branch.Branch_Id != 0)
-                {
-                    button = "Update";
-                }*@
+        {
+            button = "Update";
+        }*@
             <br />
             <br />
             <br />
@@ -170,10 +170,10 @@
             <input type="submit" value="Save" class="btn primary-button" onclick="AssignVendorForBranch"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
 
             <input type="reset" value="Reset" class="btn primary-button" onclick="AssignVendorForBranch"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
-            <input type="submit" value="Cancel" class="btn primary-button" onclick="AssignVendorForBranch"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+            <a href="@Url.Action("dashboard","Common",new { pid=9})" class="btn primary-button">Cancel</a>
 
             @*<input type="reset" value="Reset" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
-                @Html.ActionLink("Cancel", "AddBranch", new { Orgid = Model.organization.Organization_Id }, new { @class = "btn primary-button" })*@
+        @Html.ActionLink("Cancel", "AddBranch", new { Orgid = Model.organization.Organization_Id }, new { @class = "btn primary-button" })*@
 
 
 

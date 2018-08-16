@@ -120,12 +120,14 @@
             }
         </script>*@
 }
-<ul class="breadcrumb ML15">
-    <li><a href="/Common/dashboard?pid=9">Branch Management</a></li>
-    <li> Branch</li>
-</ul>
-<h2 class="ML15">Add Company Branch</h2>
-
+@if (Model.organization.Organization_Id == 0)
+{
+    <ul class="breadcrumb ML15">
+        <li><a href="/Common/dashboard?pid=9">Branch Management</a></li>
+        <li>Add Branch</li>
+    </ul>
+    <h2 class="ML15">Add Branch</h2>
+}
 
 @{string button = "save";
     string actionname = "AddBranch";}
@@ -133,6 +135,11 @@
 {
     button = "Update";
     actionname = "UpdateBranch";
+    <ul class="breadcrumb ML15">
+        <li><a href="/Common/dashboard?pid=9">Branch Management</a></li>
+        <li> Update Branch</li>
+    </ul>
+    <h2 class="ML15">Update Branch</h2>
 }
 @using (Html.BeginForm(actionname, "ManageOrganization", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -141,37 +148,16 @@
 
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @if ((TempData["CompanyName"]) != null)
-
+                @if ((TempData["CompanyID"]) != null)
                 {
                     Model.ChildCompanyName = TempData["CompanyName"].ToString();
-
                     @Html.Label("Company")
-
-
-                    Model.GroupCompanyID = Convert.ToInt32(Session["ParentCompanyID"]);
-                    Model.CompanyID = Convert.ToInt32(Session["CompanyID"]);
-                    //Model.ChildCompanyName = Session["CompanyName"].ToString();
                     @Html.TextBoxFor(m => m.ChildCompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
-                    @Html.HiddenFor(m => m.GroupCompanyID)
+                    Model.CompanyID = Convert.ToInt32(TempData["CompanyID"]);
                     @Html.HiddenFor(m => m.CompanyID)
-
                 }
                 else
                 {
-                    @*<div class="col-xs-4 subSelect ">
-                                    <div class="input-field">
-                                        @Html.Label("GroupCompany", new { @class = "floating-label" })
-                                    @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "GetCompany(this.value)" })
-                            </div>
-                        </div>*@
-
-
-
-
-
-
-
                     @Html.Label("Company", new { @class = "floating-label" })<span style="color:red">*</span>
                     @Html.DropDownListFor(m => m.CompanyID, Model.CompaniesList, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "GetVendor(this.value)" })
 
@@ -189,6 +175,7 @@
         @Html.HiddenFor(m => m.organization.Is_Leaf)
         @Html.HiddenFor(m => m.organization.Is_Vendor)
         @Html.HiddenFor(m => m.organization.Is_Delete)
+        @Html.HiddenFor(m => m.organization.Parent_Company_Id)
 
 
         <div class="col-xs-4 subSelect ">

@@ -17,6 +17,11 @@
             <p id=" successMessage">@TempData["Company"]@TempData["Success"]</p>
         </center>
     }
+    <div class="pull-right fa fa-pull-right" style="font-size:large">
+        <i class="fa fa-plus"></i><font style="font-size:14px; color:dimgray; font-family:Arial">
+            @Html.ActionLink("Create New", "AddVendor", new { Orgid = Model.ParentCompanyID })
+        </font>
+    </div>
     <img src="/UploadedFiles/@Model.CompanyLogo" alt="" />
     <div class="clearfix"></div>
 

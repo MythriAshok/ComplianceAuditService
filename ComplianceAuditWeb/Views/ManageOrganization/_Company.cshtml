@@ -63,20 +63,26 @@
         }
     </script>
 }
+@if (Model.organization.Organization_Id == 0)
+{
+    <ul class="breadcrumb ML15">
+        <li><a href="/Common/dashboard?pid=9">Company Management</a></li>
+        <li>Add Company</li>
+    </ul>
+    <h2 class="ML15">Add  Company</h2>
 
-<ul class="breadcrumb ML15">
-    <li><a href="/Common/dashboard?pid=9">Company Management</a></li>
-    <li>Companies</li>
-</ul>
-<h2 class="ML15">Add  Company</h2>
-
-
+}
 @{string button = "save";
     string actionname = "AddCompany";}
 @if (Model.organization.Organization_Id != 0)
 {
     button = "Update";
     actionname = "UpdateCompany";
+    <ul class="breadcrumb ML15">
+        <li><a href="/Common/dashboard?pid=9">Company Management</a></li>
+        <li>Update Company</li>
+    </ul>
+    <h2 class="ML15">Update  Company</h2>
 }
 @using (Html.BeginForm(actionname, "ManageOrganization", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -87,9 +93,6 @@
             <div class="input-field">
 
                 @if ((TempData["GroupCompanyID"]) != null)
-
-
-
                 {
                     Model.GroupCompanyName = TempData["GroupCompanyName"].ToString();
                     @Html.Label("Group Company")
@@ -102,18 +105,17 @@
                     @Html.TextBoxFor(m => m.GroupCompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
                     @Html.HiddenFor(m => m.GroupCompanyID)
                 }
-                else if ((TempData["GroupCompanyID"]) == null)
+                else /* if ((TempData["GroupCompanyID"]) == null)*/
                 {
-
                     @Html.Label("Group Comapny", new { @class = "floating-label" })<span style="color:red">*</span>
                     @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input" })
                 }
-                else
-                {
-                    Model.GroupCompanyID = Model.organization.Parent_Company_Id; ;
-                    @Html.Label("Group Comapny", new { @class = "floating-label" })<span style="color:red">*</span>
-                    @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input" })
-                }
+                @*//else
+                    //{
+                    //    Model.GroupCompanyID = Model.organization.Parent_Company_Id; ;
+                    //    @Html.Label("Group Comapny", new { @class = "floating-label" })<span style="color:red">*</span>
+                    //    @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input" })
+                    //}*@
             </div>
         </div>
 
@@ -150,11 +152,14 @@
             <div class="input-field">
                 @Html.Label("Industry Type", new { @class = "floating-label" })<span style="color:red">*</span>
 
-                @Html.DropDownListFor(m => m.organization.Industry_Type, new SelectList
-                        (Enum.GetValues(typeof(ComplianceAuditWeb.Models.CompanyViewModel.IndustryType))),
-                        "Select Industry Type", new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Industry_Type"] })
+                @*@Html.DropDownListFor(m => m.organization.Industry_Type, new SelectList
+                    (Enum.GetValues(typeof(ComplianceAuditWeb.Models.CompanyViewModel.IndustryType))),
+                    "Select Industry Type", new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Industry_Type"] })*@
 
-
+                @Html.DropDownListFor(m=>m.organization.Industry_Type, new List<SelectListItem>
+           { new SelectListItem{Text="Head Quarter", Value="1", Selected=true},
+             new SelectListItem{Text="Manufacturing", Value="2"},
+             new SelectListItem{Text="IT", Value="3"}}, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Industry_Type"] })
 
 
             </div>
@@ -377,7 +382,7 @@
 }
 
 
-    }
+}
 
 
 
