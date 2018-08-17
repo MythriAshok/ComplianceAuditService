@@ -160,7 +160,19 @@ namespace ComplianceService
             string xmlroles = vendors.GetXml();
             return xmlroles;
         }
-       
+       public string GetBranchesAssociatedWithVendors(int VendorID)
+        {
+            return BindBranchesAssociatedWithVendors(VendorID);
+        }
+        private string BindBranchesAssociatedWithVendors(int VendorID)
+        {
+            OrganizationHelper vendorhelper = new OrganizationHelper();
+            DataSet vendors = vendorhelper.getBranchAssociatedWithVendors(VendorID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            vendors = utilityHelper.ConvertNullsToEmptyString(vendors);
+            string xmlroles = vendors.GetXml();
+            return xmlroles;
+        }
 
     }
 }

@@ -753,7 +753,28 @@ namespace Compliance.DataAccess
             return dsSpecificVendorListForBranch;
         }
 
-
+        public DataSet getBranchAssociatedWithVendors(int VendorID)
+        {
+            DataSet dsBranchAssociatedWithVendors = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getBranchAssociatedWithVendors", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Vendor_ID", VendorID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsBranchAssociatedWithVendors);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsBranchAssociatedWithVendors;
+        }
 
     }
 }

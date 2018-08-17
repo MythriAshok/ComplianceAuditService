@@ -62,6 +62,12 @@
   <wsdl:message name="IVendorService_GetAssignedVendorsforBranch_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAssignedVendorsforBranchResponse" />
   </wsdl:message>
+  <wsdl:message name="IVendorService_GetBranchesAssociatedWithVendors_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBranchesAssociatedWithVendors" />
+  </wsdl:message>
+  <wsdl:message name="IVendorService_GetBranchesAssociatedWithVendors_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBranchesAssociatedWithVendorsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IVendorService">
     <wsdl:operation name="insertVendor">
       <wsdl:input wsaw:Action="http://tempuri.org/IVendorService/insertVendor" message="tns:IVendorService_insertVendor_InputMessage" />
@@ -98,6 +104,10 @@
     <wsdl:operation name="GetAssignedVendorsforBranch">
       <wsdl:input wsaw:Action="http://tempuri.org/IVendorService/GetAssignedVendorsforBranch" message="tns:IVendorService_GetAssignedVendorsforBranch_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IVendorService/GetAssignedVendorsforBranchResponse" message="tns:IVendorService_GetAssignedVendorsforBranch_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBranchesAssociatedWithVendors">
+      <wsdl:input wsaw:Action="http://tempuri.org/IVendorService/GetBranchesAssociatedWithVendors" message="tns:IVendorService_GetBranchesAssociatedWithVendors_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IVendorService/GetBranchesAssociatedWithVendorsResponse" message="tns:IVendorService_GetBranchesAssociatedWithVendors_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IVendorService" type="tns:IVendorService">
@@ -176,6 +186,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetAssignedVendorsforBranch">
       <soap:operation soapAction="http://tempuri.org/IVendorService/GetAssignedVendorsforBranch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBranchesAssociatedWithVendors">
+      <soap:operation soapAction="http://tempuri.org/IVendorService/GetBranchesAssociatedWithVendors" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

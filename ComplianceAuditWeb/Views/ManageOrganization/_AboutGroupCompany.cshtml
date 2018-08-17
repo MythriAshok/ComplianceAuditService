@@ -83,7 +83,9 @@
             }
         </li>
         <li>
-            <input type="submit" value="Add Company" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+            @Html.ActionLink("Add Company", "AddCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+
+            @*<input type="submit" value="Add Company" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>*@
         </li>
         <li>
             @Html.ActionLink("Cancel", "GroupCompanyList", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })

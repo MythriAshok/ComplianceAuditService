@@ -68,6 +68,12 @@ namespace ComplianceAuditWeb.VendorService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/GetAssignedVendorsforBranch", ReplyAction="http://tempuri.org/IVendorService/GetAssignedVendorsforBranchResponse")]
         System.Threading.Tasks.Task<string> GetAssignedVendorsforBranchAsync(int BranchID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/GetBranchesAssociatedWithVendors", ReplyAction="http://tempuri.org/IVendorService/GetBranchesAssociatedWithVendorsResponse")]
+        string GetBranchesAssociatedWithVendors(int VendorID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/GetBranchesAssociatedWithVendors", ReplyAction="http://tempuri.org/IVendorService/GetBranchesAssociatedWithVendorsResponse")]
+        System.Threading.Tasks.Task<string> GetBranchesAssociatedWithVendorsAsync(int VendorID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -167,6 +173,14 @@ namespace ComplianceAuditWeb.VendorService {
         
         public System.Threading.Tasks.Task<string> GetAssignedVendorsforBranchAsync(int BranchID) {
             return base.Channel.GetAssignedVendorsforBranchAsync(BranchID);
+        }
+        
+        public string GetBranchesAssociatedWithVendors(int VendorID) {
+            return base.Channel.GetBranchesAssociatedWithVendors(VendorID);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetBranchesAssociatedWithVendorsAsync(int VendorID) {
+            return base.Channel.GetBranchesAssociatedWithVendorsAsync(VendorID);
         }
     }
 }

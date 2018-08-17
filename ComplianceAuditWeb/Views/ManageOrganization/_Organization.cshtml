@@ -93,15 +93,23 @@
     {
         <div class="mid_content_sec">
             @Html.AntiForgeryToken()
-            @Html.ValidationMessage("Error")
+            @*@Html.ValidationMessage("Error")*@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                @*<p class="alert alert-warning">@TempData["Message"]</p>*@
+                <p style="color:red">@TempData["ErrorMessage"]</p>
+            }
+       
             <div class="col-xs-4 subSelect ">
                 <div class="input-field">
                     @*@using (Html.BeginForm("AddGroupCompany", "ManageOrganization"))
-                        {*@
+                {*@
                     @Html.Label("Group Company Name", new { @class = "floating-label" })<span style="color:red">*</span>
-                    @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input", size = "4", placeholder = ConfigurationManager.AppSettings["Group Company Name"] })
-                    @Html.ValidationMessageFor(m => m.organization.Company_Name, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(m => m.organization.Company_Name, new { @class = "inputMaterial ui - autocomplete - input", size = "4",
+                   required="required"})
+                    @Html.ValidationMessage("Group Company Name", "", new { @class = "text-danger" })
                 </div>
             </div>
 

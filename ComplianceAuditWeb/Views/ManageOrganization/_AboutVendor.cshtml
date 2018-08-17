@@ -46,7 +46,7 @@
 
 
             @Html.Label("Vendor Description", new { @class = "floating-label" })
-            @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input" })
+            @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input", @rows = 10 })
 
         </div>
     </div>
@@ -70,7 +70,56 @@
         </li>
     </ul>
 
+
+
+
+    if (Model.AboutGroupCompany.Count > 0)
+    {
+
+        <div class="new_section_box">
+            <div class="tab-content">
+                <div id="home" class="tab-pane fade in active">
+                    <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Branches Associated:</h2>
+
+
+                    @foreach (var item in Model.AboutGroupCompany)
+                    {
+                        <div class="col-sm-3 QueList">
+                            <div class="queContainer">
+                                <a href="@Url.Action("AboutBranch", "ManageOrganization", new { id = item.OrganizationID })">
+                                    <span class="qIcon"><img src="/UploadedFiles/@item.CompanyLogo" alt="" style="height:60px;width:75px"></span>
+                                    <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyNameList)</h3>
+                                </a>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    }
+
+
+
+                    <div class="clearfix"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    }
+    else
+    {
+        <center>
+            <p id=" successMessage">@ViewBag.Message</p>
+        </center>
+    }
 }
+
+
+
+
+
+
 
 
 

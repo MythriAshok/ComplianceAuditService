@@ -34,5 +34,8 @@ namespace ComplianceService
         [OperationContract]
 
         string GetAssignedVendorsforBranch(int BranchID);
+        [OperationContract]
+
+        string GetBranchesAssociatedWithVendors(int VendorID);
     }
 }

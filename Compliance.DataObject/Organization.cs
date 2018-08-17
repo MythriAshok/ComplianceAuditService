@@ -8,7 +8,7 @@ namespace Compliance.DataObject
    public class Organization
     {
         public int Organization_Id { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Please enter the group company name")]
         public string Company_Name { get; set; }
         public int Company_Id { get; set; }
         
