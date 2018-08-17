@@ -67,6 +67,9 @@
             @Html.ActionLink("Modify", "UpdateGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
         </li>
         <li>
+            @*@Html.ActionLink("Delete", "DeleteGroupCompany",  new { OrgID = Model.CompanyID , @class = "btn primary-button" },
+           new { onclick = "return confirm('Are you sure you want to delete?');" })*@
+
             @Html.ActionLink("Delete", "DeleteGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
             @if (Model.Is_Active == true)
             {

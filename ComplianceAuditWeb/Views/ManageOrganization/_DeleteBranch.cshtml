@@ -5,10 +5,10 @@
 
 
 <ul class="breadcrumb ML15">
-    <li><a href="/Common/dashboard?pid=9">Vendor Management</a></li>
-    <li>Deactivate </li>
+    <li><a href="/Common/dashboard?pid=9">Branch Management</a></li>
+    <li>Delete Branch</li>
 </ul>
-<h2 class="ML15">Deactivate Vendor</h2>
+<h2 class="ML15">Delete Branch</h2>
 
 <center>
     <h2 class="ML15">Are you sure you want to delete?</h2>
@@ -40,13 +40,16 @@
     <ul class="list-inline continueBtn">
         <li>
             @*<input type="submit" value="Activate" class="btn btn-default" />*@
-            <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit" onclick="DeleteVendorUnderCompany">Delete<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
-            @Html.ActionLink("Cancel", "CompanyVendorsList", new { id = Model.ParentCompanyID }, new { @class = "btn primary-button" })
+            <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit" onclick="DeleteBranch">Delete<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
+
+            @Html.ActionLink("Cancel", "BranchList", new { id = Model.ParentCompanyID }, new { @class = "btn primary-button" })
 
         </li>
     </ul>
 
 
 }
+
+
 
 
