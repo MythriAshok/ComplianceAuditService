@@ -42,7 +42,7 @@
     <li><a href="/Common/dashboard?pid=9">Branch Management</a></li>
     <li> Branch List</li>
 </ul>
-<h2 class="ML15">Manage Branch</h2>
+<h2 class="ML15">List Of Branches</h2>
 
 <div class="mid_content_sec">
     @using (Html.BeginForm())
@@ -67,7 +67,7 @@
         <div class="new_section_box">
             <div class="tab-content">
                 <div id="home" class="tab-pane fade in active">
-                    <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Branch</h2>
+                    <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h2>
                     @if (Model.listOfGroups.Count != 0)
                     {
                         foreach (var item in Model.listOfGroups)

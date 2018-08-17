@@ -93,6 +93,8 @@
             @Html.ActionLink("Modify", "UpdateCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
         </li>
         <li>
+            @*@Html.ActionLink("Delete", "DeleteCompany",  new { OrgID = Model.CompanyID , @class = "btn primary-button" },
+        new { onclick = "return confirm('Are you sure you want to delete?');" })*@
             @Html.ActionLink("Delete", "DeleteCompany", new { OrgID = Model.CompanyID }, new { @class = "btn primary-button" })
             @if (Model.Is_Active == true)
             {
@@ -103,7 +105,7 @@
                 @Html.ActionLink("Activate", "ActivateCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
 
             }
-            
+
 
         </li>
         <li>
@@ -116,7 +118,7 @@
 
         </li>
         <li>
-            @Html.ActionLink("Cancel", "SelectGroupCompany",new { Orgid = Model.CompanyID } , new { @class = "btn primary-button" })
+            @Html.ActionLink("Cancel", "SelectGroupCompany",new { Orgid = Model.ParentCompanyID } , new { @class = "btn primary-button" })
 
         </li>
 

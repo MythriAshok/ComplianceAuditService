@@ -157,9 +157,9 @@
                     "Select Industry Type", new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Industry_Type"] })*@
 
                 @Html.DropDownListFor(m=>m.organization.Industry_Type, new List<SelectListItem>
-           { new SelectListItem{Text="Head Quarter", Value="1", Selected=true},
+           { new SelectListItem{Text="Marketing", Value="1"},
              new SelectListItem{Text="Manufacturing", Value="2"},
-             new SelectListItem{Text="IT", Value="3"}}, new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Industry_Type"] })
+             new SelectListItem{Text="IT", Value="3"}},"--Select Industry Type--" ,new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Industry_Type"] })
 
 
             </div>

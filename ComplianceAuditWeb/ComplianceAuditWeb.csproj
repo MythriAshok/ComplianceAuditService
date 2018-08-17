@@ -513,6 +513,12 @@
     <Content Include="Views\ManageOrganization\_AboutGroupCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_AboutBranch.cshtml" />
     <Content Include="Views\ManageOrganization\View.cshtml" />
+    <Content Include="Views\ManageOrganization\_DeleteCompany.cshtml" />
+    <Content Include="Views\ManageOrganization\_DeleteBranch.cshtml" />
+    <Content Include="Views\ManageOrganization\_DeactivateBranch.cshtml" />
+    <Content Include="Views\ManageOrganization\_ActivateBranch.cshtml" />
+    <Content Include="Views\ManageOrganization\_DeactivateCompany.cshtml" />
+    <Content Include="Views\ManageOrganization\_ActivateCompany.cshtml" />
     <Content Include="Views\ComplianceManagement\_ListofCompliance - Copy.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
