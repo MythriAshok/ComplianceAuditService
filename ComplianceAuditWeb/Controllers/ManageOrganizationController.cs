@@ -130,6 +130,14 @@ namespace ComplianceAuditWeb.Controllers
                     string message = common.UploadFile(file, filePath);
                     ModelState.AddModelError("org_hier.logo", message);
                 }
+                else
+                {
+                    CommonController common = new CommonController();
+                    organizationVM.organization.logo = Path.GetFileName("noimage.png");
+                    string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName("noimage.png"));
+                    string message = common.UploadFile(file, filePath);
+                    ModelState.AddModelError("org_hier.logo", message);
+                }
                 bool result = false;
                 OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
                 result = organizationClient.updateOrganization(organizationVM.organization);
@@ -310,10 +318,10 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult AboutGroupCompany(AboutCompanyViewModel aboutCompanyViewModel)
         {
-            TempData["CompanyID"] = aboutCompanyViewModel.CompanyID;
+           // TempData["CompanyID"] = aboutCompanyViewModel.CompanyID;
             TempData["GroupCompanyName"] = aboutCompanyViewModel.CompanyName;
             TempData["GroupCompanyID"] = aboutCompanyViewModel.CompanyID;
-            TempData["ParentCompanyID"] = aboutCompanyViewModel.CompanyID;
+           // TempData["ParentCompanyID"] = aboutCompanyViewModel.CompanyID;
             int id = aboutCompanyViewModel.CompanyID;
                 return RedirectToAction("AddCompany", new { id = id });
         }
@@ -415,32 +423,6 @@ namespace ComplianceAuditWeb.Controllers
                 {
                     TempData["ParentCompany_ID"] = companyVM.organization.Parent_Company_Id;
                     TempData["Success"] = "Company created successfully!!!";
-                    BranchViewModel branchViewModel = new BranchViewModel();
-                    branchViewModel.organization = new Organization();
-                    branchViewModel.organization.Organization_Id = 0;
-                    branchViewModel.branch = new BranchLocation();
-                    branchViewModel.branch.Branch_Id = 0;
-
-                    branchViewModel.organization.Is_Active = true;
-                    branchViewModel.organization.Level = 3;
-                    branchViewModel.organization.Is_Leaf = true;
-                    branchViewModel.organization.Is_Vendor = false;
-                    branchViewModel.organization.Parent_Company_Id = id;
-                    branchViewModel.organization.Company_Name = "HQBranch";
-                    branchViewModel.organization.Industry_Type = "Head Quarter";
-                    branchViewModel.organization.User_Id = Convert.ToInt32(Session["UserID"]);
-                    branchViewModel.branch.Country_Id = companyVM.branch.Country_Id;
-                    branchViewModel.branch.State_Id = companyVM.branch.State_Id;
-                    branchViewModel.branch.City_Id = companyVM.branch.City_Id;
-                    int headQuarterid = organizationClient.insertBranch(branchViewModel.organization, branchViewModel.branch);
-
-
-                    string appkey = String.Join("", "group", companyVM.organization.Parent_Company_Id);
-                    string companyfolder = String.Join("", "Company", id);
-                    string path = string.Join("/", ConfigurationManager.AppSettings["FilePath"],appkey,companyfolder);
-                    //ConfigurationManager.AppSettings[appkey] = path;
-                    Directory.CreateDirectory(Path.Combine(Server.MapPath(path)));
-
                     return RedirectToAction("AboutCompany", new { id = id });
                 }
             }
@@ -583,6 +565,14 @@ namespace ComplianceAuditWeb.Controllers
                 CommonController common = new CommonController();
                 companyVM.organization.logo = Path.GetFileName(file.FileName);
                 string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName(file.FileName));
+                string message = common.UploadFile(file, filePath);
+                ModelState.AddModelError("org_hier.logo", message);
+            }
+            else
+            {
+                CommonController common = new CommonController();
+                companyVM.organization.logo = Path.GetFileName("noimage.png");
+                string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName("noimage.png"));
                 string message = common.UploadFile(file, filePath);
                 ModelState.AddModelError("org_hier.logo", message);
             }
@@ -893,18 +883,7 @@ namespace ComplianceAuditWeb.Controllers
 
 
                 }
-                //string strXMLDefaultCountries = organizationservice.GetCountryList();
-                //DataSet dsDefaultCountries = new DataSet();
-                //dsDefaultCountries.ReadXml(new StringReader(strXMLDefaultCountries));
-               // branchVM.Country = new List<SelectListItem>();
-                //branchVM.Country.Add(new SelectListItem { Text = "--Select Country--", Value = "0" });
-                //if (dsCompanyList.Tables.Count > 0)
-                //{
-                //    foreach (System.Data.DataRow row in dsDefaultCountries.Tables[0].Rows)
-                //    {
-                //        branchVM.Country.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
-                //    }
-                //}
+     
 
 
                 branchVM.State = new List<SelectListItem>();
@@ -966,26 +945,26 @@ namespace ComplianceAuditWeb.Controllers
 
 
         [HttpPost]
-        public ActionResult AddBranch(BranchViewModel branchVM, HttpPostedFileBase file)
+        public ActionResult AddBranch(BranchViewModel branchVM)//, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
-                if (file != null)
-                {
-                    CommonController common = new CommonController();
-                    branchVM.organization.logo = Path.GetFileName(file.FileName);
-                    string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName(file.FileName));
-                    string message = common.UploadFile(file, filePath);
-                    ModelState.AddModelError("org_hier.logo", message);
-                }
-                else
-                {
-                    CommonController common = new CommonController();
-                    branchVM.organization.logo = Path.GetFileName("noimage.png");
-                    string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName("noimage.png"));
-                    string message = common.UploadFile(file, filePath);
-                    ModelState.AddModelError("org_hier.logo", message);
-                }
+                //if (file != null)
+                //{
+                //    CommonController common = new CommonController();
+                //    branchVM.organization.logo = Path.GetFileName(file.FileName);
+                //    string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName(file.FileName));
+                //    string message = common.UploadFile(file, filePath);
+                //    ModelState.AddModelError("org_hier.logo", message);
+                //}
+                //else
+                //{
+                //    CommonController common = new CommonController();
+                //    branchVM.organization.logo = Path.GetFileName("noimage.png");
+                //    string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName("noimage.png"));
+                //    string message = common.UploadFile(file, filePath);
+                //    ModelState.AddModelError("org_hier.logo", message);
+                //}
 
                 OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
                 branchVM.organization.Is_Active = true;
@@ -1104,7 +1083,6 @@ namespace ComplianceAuditWeb.Controllers
             }
 
 
-            // branchViewModel.GroupCompanyID = 36;//Convert.ToInt32((BranchViewModel) Session["GroupCompanyID"]);
 
             string strXMLGroupCompanyList = organizationClient.GetGroupCompaniesList();
             DataSet dsGroupCompanyList = new DataSet();
@@ -1121,7 +1099,6 @@ namespace ComplianceAuditWeb.Controllers
             branchViewModel.CompanyID = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Parent_Company_ID"]);
 
             string strXMLCompanyList = organizationClient.getCompanyListsforBranch(branchViewModel.CompanyID);
-            // string strXMLCompanyList = organizationClient.GeSpecifictCompaniesList(branchViewModel.CompanyID);
             DataSet dsCompanyList = new DataSet();
             dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
             branchViewModel.CompaniesList = new List<SelectListItem>();
@@ -1150,6 +1127,14 @@ namespace ComplianceAuditWeb.Controllers
                 string message = common.UploadFile(file, filePath);
                 ModelState.AddModelError("org_hier.logo", message);
             }
+            else
+            {
+                CommonController common = new CommonController();
+                BranchVM.organization.logo = Path.GetFileName("noimage.png");
+                string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName("noimage.png"));
+                string message = common.UploadFile(file, filePath);
+                ModelState.AddModelError("org_hier.logo", message);
+            }
             bool result = false;
             OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
             BranchVM.branch.Org_Hier_ID = BranchVM.organization.Organization_Id;
@@ -1172,8 +1157,6 @@ namespace ComplianceAuditWeb.Controllers
         [HttpGet]
         public ActionResult DeactivateBranch(int OrgID)
         {
-            // OrganizationViewModel organizationViewModel = new OrganizationViewModel();
-            //organizationViewModel.organization = new Organization();
             OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
             OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
             string strxmlData = organizationServiceClient.getBranch(OrgID);
@@ -1210,8 +1193,6 @@ namespace ComplianceAuditWeb.Controllers
 
         public ActionResult ActivateBranch(int OrgID)
         {
-            // OrganizationViewModel organizationViewModel = new OrganizationViewModel();
-            //organizationViewModel.organization = new Organization();
             OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
             OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
             string strxmlData = organizationServiceClient.getBranch(OrgID);
@@ -1251,8 +1232,6 @@ namespace ComplianceAuditWeb.Controllers
         [HttpGet]
         public ActionResult DeleteBranch(int OrgID)
         {
-            // OrganizationViewModel organizationViewModel = new OrganizationViewModel();
-            //organizationViewModel.organization = new Organization();
             OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
             OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
             string strxmlData = organizationServiceClient.getBranch(OrgID);
@@ -1482,6 +1461,14 @@ namespace ComplianceAuditWeb.Controllers
                 CommonController common = new CommonController();
                 vendorViewModel.organization.logo = Path.GetFileName(file.FileName);
                 string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName(file.FileName));
+                string message = common.UploadFile(file, filePath);
+                ModelState.AddModelError("org_hier.logo", message);
+            }
+            else
+            {
+                CommonController common = new CommonController();
+                vendorViewModel.organization.logo = Path.GetFileName("noimage.png");
+                string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName("noimage.png"));
                 string message = common.UploadFile(file, filePath);
                 ModelState.AddModelError("org_hier.logo", message);
             }
@@ -1799,64 +1786,7 @@ namespace ComplianceAuditWeb.Controllers
         }
 
 
-        //public List<AboutCompanyViewModel>  GetCompanyListUndergroupCompany(int id)
-        //{
-        //    AboutCompanyViewModel aboutCompanyViewModel = new AboutCompanyViewModel();
-        //    OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-
-
-        //    List<AboutCompanyViewModel> model = new List<AboutCompanyViewModel>();
-        //   // string companyListofGroupCompany = organizationServiceClient.GeSpecifictCompaniesList(aboutCompanyViewModel.ParentCompanyID);
-        //    string companyListofGroupCompany = organizationServiceClient.GeSpecifictCompaniesList(id);
-        //    DataSet dscompanyList = new DataSet();
-        //    dscompanyList.ReadXml(new StringReader(companyListofGroupCompany));
-        //    aboutCompanyViewModel.CompaniesList = new List<SelectListItem>();
-        //    if (dscompanyList.Tables.Count > 0)
-        //    {
-        //        foreach (System.Data.DataRow row in dscompanyList.Tables[0].Rows)
-        //        {
-        //            AboutCompanyViewModel listOfComp = new AboutCompanyViewModel
-        //            {
-        //                OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
-        //                CompanyNameList = row["Company_Name"].ToString(),
-        //                IndustryType = row["Industry_Type"].ToString(),
-        //                CountryID = Convert.ToInt32(row["Country_ID"]),
-        //                StateID = Convert.ToInt32(row["State_ID"]),
-        //                CityID = Convert.ToInt32(row["City_ID"]),
-        //                logo = row["logo"].ToString()
-        //            };
-        //            model.Add(listOfComp);
-
-        //        }
-        //    }
-        //    return model;
-        //}
-
-        //public AboutCompanyViewModel aboutcreatedGroupCompany(int id)
-        //{
-        //    AboutCompanyViewModel aboutCompanyViewModel = new AboutCompanyViewModel();
-        //    OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-        //    string aboutcompany = organizationServiceClient.getCompanyListsforBranch(id);
-        //    DataSet dsaboutCompany = new DataSet();
-        //    dsaboutCompany.ReadXml(new StringReader(aboutcompany));
-        //    aboutCompanyViewModel.CompanyID = Convert.ToInt32(dsaboutCompany.Tables[0].Rows[0]["Org_Hier_ID"]);
-        //    aboutCompanyViewModel.CompanyDescription = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["Description"]);
-        //    aboutCompanyViewModel.CompanyName = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["Company_Name"]);
-        //    aboutCompanyViewModel.ParentCompanyID = Convert.ToInt32(dsaboutCompany.Tables[0].Rows[0]["Parent_Company_ID"]);
-        //    aboutCompanyViewModel.Is_Active = Convert.ToBoolean(Convert.ToInt32(dsaboutCompany.Tables[0].Rows[0]["Is_Active"]));
-        //    // if (dsaboutCompany.Tables.Contains("logo"))
-        //    {
-        //        aboutCompanyViewModel.CompanyLogo = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["logo"]);
-        //    }
-        //    //aboutCompanyViewModel.CompanyID =Convert.ToInt32( Session["CompanyID"]);
-        //    //aboutCompanyViewModel.CompanyDescription = Convert.ToString(Session["CompanyDescription"]);
-        //    //aboutCompanyViewModel.CompanyName = Convert.ToString(Session["CompanyName"]);
-        //    Session["ParentCompanyID"] = aboutCompanyViewModel.ParentCompanyID;
-        //    return aboutCompanyViewModel;
-        //}
-      
-
-
+       
    
         [HttpGet]
         public ActionResult AboutBranch(int id)

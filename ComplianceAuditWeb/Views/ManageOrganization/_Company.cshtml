@@ -95,27 +95,19 @@
                 @if ((TempData["GroupCompanyID"]) != null)
                 {
                     Model.GroupCompanyName = TempData["GroupCompanyName"].ToString();
-                    @Html.Label("Group Company")
+                    @Html.Label("Group Company")<span style="color:red">*</span>
 
-                    @*Model.GroupCompanyID = Convert.ToInt32(Session["CompanyID"]);
-                        @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })*@
-                    // Model.GroupCompanyID = Convert.ToInt32(Session["CompanyID"]);
-                    //Model.GroupCompanyName = Session["CompanyName"].ToString();
-                    //Model.GroupCompanyName = TempData["CompanyName"].ToString();
+
                     @Html.TextBoxFor(m => m.GroupCompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
                     @Html.HiddenFor(m => m.GroupCompanyID)
                 }
-                else /* if ((TempData["GroupCompanyID"]) == null)*/
+
+                else
                 {
                     @Html.Label("Group Comapny", new { @class = "floating-label" })<span style="color:red">*</span>
                     @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input" })
+
                 }
-                @*//else
-                    //{
-                    //    Model.GroupCompanyID = Model.organization.Parent_Company_Id; ;
-                    //    @Html.Label("Group Comapny", new { @class = "floating-label" })<span style="color:red">*</span>
-                    //    @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input" })
-                    //}*@
             </div>
         </div>
 
@@ -247,9 +239,18 @@
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
                 @Html.Label("Auditing Frequency", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.DropDownListFor(m => m.companydetails.Auditing_Frequency, new SelectList
+                @*@Html.DropDownListFor(m => m.companydetails.Auditing_Frequency, new SelectList
                         (Enum.GetValues(typeof(ComplianceAuditWeb.Models.CompanyViewModel.Auditingfrequency))),
-                        "Select Auditing Freequency", new { @class = "inputMaterial ui - autocomplete - input" })
+                        "Select Auditing Freequency", new { @class = "inputMaterial ui - autocomplete - input" })*@
+
+                @Html.DropDownListFor(m=>m.companydetails.Auditing_Frequency, new List<SelectListItem>
+        { new SelectListItem{Text="Quarterly", Value="1"},
+          new SelectListItem{Text="Half Yearly", Value="2"},
+          new SelectListItem{Text="Anually", Value="3"}},"--Select Auditing Frequency--" ,new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Industry_Type"] })
+
+
+
+
             </div>
         </div>
 
