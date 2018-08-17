@@ -1,19 +1,23 @@
 ﻿@model ComplianceAuditWeb.Models.ComplianceViewModel
 @{ Layout = null;}
 
-<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-@{  string submit = "Save";}
-@if (Model.Compliance.Compliance_Xref_ID != 0)
-{
-    <h2>Update Section</h2>
-    submit= "Update";
-}
-else
-{
-    submit = "Save";
-    <h2>Add Section</h2>
-}
 
+<div class="">
+    <div class="modal-title" style="margin: 10px;">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        @{ string submit = "Save";}
+        @if (Model.Compliance.Compliance_Xref_ID != 0)
+        {
+            <h2>Update Section</h2>
+            submit = "Update";
+        }
+        else
+        {
+            submit = "Save";
+            <h2>Add Section</h2>
+        }
+    </div>
+    <br />
     @using (Html.BeginForm())
     {
         <div class="mid_content_sec">
@@ -108,7 +112,8 @@ else
             <ul class="list-inline continueBtn">
                 <li>
                     <div class="modal-footer">
-                        <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">@submit<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
+                        @*<button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">@submit<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>*@
+                        <button type="submit" class="btn primary-button" id="approve-btn" name="Button" value="Submit">@submit</button>
                         <input type="reset" value="Reset" class="btn primary-button" />
                         <button class="btn primary-button" data-dismiss="modal" id="btnCancel">Cancel</button>
                     </div>
@@ -117,4 +122,12 @@ else
         </div>
     }
 
+</div>
 
+<script type="text/javascript">
+    $(function () {
+        $('#approve-btn').click(function () {
+            $('#modal-container').modal('hide');
+        });
+    });
+</script>
