@@ -28,7 +28,7 @@ namespace ComplianceAuditWeb.Models
         {
             Complianced,
             NonCompliance,
-            PartaillyComplianced
+            PartiallyComplianced
         }
     }
 }

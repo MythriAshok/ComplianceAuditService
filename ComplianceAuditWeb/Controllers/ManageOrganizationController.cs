@@ -74,7 +74,13 @@ namespace ComplianceAuditWeb.Controllers
                 if (id != 0)
                 {
                     TempData["ParentCompanyID"] = organizationVM.organization.Organization_Id;
+                    //TempData["CompanyName"] = organizationVM.organization.Company_Name;
+                    string appkey = String.Join("", "group", id);
+                    string path = string.Join("/", ConfigurationManager.AppSettings["FilePath"],appkey);                                                                     
+                    Directory.CreateDirectory(Path.Combine(Server.MapPath(path)));
+                   // ConfigurationManager.AppSettings[appkey] = path;
                     TempData["Success"] = "Group Company created successfully!!!";
+
                     return RedirectToAction("AboutGroupCompany", new { id = id });
                 }
             }
@@ -428,6 +434,12 @@ namespace ComplianceAuditWeb.Controllers
                     branchViewModel.branch.City_Id = companyVM.branch.City_Id;
                     int headQuarterid = organizationClient.insertBranch(branchViewModel.organization, branchViewModel.branch);
 
+
+                    string appkey = String.Join("", "group", companyVM.organization.Parent_Company_Id);
+                    string companyfolder = String.Join("", "Company", id);
+                    string path = string.Join("/", ConfigurationManager.AppSettings["FilePath"],appkey,companyfolder);
+                    //ConfigurationManager.AppSettings[appkey] = path;
+                    Directory.CreateDirectory(Path.Combine(Server.MapPath(path)));
 
                     return RedirectToAction("AboutCompany", new { id = id });
                 }
@@ -840,7 +852,6 @@ namespace ComplianceAuditWeb.Controllers
                 {
                     branchVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
                 }
-
             }
             string strXMLCompanyList = organizationservice.GeSpecifictCompaniesList(id);
             DataSet dsCompanyList = new DataSet();
@@ -987,9 +998,14 @@ namespace ComplianceAuditWeb.Controllers
                 //bool vendorresult = vendorServiceClient.insertVendorForBranch(branchVM.VendorID, id,branchVM.VendorStartDate
                 //    , branchVM.VendorEndDate, branchVM.IsVendorActive);
                 if (id != 0)
-                {
-                  
+                {                  
                     TempData["Success"] = "Branch created successfully";
+                    string appkey = String.Join("", "group", branchVM.GroupCompanyID);
+                    string appcompany = String.Join("", "Company", branchVM.organization.Parent_Company_Id);
+                    string appstring = String.Join("", "Branch", id);
+                    string path = string.Join("/", ConfigurationManager.AppSettings["FilePath"], appkey,appcompany,appstring);                                  
+                    Directory.CreateDirectory(Path.Combine(Server.MapPath(path)));
+                    //ConfigurationManager.AppSettings[appstring] = path;
                     return RedirectToAction("AboutBranch", new { id = id });
                 }
                 else
@@ -1372,8 +1388,12 @@ namespace ComplianceAuditWeb.Controllers
             }
             else
             {
+
                 ModelState.AddModelError("", ConfigurationManager.AppSettings["Requried"]);
-                return RedirectToAction("AddVendor");
+                vendorVM.CompaniesList=(List<SelectListItem>) TempData["CompanyList"];
+                return View("_Vendor", vendorVM);
+              
+                //return RedirectToAction("AddVendor");
             }
         }
 

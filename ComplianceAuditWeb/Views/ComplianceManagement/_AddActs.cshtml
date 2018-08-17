@@ -70,7 +70,8 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @if (TempData["Message"] != null)
         {
-        <p class="alert alert-warning">@TempData["Message"]</p>
+            @*<p class="alert alert-warning">@TempData["Message"]</p>*@
+            <p style="color:red">@TempData["Message"]</p>
         }
         <div class="col-xs-4 subSelect ">
             <div class="input-field">

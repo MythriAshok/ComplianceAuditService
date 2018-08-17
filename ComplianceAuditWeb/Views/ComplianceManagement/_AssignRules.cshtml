@@ -75,11 +75,13 @@
 <div class="mid_content_sec">
     @if (TempData["Message"] != null)
     {
-        <p class="alert alert-success">@TempData["Message"]</p>
+        @*<p class="alert alert-success">@TempData["Message"]</p>*@
+    <p id="successMessage">@TempData["Message"]</p>
     }
     @if (TempData["Error"] != null)
     {
-        <p class="alert alert-warning">@TempData["Error"]</p>
+        @*<p class="alert alert-warning">@TempData["Error"]</p>*@
+    <p id="successMessage">@TempData["Message"]</p>
     }
     <div class="col-xs-6 subSelect ">
         @Html.Label("Compliance Type", new { @class = "floating-label" })

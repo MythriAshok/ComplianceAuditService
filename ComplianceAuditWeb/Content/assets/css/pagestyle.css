@@ -979,9 +979,9 @@ select {
 
 
 @media screen and (max-width: 480px) { 
+}
 
-
-
-
-
+#successMessage{
+    color:green;
+    text-align:center;
 }

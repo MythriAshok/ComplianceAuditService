@@ -85,7 +85,7 @@
                         <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Branch:</h4>
                         @if (TempData["Message"] != null)
                         {
-                            <p class="alert alert-success">  @TempData["Message"] </p>
+                            <p id=" successMessage">  @TempData["Message"] </p>
                         }
                         @foreach (var item in Model.Branch)
                         {
@@ -123,7 +123,7 @@
                         <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Vendor:</h4>
                         @if (TempData["Message"] != null)
                         {
-                            <p class="alert alert-success">  @TempData["Message"] </p>
+                            <p id=" successMessage"> @TempData["Message"] </p>
                         }
                         @foreach (var item in Model.Vendor)
                         {

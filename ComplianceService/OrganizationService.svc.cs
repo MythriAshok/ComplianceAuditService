@@ -227,8 +227,6 @@ namespace ComplianceService
                     branch.Org_Hier_ID = OrganizationID;
                     BranchLocationID = organizationhelper.insertupdateBranchLocation(branch, 'I');
 
-
-
                     if (OrganizationID > 0)
                     {
                         company.Org_Hier_ID = OrganizationID;
