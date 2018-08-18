@@ -127,7 +127,7 @@
             var procemessage = "<option value='0'> Please wait...</option>";
             $("#branch_Country_Id").html(procemessage).show();
             var url = "/Common/getdefaultcountry";
-            
+
             $.ajax({
                 url: url,
                 data: { compid: _CompanyId },
@@ -144,7 +144,7 @@
                     alert("error : " + reponse);
                 }
             });
-         
+
         }
     </script>
 }
@@ -186,12 +186,18 @@
                 }
                 else if (Model.CompanyID > 0)
                 {
-                    Model.ChildCompanyName = TempData["DefaultCompanyName"].ToString(); ;
-                    @Html.Label("Company", new { @class = "floating-label" })<span style="color:red">*</span>
-                    @Html.TextBoxFor(m => m.ChildCompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
-
+                    if ((TempData["DefaultCompanyName"]) != null)
+                    {
+                        Model.ChildCompanyName = TempData["DefaultCompanyName"].ToString();
+                        @Html.Label("Company", new { @class = "floating-label" })<span style="color:red">*</span>
+                        @Html.TextBoxFor(m => m.ChildCompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
+                    }
                     @*@Html.DropDownListFor(m => m.CompanyID, Model.CompaniesList, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })*@
-
+                    else
+                    {
+                        @Html.Label("Company", new { @class = "floating-label" })<span style="color:red">*</span>
+                        @Html.DropDownListFor(m => m.CompanyID, Model.CompaniesList, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "GetCountry(this.value)" })
+                    }
                 }
                 else
                 {
@@ -272,12 +278,26 @@
                     (Enum.GetValues(typeof(ComplianceAuditWeb.Models.OrganizationViewModel.BranchType))),
                     "Select Branch Type", new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Branch Type"] })*@
 
+                @if ((TempData["HeadQuarter"]) != null)
+                {
+                    @Html.DropDownListFor(m => m.organization.Industry_Type, new List<SelectListItem>
+                  { new SelectListItem{Text="Head Quarter", Value="1", Selected=true},
 
-                @Html.DropDownListFor(m=>m.organization.Industry_Type, new List<SelectListItem>
-        { new SelectListItem{Text="Marketing", Value="1"},
-          new SelectListItem{Text="Manufacturing", Value="2"},
-          new SelectListItem{Text="IT", Value="3"}},"--Select Industry Type--" ,new { @class = "inputMaterial ui - autocomplete - input" })
+                   new SelectListItem{Text="Marketing", Value="2"},
+                    new SelectListItem{Text="Manufacturing", Value="3"},
+                    new SelectListItem{Text="IT", Value="4"}},  new { @class = "inputMaterial ui - autocomplete - input" })
+                }
+                else
+                {
+                    @Html.DropDownListFor(m => m.organization.Industry_Type, new List<SelectListItem>
+            
+            { new SelectListItem{Text="Head Quarter", Value="1", Disabled=true},
 
+                   new SelectListItem{Text="Marketing", Value="2"},
+              new SelectListItem{Text="Manufacturing", Value="3"},
+              new SelectListItem{Text="IT", Value="4"}}, "--Select Industry Type--", new { @class = "inputMaterial ui - autocomplete - input" })
+
+                }
 
 
 

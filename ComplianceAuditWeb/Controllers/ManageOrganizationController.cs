@@ -441,7 +441,7 @@ namespace ComplianceAuditWeb.Controllers
                     branchViewModel.branch.State_Id = companyVM.branch.State_Id;
                     branchViewModel.branch.City_Id = companyVM.branch.City_Id;
                     branchViewModel.organization.Company_Name = "HeadQuarter" + companyVM.organization.Company_Name;
-                    branchViewModel.organization.Industry_Type = companyVM.organization.Industry_Type;
+                    branchViewModel.organization.Industry_Type = "Head Quarter";
                     branchViewModel.branch.Postal_Code = companyVM.branch.Postal_Code;
                     int headQuarterid = Convert.ToInt32(organizationClient.insertBranch(branchViewModel.organization, branchViewModel.branch));
 
@@ -1030,22 +1030,7 @@ namespace ComplianceAuditWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                //if (file != null)
-                //{
-                //    CommonController common = new CommonController();
-                //    branchVM.organization.logo = Path.GetFileName(file.FileName);
-                //    string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName(file.FileName));
-                //    string message = common.UploadFile(file, filePath);
-                //    ModelState.AddModelError("org_hier.logo", message);
-                //}
-                //else
-                //{
-                //    CommonController common = new CommonController();
-                //    branchVM.organization.logo = Path.GetFileName("noimage.png");
-                //    string filePath = Path.Combine(Server.MapPath(ConfigurationManager.AppSettings["FilePath"].ToString()), Path.GetFileName("noimage.png"));
-                //    string message = common.UploadFile(file, filePath);
-                //    ModelState.AddModelError("org_hier.logo", message);
-                //}
+               
 
                 OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
                 branchVM.organization.Is_Active = true;
@@ -1100,6 +1085,11 @@ namespace ComplianceAuditWeb.Controllers
                 branchViewModel.organization.Company_Name = dsUpdatedData.Tables[0].Rows[0]["Company_Name"].ToString();
                 branchViewModel.organization.Description = dsUpdatedData.Tables[0].Rows[0]["Description"].ToString();
                 branchViewModel.organization.Industry_Type = dsUpdatedData.Tables[0].Rows[0]["Industry_Type"].ToString();
+                if(branchViewModel.organization.Industry_Type =="Head Quarter")
+                {
+                    TempData["HeadQuarter"] = branchViewModel.organization.Industry_Type;
+                }
+
                 branchViewModel.organization.Is_Active =Convert.ToBoolean(Convert.ToInt32( dsUpdatedData.Tables[0].Rows[0]["Is_Active"]));
                 branchViewModel.organization.Is_Delete =Convert.ToBoolean(Convert.ToInt32( dsUpdatedData.Tables[0].Rows[0]["Is_Vendor"]));
                 branchViewModel.organization.Is_Leaf =Convert.ToBoolean(Convert.ToInt32( dsUpdatedData.Tables[0].Rows[0]["Is_Leaf"]));
@@ -1935,7 +1925,7 @@ namespace ComplianceAuditWeb.Controllers
             TempData["BranchName"] = aboutCompanyViewModel.CompanyName;
             //Session["ParentCompanyID"] = aboutCompanyViewModel.ParentCompanyID;
             int id = aboutCompanyViewModel.ParentCompanyID;
-
+            
             return RedirectToAction("BranchList", new { id = id });
         }
         
