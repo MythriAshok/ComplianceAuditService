@@ -1,0 +1,53 @@
+﻿@model IEnumerable<SelectListItem>
+
+@{
+    ViewBag.Title = "Select Group Company";
+    Layout = null;
+}
+<head>
+    <script>
+        $(function() {
+            $('#btnsave').click(function () {
+                var _id = $("#GroupDropdown").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/Common/SelectGroupCompany",
+                    data: { GroupDropdown: _id },
+                    success: function (data) {
+                        alert(data);
+                        if (data.success) {
+                            $('#bootstrapDialog').modal('hide');
+                        }
+                        else {
+                            $('#bootstrapDialog').html(data.message);
+                        }
+                    },
+                    error: function () {
+                        alert("Error");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+@*@using (Html.BeginForm("SelectGroupCompany","Common",FormMethod.Post))
+{*@
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModal-label">Select Group Company</h4>
+            </div>
+            <div class="modal-body">
+                @Html.DropDownList("GroupDropdown", Model, null, new { @class = "inputMaterial ui - autocomplete - input" })
+                <input type="hidden" id="GroupDropdown" />
+                <br />
+                @*<input type="submit" value="select" class="btn primary-button" onclick="assigngroupCompany()" />*@
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" id="btnsave">Select</button>
+                <button class=" btn btn-default" data-dismiss="modal" id="btnCancel">Cancel</button>
+            </div>
+        </div>      
+    </div>
+@*}*@

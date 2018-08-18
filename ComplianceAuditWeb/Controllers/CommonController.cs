@@ -196,5 +196,35 @@ namespace ComplianceAuditWeb.Controllers
             //return View("View");
             return ViewBag.Message;
         }
+        [HttpGet]
+        public ActionResult SelectGroupCompany()
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem { Text = "-- Select Group Company --", Value = "0" });
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+            string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
+            DataSet dsGroupCompanyList = new DataSet();
+            dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
+
+            if (dsGroupCompanyList.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
+                {
+                    if(Convert.ToInt32(Session["GroupCompanyId"]) == Convert.ToInt32(row["Org_Hier_ID"]))
+                    listItems.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString(),Selected=true });
+                    else
+                    listItems.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString()});
+                }
+            }
+            return PartialView("~/Views/Shared/_SelectGroupCompany.cshtml", listItems);
+        }
+
+        [HttpPost]
+        public JsonResult SelectGroupCompany(string GroupDropdown)
+        {          
+            Session["GroupCompanyId"] = Convert.ToInt32(GroupDropdown);
+            //return PartialView("~/Views/Shared/_SelectGroupCompany.cshtml");
+            return Json(new { success = true });
+        }
     }
 }

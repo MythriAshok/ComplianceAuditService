@@ -9,17 +9,35 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewBag.Title</title>
+    <link href="~/Content/assets/css/loginpage.css" rel="stylesheet" />
 </head>
 <body>
     <br />
     <br />
     <br />
+    <div id="login">
+        @using (Html.BeginForm())
+        {
 
-    <div style="background-color:white">
-      <h4>Successfully Logged out</h4>
-        Click here to 
-       @Html.ActionLink(linkText:"Login",actionName: "Login",controllerName: "UserManagement")
-        again.
+            <div style="align-content:center; margin-left:100px">
+                <br />
+
+                <img src="~/Content/assets/images/logo_new.png" /><br />
+            </div>
+            <hr/>
+            <h4>Successfully Logged out</h4>
+
+            <p>
+                Click here to
+
+                @Html.ActionLink(linkText: "Login", actionName: "Login", controllerName: "UserManagement")
+                again.
+            </p>
+    @*<input type="submit" value="Login">*@
+    <br />
+    <br />
+    <br />
+    }
     </div>
 </body>
 </html>

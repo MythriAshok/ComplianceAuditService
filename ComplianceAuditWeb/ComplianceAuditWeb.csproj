@@ -520,6 +520,8 @@
     <Content Include="Views\ManageOrganization\_DeactivateCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_ActivateCompany.cshtml" />
     <Content Include="Views\ComplianceManagement\_ListofCompliance - Copy.cshtml" />
+    <Content Include="Views\Shared\_SelectGroupCompany.cshtml" />
+    <Content Include="Views\Shared\EmptyPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

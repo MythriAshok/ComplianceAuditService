@@ -506,6 +506,7 @@ namespace ComplianceAuditWeb.Controllers
                     Session["username"] = fullname;
                     Session["emailid"] = ds.Tables[0].Rows[0]["Email_ID"];
                     Session["GroupCompanyId"] = ds.Tables[0].Rows[0]["Company_ID"];
+                    Session["Isproductadmin"] = Session["GroupCompanyId"];
                     Session["Last_Login"] = ds.Tables[0].Rows[0]["Last_Login"];
                     Session["photo"] = ds.Tables[0].Rows[0]["Photo"];
                     return RedirectToAction("dashboard", "common",new { pid=0});
