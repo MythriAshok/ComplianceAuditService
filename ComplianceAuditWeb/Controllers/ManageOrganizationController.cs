@@ -338,13 +338,13 @@ namespace ComplianceAuditWeb.Controllers
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
             companyVM.GroupCompaniesList = new List<SelectListItem>();
             companyVM.GroupCompaniesList.Add(new SelectListItem { Text = "--Select Group Company--", Value = "0" });
-            if (dsGroupCompanyList.Tables.Count > 0)
-            {
-                foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
-                {
-                    companyVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
-                }
-            }
+            //if (dsGroupCompanyList.Tables.Count > 0)
+            //{
+            //    foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
+            //    {
+            //        companyVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+            //    }
+            //}
             string strXMLCountries = organizationservice.GetCountryList();
             DataSet dsCountries = new DataSet();
             dsCountries.ReadXml(new StringReader(strXMLCountries));
@@ -798,7 +798,7 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult AddBranch()
         {
 
-            int id = 0;
+            int id = 0;// session
             BranchViewModel branchVM = new BranchViewModel();
             var copmpanyid = Request.QueryString["Orgid"];
             if (copmpanyid != null)
