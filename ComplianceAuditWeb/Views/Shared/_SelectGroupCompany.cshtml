@@ -14,9 +14,9 @@
                     url: "/Common/SelectGroupCompany",
                     data: { GroupDropdown: _id },
                     success: function (data) {
-                        alert(data);
                         if (data.success) {
                             $('#bootstrapDialog').modal('hide');
+                            location.reload();
                         }
                         else {
                             $('#bootstrapDialog').html(data.message);
@@ -45,8 +45,8 @@
                 @*<input type="submit" value="select" class="btn primary-button" onclick="assigngroupCompany()" />*@
             </div>
             <div class="modal-footer">
-                <button class="btn btn-success" id="btnsave">Select</button>
-                <button class=" btn btn-default" data-dismiss="modal" id="btnCancel">Cancel</button>
+                <button class="btn primary-button" id="btnsave">Select</button>
+                <button class="btn primary-button" data-dismiss="modal" id="btnCancel">Cancel</button>
             </div>
         </div>      
     </div>
