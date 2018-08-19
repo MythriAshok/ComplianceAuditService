@@ -1579,11 +1579,17 @@ namespace ComplianceAuditWeb.Controllers
             //return RedirectToAction("ListofCompany",routeValues:new { GroupCompanyid = model.GroupCompanyID });
         }
 
-        public ActionResult ListofCompany(int GroupCompanyid)
+        public ActionResult ListofCompany()
         {
+            int ID = Convert.ToInt32(Session["GroupCompanyId"]);
+            var groupcopmpanyid = Request.QueryString["GroupCompanyid"];
+            if (groupcopmpanyid != null)
+            {
+                ID = Convert.ToInt32(groupcopmpanyid);
+            }
             List<ListOfGroupCompanies> companylist = new List<ListOfGroupCompanies>();
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
-            string strxmlCompanies = organizationservice.GeSpecifictCompaniesList(GroupCompanyid);
+            string strxmlCompanies = organizationservice.GeSpecifictCompaniesList(ID);
 
             DataSet dsSpecificCompaniesList = new DataSet();
             dsSpecificCompaniesList.ReadXml(new StringReader(strxmlCompanies));
@@ -1610,14 +1616,14 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult SelectCompany()
         {
             int id = 0;
-
+             
             Models.ListOfGroupCompanies model = new ListOfGroupCompanies();
             model.GroupCompaniesList = new List<SelectListItem>();
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
             string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
             DataSet dsGroupCompanyList = new DataSet();
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
-            model.GroupCompaniesList.Add(new SelectListItem() { Text = "--Select GroupCompany--", Value = "0" });
+            //model.GroupCompaniesList.Add(new SelectListItem() { Text = "--Select GroupCompany--", Value = "0" });
             if (dsGroupCompanyList.Tables.Count > 0)
             {
                 model.GroupCompanyID = Convert.ToInt32(dsGroupCompanyList.Tables[0].Rows[0]["Org_Hier_ID"]);
@@ -1626,11 +1632,12 @@ namespace ComplianceAuditWeb.Controllers
                     model.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
                 }
             }
+            model.GroupCompanyID = Convert.ToInt32(Session["GroupCompanyId"]);
             string strXMLCompanyList = organizationservice.GeSpecifictCompaniesList(model.GroupCompanyID);
             DataSet dsCompanyList = new DataSet();
             dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
             model.CompaniesList = new List<SelectListItem>();
-            model.CompaniesList.Add(new SelectListItem { Text = "--Select Company--", Value = "0" });
+            model.CompaniesList.Add(new SelectListItem { Text = "-- Select Company --", Value = "0" });
             if (dsCompanyList.Tables.Count > 0)
             {
                 model.CompanyID = Convert.ToInt32(dsCompanyList.Tables[0].Rows[0]["Org_Hier_ID"]);

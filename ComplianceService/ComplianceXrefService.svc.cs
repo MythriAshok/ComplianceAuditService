@@ -172,6 +172,17 @@ namespace ComplianceService
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();
         }
-
+        public string GetComplainceType()
+        {
+            return bindcompliancetype();
+        }
+        private string bindcompliancetype()
+        {
+            ComplianceXrefHelper helper = new ComplianceXrefHelper();
+            DataSet ds = helper.GetComplianceType();
+            UtilityHelper utilityHelper = new UtilityHelper();
+            ds = utilityHelper.ConvertNullsToEmptyString(ds);
+            return ds.GetXml();
+        }
     }
 }

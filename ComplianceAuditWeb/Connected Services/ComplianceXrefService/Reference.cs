@@ -110,6 +110,12 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSpecificComplaince", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSpecificComplainceResponse")]
         System.Threading.Tasks.Task<string> GetSpecificComplainceAsync(int complianceId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetComplainceType", ReplyAction="http://tempuri.org/IComplianceXrefService/GetComplainceTypeResponse")]
+        string GetComplainceType();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetComplainceType", ReplyAction="http://tempuri.org/IComplianceXrefService/GetComplainceTypeResponse")]
+        System.Threading.Tasks.Task<string> GetComplainceTypeAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -265,6 +271,14 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         
         public System.Threading.Tasks.Task<string> GetSpecificComplainceAsync(int complianceId) {
             return base.Channel.GetSpecificComplainceAsync(complianceId);
+        }
+        
+        public string GetComplainceType() {
+            return base.Channel.GetComplainceType();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetComplainceTypeAsync() {
+            return base.Channel.GetComplainceTypeAsync();
         }
     }
 }

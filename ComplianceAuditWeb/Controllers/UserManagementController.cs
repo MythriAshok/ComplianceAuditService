@@ -243,6 +243,7 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult AddUser(UserViewModel model, HttpPostedFileBase file)
         {
                 UserService.UserServiceClient Client = new UserService.UserServiceClient();
+            
                 if (ModelState.IsValid)
                 {
                 if (file != null && file.ContentLength > 0)

@@ -49,9 +49,20 @@ namespace ComplianceAuditWeb.Controllers
             model.ActType.Add(new SelectListItem { Text = "State Level", Value = "2" });
             //model.ActType.Add(new SelectListItem { Text = "City Level", Value = "3" });
 
+            ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
 
-            model.AuditType = new List<SelectListItem>();
-            model.AuditType.Add(new SelectListItem { Text = "Labour Compliance", Value = "1" });
+            model.ComplianceType = new List<SelectListItem>();
+            string xmldata=client.GetComplainceType();
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            model.ComplianceType.Add(new SelectListItem { Text = "-- Select Compliance --", Value = "0" });
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.ComplianceType.Add(new SelectListItem { Text = Convert.ToString(row["Compliance_Type_Name"]), Value = Convert.ToString(row["Compliance_Type_ID"]) });
+                }
+            }
             model.Compliance = new ComplianceXref();
             model.Compliance.Compliance_Xref_ID = 0;
             TempData["Actmodel"] = model;
@@ -141,7 +152,7 @@ namespace ComplianceAuditWeb.Controllers
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             model.Compliance.Effective_Start_Date = Convert.ToDateTime(ds.Tables[0].Rows[0]["Effective_Start_Date"]);
-            model.Compliance.Audit_Type_ID=Convert.ToInt32(ds.Tables[0].Rows[0]["Audit_Type_ID"]);
+            model.Compliance.Compliance_Type_ID=Convert.ToInt32(ds.Tables[0].Rows[0]["Compliance_Type_ID"]);
             model.Compliance.Country_ID= Convert.ToInt32(ds.Tables[0].Rows[0]["Country_ID"]);
             model.Compliance.State_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["State_ID"]);
             model.Compliance.City_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["City_ID"]);
@@ -184,7 +195,7 @@ namespace ComplianceAuditWeb.Controllers
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             model.Compliance.Effective_Start_Date = Convert.ToDateTime(ds.Tables[0].Rows[0]["Effective_Start_Date"]);
-            model.Compliance.Audit_Type_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["Audit_Type_ID"]);
+            model.Compliance.Compliance_Type_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["Compliance_Type_ID"]);
             model.Compliance.Country_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["Country_ID"]);
             model.Compliance.State_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["State_ID"]);
             model.Compliance.City_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["City_ID"]);
@@ -305,7 +316,7 @@ namespace ComplianceAuditWeb.Controllers
                     Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),                    
                     Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),                    
                     Version = Convert.ToInt32(row["Version"]),
-                    Audit_Type_ID=Convert.ToInt32(row["Audit_Type_ID"])
+                    Compliance_Type_ID=Convert.ToInt32(row["Compliance_Type_ID"])
                 });
             }
             return model;
@@ -624,17 +635,27 @@ namespace ComplianceAuditWeb.Controllers
             model.ActType.Add(new SelectListItem { Text = "State Level", Value = "2" });
             //model.ActType.Add(new SelectListItem { Text = "City Level", Value = "3" });
 
-
-            model.AuditType = new List<SelectListItem>();
-            model.AuditType.Add(new SelectListItem { Text = "Labour Compliance", Value = "1" });
-            model.Compliance = new ComplianceXref();
-
             ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
-            string xmldata=client.GetActs(id);
+            model.ComplianceType = new List<SelectListItem>();
+            string xmldata = client.GetComplainceType();
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
+            model.ComplianceType.Add(new SelectListItem { Text = "-- Select Compliance --", Value = "0" });
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.ComplianceType.Add(new SelectListItem { Text = Convert.ToString(row["Compliance_Type_Name"]), Value = Convert.ToString(row["Compliance_Type_ID"]) });
+                }
+            }
+            model.Compliance = new ComplianceXref();
+
+            
+            xmldata=client.GetActs(id);
+            ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
             model.Compliance.Compliance_Xref_ID = id;
-            model.Compliance.Audit_Type_ID=Convert.ToInt32(ds.Tables[0].Rows[0]["Audit_Type_ID"]);
+            model.Compliance.Compliance_Type_ID=Convert.ToInt32(ds.Tables[0].Rows[0]["Compliance_Type_ID"]);
             model.Compliance.Compliance_Parent_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["Compliance_Parent_ID"]);
             model.Compliance.Compliance_Title = Convert.ToString(ds.Tables[0].Rows[0]["Compliance_Title"]);
             model.Compliance.compl_def_consequence = Convert.ToString(ds.Tables[0].Rows[0]["compl_def_consequence"]);
@@ -656,13 +677,24 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult Updatesection(int id)
         {
             ComplianceViewModel model = new ComplianceViewModel();
-            model.AuditType = new List<SelectListItem>();
-            model.AuditType.Add(new SelectListItem { Text = "Labour Compliance", Value = "1" });
+            model.ComplianceType = new List<SelectListItem>();
+            ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
+            string xmldata = client.GetComplainceType();
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            model.ComplianceType.Add(new SelectListItem { Text = "-- Select Compliance --", Value = "0" });
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.ComplianceType.Add(new SelectListItem { Text = Convert.ToString(row["Compliance_Type_Name"]), Value = Convert.ToString(row["Compliance_Type_ID"]) });
+                }
+            }
             model.Compliance = new ComplianceXref();
 
-            ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
-            string xmldata = client.GetSpecificComplaince(id);
-            DataSet ds = new DataSet();
+           
+            xmldata = client.GetSpecificComplaince(id);
+            ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             model.Compliance.Compliance_Xref_ID = id;           
             model.Compliance.Compliance_Parent_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["Compliance_Parent_ID"]);
@@ -677,8 +709,8 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult UpdateRule(int id)
         {
             ComplianceViewModel model = new ComplianceViewModel();
-            model.AuditType = new List<SelectListItem>();
-            model.AuditType.Add(new SelectListItem { Text = "Labour Compliance", Value = "1" });
+            model.ComplianceType = new List<SelectListItem>();
+            model.ComplianceType.Add(new SelectListItem { Text = "Labour Compliance", Value = "1" });
             model.Compliance = new ComplianceXref();
 
             ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();

@@ -49,7 +49,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_City_ID", xref.City_ID);
                     cmd.Parameters.AddWithValue("p_User_ID", xref.User_ID);
                     cmd.Parameters.AddWithValue("p_Is_Active", xref.Is_Active);
-                    cmd.Parameters.AddWithValue("p_Audit_Type_ID", xref.Audit_Type_ID);
+                    cmd.Parameters.AddWithValue("p_Compliance_Type_ID", xref.Compliance_Type_ID);
                     ComplianceXref = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
@@ -328,7 +328,28 @@ namespace Compliance.DataAccess
             }
             return ds;
         }
+        public DataSet GetComplianceType()
+        {
+             DataSet ds=new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getComplianceType", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(ds);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
 
+            return ds;
+        }
     }
 }
     

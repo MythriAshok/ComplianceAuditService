@@ -104,6 +104,12 @@
   <wsdl:message name="IComplianceXrefService_GetSpecificComplaince_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetSpecificComplainceResponse" />
   </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_GetComplainceType_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetComplainceType" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_GetComplainceType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetComplainceTypeResponse" />
+  </wsdl:message>
   <wsdl:portType name="IComplianceXrefService">
     <wsdl:operation name="insertActs">
       <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/insertActs" message="tns:IComplianceXrefService_insertActs_InputMessage" />
@@ -168,6 +174,10 @@
     <wsdl:operation name="GetSpecificComplaince">
       <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/GetSpecificComplaince" message="tns:IComplianceXrefService_GetSpecificComplaince_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/GetSpecificComplainceResponse" message="tns:IComplianceXrefService_GetSpecificComplaince_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetComplainceType">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/GetComplainceType" message="tns:IComplianceXrefService_GetComplainceType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/GetComplainceTypeResponse" message="tns:IComplianceXrefService_GetComplainceType_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IComplianceXrefService" type="tns:IComplianceXrefService">
@@ -309,6 +319,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetSpecificComplaince">
       <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/GetSpecificComplaince" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetComplainceType">
+      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/GetComplainceType" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

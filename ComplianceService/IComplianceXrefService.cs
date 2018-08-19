@@ -44,5 +44,7 @@ namespace ComplianceService
         string GetcomplianceonType(int Audit_Type_Id,int countryId,int StateId,int cityId,int flag);
         [OperationContract]
         string GetSpecificComplaince(int complianceId);
+        [OperationContract]
+        string GetComplainceType();
     }
 }

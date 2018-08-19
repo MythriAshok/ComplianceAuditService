@@ -26,7 +26,7 @@ namespace ComplianceAuditWeb.Models
         }
       
         public List<SelectListItem> ActType { get; set; }
-        public List<SelectListItem> AuditType { get; set; }
+        public List<SelectListItem> ComplianceType { get; set; }
 
 
     }

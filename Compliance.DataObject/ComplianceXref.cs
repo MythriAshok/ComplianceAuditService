@@ -39,7 +39,7 @@ namespace Compliance.DataObject
         public DateTime Last_Updated_Date { get; set; }
         public int User_ID { get; set; }
         public bool Is_Active { get; set; }
-        public int Audit_Type_ID { get; set; }
+        public int Compliance_Type_ID { get; set; }
 
     }
 }
