@@ -1586,16 +1586,16 @@ namespace ComplianceAuditWeb.Controllers
 
         public ActionResult ListofCompany()
         {
-            int ID = Convert.ToInt32(Session["GroupCompanyId"]);
+            int ID = 0;
             var groupcopmpanyid = Request.QueryString["GroupCompanyid"];
             if (groupcopmpanyid != null)
             {
                 ID = Convert.ToInt32(groupcopmpanyid);
             }
+            ID = Convert.ToInt32(Session["GroupCompanyId"]);
             List<ListOfGroupCompanies> companylist = new List<ListOfGroupCompanies>();
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
             //string strxmlCompanies = organizationservice.GeSpecifictCompaniesList(id);
-            string strxmlCompanies = organizationservice.getCompanyListDropDown(id);
             string strxmlCompanies = organizationservice.GeSpecifictCompaniesList(ID);
 
             DataSet dsSpecificCompaniesList = new DataSet();
@@ -1625,9 +1625,10 @@ namespace ComplianceAuditWeb.Controllers
             int id = 0;
              
             Models.ListOfGroupCompanies model = new ListOfGroupCompanies();
+            model.GroupCompanyID = Convert.ToInt32(Session["GroupCompanyId"]);
             model.GroupCompaniesList = new List<SelectListItem>();
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
-            string strXMLGroupCompanyList = organizationservice.getGroupCompanyListDropDown();//
+            string strXMLGroupCompanyList = organizationservice.getParticularGroupCompaniesList(model.GroupCompanyID);//
             DataSet dsGroupCompanyList = new DataSet();
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
             //model.GroupCompaniesList.Add(new SelectListItem() { Text = "--Select GroupCompany--", Value = "0" });
@@ -1636,11 +1637,10 @@ namespace ComplianceAuditWeb.Controllers
                 model.GroupCompanyID = Convert.ToInt32(dsGroupCompanyList.Tables[0].Rows[0]["Org_Hier_ID"]);
                 foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
                 {
+                   
                     model.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
                 }
-            }
-            model.GroupCompanyID = Convert.ToInt32(Session["GroupCompanyId"]);
-            string strXMLCompanyList = organizationservice.GeSpecifictCompaniesList(model.GroupCompanyID);
+            }                
             string strXMLCompanyList = organizationservice.getCompanyListDropDown(model.GroupCompanyID);
             DataSet dsCompanyList = new DataSet();
             dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
@@ -1677,15 +1677,39 @@ namespace ComplianceAuditWeb.Controllers
             }
             else { ViewBag.Message = ConfigurationManager.AppSettings["No_Branches"]; }
 
-            model.listOfGroups = branchlist;
-            Session["GroupCompany"] = model.GroupCompaniesList;
+            model.listOfGroups = branchlist;           
             return View("_BranchList", model);
         }
         [HttpPost]
         public ActionResult SelectCompany(ListOfGroupCompanies model)
         {
-            List<ListOfGroupCompanies> branchlist = new List<ListOfGroupCompanies>();
+            model.GroupCompanyID = Convert.ToInt32(Session["GroupCompanyId"]);
+            model.GroupCompaniesList = new List<SelectListItem>();
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+            string strXMLGroupCompanyList = organizationservice.getParticularGroupCompaniesList(model.GroupCompanyID);//
+            DataSet dsGroupCompanyList = new DataSet();
+            dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
+            if (dsGroupCompanyList.Tables.Count > 0)
+            {
+                model.GroupCompanyID = Convert.ToInt32(dsGroupCompanyList.Tables[0].Rows[0]["Org_Hier_ID"]);
+                foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
+                {
+                    model.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+                }
+            }
+            string strXMLCompanyList = organizationservice.getCompanyListDropDown(model.GroupCompanyID);
+            DataSet dsCompanyList = new DataSet();
+            dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
+            model.CompaniesList = new List<SelectListItem>();
+            model.CompaniesList.Add(new SelectListItem { Text = "-- Select Company --", Value = "0" });
+            if (dsCompanyList.Tables.Count > 0)
+            {               
+                foreach (System.Data.DataRow row in dsCompanyList.Tables[0].Rows)
+                {
+                    model.CompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+                }
+            }
+            List<ListOfGroupCompanies> branchlist = new List<ListOfGroupCompanies>();            
             string strxmlCompanies = organizationservice.GeSpecifictBranchList(model.CompanyID);
 
             DataSet dsSpecificBranchList = new DataSet();
@@ -1706,8 +1730,9 @@ namespace ComplianceAuditWeb.Controllers
 
                 }
             }
-            model.GroupCompaniesList = (List<SelectListItem>)Session["GroupCompany"];
-            model.CompaniesList = (List<SelectListItem>)Session["Company"];
+            else { ViewBag.Message = ConfigurationManager.AppSettings["No_Branches"]; }
+            //model.GroupCompaniesList = (List<SelectListItem>)Session["GroupCompany"];
+            //model.CompaniesList = (List<SelectListItem>)Session["Company"];
             model.listOfGroups = branchlist;
             return View("_BranchList", model);
             //return RedirectToAction("BranchList", routeValues: new { id = model.CompanyID });
@@ -1722,11 +1747,12 @@ namespace ComplianceAuditWeb.Controllers
 
             Models.ListOfGroupCompanies model = new ListOfGroupCompanies();
             model.GroupCompaniesList = new List<SelectListItem>();
+            model.GroupCompanyID = Convert.ToInt32(Session["GroupCompanyId"]);
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
-            string strXMLGroupCompanyList = organizationservice.getGroupCompanyListDropDown();
+            string strXMLGroupCompanyList = organizationservice.getParticularGroupCompaniesList(model.GroupCompanyID);
             DataSet dsGroupCompanyList = new DataSet();
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
-            model.GroupCompaniesList.Add(new SelectListItem() { Text = "--Select GroupCompany--", Value = "0" });
+            //model.GroupCompaniesList.Add(new SelectListItem() { Text = "--Select GroupCompany--", Value = "0" });
             if (dsGroupCompanyList.Tables.Count > 0)
             {
                 model.GroupCompanyID = Convert.ToInt32(dsGroupCompanyList.Tables[0].Rows[0]["Org_Hier_ID"]);
@@ -1773,14 +1799,37 @@ namespace ComplianceAuditWeb.Controllers
             else { ViewBag.Message = ConfigurationManager.AppSettings["No_Vendors"]; }
 
             model.listOfGroups = vendorlist;
-            Session["GroupCompany"] = model.GroupCompaniesList;
             return View("_vendorList", model);
         }
         [HttpPost]
         public ActionResult SelectCompanyForVendor(ListOfGroupCompanies model)
         {
-            List<ListOfGroupCompanies> vendorlist = new List<ListOfGroupCompanies>();
+            model.GroupCompaniesList = new List<SelectListItem>();
+            model.GroupCompanyID = Convert.ToInt32(Session["GroupCompanyId"]);
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+            string strXMLGroupCompanyList = organizationservice.getParticularGroupCompaniesList(model.GroupCompanyID);
+            DataSet dsGroupCompanyList = new DataSet();
+            dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
+            if (dsGroupCompanyList.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
+                {
+                    model.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+                }
+            }
+            string strXMLCompanyList = organizationservice.getCompanyListDropDown(model.GroupCompanyID);
+            DataSet dsCompanyList = new DataSet();
+            dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
+            model.CompaniesList = new List<SelectListItem>();
+            model.CompaniesList.Add(new SelectListItem { Text = "--Select Company--", Value = "0" });
+            if (dsCompanyList.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in dsCompanyList.Tables[0].Rows)
+                {
+                    model.CompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+                }
+            }
+            List<ListOfGroupCompanies> vendorlist = new List<ListOfGroupCompanies>();
             string strxmlVendors = organizationservice.GetVendors(model.CompanyID);
             DataSet dsSpecificVendorList = new DataSet();
             dsSpecificVendorList.ReadXml(new StringReader(strxmlVendors));
@@ -1801,8 +1850,7 @@ namespace ComplianceAuditWeb.Controllers
 
                 }
             }
-            model.GroupCompaniesList = (List<SelectListItem>)Session["GroupCompany"];
-            model.CompaniesList = (List<SelectListItem>)Session["Company"];
+            else { ViewBag.Message = ConfigurationManager.AppSettings["No_Vendors"]; }
             model.listOfGroups = vendorlist;
             return View("_vendorList", model);
             //return RedirectToAction("CompanyVendorsList", routeValues: new {id = model.CompanyID });
