@@ -104,7 +104,16 @@
                     <div class="col-sm-3 QueList">
                         <div class="queContainer">
                             <a href="@Url.Action("AboutVendor", "ManageOrganization", new { id = item.OrganizationID })">
+                                @if (item.Is_Active == false)
+                                {
+                                    <i class="fa fa-ban"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-check-circle"></i>
+                                }
                                 <span class="qIcon"><img src="/UploadedFiles/@item.CompanyLogo" alt="" style="height:60px;width:75px"></span>
+
                                 <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyNameList)</h3>
                             </a>
                             <div class="clearfix"></div>

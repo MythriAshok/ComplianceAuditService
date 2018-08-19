@@ -83,7 +83,30 @@ namespace Compliance.DataAccess
 
             return dsVendorList;
         }
-     public DataSet getcompleteVendorList(int VendorID)
+        public DataSet getSpecificVendorListDropDown(int PCompanyID)
+        {
+            DataSet dsVendorList = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getSpecificVendorListDropDown", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Parent_Company_ID", PCompanyID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsVendorList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return dsVendorList;
+        }
+        public DataSet getcompleteVendorList(int VendorID)
         {
             DataSet dsVendorList = new DataSet();
             try

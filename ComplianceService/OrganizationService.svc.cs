@@ -530,7 +530,7 @@ namespace ComplianceService
             }
             return OrganizationID;
         }
-    
+
         public bool updateVendor(Organization org, CompanyDetails company)
         {
             int insertOrganizationID = 0;
@@ -568,7 +568,7 @@ namespace ComplianceService
         {
             return BindState(countryID);
         }
-      
+
         private string BindState(int countryID)
         {
             CountryHelper countryhelper = new CountryHelper();
@@ -708,6 +708,21 @@ namespace ComplianceService
             return xmlCompaniesList;
         }
 
+        public string getSpecificBranchListDropDown(int CompanyID)
+        {
+            return bindSpecificBranchListDropDown(CompanyID);
+        }
+
+        private string bindSpecificBranchListDropDown(int CompanyID)
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsCompanies = OrganizationHelper.getSpecificBranchListDropDown(CompanyID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCompanies = utilityHelper.ConvertNullsToEmptyString(dsCompanies);
+            string xmlCompaniesList = dsCompanies.GetXml();
+            return xmlCompaniesList;
+        }
+
         //public string GetSpecificCompaniesList(int GroupCompanyID)
         //{
         //    return BindSpecificCompaniesList(GroupCompanyID);
@@ -754,7 +769,19 @@ namespace ComplianceService
             string xmlVendorsList = dsVendors.GetXml();
             return xmlVendorsList;
         }
-
+        public string getSpecificVendorListDropDown(int pid)
+        {
+            return bindSpecificVendorListDropDown(pid);
+        }
+        private string bindSpecificVendorListDropDown(int pid)
+        {
+            VendorHelper vendorhelper = new VendorHelper();
+            DataSet vendors = vendorhelper.getSpecificVendorListDropDown(pid);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            vendors = utilityHelper.ConvertNullsToEmptyString(vendors);
+            string xmlvendors = vendors.GetXml();
+            return xmlvendors;
+        }
 
         public string GetAllVendors(int VendorID)
         {
@@ -817,50 +844,65 @@ namespace ComplianceService
             string xmlvendors = vendors.GetXml();
             return xmlvendors;
         }
+
+        public string getParticularGroupCompaniesList(int OrgID)
+        {
+            return bindParticularGroupCompaniesList(OrgID);
+        }
+
+        private string bindParticularGroupCompaniesList(int OrgID)
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsCompanies = OrganizationHelper.getParticularGroupCompaniesList(OrgID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCompanies = utilityHelper.ConvertNullsToEmptyString(dsCompanies);
+            string xmlCompaniesList = dsCompanies.GetXml();
+            return xmlCompaniesList;
+        }
+
+
+
+
+
+
+
+
+
+
+        public string getGroupCompanyListDropDown()
+        {
+            return BindGroupCompaniesListDropDown();
+        }
+        /// <summary>
+        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
+        /// </summary>
+        /// <returns></returns>
+        private string BindGroupCompaniesListDropDown()
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsGroupCompanies = OrganizationHelper.getGroupCompanyListDropDown();
+            string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
+            return xmlGroupCompaniesList;
+        }
+
+        public string getCompanyListDropDown(int groupcompanyID)
+        {
+            return BindCompaniesListDropDown(groupcompanyID);
+        }
+        /// <summary>
+        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
+        /// </summary>
+        /// <returns></returns>
+        private string BindCompaniesListDropDown(int groupcompanyID)
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsGroupCompanies = OrganizationHelper.getCompanyListDropDown(groupcompanyID);
+            string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
+            return xmlGroupCompaniesList;
+        }
+
     }
 }
-
-
-
-
-
-
-
-
-//        public string getGroupCompanyListDropDown()
-//        {
-//            return BindGroupCompaniesListDropDown();
-//        }
-//        /// <summary>
-//        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
-//        /// </summary>
-//        /// <returns></returns>
-//        private string BindGroupCompaniesListDropDown()
-//        {
-//            OrganizationHelper OrganizationHelper = new OrganizationHelper();
-//            DataSet dsGroupCompanies = OrganizationHelper.getGroupCompanyListDropDown();
-//            string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
-//            return xmlGroupCompaniesList;
-//        }
-
-//public string getCompanyListDropDown(int groupcompanyID)
-//{
-//    return BindCompaniesListDropDown(groupcompanyID);
-//}
-///// <summary>
-///// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
-///// </summary>
-///// <returns></returns>
-//private string BindCompaniesListDropDown(int groupcompanyID)
-//{
-//    OrganizationHelper OrganizationHelper = new OrganizationHelper();
-//    DataSet dsGroupCompanies = OrganizationHelper.getCompanyListDropDown(groupcompanyID);
-//    string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
-//    return xmlGroupCompaniesList;
-//}
-
-
-
 
 //    }
 //}

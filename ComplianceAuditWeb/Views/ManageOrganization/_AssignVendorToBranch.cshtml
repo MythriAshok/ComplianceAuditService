@@ -34,7 +34,7 @@
         function GetBranch(_CompanyId) {
             var procemessage = "<option value='0'> Please wait...</option>";
             $("#BranchID").html(procemessage).show();
-            var url = "/Common/getspecificbranch";
+            var url = "/Common/getspecificbranchdropdown";
 
             $.ajax({
                 url: url,
@@ -95,12 +95,12 @@
 
 @using (Html.BeginForm())
 {
-    <div class="col-xs-4 subSelect ">
+    @*<div class="col-xs-4 subSelect ">
         <div class="input-field">
             @Html.Label("Group Company Name", new { @class = "floating-label" })<span style="color:red">*</span>
             @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input", @onchange = "GetCompany(this.value)" })
         </div>
-    </div>
+    </div>*@
 
 
 

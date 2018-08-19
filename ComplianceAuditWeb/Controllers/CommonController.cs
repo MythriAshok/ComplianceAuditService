@@ -99,6 +99,26 @@ namespace ComplianceAuditWeb.Controllers
             Session["Company"] = company;
             return Json(company, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult getcompanydropdown(string groupcompid)
+        {
+            List<SelectListItem> company = new List<SelectListItem>();
+            int ID = Convert.ToInt32(groupcompid);
+            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
+            string xmldata = client.getCompanyListDropDown(ID);
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            company = new List<SelectListItem>();
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    company.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                }
+            }
+            Session["Company"] = company;
+            return Json(company, JsonRequestBehavior.AllowGet);
+        }
+
 
         public JsonResult getspecificbranch(string compid)
         {
@@ -118,6 +138,24 @@ namespace ComplianceAuditWeb.Controllers
             }
             return Json(company, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult getspecificbranchdropdown(string compid)
+        {
+            List<SelectListItem> company = new List<SelectListItem>();
+            int ID = Convert.ToInt32(compid);
+            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+            string xmldata = organizationServiceClient.getSpecificBranchListDropDown(ID);
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            company = new List<SelectListItem>();
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    company.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                }
+            }
+            return Json(company, JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult getspecificvendors(string compid)
         {
@@ -125,7 +163,7 @@ namespace ComplianceAuditWeb.Controllers
             int ID = Convert.ToInt32(compid);
             VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
             OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            string xmldata = organizationServiceClient.GetVendors(ID);
+            string xmldata = organizationServiceClient.getSpecificVendorListDropDown(ID);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             vendors = new List<SelectListItem>();
@@ -222,7 +260,7 @@ namespace ComplianceAuditWeb.Controllers
             List<SelectListItem> listItems = new List<SelectListItem>();
             listItems.Add(new SelectListItem { Text = "-- Select Group Company --", Value = "0" });
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
-            string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
+            string strXMLGroupCompanyList = organizationservice.getGroupCompanyListDropDown();
             DataSet dsGroupCompanyList = new DataSet();
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
 
