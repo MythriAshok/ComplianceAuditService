@@ -533,7 +533,8 @@ namespace Compliance.DataAccess
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getGroupCompaniesList", conn);
+               // MySqlCommand cmd = new MySqlCommand("sp_getGroupCompaniesList", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getGroupCompanyListActiveDeactive", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsGroupCompaniesList);
@@ -548,6 +549,31 @@ namespace Compliance.DataAccess
             }
             return dsGroupCompaniesList;
         }
+        public DataSet getGroupCompanyListDropDown()
+        {
+            DataSet dsGroupCompaniesList = new DataSet();
+            try
+            {
+                conn.Open();
+                // MySqlCommand cmd = new MySqlCommand("sp_getGroupCompaniesList", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getGroupCompanyListDropDown", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsGroupCompaniesList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsGroupCompaniesList;
+        }
+
+
+
         // no use of this
         public DataSet getCompanyList()
         {
@@ -638,6 +664,29 @@ namespace Compliance.DataAccess
             return dsSpecificBranchList;
         }
 
+        public DataSet getSpecificBranchListDropDown(int CompanyID)
+        {
+            DataSet dsSpecificBranchList = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getSpecificBranchListDropDown", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Parent_Company_ID", CompanyID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsSpecificBranchList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsSpecificBranchList;
+        }
+
 
         public DataSet getCompanyListsforBranch(int GroupCompanyID)
         {
@@ -685,27 +734,27 @@ namespace Compliance.DataAccess
         }
 
 
-        public DataSet getGroupCompanyListDropDown()
-        {
-            DataSet dsGroupCompaniesListDropDown = new DataSet();
-            try
-            {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getGroupCompaniesListDropDown", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-                adapter.Fill(dsGroupCompaniesListDropDown);
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return dsGroupCompaniesListDropDown;
-        }
+        //public DataSet getGroupCompanyListDropDown()
+        //{
+        //    DataSet dsGroupCompaniesListDropDown = new DataSet();
+        //    try
+        //    {
+        //        conn.Open();
+        //        MySqlCommand cmd = new MySqlCommand("sp_getGroupCompaniesListDropDown", conn);
+        //        cmd.CommandType = CommandType.StoredProcedure;
+        //        MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+        //        adapter.Fill(dsGroupCompaniesListDropDown);
+        //    }
+        //    catch
+        //    {
+        //        throw;
+        //    }
+        //    finally
+        //    {
+        //        conn.Close();
+        //    }
+        //    return dsGroupCompaniesListDropDown;
+        //}
 
         public DataSet getCompanyListDropDown(int id)
         {
@@ -775,7 +824,29 @@ namespace Compliance.DataAccess
             }
             return dsBranchAssociatedWithVendors;
         }
+        public DataSet getParticularGroupCompaniesList(int OrgID)
+        {
+            DataSet dsGroupCompaniesListDropDown = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getParticularGroupCompaniesList", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", OrgID);
 
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsGroupCompaniesListDropDown);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsGroupCompaniesListDropDown;
+        }
     }
 }
 

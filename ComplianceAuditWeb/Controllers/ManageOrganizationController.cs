@@ -276,6 +276,7 @@ namespace ComplianceAuditWeb.Controllers
                             OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
                             CompanyNameList = row["Company_Name"].ToString(),
                             IndustryType = row["Industry_Type"].ToString(),
+                            Is_Active =Convert.ToBoolean(Convert.ToInt32( row["Is_Active"])),
                             logo = row["logo"].ToString()
                         };
                         companylist.Add(listOfComp);
@@ -333,18 +334,20 @@ namespace ComplianceAuditWeb.Controllers
             //{
             //    companyVM.GroupCompanyID = companyVM.organization.Parent_Company_Id;
             //}
-            string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
+           // string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
+            string strXMLGroupCompanyList = organizationservice.getParticularGroupCompaniesList(companyVM.GroupCompanyID);
             DataSet dsGroupCompanyList = new DataSet();
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
             companyVM.GroupCompaniesList = new List<SelectListItem>();
             companyVM.GroupCompaniesList.Add(new SelectListItem { Text = "--Select Group Company--", Value = "0" });
-            //if (dsGroupCompanyList.Tables.Count > 0)
-            //{
-            //    foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
-            //    {
-            //        companyVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
-            //    }
-            //}
+
+            if (dsGroupCompanyList.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
+                {
+                    companyVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+                }
+            }
             string strXMLCountries = organizationservice.GetCountryList();
             DataSet dsCountries = new DataSet();
             dsCountries.ReadXml(new StringReader(strXMLCountries));
@@ -723,7 +726,7 @@ namespace ComplianceAuditWeb.Controllers
                         OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
                         CompanyNameList = row["Company_Name"].ToString(),
                         IndustryType = row["Industry_Type"].ToString(),
-                     
+                        Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
                         logo = row["logo"].ToString()
                     };
                     branchList.Add(listOfBranch);
@@ -746,6 +749,7 @@ namespace ComplianceAuditWeb.Controllers
                         OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
                         CompanyNameList = row["Company_Name"].ToString(),
                         IndustryType = row["Industry_Type"].ToString(),
+                        Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
                         logo = row["logo"].ToString()
                     };
                     vendorList.Add(listOfVendors);
@@ -810,20 +814,21 @@ namespace ComplianceAuditWeb.Controllers
             branchVM.organization.Organization_Id = 0;
             branchVM.branch = new BranchLocation();
             branchVM.branch.Branch_Id = 0;
-            branchVM.organization.Parent_Company_Id = Convert.ToInt32(TempData["ParentCompany_ID"]);
+           // branchVM.organization.Parent_Company_Id = Convert.ToInt32(TempData["ParentCompany_ID"]);
             string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
             DataSet dsGroupCompanyList = new DataSet();
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
             branchVM.GroupCompaniesList = new List<SelectListItem>();
-            branchVM.GroupCompaniesList.Add(new SelectListItem { Text = "--Select Group Company--", Value = "0" });
-            if (dsGroupCompanyList.Tables.Count > 0)
-            {
-                foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
-                {
-                    branchVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
-                }
-            }
-            string strXMLCompanyList = organizationservice.GeSpecifictCompaniesList(id);
+            //branchVM.GroupCompaniesList.Add(new SelectListItem { Text = "--Select Group Company--", Value = "0" });
+            //if (dsGroupCompanyList.Tables.Count > 0)
+            //{
+            //    foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
+            //    {
+            //        branchVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+            //    }
+            //}
+           // string strXMLCompanyList = organizationservice.GeSpecifictCompaniesList(Convert.ToInt32(Session["GroupCompanyId"]));
+            string strXMLCompanyList = organizationservice.getCompanyListDropDown(Convert.ToInt32(Session["GroupCompanyId"]));
             DataSet dsCompanyList = new DataSet();
             dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
             branchVM.CompaniesList = new List<SelectListItem>();
@@ -1307,7 +1312,7 @@ namespace ComplianceAuditWeb.Controllers
                     vendorVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
                 }
             }
-            string strXMLCompanyList = organizationservice.GeSpecifictCompaniesList(id);
+            string strXMLCompanyList = organizationservice.getCompanyListDropDown(Convert.ToInt32(Session["GroupCompanyId"]));
             DataSet dsCompanyList = new DataSet();
             dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
             vendorVM.CompaniesList = new List<SelectListItem>();
@@ -1513,7 +1518,7 @@ namespace ComplianceAuditWeb.Controllers
             Models.ListOfGroupCompanies model = new ListOfGroupCompanies();
             model.GroupCompaniesList = new List<SelectListItem>();
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
-            string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
+            string strXMLGroupCompanyList = organizationservice.getGroupCompanyListDropDown();//
             DataSet dsGroupCompanyList = new DataSet();
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
             model.GroupCompaniesList.Add(new SelectListItem() { Text = "--Select GroupCompany--", Value = "0" });
@@ -1579,11 +1584,19 @@ namespace ComplianceAuditWeb.Controllers
             //return RedirectToAction("ListofCompany",routeValues:new { GroupCompanyid = model.GroupCompanyID });
         }
 
-        public ActionResult ListofCompany(int GroupCompanyid)
+        public ActionResult ListofCompany()//(int GroupCompanyid)
         {
+            int id = 0;
             List<ListOfGroupCompanies> companylist = new List<ListOfGroupCompanies>();
+            //int gid =Convert.ToInt32( Session["GroupCompanyId"]);
+            //var groupcopmpanyid = Request.QueryString["Orgid"];
+            //if (groupcopmpanyid != null)
+            //{
+            //    id = Convert.ToInt32(groupcopmpanyid);
+            //}
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
-            string strxmlCompanies = organizationservice.GeSpecifictCompaniesList(GroupCompanyid);
+            //string strxmlCompanies = organizationservice.GeSpecifictCompaniesList(id);
+            string strxmlCompanies = organizationservice.getCompanyListDropDown(id);
 
             DataSet dsSpecificCompaniesList = new DataSet();
             dsSpecificCompaniesList.ReadXml(new StringReader(strxmlCompanies));
@@ -1614,7 +1627,7 @@ namespace ComplianceAuditWeb.Controllers
             Models.ListOfGroupCompanies model = new ListOfGroupCompanies();
             model.GroupCompaniesList = new List<SelectListItem>();
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
-            string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
+            string strXMLGroupCompanyList = organizationservice.getGroupCompanyListDropDown();//
             DataSet dsGroupCompanyList = new DataSet();
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
             model.GroupCompaniesList.Add(new SelectListItem() { Text = "--Select GroupCompany--", Value = "0" });
@@ -1626,7 +1639,7 @@ namespace ComplianceAuditWeb.Controllers
                     model.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
                 }
             }
-            string strXMLCompanyList = organizationservice.GeSpecifictCompaniesList(model.GroupCompanyID);
+            string strXMLCompanyList = organizationservice.getCompanyListDropDown(model.GroupCompanyID);
             DataSet dsCompanyList = new DataSet();
             dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
             model.CompaniesList = new List<SelectListItem>();
@@ -1708,7 +1721,7 @@ namespace ComplianceAuditWeb.Controllers
             Models.ListOfGroupCompanies model = new ListOfGroupCompanies();
             model.GroupCompaniesList = new List<SelectListItem>();
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
-            string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
+            string strXMLGroupCompanyList = organizationservice.getGroupCompanyListDropDown();
             DataSet dsGroupCompanyList = new DataSet();
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
             model.GroupCompaniesList.Add(new SelectListItem() { Text = "--Select GroupCompany--", Value = "0" });
@@ -1720,7 +1733,7 @@ namespace ComplianceAuditWeb.Controllers
                     model.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
                 }
             }
-            string strXMLCompanyList = organizationservice.GeSpecifictCompaniesList(model.GroupCompanyID);
+            string strXMLCompanyList = organizationservice.getCompanyListDropDown(model.GroupCompanyID);
             DataSet dsCompanyList = new DataSet();
             dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
             model.CompaniesList = new List<SelectListItem>();
@@ -1833,7 +1846,7 @@ namespace ComplianceAuditWeb.Controllers
                         OrganizationID = Convert.ToInt32(row["Vendor_ID"]),
                         CompanyNameList = row["Company_Name"].ToString(),
                         IndustryType = row["Industry_Type"].ToString(),
-                      
+                        Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
                         logo = row["logo"].ToString()
                     };
                     branchList.Add(listOfBranch);
@@ -1936,7 +1949,7 @@ namespace ComplianceAuditWeb.Controllers
                         OrganizationID = Convert.ToInt32(row["Branch_ID"]),
                         CompanyNameList = row["Company_Name"].ToString(),
                         IndustryType = row["Industry_Type"].ToString(),
-
+                        Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
                         logo = row["logo"].ToString()
                     };
                     branchList.Add(listOfBranch);
@@ -2060,32 +2073,32 @@ namespace ComplianceAuditWeb.Controllers
 
             
 
-            branchVM.GroupCompaniesList.Add(new SelectListItem { Text = "--Select Group Company--", Value = "0" });
+            ////branchVM.GroupCompaniesList.Add(new SelectListItem { Text = "--Select Group Company--", Value = "0" });
 
-            if (dsGroupCompanyList.Tables.Count > 0)
-            {
-                foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
-                {
-                    branchVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
-                }
-            }
+            ////if (dsGroupCompanyList.Tables.Count > 0)
+            ////{
+            ////    foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
+            ////    {
+            ////        branchVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+            ////    }
+            ////}
 
             int groupcompid = 0;
-            string strXMLCompanyList = organizationservice.GeSpecifictCompaniesList(groupcompid);
+            string strXMLCompanyList = organizationservice.getCompanyListDropDown(Convert.ToInt32(Session["GroupCompanyId"]));
             DataSet dsCompanyList = new DataSet();
             dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
             branchVM.CompaniesList = new List<SelectListItem>();
             branchVM.CompaniesList.Add(new SelectListItem { Text = "--Select Company--", Value = "0" });
-            //if (dsCompanyList.Tables.Count > 0)
-            //{
-            //    foreach (System.Data.DataRow row in dsCompanyList.Tables[0].Rows)
-            //    {
-            //        branchVM.CompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
-            //    }
-            //}
+            if (dsCompanyList.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in dsCompanyList.Tables[0].Rows)
+                {
+                    branchVM.CompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+                }
+            }
 
             int compid = 0;
-            string strXMLBranchList = organizationservice.GeSpecifictBranchList(compid);
+            string strXMLBranchList = organizationservice.getSpecificBranchListDropDown(compid);
             DataSet dsBranchList = new DataSet();
             dsBranchList.ReadXml(new StringReader(strXMLBranchList));
             branchVM.BranchList = new List<SelectListItem>();
@@ -2416,33 +2429,40 @@ namespace ComplianceAuditWeb.Controllers
             // branchVM.branch = new BranchLocation();
             // branchVM.branch.Branch_Id = 0;
 
-            string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
-            DataSet dsGroupCompanyList = new DataSet();
-            dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
-            branchVM.GroupCompaniesList = new List<SelectListItem>();
+            ////string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
+            ////DataSet dsGroupCompanyList = new DataSet();
+            ////dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
+            ////branchVM.GroupCompaniesList = new List<SelectListItem>();
 
 
 
-            branchVM.GroupCompaniesList.Add(new SelectListItem { Text = "--Select Group Company--", Value = "0" });
+            //branchVM.GroupCompaniesList.Add(new SelectListItem { Text = "--Select Group Company--", Value = "0" });
 
-            if (dsGroupCompanyList.Tables.Count > 0)
-            {
-                foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
-                {
-                    branchVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
-                }
-            }
+            //if (dsGroupCompanyList.Tables.Count > 0)
+            //{
+            //    foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
+            //    {
+            //        branchVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+            //    }
+            //}
 
             int groupcompid = 0;
-            string strXMLCompanyList = organizationservice.GeSpecifictCompaniesList(groupcompid);
+            string strXMLCompanyList = organizationservice.GeSpecifictCompaniesList(Convert.ToInt32(Session["GroupCompanyId"]));
             DataSet dsCompanyList = new DataSet();
             dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
             branchVM.CompaniesList = new List<SelectListItem>();
             branchVM.CompaniesList.Add(new SelectListItem { Text = "--Select Company--", Value = "0" });
-           
+            if (dsCompanyList.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in dsCompanyList.Tables[0].Rows)
+                {
+                    branchVM.CompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+                }
+            }
+
 
             int compid = 0;
-            string strXMLBranchList = organizationservice.GeSpecifictBranchList(compid);
+            string strXMLBranchList = organizationservice.getSpecificBranchListDropDown(compid);
             DataSet dsBranchList = new DataSet();
             dsBranchList.ReadXml(new StringReader(strXMLBranchList));
             branchVM.BranchList = new List<SelectListItem>();

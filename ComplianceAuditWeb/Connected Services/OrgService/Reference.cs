@@ -99,11 +99,23 @@ namespace ComplianceAuditWeb.OrgService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GeSpecifictCompaniesList", ReplyAction="http://tempuri.org/IOrganizationService/GeSpecifictCompaniesListResponse")]
         System.Threading.Tasks.Task<string> GeSpecifictCompaniesListAsync(int OrgID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getGroupCompanyListDropDown", ReplyAction="http://tempuri.org/IOrganizationService/getGroupCompanyListDropDownResponse")]
+        string getGroupCompanyListDropDown();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getGroupCompanyListDropDown", ReplyAction="http://tempuri.org/IOrganizationService/getGroupCompanyListDropDownResponse")]
+        System.Threading.Tasks.Task<string> getGroupCompanyListDropDownAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getGroupOrganization", ReplyAction="http://tempuri.org/IOrganizationService/getGroupOrganizationResponse")]
         string getGroupOrganization(int OrgID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getGroupOrganization", ReplyAction="http://tempuri.org/IOrganizationService/getGroupOrganizationResponse")]
         System.Threading.Tasks.Task<string> getGroupOrganizationAsync(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getCompanyListDropDown", ReplyAction="http://tempuri.org/IOrganizationService/getCompanyListDropDownResponse")]
+        string getCompanyListDropDown(int groupcompanyID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getCompanyListDropDown", ReplyAction="http://tempuri.org/IOrganizationService/getCompanyListDropDownResponse")]
+        System.Threading.Tasks.Task<string> getCompanyListDropDownAsync(int groupcompanyID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getCompanyListsforBranch", ReplyAction="http://tempuri.org/IOrganizationService/getCompanyListsforBranchResponse")]
         string getCompanyListsforBranch(int OrgID);
@@ -230,6 +242,24 @@ namespace ComplianceAuditWeb.OrgService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getorglocation", ReplyAction="http://tempuri.org/IOrganizationService/getorglocationResponse")]
         System.Threading.Tasks.Task<string> getorglocationAsync(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getParticularGroupCompaniesList", ReplyAction="http://tempuri.org/IOrganizationService/getParticularGroupCompaniesListResponse")]
+        string getParticularGroupCompaniesList(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getParticularGroupCompaniesList", ReplyAction="http://tempuri.org/IOrganizationService/getParticularGroupCompaniesListResponse")]
+        System.Threading.Tasks.Task<string> getParticularGroupCompaniesListAsync(int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getSpecificBranchListDropDown", ReplyAction="http://tempuri.org/IOrganizationService/getSpecificBranchListDropDownResponse")]
+        string getSpecificBranchListDropDown(int CompanyID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getSpecificBranchListDropDown", ReplyAction="http://tempuri.org/IOrganizationService/getSpecificBranchListDropDownResponse")]
+        System.Threading.Tasks.Task<string> getSpecificBranchListDropDownAsync(int CompanyID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getSpecificVendorListDropDown", ReplyAction="http://tempuri.org/IOrganizationService/getSpecificVendorListDropDownResponse")]
+        string getSpecificVendorListDropDown(int pid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getSpecificVendorListDropDown", ReplyAction="http://tempuri.org/IOrganizationService/getSpecificVendorListDropDownResponse")]
+        System.Threading.Tasks.Task<string> getSpecificVendorListDropDownAsync(int pid);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -371,12 +401,28 @@ namespace ComplianceAuditWeb.OrgService {
             return base.Channel.GeSpecifictCompaniesListAsync(OrgID);
         }
         
+        public string getGroupCompanyListDropDown() {
+            return base.Channel.getGroupCompanyListDropDown();
+        }
+        
+        public System.Threading.Tasks.Task<string> getGroupCompanyListDropDownAsync() {
+            return base.Channel.getGroupCompanyListDropDownAsync();
+        }
+        
         public string getGroupOrganization(int OrgID) {
             return base.Channel.getGroupOrganization(OrgID);
         }
         
         public System.Threading.Tasks.Task<string> getGroupOrganizationAsync(int OrgID) {
             return base.Channel.getGroupOrganizationAsync(OrgID);
+        }
+        
+        public string getCompanyListDropDown(int groupcompanyID) {
+            return base.Channel.getCompanyListDropDown(groupcompanyID);
+        }
+        
+        public System.Threading.Tasks.Task<string> getCompanyListDropDownAsync(int groupcompanyID) {
+            return base.Channel.getCompanyListDropDownAsync(groupcompanyID);
         }
         
         public string getCompanyListsforBranch(int OrgID) {
@@ -545,6 +591,30 @@ namespace ComplianceAuditWeb.OrgService {
         
         public System.Threading.Tasks.Task<string> getorglocationAsync(int OrgID) {
             return base.Channel.getorglocationAsync(OrgID);
+        }
+        
+        public string getParticularGroupCompaniesList(int OrgID) {
+            return base.Channel.getParticularGroupCompaniesList(OrgID);
+        }
+        
+        public System.Threading.Tasks.Task<string> getParticularGroupCompaniesListAsync(int OrgID) {
+            return base.Channel.getParticularGroupCompaniesListAsync(OrgID);
+        }
+        
+        public string getSpecificBranchListDropDown(int CompanyID) {
+            return base.Channel.getSpecificBranchListDropDown(CompanyID);
+        }
+        
+        public System.Threading.Tasks.Task<string> getSpecificBranchListDropDownAsync(int CompanyID) {
+            return base.Channel.getSpecificBranchListDropDownAsync(CompanyID);
+        }
+        
+        public string getSpecificVendorListDropDown(int pid) {
+            return base.Channel.getSpecificVendorListDropDown(pid);
+        }
+        
+        public System.Threading.Tasks.Task<string> getSpecificVendorListDropDownAsync(int pid) {
+            return base.Channel.getSpecificVendorListDropDownAsync(pid);
         }
     }
 }

@@ -52,12 +52,15 @@ namespace ComplianceService
 
         [OperationContract]
         string GeSpecifictCompaniesList(int OrgID);
+        [OperationContract]
 
-        //string getGroupCompanyListDropDown();
+        string getGroupCompanyListDropDown();
 
         [OperationContract]
         string getGroupOrganization(int OrgID);
-        //string getCompanyListDropDown(int groupcompanyID);
+        [OperationContract]
+
+        string getCompanyListDropDown(int groupcompanyID);
         [OperationContract]
         string getCompanyListsforBranch(int OrgID);
 
@@ -119,6 +122,15 @@ namespace ComplianceService
 
         [OperationContract]
         string getorglocation(int OrgID);
+        [OperationContract]
+
+        string getParticularGroupCompaniesList(int OrgID);
+        [OperationContract]
+
+        string getSpecificBranchListDropDown(int CompanyID);
+        [OperationContract]
+
+        string getSpecificVendorListDropDown(int pid);
 
     }
 }

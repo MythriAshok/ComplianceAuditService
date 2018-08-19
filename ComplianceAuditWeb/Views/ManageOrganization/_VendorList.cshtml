@@ -9,7 +9,7 @@
         function GetCompany(_Groupcompid) {
             var procemessage = "<option value='0'> Please wait...</option>";
             $("#CompanyID").html(procemessage).show();
-            var url = "/Common/getcompany";
+            var url = "/Common/getcompanydropdown";
 
             $.ajax({
                 url: url,
@@ -74,6 +74,14 @@
                     <div class="col-sm-3 QueList">
                         <div class="queContainer">
                             <a href="@Url.Action("AboutVendor", "ManageOrganization",new { id = item.OrganizationID })">
+                                @if (item.IsActive == false)
+                                {
+                                    <i class="fa fa-ban"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-check-circle"></i>
+                                }
                                 <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
                                 <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
                             </a>
