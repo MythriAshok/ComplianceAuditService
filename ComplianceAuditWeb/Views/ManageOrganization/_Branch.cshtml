@@ -287,22 +287,24 @@
 
                 @if ((TempData["HeadQuarter"]) != null)
                 {
-                    @Html.DropDownListFor(m => m.organization.Industry_Type, new List<SelectListItem>
+                    @*@Html.DropDownListFor(m => m.organization.Industry_Type, new List<SelectListItem>
                   { new SelectListItem{Text="Head Quarter", Value="1", Selected=true},
 
                    new SelectListItem{Text="Marketing", Value="2"},
                     new SelectListItem{Text="Manufacturing", Value="3"},
-                    new SelectListItem{Text="IT", Value="4"}},  new { @class = "inputMaterial ui - autocomplete - input" })
+                    new SelectListItem{Text="IT", Value="4"}},  new { @class = "inputMaterial ui - autocomplete - input" })*@
+                    @Html.TextBoxFor(m=>m.organization.Industry_Type, new { @class = "inputMaterial ui - autocomplete - input" })
+                 
                 }
                 else
                 {
                     @Html.DropDownListFor(m => m.organization.Industry_Type, new List<SelectListItem>
             
-            { new SelectListItem{Text="Head Quarter", Value="1", Disabled=true},
+            {
 
-                   new SelectListItem{Text="Marketing", Value="2"},
-              new SelectListItem{Text="Manufacturing", Value="3"},
-              new SelectListItem{Text="IT", Value="4"}}, "--Select Industry Type--", new { @class = "inputMaterial ui - autocomplete - input" })
+                   new SelectListItem{Text="Marketing", Value="1"},
+              new SelectListItem{Text="Manufacturing", Value="2"},
+              new SelectListItem{Text="IT", Value="3"}}, "--Select Industry Type--", new { @class = "inputMaterial ui - autocomplete - input" })
 
                 }
 
