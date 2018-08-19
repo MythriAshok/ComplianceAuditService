@@ -26,7 +26,7 @@ namespace ComplianceAuditWeb.Controllers
             if (dsstate.Tables.Count > 0)
             {
                 foreach (System.Data.DataRow row in dsstate.Tables[0].Rows)
-                {
+                {                  
                     state.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
                 }
             }
@@ -46,6 +46,7 @@ namespace ComplianceAuditWeb.Controllers
             {
                 foreach (System.Data.DataRow row in dsCities.Tables[0].Rows)
                 {
+
                     cities.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
                 }
             }
@@ -140,62 +141,20 @@ namespace ComplianceAuditWeb.Controllers
 
         public JsonResult getdefaultcountry(string compid)
         {
-           // List<SelectListItem> vendors = new List<SelectListItem>();
             BranchViewModel branchVM = new BranchViewModel();
-            branchVM.branch = new BranchLocation();
-            branchVM.organization = new Organization();
             int ID = Convert.ToInt32(compid);
             OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
             string xmldata = organizationServiceClient.getDefaultCompanyDetails(ID);
             DataSet dsDefaultCompanyDetails = new DataSet();
             dsDefaultCompanyDetails.ReadXml(new StringReader(xmldata));
             branchVM.Country = new List<SelectListItem>();
-            branchVM.State = new List<SelectListItem>();
-            branchVM.City = new List<SelectListItem>();
-            branchVM.CompaniesList = new List<SelectListItem>();
-            branchVM.CompaniesList.Add(new SelectListItem { Text = "--Select Country--", Value = "0" });
             if (dsDefaultCompanyDetails.Tables.Count > 0)
-            {
-                foreach (System.Data.DataRow row in dsDefaultCompanyDetails.Tables[0].Rows)
-                {
-                    branchVM.branch.Country_Id = Convert.ToInt32(dsDefaultCompanyDetails.Tables[0].Rows[0]["Country_ID"].ToString());
-                    branchVM.Country.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
-                    branchVM.branch.State_Id = Convert.ToInt32(dsDefaultCompanyDetails.Tables[0].Rows[0]["State_ID"].ToString());
-                    branchVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
-
-                    branchVM.branch.City_Id = Convert.ToInt32(dsDefaultCompanyDetails.Tables[0].Rows[0]["City_ID"].ToString());
-                    branchVM.City.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
-                }
-               // TempData["DefaultCompanyName"] = dsDefaultCompanyDetails.Tables[0].Rows[0]["Company_Name"].ToString();
-            }
-            branchVM.State = new List<SelectListItem>();
-            branchVM.State.Add(new SelectListItem { Text = "--Select State--", Value = "0" });
-            string strXMLDefaultStates = organizationServiceClient.GetStateList(branchVM.branch.Country_Id);
-            DataSet dsDefaultStates = new DataSet();
-            dsDefaultStates.ReadXml(new StringReader(strXMLDefaultStates));
-            if (dsDefaultStates.Tables.Count > 0)
-            {
-                foreach (System.Data.DataRow row in dsDefaultStates.Tables[0].Rows)
-                {
-                    branchVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
-                }
-            }
-
-
-            branchVM.City = new List<SelectListItem>();
-            branchVM.City.Add(new SelectListItem { Text = "--Select City--", Value = "0" });
-            string strXMLDefaulyCities = organizationServiceClient.GetCityList(branchVM.branch.State_Id);
-            DataSet dsDefaultCities = new DataSet();
-            dsDefaultCities.ReadXml(new StringReader(strXMLDefaulyCities));
-            if (dsDefaultCities.Tables.Count > 0)
-            {
-                foreach (System.Data.DataRow row in dsDefaultCities.Tables[0].Rows)
-                {
-                    branchVM.City.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
-                }
-            }
-
-            return Json(branchVM, JsonRequestBehavior.AllowGet);
+            {                 
+                branchVM.Country.Add(new SelectListItem() { Text = dsDefaultCompanyDetails.Tables[0].Rows[0]["Country_Name"].ToString(), Value = dsDefaultCompanyDetails.Tables[0].Rows[0]["Country_ID"].ToString() });
+                branchVM.Country.Add(new SelectListItem() { Text = dsDefaultCompanyDetails.Tables[0].Rows[0]["State_Name"].ToString(), Value = dsDefaultCompanyDetails.Tables[0].Rows[0]["State_ID"].ToString() });
+                branchVM.Country.Add(new SelectListItem() { Text = dsDefaultCompanyDetails.Tables[0].Rows[0]["City_Name"].ToString(), Value = dsDefaultCompanyDetails.Tables[0].Rows[0]["City_ID"].ToString() });
+            }      
+            return Json(branchVM.Country, JsonRequestBehavior.AllowGet);
         }
 
 

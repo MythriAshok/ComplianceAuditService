@@ -9,15 +9,14 @@
             var procemessage = "<option value='0'> Please wait...</option>";
             $("#branch_State_Id").html(procemessage).show();
             var url = "/Common/getstate";
-            //alert(url);
             $.ajax({
                 url: url,
                 data: { countryid: _CountryId },
                 cache: false,
                 type: "POST",
                 success: function (data) {
-                    var markup = "<option value='0'>Select State</option>";
-                    for (var x = 0; x < data.length; x++) {
+                    var markup = "<option value='0'>-- Select State --</option>";
+                    for (var x = 0; x < data.length; x++) {                      
                         markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
                     }
                     $("#branch_State_Id").html(markup).show();
@@ -38,7 +37,7 @@
                 cache: false,
                 type: "POST",
                 success: function (data) {
-                    var markup = "<option value='0'>Select City</option>";
+                    var markup = "<option value='0'>-- Select City --</option>";
                     for (var x = 0; x < data.length; x++) {
                         markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
                     }
@@ -62,8 +61,8 @@
                 cache: false,
                 type: "POST",
                 success: function (data) {
-                    var markup = "<option value='0'>Select Company</option>";
-                    for (var x = 0; x < data.length; x++) {
+                    var markup = "<option value='0'>-- Select Company --</option>";
+                    for (var x = 0; x < data.length; x++) {                       
                         markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
                     }
                     $("#CompanyID").html(markup).show();
@@ -127,24 +126,32 @@
             var procemessage = "<option value='0'> Please wait...</option>";
             $("#branch_Country_Id").html(procemessage).show();
             var url = "/Common/getdefaultcountry";
-
             $.ajax({
                 url: url,
                 data: { compid: _CompanyId },
                 cache: false,
                 type: "POST",
                 success: function (data) {
-                    var markup = "<option value='0'>Select Country</option>";
-                    for (var x = 0; x < data.length; x++) {
-                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
-                    }
-                    $("#branch_Country_Id").html(markup).show();
+                    var markup = "";
+                    markup += "<option value=" + data[0].Value + ">" + data[0].Text + "</option>";
+                    var CountryId = data[0].Value;                  
+                    var StateId = data[1].Value;                   
+                    var CityId = data[2].Value;                 
+                    $("#branch_Country_Id").html(markup).show();  
+                    GetState(CountryId);
+                    GetCity(StateId);
+                    alert(CityId);
+                    $("#branch_State_Id").val(StateId);
+                    $("#branch_City_Id").val(CityId);
+                    alert(CityId);
+                    //$("#branch_State_Id < option[value=" + StateId + "]").attr("selected",true);
+                    //$("#branch_City_Id option[value=" + CityId + "]").attr('selected', true);
+                  
                 },
                 error: function (reponse) {
                     alert("error : " + reponse);
                 }
             });
-
         }
     </script>
 }
