@@ -250,7 +250,7 @@ namespace Compliance.DataAccess
             }
             return vendorForCompany;
         }
-        public bool DeactivateVendorForBranch(int BranchVendorID)
+        public bool DeactivateVendorForBranch(int VendorID, int BranchID)
         {
             bool vendorForCompany = false;
             try
@@ -258,7 +258,8 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_DeactivateVendorForBranch", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Vendor_Branch_ID", BranchVendorID);
+                cmd.Parameters.AddWithValue("p_Vendor_ID", VendorID);
+                cmd.Parameters.AddWithValue("p_Branch_ID", BranchID);
                 int resultCount = cmd.ExecuteNonQuery();
                 if (resultCount > 0)
                 {

@@ -156,33 +156,27 @@ namespace ComplianceAuditWeb.Controllers
             return RedirectToAction("UpdateGroupCompany", new { OrgID = organizationVM.organization.Organization_Id });
         }
 
-        [HttpGet]
-        public ActionResult DeactivateGroupCompany(int OrgID)
-        {
-            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            string strxmlData = organizationServiceClient.getGroupOrganization(OrgID);
-            DataSet dsData = new DataSet();
-            dsData.ReadXml(new StringReader(strxmlData));
-            if (dsData.Tables.Count > 0)
-            {
-                orgActivateDeactivateViewModel.CompanyID = OrgID;
-                orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-            }
-            return View(orgActivateDeactivateViewModel);
-        }
-
-        [HttpPost]
-        public ActionResult DeactivateGroupCompany(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
+      
+        public ActionResult DeactivateGroupCompany(int Orgid)
         {
             if (ModelState.IsValid)
             {
+
                 bool result = false;
                 OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+                string strxmlData = organizationServiceClient.getGroupOrganization(Orgid);
+                DataSet dsData = new DataSet();
+                dsData.ReadXml(new StringReader(strxmlData));
+                if (dsData.Tables.Count > 0)
+                {
+                    orgActivateDeactivateViewModel.CompanyID = Orgid;
+                    orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+                }
                 result = organizationServiceClient.DeactivateGroupCompany(orgActivateDeactivateViewModel.CompanyID);
                 if (result == true)
                 {
-                    TempData["Success"] = "Deactivated successfully!!!";
+                    TempData["Success"] = "deactivated successfully!!!";
                     TempData["Company"] = orgActivateDeactivateViewModel.CompanyName;
 
                     return RedirectToAction("GroupCompanyList");
@@ -190,68 +184,54 @@ namespace ComplianceAuditWeb.Controllers
             }
             return View();
         }
-
-        [HttpGet]
-        public ActionResult ActivateGroupCompany(int OrgID)
-        {
-            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            string strxmlData = organizationServiceClient.getGroupOrganization(OrgID);
-            DataSet dsData = new DataSet();
-            dsData.ReadXml(new StringReader(strxmlData));
-            if (dsData.Tables.Count > 0)
-            {
-                orgActivateDeactivateViewModel.CompanyID = OrgID;
-                orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-            }
-            return View(orgActivateDeactivateViewModel);
-        }
-
-        [HttpPost]
-        public ActionResult ActivateGroupCompany(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
+        public ActionResult ActivateGroupCompany(int Orgid)
         {
             if (ModelState.IsValid)
             {
+
                 bool result = false;
                 OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+                string strxmlData = organizationServiceClient.getGroupOrganization(Orgid);
+                DataSet dsData = new DataSet();
+                dsData.ReadXml(new StringReader(strxmlData));
+                if (dsData.Tables.Count > 0)
+                {
+                    orgActivateDeactivateViewModel.CompanyID = Orgid;
+                    orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+                }
                 result = organizationServiceClient.ActivateGroupCompany(orgActivateDeactivateViewModel.CompanyID);
                 if (result == true)
                 {
-                    TempData["Success"] = "Activated successfully!!!";
+                    TempData["Success"] = "activated successfully!!!";
                     TempData["Company"] = orgActivateDeactivateViewModel.CompanyName;
+
                     return RedirectToAction("GroupCompanyList");
                 }
             }
             return View();
         }
 
-        [HttpGet]
-        public ActionResult DeleteGroupCompany(int OrgID)
-        {
-            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            string strxmlData = organizationServiceClient.getGroupOrganization(OrgID);
-            DataSet dsData = new DataSet();
-            dsData.ReadXml(new StringReader(strxmlData));
-            if (dsData.Tables.Count > 0)
-            {
-                orgActivateDeactivateViewModel.CompanyID = OrgID;
-                orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-            }
-            return View(orgActivateDeactivateViewModel);
-        }
-
-        [HttpPost]
-        public ActionResult DeleteGroupCompany(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
+        public ActionResult DeleteGroupCompany(int Orgid)
         {
             if (ModelState.IsValid)
             {
+
                 bool result = false;
                 OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+                string strxmlData = organizationServiceClient.getGroupOrganization(Orgid);
+                DataSet dsData = new DataSet();
+                dsData.ReadXml(new StringReader(strxmlData));
+                if (dsData.Tables.Count > 0)
+                {
+                    orgActivateDeactivateViewModel.CompanyID = Orgid;
+                    orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+                }
                 result = organizationServiceClient.DeleteGroupCompany(orgActivateDeactivateViewModel.CompanyID);
                 if (result == true)
                 {
-                    TempData["Success"] = "Deleted successfully!!!";
+                    TempData["Success"] = "deleted successfully!!!";
                     TempData["Company"] = orgActivateDeactivateViewModel.CompanyName;
 
                     return RedirectToAction("GroupCompanyList");
@@ -616,120 +596,96 @@ namespace ComplianceAuditWeb.Controllers
                 return RedirectToAction("UpdateCompany", new { OrgID = companyVM.organization.Organization_Id });
             }
         }
-        [HttpGet]
-        public ActionResult DeactivateCompany(int OrgID)
-        {
-            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            string strxmlData = organizationServiceClient.getGroupCompany(OrgID);
-            DataSet dsData = new DataSet();
-            dsData.ReadXml(new StringReader(strxmlData));
-            if (dsData.Tables.Count > 0)
-            {
-                orgActivateDeactivateViewModel.CompanyID = OrgID;
-                orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-                orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
-            }
-            return View("_DeactivateCompany", orgActivateDeactivateViewModel);
-        }
-        [HttpPost]
-        public ActionResult DeactivateCompany(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
-        {
-            bool result = false;
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            result = organizationServiceClient.DeactivateCompany(orgActivateDeactivateViewModel.CompanyID);
-            if (result == true)
-            {
-                TempData["Success"] = "Deactivated successfully";
-                TempData["Company"] = orgActivateDeactivateViewModel.CompanyName;
-                return RedirectToAction("ListofCompany", new { GroupCompanyid = orgActivateDeactivateViewModel.ParentCompanyID });
-            }
-            else
-            {
-                return View();
-            }
-        }
-        public ActionResult ActivateCompany(int OrgID)
-        {
-            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            string strxmlData = organizationServiceClient.getGroupCompany(OrgID);
-            DataSet dsData = new DataSet();
-            dsData.ReadXml(new StringReader(strxmlData));
-            if (dsData.Tables.Count > 0)
-            {
-                orgActivateDeactivateViewModel.CompanyID = OrgID;
-                orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
-                orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-            }
-            return View("_ActivateCompany", orgActivateDeactivateViewModel);
-        }
-        [HttpPost]
-        public ActionResult ActivateCompany(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
+        public ActionResult DeactivateCompany(int Orgid)
         {
             if (ModelState.IsValid)
             {
+
                 bool result = false;
                 OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-                result = organizationServiceClient.ActivateCompany(orgActivateDeactivateViewModel.CompanyID);
+                OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+                string strxmlData = organizationServiceClient.getGroupOrganization(Orgid);
+                DataSet dsData = new DataSet();
+                dsData.ReadXml(new StringReader(strxmlData));
+                if (dsData.Tables.Count > 0)
+                {
+                    orgActivateDeactivateViewModel.CompanyID = Orgid;
+                    orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+                    orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
+
+                }
+                result = organizationServiceClient.DeactivateCompany(orgActivateDeactivateViewModel.CompanyID);
                 if (result == true)
                 {
-
-                    TempData["Success"] = "Activated successfully";
+                    TempData["Success"] = "deactivated successfully!!!";
                     TempData["Company"] = orgActivateDeactivateViewModel.CompanyName;
+
                     return RedirectToAction("ListofCompany", new { GroupCompanyid = orgActivateDeactivateViewModel.ParentCompanyID });
-                }
-                else
-                {
-                    return View();
 
-                }
-            }
-            else
-            {
-                return View();
-            }
-        }
-
-        [HttpGet]
-        public ActionResult DeleteCompany(int OrgID)
-        {
-            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            string strxmlData = organizationServiceClient.getGroupCompany(OrgID);
-            DataSet dsData = new DataSet();
-            dsData.ReadXml(new StringReader(strxmlData));
-            if (dsData.Tables.Count > 0)
-
-            {
-                orgActivateDeactivateViewModel.CompanyID = OrgID;
-                orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-                orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
-            }
-            return View("_DeleteCompany", orgActivateDeactivateViewModel);
-        }
-        [HttpPost]
-        public ActionResult DeleteCompany(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                bool result = false;
-                OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-                result = organizationServiceClient.DeleteCompany(orgActivateDeactivateViewModel.CompanyID);
-                if (result == true)
-                {
-                    TempData["Success"] = "Deleted successfully";
-                    TempData["Company"] = orgActivateDeactivateViewModel.CompanyName;
-                    return RedirectToAction("ListofCompany", new { GroupCompanyid = orgActivateDeactivateViewModel.ParentCompanyID });
-                }
-                else
-                {
-                    return View();
                 }
             }
             return View();
         }
+        public ActionResult ActivateCompany(int Orgid)
+        {
+            if (ModelState.IsValid)
+            {
 
+                bool result = false;
+                OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+                string strxmlData = organizationServiceClient.getGroupOrganization(Orgid);
+                DataSet dsData = new DataSet();
+                dsData.ReadXml(new StringReader(strxmlData));
+                if (dsData.Tables.Count > 0)
+                {
+                    orgActivateDeactivateViewModel.CompanyID = Orgid;
+                    orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+                    orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
+
+                }
+                result = organizationServiceClient.ActivateCompany(orgActivateDeactivateViewModel.CompanyID);
+                if (result == true)
+                {
+                    TempData["Success"] = "activated successfully!!!";
+                    TempData["Company"] = orgActivateDeactivateViewModel.CompanyName;
+
+                    return RedirectToAction("ListofCompany", new { GroupCompanyid = orgActivateDeactivateViewModel.ParentCompanyID });
+
+                }
+            }
+            return View();
+        }
+        public ActionResult DeleteCompany(int Orgid)
+        {
+            if (ModelState.IsValid)
+            {
+
+                bool result = false;
+                OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+                string strxmlData = organizationServiceClient.getGroupOrganization(Orgid);
+                DataSet dsData = new DataSet();
+                dsData.ReadXml(new StringReader(strxmlData));
+                if (dsData.Tables.Count > 0)
+                {
+                    orgActivateDeactivateViewModel.CompanyID = Orgid;
+                    orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+                    orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
+
+                }
+                result = organizationServiceClient.DeleteCompany(orgActivateDeactivateViewModel.CompanyID);
+                if (result == true)
+                {
+                    TempData["Success"] = "deleted successfully!!!";
+                    TempData["Company"] = orgActivateDeactivateViewModel.CompanyName;
+
+                    return RedirectToAction("ListofCompany", new { GroupCompanyid = orgActivateDeactivateViewModel.ParentCompanyID });
+
+                }
+            }
+            return View();
+        }
         [HttpGet]
         public ActionResult AboutCompany(int id)
         {
@@ -1225,120 +1181,100 @@ namespace ComplianceAuditWeb.Controllers
         }
 
 
-        [HttpGet]
-        public ActionResult DeactivateBranch(int OrgID)
+        public ActionResult ActivateBranch(int Orgid)
         {
-            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            string strxmlData = organizationServiceClient.getBranch(OrgID);
-            DataSet dsData = new DataSet();
-            dsData.ReadXml(new StringReader(strxmlData));
-            if (dsData.Tables.Count > 0)
+            if (ModelState.IsValid)
             {
-                orgActivateDeactivateViewModel.CompanyID = OrgID;
-                orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-                orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
+
+                bool result = false;
+                OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+                string strxmlData = organizationServiceClient.getGroupOrganization(Orgid);
+                DataSet dsData = new DataSet();
+                dsData.ReadXml(new StringReader(strxmlData));
+                if (dsData.Tables.Count > 0)
+                {
+                    orgActivateDeactivateViewModel.CompanyID = Orgid;
+                    orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+                    orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
+
+                }
+                result = organizationServiceClient.ActivateBranch(orgActivateDeactivateViewModel.CompanyID);
+                if (result == true)
+                {
+                    TempData["Success"] = "activated successfully!!!";
+                    TempData["Company"] = orgActivateDeactivateViewModel.CompanyName;
+
+                    return RedirectToAction("BranchList", new { id = orgActivateDeactivateViewModel.ParentCompanyID });
+
+
+
+                }
             }
-            return View("_DeactivateBranch", orgActivateDeactivateViewModel);
+            return View();
         }
-        [HttpPost]
-        public ActionResult DeactivateBranch(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
+        public ActionResult DeactivateBranch(int Orgid)
         {
-            bool result = false;
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            result = organizationServiceClient.DeactivateBranch(orgActivateDeactivateViewModel.CompanyID);
-            if (result == true)
+            if (ModelState.IsValid)
             {
-                TempData["Success"] = "Deactivated successfully";
-                TempData["Company"] = orgActivateDeactivateViewModel.CompanyName;
-                return RedirectToAction("BranchList", new { id = orgActivateDeactivateViewModel.ParentCompanyID });
 
+                bool result = false;
+                OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+                string strxmlData = organizationServiceClient.getGroupOrganization(Orgid);
+                DataSet dsData = new DataSet();
+                dsData.ReadXml(new StringReader(strxmlData));
+                if (dsData.Tables.Count > 0)
+                {
+                    orgActivateDeactivateViewModel.CompanyID = Orgid;
+                    orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+                    orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
+
+                }
+                result = organizationServiceClient.DeactivateBranch(orgActivateDeactivateViewModel.CompanyID);
+                if (result == true)
+                {
+                    TempData["Success"] = "deactivated successfully!!!";
+                    TempData["Company"] = orgActivateDeactivateViewModel.CompanyName;
+
+                    return RedirectToAction("BranchList", new { id = orgActivateDeactivateViewModel.ParentCompanyID });
+
+
+                }
             }
-            else
-            {
-                return RedirectToAction("DeactivateBranch", new { OrgId = orgActivateDeactivateViewModel.ParentCompanyID });
-
-
-            }
+            return View();
         }
-
-        public ActionResult ActivateBranch(int OrgID)
+        public ActionResult DeleteBranch(int Orgid)
         {
-            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            string strxmlData = organizationServiceClient.getBranch(OrgID);
-            DataSet dsData = new DataSet();
-            dsData.ReadXml(new StringReader(strxmlData));
-            if (dsData.Tables.Count > 0)
+            if (ModelState.IsValid)
             {
-                orgActivateDeactivateViewModel.CompanyID = OrgID;
-                orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-                orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
+
+                bool result = false;
+                OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+                string strxmlData = organizationServiceClient.getGroupOrganization(Orgid);
+                DataSet dsData = new DataSet();
+                dsData.ReadXml(new StringReader(strxmlData));
+                if (dsData.Tables.Count > 0)
+                {
+                    orgActivateDeactivateViewModel.CompanyID = Orgid;
+                    orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+                    orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
+
+                }
+                result = organizationServiceClient.DeleteBranch(orgActivateDeactivateViewModel.CompanyID);
+                if (result == true)
+                {
+                    TempData["Success"] = "deleted successfully!!!";
+                    TempData["Company"] = orgActivateDeactivateViewModel.CompanyName;
+
+                    return RedirectToAction("BranchList", new { id = orgActivateDeactivateViewModel.ParentCompanyID });
+
+
+                }
             }
-            return View("_ActivateBranch", orgActivateDeactivateViewModel);
+            return View();
         }
-        [HttpPost]
-        public ActionResult ActivateBranch(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
-        {
-            bool result = false;
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            result = organizationServiceClient.ActivateBranch(orgActivateDeactivateViewModel.CompanyID);
-            if (result == true)
-            {
-
-                TempData["Success"] = "Activated successfully";
-                TempData["Company"] = orgActivateDeactivateViewModel.CompanyName;
-                return RedirectToAction("BranchList", new { id = orgActivateDeactivateViewModel.ParentCompanyID });
-
-
-            }
-            else
-            {
-                return RedirectToAction("ActivateBranch", new { OrgId = orgActivateDeactivateViewModel.ParentCompanyID });
-
-
-            }
-        }
-
-        [HttpGet]
-        public ActionResult DeleteBranch(int OrgID)
-        {
-            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            string strxmlData = organizationServiceClient.getBranch(OrgID);
-            DataSet dsData = new DataSet();
-            dsData.ReadXml(new StringReader(strxmlData));
-            if (dsData.Tables.Count > 0)
-            {
-                orgActivateDeactivateViewModel.CompanyID = OrgID;
-                orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-                orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
-            }
-            return View("_DeleteBranch", orgActivateDeactivateViewModel);
-        }
-        [HttpPost]
-        public ActionResult DeleteBranch(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
-        {
-            bool result = false;
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            result = organizationServiceClient.DeleteBranch(orgActivateDeactivateViewModel.CompanyID);
-            if (result == true)
-            {
-
-                TempData["Success"] = "Deleted successfully";
-                TempData["Company"] = orgActivateDeactivateViewModel.CompanyName;
-                return RedirectToAction("BranchList", new { id = orgActivateDeactivateViewModel.ParentCompanyID });
-
-
-            }
-            else
-            {
-                return RedirectToAction("DeleteBranch", new { OrgId = orgActivateDeactivateViewModel.ParentCompanyID });
-
-
-            }
-        }
-
 
         [HttpGet]
         public ActionResult AddVendor()
@@ -2258,35 +2194,27 @@ namespace ComplianceAuditWeb.Controllers
 }
 
 
-        [HttpGet]
-        public ActionResult DeactivateVendorUnderCompany(int OrgID)
-        {
-            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
-
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            string strxmlData = organizationServiceClient.getCompanyListsforBranch(OrgID);
-            DataSet dsData = new DataSet();
-            dsData.ReadXml(new StringReader(strxmlData));
-            if (dsData.Tables.Count > 0)
-            {
-                orgActivateDeactivateViewModel.CompanyID = OrgID;
-                orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-                orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
-            }
-            return View("_DeactivateVendorForCompany",orgActivateDeactivateViewModel);
-        }
-        [HttpPost]
-        public ActionResult DeactivateVendorUnderCompany(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
+        public ActionResult DeactivateVendorUnderCompany(int Orgid)
         {
             if (ModelState.IsValid)
             {
                 bool result = false;
-               // OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+                OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                string strxmlData = organizationServiceClient.getCompanyListsforBranch(Orgid);
+                DataSet dsData = new DataSet();
+                dsData.ReadXml(new StringReader(strxmlData));
+                if (dsData.Tables.Count > 0)
+                {
+                    orgActivateDeactivateViewModel.CompanyID = Orgid;
+                    orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+                    orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
+                }
                 VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
                 result = Convert.ToBoolean(vendorServiceClient.DeactivateVendorForCompany(orgActivateDeactivateViewModel.CompanyID));
                 if (result == true)
                 {
-                    TempData["Success"] = "Deactivated successfully";
+                    TempData["Success"] = "deactivated successfully";
                     TempData["Company"] = orgActivateDeactivateViewModel.CompanyName;
                     return RedirectToAction("CompanyVendorsList", new { id = orgActivateDeactivateViewModel.ParentCompanyID });
                 }
@@ -2294,84 +2222,76 @@ namespace ComplianceAuditWeb.Controllers
             }
             return View();
         }
-    
 
-    public ActionResult DeactivateVendorUnderBranch(int OrgID)
-    {
-        //OrganizationViewModel organizationViewModel = new OrganizationViewModel();
-        OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
-        // organizationViewModel.organization = new Organization();
+        
 
-        OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
 
-            string strxmlData = organizationServiceClient.getCompanyListsforBranch(OrgID);
+    //    public ActionResult DeactivateVendorUnderBranch(int OrgID)
+    //{
+    //    //OrganizationViewModel organizationViewModel = new OrganizationViewModel();
+    //    OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+    //    // organizationViewModel.organization = new Organization();
+
+    //    OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+    //        VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+
+    //        string strxmlData = organizationServiceClient.getCompanyListsforBranch(OrgID);
            
-            DataSet dsData = new DataSet();
-        dsData.ReadXml(new StringReader(strxmlData));
-            if (dsData.Tables.Count > 0)
-            {
-                orgActivateDeactivateViewModel.CompanyID = OrgID;
-                orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-            }
-        return View("_DeacvtivateVendorForBranch", orgActivateDeactivateViewModel);
-    }
-    [HttpPost]
-    public ActionResult DeactivateVendorUnderBranch(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
-    {
-        if (ModelState.IsValid)
-        {
-            bool result = false;
-            // OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
-            result = Convert.ToBoolean(vendorServiceClient.DeactivateVendorForBranch(orgActivateDeactivateViewModel.CompanyID));
-            if (result == true)
-            {
-                    TempData["Success"] = "Deactivated successfully";
-                    TempData["Compant"] = orgActivateDeactivateViewModel.CompanyName;
-                    return RedirectToAction("BranchVendorsList");
-            }
+    //        DataSet dsData = new DataSet();
+    //    dsData.ReadXml(new StringReader(strxmlData));
+    //        if (dsData.Tables.Count > 0)
+    //        {
+    //            orgActivateDeactivateViewModel.CompanyID = OrgID;
+    //            orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+    //        }
+    //    return View("_DeacvtivateVendorForBranch", orgActivateDeactivateViewModel);
+    //}
+    //[HttpPost]
+    //public ActionResult DeactivateVendorUnderBranch(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
+    //{
+    //    if (ModelState.IsValid)
+    //    {
+    //        bool result = false;
+    //        // OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+    //        VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+    //        result = Convert.ToBoolean(vendorServiceClient.DeactivateVendorForBranch(orgActivateDeactivateViewModel.CompanyID));
+    //        if (result == true)
+    //        {
+    //                TempData["Success"] = "Deactivated successfully";
+    //                TempData["Compant"] = orgActivateDeactivateViewModel.CompanyName;
+    //                return RedirectToAction("BranchVendorsList");
+    //        }
 
-        }
-        return View();
-    }
+    //    }
+    //    return View();
+    //}
 
 
 
-        public ActionResult ActivateVendorUnderCompany(int OrgID)
-        {
-            //OrganizationViewModel organizationViewModel = new OrganizationViewModel();
-            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
-            // organizationViewModel.organization = new Organization();
 
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
-
-            string strxmlData = organizationServiceClient.getCompanyListsforBranch(OrgID);
-
-            DataSet dsData = new DataSet();
-            dsData.ReadXml(new StringReader(strxmlData));
-            if (dsData.Tables.Count > 0)
-            {
-                orgActivateDeactivateViewModel.CompanyID = OrgID;
-                orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-            }
-            return View("_ActivateVendorForCompany", orgActivateDeactivateViewModel);
-        }
-        [HttpPost]
-        public ActionResult ActivateVendorUnderCompany(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
+        public ActionResult ActivateVendorUnderCompany(int Orgid)
         {
             if (ModelState.IsValid)
             {
                 bool result = false;
-                // OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+                OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                string strxmlData = organizationServiceClient.getCompanyListsforBranch(Orgid);
+                DataSet dsData = new DataSet();
+                dsData.ReadXml(new StringReader(strxmlData));
+                if (dsData.Tables.Count > 0)
+                {
+                    orgActivateDeactivateViewModel.CompanyID = Orgid;
+                    orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+                    orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
+                }
                 VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
                 result = Convert.ToBoolean(vendorServiceClient.ActivateVendorForCompany(orgActivateDeactivateViewModel.CompanyID));
                 if (result == true)
                 {
-                    TempData["Success"] = "Activated successfully";
+                    TempData["Success"] = "activated successfully";
                     TempData["Company"] = orgActivateDeactivateViewModel.CompanyName;
-                    return RedirectToAction("CompanyVendorsList", new { id = orgActivateDeactivateViewModel.ParentCompanyID});
+                    return RedirectToAction("CompanyVendorsList", new { id = orgActivateDeactivateViewModel.ParentCompanyID });
                 }
 
             }
@@ -2416,39 +2336,28 @@ namespace ComplianceAuditWeb.Controllers
             }
             return View();
         }
-        public ActionResult DeleteVendorUnderCompany(int OrgID)
-        {
-            //OrganizationViewModel organizationViewModel = new OrganizationViewModel();
-            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
-            // organizationViewModel.organization = new Organization();
 
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
-
-            string strxmlData = organizationServiceClient.getCompanyListsforBranch(OrgID);
-
-            DataSet dsData = new DataSet();
-            dsData.ReadXml(new StringReader(strxmlData));
-            if (dsData.Tables.Count > 0)
-            {
-                orgActivateDeactivateViewModel.CompanyID = OrgID;
-                orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-                orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
-            }
-            return View("_DeleteVendorUnderCompany", orgActivateDeactivateViewModel);
-        }
-        [HttpPost]
-        public ActionResult DeleteVendorUnderCompany(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
+        public ActionResult DeleteVendorUnderCompany(int Orgid)
         {
             if (ModelState.IsValid)
             {
                 bool result = false;
-                // OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+                OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+                string strxmlData = organizationServiceClient.getCompanyListsforBranch(Orgid);
+                DataSet dsData = new DataSet();
+                dsData.ReadXml(new StringReader(strxmlData));
+                if (dsData.Tables.Count > 0)
+                {
+                    orgActivateDeactivateViewModel.CompanyID = Orgid;
+                    orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+                    orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
+                }
                 VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
                 result = Convert.ToBoolean(vendorServiceClient.DeleteVendorForCompany(orgActivateDeactivateViewModel.CompanyID));
                 if (result == true)
                 {
-                    TempData["Success"] = "Deleted successfully";
+                    TempData["Success"] = "deleted successfully";
                     TempData["Company"] = orgActivateDeactivateViewModel.CompanyName;
                     return RedirectToAction("CompanyVendorsList", new { id = orgActivateDeactivateViewModel.ParentCompanyID });
                 }
@@ -2456,42 +2365,138 @@ namespace ComplianceAuditWeb.Controllers
             }
             return View();
         }
-        public ActionResult DeleteVendorUnderBranch(int OrgID)
+        //public ActionResult DeleteVendorUnderBranch(int OrgID)
+        //{
+        //    OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
+
+        //    OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+        //    VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+
+        //    string strxmlData = organizationServiceClient.getCompanyListsforBranch(OrgID);
+
+        //    DataSet dsData = new DataSet();
+        //    dsData.ReadXml(new StringReader(strxmlData));
+        //    if (dsData.Tables.Count > 0)
+        //    {
+        //        orgActivateDeactivateViewModel.CompanyID = OrgID;
+        //        orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
+        //        orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
+        //    }
+        //    return View("_DeleteVendorForBranch", orgActivateDeactivateViewModel);
+        //}
+        //[HttpPost]
+        //public ActionResult DeleteVendorUnderBranch(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        bool result = false;
+        //        VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+        //        result = Convert.ToBoolean(vendorServiceClient.DeactivateVendorForBranch(orgActivateDeactivateViewModel.CompanyID));
+        //        if (result == true)
+        //        {
+        //            TempData["Success"] = "Deleted successfully";
+        //            TempData["Compant"] = orgActivateDeactivateViewModel.CompanyName;
+        //            return RedirectToAction("BranchVendorsList");
+        //        }
+
+        //    }
+        //    return View();
+        //}
+
+
+        public ActionResult DessignVendorForBranch()
         {
-            OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
 
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+            BranchViewModel branchVM = new BranchViewModel();
 
-            string strxmlData = organizationServiceClient.getCompanyListsforBranch(OrgID);
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+            // branchVM.organization = new Organization();
+            // branchVM.organization.Organization_Id = 0;
+            // branchVM.branch = new BranchLocation();
+            // branchVM.branch.Branch_Id = 0;
 
-            DataSet dsData = new DataSet();
-            dsData.ReadXml(new StringReader(strxmlData));
-            if (dsData.Tables.Count > 0)
+            string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
+            DataSet dsGroupCompanyList = new DataSet();
+            dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
+            branchVM.GroupCompaniesList = new List<SelectListItem>();
+
+
+
+            branchVM.GroupCompaniesList.Add(new SelectListItem { Text = "--Select Group Company--", Value = "0" });
+
+            if (dsGroupCompanyList.Tables.Count > 0)
             {
-                orgActivateDeactivateViewModel.CompanyID = OrgID;
-                orgActivateDeactivateViewModel.CompanyName = dsData.Tables[0].Rows[0]["Company_Name"].ToString();
-                orgActivateDeactivateViewModel.ParentCompanyID = Convert.ToInt32(dsData.Tables[0].Rows[0]["Parent_Company_ID"]);
+                foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
+                {
+                    branchVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+                }
             }
-            return View("_DeleteVendorForBranch", orgActivateDeactivateViewModel);
+
+            int groupcompid = 0;
+            string strXMLCompanyList = organizationservice.GeSpecifictCompaniesList(groupcompid);
+            DataSet dsCompanyList = new DataSet();
+            dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
+            branchVM.CompaniesList = new List<SelectListItem>();
+            branchVM.CompaniesList.Add(new SelectListItem { Text = "--Select Company--", Value = "0" });
+           
+
+            int compid = 0;
+            string strXMLBranchList = organizationservice.GeSpecifictBranchList(compid);
+            DataSet dsBranchList = new DataSet();
+            dsBranchList.ReadXml(new StringReader(strXMLBranchList));
+            branchVM.BranchList = new List<SelectListItem>();
+            branchVM.BranchList.Add(new SelectListItem { Text = "--Select Branch--", Value = "0" });
+           
+
+
+            int BranchID = 0;
+            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+            string xmlVndors = vendorServiceClient.GetAssignedVendorsforBranch(BranchID);
+            DataSet dsVendors = new DataSet();
+            dsVendors.ReadXml(new StringReader(xmlVndors));
+            branchVM.VendorList = new List<SelectListItem>();
+            branchVM.VendorList.Add(new SelectListItem { Text = "--Select Vendor--", Value = "0" });
+
+           
+            return View("_DessignVendorsForBranch", branchVM);
         }
+
+
         [HttpPost]
-        public ActionResult DeleteVendorUnderBranch(OrgActivateDeactivateViewModel orgActivateDeactivateViewModel)
+        public ActionResult DessignVendorForBranch(BranchViewModel branchViewModel)
         {
+            bool result = false;
+            // BranchViewModel branchViewModel = new BranchViewModel();
+            int[] Orgid = branchViewModel.VendorID;
+            branchViewModel.organization = new Organization();
+            branchViewModel.BranchList = new List<SelectListItem>();
+            branchViewModel.CompaniesList = new List<SelectListItem>();
+            branchViewModel.GroupCompaniesList = new List<SelectListItem>();
             if (ModelState.IsValid)
             {
-                bool result = false;
                 VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
-                result = Convert.ToBoolean(vendorServiceClient.DeactivateVendorForBranch(orgActivateDeactivateViewModel.CompanyID));
-                if (result == true)
+               
+                     result = Convert.ToBoolean(vendorServiceClient.DeactivateVendorForBranch((Orgid), branchViewModel.BranchID));
+               
+
+               // string selectedbranch = Convert.ToString(branchViewModel.BranchList);
+                if (result != false)
                 {
-                    TempData["Success"] = "Deleted successfully";
-                    TempData["Compant"] = orgActivateDeactivateViewModel.CompanyName;
-                    return RedirectToAction("BranchVendorsList");
+
+                    ViewBag.MessageDeallocated = "de-allocated successfully";
+                    foreach (var item in branchViewModel.VendorID)
+                    {
+                        ViewBag.MessageVendorName = branchViewModel.VendorName;
+                    }
+                    // return RedirectToAction("BranchVendorsList" , new { id = branchViewModel.CompanyID});
+                    return View("View");
                 }
+               
 
             }
-            return View();
+            ModelState.AddModelError("", ConfigurationManager.AppSettings["ERROR"]);
+            return View("_AssignVendorToBranch");
+
         }
 
     }

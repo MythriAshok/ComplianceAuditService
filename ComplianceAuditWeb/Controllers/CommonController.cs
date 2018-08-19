@@ -142,8 +142,8 @@ namespace ComplianceAuditWeb.Controllers
         {
            // List<SelectListItem> vendors = new List<SelectListItem>();
             BranchViewModel branchVM = new BranchViewModel();
-            branchVM.branch = new BranchLocation();
-            branchVM.organization = new Organization();
+           // branchVM.branch = new BranchLocation();
+            //branchVM.organization = new Organization();
             int ID = Convert.ToInt32(compid);
             OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
             string xmldata = organizationServiceClient.getDefaultCompanyDetails(ID);
@@ -156,16 +156,16 @@ namespace ComplianceAuditWeb.Controllers
             branchVM.CompaniesList.Add(new SelectListItem { Text = "--Select Country--", Value = "0" });
             if (dsDefaultCompanyDetails.Tables.Count > 0)
             {
-                foreach (System.Data.DataRow row in dsDefaultCompanyDetails.Tables[0].Rows)
-                {
+               // foreach (System.Data.DataRow row in dsDefaultCompanyDetails.Tables[0].Rows)
+                //{
                     branchVM.branch.Country_Id = Convert.ToInt32(dsDefaultCompanyDetails.Tables[0].Rows[0]["Country_ID"].ToString());
-                    branchVM.Country.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
+                   // branchVM.Country.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
                     branchVM.branch.State_Id = Convert.ToInt32(dsDefaultCompanyDetails.Tables[0].Rows[0]["State_ID"].ToString());
-                    branchVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
+                    //branchVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
 
                     branchVM.branch.City_Id = Convert.ToInt32(dsDefaultCompanyDetails.Tables[0].Rows[0]["City_ID"].ToString());
-                    branchVM.City.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
-                }
+                    //branchVM.City.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
+               // }
                // TempData["DefaultCompanyName"] = dsDefaultCompanyDetails.Tables[0].Rows[0]["Company_Name"].ToString();
             }
             branchVM.State = new List<SelectListItem>();
@@ -256,6 +256,28 @@ namespace ComplianceAuditWeb.Controllers
             //}
             //return View("View");
             return ViewBag.Message;
+        }
+
+
+
+        public JsonResult getspecificvendorsassociatedwithbranch(string branchid)
+        {
+            List<SelectListItem> vendors = new List<SelectListItem>();
+            int ID = Convert.ToInt32(branchid);
+            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+
+            string xmldata = vendorServiceClient.GetAssignedVendorsforBranch(ID);
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            vendors = new List<SelectListItem>();
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    vendors.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Vendor_ID"]) });
+                }
+            }
+            return Json(vendors, JsonRequestBehavior.AllowGet);
         }
     }
 }

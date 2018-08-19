@@ -67,18 +67,22 @@
             @Html.ActionLink("Modify", "UpdateGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
         </li>
         <li>
-            @*@Html.ActionLink("Delete", "DeleteGroupCompany",  new { OrgID = Model.CompanyID , @class = "btn primary-button" },
-           new { onclick = "return confirm('Are you sure you want to delete?');" })*@
+            @Html.ActionLink("Delete", "DeleteGroupCompany",  new{ Orgid = Model.CompanyID },
+                  new { @onclick = "return confirm('Are you sure you want to delete?');", @class = "btn primary-button" })
 
-            @Html.ActionLink("Delete", "DeleteGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
             @if (Model.Is_Active == true)
             {
-                @Html.ActionLink("Deactivate", "DeactivateGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+                @*@Html.ActionLink("Deactivate", "DeactivateGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })*@
+
+                @Html.ActionLink("Deactivate", "DeactivateGroupCompany",  new{ Orgid = Model.CompanyID },
+            new { @onclick = "return confirm('Are you sure you want to deactivate?');", @class = "btn primary-button" })
             }
 
             else
             {
-                @Html.ActionLink("Activate", "ActivateGroupCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
+
+                @Html.ActionLink("Activate", "ActivateGroupCompany",  new{ Orgid = Model.CompanyID },
+            new { @onclick = "return confirm('Are you sure you want to activate?');", @class = "btn primary-button" })
 
             }
         </li>

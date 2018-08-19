@@ -46,10 +46,10 @@ namespace ComplianceAuditWeb.VendorService {
         System.Threading.Tasks.Task<string> ActivateVendorForCompanyAsync(int VendorID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/DeactivateVendorForBranch", ReplyAction="http://tempuri.org/IVendorService/DeactivateVendorForBranchResponse")]
-        string DeactivateVendorForBranch(int VendorBranchID);
+        string DeactivateVendorForBranch(int[] VendorID, int BranchID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/DeactivateVendorForBranch", ReplyAction="http://tempuri.org/IVendorService/DeactivateVendorForBranchResponse")]
-        System.Threading.Tasks.Task<string> DeactivateVendorForBranchAsync(int VendorBranchID);
+        System.Threading.Tasks.Task<string> DeactivateVendorForBranchAsync(int[] VendorID, int BranchID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/ActivateVendorForBranch", ReplyAction="http://tempuri.org/IVendorService/ActivateVendorForBranchResponse")]
         string ActivateVendorForBranch(int VendorBranchID);
@@ -143,12 +143,12 @@ namespace ComplianceAuditWeb.VendorService {
             return base.Channel.ActivateVendorForCompanyAsync(VendorID);
         }
         
-        public string DeactivateVendorForBranch(int VendorBranchID) {
-            return base.Channel.DeactivateVendorForBranch(VendorBranchID);
+        public string DeactivateVendorForBranch(int[] VendorID, int BranchID) {
+            return base.Channel.DeactivateVendorForBranch(VendorID, BranchID);
         }
         
-        public System.Threading.Tasks.Task<string> DeactivateVendorForBranchAsync(int VendorBranchID) {
-            return base.Channel.DeactivateVendorForBranchAsync(VendorBranchID);
+        public System.Threading.Tasks.Task<string> DeactivateVendorForBranchAsync(int[] VendorID, int BranchID) {
+            return base.Channel.DeactivateVendorForBranchAsync(VendorID, BranchID);
         }
         
         public string ActivateVendorForBranch(int VendorBranchID) {

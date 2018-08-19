@@ -25,7 +25,7 @@ namespace ComplianceService
         [OperationContract]
         string ActivateVendorForCompany(int VendorID);
         [OperationContract]
-        string DeactivateVendorForBranch(int VendorBranchID);
+        string DeactivateVendorForBranch(int[] VendorID, int BranchID);
         [OperationContract]
         string ActivateVendorForBranch(int VendorBranchID);
         [OperationContract]

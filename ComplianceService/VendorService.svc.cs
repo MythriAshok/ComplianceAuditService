@@ -118,11 +118,12 @@ namespace ComplianceService
                 return "Not activated";
             }
         }
-        public string DeactivateVendorForBranch(int VendorBranchID)
+        public string DeactivateVendorForBranch(int[] VendorID, int BranchID)
         {
             string vendor = "";
             VendorHelper vendorHelper = new VendorHelper();
-            vendor = Convert.ToString(vendorHelper.DeactivateVendorForBranch(VendorBranchID));
+            foreach(var item in VendorID)
+            vendor = Convert.ToString(vendorHelper.DeactivateVendorForBranch((item), BranchID));
             if (vendor != null)
             {
                 return vendor;
