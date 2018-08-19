@@ -315,6 +315,7 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult AddCompany()
         {
             CompanyViewModel companyVM = new CompanyViewModel();
+            companyVM.GroupCompanyID = Convert.ToInt32(Session["GroupCompanyId"]);
             var groupcopmpanyid = Request.QueryString["Orgid"];
             if (groupcopmpanyid != null)
             {
@@ -328,10 +329,10 @@ namespace ComplianceAuditWeb.Controllers
             companyVM.companydetails = new CompanyDetails();
             companyVM.companydetails.Company_Details_ID = 0;
            // companyVM.organization.Parent_Company_Id = Convert.ToInt32(TempData["ParentCompany_ID"]);
-            if (companyVM.organization.Parent_Company_Id > 0)
-            {
-                companyVM.GroupCompanyID = companyVM.organization.Parent_Company_Id;
-            }
+            //if (companyVM.organization.Parent_Company_Id > 0)
+            //{
+            //    companyVM.GroupCompanyID = companyVM.organization.Parent_Company_Id;
+            //}
             string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
             DataSet dsGroupCompanyList = new DataSet();
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
