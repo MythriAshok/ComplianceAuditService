@@ -19,7 +19,7 @@ namespace Compliance.DataObject
         public int City_Id { get; set; }
         public int Org_Hier_ID { get; set; }
 
-    // [Required]
+     [Required]
         public string Postal_Code { get; set; }
         public string Branch_Coordinates1 { get; set; }
         public string Branch_Coordinates2 { get; set; }

@@ -1,4 +1,4 @@
-﻿@model ComplianceAuditWeb.Models.CompanyViewModel
+﻿@model ComplianceAuditWeb.Models.VendorViewModel
 @using System.Configuration;
 @{
     ViewBag.Title = "Compliance Auditing";
@@ -213,11 +213,11 @@ new SelectListItem{Text="Anually", Value="3"}}, "--Select Vendor Auditing Freequ
             </div>
         </div>
 
-        @Html.HiddenFor(m => m.branch.Branch_Id)
+        @*@Html.HiddenFor(m => m.branch.Branch_Id)
         @Html.HiddenFor(m => m.branch.City_Id)
         @Html.HiddenFor(m => m.branch.Country_Id)
         @Html.HiddenFor(m => m.branch.State_Id)
-        @Html.HiddenFor(m => m.branch.City_Id)
+        @Html.HiddenFor(m => m.branch.City_Id)*@
         @Html.HiddenFor(m => m.organization.User_Id)
         @Html.HiddenFor(m => m.organization.Parent_Company_Id)
         @Html.HiddenFor(m => m.organization.Organization_Id)

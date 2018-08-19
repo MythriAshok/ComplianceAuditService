@@ -34,7 +34,7 @@
         function GetBranch(_CompanyId) {
             var procemessage = "<option value='0'> Please wait...</option>";
             $("#BranchID").html(procemessage).show();
-            var url = "/Common/getspecificbranch";
+            var url = "/Common/getspecificbranchdropdown";
 
             $.ajax({
                 url: url,

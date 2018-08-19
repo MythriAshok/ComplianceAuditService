@@ -536,7 +536,8 @@ namespace ComplianceAuditWeb.Controllers
                 companyVM.GroupCompanyID = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Parent_Company_ID"]);
             }
 
-            string strXMLGroupCompanyList = organizationClient.GetGroupCompaniesList();
+           // string strXMLGroupCompanyList = organizationClient.GetGroupCompaniesList();
+            string strXMLGroupCompanyList = organizationClient.getParticularGroupCompaniesList(companyVM.GroupCompanyID);
             DataSet dsGroupCompanyList = new DataSet();
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
             if (dsGroupCompanyList.Tables.Count > 0)
@@ -1068,6 +1069,7 @@ namespace ComplianceAuditWeb.Controllers
                 branchViewModel.branch.Postal_Code = dsUpdatedData.Tables[0].Rows[0]["Postal_Code"].ToString();
 
                 branchViewModel.organization.logo = dsUpdatedData.Tables[0].Rows[0]["logo"].ToString();
+                branchViewModel.CompanyID = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Parent_Company_ID"]);
 
 
 
@@ -1129,7 +1131,6 @@ namespace ComplianceAuditWeb.Controllers
                 }
             }
 
-            branchViewModel.CompanyID = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Parent_Company_ID"]);
 
             string strXMLCompanyList = organizationClient.getCompanyListsforBranch(branchViewModel.CompanyID);
             DataSet dsCompanyList = new DataSet();
@@ -1286,7 +1287,7 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult AddVendor()
         {
            int id = 0;
-            CompanyViewModel vendorVM = new CompanyViewModel();
+            VendorViewModel vendorVM = new VendorViewModel();
             var copmpanyid = Request.QueryString["Orgid"];
             if (copmpanyid != null)
             {
@@ -1295,8 +1296,8 @@ namespace ComplianceAuditWeb.Controllers
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
             vendorVM.organization = new Organization();
             vendorVM.organization.Organization_Id = 0;
-            vendorVM.branch = new BranchLocation();
-            vendorVM.branch.Branch_Id = 0;
+            //vendorVM.branch = new BranchLocation();
+            //vendorVM.branch.Branch_Id = 0;
             vendorVM.companydetails = new CompanyDetails();
             vendorVM.companydetails.Company_Details_ID = 0;
             vendorVM.organization.Parent_Company_Id = Convert.ToInt32(TempData["CompanyID"]);
@@ -1392,9 +1393,9 @@ namespace ComplianceAuditWeb.Controllers
         [HttpGet]
         public ActionResult UpdateVendor(int OrgID)
         {
-            CompanyViewModel ViewModel = new CompanyViewModel();
+            VendorViewModel ViewModel = new VendorViewModel();
             ViewModel.organization = new Organization();
-            ViewModel.branch = new BranchLocation();
+           // ViewModel.branch = new BranchLocation();
             ViewModel.companydetails = new CompanyDetails();
 
             //int OrgID = 0;
@@ -1429,6 +1430,7 @@ namespace ComplianceAuditWeb.Controllers
                 ViewModel.organization.Parent_Company_Id = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Parent_Company_ID"]);
 
                 ViewModel.organization.logo = dsUpdatedData.Tables[0].Rows[0]["logo"].ToString();
+                ViewModel.CompanyID = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Parent_Company_ID"]);
 
             }
 
@@ -1447,7 +1449,9 @@ namespace ComplianceAuditWeb.Controllers
                 }
 
             }
+
             string strXMLCompanyList = organizationClient.getCompanyListsforBranch(ViewModel.CompanyID);
+
             // string strXMLCompanyList = organizationClient.GeSpecifictCompaniesList(branchViewModel.CompanyID);
             DataSet dsCompanyList = new DataSet();
             dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
@@ -2497,7 +2501,7 @@ namespace ComplianceAuditWeb.Controllers
             //}
 
             int groupcompid = 0;
-            string strXMLCompanyList = organizationservice.GeSpecifictCompaniesList(Convert.ToInt32(Session["GroupCompanyId"]));
+            string strXMLCompanyList = organizationservice.getCompanyListDropDown(Convert.ToInt32(Session["GroupCompanyId"]));
             DataSet dsCompanyList = new DataSet();
             dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
             branchVM.CompaniesList = new List<SelectListItem>();
