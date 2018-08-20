@@ -86,12 +86,18 @@
 }
 @using (Html.BeginForm(actionname, "ManageOrganization", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    if (TempData["ErrorMessage"] != null)
+    {
+        <p style="color:red">@TempData["ErrorMessage"]</p>
 
+    }
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @*@Html.ValidationMessage("Error")*@
     <div class="mid_content_sec">
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-              
+
                 @if ((TempData["GroupCompanyID"]) != null)
                 {
                     Model.GroupCompanyName = TempData["GroupCompanyName"].ToString();
@@ -108,6 +114,7 @@
                     @Html.DropDownListFor(m => m.GroupCompanyID, Model.GroupCompaniesList, new { @class = "inputMaterial ui - autocomplete - input" })
 
                 }
+
             </div>
         </div>
 
@@ -240,8 +247,8 @@
             <div class="input-field">
                 @Html.Label("Auditing Frequency", new { @class = "floating-label" })<span style="color:red">*</span>
                 @*@Html.DropDownListFor(m => m.companydetails.Auditing_Frequency, new SelectList
-                        (Enum.GetValues(typeof(ComplianceAuditWeb.Models.CompanyViewModel.Auditingfrequency))),
-                        "Select Auditing Freequency", new { @class = "inputMaterial ui - autocomplete - input" })*@
+                    (Enum.GetValues(typeof(ComplianceAuditWeb.Models.CompanyViewModel.Auditingfrequency))),
+                    "Select Auditing Freequency", new { @class = "inputMaterial ui - autocomplete - input" })*@
 
                 @Html.DropDownListFor(m=>m.companydetails.Auditing_Frequency, new List<SelectListItem>
         { new SelectListItem{Text="Quarterly", Value="1"},
