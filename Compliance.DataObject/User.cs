@@ -30,5 +30,6 @@ namespace Compliance.DataObject
         public string photo { get; set; }
         public bool IsActive { get; set; }
         public DateTime LastLogin { get; set; }
+        public int Company_Id { get; set; }
     }
 }

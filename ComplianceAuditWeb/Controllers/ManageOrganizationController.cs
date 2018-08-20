@@ -330,6 +330,13 @@ namespace ComplianceAuditWeb.Controllers
             companyVM.companydetails = new CompanyDetails();
             companyVM.companydetails.Company_Details_ID = 0;
           
+            companyVM.companydetails.Company_Details_ID = 0;            
+           // companyVM.organization.Parent_Company_Id = Convert.ToInt32(TempData["ParentCompany_ID"]);
+            //if (companyVM.organization.Parent_Company_Id > 0)
+            //{
+            //    companyVM.GroupCompanyID = companyVM.organization.Parent_Company_Id;
+            //}
+           // string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
             string strXMLGroupCompanyList = organizationservice.getParticularGroupCompaniesList(companyVM.GroupCompanyID);
             DataSet dsGroupCompanyList = new DataSet();
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
@@ -373,15 +380,41 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult AddCompany(CompanyViewModel companyVM, HttpPostedFileBase file)
         {
-           
-            if (companyVM.companydetails.Calender_StartDate == null)
+
+            if (companyVM.companydetails.Calender_StartDate != DateTime.MinValue)
             {
-                companyVM.companydetails.Calender_StartDate = Convert.ToDateTime(DateTime.MinValue.ToString("dd-MM-yyyy"));
+                int year = DateTime.Now.Year;
+                if (companyVM.companydetails.Calender_StartDate.Year <= year || companyVM.companydetails.Calender_StartDate.Year>year)
+                {
+                    DateTime date = new DateTime();
+                    date.AddDays(31);
+                    if (companyVM.companydetails.Calender_StartDate.Month==04)
+                    {
+                        date.AddMonths(03);
+                        date.AddYears(companyVM.companydetails.Calender_StartDate.Year + 1);
+                    }
+                    else
+                    {
+                        date.AddMonths(12);
+                    }
+                    companyVM.companydetails.Calender_EndDate = date;
+                }
+                else
+                    ModelState.AddModelError("Startdate", "Please enter the vaild Calender start date");
+
             }
-            if (companyVM.companydetails.Calender_EndDate == null)
+            else
             {
-                companyVM.companydetails.Calender_EndDate = Convert.ToDateTime(DateTime.MaxValue.ToString("dd-MM-yyyy"));
-            }
+                DateTime date = new DateTime();
+                date.AddDays(01);
+                date.AddMonths(04);
+                date.AddYears(DateTime.Now.Year);
+                companyVM.companydetails.Calender_StartDate = date;
+                date.AddDays(31);
+                date.AddMonths(03);
+                date.AddYears(DateTime.Now.Year+1);
+                companyVM.companydetails.Calender_EndDate = date;
+            }               
             if (ModelState.IsValid)
             {
                 if (file != null)
@@ -813,13 +846,15 @@ namespace ComplianceAuditWeb.Controllers
 
             int id = 0;// session
             BranchViewModel branchVM = new BranchViewModel();
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+            branchVM.organization = new Organization();
             var copmpanyid = Request.QueryString["Orgid"];
             if (copmpanyid != null)
             {
                 branchVM.CompanyID = Convert.ToInt32(copmpanyid);
+                branchVM.organization.Company_Id = branchVM.CompanyID;
             }
-            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
-            branchVM.organization = new Organization();
+           
             branchVM.organization.Organization_Id = 0;
             branchVM.branch = new BranchLocation();
             branchVM.branch.Branch_Id = 0;

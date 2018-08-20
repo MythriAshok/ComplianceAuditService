@@ -130,7 +130,7 @@ namespace ComplianceService
         string getSpecificBranchListDropDown(int CompanyID);
         [OperationContract]
 
-        string getSpecificVendorListDropDown(int pid);
+        string getSpecificVendorListDropDown(int pid, int branchid);
 
     }
 }

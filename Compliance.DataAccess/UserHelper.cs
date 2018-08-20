@@ -52,6 +52,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Gender", user.Gender);
                     cmd.Parameters.AddWithValue("p_Is_Active", user.IsActive);
                     cmd.Parameters.AddWithValue("p_Photo", user.photo);
+                    cmd.Parameters.AddWithValue("p_compnay_Id", user.Company_Id);
                     result = Convert.ToString(cmd.ExecuteScalar());
                 }
                 else

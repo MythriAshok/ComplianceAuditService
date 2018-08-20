@@ -96,27 +96,27 @@ namespace ComplianceService
             return helper.getAuditorforBranch(Branchid);
        }
 
-       public bool inseretActandRuleforBranch(int orgid,int[] ruleid,int userid)
+       public bool inseretActandRuleforBranch(int orgid,int[] ruleid,int userid,int vendorid)
         {
             bool res = false;
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
             foreach(int id in ruleid)
             {                
-                res=helper.insertActAndRuleforBranch(orgid,id, userid);
+                res=helper.insertActAndRuleforBranch(orgid,id, userid,vendorid,DateTime.Now.Year,DateTime.Now,DateTime.Now);
             }
             return res;
             
         }
 
-        public string getRuleforBranch(int branchid)
+        public string getRuleforBranch(int branchid,int vendorid)
         {
-            return Bindruleforbranch( branchid);
+            return Bindruleforbranch( branchid,vendorid);
         }
 
-        private string Bindruleforbranch( int branchid)
+        private string Bindruleforbranch( int branchid,int vendorid)
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
-            DataSet ds = helper.getRuleforBranch(branchid);
+            DataSet ds = helper.getRuleforBranch(branchid,vendorid);
             UtilityHelper utilityHelper = new UtilityHelper();
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();

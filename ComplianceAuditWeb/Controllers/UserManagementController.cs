@@ -243,7 +243,7 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult AddUser(UserViewModel model, HttpPostedFileBase file)
         {
                 UserService.UserServiceClient Client = new UserService.UserServiceClient();
-            
+                model.User.Company_Id = Convert.ToInt32(Session["GroupCompanyId"]);
                 if (ModelState.IsValid)
                 {
                 if (file != null && file.ContentLength > 0)
@@ -260,6 +260,7 @@ namespace ComplianceAuditWeb.Controllers
                         model.User.UserId = Convert.ToInt32(res);
                         Client.insertUserGroupmember(model.User.UserId, model.UserGroupID);
                     //Client.insertUserRole(model.User.UserId, model.RoleID);
+                    TempData["Message"] = "Successfully created" + model.User.FirstName;
                     return RedirectToAction("ListofUsers");
                     }
                     else

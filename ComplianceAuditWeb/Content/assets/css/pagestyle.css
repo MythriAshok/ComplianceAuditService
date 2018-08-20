@@ -985,3 +985,5 @@ select {
     color:green;
     text-align:center;
 }
+
+.queContainer i{float:left;} 

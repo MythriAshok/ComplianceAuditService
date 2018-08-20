@@ -16,11 +16,11 @@ namespace Compliance.DataObject
         public string Formal_Name { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode =true)]
         [DataType(DataType.Date)]
-        public Nullable< DateTime> Calender_StartDate { get; set; }
+        public  DateTime Calender_StartDate { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
-        public Nullable<  DateTime> Calender_EndDate  { get; set; }
+        public  DateTime Calender_EndDate  { get; set; }
         [Required]
         public string Auditing_Frequency { get; set; }
         [Required]

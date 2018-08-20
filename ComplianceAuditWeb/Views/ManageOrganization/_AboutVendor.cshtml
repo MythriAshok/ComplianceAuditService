@@ -8,142 +8,144 @@
     <li> About Vendor</li>
 </ul>
 <h2 class="ML15">Manage Vendor</h2>
+<div class="mid_content_sec">
+    @using (Html.BeginForm())
+    {
+        <div>
+            @if (Session["GroupCompanyName"] != null)
+            {
+                Model.GroupCompanyName = Session["GroupCompanyName"].ToString();
 
-@using (Html.BeginForm())
-{
-    <div>
-        @if (Session["GroupCompanyName"] != null)
-        {
-            Model.GroupCompanyName = Session["GroupCompanyName"].ToString();
+                <center>
 
-            <center>
-
-                <h3 class="text-uppercase"> @Html.DisplayFor(m => m.GroupCompanyName)</h3>
+                    <h3 class="text-uppercase"> @Html.DisplayFor(m => m.GroupCompanyName)</h3>
 
                 <h4 class="text-center">@Html.DisplayFor(m => m.CompanyNameList)</h4>
 
+                </center>
+
+
+            }
+        </div>
+        if (TempData["Success"] != null)
+        {
+            <center>
+                <p id="successMessage">@TempData["Company"]@TempData["Success"]</p>
             </center>
-
-
         }
-    </div>
-    if (TempData["Success"] != null)
-    {
-        <center>
-            <p id="successMessage">@TempData["Company"]@TempData["Success"]</p>
-        </center>
-    }
-    <div class="pull-right fa fa-pull-right" style="font-size:large">
-        <i class="fa fa-plus"></i><font style="font-size:14px; color:dimgray; font-family:Arial">
-            @Html.ActionLink("Create New", "AddVendor", new { Orgid = Model.ParentCompanyID })
-        </font>
-    </div>
-    <img src="/UploadedFiles/@Model.CompanyLogo" alt="" />
-    <div class="clearfix"></div>
-
-    <div class="col-xs-4 subSelect ">
-        <div class="input-field">
-            @Html.Label("Vendor name")
-            @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
+        <div class="pull-right fa fa-pull-right" style="font-size:large">
+            <i class="fa fa-plus"></i><font style="font-size:14px; color:dimgray; font-family:Arial">
+                @Html.ActionLink("Create New", "AddVendor", new { Orgid = Model.ParentCompanyID })
+            </font>
         </div>
-    </div>
 
-    @*@Html.Label("Company Name", new { @class = "floating-label" })*@
-
-
-
-
-    <div class="clearfix"></div>
-
-
-
-    <div class="col-xs-12 subSelect ">
-        <div class="input-field">
-
-
-            @Html.Label("Vendor Description", new { @class = "floating-label" })
-            @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input", @rows = 10 })
-
+        <div class="col-xs-4 subSelect ">
+            <img src="/UploadedFiles/@Model.CompanyLogo" alt="" />
         </div>
-    </div>
-    @Html.HiddenFor(m => m.CompanyID)
-    @Html.HiddenFor(m => m.ParentCompanyID)
 
-    <ul class="list-inline continueBtn">
-        <li>
-            @Html.ActionLink("Modify", "UpdateVendor", new { OrgID = Model.CompanyID }, new { @class = "btn primary-button" })
-            <input type="submit" value="Cancel" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
-            @Html.ActionLink("Delete", "DeleteVendorUnderCompany",  new{ Orgid = Model.CompanyID },
-     new { @onclick = "return confirm('Are you sure you want to delete?');", @class = "btn primary-button" })
-            @if (Model.Is_Active == true)
-            {
-                @Html.ActionLink("Deactivate", "DeactivateVendorUnderCompany",  new{ Orgid = Model.CompanyID },
-    new { @onclick = "return confirm('Are you sure you want to deactivate?');", @class = "btn primary-button" })
-            }
-            else
-            {
-                @Html.ActionLink("Activate", "ActivateVendorUnderCompany",  new{ Orgid = Model.CompanyID },
-    new { @onclick = "return confirm('Are you sure you want to activate?');", @class = "btn primary-button" })
+        <div class="col-xs-42 subSelect ">
+            <div class="input-field">
+                @Html.Label("Vendor name")
+                @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
+            </div>
+        </div>
 
-            }
-        </li>
-    </ul>
+        @*@Html.Label("Company Name", new { @class = "floating-label" })*@
 
 
 
 
-    if (Model.AboutGroupCompany.Count > 0)
-    {
-
-        <div class="new_section_box">
-            <div class="tab-content">
-                <div id="home" class="tab-pane fade in active">
-                    <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Branches Associated:</h2>
 
 
-                    @foreach (var item in Model.AboutGroupCompany)
-                    {
-                        <div class="col-sm-3 QueList">
-                            <div class="queContainer">
-                                <a href="@Url.Action("AboutBranch", "ManageOrganization", new { id = item.OrganizationID })">
-                                    @if (item.Is_Active == false)
-                                    {
-                                        <i class="fa fa-ban"></i>
-                                    }
-                                    else
-                                    {
-                                        <i class="fa fa-check-circle"></i>
-                                    }
-                                    <span class="qIcon"><img src="/UploadedFiles/@item.CompanyLogo" alt="" style="height:60px;width:75px"></span>
-                                    <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyNameList)</h3>
-                                </a>
-                                <div class="clearfix"></div>
+
+
+        <div class="col-xs-12 subSelect ">
+            <div class="input-field">
+
+
+                @Html.Label("Vendor Description", new { @class = "floating-label" })
+                @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input", @rows = 10 })
+
+            </div>
+        </div>
+        @Html.HiddenFor(m => m.CompanyID)
+        @Html.HiddenFor(m => m.ParentCompanyID)
+        <div class="clearfix"></div>
+        <ul class="list-inline continueBtn">
+            <li>
+                @Html.ActionLink("Modify", "UpdateVendor", new { OrgID = Model.CompanyID }, new { @class = "btn primary-button" })
+                <input type="submit" value="Cancel" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+                @Html.ActionLink("Delete", "DeleteVendorUnderCompany",  new{ Orgid = Model.CompanyID },
+         new { @onclick = "return confirm('Are you sure you want to delete?');", @class = "btn primary-button" })
+                @if (Model.Is_Active == true)
+                {
+                    @Html.ActionLink("Deactivate", "DeactivateVendorUnderCompany",  new{ Orgid = Model.CompanyID },
+        new { @onclick = "return confirm('Are you sure you want to deactivate?');", @class = "btn primary-button" })
+                }
+                else
+                {
+                    @Html.ActionLink("Activate", "ActivateVendorUnderCompany",  new{ Orgid = Model.CompanyID },
+        new { @onclick = "return confirm('Are you sure you want to activate?');", @class = "btn primary-button" })
+
+                }
+            </li>
+        </ul>
+
+
+
+
+        if (Model.AboutGroupCompany.Count > 0)
+        {
+
+            <div class="new_section_box">
+                <div class="tab-content">
+                    <div id="home" class="tab-pane fade in active">
+                        <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Branches Associated:</h2>
+
+
+                        @foreach (var item in Model.AboutGroupCompany)
+                        {
+                            <div class="col-sm-3 QueList">
+                                <div class="queContainer">
+                                    <a href="@Url.Action("AboutBranch", "ManageOrganization", new { id = item.OrganizationID })">
+                                        @if (item.Is_Active == false)
+                                        {
+                                            <i class="fa fa-ban"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa fa-check-circle"></i>
+                                        }
+                                        <span class="qIcon"><img src="/UploadedFiles/@item.CompanyLogo" alt="" style="height:60px;width:75px"></span>
+                                        <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyNameList)</h3>
+                                    </a>
+                                    <div class="clearfix"></div>
+                                </div>
                             </div>
-                        </div>
-                    }
+                        }
 
 
 
-                    <div class="clearfix"></div>
+                        <div class="clearfix"></div>
+
+                    </div>
 
                 </div>
 
             </div>
 
-        </div>
 
-
+        }
+        else
+        {
+            <center>
+                <p id="successMessage">@ViewBag.Message</p>
+            </center>
+        }
     }
-    else
-    {
-        <center>
-            <p id="successMessage">@ViewBag.Message</p>
-        </center>
-    }
-}
 
 
-
+</div>
 
 
 
