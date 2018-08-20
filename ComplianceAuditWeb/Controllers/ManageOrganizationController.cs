@@ -1867,12 +1867,7 @@ namespace ComplianceAuditWeb.Controllers
             OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
 
             //  int id = Convert.ToInt32(TempData["ID"]);
-            //string data = organizationClient.getCompanyListsforBranch(branchVM.CompanyID);
-            //DataSet dataSet = new DataSet();
-            //dataSet.ReadXml(new StringReader(data));
-
-            //aboutCompanyViewModel.CompanyName = dataSet.Tables[0].Rows[0]["Company_Name"].ToString();
-            aboutCompanyViewModel.GroupCompanyName = Session["GroupCompanyName"].ToString();
+            
            // Session["CompanyNameG"] = branchVM.ChildCompanyName;
             string aboutcompany = organizationServiceClient.getCompanyListsforBranch(id);
             DataSet dsaboutCompany = new DataSet();
@@ -1884,10 +1879,14 @@ namespace ComplianceAuditWeb.Controllers
                 aboutCompanyViewModel.CompanyName = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["Company_Name"]);
                 aboutCompanyViewModel.ParentCompanyID = Convert.ToInt32(dsaboutCompany.Tables[0].Rows[0]["Parent_Company_ID"]);
                 aboutCompanyViewModel.Is_Active = Convert.ToBoolean(Convert.ToInt32(dsaboutCompany.Tables[0].Rows[0]["Is_Active"]));
-
                 aboutCompanyViewModel.CompanyLogo = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["logo"]);
-          
             }
+            string data = organizationServiceClient.getCompanyListsforBranch(aboutCompanyViewModel.ParentCompanyID);
+            DataSet dataSet = new DataSet();
+            dataSet.ReadXml(new StringReader(data));
+
+            aboutCompanyViewModel.CompanyName = dataSet.Tables[0].Rows[0]["Company_Name"].ToString();
+            aboutCompanyViewModel.GroupCompanyName = Session["GroupCompanyName"].ToString();
             List<AboutCompanyViewModel> branchList = new List<AboutCompanyViewModel>();
             VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
             string branchListofCompany = vendorServiceClient.GetAssignedVendorsforBranch(aboutCompanyViewModel.CompanyID);
