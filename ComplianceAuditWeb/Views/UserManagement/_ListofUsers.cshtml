@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<Compliance.DataObject.User>
-
-
+@if (TempData["Message"] != null)
+{
+<p id="successMessage">
+    @TempData["Message"]
+</p>
+}
 <p style="text-align:right;margin-right:20px">
-    @Html.ActionLink("Create New", actionName: "AddUser")
+    <i class="fa fa-plus"></i>@Html.ActionLink("Add User", actionName: "AddUser")
 </p>
 <table class="table">
     <tr>

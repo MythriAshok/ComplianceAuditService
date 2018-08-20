@@ -260,6 +260,7 @@ namespace ComplianceAuditWeb.Controllers
                         model.User.UserId = Convert.ToInt32(res);
                         Client.insertUserGroupmember(model.User.UserId, model.UserGroupID);
                     //Client.insertUserRole(model.User.UserId, model.RoleID);
+                    TempData["Message"] = "Successfully created" + model.User.FirstName;
                     return RedirectToAction("ListofUsers");
                     }
                     else
