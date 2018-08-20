@@ -1987,7 +1987,12 @@ namespace ComplianceAuditWeb.Controllers
                 aboutCompanyViewModel.Is_Active = Convert.ToBoolean(Convert.ToInt32(dsaboutCompany.Tables[0].Rows[0]["Is_Active"]));
                 aboutCompanyViewModel.CompanyLogo = Convert.ToString(dsaboutCompany.Tables[0].Rows[0]["logo"]);
             }
+            string data = organizationServiceClient.getCompanyListsforBranch(aboutCompanyViewModel.ParentCompanyID);
+            DataSet dataSet = new DataSet();
+            dataSet.ReadXml(new StringReader(data));
 
+            aboutCompanyViewModel.CompanyName = dataSet.Tables[0].Rows[0]["Company_Name"].ToString();
+            aboutCompanyViewModel.GroupCompanyName = Session["GroupCompanyName"].ToString();
             List<AboutCompanyViewModel> branchList = new List<AboutCompanyViewModel>();
             VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
            
@@ -2032,7 +2037,7 @@ namespace ComplianceAuditWeb.Controllers
             //Session["VendorID"] = aboutCompanyViewModel.VendorID;
             //Session["VendorName"] = aboutCompanyViewModel.VendorName;
             // Session["CompanyID"] = aboutCompanyViewModel.CompanyID;
-
+           
             int id = aboutCompanyViewModel.ParentCompanyID;
             //TempData["CompanyName"] = aboutCompanyViewModel.CompanyName;
             return RedirectToAction("CompanyVendorsList", new { id = id });

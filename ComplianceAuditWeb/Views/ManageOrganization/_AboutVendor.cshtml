@@ -11,6 +11,22 @@
 
 @using (Html.BeginForm())
 {
+    <div>
+        @if (Session["GroupCompanyName"] != null)
+        {
+            Model.GroupCompanyName = Session["GroupCompanyName"].ToString();
+
+            <center>
+
+                <h3 class="text-uppercase"> @Html.DisplayFor(m => m.GroupCompanyName)</h3>
+
+                <h4 class="text-center">@Html.DisplayFor(m => m.CompanyName)</h4>
+
+            </center>
+
+
+        }
+    </div>
     if (TempData["Success"] != null)
     {
         <center>
