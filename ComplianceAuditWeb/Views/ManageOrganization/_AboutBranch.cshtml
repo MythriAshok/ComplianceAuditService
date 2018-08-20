@@ -3,7 +3,7 @@
     ViewBag.Title = "Compliance Auditing";
 }
 <ul class="breadcrumb ML15">
-    <li><a href="/Common/dashboard?pid=9">Branch Management</a></li>
+    <li><a href="/ManageOrganization/SelectCompany">Branch Management</a></li>
     <li>About Branch</li>
 </ul>
 <h2 class="ML15">Manage Branch</h2>
@@ -18,15 +18,26 @@
 
             @Html.ActionLink("Create Branch", "AddBranch", new { Orgid = Model.ParentCompanyID })
         </font>
-
-        @*@TempData["ParentCompanyID"] = Model.ParentCompanyID;*@
-
-
     </div>
+    if (Session["GroupCompanyName"] != null)
+    {
+        Model.GroupCompanyName = Session["GroupCompanyName"].ToString();
+
+    <center>
+
+        <h3 class="text-uppercase"> You are in @Html.DisplayFor(m => m.GroupCompanyName)</h3>
+        
+        <h4 class="text-uppercase">@Html.DisplayFor(m => m.CompanyName)</h4>
+
+    </center>
+
+
+    }
+
     if (TempData["Success"] != null)
     {
         <center>
-            <p  id=" successMessage">@TempData["Success"]</p>
+            <p id="successMessage">@TempData["Success"]</p>
         </center>
     }
     @*<img src="/UploadedFiles/@Model.CompanyLogo" alt="" />*@
@@ -44,7 +55,7 @@
 
 
             @Html.Label("Branch Description", new { @class = "floating-label" })
-            @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input" , @rows=10})
+            @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input", @rows = 10 })
 
         </div>
     </div>
@@ -97,30 +108,30 @@
             <div class="tab-content">
                 <div id="home" class="tab-pane fade in active">
                     <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Vendors Assigned:</h2>
-               
+
 
                     @foreach (var item in Model.AboutGroupCompany)
                     {
-                    <div class="col-sm-3 QueList">
-                        <div class="queContainer">
-                            <a href="@Url.Action("AboutVendor", "ManageOrganization", new { id = item.OrganizationID })">
-                                @if (item.Is_Active == false)
-                                {
-                                    <i class="fa fa-ban"></i>
-                                }
-                                else
-                                {
-                                    <i class="fa fa-check-circle"></i>
-                                }
-                                <span class="qIcon"><img src="/UploadedFiles/@item.CompanyLogo" alt="" style="height:60px;width:75px"></span>
+                        <div class="col-sm-3 QueList">
+                            <div class="queContainer">
+                                <a href="@Url.Action("AboutVendor", "ManageOrganization", new { id = item.OrganizationID })">
+                                    @if (item.Is_Active == false)
+                                    {
+                                        <i class="fa fa-ban"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-check-circle"></i>
+                                    }
+                                    <span class="qIcon"><img src="/UploadedFiles/@item.CompanyLogo" alt="" style="height:60px;width:75px"></span>
 
-                                <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyNameList)</h3>
-                            </a>
-                            <div class="clearfix"></div>
+                                    <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyNameList)</h3>
+                                </a>
+                                <div class="clearfix"></div>
+                            </div>
                         </div>
-                    </div>
                     }
-                    
+
 
 
                     <div class="clearfix"></div>
@@ -136,7 +147,7 @@
     else
     {
         <center>
-            <p id=" successMessage">@ViewBag.Message</p>
+            <p id="successMessage">@ViewBag.Message</p>
         </center>
     }
 }

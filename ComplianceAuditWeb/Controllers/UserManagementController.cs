@@ -511,7 +511,13 @@ namespace ComplianceAuditWeb.Controllers
                     Session["Isproductadmin"] = Session["GroupCompanyId"];
                     Session["Last_Login"] = ds.Tables[0].Rows[0]["Last_Login"];
                     Session["photo"] = ds.Tables[0].Rows[0]["Photo"];
+                    if (Convert.ToInt32(Session["Isproductadmin"]) != 0)
+                    {
+                        CommonController commonController = new CommonController();
+                        commonController.setGroupCompanyDetails(Convert.ToInt32(Session["GroupCompanyId"]));
+                    }
                     return RedirectToAction("dashboard", "common",new { pid=0});
+
                     //return View("~/Views/UserManagement/Landing_Page.cshtml");
                 }
                 else

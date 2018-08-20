@@ -280,8 +280,9 @@ namespace ComplianceAuditWeb.Controllers
 
         [HttpPost]
         public JsonResult SelectGroupCompany(string GroupDropdown)
-        {          
+        {
             Session["GroupCompanyId"] = Convert.ToInt32(GroupDropdown);
+            setGroupCompanyDetails(Convert.ToInt32(Session["GroupCompanyId"]));
             //return PartialView("~/Views/Shared/_SelectGroupCompany.cshtml");
             return Json(new { success = true });
         }
@@ -306,6 +307,16 @@ namespace ComplianceAuditWeb.Controllers
                 }
             }
             return Json(vendors, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public void setGroupCompanyDetails(int groupcompanyid)
+        {
+            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+            string xmlData = organizationServiceClient.getParticularGroupCompaniesList(groupcompanyid);
+            DataSet dataSet = new DataSet();
+            dataSet.ReadXml(new StringReader(xmlData));
+            Session["GroupCompanyName"] = dataSet.Tables[0].Rows[0]["Company_Name"];
         }
     }
 }

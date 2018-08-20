@@ -74,13 +74,11 @@ namespace ComplianceAuditWeb.Controllers
                 if (id != 0)
                 {
                     TempData["ParentCompanyID"] = organizationVM.organization.Organization_Id;
-                    //TempData["CompanyName"] = organizationVM.organization.Company_Name;
                     string appkey = String.Join("", "group", id);
                     string path = string.Join("/", ConfigurationManager.AppSettings["FilePath"],appkey);                                                                     
                     Directory.CreateDirectory(Path.Combine(Server.MapPath(path)));
                    // ConfigurationManager.AppSettings[appkey] = path;
                     TempData["Success"] = "Group Company created successfully!!!";
-
                     return RedirectToAction("AboutGroupCompany", new { id = id });
                 }
                 else
@@ -161,7 +159,6 @@ namespace ComplianceAuditWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 bool result = false;
                 OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
                 OrgActivateDeactivateViewModel orgActivateDeactivateViewModel = new OrgActivateDeactivateViewModel();
@@ -339,7 +336,6 @@ namespace ComplianceAuditWeb.Controllers
             DataSet dsGroupCompanyList = new DataSet();
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
             companyVM.GroupCompaniesList = new List<SelectListItem>();
-            companyVM.GroupCompaniesList.Add(new SelectListItem { Text = "--Select Group Company--", Value = "0" });
 
             if (dsGroupCompanyList.Tables.Count > 0)
             {
@@ -364,6 +360,8 @@ namespace ComplianceAuditWeb.Controllers
             companyVM.State.Add(new SelectListItem { Text = "--Select State--", Value = "0" });
             companyVM.City = new List<SelectListItem>();
             companyVM.City.Add(new SelectListItem { Text = "--Select City--", Value = "0" });
+           
+            companyVM.GroupCompanyName = Session["GroupCompanyName"].ToString();
             return View("_Company", companyVM);
         }
 
@@ -843,7 +841,7 @@ namespace ComplianceAuditWeb.Controllers
             branchVM.organization.Organization_Id = 0;
             branchVM.branch = new BranchLocation();
             branchVM.branch.Branch_Id = 0;
-           // branchVM.organization.Parent_Company_Id = Convert.ToInt32(TempData["ParentCompany_ID"]);
+            //branchVM.organization.Parent_Company_Id = Convert.ToInt32(TempData["ParentCompany_ID"]);
             string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
             DataSet dsGroupCompanyList = new DataSet();
             dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
@@ -891,15 +889,8 @@ namespace ComplianceAuditWeb.Controllers
 
                         branchVM.branch.City_Id = Convert.ToInt32(dsDefaultCompanyDetails.Tables[0].Rows[0]["City_ID"].ToString());
                         branchVM.City.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
-
                     }
-
-
-
                 }
-     
-
-
                 branchVM.State = new List<SelectListItem>();
                 branchVM.State.Add(new SelectListItem { Text = "--Select State--", Value = "0" });
                 string strXMLDefaultStates = organizationservice.GetStateList(branchVM.branch.Country_Id);
@@ -912,8 +903,6 @@ namespace ComplianceAuditWeb.Controllers
                         branchVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
                     }
                 }
-
-
                 branchVM.City = new List<SelectListItem>();
                 branchVM.City.Add(new SelectListItem { Text = "--Select City--", Value = "0" });
                 string strXMLDefaulyCities = organizationservice.GetCityList(branchVM.branch.State_Id);
@@ -927,10 +916,10 @@ namespace ComplianceAuditWeb.Controllers
                     }
                 }
                 return View("_Branch", branchVM);
-
             }
             if(branchVM.CompanyID !=0)
             {
+                //branchVM.organization.Parent_Company_Id = branchVM.CompanyID;
                 string strXMLDefaultCompanyDetails = organizationservice.getDefaultCompanyDetails(branchVM.CompanyID);
                 DataSet dsDefaultCompanyDetails = new DataSet();
                 dsDefaultCompanyDetails.ReadXml(new StringReader(strXMLDefaultCompanyDetails));
@@ -949,16 +938,9 @@ namespace ComplianceAuditWeb.Controllers
 
                         branchVM.branch.City_Id = Convert.ToInt32(dsDefaultCompanyDetails.Tables[0].Rows[0]["City_ID"].ToString());
                         branchVM.City.Add(new SelectListItem() { Text = row["City_Name"].ToString(), Value = row["City_ID"].ToString() });
-
                     }
-
                     TempData["DefaultCompanyName"] = dsDefaultCompanyDetails.Tables[0].Rows[0]["Company_Name"].ToString();
-
-
                 }
-
-
-
                 branchVM.State = new List<SelectListItem>();
                 branchVM.State.Add(new SelectListItem { Text = "--Select State--", Value = "0" });
                 string strXMLDefaultStates = organizationservice.GetStateList(branchVM.branch.Country_Id);
@@ -971,8 +953,6 @@ namespace ComplianceAuditWeb.Controllers
                         branchVM.State.Add(new SelectListItem() { Text = row["State_Name"].ToString(), Value = row["State_ID"].ToString() });
                     }
                 }
-
-
                 branchVM.City = new List<SelectListItem>();
                 branchVM.City.Add(new SelectListItem { Text = "--Select City--", Value = "0" });
                 string strXMLDefaulyCities = organizationservice.GetCityList(branchVM.branch.State_Id);
@@ -1011,6 +991,11 @@ namespace ComplianceAuditWeb.Controllers
             branchVM.City = new List<SelectListItem>();
             branchVM.City.Add(new SelectListItem { Text = "--Select City--", Value = "0" });
             string strXMLCities = organizationservice.GetCityList(branchVM.branch.State_Id);
+
+            
+
+           
+
             return View("_Branch", branchVM);
 
         }
@@ -1042,6 +1027,14 @@ namespace ComplianceAuditWeb.Controllers
                     string path = string.Join("/", ConfigurationManager.AppSettings["FilePath"], appkey,appcompany,appstring);                                  
                     Directory.CreateDirectory(Path.Combine(Server.MapPath(path)));
                     //ConfigurationManager.AppSettings[appstring] = path;
+                    string data= organizationClient.getCompanyListsforBranch(branchVM.CompanyID);
+                    DataSet dataSet = new DataSet();
+                    dataSet.ReadXml(new StringReader(data));
+
+                    branchVM.ChildCompanyName = dataSet.Tables[0].Rows[0]["Company_Name"].ToString();
+                    branchVM.GroupCompanyName = Session["GroupCompanyName"].ToString();
+                    Session["CompanyNameG"] = branchVM.ChildCompanyName;
+
                     return RedirectToAction("AboutBranch", new { id = id });
                 }
                 else
@@ -1648,6 +1641,10 @@ namespace ComplianceAuditWeb.Controllers
 
                 }
             }
+            else
+            {
+                TempData["Success"] = "No companies found";
+            }
             return View("_Companydashboard", companylist);
         }
 
@@ -1895,10 +1892,16 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult AboutBranch(int id)
         {
             AboutCompanyViewModel aboutCompanyViewModel = new AboutCompanyViewModel();
+            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
 
             //  int id = Convert.ToInt32(TempData["ID"]);
-           
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
+            //string data = organizationClient.getCompanyListsforBranch(branchVM.CompanyID);
+            //DataSet dataSet = new DataSet();
+            //dataSet.ReadXml(new StringReader(data));
+
+            //aboutCompanyViewModel.CompanyName = dataSet.Tables[0].Rows[0]["Company_Name"].ToString();
+            aboutCompanyViewModel.GroupCompanyName = Session["GroupCompanyName"].ToString();
+           // Session["CompanyNameG"] = branchVM.ChildCompanyName;
             string aboutcompany = organizationServiceClient.getCompanyListsforBranch(id);
             DataSet dsaboutCompany = new DataSet();
             dsaboutCompany.ReadXml(new StringReader(aboutcompany));
