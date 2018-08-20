@@ -322,31 +322,31 @@ namespace ComplianceAuditWeb.Controllers
             return model;
         }
         
-        public JsonResult getallocatedrules(string secid, string branchid)
-        {
-            ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
-            int sectionID = Convert.ToInt32(secid);
-            int BranchID = Convert.ToInt32(branchid);
-            string xmldata = client.getRuleforBranch(BranchID);
-            DataSet ds = new DataSet();
-            ds.ReadXml(new StringReader(xmldata));
-            List<SelectListItem> Rulelist = new List<SelectListItem>();
-            if (ds.Tables.Count > 0)
-            {
-                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
-                {
-                    Rulelist.Add(new SelectListItem
-                    {
-                        Text = Convert.ToString(row["Compliance_Title"]),
-                        Value = Convert.ToString(row["Compliance_Xref_ID"])
-                    });
-                }
-            }
-            return Json(Rulelist, JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult getallocatedrules(string secid, string branchid)
+        //{
+        //    ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
+        //    int sectionID = Convert.ToInt32(secid);
+        //    int BranchID = Convert.ToInt32(branchid);
+        //    string xmldata = client.getRuleforBranch(BranchID,vendorid);
+        //    DataSet ds = new DataSet();
+        //    ds.ReadXml(new StringReader(xmldata));
+        //    List<SelectListItem> Rulelist = new List<SelectListItem>();
+        //    if (ds.Tables.Count > 0)
+        //    {
+        //        foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+        //        {
+        //            Rulelist.Add(new SelectListItem
+        //            {
+        //                Text = Convert.ToString(row["Compliance_Title"]),
+        //                Value = Convert.ToString(row["Compliance_Xref_ID"])
+        //            });
+        //        }
+        //    }
+        //    return Json(Rulelist, JsonRequestBehavior.AllowGet);
+        //}
 
         [HttpGet]
-        public ActionResult AssignRules(string Branchid, string Branchname)
+        public ActionResult AssignRules(string Branchid,string Vendorid, string Branchname)
         {
             AllocateActandRuleViewModel model = new AllocateActandRuleViewModel();
             model.ActType = new List<SelectListItem>();
@@ -362,7 +362,7 @@ namespace ComplianceAuditWeb.Controllers
             model.Name = Branchname;
             Session["Branch_Id"] = Branchid;
             Session["BranchName"] = Branchname;
-
+            Session["VendorId"] = Vendorid;
             return View("_AssignRules",model);
         }
         public JsonResult GetJsTree3Data(string audittypeid,string  acttype)
@@ -392,7 +392,6 @@ namespace ComplianceAuditWeb.Controllers
             {
                 cityid= Convert.ToInt32(loc.Tables[0].Rows[0]["City_ID"]);
             }
-
            
             var root = new treenode() //Create our root node and ensure it is opened
             {
@@ -401,6 +400,7 @@ namespace ComplianceAuditWeb.Controllers
                 state = new Models.State(true, false, false)
             };
             int orgid = Convert.ToInt32(Session["Branch_Id"]);
+            int vendorid = Convert.ToInt32(Session["VendorId"]);
             //Create a basic structure of nodes
             var children = new List<treenode>();
             ComplianceXrefService.ComplianceXrefServiceClient xrefclient = new ComplianceXrefService.ComplianceXrefServiceClient();
@@ -417,25 +417,19 @@ namespace ComplianceAuditWeb.Controllers
                 DataView dv = new DataView(dscomp.Tables[0]);
                 dv.RowFilter = "level=1";
                 ds = dv.ToTable();
-                //string xmldata = xrefclient.GetActs(0);
-                //DataSet ds = new DataSet();
-                //ds.ReadXml(new StringReader(xmldata));
+
                 dv.Table = dscomp.Tables[0];
                 dv.RowFilter = "level=3";
                  dsrules = dv.ToTable();
-                //xmldata = xrefclient.GetRules(0);
-                //
-                //dsrules.ReadXml(new StringReader(xmldata));
+
                 dv.Table = dscomp.Tables[0];
                 dv.RowFilter = "level=2";
                 dsection = dv.ToTable();
-                //xmldata = xrefclient.GetSections(0);
-                //DataSet dsection = new DataSet();
-                //dsection.ReadXml(new StringReader(xmldata));
+
             }
             else
             TempData["Error"] = "No Rules for the state level";
-            xmldata = xrefclient.getRuleforBranch(orgid);
+            xmldata = xrefclient.getRuleforBranch(orgid,vendorid);
             DataSet dsassigenedrule = new DataSet();
             dsassigenedrule.ReadXml(new StringReader(xmldata));
 
@@ -511,19 +505,20 @@ namespace ComplianceAuditWeb.Controllers
                 int i = 0;
                 int userid = Convert.ToInt32(Session["UserId"]);
                 int orgid = Convert.ToInt32(Session["Branch_Id"]);
+                int vendorid = Convert.ToInt32(Session["VendorId"]);
                 foreach (var item in ruleslist)
                 {
                     rules[i++] = Convert.ToInt32(item.id);
                 }
                 ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
                 client.DeleteRuleforBranch(orgid);
-                client.inseretActandRuleforBranch(orgid, rules, userid);
+                client.inseretActandRuleforBranch(orgid, rules, userid,vendorid);
                 TempData["Message"] = "Successfully assigned " + ruleslist.Count + "Rules to" + Session["BranchName"];
-                return RedirectToAction("AssignRules", new { Branchid = Convert.ToString(Session["Branch_Id"]), Branchname = Convert.ToString(Session["BranchName"]) });
+                return RedirectToAction("AssignRules", new { Branchid = Convert.ToString(Session["Branch_Id"]), Vendorid= Convert.ToInt32(Session["VendorId"]), Branchname = Convert.ToString(Session["BranchName"]) });
             }
             else
                TempData["Error"]="Please select atleast one rule";
-            return RedirectToAction("AssignRules", new { Branchid = Convert.ToString(Session["Branch_Id"]), Branchname = Convert.ToString(Session["BranchName"]) });
+            return RedirectToAction("AssignRules", new { Branchid = Convert.ToString(Session["Branch_Id"]), Vendorid= Convert.ToInt32(Session["VendorId"]), Branchname = Convert.ToString(Session["BranchName"]) });
         }
         [HttpGet]
         public ActionResult SMEdashboard()
@@ -531,7 +526,8 @@ namespace ComplianceAuditWeb.Controllers
 
             AllocateActandRuleViewModel model = new AllocateActandRuleViewModel();
             OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
-            string xmldata = client.GetCompaniesList();
+            int groupid= Convert.ToInt32(Session["GroupCompanyId"]);
+            string xmldata = client.getCompanyListDropDown(groupid);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             model.Companylist = new List<SelectListItem>() { new SelectListItem { Text = "--Select Company--", Value = "0" } };
@@ -543,7 +539,7 @@ namespace ComplianceAuditWeb.Controllers
                     model.Companylist.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
                 }
             }
-            Session["Company"] = model.Companylist;            
+        
             model.Branch = new List<Organization>();
 
             AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
@@ -575,12 +571,25 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult SMEdashboard(AllocateActandRuleViewModel model)
         {
-            model.Companylist =(List<SelectListItem>) Session["Company"];
-            model.Branch = new List<Organization>();
-            model.Vendor = new List<Organization>();
-            AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
-            string xmldata = auditServiceClient.getSpecificBranchList(model.CompanyId);
+            model.Companylist =new  List<SelectListItem>();
+            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
+            int groupid = Convert.ToInt32(Session["GroupCompanyId"]);
+            string xmldata = client.getCompanyListDropDown(groupid);
             DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            model.Companylist = new List<SelectListItem>() { new SelectListItem { Text = "--Select Company--", Value = "0" } };
+            if (ds.Tables.Count > 0)
+            {
+                model.CompanyId = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.Companylist.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                }
+            }
+            model.Branch = new List<Organization>();    
+            AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
+            xmldata = auditServiceClient.getSpecificBranchList(model.CompanyId);
+            ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             if (ds.Tables.Count > 0)
             {
@@ -591,18 +600,30 @@ namespace ComplianceAuditWeb.Controllers
                 }
             }
             
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            xmldata = organizationServiceClient.GetVendors(model.CompanyId);
-            ds = new DataSet();
+           
+            return View("_SMEDashboard", model);
+        }
+
+        public ActionResult Listofvendors(int branchid,string branchname)
+        {
+            AllocateActandRuleViewModel model = new AllocateActandRuleViewModel();
+            model.BranchId = branchid;
+            model.Name = branchname;
+            model.Vendor = new List<Organization>();
+            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+            string xmldata = vendorServiceClient.GetAssignedVendorsforBranch(branchid);
+            DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             if (ds.Tables.Count > 0)
             {
                 foreach (System.Data.DataRow row in ds.Tables[0].Rows)
                 {
-                    model.Vendor.Add(new Organization { Company_Name = Convert.ToString(row["Company_Name"]), Company_Id = Convert.ToInt32(row["Org_Hier_ID"]) });
+                    model.Vendor.Add(new Organization { Company_Name = Convert.ToString(row["Company_Name"]), Company_Id = Convert.ToInt32(row["Vendor_ID"]),logo=Convert.ToString(row["logo"]) });
                 }
             }
-            return View("_SMEDashboard", model);
+            else
+                TempData["Message"] = "No Vendors assigned for the selected branch.";
+            return View("_ListofVendors",model);
         }
 
         [HttpGet]

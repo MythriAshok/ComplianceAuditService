@@ -256,10 +256,10 @@ namespace ComplianceAuditWeb.OrgService {
         System.Threading.Tasks.Task<string> getSpecificBranchListDropDownAsync(int CompanyID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getSpecificVendorListDropDown", ReplyAction="http://tempuri.org/IOrganizationService/getSpecificVendorListDropDownResponse")]
-        string getSpecificVendorListDropDown(int pid);
+        string getSpecificVendorListDropDown(int pid, int branchid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getSpecificVendorListDropDown", ReplyAction="http://tempuri.org/IOrganizationService/getSpecificVendorListDropDownResponse")]
-        System.Threading.Tasks.Task<string> getSpecificVendorListDropDownAsync(int pid);
+        System.Threading.Tasks.Task<string> getSpecificVendorListDropDownAsync(int pid, int branchid);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -609,12 +609,12 @@ namespace ComplianceAuditWeb.OrgService {
             return base.Channel.getSpecificBranchListDropDownAsync(CompanyID);
         }
         
-        public string getSpecificVendorListDropDown(int pid) {
-            return base.Channel.getSpecificVendorListDropDown(pid);
+        public string getSpecificVendorListDropDown(int pid, int branchid) {
+            return base.Channel.getSpecificVendorListDropDown(pid, branchid);
         }
         
-        public System.Threading.Tasks.Task<string> getSpecificVendorListDropDownAsync(int pid) {
-            return base.Channel.getSpecificVendorListDropDownAsync(pid);
+        public System.Threading.Tasks.Task<string> getSpecificVendorListDropDownAsync(int pid, int branchid) {
+            return base.Channel.getSpecificVendorListDropDownAsync(pid, branchid);
         }
     }
 }

@@ -157,13 +157,14 @@ namespace ComplianceAuditWeb.Controllers
             return Json(company, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult getspecificvendors(string compid)
+        public JsonResult getspecificvendors(string compid,string branchid)
         {
             List<SelectListItem> vendors = new List<SelectListItem>();
             int ID = Convert.ToInt32(compid);
+            int branchID = Convert.ToInt32(branchid);
             VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
             OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            string xmldata = organizationServiceClient.getSpecificVendorListDropDown(ID);
+            string xmldata = organizationServiceClient.getSpecificVendorListDropDown(ID, branchID);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             vendors = new List<SelectListItem>();

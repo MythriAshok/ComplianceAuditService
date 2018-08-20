@@ -140,12 +140,10 @@
                     $("#branch_Country_Id").html(markup).show();  
                     GetState(CountryId);
                     GetCity(StateId);
-                    alert(CityId);
-                    $("#branch_State_Id").val(StateId);
-                    $("#branch_City_Id").val(CityId);
-                    alert(CityId);
-                    //$("#branch_State_Id < option[value=" + StateId + "]").attr("selected",true);
-                    //$("#branch_City_Id option[value=" + CityId + "]").attr('selected', true);
+                    $("#branch_State_Id").val(data[1].Text);
+                    //$("#branch_City_Id").val(CityId);
+                    $("#branch_State_Id < option[Value=" + data[1].Value + "]").attr("selected", true);
+                    $("#branch_City_Id < option[Value=" + CityId + "]").attr('selected', true);
                   
                 },
                 error: function (reponse) {
@@ -198,6 +196,7 @@
                         Model.ChildCompanyName = TempData["DefaultCompanyName"].ToString();
                         @Html.Label("Company", new { @class = "floating-label" })<span style="color:red">*</span>
                         @Html.TextBoxFor(m => m.ChildCompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
+                        @Html.HiddenFor(m=>m.CompanyID)
                     }
                     @*@Html.DropDownListFor(m => m.CompanyID, Model.CompaniesList, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })*@
                     else

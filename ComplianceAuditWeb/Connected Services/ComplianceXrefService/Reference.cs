@@ -76,16 +76,16 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         System.Threading.Tasks.Task<int> GetAuditorIdAsync(int Branchid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/getRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/getRuleforBranchResponse")]
-        string getRuleforBranch(int branchid);
+        string getRuleforBranch(int branchid, int vendorid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/getRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/getRuleforBranchResponse")]
-        System.Threading.Tasks.Task<string> getRuleforBranchAsync(int branchid);
+        System.Threading.Tasks.Task<string> getRuleforBranchAsync(int branchid, int vendorid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranchResponse")]
-        bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid);
+        bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid, int vendorid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranchResponse")]
-        System.Threading.Tasks.Task<bool> inseretActandRuleforBranchAsync(int orgid, int[] ruleid, int userid);
+        System.Threading.Tasks.Task<bool> inseretActandRuleforBranchAsync(int orgid, int[] ruleid, int userid, int vendorid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/DeleteRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/DeleteRuleforBranchResponse")]
         bool DeleteRuleforBranch(int orgid);
@@ -225,20 +225,20 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
             return base.Channel.GetAuditorIdAsync(Branchid);
         }
         
-        public string getRuleforBranch(int branchid) {
-            return base.Channel.getRuleforBranch(branchid);
+        public string getRuleforBranch(int branchid, int vendorid) {
+            return base.Channel.getRuleforBranch(branchid, vendorid);
         }
         
-        public System.Threading.Tasks.Task<string> getRuleforBranchAsync(int branchid) {
-            return base.Channel.getRuleforBranchAsync(branchid);
+        public System.Threading.Tasks.Task<string> getRuleforBranchAsync(int branchid, int vendorid) {
+            return base.Channel.getRuleforBranchAsync(branchid, vendorid);
         }
         
-        public bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid) {
-            return base.Channel.inseretActandRuleforBranch(orgid, ruleid, userid);
+        public bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid, int vendorid) {
+            return base.Channel.inseretActandRuleforBranch(orgid, ruleid, userid, vendorid);
         }
         
-        public System.Threading.Tasks.Task<bool> inseretActandRuleforBranchAsync(int orgid, int[] ruleid, int userid) {
-            return base.Channel.inseretActandRuleforBranchAsync(orgid, ruleid, userid);
+        public System.Threading.Tasks.Task<bool> inseretActandRuleforBranchAsync(int orgid, int[] ruleid, int userid, int vendorid) {
+            return base.Channel.inseretActandRuleforBranchAsync(orgid, ruleid, userid, vendorid);
         }
         
         public bool DeleteRuleforBranch(int orgid) {

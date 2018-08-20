@@ -253,7 +253,7 @@ namespace Compliance.DataAccess
             return Auditorid;
         }
 
-        public bool insertActAndRuleforBranch(int orgid,int ruleid,int userid)
+        public bool insertActAndRuleforBranch(int orgid,int ruleid,int userid,int vendorid,int year,DateTime startdate,DateTime enddate)
         {
             bool res = false;
             try
@@ -263,8 +263,12 @@ namespace Compliance.DataAccess
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", ruleid);
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID", orgid);
+                cmd.Parameters.AddWithValue("p_Financial_Year",year);
                 cmd.Parameters.AddWithValue("p_UpdatedByLogin_ID", userid);
                 cmd.Parameters.AddWithValue("p_Is_Active", 1);
+                cmd.Parameters.AddWithValue("p_Vendor_Id", vendorid);
+                cmd.Parameters.AddWithValue("p_Auditing_start_date", startdate);
+                cmd.Parameters.AddWithValue("p_Auditing_end_date", enddate);
                 int count=cmd.ExecuteNonQuery();
                 if(count>0)
                 {
@@ -282,7 +286,7 @@ namespace Compliance.DataAccess
             return res;
         }
 
-        public DataSet getRuleforBranch(int branchid)
+        public DataSet getRuleforBranch(int branchid,int vendorid)
         {
             DataSet ds = new DataSet();
             try
@@ -291,6 +295,7 @@ namespace Compliance.DataAccess
                 MySqlCommand cmd = new MySqlCommand("sp_getRuleforBranch", conn);
                 cmd.CommandType = CommandType.StoredProcedure;                
                 cmd.Parameters.AddWithValue("p_Org_ID", branchid);
+                cmd.Parameters.AddWithValue("p_vendor_ID", vendorid);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(ds);
             }

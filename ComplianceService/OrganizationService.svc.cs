@@ -769,14 +769,14 @@ namespace ComplianceService
             string xmlVendorsList = dsVendors.GetXml();
             return xmlVendorsList;
         }
-        public string getSpecificVendorListDropDown(int pid)
+        public string getSpecificVendorListDropDown(int pid,int branchid)
         {
-            return bindSpecificVendorListDropDown(pid);
+            return bindSpecificVendorListDropDown(pid,branchid);
         }
-        private string bindSpecificVendorListDropDown(int pid)
+        private string bindSpecificVendorListDropDown(int pid, int branchid)
         {
             VendorHelper vendorhelper = new VendorHelper();
-            DataSet vendors = vendorhelper.getSpecificVendorListDropDown(pid);
+            DataSet vendors = vendorhelper.getSpecificVendorListDropDown(pid,branchid);
             UtilityHelper utilityHelper = new UtilityHelper();
             vendors = utilityHelper.ConvertNullsToEmptyString(vendors);
             string xmlvendors = vendors.GetXml();

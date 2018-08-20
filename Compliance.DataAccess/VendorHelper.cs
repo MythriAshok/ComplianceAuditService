@@ -83,7 +83,7 @@ namespace Compliance.DataAccess
 
             return dsVendorList;
         }
-        public DataSet getSpecificVendorListDropDown(int PCompanyID)
+        public DataSet getSpecificVendorListDropDown(int PCompanyID,int branchid)
         {
             DataSet dsVendorList = new DataSet();
             try
@@ -92,6 +92,7 @@ namespace Compliance.DataAccess
                 MySqlCommand cmd = new MySqlCommand("sp_getSpecificVendorListDropDown", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Parent_Company_ID", PCompanyID);
+                cmd.Parameters.AddWithValue("p_Branch_ID", branchid);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsVendorList);
             }
