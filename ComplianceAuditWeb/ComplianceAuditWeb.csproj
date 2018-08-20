@@ -485,7 +485,6 @@
     <Content Include="Views\ManageOrganization\UpdateBranch.cshtml" />
     <Content Include="Views\Shared\Logout.cshtml" />
     <Content Include="Views\ManageOrganization\_AboutCompany.cshtml" />
-    <Content Include="Views\ManageOrganization\_AboutChildCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_BranchDashboard.cshtml" />
     <Content Include="Views\ManageOrganization\_Vendor.cshtml" />
     <Content Include="Views\ManageOrganization\_AssignVendorToBranch.cshtml" />
@@ -498,7 +497,6 @@
     <Content Include="Views\ManageOrganization\_ActivateVendorForCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_ActivateVendorForBranch.cshtml" />
     <Content Include="Views\ManageOrganization\_AboutVendor.cshtml" />
-    <Content Include="Views\ManageOrganization\_BranchDashboard - Copy.cshtml" />
     <Content Include="Views\ManageOrganization\_DashBoardBranch.cshtml" />
     <Content Include="Views\ManageOrganization\_DashBoardGroupCompany.cshtml" />
     <Content Include="Views\ComplianceManagement\_AssignRules.cshtml" />
@@ -516,9 +514,7 @@
     <Content Include="Views\ManageOrganization\_DeleteCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_DeleteBranch.cshtml" />
     <Content Include="Views\ManageOrganization\_DeactivateBranch.cshtml" />
-    <Content Include="Views\ManageOrganization\_ActivateBranch.cshtml" />
     <Content Include="Views\ManageOrganization\_DeactivateCompany.cshtml" />
-    <Content Include="Views\ManageOrganization\_ActivateCompany.cshtml" />
     <Content Include="Views\ComplianceManagement\_ListofCompliance - Copy.cshtml" />
     <Content Include="Views\ManageOrganization\_DessignVendorsForBranch.cshtml" />
     <Content Include="Views\Shared\_SelectGroupCompany.cshtml" />
