@@ -541,30 +541,32 @@ namespace ComplianceAuditWeb.Controllers
             }
         
             model.Branch = new List<Organization>();
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
 
-            AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
-            xmldata = auditServiceClient.getSpecificBranchList(model.CompanyId);
-            ds = new DataSet();
-            ds.ReadXml(new StringReader(xmldata));
-            if (ds.Tables.Count > 0)
+            string strxmlCompanies = organizationservice.GeSpecifictBranchList(model.CompanyId);
+
+            DataSet dsSpecificBranchList = new DataSet();
+            dsSpecificBranchList.ReadXml(new StringReader(strxmlCompanies));
+            if (dsSpecificBranchList.Tables.Count > 0)
             {
-                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                foreach (System.Data.DataRow row in dsSpecificBranchList.Tables[0].Rows)
                 {
                     model.Branch.Add(new Organization { Company_Name = Convert.ToString(row["Company_Name"]), Company_Id = Convert.ToInt32(row["Org_Hier_ID"]) });
                 }
             }
-            model.Vendor = new List<Organization>();
-            OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
-            xmldata = organizationServiceClient.GetVendors(model.CompanyId);
-            ds = new DataSet();
-            ds.ReadXml(new StringReader(xmldata));
-            if (ds.Tables.Count > 0)
-            {
-                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
-                {
-                    model.Vendor.Add(new Organization { Company_Name = Convert.ToString(row["Company_Name"]), Company_Id = Convert.ToInt32(row["Org_Hier_ID"]) });
-                }
-            }
+            else { ViewBag.Message = ConfigurationManager.AppSettings["No_Branches"]; }                                             
+           
+            //model.Vendor = new List<Organization>();        
+            //xmldata = organizationservice.GetVendors(model.CompanyId);
+            //ds = new DataSet();
+            //ds.ReadXml(new StringReader(xmldata));
+            //if (ds.Tables.Count > 0)
+            //{
+            //    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            //    {
+            //        model.Vendor.Add(new Organization { Company_Name = Convert.ToString(row["Company_Name"]), Company_Id = Convert.ToInt32(row["Org_Hier_ID"]) });
+            //    }
+            //}
             return View("_SMEDashboard", model);
         }
 
@@ -580,15 +582,13 @@ namespace ComplianceAuditWeb.Controllers
             model.Companylist = new List<SelectListItem>() { new SelectListItem { Text = "--Select Company--", Value = "0" } };
             if (ds.Tables.Count > 0)
             {
-                model.CompanyId = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
                 foreach (System.Data.DataRow row in ds.Tables[0].Rows)
                 {
                     model.Companylist.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
                 }
             }
             model.Branch = new List<Organization>();    
-            AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
-            xmldata = auditServiceClient.getSpecificBranchList(model.CompanyId);
+            xmldata = client.GeSpecifictBranchList(model.CompanyId);
             ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             if (ds.Tables.Count > 0)
@@ -608,10 +608,21 @@ namespace ComplianceAuditWeb.Controllers
         {
             AllocateActandRuleViewModel model = new AllocateActandRuleViewModel();
             model.BranchId = branchid;
-            model.Name = branchname;
+            model.Branch = new List<Organization>();
+            OrgService.OrganizationServiceClient service = new OrgService.OrganizationServiceClient();
+            string xmldata = service.getBranch(model.BranchId);
+            DataSet data = new DataSet();
+            data.ReadXml(new StringReader(xmldata));
+            model.Branch.Add(new Organization
+            {
+                Company_Id = Convert.ToInt32(data.Tables[0].Rows[0]["Org_Hier_ID"]),
+                Company_Name = Convert.ToString(data.Tables[0].Rows[0]["Company_Name"]),
+                Parent_Company_Id = Convert.ToInt32(data.Tables[0].Rows[0]["Parent_Company_ID"]),
+                logo = Convert.ToString(data.Tables[0].Rows[0]["logo"])
+            });
             model.Vendor = new List<Organization>();
             VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
-            string xmldata = vendorServiceClient.GetAssignedVendorsforBranch(branchid);
+            xmldata = vendorServiceClient.GetAssignedVendorsforBranch(branchid);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             if (ds.Tables.Count > 0)

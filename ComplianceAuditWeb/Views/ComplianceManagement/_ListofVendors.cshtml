@@ -26,32 +26,35 @@
                             {
                                 <p id=" successMessage"> @TempData["Message"] </p>
                             }
-                            <div class="col-sm-3 QueList">
-                                <div class="queContainer">
-                                    <a href="@Url.Action("AssignRules", "ComplianceManagement", new { Branchid=Model.BranchId,Vendorid = Model.BranchId, Branchname = Model.Name })">
-                                        <span class="qIcon">              
-                                            <img src="~/UploadedFiles/noimage.png"  alt="" style="height:60px;width:75px"/>
-                                        </span>
-                                        <h3 class="PB25"> @Model.Name</h3>
-                                    </a>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                            @foreach (var item in Model.Vendor)
+                            @foreach (var item in Model.Branch)
                             {
                                 <div class="col-sm-3 QueList">
                                     <div class="queContainer">
-                                        <a href="@Url.Action("AssignRules", "ComplianceManagement", new { Branchid=Model.BranchId,Vendorid = item.Company_Id, Branchname = item.Company_Name })">
-                                            <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
+                                        <a href="@Url.Action("AssignRules", "ComplianceManagement", new { Branchid = item.Company_Id, Vendorid = item.Company_Id, Branchname = item.Company_Name })">
+                                            <span class="qIcon">
+                                                <img src="~/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px" />
+                                            </span>
                                             <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
                                         </a>
                                         <div class="clearfix"></div>
                                     </div>
                                 </div>
                             }
-                            <div class="clearfix"></div>
+                                @foreach (var item in Model.Vendor)
+                                {
+                                    <div class="col-sm-3 QueList">
+                                        <div class="queContainer">
+                                            <a href="@Url.Action("AssignRules", "ComplianceManagement", new { Branchid=Model.BranchId,Vendorid = item.Company_Id, Branchname = item.Company_Name })">
+                                                <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
+                                                <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
+                                            </a>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="clearfix"></div>
 
-                        </div>
+                            </div>
 
                     </div>
 

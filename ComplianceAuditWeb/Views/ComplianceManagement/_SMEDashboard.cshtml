@@ -76,7 +76,7 @@
         </div>
     </div>
     <div class="clearfix"></div>
-    <div class="col-xs-6 subSelect ">
+    <div class="col-xs-12 subSelect ">
         @if (Model.Branch != null)
         {
             <div class="new_section_box">
@@ -89,7 +89,7 @@
                         }
                         @foreach (var item in Model.Branch)
                         {
-                            <div class="col-sm-6 QueList">
+                            <div class="col-sm-3 QueList">
                                 <div class="queContainer">
                                     <a href="@Url.Action("Listofvendors", "ComplianceManagement", new { branchid = item.Company_Id,branchname=item.Company_Name })">
                                         <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>

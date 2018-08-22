@@ -78,12 +78,12 @@ namespace ComplianceAuditWeb.Controllers
             Session["ComplianceBranchID"] = auditViewModel.complianceAudit.Company_ID;
             Session["AuditorID"] =auditViewModel.complianceAudit.Auditor_Id;
             Session["OrgHierID"] = auditViewModel.complianceAudit.Org_Hier_Id;
-            return RedirectToAction("addComplianceAudit");
+            return RedirectToAction("ListofVendors",new { branchid= auditViewModel.complianceAudit.Company_ID});
         }
         [HttpGet]
-        public ActionResult addComplianceAudit()
+        public ActionResult addComplianceAudit(int VendorID)
         {
-            int ComplianceBrachID =Convert.ToInt32( Session["ComplianceBranchID"]);
+            int ComplianceBrachID =Convert.ToInt32( Session["ComplianceBranchID"]);           
             AuditViewModel auditViewModel = new AuditViewModel();
             AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
             List<AuditViewModel> auditViewModelsList = new List<AuditViewModel>();
@@ -172,22 +172,22 @@ namespace ComplianceAuditWeb.Controllers
                             Compliance_Parent_ID = Convert.ToInt32(row["Compliance_Parent_ID"]),
                             Compliance_Title = Convert.ToString(row["Compliance_Title"]),
                             Comp_Category = Convert.ToString(row["Comp_Category"]),
-                            Comp_Description = Convert.ToString(row["Comp_Description"]),
+                            //Comp_Description = Convert.ToString(row["Comp_Description"]),
                             compl_def_consequence = Convert.ToString(row["compl_def_consequence"]),
                             Country_ID = Convert.ToInt32(row["Country_ID"]),
                             City_ID = Convert.ToInt32(row["City_ID"]),
                             Effective_End_Date = Convert.ToDateTime(row["Effective_Start_Date"]),
                             Effective_Start_Date = Convert.ToDateTime(row["Effective_End_Date"]),
-                            Form = Convert.ToString(row["Form"]),
+                            //Form = Convert.ToString(row["Form"]),
                             level = Convert.ToInt32(row["level"]),
                             State_ID = Convert.ToInt32(row["State_ID"]),
                             Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
                             Is_Best_Practice = Convert.ToBoolean(Convert.ToInt32(row["Is_Best_Practice"])),
                             Risk_Category = Convert.ToString(row["Risk_Category"]),
                             Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
-                            Recurrence = Convert.ToString(row["Recurrence"]),
-                            Risk_Description = Convert.ToString(row["Risk_Description"]),
-                            Type = Convert.ToString(row["Type"]),
+                            //Recurrence = Convert.ToString(row["Recurrence"]),
+                            //Risk_Description = Convert.ToString(row["Risk_Description"]),
+                            //Type = Convert.ToString(row["Type"]),
                             //  Audit_Type = Convert.ToString(row["Audit_Type"]),
 
                         });
@@ -305,15 +305,42 @@ namespace ComplianceAuditWeb.Controllers
                 else
                 {
                     result = false;
-                }
-
-
-
-               
-              
+                }                             
             }
             return View("View");
+        }
 
+        public ActionResult Listofvendors(int branchid)
+        {
+            AllocateActandRuleViewModel model = new AllocateActandRuleViewModel();
+            model.BranchId = branchid;
+            model.Branch = new List<Organization>();
+            OrgService.OrganizationServiceClient service = new OrgService.OrganizationServiceClient();
+            string xmldata=service.getBranch(model.BranchId);
+            DataSet data = new DataSet();
+            data.ReadXml(new StringReader(xmldata));
+            model.Branch.Add(new Organization
+            {
+                Company_Id = Convert.ToInt32(data.Tables[0].Rows[0]["Org_Hier_ID"]),
+                Company_Name = Convert.ToString(data.Tables[0].Rows[0]["Company_Name"]),
+                Parent_Company_Id = Convert.ToInt32(data.Tables[0].Rows[0]["Parent_Company_ID"]),
+                logo = Convert.ToString(data.Tables[0].Rows[0]["logo"])
+            });
+            model.Vendor = new List<Organization>();
+            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+            xmldata = vendorServiceClient.GetAssignedVendorsforBranch(branchid);
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.Vendor.Add(new Organization { Company_Name = Convert.ToString(row["Company_Name"]), Company_Id = Convert.ToInt32(row["Vendor_ID"]), logo = Convert.ToString(row["logo"]) });
+                }
+            }
+            else
+                TempData["Message"] = "No Vendors assigned for the selected branch.";
+            return View("_Listofvendorforauditing", model);
         }
     }
 }
