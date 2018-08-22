@@ -1638,7 +1638,7 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult ListofCompany()
         {
             int ID = 0;
-            var groupcopmpanyid = Request.QueryString["GroupCompanyid"];
+            var groupcopmpanyid = Session["GroupCompanyId"];//Request.QueryString["GroupCompanyid"];
             if (groupcopmpanyid != null)
             {
                 ID = Convert.ToInt32(groupcopmpanyid);

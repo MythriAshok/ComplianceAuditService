@@ -316,7 +316,11 @@ namespace ComplianceAuditWeb.Controllers
             string xmlData = organizationServiceClient.getParticularGroupCompaniesList(groupcompanyid);
             DataSet dataSet = new DataSet();
             dataSet.ReadXml(new StringReader(xmlData));
-            Session["GroupCompanyName"] = dataSet.Tables[0].Rows[0]["Company_Name"];
+            if(dataSet.Tables.Count>0)
+            {
+                Session["GroupCompanyName"] = dataSet.Tables[0].Rows[0]["Company_Name"];
+
+            }
         }
     }
 }
