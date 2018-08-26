@@ -360,7 +360,6 @@
     <Content Include="UploadedFiles\adani.png" />
     <Content Include="UploadedFiles\noimage.png" />
     <Content Include="UploadedFiles\tata.png" />
-    <Content Include="Views\ManageOrganization\ListOfGroupCompanies.cshtml" />
     <Content Include="Views\Shared\_Layout1.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -445,17 +444,8 @@
     <Content Include="Views\UserManagement\_AddUser.cshtml" />
     <Content Include="Views\UserManagement\_AddRole.cshtml" />
     <Content Include="Views\UserManagement\_AddUserGroup.cshtml" />
-    <Content Include="Views\ManageOrganization\AddGroupCompany.cshtml" />
-    <Content Include="Views\ManageOrganization\AddCompany.cshtml" />
     <Content Include="Views\UserManagement\insertRoles.cshtml" />
-    <Content Include="Views\ManageOrganization\AddBranch.cshtml" />
     <Content Include="Views\AuditManagement\View.cshtml" />
-    <Content Include="Views\ManageOrganization\UpdateGroupCompany.cshtml" />
-    <Content Include="Views\ManageOrganization\DeactivateGroupCompany.cshtml" />
-    <Content Include="Views\ManageOrganization\DeleteGroupCompany.cshtml" />
-    <Content Include="Views\ManageOrganization\ActivateGroupCompany.cshtml" />
-    <Content Include="Views\ManageOrganization\ListOfBranches.cshtml" />
-    <Content Include="Views\ManageOrganization\ListOfCompanies.cshtml" />
     <Content Include="Views\ComplianceManagement\_AddActs.cshtml" />
     <Content Include="Views\AuditManagement\_complianceAuditing.cshtml" />
     <Content Include="Views\AuditManagement\addComplianceAudit.cshtml" />
@@ -480,9 +470,7 @@
     <Content Include="Views\ManageOrganization\_Companydashboard.cshtml" />
     <Content Include="Views\UserManagement\_ListofRoles.cshtml" />
     <Content Include="Views\UserManagement\_ListofUsers.cshtml" />
-    <Content Include="Views\ManageOrganization\UpdateCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_GroupCompanyDashboard.cshtml" />
-    <Content Include="Views\ManageOrganization\UpdateBranch.cshtml" />
     <Content Include="Views\Shared\Logout.cshtml" />
     <Content Include="Views\ManageOrganization\_AboutCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_BranchDashboard.cshtml" />

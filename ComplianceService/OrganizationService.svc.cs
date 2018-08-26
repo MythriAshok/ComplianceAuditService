@@ -29,21 +29,13 @@ namespace ComplianceService
         public int insertOrganization(Organization org)
         {
             int OrganizationID = 0;
-            int BranchLocationID = 0;
-            int CompanyDetailsID = 0;
+          
             bool insertResult = false;
             try
             {
                 OrganizationHelper organizationhelper = new OrganizationHelper();
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
-                ////if (OrganizationID > 0)
-                ////{
-                ////    branch.Org_Hier_ID = OrganizationID;
-                ////    BranchLocationID = organizationhelper.insertupdateBranchLocation(branch, 'I');
-                ////}
-
-
-                // if (BranchLocationID > 0 && OrganizationID > 0)
+           
                 {
                     insertResult = true;
                 }
@@ -64,20 +56,17 @@ namespace ComplianceService
         public bool updateOrganization(Organization org)
         {
             int OrganizationID = 0;
-            int BranchID = 0;
-            // int insertCompanyDetailsID = 0;
+          
             bool updateResult = false;
             try
             {
                 OrganizationHelper organizationhelper = new OrganizationHelper();
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
 
-                //  BranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
-                // insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
-                // if (BranchID > 0 && OrganizationID > 0) //insertCompanyDetailsID > 0)
-                //{
+               
+               
                 updateResult = true;
-                // }
+             
             }
             catch
             {
@@ -148,7 +137,6 @@ namespace ComplianceService
 
         private string bindGroupCompany(int orgID)
         {
-            // Organization org = new Organization();
             OrganizationHelper orgHelper = new OrganizationHelper();
             DataSet dsOrganization = orgHelper.getOrganizationHier(orgID);
             UtilityHelper utilityHelper = new UtilityHelper();
@@ -166,7 +154,6 @@ namespace ComplianceService
 
         private string bindGroupOrg(int orgID)
         {
-            // Organization org = new Organization();
             OrganizationHelper orgHelper = new OrganizationHelper();
             DataSet dsOrganization = orgHelper.getOrganizationGroup(orgID);
             UtilityHelper utilityHelper = new UtilityHelper();
@@ -188,30 +175,8 @@ namespace ComplianceService
 
 
 
-        //public string getGroupCompanyForBranch(int OrgID)
-        //{
-        //    return bindGroupCompanyForBranch(OrgID);
-        //}
-        ///// <summary>
-        ///// A private method in the service layer that interacts with Organization helper class to bind the Organization data from the database
-        ///// </summary>
-        ///// <param name="orgID">binds the data of Organization w.r.t specific OrganizationID</param>
-        ///// <returns>xmlstring</returns>
-        //private string bindGroupCompanyForBranch(int orgID)
-        //{
-        //    Organization org = new Organization();
-        //    OrganizationHelper orgHelper = new OrganizationHelper();
-        //    DataSet dsOrganization = orgHelper.getBranch(orgID);
-        //    string xmlOrganization = dsOrganization.GetXml();
-        //    return xmlOrganization; 
-        //}
-        /// <summary>
-        /// A method in the service layer that interacts with organization helper class to insert the Company details into the database
-        /// </summary>
-        /// <param name="org">data object of Organization</param>
-        /// <param name="company">data object of CompanyDetails</param>
-        /// <param name="branch">data object of BranchLocation</param>
-        /// <returns>boolean value</returns>
+     
+      
         public int insertCompany(Organization org, CompanyDetails company, BranchLocation branch)
         {
             int OrganizationID = 0;
@@ -245,13 +210,7 @@ namespace ComplianceService
             }
             return OrganizationID;
         }
-        /// <summary>
-        /// A method to in the sevice layer that interacts with Organization helper class to update the Company details in the database
-        /// </summary>
-        /// <param name="org">data object of Organization</param>
-        /// <param name="company">data object of CompanyDetails</param>
-        /// <param name="branch">data object of BranchLocation</param>
-        /// <returns>boolean value</returns>
+   
         public bool updateCompany(Organization org, CompanyDetails company, BranchLocation branch)
         {
             int insertOrganizationID = 0;
@@ -265,7 +224,6 @@ namespace ComplianceService
 
                 inserBranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
                 insertCompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'U');
-                //if (inserBranchID > 0 || insertOrganizationID > 0 || insertCompanyDetailsID > 0)
                 {
                     updateResult = true;
                 }
@@ -276,20 +234,12 @@ namespace ComplianceService
             }
             return updateResult;
         }
-        /// <summary>
-        /// A public method in the service layer that interacts with the Organization helper class to fetch the data of groupcompany from the database
-        /// </summary>
-        /// <param name="OrgID">fetches the data of Organization w.r.t specofic OrganizationID</param>
-        /// <returns>xml string</returns>
+     
         public string getCompany(int OrgID)
         {
             return bindCompany(OrgID);
         }
-        /// <summary>
-        /// A private method in the service layer that interacts with Organization helper class to bind the Organization data from the database
-        /// </summary>
-        /// <param name="orgID">binds the data of Organization w.r.t specific OrganizationID</param>
-        /// <returns>xmlstring</returns>
+       
         private string bindCompany(int orgID)
         {
             Organization org = new Organization();
@@ -352,12 +302,7 @@ namespace ComplianceService
 
 
 
-        /// <summary>
-        /// A method in the service layer that interacts with organization helper class to insert the Branch details into the database
-        /// </summary>
-        /// <param name="org">data object of Organization</param>
-        /// <param name="branch">data object of BranchLocation</param>
-        /// <returns>boolean value</returns>
+     
         public int insertBranch(Organization org, BranchLocation branch)
         {
             int OrganizationID = 0;
@@ -385,12 +330,7 @@ namespace ComplianceService
             }
             return OrganizationID;
         }
-        /// <summary>
-        /// A method to in the sevice layer that interacts with Organization helper class to update the Branch details in the database
-        /// </summary>
-        /// <param name="org">data object of Organization</param>
-        /// <param name="branch">data object of BranchLocation</param>
-        /// <returns>boolean value</returns>
+     
         public bool updateBranch(Organization org, BranchLocation branch)
         {
             int OrganizationID = 0;
@@ -402,7 +342,6 @@ namespace ComplianceService
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'U');
 
                 BranchID = organizationhelper.insertupdateBranchLocation(branch, 'U');
-                // if (BranchID != 0 && OrganizationID != 0)
                 {
                     updateResult = true;
                 }
@@ -413,11 +352,7 @@ namespace ComplianceService
             }
             return updateResult;
         }
-        /// <summary>
-        /// A public method in the service layer that interacts with the Organization helper class to fetch the data of groupcompany from the database
-        /// </summary>
-        /// <param name="OrgID">fetches the data of Organization w.r.t specofic OrganizationID</param>
-        /// <returns>xml string</returns>
+
         public string getBranch(int OrgID)
         {
             return bindBranch(OrgID);
@@ -578,20 +513,12 @@ namespace ComplianceService
             string xmlStates = dsStates.GetXml();
             return xmlStates;
         }
-        /// <summary>
-        /// A method in the service layer that interacts with the private method, BindCity.
-        /// </summary>
-        /// <param name="stateID">Gets the list of states w.r.t specific StateID</param>
-        /// <returns>xml string</returns>
+     
         public string GetCityList(int stateID)
         {
             return BindCity(stateID);
         }
-        /// <summary>
-        /// A private method in the service layer that interacts with Country helper class to bind the Cities from the database
-        /// </summary>
-        /// <param name="stateID">Gets the list of cities w.r.t specific StateID</param>
-        /// <returns>xml string</returns>
+    
         private string BindCity(int stateID)
         {
             CountryHelper countryhelper = new CountryHelper();
@@ -601,18 +528,12 @@ namespace ComplianceService
             string xmlCities = dsCities.GetXml();
             return xmlCities;
         }
-        /// <summary>
-        /// A method in the service layer that interacts with private method BindGroupCompanies to fetch the list of group companies present in the database
-        /// </summary>
-        /// <returns>xml string</returns>
+   
         public string GetGroupCompaniesList()
         {
             return BindGroupCompaniesList();
         }
-        /// <summary>
-        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
-        /// </summary>
-        /// <returns></returns>
+      
         private string BindGroupCompaniesList()
         {
             OrganizationHelper OrganizationHelper = new OrganizationHelper();
@@ -679,10 +600,7 @@ namespace ComplianceService
         {
             return BindSpecificCompaniesList(OrgID);
         }
-        /// <summary>
-        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
-        /// </summary>
-        /// <returns></returns>
+      
         private string BindSpecificCompaniesList(int OrgID)
         {
             OrganizationHelper OrganizationHelper = new OrganizationHelper();
@@ -722,23 +640,6 @@ namespace ComplianceService
             string xmlCompaniesList = dsCompanies.GetXml();
             return xmlCompaniesList;
         }
-
-        //public string GetSpecificCompaniesList(int GroupCompanyID)
-        //{
-        //    return BindSpecificCompaniesList(GroupCompanyID);
-        //}
-        //private string BindSpecificCompaniesList(int groupcompanyID)
-        //{
-        //    OrganizationHelper OrganizationHelper = new OrganizationHelper();
-        //    DataSet dsGroupCompanies = OrganizationHelper.getSpecificCompanyList(groupcompanyID);
-        //    string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
-        //    return xmlGroupCompaniesList;
-        //}
-        
-
-
-
-
 
         public string GetVendors(int CompanyID)
         {
@@ -816,10 +717,7 @@ namespace ComplianceService
         {
             return bindDefaultCompanyDetails(CompID);
         }
-        /// <summary>
-        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
-        /// </summary>
-        /// <returns></returns>
+    
         private string bindDefaultCompanyDetails(int CompID)
         {
             OrganizationHelper OrganizationHelper = new OrganizationHelper();
@@ -873,10 +771,7 @@ namespace ComplianceService
         {
             return BindGroupCompaniesListDropDown();
         }
-        /// <summary>
-        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
-        /// </summary>
-        /// <returns></returns>
+
         private string BindGroupCompaniesListDropDown()
         {
             OrganizationHelper OrganizationHelper = new OrganizationHelper();
@@ -889,10 +784,7 @@ namespace ComplianceService
         {
             return BindCompaniesListDropDown(groupcompanyID);
         }
-        /// <summary>
-        /// A private method in the service layer that interacts with Organization helper class to bind the list of groupcompanies present in the database
-        /// </summary>
-        /// <returns></returns>
+    
         private string BindCompaniesListDropDown(int groupcompanyID)
         {
             OrganizationHelper OrganizationHelper = new OrganizationHelper();
@@ -904,5 +796,4 @@ namespace ComplianceService
     }
 }
 
-//    }
-//}
+
