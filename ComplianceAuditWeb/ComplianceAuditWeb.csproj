@@ -507,6 +507,7 @@
     <Content Include="Views\ManageOrganization\_DessignVendorsForBranch.cshtml" />
     <Content Include="Views\Shared\_SelectGroupCompany.cshtml" />
     <Content Include="Views\ComplianceManagement\_ListofVendors.cshtml" />
+    <Content Include="Views\AuditManagement\_Listofvendorforauditing.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

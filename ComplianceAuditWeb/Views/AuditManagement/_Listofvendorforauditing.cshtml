@@ -1,0 +1,72 @@
+﻿@model ComplianceAuditWeb.Models.AllocateActandRuleViewModel
+
+@{
+    /**/
+
+    ViewBag.Title = "Compliance Mapping";
+}
+
+<ul class="breadcrumb ML15">
+    <li><a href="/Common/dashboard?pid=14">Compliance Management</a></li>
+    <li>Compliance Mapping</li>
+</ul>
+@*<h3>Branch Name :</h3>*@
+<h2 class="ML15"> @Model.Name</h2>
+
+
+@using (Html.BeginForm())
+{
+    <div class="mid_content_sec">
+        @if (Model.Vendor != null)
+        {<div class="new_section_box">
+                <div class="tab-content">
+                    <div id="home" class="tab-pane fade in active">
+                        <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h4>
+                        @if (TempData["Message"] != null)
+                        {
+                            <p id=" successMessage"> @TempData["Message"] </p>
+                        }
+                        @foreach (var item in Model.Branch)
+                        {
+                            <div class="col-sm-3 QueList">
+                                <div class="queContainer">
+                                    <a href="@Url.Action("addComplianceAudit", "AuditManagement", new {VendorID = item.Company_Id })">
+                                        <span class="qIcon">
+                                            <img src="~/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px" />
+                                        </span>
+                                        <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
+                                    </a>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        }
+                        @foreach (var item in Model.Vendor)
+                        {
+                            <div class="col-sm-3 QueList">
+                                <div class="queContainer">
+                                    <a href="@Url.Action("addComplianceAudit", "AuditManagement", new { VendorID = item.Company_Id })">
+                                        <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
+                                        <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
+                                    </a>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        }
+                        <div class="clearfix"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+        <div class="clearfix"></div>
+        <ul class="list-inline continueBtn">
+            <li>
+                <a href="@Url.Action("dashboard","common",new { pid=20})" class="btn primary-button">Cancel</a>
+            </li>
+        </ul>
+    </div>
+}
+
