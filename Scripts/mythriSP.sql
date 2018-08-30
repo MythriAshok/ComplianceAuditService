@@ -312,7 +312,7 @@ Vendor_ID, Start_Date,End_Date,tbl_vendor_branch_mapping.Is_Active ,
 Company_Name,Type,logo 
  from tbl_vendor_branch_mapping
 inner join tbl_org_hier on tbl_org_hier.Org_Hier_ID = tbl_vendor_branch_mapping.Vendor_ID
-where Branch_ID= p_Branch_ID ;
+where Branch_ID= p_Branch_ID  and tbl_vendor_branch_mapping.Is_Active = 1;
  end if;
 end$$
 
@@ -844,6 +844,20 @@ end$$
 DELIMITER ;
 
 
+
+
+USE `auditmoduledb`;
+DROP procedure IF EXISTS `auditmoduledb`.`sp_getSpecificVendorListDropDown`;
+
+DELIMITER $$
+USE `auditmoduledb`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getSpecificVendorListDropDown`(p_Parent_Company_ID int,p_Branch_ID int)
+begin 
+select * from tbl_org_hier where Parent_Company_ID=p_Parent_Company_ID and Is_Vendor=1 and level=3 and Is_Delete = 0 and Is_Active = 1 and Org_Hier_ID Not In
+(select Vendor_ID from tbl_vendor_branch_mapping where Branch_ID=p_Branch_ID and tbl_vendor_branch_mapping.Is_Active = 1);
+end$$
+
+DELIMITER ;
 
 
 
