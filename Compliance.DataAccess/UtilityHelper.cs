@@ -17,17 +17,26 @@ namespace Compliance.DataAccess
     /// <returns>Dataset</returns>
         public DataSet ConvertNullsToEmptyString(DataSet ds)
         {
-            
-            foreach (DataRow row in ds.Tables[0].Rows)
+            try
             {
-                for (int i = 0; i < ds.Tables[0].Columns.Count; i++)
-                {
-                    ds.Tables[0].Columns[i].ReadOnly = false;
 
-                    if (string.IsNullOrEmpty(row[i].ToString()))
-                        row[i] = string.Empty;
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    for (int i = 0; i < ds.Tables[0].Columns.Count; i++)
+                    {
+                        ds.Tables[0].Columns[i].ReadOnly = false;
+
+                        if (string.IsNullOrEmpty(row[i].ToString()))
+                            row[i] = string.Empty;
+                    }
                 }
-            }            
+            }
+            catch(Exception ex)
+            {
+                string mess = "error";
+                mess = ex.Message;
+                
+            }
             return ds;
         }
     }

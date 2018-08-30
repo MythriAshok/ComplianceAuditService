@@ -20,6 +20,7 @@ namespace Compliance.DataObject
         public int Org_Hier_ID { get; set; }
 
      [Required]
+    // [Range(6,6)]
         public string Postal_Code { get; set; }
         public string Branch_Coordinates1 { get; set; }
         public string Branch_Coordinates2 { get; set; }

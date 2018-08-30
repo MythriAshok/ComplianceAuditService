@@ -131,6 +131,27 @@ namespace ComplianceService
         [OperationContract]
 
         string getSpecificVendorListDropDown(int pid, int branchid);
+        [OperationContract]
+
+       string GetComplianceType(int IndusrtyTypeID, int CountryID);
+        [OperationContract]
+
+        string GetIndustryType();
+        [OperationContract]
+
+        int insertcomplianceTypes(int[] ComplianceTypeID, int OrgID);
+        [OperationContract]
+
+        int updatecomplianceTypes(int[] ComplianceTypeID, int OrgID);
+        [OperationContract]
+
+        string GetAssignedComplianceTypes(int CompID);
+        [OperationContract]
+
+        string getDefaultIndustryType(int CompID);
+        [OperationContract]
+
+        bool DeleteCompliance(int CompID);
 
     }
 }

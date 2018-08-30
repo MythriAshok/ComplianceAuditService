@@ -12,23 +12,23 @@ namespace ComplianceAuditWeb.Models
         public Organization organization { get; set; }
         public BranchLocation branch { get; set; }
 
-        public List<SelectListItem> Country { get; set; }
+        //public List<SelectListItem> Country { get; set; }
 
-        public List<SelectListItem> State { get; set; }
-        public List<SelectListItem> City { get; set; }
+        //public List<SelectListItem> State { get; set; }
+        //public List<SelectListItem> City { get; set; }
 
-        public enum AuditingFrequency
-        {
-            Quarterly,
-            HalfYearly,
-            Annaully
-        }
+        //public enum AuditingFrequency
+        //{
+        //    Quarterly,
+        //    HalfYearly,
+        //    Annaully
+        //}
 
-        public enum IndustryType
-        {
-            IT,
-            Manufacturing
-        }
+        //public enum IndustryType
+        //{
+        //    IT,
+        //    Manufacturing
+        //}
 
 
 

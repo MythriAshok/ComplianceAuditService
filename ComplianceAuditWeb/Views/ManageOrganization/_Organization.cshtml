@@ -2,6 +2,8 @@
 @using System.Configuration;
 @{
     ViewBag.Title = "Compliance Auditing";
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
 }
 @section scripts
 {
@@ -91,6 +93,7 @@
     }
     @using (Html.BeginForm(actionname, "ManageOrganization", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
+       
         <div class="mid_content_sec">
             @Html.AntiForgeryToken()
             @*@Html.ValidationMessage("Error")*@

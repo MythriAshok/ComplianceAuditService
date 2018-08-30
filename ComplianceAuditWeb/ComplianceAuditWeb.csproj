@@ -163,6 +163,9 @@
     <None Include="Connected Services\OrgService\OrganizationService.disco" />
     <None Include="Connected Services\OrgService\configuration91.svcinfo" />
     <None Include="Connected Services\OrgService\configuration.svcinfo" />
+    <None Include="Connected Services\OrgService\OrganizationService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\OrgService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -508,6 +511,7 @@
     <Content Include="Views\Shared\_SelectGroupCompany.cshtml" />
     <Content Include="Views\ComplianceManagement\_ListofVendors.cshtml" />
     <Content Include="Views\AuditManagement\_Listofvendorforauditing.cshtml" />
+    <Content Include="Views\ManageOrganization\ErrorPage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -9,6 +9,7 @@ using Compliance.DataObject;
 using System.Data;
 using System.Xml;
 using System.IO;
+using NLog;
 
 namespace ComplianceService
 {
@@ -19,6 +20,7 @@ namespace ComplianceService
     /// </summary>
     public class OrganizationService : IOrganizationService
     {
+        Logger log;
         /// <summary>
         /// A method in the service layer that interacts with organization helper class to insert the Organization details into the database
         /// </summary>
@@ -42,6 +44,7 @@ namespace ComplianceService
             }
             catch
             {
+                
                 throw;
             }
             return OrganizationID;
@@ -182,11 +185,14 @@ namespace ComplianceService
             int OrganizationID = 0;
             int BranchLocationID = 0;
             int CompanyDetailsID = 0;
+            int IndustryTypeID = 0;
             bool insertResult = false;
             try
             {
                 OrganizationHelper organizationhelper = new OrganizationHelper();
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
+                
+                
                 if (OrganizationID > 0)
                 {
                     branch.Org_Hier_ID = OrganizationID;
@@ -758,7 +764,7 @@ namespace ComplianceService
             return xmlCompaniesList;
         }
 
-
+       
 
 
 
@@ -792,6 +798,109 @@ namespace ComplianceService
             string xmlGroupCompaniesList = dsGroupCompanies.GetXml();
             return xmlGroupCompaniesList;
         }
+
+        public string GetComplianceType(int IndusrtyTypeID, int CountryID)
+        {
+            return bindComplianceType(IndusrtyTypeID, CountryID);
+        }
+
+        private string bindComplianceType(int IndusrtyTypeID, int CountryID)
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsCompliancetypes = OrganizationHelper.getComplianceType(IndusrtyTypeID, CountryID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCompliancetypes = utilityHelper.ConvertNullsToEmptyString(dsCompliancetypes);
+            string xmlCompaniesList = dsCompliancetypes.GetXml();
+            return xmlCompaniesList;
+        }
+        public string GetIndustryType()
+        {
+            return bindIndustryType();
+        }
+
+        private string bindIndustryType()
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsCompliancetypes = OrganizationHelper.getIndustryType();
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCompliancetypes = utilityHelper.ConvertNullsToEmptyString(dsCompliancetypes);
+            string xmlCompaniesList = dsCompliancetypes.GetXml();
+            return xmlCompaniesList;
+        }
+
+
+        public int insertcomplianceTypes(int[] ComplianceTypeID, int OrgID)
+        {
+            int resID = 0;
+            OrganizationHelper helper = new OrganizationHelper();
+            foreach (var item in ComplianceTypeID)
+            {
+                 resID = helper.insertUpdateComplianceTypes(item, OrgID, 'I');
+            }
+            return resID;
+
+        }
+
+
+        public int updatecomplianceTypes(int[] ComplianceTypeID, int OrgID)
+        {
+            int resID = 0;
+            OrganizationHelper helper = new OrganizationHelper();
+            foreach (var item in ComplianceTypeID)
+            {
+                resID = helper.insertUpdateComplianceTypes(item, OrgID, 'U');
+            }
+            return resID;
+
+        }
+
+        public string GetAssignedComplianceTypes(int CompID)
+        {
+            return bindAssignedComplianceTypes( CompID);
+        }
+
+        private string bindAssignedComplianceTypes(int CompID)
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsCompliancetypes = OrganizationHelper.getAssignedComplianceTypes(CompID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCompliancetypes = utilityHelper.ConvertNullsToEmptyString(dsCompliancetypes);
+            string xmlCompaniesList = dsCompliancetypes.GetXml();
+            return xmlCompaniesList;
+        }
+        public string getDefaultIndustryType(int CompID)
+        {
+            return bindDefaultIndustryType(CompID);
+        }
+
+        private string bindDefaultIndustryType(int CompID)
+        {
+            string xmlCompaniesList = "";
+            try
+            {
+                OrganizationHelper OrganizationHelper = new OrganizationHelper();
+                DataSet dsCompanies = OrganizationHelper.getDefaultIndustryType(CompID);
+                UtilityHelper utilityHelper = new UtilityHelper();
+                dsCompanies = utilityHelper.ConvertNullsToEmptyString(dsCompanies);
+                 xmlCompaniesList = dsCompanies.GetXml();
+            }
+            catch(Exception ex)
+            {
+                //log.ErrorException("Error occured", ex);
+                log.Error("Error Occured");
+            }
+            return xmlCompaniesList;
+        }
+
+        public bool DeleteCompliance(int CompID)
+        {
+           
+                OrganizationHelper helper = new OrganizationHelper();
+                return helper.DeleteComplianceTypes(CompID);
+            
+           
+        }
+
 
     }
 }

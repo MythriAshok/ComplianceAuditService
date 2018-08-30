@@ -145,7 +145,8 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Description", org.Description);
                     cmd.Parameters.AddWithValue("p_level", org.Level);
                     cmd.Parameters.AddWithValue("p_Is_Leaf", org.Is_Leaf);
-                    cmd.Parameters.AddWithValue("p_Industry_Type", org.Industry_Type);
+                    cmd.Parameters.AddWithValue("p_Type", org.Type);
+                   // cmd.Parameters.AddWithValue("p_Industry_Type_ID", org.Industry_Type_ID); 
                     cmd.Parameters.AddWithValue("p_Last_Updated_Date", org.Last_Updated_Date);
                     cmd.Parameters.AddWithValue("p_Is_Vendor", org.Is_Vendor);
                     cmd.Parameters.AddWithValue("p_User_ID", org.User_Id);
@@ -436,7 +437,8 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Company_Email_ID", details.Company_EmailID);
                     cmd.Parameters.AddWithValue("p_Company_ContactNumber1", details.Company_ContactNumber1);
                     cmd.Parameters.AddWithValue("p_Company_ContactNumber2", details.Company_ContactNumber2);
-                  //  cmd.Parameters.AddWithValue("p_Compliance_Audit_Type", details.Compliance_Audit_Type);
+                    cmd.Parameters.AddWithValue("p_Industry_Type_ID", details.Industry_Type_ID);
+                    //  cmd.Parameters.AddWithValue("p_Compliance_Audit_Type", details.Compliance_Audit_Type);
                     cmd.Parameters.AddWithValue("p_Is_Active", details.Is_Active);
                     object objcompanydetailsid = cmd.ExecuteScalar();
                     if (objcompanydetailsid != null)
@@ -847,7 +849,165 @@ namespace Compliance.DataAccess
             }
             return dsGroupCompaniesListDropDown;
         }
+
+        public DataSet getComplianceType(int CountryID, int IndustryTypeID)
+        {
+            DataSet dsComplianceTypesList = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getComplianceList", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Industry_Type_ID", IndustryTypeID);
+                cmd.Parameters.AddWithValue("p_Country_ID", CountryID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsComplianceTypesList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsComplianceTypesList;
+        }
+
+        public DataSet getIndustryType()
+        {
+            DataSet dsIndustryTypesList = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getIndustryTypeList", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsIndustryTypesList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsIndustryTypesList;
+        }
+
+        public int insertUpdateComplianceTypes(int ComplianceTypeID,int OrgID, char Flag)
+        {
+            int ComplianceTypeListID = 0;
+            try
+            {
+               // if (branchLocation != null)
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateComplianceTypeMapping", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("p_Flag", MySqlDbType.VarChar, 1).Value = Flag;
+                    cmd.Parameters.Add("p_Org_Hier_ID", MySqlDbType.Int32).Value = OrgID;
+                    cmd.Parameters.Add("p_compliance_type_map_ID", MySqlDbType.Int32).Value = ComplianceTypeListID;
+                    cmd.Parameters.Add("p_Compliance_Type_ID", MySqlDbType.Int32).Value = ComplianceTypeID;
+
+                    object objComplianceID = cmd.ExecuteScalar();
+                    if (Convert.ToInt32(objComplianceID) > 0)
+                    {
+                        ComplianceTypeListID = Convert.ToInt32(objComplianceID);
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return ComplianceTypeListID;
+        }
+
+        public DataSet getAssignedComplianceTypes(int CompanyID)
+        {
+            DataSet dsCompliances = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getAssignedCompliances", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", CompanyID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsCompliances);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsCompliances;
+        }
+
+        public DataSet getDefaultIndustryType(int CompanyID)
+        {
+            DataSet dsIndustryType = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getDefaultIndustryType", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", CompanyID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsIndustryType);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsIndustryType;
+        }
+
+        public bool DeleteComplianceTypes(int compID)
+        {
+            bool result = false;
+            try
+            {
+                conn = DBConnection.getconnection();
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_DeleteComplianceTypes", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", compID);
+                int res = cmd.ExecuteNonQuery();
+                if (res > 0)
+                {
+                    result = true;
+                }
+            }
+
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return result;
+        }
+
     }
+
+
+
 }
 
 

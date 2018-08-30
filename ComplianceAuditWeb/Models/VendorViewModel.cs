@@ -26,13 +26,18 @@ namespace ComplianceAuditWeb.Models
         public string CompanyName { get; set; }
         public string ChildCompanyName { get; set; }
 
+        public List<SelectListItem> ComplianceList { get; set; }
+        public int[] ComplianceID { get; set; }
+        public int SingleComplianceID { get; set; }
+
 
         //public string[] TpeofAuditList { get; set; }
 
         //public List<SelectListItem> ComplianceAuditTypeList { get; set; }
         //public int[] ComplianceAuditTypeID { get; set; }
+        public List<SelectListItem> IndustryTypeList { get; set; }
 
-
+        
 
         public enum Auditingfrequency
         {

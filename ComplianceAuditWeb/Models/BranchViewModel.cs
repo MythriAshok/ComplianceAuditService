@@ -13,7 +13,7 @@ namespace ComplianceAuditWeb.Models
     {
         public Organization organization { get; set; }
         public BranchLocation branch { get; set; }
-        //public BranchAuditingfrequency branchAuditingFrequency { get; set; }
+        public string branchAuditingFrequency { get; set; }
        // public TypeOfBranch branchType { get; set; }
         public List<SelectListItem> Country { get; set; }
         public List<SelectListItem> State { get; set; }
@@ -40,7 +40,9 @@ namespace ComplianceAuditWeb.Models
         public Nullable< DateTime> VendorEndDate { get; set; }
         public bool IsVendorActive { get; set; }
 
-
+        public List<SelectListItem> ComplianceList { get; set; }
+        public int[] ComplianceID { get; set; }
+        public int SingleComplianceID { get; set; }
 
 
     }

@@ -22,9 +22,10 @@
     <MetadataSource Address="http://localhost:56172/OrganizationService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="OrganizationService.xsd" MetadataType="Schema" ID="ac7c2016-1314-4196-9e25-b9da75575e13" SourceId="1" SourceUrl="http://localhost:56172/OrganizationService.svc?xsd=xsd0" />
     <MetadataFile FileName="OrganizationService.wsdl" MetadataType="Wsdl" ID="2a8d4e50-9bfe-4322-9a94-13287e54fa16" SourceId="1" SourceUrl="http://localhost:56172/OrganizationService.svc?wsdl" />
     <MetadataFile FileName="OrganizationService.disco" MetadataType="Disco" ID="c417c105-8717-46a1-b5aa-9b3b7b7486c4" SourceId="1" SourceUrl="http://localhost:56172/OrganizationService.svc?disco" />
+    <MetadataFile FileName="OrganizationService3.xsd" MetadataType="Schema" ID="aec4c3b4-67bd-48f3-9437-efbaed2bf794" SourceId="1" SourceUrl="http://localhost:56172/OrganizationService.svc?xsd=xsd3" />
+    <MetadataFile FileName="OrganizationService.xsd" MetadataType="Schema" ID="ac7c2016-1314-4196-9e25-b9da75575e13" SourceId="1" SourceUrl="http://localhost:56172/OrganizationService.svc?xsd=xsd0" />
     <MetadataFile FileName="OrganizationService1.xsd" MetadataType="Schema" ID="7cd3a15b-848b-49cd-b4ea-f27f195e3f1f" SourceId="1" SourceUrl="http://localhost:56172/OrganizationService.svc?xsd=xsd2" />
     <MetadataFile FileName="OrganizationService2.xsd" MetadataType="Schema" ID="bbe4447e-364f-40b2-9af9-b4eac2610ea6" SourceId="1" SourceUrl="http://localhost:56172/OrganizationService.svc?xsd=xsd1" />
   </Metadata>

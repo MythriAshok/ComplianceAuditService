@@ -5,7 +5,7 @@
       <xs:element minOccurs="0" name="Company_Id" type="xs:int" />
       <xs:element minOccurs="0" name="Company_Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Industry_Type" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Industry_Type_ID" type="xs:int" />
       <xs:element minOccurs="0" name="Is_Active" type="xs:boolean" />
       <xs:element minOccurs="0" name="Is_Delete" type="xs:boolean" />
       <xs:element minOccurs="0" name="Is_Leaf" type="xs:boolean" />
@@ -14,6 +14,7 @@
       <xs:element minOccurs="0" name="Level" type="xs:int" />
       <xs:element minOccurs="0" name="Organization_Id" type="xs:int" />
       <xs:element minOccurs="0" name="Parent_Company_Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="User_Id" type="xs:int" />
       <xs:element minOccurs="0" name="logo" nillable="true" type="xs:string" />
     </xs:sequence>
@@ -30,6 +31,7 @@
       <xs:element minOccurs="0" name="Company_EmailID" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Compliance_Audit_Type" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Formal_Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Industry_Type_ID" type="xs:int" />
       <xs:element minOccurs="0" name="Is_Active" type="xs:boolean" />
       <xs:element minOccurs="0" name="Org_Hier_ID" type="xs:int" />
       <xs:element minOccurs="0" name="Website" nillable="true" type="xs:string" />

@@ -5,6 +5,7 @@
       <xsd:import schemaLocation="http://localhost:56172/OrganizationService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:56172/OrganizationService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:56172/OrganizationService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Compliance.DataObject" />
+      <xsd:import schemaLocation="http://localhost:56172/OrganizationService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IOrganizationService_insertOrganization_InputMessage">
@@ -253,6 +254,48 @@
   <wsdl:message name="IOrganizationService_getSpecificVendorListDropDown_OutputMessage">
     <wsdl:part name="parameters" element="tns:getSpecificVendorListDropDownResponse" />
   </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetComplianceType_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetComplianceType" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetComplianceType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetComplianceTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetIndustryType_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetIndustryType" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetIndustryType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetIndustryTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_insertcomplianceTypes_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertcomplianceTypes" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_insertcomplianceTypes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertcomplianceTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_updatecomplianceTypes_InputMessage">
+    <wsdl:part name="parameters" element="tns:updatecomplianceTypes" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_updatecomplianceTypes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:updatecomplianceTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetAssignedComplianceTypes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssignedComplianceTypes" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetAssignedComplianceTypes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAssignedComplianceTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_getDefaultIndustryType_InputMessage">
+    <wsdl:part name="parameters" element="tns:getDefaultIndustryType" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_getDefaultIndustryType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getDefaultIndustryTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_DeleteCompliance_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteCompliance" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_DeleteCompliance_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteComplianceResponse" />
+  </wsdl:message>
   <wsdl:portType name="IOrganizationService">
     <wsdl:operation name="insertOrganization">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertOrganization" message="tns:IOrganizationService_insertOrganization_InputMessage" />
@@ -417,6 +460,34 @@
     <wsdl:operation name="getSpecificVendorListDropDown">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/getSpecificVendorListDropDown" message="tns:IOrganizationService_getSpecificVendorListDropDown_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/getSpecificVendorListDropDownResponse" message="tns:IOrganizationService_getSpecificVendorListDropDown_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetComplianceType">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GetComplianceType" message="tns:IOrganizationService_GetComplianceType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GetComplianceTypeResponse" message="tns:IOrganizationService_GetComplianceType_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIndustryType">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GetIndustryType" message="tns:IOrganizationService_GetIndustryType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GetIndustryTypeResponse" message="tns:IOrganizationService_GetIndustryType_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="insertcomplianceTypes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertcomplianceTypes" message="tns:IOrganizationService_insertcomplianceTypes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/insertcomplianceTypesResponse" message="tns:IOrganizationService_insertcomplianceTypes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="updatecomplianceTypes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/updatecomplianceTypes" message="tns:IOrganizationService_updatecomplianceTypes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/updatecomplianceTypesResponse" message="tns:IOrganizationService_updatecomplianceTypes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAssignedComplianceTypes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GetAssignedComplianceTypes" message="tns:IOrganizationService_GetAssignedComplianceTypes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GetAssignedComplianceTypesResponse" message="tns:IOrganizationService_GetAssignedComplianceTypes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getDefaultIndustryType">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/getDefaultIndustryType" message="tns:IOrganizationService_getDefaultIndustryType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/getDefaultIndustryTypeResponse" message="tns:IOrganizationService_getDefaultIndustryType_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCompliance">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/DeleteCompliance" message="tns:IOrganizationService_DeleteCompliance_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/DeleteComplianceResponse" message="tns:IOrganizationService_DeleteCompliance_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IOrganizationService" type="tns:IOrganizationService">
@@ -783,6 +854,69 @@
     </wsdl:operation>
     <wsdl:operation name="getSpecificVendorListDropDown">
       <soap:operation soapAction="http://tempuri.org/IOrganizationService/getSpecificVendorListDropDown" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetComplianceType">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/GetComplianceType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIndustryType">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/GetIndustryType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="insertcomplianceTypes">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/insertcomplianceTypes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updatecomplianceTypes">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/updatecomplianceTypes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAssignedComplianceTypes">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/GetAssignedComplianceTypes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDefaultIndustryType">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/getDefaultIndustryType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCompliance">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/DeleteCompliance" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

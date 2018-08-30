@@ -322,5 +322,65 @@ namespace ComplianceAuditWeb.Controllers
 
             }
         }
+
+        public JsonResult getCompliance(string countryid, string industrytypeid)
+        {
+            List<SelectListItem> cities = new List<SelectListItem>();
+            int CID = Convert.ToInt32(countryid);
+            int IndustryID = Convert.ToInt32(industrytypeid);
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+            string strXMLCompliances = organizationservice.GetComplianceType(CID, IndustryID);
+            DataSet dsCompliances = new DataSet();
+            dsCompliances.ReadXml(new StringReader(strXMLCompliances));
+            if (dsCompliances.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in dsCompliances.Tables[0].Rows)
+                {
+
+                    cities.Add(new SelectListItem() { Text = row["Compliance_Type_Name"].ToString(), Value = row["Compliance_Type_ID"].ToString() });
+                }
+            }
+            return Json(cities, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getcompliancelistundercompany(string compid)
+        {
+            List<SelectListItem> cities = new List<SelectListItem>();
+            int CID = Convert.ToInt32(compid);
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+            string strXMLCompliances = organizationservice.GetAssignedComplianceTypes(CID);
+            DataSet dsCompliances = new DataSet();
+            dsCompliances.ReadXml(new StringReader(strXMLCompliances));
+            if (dsCompliances.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in dsCompliances.Tables[0].Rows)
+                {
+
+                    cities.Add(new SelectListItem() { Text = row["Compliance_Type_Name"].ToString(), Value = row["Compliance_Type_ID"].ToString() });
+                }
+            }
+            return Json(cities, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getdefaultindustrytype(string compid)
+        {
+            List<SelectListItem> cities = new List<SelectListItem>();
+            VendorViewModel model = new VendorViewModel();
+            model.companydetails = new CompanyDetails();
+            int CID = Convert.ToInt32(compid);
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+            string strXMLIndustry = organizationservice.getDefaultIndustryType(CID);
+            DataSet dsIndustry = new DataSet();
+            dsIndustry.ReadXml(new StringReader(strXMLIndustry));
+            if (dsIndustry.Tables.Count > 0)
+            {
+               
+                  // model.companydetails.Industry_Type_ID=Convert.ToInt32(dsIndustry.Tables[0].Rows[0]["Industry_Type_ID"]);
+
+                   cities.Add(new SelectListItem() { Text = dsIndustry.Tables[0].Rows[0]["Industry_Name"].ToString(), Value = dsIndustry.Tables[0].Rows[0]["Industry_Type_ID"].ToString() });
+                
+            }
+            return Json(cities, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -20,8 +20,9 @@ namespace Compliance.DataObject
         public int Level { get; set; }
         public bool Is_Leaf { get; set; }
         public bool Is_Delete { get; set; }
-        public string Industry_Type { get; set; }
-       
+        public string Type { get; set; }
+        public int Industry_Type_ID { get; set; }
+
 
         public int User_Id { get; set; }
 

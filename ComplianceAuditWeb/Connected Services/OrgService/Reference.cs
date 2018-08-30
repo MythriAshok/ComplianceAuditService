@@ -260,6 +260,48 @@ namespace ComplianceAuditWeb.OrgService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getSpecificVendorListDropDown", ReplyAction="http://tempuri.org/IOrganizationService/getSpecificVendorListDropDownResponse")]
         System.Threading.Tasks.Task<string> getSpecificVendorListDropDownAsync(int pid, int branchid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetComplianceType", ReplyAction="http://tempuri.org/IOrganizationService/GetComplianceTypeResponse")]
+        string GetComplianceType(int IndusrtyTypeID, int CountryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetComplianceType", ReplyAction="http://tempuri.org/IOrganizationService/GetComplianceTypeResponse")]
+        System.Threading.Tasks.Task<string> GetComplianceTypeAsync(int IndusrtyTypeID, int CountryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetIndustryType", ReplyAction="http://tempuri.org/IOrganizationService/GetIndustryTypeResponse")]
+        string GetIndustryType();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetIndustryType", ReplyAction="http://tempuri.org/IOrganizationService/GetIndustryTypeResponse")]
+        System.Threading.Tasks.Task<string> GetIndustryTypeAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertcomplianceTypes", ReplyAction="http://tempuri.org/IOrganizationService/insertcomplianceTypesResponse")]
+        int insertcomplianceTypes(int[] ComplianceTypeID, int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertcomplianceTypes", ReplyAction="http://tempuri.org/IOrganizationService/insertcomplianceTypesResponse")]
+        System.Threading.Tasks.Task<int> insertcomplianceTypesAsync(int[] ComplianceTypeID, int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updatecomplianceTypes", ReplyAction="http://tempuri.org/IOrganizationService/updatecomplianceTypesResponse")]
+        int updatecomplianceTypes(int[] ComplianceTypeID, int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updatecomplianceTypes", ReplyAction="http://tempuri.org/IOrganizationService/updatecomplianceTypesResponse")]
+        System.Threading.Tasks.Task<int> updatecomplianceTypesAsync(int[] ComplianceTypeID, int OrgID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetAssignedComplianceTypes", ReplyAction="http://tempuri.org/IOrganizationService/GetAssignedComplianceTypesResponse")]
+        string GetAssignedComplianceTypes(int CompID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetAssignedComplianceTypes", ReplyAction="http://tempuri.org/IOrganizationService/GetAssignedComplianceTypesResponse")]
+        System.Threading.Tasks.Task<string> GetAssignedComplianceTypesAsync(int CompID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getDefaultIndustryType", ReplyAction="http://tempuri.org/IOrganizationService/getDefaultIndustryTypeResponse")]
+        string getDefaultIndustryType(int CompID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getDefaultIndustryType", ReplyAction="http://tempuri.org/IOrganizationService/getDefaultIndustryTypeResponse")]
+        System.Threading.Tasks.Task<string> getDefaultIndustryTypeAsync(int CompID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/DeleteCompliance", ReplyAction="http://tempuri.org/IOrganizationService/DeleteComplianceResponse")]
+        bool DeleteCompliance(int CompID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/DeleteCompliance", ReplyAction="http://tempuri.org/IOrganizationService/DeleteComplianceResponse")]
+        System.Threading.Tasks.Task<bool> DeleteComplianceAsync(int CompID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -615,6 +657,62 @@ namespace ComplianceAuditWeb.OrgService {
         
         public System.Threading.Tasks.Task<string> getSpecificVendorListDropDownAsync(int pid, int branchid) {
             return base.Channel.getSpecificVendorListDropDownAsync(pid, branchid);
+        }
+        
+        public string GetComplianceType(int IndusrtyTypeID, int CountryID) {
+            return base.Channel.GetComplianceType(IndusrtyTypeID, CountryID);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetComplianceTypeAsync(int IndusrtyTypeID, int CountryID) {
+            return base.Channel.GetComplianceTypeAsync(IndusrtyTypeID, CountryID);
+        }
+        
+        public string GetIndustryType() {
+            return base.Channel.GetIndustryType();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetIndustryTypeAsync() {
+            return base.Channel.GetIndustryTypeAsync();
+        }
+        
+        public int insertcomplianceTypes(int[] ComplianceTypeID, int OrgID) {
+            return base.Channel.insertcomplianceTypes(ComplianceTypeID, OrgID);
+        }
+        
+        public System.Threading.Tasks.Task<int> insertcomplianceTypesAsync(int[] ComplianceTypeID, int OrgID) {
+            return base.Channel.insertcomplianceTypesAsync(ComplianceTypeID, OrgID);
+        }
+        
+        public int updatecomplianceTypes(int[] ComplianceTypeID, int OrgID) {
+            return base.Channel.updatecomplianceTypes(ComplianceTypeID, OrgID);
+        }
+        
+        public System.Threading.Tasks.Task<int> updatecomplianceTypesAsync(int[] ComplianceTypeID, int OrgID) {
+            return base.Channel.updatecomplianceTypesAsync(ComplianceTypeID, OrgID);
+        }
+        
+        public string GetAssignedComplianceTypes(int CompID) {
+            return base.Channel.GetAssignedComplianceTypes(CompID);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetAssignedComplianceTypesAsync(int CompID) {
+            return base.Channel.GetAssignedComplianceTypesAsync(CompID);
+        }
+        
+        public string getDefaultIndustryType(int CompID) {
+            return base.Channel.getDefaultIndustryType(CompID);
+        }
+        
+        public System.Threading.Tasks.Task<string> getDefaultIndustryTypeAsync(int CompID) {
+            return base.Channel.getDefaultIndustryTypeAsync(CompID);
+        }
+        
+        public bool DeleteCompliance(int CompID) {
+            return base.Channel.DeleteCompliance(CompID);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteComplianceAsync(int CompID) {
+            return base.Channel.DeleteComplianceAsync(CompID);
         }
     }
 }
