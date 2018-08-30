@@ -2762,6 +2762,7 @@ namespace ComplianceAuditWeb.Controllers
             branchViewModel.GroupCompaniesList = new List<SelectListItem>();
             if (ModelState.IsValid)
             {
+
                 branchViewModel.IsVendorActive = true;
                 VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
                 bool result = vendorServiceClient.insertVendorForBranch(branchViewModel.VendorID, branchViewModel.BranchID,
