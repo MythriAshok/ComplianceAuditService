@@ -473,7 +473,6 @@
     <Content Include="Views\ManageOrganization\_Companydashboard.cshtml" />
     <Content Include="Views\UserManagement\_ListofRoles.cshtml" />
     <Content Include="Views\UserManagement\_ListofUsers.cshtml" />
-    <Content Include="Views\ManageOrganization\_GroupCompanyDashboard.cshtml" />
     <Content Include="Views\Shared\Logout.cshtml" />
     <Content Include="Views\ManageOrganization\_AboutCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_BranchDashboard.cshtml" />
@@ -483,7 +482,6 @@
     <Content Include="Views\ManageOrganization\_VendorDashBoardForCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_VendorDashBoardForBranch.cshtml" />
     <Content Include="Views\ManageOrganization\_BranchListForVendors.cshtml" />
-    <Content Include="Views\ManageOrganization\_DeactivateVendorForCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_DeactivateVendorForBranch.cshtml" />
     <Content Include="Views\ManageOrganization\_ActivateVendorForCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_ActivateVendorForBranch.cshtml" />
@@ -495,19 +493,13 @@
     <Content Include="Views\ManageOrganization\_BranchList.cshtml" />
     <Content Include="Views\ManageOrganization\_VendorList.cshtml" />
     <Content Include="Views\ComplianceManagement\AssignRules.cshtml" />
-    <Content Include="Views\ManageOrganization\_DeleteVendorUnderCompany.cshtml" />
     <Content Include="Views\ComplianceManagement\_AuditoraccessMapping.cshtml" />
     <Content Include="Views\ComplianceManagement\_SMEdashboard - Copy.cshtml" />
     <Content Include="Views\ComplianceManagement\UpdateAct.cshtml" />
     <Content Include="Views\ManageOrganization\_AboutGroupCompany.cshtml" />
     <Content Include="Views\ManageOrganization\_AboutBranch.cshtml" />
     <Content Include="Views\ManageOrganization\View.cshtml" />
-    <Content Include="Views\ManageOrganization\_DeleteCompany.cshtml" />
-    <Content Include="Views\ManageOrganization\_DeleteBranch.cshtml" />
-    <Content Include="Views\ManageOrganization\_DeactivateBranch.cshtml" />
-    <Content Include="Views\ManageOrganization\_DeactivateCompany.cshtml" />
     <Content Include="Views\ComplianceManagement\_ListofCompliance - Copy.cshtml" />
-    <Content Include="Views\ManageOrganization\_DessignVendorsForBranch.cshtml" />
     <Content Include="Views\Shared\_SelectGroupCompany.cshtml" />
     <Content Include="Views\ComplianceManagement\_ListofVendors.cshtml" />
     <Content Include="Views\AuditManagement\_Listofvendorforauditing.cshtml" />

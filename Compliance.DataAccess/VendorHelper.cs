@@ -285,7 +285,7 @@ namespace Compliance.DataAccess
                 cmd.Parameters.AddWithValue("p_Vendor_ID", VendorID);
                 cmd.Parameters.AddWithValue("p_Branch_ID", BranchID);
                 int resultCount = cmd.ExecuteNonQuery();
-                if (resultCount > 0)
+                if (resultCount >= 0)
                 {
                     vendorForCompany = true;
                 }

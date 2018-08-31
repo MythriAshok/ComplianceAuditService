@@ -1,7 +1,7 @@
 ﻿@model ComplianceAuditWeb.Models.BranchViewModel
 @using System.Configuration;
 @{
-    ViewBag.Title = "Compliance Auditing";
+    ViewBag.Title = "Branch";
 }
 @section scripts{
     <script language="javascript" type="text/javascript">
@@ -181,9 +181,9 @@
                 cache: false,
                 type: "POST",
                 success: function (data) {
-                    var markup = "<option value='0'>-- Select Company --</option>";
+                    var markup = "";
                     for (var x = 0; x < data.length; x++) {
-                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                        markup += "<option value= " + data[x].Value + ">" + data[x].Text + "</option>";
                     }
                     $("#ComplianceID").html(markup).show();
                 },
