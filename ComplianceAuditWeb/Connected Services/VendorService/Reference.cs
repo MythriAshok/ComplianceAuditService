@@ -28,10 +28,10 @@ namespace ComplianceAuditWeb.VendorService {
         System.Threading.Tasks.Task<int> updateVendorAsync(Compliance.DataObject.VendorMaster vendor);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/insertVendorForBranch", ReplyAction="http://tempuri.org/IVendorService/insertVendorForBranchResponse")]
-        bool insertVendorForBranch(int[] VendorID, int OrgCompanyID, System.DateTime StartDate, System.Nullable<System.DateTime> EndDate, bool IsActive);
+        bool insertVendorForBranch(int VendorID, int OrgCompanyID, System.DateTime StartDate, System.Nullable<System.DateTime> EndDate, bool IsActive);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/insertVendorForBranch", ReplyAction="http://tempuri.org/IVendorService/insertVendorForBranchResponse")]
-        System.Threading.Tasks.Task<bool> insertVendorForBranchAsync(int[] VendorID, int OrgCompanyID, System.DateTime StartDate, System.Nullable<System.DateTime> EndDate, bool IsActive);
+        System.Threading.Tasks.Task<bool> insertVendorForBranchAsync(int VendorID, int OrgCompanyID, System.DateTime StartDate, System.Nullable<System.DateTime> EndDate, bool IsActive);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IVendorService/DeactivateVendorForCompany", ReplyAction="http://tempuri.org/IVendorService/DeactivateVendorForCompanyResponse")]
         string DeactivateVendorForCompany(int VendorID);
@@ -119,11 +119,11 @@ namespace ComplianceAuditWeb.VendorService {
             return base.Channel.updateVendorAsync(vendor);
         }
         
-        public bool insertVendorForBranch(int[] VendorID, int OrgCompanyID, System.DateTime StartDate, System.Nullable<System.DateTime> EndDate, bool IsActive) {
+        public bool insertVendorForBranch(int VendorID, int OrgCompanyID, System.DateTime StartDate, System.Nullable<System.DateTime> EndDate, bool IsActive) {
             return base.Channel.insertVendorForBranch(VendorID, OrgCompanyID, StartDate, EndDate, IsActive);
         }
         
-        public System.Threading.Tasks.Task<bool> insertVendorForBranchAsync(int[] VendorID, int OrgCompanyID, System.DateTime StartDate, System.Nullable<System.DateTime> EndDate, bool IsActive) {
+        public System.Threading.Tasks.Task<bool> insertVendorForBranchAsync(int VendorID, int OrgCompanyID, System.DateTime StartDate, System.Nullable<System.DateTime> EndDate, bool IsActive) {
             return base.Channel.insertVendorForBranchAsync(VendorID, OrgCompanyID, StartDate, EndDate, IsActive);
         }
         

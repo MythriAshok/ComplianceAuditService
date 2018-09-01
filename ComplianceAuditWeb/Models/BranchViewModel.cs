@@ -44,6 +44,13 @@ namespace ComplianceAuditWeb.Models
         public int[] ComplianceID { get; set; }
         public int SingleComplianceID { get; set; }
 
+        public int[] currentID { get; set; }
+        public List<SelectListItem> currentList { get; set; }
+
+
+        public int[] assignedID { get; set; }
+        public List<SelectListItem> AssignedList { get; set; }
+
 
     }
     public enum BranchAuditingfrequency

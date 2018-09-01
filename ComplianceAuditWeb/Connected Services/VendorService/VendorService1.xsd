@@ -33,7 +33,7 @@
   <xs:element name="insertVendorForBranch">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="VendorID" nillable="true" type="q3:ArrayOfint" />
+        <xs:element minOccurs="0" name="VendorID" type="xs:int" />
         <xs:element minOccurs="0" name="OrgCompanyID" type="xs:int" />
         <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
         <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:dateTime" />
@@ -79,7 +79,7 @@
   <xs:element name="DeactivateVendorForBranch">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="VendorID" nillable="true" type="q4:ArrayOfint" />
+        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="VendorID" nillable="true" type="q3:ArrayOfint" />
         <xs:element minOccurs="0" name="BranchID" type="xs:int" />
       </xs:sequence>
     </xs:complexType>

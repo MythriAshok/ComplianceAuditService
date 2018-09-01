@@ -56,15 +56,15 @@ namespace ComplianceService
             return VendorID;
         }
 
-        public bool insertVendorForBranch(int[] VendorID, int OrgCompanyID,DateTime StartDate, Nullable<DateTime> EndDate, bool IsActive)
+        public bool insertVendorForBranch(int VendorID, int OrgCompanyID,DateTime StartDate, Nullable<DateTime> EndDate, bool IsActive)
         {
             bool insertResult = false;
             try
             {
                 VendorHelper vendorhelper = new VendorHelper();
-                foreach (var item in VendorID)
+               // foreach (var item in VendorID)
                 {
-                    insertResult =Convert.ToBoolean( vendorhelper.insertVendorForBranch(item, OrgCompanyID, 'I',StartDate,EndDate,IsActive));
+                    insertResult =Convert.ToBoolean( vendorhelper.insertVendorForBranch(VendorID, OrgCompanyID, 'I',StartDate,EndDate,IsActive));
                 }
             }
             catch

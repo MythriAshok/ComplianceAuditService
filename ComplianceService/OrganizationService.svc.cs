@@ -21,13 +21,7 @@ namespace ComplianceService
     public class OrganizationService : IOrganizationService
     {
         Logger log;
-        /// <summary>
-        /// A method in the service layer that interacts with organization helper class to insert the Organization details into the database
-        /// </summary>
-        /// <param name="org">data object of Organization</param>
-        /// <param name="company">data object of CompanyDetails</param>
-        /// <param name="branch">data object of BranchLocation</param>
-        /// <returns>boolean value</returns>
+      
         public int insertOrganization(Organization org)
         {
             int OrganizationID = 0;
@@ -49,13 +43,7 @@ namespace ComplianceService
             }
             return OrganizationID;
         }
-        /// <summary>
-        /// A method to in the sevice layer that interacts with Organization helper class to update the Organization details in the database
-        /// </summary>
-        /// <param name="org">data object of Organization</param>
-        /// <param name="company">data object of CompanyDetails</param>
-        /// <param name="branch">data object of BranchLocation</param>
-        /// <returns>boolean value</returns>
+ 
         public bool updateOrganization(Organization org)
         {
             int OrganizationID = 0;
@@ -128,11 +116,7 @@ namespace ComplianceService
 
 
 
-        /// <summary>
-        /// A public method in the service layer that interacts with the Organization helper class to fetch the data of groupcompany from the database
-        /// </summary>
-        /// <param name="OrgID">fetches the data of Organization w.r.t specofic OrganizationID</param>
-        /// <returns>xml string</returns>
+   
         public string getGroupCompany(int OrgID)
         {
             return bindGroupCompany(OrgID);

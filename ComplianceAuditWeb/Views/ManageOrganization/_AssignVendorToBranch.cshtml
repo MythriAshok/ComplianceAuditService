@@ -1,7 +1,7 @@
 ﻿@model ComplianceAuditWeb.Models.BranchViewModel
 @using System.Configuration;
 @{
-    ViewBag.Title = "Compliance Auditing";
+    ViewBag.Title = "Assign/Delete Vendor";
 }
 @section scripts{
 
@@ -62,6 +62,7 @@
             $("#VendorID").html(procemessage).show();
             var url = "/Common/getspecificvendors";
             var _companyid = $("#CompanyID").val();
+
             $.ajax({
                 url: url,
 
@@ -81,16 +82,57 @@
                     alert("error : " + reponse);
                 }
             });
+            GetVendorAssociatedwithBranch(_branchid);
 
         }
+    </script>
+    <script language="javascript" type="text/javascript">
+        function GetVendorAssociatedwithBranch(_branchid) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#assignedID").html(procemessage).show();
+            var url = "/Common/getspecificvendorsassociatedwithbranch";
+
+            $.ajax({
+                url: url,
+
+                data: { branchid: _branchid },
+
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option='0'>Select Vendor</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#assignedID").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+
+        }
+    </script>
+
+    <script language="javascript" type="text/javascript">
+
+        $("#ShiftRight,#ShiftLeft").click(function (event) {
+            var ID = $(event.target).attr("ID");
+            var ChooseFrom = ID == "ShiftRight" ? "#VendorID" : "#assignedID";
+            var moveTo = ID == "ShiftRight" ? "#assignedID" : "#VendorID";
+            var SelectData = $(ChooseFrom + " :selected");
+            $(moveTo).append(SelectData);
+            SelectData.remove;
+        });
+
     </script>
 }
 
 <ul class="breadcrumb ML15">
     <li><a href="/Common/dashboard?pid=9">Dashboard</a></li>
-    <li>Assign Vendor </li>
+    <li>Assign/Delete Vendor </li>
 </ul>
-<h2 class="ML15">Assign Vendor</h2>
+<h2 class="ML15">Assign/Delete Vendor</h2>
 
 @*<h2 class="ML15">Add Company Branch</h2>*@
 
@@ -131,12 +173,36 @@
         <div class="input-field">
 
             @*@Html.Label(ConfigurationManager.AppSettings["vendors"], new { @class = "floating-label" })*@
-            @Html.Label("List of Vendors")<span style="color:red">*</span>
+            @Html.Label("List of available vendors")<span style="color:red">*</span>
             @Html.ListBoxFor(m => m.VendorID, Model.VendorList, new { @class = "inputMaterialSelect ui - autocomplete - input ", placeholder = ConfigurationManager.AppSettings["Roles"] })
-
 
         </div>
     </div>
+
+    <div class="col-xs-1 subSelect">
+        <div class="input-field">
+            <input id="ShiftRight" type="button" value=">>>" />
+            <input id="ShiftLeft" type="button" value="<<<" />
+        </div>
+    </div>
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+
+
+            @Html.Label("List of assigned vendors", new { @class = "floating-label" })
+            @Html.ListBoxFor(model => model.assignedID, Model.AssignedList)
+            @*@Html.Label("List of Assigned items", new { @class = "floating-label" })
+                @Html.ListBoxFor(model => model.currentID, Model.currentList)*@
+
+            @Html.HiddenFor(m => m.assignedID)
+            @Html.HiddenFor(m => m.VendorID)
+            @Html.HiddenFor(m => m.currentID)
+
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
 
@@ -151,7 +217,7 @@
         <div class="input-field">
 
             @*@Html.Label(ConfigurationManager.AppSettings["vendors"], new { @class = "floating-label" })*@
-            @Html.Label("Vendor End Date")
+            @Html.Label("Vendor End Date")<span style="color:red">*</span>
             @Html.EditorFor(m => m.VendorEndDate, new { @class = "inputMaterialSelect ui - autocomplete - input " })
 
 
@@ -160,6 +226,7 @@
 
     @Html.HiddenFor(m => m.IsVendorActive);
 
+    <div class="clearfix"></div>
 
 
     <ul class="list-inline continueBtn">
@@ -170,10 +237,9 @@
                 {
                     button = "Update";
                 }*@
-            <br />
-            <br />
-            <br />
-            <br />
+
+
+
             <input type="submit" value="Save" class="btn primary-button" onclick="AssignVendorForBranch"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
 
             <input type="reset" value="Reset" class="btn primary-button" onclick="AssignVendorForBranch"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
