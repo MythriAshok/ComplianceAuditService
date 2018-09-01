@@ -402,17 +402,20 @@
     </Compile>
     <Compile Include="Controllers\AuditManagementController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
-    <Compile Include="Controllers\ComplianceManagementController.cs" />
     <Compile Include="Controllers\ManageAccessController.cs" />
+    <Compile Include="Controllers\ManageAuditController.cs" />
+    <Compile Include="Controllers\ManageComplianceController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AboutCompanyViewModel.cs" />
     <Compile Include="Models\AllocateActandRuleViewModel.cs" />
+    <Compile Include="Models\AuditorpageViewModel.cs" />
     <Compile Include="Models\AuditViewModel.cs" />
     <Compile Include="Models\BranchViewModel.cs" />
     <Compile Include="Models\CompanyViewModel.cs" />
+    <Compile Include="Models\complianceActmappingViewModel.cs" />
     <Compile Include="Models\ComplianceViewModel.cs" />
     <Compile Include="Models\GroupCompanyViewModel.cs" />
     <Compile Include="Models\ListofComplianceViewModel.cs" />
@@ -512,6 +515,12 @@
     <Content Include="Views\ComplianceManagement\_ListofVendors.cshtml" />
     <Content Include="Views\AuditManagement\_Listofvendorforauditing.cshtml" />
     <Content Include="Views\ManageOrganization\ErrorPage.cshtml" />
+    <Content Include="Views\ManageCompliance\_Acts.cshtml" />
+    <Content Include="Views\ManageCompliance\_AddActs.cshtml" />
+    <Content Include="Views\ManageCompliance\_ListofCompliance.cshtml" />
+    <Content Include="Views\ManageCompliance\_AddLineitems.cshtml" />
+    <Content Include="Views\ManageCompliance\_ComplianceActMapping.cshtml" />
+    <Content Include="Views\ManageAudit\_SelectBranch.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

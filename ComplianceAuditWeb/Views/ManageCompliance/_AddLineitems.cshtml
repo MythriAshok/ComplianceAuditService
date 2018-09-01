@@ -1,0 +1,139 @@
+﻿@model ComplianceAuditWeb.Models.ComplianceViewModel
+
+@{ Layout = null;}
+<div class="">
+    <div class="modal-title" style="margin: 10px;">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        @{ string submit = "Save";}
+        @if (Model.Compliance.Compliance_Xref_ID != 0)
+        {
+        <h2>Update @Model.Compliance.Comp_Category</h2>
+            submit = "Update";
+        }
+        else
+        {
+            submit = "Save";
+            <h2>Add @Model.Compliance.Comp_Category</h2>
+        }
+        </div>
+        @using (Html.BeginForm())
+        {<div class="mid_content_sec">
+    @if (@TempData["Message"] != null)
+    {
+        <p class="alert alert-warning">@TempData["Message"]</p>
+    }
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Compliance.Compliance_Parent_ID)
+    @Html.HiddenFor(model => model.Compliance.Compliance_Type_ID)
+    @Html.HiddenFor(model => model.Compliance.Country_ID)
+    @Html.HiddenFor(model => model.Compliance.State_ID)
+    @Html.HiddenFor(model => model.Compliance.City_ID)
+    @Html.HiddenFor(model=>model.Compliance.Comp_Category)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="col-xs-8 subSelect ">
+        <div class="input-field">
+            @Html.Label("Compliance Title", new { @class = "floating-label" })<span style="color:red">*</span>
+
+            @Html.TextBoxFor(model => model.Compliance.Compliance_Title, new { @class = "inputMaterial ui - autocomplete - input" })
+            <span id="loading_data_icon"></span>
+            @Html.ValidationMessageFor(model => model.Compliance.Compliance_Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Risk Category", new { @class = "floating-label" })<span style="color:red">*</span>
+
+            @Html.DropDownListFor(model => model.Compliance.Risk_Category, new SelectList(Enum.GetNames(typeof(ComplianceAuditWeb.Models.ComplianceViewModel.RiskCategory))), "--Select RiskCategory", new { @class = "inputMaterial ui - autocomplete - input" })
+            @Html.ValidationMessageFor(model => model.Compliance.Risk_Category, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-12 subSelect ">
+        <div class="input-field">
+            @Html.Label("Compliance Description", new { @class = "floating-label" })
+
+            @Html.TextAreaFor(model => model.Compliance.Comp_Description, new { @class = "inputMaterial ui - autocomplete - input" })
+            <span id="loading_data_icon"></span>
+            @Html.ValidationMessageFor(model => model.Compliance.Comp_Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-12 subSelect ">
+        <div class="input-field">
+            @Html.Label("Risk Description", new { @class = "floating-label" })
+
+            @Html.TextAreaFor(model => model.Compliance.Risk_Description, new { @class = "inputMaterial ui - autocomplete - input" })
+            <span id="loading_data_icon"></span>
+            @Html.ValidationMessageFor(model => model.Compliance.Risk_Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-12 subSelect ">
+        <div class="input-field">
+            @Html.Label("Non-compliance Consequence", new { @class = "floating-label" })<span style="color:red">*</span>
+
+            @Html.TextAreaFor(model => model.Compliance.compl_def_consequence, new { @class = "inputMaterial ui - autocomplete - input" })
+            <span id="loading_data_icon"></span>
+            @Html.ValidationMessageFor(model => model.Compliance.compl_def_consequence, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Periodicity", new { @class = "floating-label" })<span style="color:red">*</span>
+
+            @Html.TextBoxFor(model => model.Compliance.Periodicity, new { @class = "inputMaterial ui - autocomplete - input" })
+            <span id="loading_data_icon"></span>
+            @Html.ValidationMessageFor(model => model.Compliance.Periodicity, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Effective Start Date", new { @class = "floating-label" })<span style="color:red">*</span>
+            @*@Html.TextBox("Compliance_Effective_Start_Date",Model.Compliance.Effective_Start_Date.ToShortDateString(), new { @class = "inputMaterial ui - autocomplete - input",type="date" })*@
+            @Html.EditorFor(model => model.Compliance.Effective_Start_Date, new { htmlAttributes = new { @class = "inputMaterial ui - autocomplete - input" } })
+            <span id="loading_data_icon"></span>
+            @Html.ValidationMessageFor(model => model.Compliance.Effective_Start_Date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Effective_End_Date", new { @class = "floating-label" })
+
+            @Html.EditorFor(model => model.Compliance.Effective_End_Date, new { @class = "inputMaterial ui - autocomplete - input" })
+            <span id="loading_data_icon"></span>
+            @Html.ValidationMessageFor(model => model.Compliance.Effective_End_Date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*<div class="clearfix"></div>
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Is Best Practice", new { @class = "floating-label" })
+            @Html.EditorFor(model => model.Compliance.Is_Best_Practice)
+            <span id="loading_data_icon"></span>
+            @Html.ValidationMessageFor(model => model.Compliance.Is_Best_Practice, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+
+    @*<input type="submit" value="Create" class="btn btn-default" />*@
+    <div class="modal-footer" style="padding:0px">
+        <ul class="list-inline continueBtn">
+            <li>
+                <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">@submit<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
+                <input type="reset" value="Reset" class="btn primary-button" />
+                <button class="btn primary-button" data-dismiss="modal" id="btnCancel">Cancel</button>
+            </li>
+        </ul>
+    </div>
+</div>
+        }
+    </div>
+<script type="text/javascript">
+    $(function () {
+        $('#approve-btn').click(function () {
+            $('#modal-container').modal('hide');
+        });
+    });
+</script>

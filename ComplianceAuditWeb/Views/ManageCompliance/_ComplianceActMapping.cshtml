@@ -1,0 +1,110 @@
+﻿@model ComplianceAuditWeb.Models.complianceActmappingViewModel
+
+@{
+    /**/
+
+    ViewBag.Title = "Assign Acts";
+}
+
+@section scripts{
+    <link href="~/Content/themes/default/style.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/jstree.js"></script>
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/themes/CustomJstreecss.css" rel="stylesheet" />
+    <script>
+        $('#actjstree').on('changed.jstree', function (e, data) {
+
+            var i, j;
+            var selectedItems = [];
+            for (i = 0, j = data.selected.length; i < j; i++) {
+
+                //Fetch the Id.
+                var id = data.selected[i];
+                var selectednode = data.instance.get_node(data.selected[i]);
+                if (selectednode.original.categorytype == "Act") {
+                    selectedItems.push({
+                        text: data.instance.get_node(data.selected[i]).text,
+                        id: id,
+                        //categorytype: data.instance.get_node(dat.selected[i]).orginal.categorytype
+                    });
+                }
+                $('#selectedItems').val(JSON.stringify(selectedItems));
+
+            }
+        });
+        $(function () {
+            var _acttyid = $('#compliancetypeid').val();
+            alert(_acttyid);
+            $('#actjstree').jstree({
+                'plugins': ["checkbox"],
+                'core': {
+                    'data': {
+                        'url': '/ManageCompliance/getcompliancetypeact',
+                        'data': { compliancetypeid: _acttyid},
+                        'dataType': 'json'
+                    },
+                }
+            });
+        });
+
+        function LoadJSTree() {
+            $('#actjstree').jstree('destroy');
+            var _acttyid = $('#compliancetypeid').val();
+            alert(_acttyid);
+            //var _acttype = $('#ActTypeID').val();
+            $('#actjstree').jstree({
+                'plugins': ["checkbox"],
+                'core': {
+                    'data': {
+                        'url': '/ManageCompliance/getcompliancetypeact',
+                        'data': { compliancetypeid: _acttyid},
+                        'dataType': 'json'
+                    },
+                }
+            });
+        }
+    </script>
+}
+<ul class="breadcrumb ML15">
+    <li><a href="/Common/dashboard?pid=14">Compliance Management</a></li>
+    <li>Compliance Type Act Mapping</li>
+</ul>
+<h2 class="ML15">Compliance Type Act Mapping</h2>
+@using (Html.BeginForm("ComplianceActMapping", "ManageCompliance", FormMethod.Post))
+{
+    <div class="mid_content_sec">
+        @if (TempData["Message"] != null)
+        {
+            @*<p class="alert alert-success">@TempData["Message"]</p>*@
+            <p id="successMessage">@TempData["Message"]</p>
+        }
+        @if (TempData["Error"] != null)
+        {
+            @*<p class="alert alert-warning">@TempData["Error"]</p>*@
+            <p id="successMessage">@TempData["Message"]</p>
+        }
+
+        <div class="col-xs-6 subSelect ">
+            @Html.Label("Compliance Type", new { @class = "floating-label" })
+            @Html.DropDownListFor(model => model.compliancetypeid, Model.ComplianceType, new { @onchange = "javascript:LoadJSTree(); ", @class = "inputMaterial ui - autocomplete - input" })
+        </div>
+
+        <div class="clearfix"></div>
+        <div class="clearfix"></div>
+        <div class="col-xs-10 subSelect ">
+            <br />
+            <div id="actjstree"></div>
+        </div>
+        <div class="clearfix"></div>
+        <ul class="list-inline continueBtn">
+            <li>
+                <input type="hidden" name="selectedItems" id="selectedItems" />
+                <input type="submit" value="Apply" class="btn primary-button" />
+                <input type="reset" value="Reset" class="btn primary-button" />
+                <a href="@Url.Action("ListofCompliance","ComplianceManagement")" class="btn primary-button">Cancel</a>
+            </li>
+        </ul>
+    </div>
+}

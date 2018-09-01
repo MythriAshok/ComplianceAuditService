@@ -49,23 +49,23 @@ namespace ComplianceAuditWeb.Controllers
             model.ActType.Add(new SelectListItem { Text = "State Level", Value = "2" });
             //model.ActType.Add(new SelectListItem { Text = "City Level", Value = "3" });
 
-            ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
+           // ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
 
-            model.ComplianceType = new List<SelectListItem>();
-            string xmldata=client.GetComplainceType();
-            DataSet ds = new DataSet();
-            ds.ReadXml(new StringReader(xmldata));
-            model.ComplianceType.Add(new SelectListItem { Text = "-- Select Compliance --", Value = "0" });
-            if (ds.Tables.Count > 0)
-            {
-                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
-                {
-                    model.ComplianceType.Add(new SelectListItem { Text = Convert.ToString(row["Compliance_Type_Name"]), Value = Convert.ToString(row["Compliance_Type_ID"]) });
-                }
-            }
+            //model.ComplianceType = new List<SelectListItem>();
+            //string xmldata=client.GetComplainceType();
+            //DataSet ds = new DataSet();
+            //ds.ReadXml(new StringReader(xmldata));
+            //model.ComplianceType.Add(new SelectListItem { Text = "-- Select Compliance --", Value = "0" });
+            //if (ds.Tables.Count > 0)
+            //{
+            //    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            //    {
+            //        model.ComplianceType.Add(new SelectListItem { Text = Convert.ToString(row["Compliance_Type_Name"]), Value = Convert.ToString(row["Compliance_Type_ID"]) });
+            //    }
+            //}
             model.Compliance = new ComplianceXref();
             model.Compliance.Compliance_Xref_ID = 0;
-            TempData["Actmodel"] = model;
+            Session["Actmodel"] = model;
             return View("_AddActs", model);
         }
         [HttpPost]
@@ -84,8 +84,8 @@ namespace ComplianceAuditWeb.Controllers
                 if (model.Compliance.Compliance_Parent_ID > 0)
                 {
                     TempData["Message"] = "Successfuly Created " + model.Compliance.Compliance_Title + " Act.";
-                    model.Compliance.Compliance_Title = "RuleSection";
-                    client.insertSection(model.Compliance);                   
+                    //model.Compliance.Compliance_Title = "RuleSection";
+                    //client.insertSection(model.Compliance);                   
                     return RedirectToAction("ListofCompliance");
                 }
                 else
@@ -93,7 +93,8 @@ namespace ComplianceAuditWeb.Controllers
             }
             else
                 ModelState.AddModelError("", ConfigurationManager.AppSettings["Requried"]);
-            model = (ComplianceViewModel)TempData["Actmodel"];
+            model = (ComplianceViewModel)Session["Actmodel"];
+            Session.Remove("Actmodel");
             return View("_AddActs", model);
         }
 
@@ -138,51 +139,51 @@ namespace ComplianceAuditWeb.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult CreateSection(int Parentid,string type)
-        {
-            ComplianceViewModel model = new ComplianceViewModel();
-            model.Compliance = new ComplianceXref();
-            ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
-            model.Compliance.Compliance_Parent_ID = Parentid;
-            string xmldata;
-            if (type == "SubSection")
-            {  xmldata = client.GetSpecificsection(Parentid); }
-            else { xmldata = client.GetActs(Parentid); }
-            DataSet ds = new DataSet();
-            ds.ReadXml(new StringReader(xmldata));
-            model.Compliance.Effective_Start_Date = Convert.ToDateTime(ds.Tables[0].Rows[0]["Effective_Start_Date"]);
-            model.Compliance.Compliance_Type_ID=Convert.ToInt32(ds.Tables[0].Rows[0]["Compliance_Type_ID"]);
-            model.Compliance.Country_ID= Convert.ToInt32(ds.Tables[0].Rows[0]["Country_ID"]);
-            model.Compliance.State_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["State_ID"]);
-            model.Compliance.City_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["City_ID"]);
-            model.Compliance.Effective_End_Date = Convert.ToDateTime(ds.Tables[0].Rows[0]["Effective_End_Date"]);
-            return View("_AddSection", model);
-        }
-        [HttpPost]
-        public ActionResult CreateSection(ComplianceViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
-                model.Compliance.User_ID = Convert.ToInt32(Session["UserId"]);
-                int id = client.insertSection(model.Compliance);
-                if (id > 0)
-                {
-                    TempData["Message"] = "Successfuly Created " + model.Compliance.Compliance_Title + " Section";
+        //[HttpGet]
+        //public ActionResult CreateSection(int Parentid,string type)
+        //{
+        //    ComplianceViewModel model = new ComplianceViewModel();
+        //    model.Compliance = new ComplianceXref();
+        //    ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
+        //    model.Compliance.Compliance_Parent_ID = Parentid;
+        //    string xmldata;
+        //    if (type == "SubSection")
+        //    {  xmldata = client.GetSpecificsection(Parentid); }
+        //    else { xmldata = client.GetActs(Parentid); }
+        //    DataSet ds = new DataSet();
+        //    ds.ReadXml(new StringReader(xmldata));
+        //    model.Compliance.Effective_Start_Date = Convert.ToDateTime(ds.Tables[0].Rows[0]["Effective_Start_Date"]);
+        //    model.Compliance.Compliance_Type_ID=Convert.ToInt32(ds.Tables[0].Rows[0]["Compliance_Type_ID"]);
+        //    model.Compliance.Country_ID= Convert.ToInt32(ds.Tables[0].Rows[0]["Country_ID"]);
+        //    model.Compliance.State_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["State_ID"]);
+        //    model.Compliance.City_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["City_ID"]);
+        //    model.Compliance.Effective_End_Date = Convert.ToDateTime(ds.Tables[0].Rows[0]["Effective_End_Date"]);
+        //    return View("_AddSection", model);
+        //}
+        //[HttpPost]
+        //public ActionResult CreateSection(ComplianceViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
+        //        model.Compliance.User_ID = Convert.ToInt32(Session["UserId"]);
+        //        int id = client.insertSection(model.Compliance);
+        //        if (id > 0)
+        //        {
+        //            TempData["Message"] = "Successfuly Created " + model.Compliance.Compliance_Title + " Section";
 
-                }
-                else
-                    TempData["Error"] = "Not able to create successfully";
-            }
-            else
-            {
-                ModelState.AddModelError("", ConfigurationManager.AppSettings["Requried"]);
-                TempData["Error"] = "Not able to Create " + model.Compliance.Compliance_Title + " Rule.";
-            }
-                //return View("ListofCompliance");
-                return RedirectToAction("ListofCompliance");
-        }
+        //        }
+        //        else
+        //            TempData["Error"] = "Not able to create successfully";
+        //    }
+        //    else
+        //    {
+        //        ModelState.AddModelError("", ConfigurationManager.AppSettings["Requried"]);
+        //        TempData["Error"] = "Not able to Create " + model.Compliance.Compliance_Title + " Rule.";
+        //    }
+        //        //return View("ListofCompliance");
+        //        return RedirectToAction("ListofCompliance");
+        //}
 
         [HttpGet]
         public ActionResult CreateRules(int Parentid)
@@ -191,16 +192,16 @@ namespace ComplianceAuditWeb.Controllers
             model.Compliance = new ComplianceXref();
             ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
             model.Compliance.Compliance_Parent_ID = Parentid;
-            string xmldata = client.GetSpecificsection(Parentid);
+            string xmldata = client.GetActs(Parentid);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             model.Compliance.Effective_Start_Date = Convert.ToDateTime(ds.Tables[0].Rows[0]["Effective_Start_Date"]);
-            model.Compliance.Compliance_Type_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["Compliance_Type_ID"]);
+            //model.Compliance.Compliance_Type_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["Compliance_Type_ID"]);
             model.Compliance.Country_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["Country_ID"]);
             model.Compliance.State_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["State_ID"]);
             model.Compliance.City_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["City_ID"]);
             model.Compliance.Effective_End_Date = Convert.ToDateTime(ds.Tables[0].Rows[0]["Effective_End_Date"]);
-            TempData["Rulemodel"] = model;
+           // Session["Rulemodel"] = model;
             return PartialView("_AddRules", model);
         }
 
@@ -246,12 +247,12 @@ namespace ComplianceAuditWeb.Controllers
             {
                 model.Actslist = bindCompliancelist(ds.Tables[0], model.Actslist);
             
-            xmldata = client.GetSections(0);
-            ds = new DataSet();
-            ds.ReadXml(new StringReader(xmldata));
-                if (ds.Tables.Count > 0)
-                {
-                    model.Sectionlist = bindCompliancelist(ds.Tables[0], model.Sectionlist);
+            //xmldata = client.GetSections(0);
+            //ds = new DataSet();
+            //ds.ReadXml(new StringReader(xmldata));
+                //if (ds.Tables.Count > 0)
+                //{
+                  //  model.Sectionlist = bindCompliancelist(ds.Tables[0], model.Sectionlist);
 
                     xmldata = client.GetRules(0);
                     ds = new DataSet();
@@ -289,7 +290,7 @@ namespace ComplianceAuditWeb.Controllers
                             });
                         }
                     }
-                }
+                //}
             }
             return View("_ListofCompliance", model);
         }

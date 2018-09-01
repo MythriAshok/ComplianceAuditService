@@ -530,6 +530,7 @@ namespace ComplianceAuditWeb.Controllers
         }
         public ActionResult Logout()
         {
+            Session.RemoveAll();
             return View("~/Views/Shared/Logout.cshtml");
         }       
 

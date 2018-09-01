@@ -13,16 +13,14 @@
       <xs:element minOccurs="0" name="Country_ID" type="xs:int" />
       <xs:element minOccurs="0" name="Effective_End_Date" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Effective_Start_Date" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Form" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Is_Active" type="xs:boolean" />
       <xs:element minOccurs="0" name="Is_Best_Practice" type="xs:boolean" />
       <xs:element minOccurs="0" name="Is_Header" type="xs:boolean" />
       <xs:element minOccurs="0" name="Last_Updated_Date" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Recurrence" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Periodicity" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Risk_Category" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Risk_Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="State_ID" type="xs:int" />
-      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="User_ID" type="xs:int" />
       <xs:element minOccurs="0" name="Version" type="xs:int" />
       <xs:element minOccurs="0" name="compl_def_consequence" nillable="true" type="xs:string" />

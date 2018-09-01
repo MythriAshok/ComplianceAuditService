@@ -26,24 +26,24 @@ namespace ComplianceService
             compliance.Compliance_Parent_ID = 0;
             return helper.insertupdateComplianceXref(compliance,'I');
         }
-        public int insertSection(ComplianceXref compliance)
-        {
-            ComplianceXrefHelper helper = new ComplianceXrefHelper();
-            compliance.Is_Active = true;
-            compliance.Is_Header = true;
-            compliance.level = 2;
-            compliance.Comp_Category = "Section";
-            compliance.Comp_Order = 2;
-            compliance.Version = 1;
-            return helper.insertupdateComplianceXref(compliance,'I');
-        }
+        //public int insertSection(ComplianceXref compliance)
+        //{
+        //    ComplianceXrefHelper helper = new ComplianceXrefHelper();
+        //    compliance.Is_Active = true;
+        //    compliance.Is_Header = true;
+        //    compliance.level = 2;
+        //    compliance.Comp_Category = "Section";
+        //    compliance.Comp_Order = 2;
+        //    compliance.Version = 1;
+        //    return helper.insertupdateComplianceXref(compliance,'I');
+        //}
         public int insertRules(ComplianceXref compliance)
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
             compliance.Is_Active = true;
             compliance.Is_Header = false;
-            compliance.level = 3;
-            compliance.Comp_Category = "Rule";
+            compliance.level = 2;
+            //compliance.Comp_Category = "Rule";
             compliance.Version = 1;
             return helper.insertupdateComplianceXref(compliance,'I');
         }
@@ -65,10 +65,10 @@ namespace ComplianceService
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();            
         }
-        public string GetSections(int parentid)
+        public string Getlineitems(int parentid)
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
-            DataSet ds = helper.getSection(parentid);
+            DataSet ds = helper.getlineitems(parentid);
             UtilityHelper utilityHelper = new UtilityHelper();
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();
@@ -184,5 +184,37 @@ namespace ComplianceService
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();
         }
+
+      public  bool insertxreftypemapping(int[] xrefid, int compliancetypeid)
+        {
+            bool res = false;
+            ComplianceXrefHelper helper = new ComplianceXrefHelper();
+            foreach (var id in xrefid)
+            {
+                 res = helper.insertxreftypemapping(id, compliancetypeid,"Act");
+            }
+            return res;
+        }
+
+       public bool deletexreftypemapping(int compliancetypeid)
+        {
+            ComplianceXrefHelper helper = new ComplianceXrefHelper();
+            bool res = helper.deletexreftypemapping(compliancetypeid);
+            return res;
+        }
+
+        public string GetXrefComplainceTypemapping(int compliancetypeid)
+        {
+            return bindXrefComplainceTypemapping(compliancetypeid);
+        }
+        private string bindXrefComplainceTypemapping(int compliancetypeid)
+        {
+            ComplianceXrefHelper helper = new ComplianceXrefHelper();
+            DataSet ds = helper.GetxrefComplianceMapping(compliancetypeid);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            ds = utilityHelper.ConvertNullsToEmptyString(ds);
+            return ds.GetXml();
+        }
+
     }
 }

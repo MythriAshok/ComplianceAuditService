@@ -16,8 +16,8 @@ namespace ComplianceService
         int insertActs(ComplianceXref compliance);
         [OperationContract]
         int insertRules(ComplianceXref compliance);
-        [OperationContract]
-        int insertSection(ComplianceXref compliance);
+        //[OperationContract]
+        //int insertSection(ComplianceXref compliance);
         [OperationContract]
         int UpdateActs(ComplianceXref compliance);
         [OperationContract]
@@ -25,7 +25,7 @@ namespace ComplianceService
         [OperationContract]
         string GetActs(int complianceid);
         [OperationContract]
-        string GetSections(int parentid);
+        string Getlineitems(int parentid);
         [OperationContract]
         string GetSpecificsection(int complianceid);
         [OperationContract]
@@ -46,5 +46,12 @@ namespace ComplianceService
         string GetSpecificComplaince(int complianceId);
         [OperationContract]
         string GetComplainceType();
+
+        [OperationContract]
+        bool insertxreftypemapping(int[] xrefid, int compliancetypeid);
+        [OperationContract]
+        bool deletexreftypemapping(int compliancetypeid);
+        [OperationContract]
+        string GetXrefComplainceTypemapping(int compliancetypeid);
     }
 }

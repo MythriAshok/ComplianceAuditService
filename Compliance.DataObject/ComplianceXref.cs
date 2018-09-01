@@ -21,9 +21,10 @@ namespace Compliance.DataObject
         public int Compliance_Parent_ID { get; set; }
         public string Risk_Category { get; set; }
         public string Risk_Description { get; set; }
-        public string Recurrence { get; set; }
-        public string Form { get; set; }
-        public string Type { get; set; }
+        public string Periodicity { get; set; }
+        //public string Recurrence { get; set; }
+        //public string Form { get; set; }
+        //public string Type { get; set; }
         public bool Is_Best_Practice { get; set; }
         public int Version { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

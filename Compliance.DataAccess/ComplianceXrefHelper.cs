@@ -37,9 +37,9 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Comp_Order", xref.Comp_Order);
                     cmd.Parameters.AddWithValue("p_Risk_Category", xref.Risk_Category);
                     cmd.Parameters.AddWithValue("p_Risk_Description", xref.Risk_Description);
-                    cmd.Parameters.AddWithValue("p_Recurrence", xref.Recurrence);
-                    cmd.Parameters.AddWithValue("p_Form", xref.Form);
-                    cmd.Parameters.AddWithValue("p_Type", xref.Type);
+                    cmd.Parameters.AddWithValue("p_Periodicity", xref.Periodicity);
+                    //cmd.Parameters.AddWithValue("p_Form", xref.Form);
+                    //cmd.Parameters.AddWithValue("p_Type", xref.Type);
                     cmd.Parameters.AddWithValue("p_Is_Best_Practice", xref.Is_Best_Practice);
                     cmd.Parameters.AddWithValue("p_Version", xref.Version);
                     cmd.Parameters.AddWithValue("p_Effective_Start_Date", xref.Effective_Start_Date);
@@ -49,7 +49,6 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_City_ID", xref.City_ID);
                     cmd.Parameters.AddWithValue("p_User_ID", xref.User_ID);
                     cmd.Parameters.AddWithValue("p_Is_Active", xref.Is_Active);
-                    cmd.Parameters.AddWithValue("p_Compliance_Type_ID", xref.Compliance_Type_ID);
                     ComplianceXref = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
@@ -137,13 +136,13 @@ namespace Compliance.DataAccess
             return dtComplianceXref;
         }
 
-        public DataSet getSection(int parentid)
+        public DataSet getlineitems(int parentid)
         {
             DataSet dtComplianceXref = new DataSet();
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_getSections", conn);
+                MySqlCommand cmd = new MySqlCommand("sp_getlineitems", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Compliance_Parent_ID", parentid);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
@@ -341,6 +340,100 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getComplianceType", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(ds);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return ds;
+        }
+
+        public bool insertxreftypemapping(int xrefid,int compliancetypeid, string flag)
+        {
+            bool res= false;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("spinsertxref_comp_type_mapping", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Compliance_Type_ID", compliancetypeid);
+                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", xrefid);
+                res=Convert.ToBoolean(cmd.ExecuteNonQuery());
+                if (flag == "Act")
+                {
+                    insertrulecompliancetypemapping(xrefid, compliancetypeid);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return res;
+        }
+        private void insertrulecompliancetypemapping(int xrefid, int compliancetypeid)
+        {            
+            DataSet ds = new DataSet();
+            try
+            {                                              
+                ds=getlineitems(xrefid);
+                foreach(System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    insertxreftypemapping(Convert.ToInt32(row["Compliance_Xref_ID"]), compliancetypeid, "Rule");
+                }
+
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return ;
+        }
+        public bool deletexreftypemapping(int compliancetypeid)
+        {
+            bool res = false;
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_delete_xref_comp_type_mapping", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Compliance_Type_ID", compliancetypeid);
+                res = Convert.ToBoolean(cmd.ExecuteNonQuery());
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return res;
+        }
+
+        public DataSet GetxrefComplianceMapping(int compliancetypeid)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_get_xref_comp_type_mapping", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Compliance_Type_ID", compliancetypeid);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(ds);
             }

@@ -27,12 +27,6 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/insertRules", ReplyAction="http://tempuri.org/IComplianceXrefService/insertRulesResponse")]
         System.Threading.Tasks.Task<int> insertRulesAsync(Compliance.DataObject.ComplianceXref compliance);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/insertSection", ReplyAction="http://tempuri.org/IComplianceXrefService/insertSectionResponse")]
-        int insertSection(Compliance.DataObject.ComplianceXref compliance);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/insertSection", ReplyAction="http://tempuri.org/IComplianceXrefService/insertSectionResponse")]
-        System.Threading.Tasks.Task<int> insertSectionAsync(Compliance.DataObject.ComplianceXref compliance);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/UpdateActs", ReplyAction="http://tempuri.org/IComplianceXrefService/UpdateActsResponse")]
         int UpdateActs(Compliance.DataObject.ComplianceXref compliance);
         
@@ -51,11 +45,11 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetActs", ReplyAction="http://tempuri.org/IComplianceXrefService/GetActsResponse")]
         System.Threading.Tasks.Task<string> GetActsAsync(int complianceid);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSections", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSectionsResponse")]
-        string GetSections(int parentid);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/Getlineitems", ReplyAction="http://tempuri.org/IComplianceXrefService/GetlineitemsResponse")]
+        string Getlineitems(int parentid);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSections", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSectionsResponse")]
-        System.Threading.Tasks.Task<string> GetSectionsAsync(int parentid);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/Getlineitems", ReplyAction="http://tempuri.org/IComplianceXrefService/GetlineitemsResponse")]
+        System.Threading.Tasks.Task<string> GetlineitemsAsync(int parentid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetSpecificsection", ReplyAction="http://tempuri.org/IComplianceXrefService/GetSpecificsectionResponse")]
         string GetSpecificsection(int complianceid);
@@ -116,6 +110,24 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetComplainceType", ReplyAction="http://tempuri.org/IComplianceXrefService/GetComplainceTypeResponse")]
         System.Threading.Tasks.Task<string> GetComplainceTypeAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/insertxreftypemapping", ReplyAction="http://tempuri.org/IComplianceXrefService/insertxreftypemappingResponse")]
+        bool insertxreftypemapping(int[] xrefid, int compliancetypeid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/insertxreftypemapping", ReplyAction="http://tempuri.org/IComplianceXrefService/insertxreftypemappingResponse")]
+        System.Threading.Tasks.Task<bool> insertxreftypemappingAsync(int[] xrefid, int compliancetypeid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/deletexreftypemapping", ReplyAction="http://tempuri.org/IComplianceXrefService/deletexreftypemappingResponse")]
+        bool deletexreftypemapping(int compliancetypeid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/deletexreftypemapping", ReplyAction="http://tempuri.org/IComplianceXrefService/deletexreftypemappingResponse")]
+        System.Threading.Tasks.Task<bool> deletexreftypemappingAsync(int compliancetypeid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetXrefComplainceTypemapping", ReplyAction="http://tempuri.org/IComplianceXrefService/GetXrefComplainceTypemappingResponse")]
+        string GetXrefComplainceTypemapping(int compliancetypeid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetXrefComplainceTypemapping", ReplyAction="http://tempuri.org/IComplianceXrefService/GetXrefComplainceTypemappingResponse")]
+        System.Threading.Tasks.Task<string> GetXrefComplainceTypemappingAsync(int compliancetypeid);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -161,14 +173,6 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
             return base.Channel.insertRulesAsync(compliance);
         }
         
-        public int insertSection(Compliance.DataObject.ComplianceXref compliance) {
-            return base.Channel.insertSection(compliance);
-        }
-        
-        public System.Threading.Tasks.Task<int> insertSectionAsync(Compliance.DataObject.ComplianceXref compliance) {
-            return base.Channel.insertSectionAsync(compliance);
-        }
-        
         public int UpdateActs(Compliance.DataObject.ComplianceXref compliance) {
             return base.Channel.UpdateActs(compliance);
         }
@@ -193,12 +197,12 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
             return base.Channel.GetActsAsync(complianceid);
         }
         
-        public string GetSections(int parentid) {
-            return base.Channel.GetSections(parentid);
+        public string Getlineitems(int parentid) {
+            return base.Channel.Getlineitems(parentid);
         }
         
-        public System.Threading.Tasks.Task<string> GetSectionsAsync(int parentid) {
-            return base.Channel.GetSectionsAsync(parentid);
+        public System.Threading.Tasks.Task<string> GetlineitemsAsync(int parentid) {
+            return base.Channel.GetlineitemsAsync(parentid);
         }
         
         public string GetSpecificsection(int complianceid) {
@@ -279,6 +283,30 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         
         public System.Threading.Tasks.Task<string> GetComplainceTypeAsync() {
             return base.Channel.GetComplainceTypeAsync();
+        }
+        
+        public bool insertxreftypemapping(int[] xrefid, int compliancetypeid) {
+            return base.Channel.insertxreftypemapping(xrefid, compliancetypeid);
+        }
+        
+        public System.Threading.Tasks.Task<bool> insertxreftypemappingAsync(int[] xrefid, int compliancetypeid) {
+            return base.Channel.insertxreftypemappingAsync(xrefid, compliancetypeid);
+        }
+        
+        public bool deletexreftypemapping(int compliancetypeid) {
+            return base.Channel.deletexreftypemapping(compliancetypeid);
+        }
+        
+        public System.Threading.Tasks.Task<bool> deletexreftypemappingAsync(int compliancetypeid) {
+            return base.Channel.deletexreftypemappingAsync(compliancetypeid);
+        }
+        
+        public string GetXrefComplainceTypemapping(int compliancetypeid) {
+            return base.Channel.GetXrefComplainceTypemapping(compliancetypeid);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetXrefComplainceTypemappingAsync(int compliancetypeid) {
+            return base.Channel.GetXrefComplainceTypemappingAsync(compliancetypeid);
         }
     }
 }

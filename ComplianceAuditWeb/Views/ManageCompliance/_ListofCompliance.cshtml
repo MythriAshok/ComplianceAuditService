@@ -1,0 +1,178 @@
+﻿@model ComplianceAuditWeb.Models.ListofComplianceViewModel
+
+@{
+    ViewBag.Title = "Add Rules";
+}
+<ul class="breadcrumb ML15">
+    <li><a href="/Common/dashboard?pid=14">Compliance Management</a></li>
+    <li>Add Rules</li>
+</ul>
+<h2 class="ML15">Add Rules</h2>
+@section scripts{
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-ui.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/main.css" rel="stylesheet" />
+    <script src="~/Content/assets/js/jquery.simpleaccordion.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            // Initialize numeric spinner input boxes
+            //$(".numeric-spinner").spinedit();
+            // Initialize modal dialog
+            // attach modal-container bootstrap attributes to links with .modal-link class.
+            // when a link is clicked with these attributes, bootstrap will display the href content in a modal dialog.
+            $('body').on('click', '.modal-link', function (e) {
+                e.preventDefault();
+                $(this).attr('data-target', '#modal-container');
+                $(this).attr('data-toggle', 'modal');
+            });
+            // Attach listener to .modal-close-btn's so that when the button is pressed the modal dialog disappears
+            $('body').on('click', '.modal-close-btn', function () {
+                $('#modal-container').modal('hide');
+            });
+            //clear modal cache, so that new content can be loaded
+            $('#modal-container').on('hidden.bs.modal', function () {
+                $(this).removeData('bs.modal');
+            });
+            $('#CancelModal').on('click', function () {
+                return false;
+            });
+        });
+    </script>
+    <script>
+        //$(".btn-bootstrap-dialog").click(function () {
+        //    var $buttonClicked = $(this);
+        //    var options = {
+        //        "backdrop": "static",
+        //        keyboard: true
+        //    };
+        //    $.ajax({
+        //        type: "GET",
+        //        url: $(this).data("url"),
+        //        contentType: "application/json; charset=utf-8",
+        //        datatype: "json",
+        //        success: function (data) {
+        //            $('#myModalContent').html(data);
+        //            $('#myModal').modal(options);
+        //            $('#myModal').modal('show');
+        //        },
+        //        error: function () {
+        //            alert("Not able to load content.")
+        //        }
+        //    });
+        //});
+
+
+        $(document).ready(function () {
+            $('[data-behavior=accordion]').simpleAccordion({ cbOpen: accOpen, cbClose: accClose });
+        });
+        function accClose(e, $this) {
+            $this.find('span').fadeIn(200);
+        }
+
+        function accOpen(e, $this) {
+            $this.find('span').fadeOut(200)
+        }
+
+    </script>
+    <style>
+        #updatepopup {
+            float: right;
+            color: white;
+        }
+
+        #updaterulepopup {
+            float: right;
+            color: blue;
+        }
+    </style>
+}
+<div class="mid_content_sec">
+    @if (ViewBag.Message != null)
+    {
+        @*<p class="alert alert-success">@ViewBag.Message</p>*@
+        <p id="successMessage">@ViewBag.Message</p>
+    }
+    @if (TempData["Error"] != null)
+    {
+        @*<p class="alert alert-warning">@TempData["Error"]</p>*@
+        <p style="color:red;">@TempData["Error"]</p>
+    }
+    <div style="margin-right:10px;text-align:right">
+        <span class="fa fa-plus"></span>@Html.ActionLink("Add Act", "CreateActs", new { @class = "btn primary-button" })
+    </div>
+    @if (Model.Actslist != null)
+    {
+        foreach (var Act in Model.Actslist)
+        {
+            <div class="accordion-group" data-behavior="accordion">
+
+                <p class="accordion-header default-open">
+                    <i class="fa fa-legal"></i>&nbsp;@Html.DisplayFor(modelItem => Act.Compliance_Title)
+                    <a class="modal-link" id="updatepopup" href=@Url.Action("UpdateAct", "ComplianceManagement", new { id = Act.Compliance_Xref_ID })><i class="fa fa-edit"></i></a>
+                    @*@Html.ActionLink("Edit", "UpdateAct", "ComplianceManagement", new { id = Act.Compliance_Xref_ID }, new { @class = "modal-link btn btn-success" })*@
+                    @*<button class="btn-bootstrap-dialog" id="updatepopup" data-url="@Url.Action("UpdateAct", "ComplianceManagement",new { id=Act.Compliance_Xref_ID})"><i class="fa fa-edit"></i></button>*@
+                </p>
+
+                <div class="accordion-body" id="subbody">
+                    @foreach (var Rule in Model.Rulelist)
+                    {
+
+                        if (Act.Compliance_Xref_ID == Rule.Compliance_Parent_ID)
+                        {
+                            <p>
+                                <i class="fa fa-leanpub"></i>
+                                @Html.DisplayFor(modelItem => Rule.Compliance_Title)
+                                <a class="modal-link" id="updaterulepopup" href=@Url.Action("UpdateRule", "ComplianceManagement", new { id = Rule.Compliance_Xref_ID})><i class="fa fa-edit"></i></a>
+                                @*<button class="btn-bootstrap-dialog" id="updaterulepopup" data-url='@Url.Action("UpdateRule", "ComplianceManagement", new { id = Rule.Compliance_Xref_ID})'><i class="fa fa-edit"></i></button>*@
+                            </p>
+
+                        }
+                    }
+
+                    <ul class="list-inline accordinBtn">
+                        <li>
+                            <a class="modal-link btn primary-button" href=@Url.Action("Createlineitems", "ManageCompliance", new { Parentid = Act.Compliance_Xref_ID, type = "Rule" })><i class="fa fa-book">Add Rule</i></a>
+                            <a class="modal-link btn primary-button" href=@Url.Action("Createlineitems", "ManageCompliance", new { Parentid = Act.Compliance_Xref_ID, type = "Form" })><i class="fa fa-book">Add Form</i></a>
+                            <a class="modal-link btn primary-button" href=@Url.Action("Createlineitems", "ManageCompliance", new { Parentid = Act.Compliance_Xref_ID, type = "Register" })><i class="fa fa-book">Add Register</i></a>
+                            <a class="modal-link btn primary-button" href=@Url.Action("Createlineitems", "ManageCompliance", new { Parentid = Act.Compliance_Xref_ID, type = "Licence" })><i class="fa fa-book">Add License</i></a>
+                            <a class="modal-link btn primary-button" href=@Url.Action("Createlineitems", "ManageCompliance", new { Parentid = Act.Compliance_Xref_ID, type = "Return" })><i class="fa fa-book">Add Return</i></a>
+                        </li>
+                    </ul>
+                </div>
+                    
+                  
+                </div>
+
+        }
+    }
+    else
+    {
+        @*<p class="alert alert-success">@TempData["Message"]</p>*@
+        <p id="successMessage">@TempData["Message"]</p>
+    }
+    <div class="clearfix"></div>
+    <ul class="list-inline accordinBtn">
+        <li>
+            @*@Html.ActionLink("Add Act", "CreateActs", new { @class = "btn primary-button" })*@
+            <a href="@Url.Action("CreateActs","ComplianceManagement")" class="btn primary-button">Add Act</a>
+            <a href="@Url.Action("dashboard","common",new { pid=14})" class="btn primary-button">Cancel</a>
+        </li>
+    </ul>
+
+    @*<div id='myModal' class="modal fade" role="dialog" aria-hidden="true">
+            <div class="modal-dialog-centered" style="width:900px;height:400px; padding:10px;">
+                <div class="modal-content" style="padding:10px;">
+                    <div id='myModalContent' class="modal-body" style="padding:10px">
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+    <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">  
+        <div class="modal-content" style="width:800px !important; margin:30px auto !important;border:4px solid darkgray">
+        </div>
+    </div>
+</div>
+

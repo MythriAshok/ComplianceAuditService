@@ -31,7 +31,7 @@
                 <div class="container-fluid">
 
                     <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-9">
                             <div class="col-md-9"><h1><img src="~/Content/assets/images/logo_new.png" /></h1></div>
                             <div class="col-md-3 pull-right"><h1 class="pull-right"><img src="" alt="" /></h1></div>
                         </div>
@@ -39,11 +39,19 @@
                             <div style="margin:15px">
                                 @if (Convert.ToInt32(Session["Isproductadmin"]) == 0)
                                 {
-                                    <button class="btn-bootstrap-dialog">Select Group Compnay</button>
-                                    <div class="modal fade" id="bootstrapDialog" tabindex="-1" role="dialog" aria-labelledby="myModal-label" aria-hidden="true"
-                                         data-url='@Url.Action("SelectGroupCompany","Common")'>
-                                    </div>
-                                }
+                                    if (Session["GroupCompanyName"] != null)
+                                    {
+                                        <label>@Session["GroupCompanyName"]</label>
+                                        <button id="GroupCompany" class="btn primary-button">Change</button>
+                                    }
+                                    else
+                                    {
+                                        <button id="GroupCompany" class="btn primary-button">Select Group Company</button>
+                                    }
+                                        <div class="modal fade" id="bootstrapDialog" tabindex="-1" role="dialog" aria-labelledby="myModal-label" aria-hidden="true"
+                                             data-url='@Url.Action("SelectGroupCompany","Common")'>
+                                        </div>
+                                    }
                             </div>
                         </div>
                     </div>
@@ -112,7 +120,7 @@
 
     <script>
         $(document).ready(function () {
-            $('.btn-bootstrap-dialog').click(function () {
+            $('#GroupCompany').click(function () {
                 var url = $('#bootstrapDialog').data('url');
                 $.get(url, function (data) {
                     $('#bootstrapDialog').html(data);

@@ -30,24 +30,10 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="insertSection">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="compliance" nillable="true" type="q3:ComplianceXref" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="insertSectionResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="insertSectionResult" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="UpdateActs">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="compliance" nillable="true" type="q4:ComplianceXref" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="compliance" nillable="true" type="q3:ComplianceXref" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -61,7 +47,7 @@
   <xs:element name="UpdateRules">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="compliance" nillable="true" type="q5:ComplianceXref" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="compliance" nillable="true" type="q4:ComplianceXref" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -86,17 +72,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetSections">
+  <xs:element name="Getlineitems">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="parentid" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetSectionsResponse">
+  <xs:element name="GetlineitemsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="GetSectionsResult" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="GetlineitemsResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -161,7 +147,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="orgid" type="xs:int" />
-        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ruleid" nillable="true" type="q6:ArrayOfint" />
+        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ruleid" nillable="true" type="q5:ArrayOfint" />
         <xs:element minOccurs="0" name="userid" type="xs:int" />
         <xs:element minOccurs="0" name="vendorid" type="xs:int" />
       </xs:sequence>
@@ -243,6 +229,49 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="GetComplainceTypeResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="insertxreftypemapping">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="xrefid" nillable="true" type="q6:ArrayOfint" />
+        <xs:element minOccurs="0" name="compliancetypeid" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="insertxreftypemappingResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="insertxreftypemappingResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="deletexreftypemapping">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="compliancetypeid" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="deletexreftypemappingResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="deletexreftypemappingResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetXrefComplainceTypemapping">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="compliancetypeid" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetXrefComplainceTypemappingResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetXrefComplainceTypemappingResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

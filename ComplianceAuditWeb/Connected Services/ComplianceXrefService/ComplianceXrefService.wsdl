@@ -20,12 +20,6 @@
   <wsdl:message name="IComplianceXrefService_insertRules_OutputMessage">
     <wsdl:part name="parameters" element="tns:insertRulesResponse" />
   </wsdl:message>
-  <wsdl:message name="IComplianceXrefService_insertSection_InputMessage">
-    <wsdl:part name="parameters" element="tns:insertSection" />
-  </wsdl:message>
-  <wsdl:message name="IComplianceXrefService_insertSection_OutputMessage">
-    <wsdl:part name="parameters" element="tns:insertSectionResponse" />
-  </wsdl:message>
   <wsdl:message name="IComplianceXrefService_UpdateActs_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateActs" />
   </wsdl:message>
@@ -44,11 +38,11 @@
   <wsdl:message name="IComplianceXrefService_GetActs_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetActsResponse" />
   </wsdl:message>
-  <wsdl:message name="IComplianceXrefService_GetSections_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetSections" />
+  <wsdl:message name="IComplianceXrefService_Getlineitems_InputMessage">
+    <wsdl:part name="parameters" element="tns:Getlineitems" />
   </wsdl:message>
-  <wsdl:message name="IComplianceXrefService_GetSections_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetSectionsResponse" />
+  <wsdl:message name="IComplianceXrefService_Getlineitems_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetlineitemsResponse" />
   </wsdl:message>
   <wsdl:message name="IComplianceXrefService_GetSpecificsection_InputMessage">
     <wsdl:part name="parameters" element="tns:GetSpecificsection" />
@@ -110,6 +104,24 @@
   <wsdl:message name="IComplianceXrefService_GetComplainceType_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetComplainceTypeResponse" />
   </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_insertxreftypemapping_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertxreftypemapping" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_insertxreftypemapping_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertxreftypemappingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_deletexreftypemapping_InputMessage">
+    <wsdl:part name="parameters" element="tns:deletexreftypemapping" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_deletexreftypemapping_OutputMessage">
+    <wsdl:part name="parameters" element="tns:deletexreftypemappingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_GetXrefComplainceTypemapping_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetXrefComplainceTypemapping" />
+  </wsdl:message>
+  <wsdl:message name="IComplianceXrefService_GetXrefComplainceTypemapping_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetXrefComplainceTypemappingResponse" />
+  </wsdl:message>
   <wsdl:portType name="IComplianceXrefService">
     <wsdl:operation name="insertActs">
       <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/insertActs" message="tns:IComplianceXrefService_insertActs_InputMessage" />
@@ -118,10 +130,6 @@
     <wsdl:operation name="insertRules">
       <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/insertRules" message="tns:IComplianceXrefService_insertRules_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/insertRulesResponse" message="tns:IComplianceXrefService_insertRules_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="insertSection">
-      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/insertSection" message="tns:IComplianceXrefService_insertSection_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/insertSectionResponse" message="tns:IComplianceXrefService_insertSection_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="UpdateActs">
       <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/UpdateActs" message="tns:IComplianceXrefService_UpdateActs_InputMessage" />
@@ -135,9 +143,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/GetActs" message="tns:IComplianceXrefService_GetActs_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/GetActsResponse" message="tns:IComplianceXrefService_GetActs_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetSections">
-      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/GetSections" message="tns:IComplianceXrefService_GetSections_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/GetSectionsResponse" message="tns:IComplianceXrefService_GetSections_OutputMessage" />
+    <wsdl:operation name="Getlineitems">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/Getlineitems" message="tns:IComplianceXrefService_Getlineitems_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/GetlineitemsResponse" message="tns:IComplianceXrefService_Getlineitems_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetSpecificsection">
       <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/GetSpecificsection" message="tns:IComplianceXrefService_GetSpecificsection_InputMessage" />
@@ -179,6 +187,18 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/GetComplainceType" message="tns:IComplianceXrefService_GetComplainceType_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/GetComplainceTypeResponse" message="tns:IComplianceXrefService_GetComplainceType_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="insertxreftypemapping">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/insertxreftypemapping" message="tns:IComplianceXrefService_insertxreftypemapping_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/insertxreftypemappingResponse" message="tns:IComplianceXrefService_insertxreftypemapping_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="deletexreftypemapping">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/deletexreftypemapping" message="tns:IComplianceXrefService_deletexreftypemapping_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/deletexreftypemappingResponse" message="tns:IComplianceXrefService_deletexreftypemapping_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetXrefComplainceTypemapping">
+      <wsdl:input wsaw:Action="http://tempuri.org/IComplianceXrefService/GetXrefComplainceTypemapping" message="tns:IComplianceXrefService_GetXrefComplainceTypemapping_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IComplianceXrefService/GetXrefComplainceTypemappingResponse" message="tns:IComplianceXrefService_GetXrefComplainceTypemapping_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IComplianceXrefService" type="tns:IComplianceXrefService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -193,15 +213,6 @@
     </wsdl:operation>
     <wsdl:operation name="insertRules">
       <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/insertRules" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="insertSection">
-      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/insertSection" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -236,8 +247,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetSections">
-      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/GetSections" style="document" />
+    <wsdl:operation name="Getlineitems">
+      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/Getlineitems" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -328,6 +339,33 @@
     </wsdl:operation>
     <wsdl:operation name="GetComplainceType">
       <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/GetComplainceType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="insertxreftypemapping">
+      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/insertxreftypemapping" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deletexreftypemapping">
+      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/deletexreftypemapping" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetXrefComplainceTypemapping">
+      <soap:operation soapAction="http://tempuri.org/IComplianceXrefService/GetXrefComplainceTypemapping" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

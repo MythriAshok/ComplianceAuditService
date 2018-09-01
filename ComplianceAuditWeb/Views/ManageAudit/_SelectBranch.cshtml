@@ -1,0 +1,70 @@
+﻿@model ComplianceAuditWeb.Models.AuditorpageViewModel
+
+@{
+    ViewBag.Title = "Auditor Page";
+}
+<ul class="breadcrumb ML15">
+    <li><a href="/Common/dashboard?pid=18">Audit Management</a></li>
+    <li>Auditor Dashboard</li>
+</ul>
+<h2 class="ML15">Auditor Dashboard</h2>
+@section scripts{
+}
+@using (Html.BeginForm())
+{
+<div class="mid_content_sec">
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @if (TempData["Message"] != null)
+    {
+        @*<p class="alert alert-warning">@TempData["Message"]</p>*@
+        <p style="color:red">@TempData["Message"]</p>
+    }
+
+    <div class="col-xs-6 subSelect ">
+        <div class="input-field">
+            @Html.Label("Company", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.DropDownListFor(model => model.companyid, Model.companyList, new { @onchange = "javascript:Visible(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
+            @Html.ValidationMessageFor(model => model.companyList, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-xs-6 subSelect ">
+        <div class="input-field">
+            @Html.Label("Branch", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.DropDownListFor(model => model.branchid, Model.BranchList, new { @class = "inputMaterial ui - autocomplete - input" })
+            @Html.ValidationMessageFor(model => model.branchid, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-xs-12 subSelect ">
+        @if (Model.VendorList != null)
+        {
+            <div class="new_section_box">
+                <div class="tab-content">
+                    <div id="home" class="tab-pane fade in active">
+                        <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Vendors:</h4>
+                        @if (TempData["Message"] != null)
+                        {
+                            <p id=" successMessage">  @TempData["Message"] </p>
+                        }
+                        @foreach (var item in Model.VendorList)
+                        {
+                            <div class="col-sm-3 QueList">
+                                <div class="queContainer">
+                                    <a href="@Url.Action("Listofvendors", "ComplianceManagement", new { vendorid = item.Company_Id,vendorname=item.Company_Name })">
+                                        <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
+                                        <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
+                                    </a>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        }
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+}
