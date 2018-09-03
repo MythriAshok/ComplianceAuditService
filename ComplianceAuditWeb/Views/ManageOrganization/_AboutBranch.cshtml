@@ -51,7 +51,7 @@
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
             @Html.Label("Branch Name")
-            @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
+            @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
         </div>
     </div>
     <div class="clearfix"></div>
@@ -60,7 +60,7 @@
 
 
             @Html.Label("Branch Description", new { @class = "floating-label" })
-            @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input", @rows = 10 })
+            @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input", @rows = 10, @readonly = "readonly" })
 
         </div>
     </div>

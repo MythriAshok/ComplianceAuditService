@@ -22,6 +22,8 @@ namespace ComplianceAuditWeb.Controllers
             List<SelectListItem> state = new List<SelectListItem>();
             string strXMLStates = organizationservice.GetStateList(ID);
             DataSet dsstate = new DataSet();
+
+
             dsstate.ReadXml(new StringReader(strXMLStates));
             if (dsstate.Tables.Count > 0)
             {
@@ -330,6 +332,10 @@ namespace ComplianceAuditWeb.Controllers
 
         public JsonResult getCompliance(string countryid, string industrytypeid)
         {
+            if(countryid == "")
+            {
+                countryid = Convert.ToString(0);
+            }
             List<SelectListItem> cities = new List<SelectListItem>();
             int CID = Convert.ToInt32(countryid);
             int IndustryID = Convert.ToInt32(industrytypeid);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -22,6 +23,8 @@ namespace ComplianceAuditWeb.Models
         public string GroupCompanyName { get; set; }
 
         public List<SelectListItem> CompaniesList { get; set; }
+        [Required(ErrorMessage ="Please select the company")]
+
         public int CompanyID { get; set; }
         public string CompanyName { get; set; }
         public string ChildCompanyName { get; set; }

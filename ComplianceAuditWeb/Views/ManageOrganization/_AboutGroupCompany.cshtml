@@ -31,7 +31,7 @@
 
             <div class="input-field">
                 @Html.Label("Group Company Name")
-                @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
             </div>
 
 
@@ -47,7 +47,7 @@
 
 
                 @Html.Label("Group Company Description", new { @class = "floating-label" })
-                @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input", @rows = 12 })
+                @Html.TextAreaFor(m => m.CompanyDescription, new { @class = "inputMaterial ui - autocomplete - input", @rows = 12, @readonly = "readonly" })
             </div>
             <div class="clearfix"></div>
 
