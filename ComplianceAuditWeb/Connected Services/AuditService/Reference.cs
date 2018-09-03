@@ -64,16 +64,22 @@ namespace ComplianceAuditWeb.AuditService {
         System.Threading.Tasks.Task<string> getAllCompanyBrnachAssignedtoAuditorAsync(int AuditorID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getComplianceXref", ReplyAction="http://tempuri.org/IAuditService/getComplianceXrefResponse")]
-        string getComplianceXref(int OrgID);
+        string getComplianceXref(int OrgID, int VendorID, int compliancetypeid, int complianceparentid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getComplianceXref", ReplyAction="http://tempuri.org/IAuditService/getComplianceXrefResponse")]
-        System.Threading.Tasks.Task<string> getComplianceXrefAsync(int OrgID);
+        System.Threading.Tasks.Task<string> getComplianceXrefAsync(int OrgID, int VendorID, int compliancetypeid, int complianceparentid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getSpecificBranchList", ReplyAction="http://tempuri.org/IAuditService/getSpecificBranchListResponse")]
         string getSpecificBranchList(int CompID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getSpecificBranchList", ReplyAction="http://tempuri.org/IAuditService/getSpecificBranchListResponse")]
         System.Threading.Tasks.Task<string> getSpecificBranchListAsync(int CompID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getComplianceActList", ReplyAction="http://tempuri.org/IAuditService/getComplianceActListResponse")]
+        string getComplianceActList(int OrgID, int VendorID, int compliancetypeid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getComplianceActList", ReplyAction="http://tempuri.org/IAuditService/getComplianceActListResponse")]
+        System.Threading.Tasks.Task<string> getComplianceActListAsync(int OrgID, int VendorID, int compliancetypeid);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -167,12 +173,12 @@ namespace ComplianceAuditWeb.AuditService {
             return base.Channel.getAllCompanyBrnachAssignedtoAuditorAsync(AuditorID);
         }
         
-        public string getComplianceXref(int OrgID) {
-            return base.Channel.getComplianceXref(OrgID);
+        public string getComplianceXref(int OrgID, int VendorID, int compliancetypeid, int complianceparentid) {
+            return base.Channel.getComplianceXref(OrgID, VendorID, compliancetypeid, complianceparentid);
         }
         
-        public System.Threading.Tasks.Task<string> getComplianceXrefAsync(int OrgID) {
-            return base.Channel.getComplianceXrefAsync(OrgID);
+        public System.Threading.Tasks.Task<string> getComplianceXrefAsync(int OrgID, int VendorID, int compliancetypeid, int complianceparentid) {
+            return base.Channel.getComplianceXrefAsync(OrgID, VendorID, compliancetypeid, complianceparentid);
         }
         
         public string getSpecificBranchList(int CompID) {
@@ -181,6 +187,14 @@ namespace ComplianceAuditWeb.AuditService {
         
         public System.Threading.Tasks.Task<string> getSpecificBranchListAsync(int CompID) {
             return base.Channel.getSpecificBranchListAsync(CompID);
+        }
+        
+        public string getComplianceActList(int OrgID, int VendorID, int compliancetypeid) {
+            return base.Channel.getComplianceActList(OrgID, VendorID, compliancetypeid);
+        }
+        
+        public System.Threading.Tasks.Task<string> getComplianceActListAsync(int OrgID, int VendorID, int compliancetypeid) {
+            return base.Channel.getComplianceActListAsync(OrgID, VendorID, compliancetypeid);
         }
     }
 }

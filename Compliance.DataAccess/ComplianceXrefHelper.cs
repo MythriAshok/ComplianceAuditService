@@ -204,7 +204,7 @@ namespace Compliance.DataAccess
             return dtComplianceXref;
         }
 
-        public bool deleteComlianceXref(int Org_Hier_ID)
+        public bool deleteComlianceXref(int Org_Hier_ID,int Vendor_Id)
         {
             bool resultComplianceXref = false;
             try
@@ -213,6 +213,7 @@ namespace Compliance.DataAccess
                 MySqlCommand cmd = new MySqlCommand("sp_DeleteComplianceBranchMapping", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID", Org_Hier_ID);
+                cmd.Parameters.AddWithValue("p_Vendor_ID", Vendor_Id);
                 int resultCount = cmd.ExecuteNonQuery();
                 if (resultCount > 0)
                 {
@@ -252,7 +253,7 @@ namespace Compliance.DataAccess
             return Auditorid;
         }
 
-        public bool insertActAndRuleforBranch(int orgid,int ruleid,int userid,int vendorid,int year,DateTime startdate,DateTime enddate)
+        public bool insertActAndRuleforBranch(int orgid,int ruleid,int userid,int vendorid,int compliancetypeid)
         {
             bool res = false;
             try
@@ -260,14 +261,12 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_insertupdateComplianceBranchMapping", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", ruleid);
+                cmd.Parameters.AddWithValue("p_Compliance_ID", ruleid);
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID", orgid);
-                cmd.Parameters.AddWithValue("p_Financial_Year",year);
                 cmd.Parameters.AddWithValue("p_UpdatedByLogin_ID", userid);
                 cmd.Parameters.AddWithValue("p_Is_Active", 1);
                 cmd.Parameters.AddWithValue("p_Vendor_Id", vendorid);
-                cmd.Parameters.AddWithValue("p_Auditing_start_date", startdate);
-                cmd.Parameters.AddWithValue("p_Auditing_end_date", enddate);
+                cmd.Parameters.AddWithValue("p_Compliancetypeid", compliancetypeid);
                 int count=cmd.ExecuteNonQuery();
                 if(count>0)
                 {
@@ -332,7 +331,7 @@ namespace Compliance.DataAccess
             }
             return ds;
         }
-        public DataSet GetComplianceType()
+        public DataSet GetComplianceType(int compliancetypeid)
         {
              DataSet ds=new DataSet();
             try
@@ -340,6 +339,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getComplianceType", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_compliance_type_ID", compliancetypeid);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(ds);
             }
@@ -368,6 +368,7 @@ namespace Compliance.DataAccess
                 res=Convert.ToBoolean(cmd.ExecuteNonQuery());
                 if (flag == "Act")
                 {
+                    conn.Close();
                     insertrulecompliancetypemapping(xrefid, compliancetypeid);
                 }
             }
@@ -399,7 +400,7 @@ namespace Compliance.DataAccess
             }
             finally
             {
-                conn.Close();
+                
             }
             return ;
         }

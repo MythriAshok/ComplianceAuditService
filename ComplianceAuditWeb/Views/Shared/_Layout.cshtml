@@ -48,10 +48,10 @@
                                     {
                                         <button id="GroupCompany" class="btn primary-button">Select Group Company</button>
                                     }
-                                        <div class="modal fade" id="bootstrapDialog" tabindex="-1" role="dialog" aria-labelledby="myModal-label" aria-hidden="true"
-                                             data-url='@Url.Action("SelectGroupCompany","Common")'>
-                                        </div>
-                                    }
+                                    <div class="modal fade" id="bootstrapDialog" tabindex="-1" role="dialog" aria-labelledby="myModal-label" aria-hidden="true"
+                                         data-url='@Url.Action("SelectGroupCompany","Common")'>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -139,7 +139,9 @@
     @Scripts.Render("~/bundles/bootstrap")
 
     @*@Scripts.Render("~/Scripts/jquery.validate.min.js")
-    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")*@
+      @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+      <script src="~/Scripts/jquery.validate.min.js"></script>
+      <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
     @RenderSection("scripts", required: false)
 </body>
 </html>

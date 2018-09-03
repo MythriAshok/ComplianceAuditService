@@ -1,0 +1,114 @@
+﻿@model ComplianceAuditWeb.Models.AuditorpageViewModel
+
+@{
+    ViewBag.Title = "Auditor Page";
+}
+<ul class="breadcrumb ML15">
+    <li><a href="/Common/dashboard?pid=14">Compliance Management</a></li>
+    <li>SME Dashboard</li>
+</ul>
+<h2 class="ML15">SME Dashboard</h2>
+@section scripts{
+    <script language="javascript" type="text/javascript">
+        function GetBranch(_CompanyId) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#branchid").html(procemessage).show();
+            var url = "/Common/getspecificbranchdropdown";
+
+            $.ajax({
+                url: url,
+                data: { compid: _CompanyId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>-- Select Branch --</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#branchid").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+
+        }
+    </script>
+}
+@using (Html.BeginForm())
+{
+    <div class="mid_content_sec">
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*@if (TempData["Message"] != null)
+        {
+            <p class="alert alert-warning">@TempData["Message"]</p>
+            <p style="color:red">@TempData["Message"]</p>
+        }*@
+
+        <div class="col-xs-6 subSelect ">
+            <div class="input-field">
+                @Html.Label("Company", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(model => model.companyid, Model.companyList, new { @onchange = "javascript:GetBranch(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.companyList, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-xs-6 subSelect ">
+            <div class="input-field">
+                @Html.Label("Branch", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(model => model.branchid, Model.BranchList, new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.branchid, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-xs-12 subSelect ">
+            @if (Model.VendorList != null)
+            {
+                <div class="new_section_box">
+                    <div class="tab-content">
+                        <div id="home" class="tab-pane fade in active">
+
+                            @foreach (var item in Model.BranchList)
+                            {
+                                if (Convert.ToInt32(item.Value) == Model.branchid)
+                                {
+                                    
+                            <div class="col-sm-3 QueList">
+                                <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h4>
+                                <div class="queContainer">
+                                    <a href="@Url.Action("AssignRules", "ManageCompliance", new { branchid = Model.branchid, vendorid = item.Value, vendorname = item.Text })">
+                                        <span class="qIcon"><img src="~/UploadedFiles/noimage.png" alt="" style="height:60px;width:75px"></span>
+                                        <h3 class="PB25"> @Html.DisplayFor(modelitem => item.Text)</h3>
+                                    </a>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                                }
+                            }
+
+                            <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Vendors:</h4>
+                            @if (TempData["Message"] != null)
+                            {
+                                <p id=" successMessage">  @TempData["Message"] </p>
+                            }
+                            @foreach (var item in Model.VendorList)
+                            {
+                                <div class="col-sm-3 QueList">
+                                    <div class="queContainer">
+                                        <a href="@Url.Action("Listofvendors", "ComplianceManagement", new { branchid=Model.branchid,vendorid = item.Company_Id,vendorname=item.Company_Name })">
+                                            <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
+                                            <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
+                                        </a>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            }
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

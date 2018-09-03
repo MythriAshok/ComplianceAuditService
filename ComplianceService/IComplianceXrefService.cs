@@ -35,9 +35,9 @@ namespace ComplianceService
         [OperationContract]
         string getRuleforBranch(int branchid,int vendorid);
         [OperationContract]
-        bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid,int vendorid);
+        bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid,int vendorid,int compliancetypeid);
         [OperationContract]
-        bool DeleteRuleforBranch(int orgid);
+        bool DeleteRuleforBranch(int orgid,int vendorid);
         [OperationContract]
         string GetComplaince(int Audit_Type_ID);
         [OperationContract]
@@ -45,7 +45,7 @@ namespace ComplianceService
         [OperationContract]
         string GetSpecificComplaince(int complianceId);
         [OperationContract]
-        string GetComplainceType();
+        string GetComplainceType(int compliancetypeid);
 
         [OperationContract]
         bool insertxreftypemapping(int[] xrefid, int compliancetypeid);

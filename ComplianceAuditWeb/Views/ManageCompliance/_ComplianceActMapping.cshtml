@@ -36,7 +36,6 @@
         });
         $(function () {
             var _acttyid = $('#compliancetypeid').val();
-            alert(_acttyid);
             $('#actjstree').jstree({
                 'plugins': ["checkbox"],
                 'core': {
@@ -52,7 +51,6 @@
         function LoadJSTree() {
             $('#actjstree').jstree('destroy');
             var _acttyid = $('#compliancetypeid').val();
-            alert(_acttyid);
             //var _acttype = $('#ActTypeID').val();
             $('#actjstree').jstree({
                 'plugins': ["checkbox"],
@@ -101,6 +99,7 @@
         <ul class="list-inline continueBtn">
             <li>
                 <input type="hidden" name="selectedItems" id="selectedItems" />
+                @Html.HiddenFor(model=>model.compliancetypeid)
                 <input type="submit" value="Apply" class="btn primary-button" />
                 <input type="reset" value="Reset" class="btn primary-button" />
                 <a href="@Url.Action("ListofCompliance","ComplianceManagement")" class="btn primary-button">Cancel</a>

@@ -209,7 +209,7 @@ namespace ComplianceAuditWeb.Controllers
         {
             complianceActmappingViewModel model = new complianceActmappingViewModel();
             ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
-            string xmldata = client.GetComplainceType();
+            string xmldata = client.GetComplainceType(0);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             model.ComplianceType = new List<SelectListItem>();
@@ -268,23 +268,314 @@ namespace ComplianceAuditWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult ComplianceActMapping(string selectedItems)
+        public ActionResult ComplianceActMapping(string selectedItems,int compliancetypeid)
         {
             if (selectedItems != string.Empty)
             {
                 List<treenode> ruleslist = (new JavaScriptSerializer()).Deserialize<List<treenode>>(selectedItems);
                 int[] rules = new int[ruleslist.Count];
                 int i = 0;
-                int compliancetyid = Convert.ToInt32(Session["compliancetypeid"]);
+                //int compliancetyid = Convert.ToInt32(Session["compliancetypeid"]);
                 foreach (var item in ruleslist)
                 {
                     rules[i++] = Convert.ToInt32(item.id);
                 }
                 ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
-                client.deletexreftypemapping(compliancetyid);
-                client.insertxreftypemapping(rules, compliancetyid);
+                client.deletexreftypemapping(compliancetypeid);
+                client.insertxreftypemapping(rules, compliancetypeid);
             }
             return RedirectToAction("ComplianceActMapping");
         }
+
+        [HttpGet]
+        public ActionResult selectbranch()
+        {
+            AuditorpageViewModel model = new AuditorpageViewModel();
+            model.companyList = new List<SelectListItem>();
+            model.BranchList = new List<SelectListItem>();
+            model.VendorList = new List<Organization>();
+
+            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
+            int groupid = Convert.ToInt32(Session["GroupCompanyId"]);
+            string xmldata = client.getCompanyListDropDown(groupid);
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            model.companyList = new List<SelectListItem>();
+            if (ds.Tables.Count > 0)
+            {
+                model.companyid = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.companyList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                }
+            }
+            model.BranchList = new List<SelectListItem>();
+            xmldata = client.GeSpecifictBranchList(model.companyid);
+            ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            if (ds.Tables.Count > 0)
+            {
+                model.branchid = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                }
+            }
+
+            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+            xmldata = vendorServiceClient.GetAssignedVendorsforBranch(model.branchid);
+            ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.VendorList.Add(new Organization { Company_Name = Convert.ToString(row["Company_Name"]), Company_Id = Convert.ToInt32(row["Vendor_ID"]), logo = Convert.ToString(row["logo"]) });
+                }
+            }
+            else
+                TempData["Message"] = "No Vendors assigned for the selected branch.";
+
+            return View("_SelectBranch", model);
+        }
+
+        [HttpPost]
+        public ActionResult selectbranch(AuditorpageViewModel model)
+        {
+            model.companyList = new List<SelectListItem>();
+            model.BranchList = new List<SelectListItem>();
+            model.VendorList = new List<Organization>();
+
+            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
+            int groupid = Convert.ToInt32(Session["GroupCompanyId"]);
+            string xmldata = client.getCompanyListDropDown(groupid);
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            model.companyList = new List<SelectListItem>();
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.companyList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                }
+            }
+            model.BranchList = new List<SelectListItem>();
+            xmldata = client.GeSpecifictBranchList(model.companyid);
+            ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                }
+            }
+
+            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+            xmldata = vendorServiceClient.GetAssignedVendorsforBranch(model.branchid);
+            ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.VendorList.Add(new Organization { Company_Name = Convert.ToString(row["Company_Name"]), Company_Id = Convert.ToInt32(row["Vendor_ID"]), logo = Convert.ToString(row["logo"]) });
+                }
+            }
+            else
+                TempData["Message"] = "No Vendors assigned for the selected branch.";
+
+            return View("_SelectBranch", model);
+        }
+
+        [HttpGet]
+        public ActionResult AssignRules(string branchid, string vendorid, string vendorname)
+        {
+            AllocateActandRuleViewModel model = new AllocateActandRuleViewModel();
+            model.ActType = new List<SelectListItem>();
+            model.ActType.Add(new SelectListItem { Text = "Union and State Level", Value = "0" });
+            model.ActType.Add(new SelectListItem { Text = "Union Level", Value = "1" });
+            model.ActType.Add(new SelectListItem { Text = "State Level", Value = "2" });
+
+
+            model.AuditType = new List<SelectListItem>();
+            model.AuditType.Add(new SelectListItem { Text = "Labour Compliance", Value = "1" });
+            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
+            string xmldata = client.GetAssignedComplianceTypes(Convert.ToInt32(vendorid));
+            DataSet ds = new DataSet();
+            DataSet dscompliancetype = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            int[] compliancetypeid = new int[ds.Tables[0].Rows.Count];
+            int i = 0;
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    compliancetypeid[i++] = Convert.ToInt32(row["Compliance_Type_ID"]);
+                }
+            }
+            model.AuditType = new List<SelectListItem>();
+            ComplianceXrefService.ComplianceXrefServiceClient serviceClient = new ComplianceXrefService.ComplianceXrefServiceClient();
+            for (i = 0; i < compliancetypeid.Length; i++)
+            {
+                xmldata = serviceClient.GetComplainceType(compliancetypeid[i]);
+                ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+                if (ds.Tables.Count > 0)
+                {
+                    model.AuditTypeID = Convert.ToInt32(ds.Tables[0].Rows[0]["Compliance_Type_ID"]);
+                    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                    {
+                        model.AuditType.Add(new SelectListItem { Text = Convert.ToString(row["Compliance_Type_Name"]), Value = Convert.ToString(row["Compliance_Type_ID"]) });
+                    }
+                }
+            }           
+
+            model.BranchId = Convert.ToInt32(branchid);
+            model.Name = vendorname;
+            Session["Branch_Id"] = branchid;
+            Session["BranchName"] = vendorname;
+            Session["VendorId"] = vendorid;
+            return View("_AssignRules", model);
+        }
+
+        public JsonResult GetJsTree3Data(string audittypeid, string acttype)
+        {
+            int auditid = Convert.ToInt32(audittypeid);
+
+            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
+            string xmldata = client.getorglocation(Convert.ToInt32(Session["Branch_Id"]));
+            DataSet loc = new DataSet();
+            loc.ReadXml(new StringReader(xmldata));
+            int countryid = Convert.ToInt32(loc.Tables[0].Rows[0]["Country_ID"]);
+            int stateid = 0;
+            int cityid = 0;
+            int flag = Convert.ToInt32(acttype);
+            if (acttype == "1")
+            {
+                countryid = Convert.ToInt32(loc.Tables[0].Rows[0]["Country_ID"]);
+                stateid = 0;
+                cityid = 0;
+            }
+            else if (acttype == "2")
+            {
+                stateid = Convert.ToInt32(loc.Tables[0].Rows[0]["State_ID"]);
+                cityid = 0;
+            }
+            else
+            {
+                cityid = Convert.ToInt32(loc.Tables[0].Rows[0]["City_ID"]);
+            }
+
+            var root = new treenode() //Create our root node and ensure it is opened
+            {
+                id = Guid.NewGuid().ToString(),
+                text = "Select All",
+                state = new Models.State(true, false, false)
+            };
+            int orgid = Convert.ToInt32(Session["Branch_Id"]);
+            int vendorid = Convert.ToInt32(Session["VendorId"]);
+            //Create a basic structure of nodes
+            var children = new List<treenode>();
+            ComplianceXrefService.ComplianceXrefServiceClient xrefclient = new ComplianceXrefService.ComplianceXrefServiceClient();
+
+            xmldata = xrefclient.GetcomplianceonType(auditid, countryid, stateid, cityid, flag);
+            DataSet dscomp = new DataSet();
+            dscomp.ReadXml(new StringReader(xmldata));
+            DataTable ds = new DataTable();
+            DataTable dsection = new DataTable();
+            DataTable dsrules = new DataTable();
+
+            if (dscomp.Tables.Count > 0)
+            {
+                DataView dv = new DataView(dscomp.Tables[0]);
+                dv.RowFilter = "level=1";
+                ds = dv.ToTable();
+
+                dv.Table = dscomp.Tables[0];
+                dv.RowFilter = "level=2";
+                dsrules = dv.ToTable();              
+            }
+            else
+                TempData["Error"] = "No Rules for the state level";
+            xmldata = xrefclient.getRuleforBranch(orgid, vendorid);
+            DataSet dsassigenedrule = new DataSet();
+            dsassigenedrule.ReadXml(new StringReader(xmldata));
+
+            treenode act = new treenode();
+            if (ds.Rows.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Rows)
+                {
+                    //bool isrule = false;
+                    act = new treenode { id = row["Compliance_Xref_ID"].ToString(), text = row["Compliance_Title"].ToString(), icon = "fa fa-legal", state = new Models.State(true, false, false), categorytype = "Act", children = new List<treenode>() };
+                   
+                                if (dsrules.Rows.Count > 0)
+                                {
+                                    foreach (System.Data.DataRow rules in dsrules.Rows)
+                                    {
+                                        if (row["Compliance_Xref_ID"].ToString() == rules["Compliance_Parent_ID"].ToString())
+                                        {
+                                           // isrule = true;
+                                            var rule = new treenode { id = rules["Compliance_Xref_ID"].ToString(), text = rules["Compliance_Title"].ToString(), icon = "fa fa-leanpub", state = new Models.State(false, false, false), categorytype = "Rule", children = new List<treenode>() };
+                                            if (dsassigenedrule.Tables.Count > 0)
+                                            {
+                                                foreach (System.Data.DataRow assignrules in dsassigenedrule.Tables[0].Rows)
+                                                {
+                                                    if (assignrules["Compliance_Xref_ID"].ToString() == rules["Compliance_Xref_ID"].ToString())
+                                                    {
+                                                        rule.state = new Models.State(false, false, true);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                act.children.Add(rule);
+                            }
+
+                                    }
+                                }
+
+                    children.Add(act);
+
+                }
+                        
+                    }
+                    
+                       
+                    
+                
+            
+            // Add the sturcture to the root nodes children property
+            root.children = children;
+
+            // Return the object as JSON
+            return Json(root, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult AssignRules(string selectedItems,int AuditTypeID)
+        {
+            if (selectedItems != string.Empty)
+            {
+                List<treenode> ruleslist = (new JavaScriptSerializer()).Deserialize<List<treenode>>(selectedItems);
+                int[] rules = new int[ruleslist.Count];
+                int i = 0;
+                int userid = Convert.ToInt32(Session["UserId"]);
+                int orgid = Convert.ToInt32(Session["Branch_Id"]);
+                int vendorid = Convert.ToInt32(Session["VendorId"]);
+                foreach (var item in ruleslist)
+                {
+                    rules[i++] = Convert.ToInt32(item.id);
+                }
+                ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
+                client.DeleteRuleforBranch(orgid,vendorid);
+                client.inseretActandRuleforBranch(orgid, rules, userid, vendorid,AuditTypeID);
+                TempData["Message"] = "Successfully assigned " + ruleslist.Count + "Rules to" + Session["BranchName"];
+                return RedirectToAction("AssignRules", new { Branchid = Convert.ToString(Session["Branch_Id"]), Vendorid = Convert.ToInt32(Session["VendorId"]), Branchname = Convert.ToString(Session["BranchName"]) });
+            }
+            else
+                TempData["Error"] = "Please select atleast one rule";
+            return RedirectToAction("AssignRules", new { Branchid = Convert.ToString(Session["Branch_Id"]), Vendorid = Convert.ToInt32(Session["VendorId"]), Branchname = Convert.ToString(Session["BranchName"]) });
+        }
+
     }
 }

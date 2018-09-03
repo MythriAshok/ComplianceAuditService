@@ -43,10 +43,13 @@ namespace ComplianceService
         string getAllCompanyBrnachAssignedtoAuditor(int AuditorID);
         [OperationContract]
 
-       string getComplianceXref(int OrgID);
+        string getComplianceXref(int OrgID, int VendorID, int compliancetypeid, int complianceparentid);
+        [OperationContract]
+        string getSpecificBranchList(int CompID);
+
         [OperationContract]
 
-        string getSpecificBranchList(int CompID);
+        string getComplianceActList(int OrgID, int VendorID, int compliancetypeid);
 
     }
 }

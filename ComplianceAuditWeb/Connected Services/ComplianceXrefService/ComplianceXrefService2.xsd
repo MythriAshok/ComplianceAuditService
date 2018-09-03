@@ -150,6 +150,7 @@
         <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ruleid" nillable="true" type="q5:ArrayOfint" />
         <xs:element minOccurs="0" name="userid" type="xs:int" />
         <xs:element minOccurs="0" name="vendorid" type="xs:int" />
+        <xs:element minOccurs="0" name="compliancetypeid" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -164,6 +165,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="orgid" type="xs:int" />
+        <xs:element minOccurs="0" name="vendorid" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -222,7 +224,9 @@
   </xs:element>
   <xs:element name="GetComplainceType">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="compliancetypeid" type="xs:int" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetComplainceTypeResponse">

@@ -150,21 +150,34 @@ namespace ComplianceService
 
 
 
-        public string getComplianceXref(int OrgID)
+        public string getComplianceXref(int OrgID,int VendorID,int compliancetypeid, int complianceparentid)
         {
-            return bindComplianceXref(OrgID);
+            return bindComplianceXref(OrgID, VendorID,compliancetypeid,complianceparentid);
         }
 
-        private string bindComplianceXref(int OrgID)
+        private string bindComplianceXref(int OrgID,int VendorID,int compliancetypeid,int complianceparentid)
         {
             ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
-            DataSet dsCompliance = complianceAuditHelper.getComlianceXrefDataForSeletedBranch(OrgID);
+            DataSet dsCompliance = complianceAuditHelper.getComlianceXrefDataForSeletedBranch(OrgID, VendorID,compliancetypeid,complianceparentid);
            // UtilityHelper utilityHelper = new UtilityHelper();
            //dsCompliance = utilityHelper.ConvertNullsToEmptyString(dsCompliance);
             string strxmlCompliance = dsCompliance.GetXml();
             return strxmlCompliance;
         }
-       
+
+        public string getComplianceActList(int OrgID, int VendorID, int compliancetypeid)
+        {
+           return bindgetComplianceActList(OrgID, VendorID, compliancetypeid);
+        }
+
+        public string bindgetComplianceActList(int OrgID, int VendorID, int compliancetypeid)
+        {
+            ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
+            DataSet dsCompliance = complianceAuditHelper.getComlianceActList(OrgID, VendorID, compliancetypeid);
+            string strxmlCompliance = dsCompliance.GetXml();
+            return strxmlCompliance;
+
+        }
 
     }
 }

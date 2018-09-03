@@ -76,16 +76,16 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         System.Threading.Tasks.Task<string> getRuleforBranchAsync(int branchid, int vendorid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranchResponse")]
-        bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid, int vendorid);
+        bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid, int vendorid, int compliancetypeid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/inseretActandRuleforBranchResponse")]
-        System.Threading.Tasks.Task<bool> inseretActandRuleforBranchAsync(int orgid, int[] ruleid, int userid, int vendorid);
+        System.Threading.Tasks.Task<bool> inseretActandRuleforBranchAsync(int orgid, int[] ruleid, int userid, int vendorid, int compliancetypeid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/DeleteRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/DeleteRuleforBranchResponse")]
-        bool DeleteRuleforBranch(int orgid);
+        bool DeleteRuleforBranch(int orgid, int vendorid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/DeleteRuleforBranch", ReplyAction="http://tempuri.org/IComplianceXrefService/DeleteRuleforBranchResponse")]
-        System.Threading.Tasks.Task<bool> DeleteRuleforBranchAsync(int orgid);
+        System.Threading.Tasks.Task<bool> DeleteRuleforBranchAsync(int orgid, int vendorid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetComplaince", ReplyAction="http://tempuri.org/IComplianceXrefService/GetComplainceResponse")]
         string GetComplaince(int Audit_Type_ID);
@@ -106,10 +106,10 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         System.Threading.Tasks.Task<string> GetSpecificComplainceAsync(int complianceId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetComplainceType", ReplyAction="http://tempuri.org/IComplianceXrefService/GetComplainceTypeResponse")]
-        string GetComplainceType();
+        string GetComplainceType(int compliancetypeid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetComplainceType", ReplyAction="http://tempuri.org/IComplianceXrefService/GetComplainceTypeResponse")]
-        System.Threading.Tasks.Task<string> GetComplainceTypeAsync();
+        System.Threading.Tasks.Task<string> GetComplainceTypeAsync(int compliancetypeid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/insertxreftypemapping", ReplyAction="http://tempuri.org/IComplianceXrefService/insertxreftypemappingResponse")]
         bool insertxreftypemapping(int[] xrefid, int compliancetypeid);
@@ -237,20 +237,20 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
             return base.Channel.getRuleforBranchAsync(branchid, vendorid);
         }
         
-        public bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid, int vendorid) {
-            return base.Channel.inseretActandRuleforBranch(orgid, ruleid, userid, vendorid);
+        public bool inseretActandRuleforBranch(int orgid, int[] ruleid, int userid, int vendorid, int compliancetypeid) {
+            return base.Channel.inseretActandRuleforBranch(orgid, ruleid, userid, vendorid, compliancetypeid);
         }
         
-        public System.Threading.Tasks.Task<bool> inseretActandRuleforBranchAsync(int orgid, int[] ruleid, int userid, int vendorid) {
-            return base.Channel.inseretActandRuleforBranchAsync(orgid, ruleid, userid, vendorid);
+        public System.Threading.Tasks.Task<bool> inseretActandRuleforBranchAsync(int orgid, int[] ruleid, int userid, int vendorid, int compliancetypeid) {
+            return base.Channel.inseretActandRuleforBranchAsync(orgid, ruleid, userid, vendorid, compliancetypeid);
         }
         
-        public bool DeleteRuleforBranch(int orgid) {
-            return base.Channel.DeleteRuleforBranch(orgid);
+        public bool DeleteRuleforBranch(int orgid, int vendorid) {
+            return base.Channel.DeleteRuleforBranch(orgid, vendorid);
         }
         
-        public System.Threading.Tasks.Task<bool> DeleteRuleforBranchAsync(int orgid) {
-            return base.Channel.DeleteRuleforBranchAsync(orgid);
+        public System.Threading.Tasks.Task<bool> DeleteRuleforBranchAsync(int orgid, int vendorid) {
+            return base.Channel.DeleteRuleforBranchAsync(orgid, vendorid);
         }
         
         public string GetComplaince(int Audit_Type_ID) {
@@ -277,12 +277,12 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
             return base.Channel.GetSpecificComplainceAsync(complianceId);
         }
         
-        public string GetComplainceType() {
-            return base.Channel.GetComplainceType();
+        public string GetComplainceType(int compliancetypeid) {
+            return base.Channel.GetComplainceType(compliancetypeid);
         }
         
-        public System.Threading.Tasks.Task<string> GetComplainceTypeAsync() {
-            return base.Channel.GetComplainceTypeAsync();
+        public System.Threading.Tasks.Task<string> GetComplainceTypeAsync(int compliancetypeid) {
+            return base.Channel.GetComplainceTypeAsync(compliancetypeid);
         }
         
         public bool insertxreftypemapping(int[] xrefid, int compliancetypeid) {

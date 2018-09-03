@@ -33,10 +33,10 @@ namespace ComplianceAuditWeb.Controllers
             string xmldata = client.getCompanyListDropDown(groupid);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
-            model.companyList = new List<SelectListItem>() { new SelectListItem { Text = "--Select Company--", Value = "0" } };
+            model.companyList = new List<SelectListItem>();
             if (ds.Tables.Count > 0)
             {
-                model.companyid= Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
+                model.companyid = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
                 foreach (System.Data.DataRow row in ds.Tables[0].Rows)
                 {
                     model.companyList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
@@ -50,7 +50,7 @@ namespace ComplianceAuditWeb.Controllers
             {
                 model.branchid = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
                 foreach (System.Data.DataRow row in ds.Tables[0].Rows)
-                {                   
+                {
                     model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
                 }
             }
@@ -69,8 +69,151 @@ namespace ComplianceAuditWeb.Controllers
             else
                 TempData["Message"] = "No Vendors assigned for the selected branch.";
 
-            return View();
+            return View("_SelectBranch", model);
         }
 
+        [HttpPost]
+        public ActionResult selectbranch(AuditorpageViewModel model)
+        {
+            model.companyList = new List<SelectListItem>();
+            model.BranchList = new List<SelectListItem>();
+            model.VendorList = new List<Organization>();
+
+            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
+            int groupid = Convert.ToInt32(Session["GroupCompanyId"]);
+            string xmldata = client.getCompanyListDropDown(groupid);
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            model.companyList = new List<SelectListItem>();
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.companyList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                }
+            }
+            model.BranchList = new List<SelectListItem>();
+            xmldata = client.GeSpecifictBranchList(model.companyid);
+            ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                }
+            }
+
+            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+            xmldata = vendorServiceClient.GetAssignedVendorsforBranch(model.branchid);
+            ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.VendorList.Add(new Organization { Company_Name = Convert.ToString(row["Company_Name"]), Company_Id = Convert.ToInt32(row["Vendor_ID"]), logo = Convert.ToString(row["logo"]) });
+                }
+            }
+            else
+                TempData["Message"] = "No Vendors assigned for the selected branch.";
+
+            return View("_SelectBranch", model);
+        }
+
+        public ActionResult selectauditfrequency(int branchid, int vendorid, string vendorname)
+        {
+            Compliancetype_view_model model = new Compliancetype_view_model();
+            model.compliance_Types = new List<compliance_type>();
+            model.branchid = branchid;
+            model.vendorid = vendorid;
+            model.vendorname = vendorname;
+            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
+            string xmldata = client.GetAssignedComplianceTypes(vendorid);
+            DataSet ds = new DataSet();
+            DataSet dscompliancetype = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            int[] compliancetypeid = new int[ds.Tables[0].Rows.Count];
+            int i = 0;
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    compliancetypeid[i++] = Convert.ToInt32(row["Compliance_Type_ID"]);
+                }
+            }
+
+            ComplianceXrefService.ComplianceXrefServiceClient serviceClient = new ComplianceXrefService.ComplianceXrefServiceClient();
+            for (i = 0; i < compliancetypeid.Length; i++)
+            {
+                xmldata = serviceClient.GetComplainceType(compliancetypeid[i]);
+                ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+                if (ds.Tables.Count > 0)
+                {
+                    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                    {
+                        model.compliance_Types.Add(new compliance_type
+                        {
+                            complianceid = Convert.ToInt32(row["Compliance_Type_ID"]),
+                            auditfrequency = Convert.ToString(row["Audit_Frequency"]),
+                            Name = Convert.ToString(row["Compliance_Type_Name"]),
+                            startdate = Convert.ToDateTime(row["Start_Date"]),
+                            enddate = Convert.ToDateTime(row["End_Date"])
+                        });
+                    }
+                }
+            }
+            
+            return View("_SelectFrequency", model);
+        }
+
+        public ActionResult Auditentry(int compliancetypeid,int branchid, int vendorid)
+        {
+            AuditentryViewModel model = new AuditentryViewModel();
+            model.ActList = new List<SelectListItem>();
+            AuditService.AuditServiceClient client = new AuditService.AuditServiceClient();
+            
+            Session["ComplianceID"] = compliancetypeid;
+            Session["BranchID"] = branchid;
+            Session["Vendorid"] = vendorid;
+            return View("_auuditentry");
+        }
+
+        public JsonResult GetAuditData(string sidx, string sord, int page, int rows,int actid)
+        {
+            int pageIndex = Convert.ToInt32(page) - 1;
+            int pageSize = rows;
+
+            AuditService.AuditServiceClient client = new AuditService.AuditServiceClient();
+            var Results = client.getComplianceXref(Convert.ToInt32(Session["BranchID"]), Convert.ToInt32(Session["Vendorid"]), Convert.ToInt32(Session["ComplianceID"]),actid);
+            int totalRecords = Results.Count();
+            var totalPages = (int)Math.Ceiling((float)totalRecords / (float)rows);
+            //if (sord.ToUpper() == "DESC")
+            //{
+            //    Results = Results.OrderByDescending(s => s.Id);
+            //    Results = Results.Skip(pageIndex * pageSize).Take(pageSize);
+            //}
+            //else
+            //{
+            //    Results = Results.OrderBy(s => s.Id);
+            //    Results = Results.Skip(pageIndex * pageSize).Take(pageSize);
+            //}
+            var jsonData = new
+            {
+                total = totalPages,
+                page,
+                records = totalRecords,
+                rows = Results
+            };
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+            
+        }
+
+        public JsonResult EditAuditdata()
+        {
+            var result = "";
+            return Json(result);
+        }
     }
 }

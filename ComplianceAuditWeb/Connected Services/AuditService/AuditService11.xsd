@@ -8,24 +8,25 @@
   <xs:element name="ArrayOfComplianceAudit" nillable="true" type="tns:ArrayOfComplianceAudit" />
   <xs:complexType name="ComplianceAudit">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Audit_ArteFacts" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Applicability" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Audit_Date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Audit_Followup_Date" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Audit_Remarks" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Audit_Status" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Auditor_Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Company_ID" type="xs:int" />
       <xs:element minOccurs="0" name="Compliance_Audit_Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Compliance_Schedule_Instance" type="xs:int" />
-      <xs:element minOccurs="0" name="Compliance_Xref_Id" type="xs:int" />
+      <xs:element minOccurs="0" name="End_Date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Evidences" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Is_Active" type="xs:boolean" />
-      <xs:element minOccurs="0" name="Last_Update_dDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Last_Updated_Date" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Org_Hier_Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Part_Compliance_Percent" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Penalty_nc" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Reviewer_Comments" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Reviewer_Id" type="xs:int" />
-      <xs:element minOccurs="0" name="User_Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Risk_Category" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Start_Date" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Vendor_Id" type="xs:int" />
       <xs:element minOccurs="0" name="Version" type="xs:int" />
+      <xs:element minOccurs="0" name="Xref_Comp_Type_Map_ID" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ComplianceAudit" nillable="true" type="tns:ComplianceAudit" />

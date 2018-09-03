@@ -113,6 +113,9 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="OrgID" type="xs:int" />
+        <xs:element minOccurs="0" name="VendorID" type="xs:int" />
+        <xs:element minOccurs="0" name="compliancetypeid" type="xs:int" />
+        <xs:element minOccurs="0" name="complianceparentid" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -134,6 +137,22 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="getSpecificBranchListResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getComplianceActList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OrgID" type="xs:int" />
+        <xs:element minOccurs="0" name="VendorID" type="xs:int" />
+        <xs:element minOccurs="0" name="compliancetypeid" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getComplianceActListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getComplianceActListResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
