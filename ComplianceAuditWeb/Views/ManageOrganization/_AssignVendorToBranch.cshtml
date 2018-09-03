@@ -173,7 +173,7 @@
         <div class="input-field">
 
             @*@Html.Label(ConfigurationManager.AppSettings["vendors"], new { @class = "floating-label" })*@
-            @Html.Label("List of available vendors")<span style="color:red">*</span>
+            @Html.Label("List of available vendors")
             @Html.ListBoxFor(m => m.VendorID, Model.VendorList, new { @class = "inputMaterialSelect ui - autocomplete - input ", placeholder = ConfigurationManager.AppSettings["Roles"] })
 
         </div>
@@ -217,7 +217,7 @@
         <div class="input-field">
 
             @*@Html.Label(ConfigurationManager.AppSettings["vendors"], new { @class = "floating-label" })*@
-            @Html.Label("Vendor End Date")<span style="color:red">*</span>
+            @Html.Label("Vendor End Date")
             @Html.EditorFor(m => m.VendorEndDate, new { @class = "inputMaterialSelect ui - autocomplete - input " })
 
 

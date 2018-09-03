@@ -749,6 +749,7 @@
     <Content Include="Views\ManageCompliance\_SelectBranch.cshtml" />
     <Content Include="Views\ManageCompliance\_AssignRules.cshtml" />
     <Content Include="Views\ManageAudit\_auuditentry.cshtml" />
+    <Content Include="Views\ManageOrganization\View1.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

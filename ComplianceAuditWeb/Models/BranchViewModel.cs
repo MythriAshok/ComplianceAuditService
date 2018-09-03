@@ -15,6 +15,7 @@ namespace ComplianceAuditWeb.Models
         public BranchLocation branch { get; set; }
         public string branchAuditingFrequency { get; set; }
        // public TypeOfBranch branchType { get; set; }
+     
         public List<SelectListItem> Country { get; set; }
         public List<SelectListItem> State { get; set; }
         public List<SelectListItem> City { get; set; }
@@ -22,6 +23,7 @@ namespace ComplianceAuditWeb.Models
         public List<SelectListItem> CompaniesList { get; set; }
         public string ChildCompanyName { get; set; }
         public List<SelectListItem> GroupCompaniesList { get; set; }
+        [Required(ErrorMessage ="Please select the company")]
         public int CompanyID { get; set; }
         public int GroupCompanyID { get; set; }
         public string GroupCompanyName { get; set; }

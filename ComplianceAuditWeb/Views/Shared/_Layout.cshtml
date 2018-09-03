@@ -138,10 +138,8 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
 
-    @*@Scripts.Render("~/Scripts/jquery.validate.min.js")
-      @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
-      <script src="~/Scripts/jquery.validate.min.js"></script>
-      <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
+    @Scripts.Render("~/Scripts/jquery.validate.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>

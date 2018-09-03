@@ -417,7 +417,7 @@ namespace ComplianceAuditWeb.Controllers
                 DataSet dsCountries = new DataSet();
                 dsCountries.ReadXml(new StringReader(strXMLCountries));
                 companyVM.Country = new List<SelectListItem>();
-                companyVM.Country.Add(new SelectListItem { Text = "-- Select Country --", Value = "0" });
+                companyVM.Country.Add(new SelectListItem { Text = "-- Select Country --", Value = "" });
                 if (dsCountries.Tables.Count > 0)
                 {
                     foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
@@ -426,15 +426,15 @@ namespace ComplianceAuditWeb.Controllers
                     }
                 }
                 companyVM.State = new List<SelectListItem>();
-                companyVM.State.Add(new SelectListItem { Text = "-- Select State --", Value = "0" });
+                companyVM.State.Add(new SelectListItem { Text = "-- Select State --", Value = "" });
                 companyVM.City = new List<SelectListItem>();
-                companyVM.City.Add(new SelectListItem { Text = "-- Select City --", Value = "0" });
+                companyVM.City.Add(new SelectListItem { Text = "-- Select City --", Value = "" });
 
                 string strXMLIndustryType = organizationservice.GetIndustryType();
                 DataSet dsIndustryType = new DataSet();
                 dsIndustryType.ReadXml(new StringReader(strXMLIndustryType));
                 companyVM.IndustryTypeList = new List<SelectListItem>();
-                companyVM.IndustryTypeList.Add(new SelectListItem { Text = "-- Industry Type --", Value = "0" });
+                companyVM.IndustryTypeList.Add(new SelectListItem { Text = "-- Industry Type --", Value = "" });
                 if (dsIndustryType.Tables.Count > 0)
                 {
                     foreach (System.Data.DataRow row in dsIndustryType.Tables[0].Rows)
@@ -471,6 +471,7 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult AddCompany(CompanyViewModel companyVM, HttpPostedFileBase file)
         {
+            int id = 0;
             try
             {
                 if (companyVM.companydetails.Calender_StartDate != DateTime.MinValue)
@@ -532,7 +533,7 @@ namespace ComplianceAuditWeb.Controllers
                     companyVM.organization.Is_Vendor = false;
                     companyVM.organization.User_Id = Convert.ToInt32(Session["UserID"]);
                     companyVM.organization.Parent_Company_Id = companyVM.GroupCompanyID;
-                    int id = organizationClient.insertCompany(companyVM.organization, companyVM.companydetails, companyVM.branch);
+                     id = organizationClient.insertCompany(companyVM.organization, companyVM.companydetails, companyVM.branch);
                     int resultID = organizationClient.insertcomplianceTypes(companyVM.ComplianceID, id);
                     if (id != 0)
                     {
@@ -553,7 +554,17 @@ namespace ComplianceAuditWeb.Controllers
                         branchViewModel.organization.Company_Name = "HeadQuarter" + companyVM.organization.Company_Name;
                         branchViewModel.organization.Type = "Head Quarter";
                         branchViewModel.branch.Postal_Code = companyVM.branch.Postal_Code;
+                        string strXMLComplianceTyp = organizationClient.GetAssignedComplianceTypes(id);
+                        DataSet dsComplianceTyp = new DataSet();
+                        dsComplianceTyp.ReadXml(new StringReader(strXMLComplianceTyp));
+                        branchViewModel.ComplianceList = new List<SelectListItem>();
+                        foreach (System.Data.DataRow row in dsComplianceTyp.Tables[0].Rows)
+                        {
+                            branchViewModel.ComplianceList.Add(new SelectListItem() { Text = row["Compliance_Type_Name"].ToString(), Value = row["Compliance_Type_ID"].ToString() });
+                        }
                         int headQuarterid = Convert.ToInt32(organizationClient.insertBranch(branchViewModel.organization, branchViewModel.branch));
+                        int resid = organizationClient.insertcomplianceTypes(companyVM.ComplianceID, headQuarterid);
+
                         return RedirectToAction("AboutCompany", new { id = id });
                     }
                     else
@@ -569,6 +580,7 @@ namespace ComplianceAuditWeb.Controllers
                 }
             }
             catch (Exception)
+
             {
                 return View("ErrorPage");
             }
@@ -1127,7 +1139,7 @@ namespace ComplianceAuditWeb.Controllers
                 DataSet dsCompanyList = new DataSet();
                 dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
                 branchVM.CompaniesList = new List<SelectListItem>();
-                branchVM.CompaniesList.Add(new SelectListItem { Text = "--Select Company--", Value = "0" });
+                branchVM.CompaniesList.Add(new SelectListItem { Text = "--Select Company--", Value = "" });
                 if (dsCompanyList.Tables.Count > 0)
                 {
                     foreach (System.Data.DataRow row in dsCompanyList.Tables[0].Rows)
@@ -1145,7 +1157,7 @@ namespace ComplianceAuditWeb.Controllers
                     branchVM.Country = new List<SelectListItem>();
                     branchVM.State = new List<SelectListItem>();
                     branchVM.City = new List<SelectListItem>();
-                    branchVM.CompaniesList.Add(new SelectListItem { Text = "--Select Country--", Value = "0" });
+                    branchVM.CompaniesList.Add(new SelectListItem { Text = "--Select Country--", Value = "" });
                     if (dsDefaultCompanyDetails.Tables.Count > 0)
                     {
                         foreach (System.Data.DataRow row in dsDefaultCompanyDetails.Tables[0].Rows)
@@ -1160,7 +1172,7 @@ namespace ComplianceAuditWeb.Controllers
                         }
                     }
                     branchVM.State = new List<SelectListItem>();
-                    branchVM.State.Add(new SelectListItem { Text = "--Select State--", Value = "0" });
+                    branchVM.State.Add(new SelectListItem { Text = "--Select State--", Value = "" });
                     string strXMLDefaultStates = organizationservice.GetStateList(branchVM.branch.Country_Id);
                     DataSet dsDefaultStates = new DataSet();
                     dsDefaultStates.ReadXml(new StringReader(strXMLDefaultStates));
@@ -1172,7 +1184,7 @@ namespace ComplianceAuditWeb.Controllers
                         }
                     }
                     branchVM.City = new List<SelectListItem>();
-                    branchVM.City.Add(new SelectListItem { Text = "--Select City--", Value = "0" });
+                    branchVM.City.Add(new SelectListItem { Text = "--Select City--", Value = "" });
                     string strXMLDefaulyCities = organizationservice.GetCityList(branchVM.branch.State_Id);
                     DataSet dsDefaultCities = new DataSet();
                     dsDefaultCities.ReadXml(new StringReader(strXMLDefaulyCities));
@@ -1220,7 +1232,7 @@ namespace ComplianceAuditWeb.Controllers
                         TempData["DefaultCompanyName"] = dsDefaultCompanyDetails.Tables[0].Rows[0]["Company_Name"].ToString();
                     }
                     branchVM.State = new List<SelectListItem>();
-                    branchVM.State.Add(new SelectListItem { Text = "--Select State--", Value = "0" });
+                    branchVM.State.Add(new SelectListItem { Text = "--Select State--", Value = "" });
                     string strXMLDefaultStates = organizationservice.GetStateList(branchVM.branch.Country_Id);
                     DataSet dsDefaultStates = new DataSet();
                     dsDefaultStates.ReadXml(new StringReader(strXMLDefaultStates));
@@ -1232,7 +1244,7 @@ namespace ComplianceAuditWeb.Controllers
                         }
                     }
                     branchVM.City = new List<SelectListItem>();
-                    branchVM.City.Add(new SelectListItem { Text = "--Select City--", Value = "0" });
+                    branchVM.City.Add(new SelectListItem { Text = "--Select City--", Value = "" });
                     string strXMLDefaulyCities = organizationservice.GetCityList(branchVM.branch.State_Id);
                     DataSet dsDefaultCities = new DataSet();
                     dsDefaultCities.ReadXml(new StringReader(strXMLDefaulyCities));
@@ -1262,7 +1274,7 @@ namespace ComplianceAuditWeb.Controllers
                 DataSet dsCountries = new DataSet();
                 dsCountries.ReadXml(new StringReader(strXMLCountries));
                 branchVM.Country = new List<SelectListItem>();
-                branchVM.Country.Add(new SelectListItem { Text = "--Select Country--", Value = "0" });
+                branchVM.Country.Add(new SelectListItem { Text = "--Select Country--", Value = "" });
                 if (dsCompanyList.Tables.Count > 0)
                 {
                     foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
@@ -1273,13 +1285,13 @@ namespace ComplianceAuditWeb.Controllers
 
 
                 branchVM.State = new List<SelectListItem>();
-                branchVM.State.Add(new SelectListItem { Text = "--Select State--", Value = "0" });
+                branchVM.State.Add(new SelectListItem { Text = "--Select State--", Value = "" });
                 string strXMLStates = organizationservice.GetStateList(branchVM.branch.Country_Id);
 
 
 
                 branchVM.City = new List<SelectListItem>();
-                branchVM.City.Add(new SelectListItem { Text = "--Select City--", Value = "0" });
+                branchVM.City.Add(new SelectListItem { Text = "--Select City--", Value = "" });
                 string strXMLCities = organizationservice.GetCityList(branchVM.branch.State_Id);
 
 
@@ -1739,18 +1751,18 @@ namespace ComplianceAuditWeb.Controllers
                 vendorVM.companydetails = new CompanyDetails();
                 vendorVM.companydetails.Company_Details_ID = 0;
                 vendorVM.organization.Parent_Company_Id = Convert.ToInt32(TempData["CompanyID"]);
-                string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
-                DataSet dsGroupCompanyList = new DataSet();
-                dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
-                vendorVM.GroupCompaniesList = new List<SelectListItem>();
-                vendorVM.GroupCompaniesList.Add(new SelectListItem { Text = "--Select Group Company--", Value = "0" });
-                if (dsGroupCompanyList.Tables.Count > 0)
-                {
-                    foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
-                    {
-                        vendorVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
-                    }
-                }
+                //string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
+                //DataSet dsGroupCompanyList = new DataSet();
+                //dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
+                //vendorVM.GroupCompaniesList = new List<SelectListItem>();
+                //vendorVM.GroupCompaniesList.Add(new SelectListItem { Text = "--Select Group Company--", Value = "0" });
+                //if (dsGroupCompanyList.Tables.Count > 0)
+                //{
+                //    foreach (System.Data.DataRow row in dsGroupCompanyList.Tables[0].Rows)
+                //    {
+                //        vendorVM.GroupCompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+                //    }
+                //}
                 string strXMLCompanyList = "";
                 if (Session["G"] == null)
                 {
@@ -1765,7 +1777,7 @@ namespace ComplianceAuditWeb.Controllers
                 DataSet dsCompanyList = new DataSet();
                 dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
                 vendorVM.CompaniesList = new List<SelectListItem>();
-                vendorVM.CompaniesList.Add(new SelectListItem { Text = "--Select Company--", Value = "0" });
+                vendorVM.CompaniesList.Add(new SelectListItem { Text = "--Select Company--", Value = "" });
                 if (dsCompanyList.Tables.Count > 0)
                 {
                     foreach (System.Data.DataRow row in dsCompanyList.Tables[0].Rows)
@@ -1797,7 +1809,7 @@ namespace ComplianceAuditWeb.Controllers
                 DataSet dsIndustryType = new DataSet();
                 dsIndustryType.ReadXml(new StringReader(strXMLIndustryType));
                 vendorVM.IndustryTypeList = new List<SelectListItem>();
-                vendorVM.IndustryTypeList.Add(new SelectListItem { Text = "-- Vendor Type --", Value = "0" });
+                vendorVM.IndustryTypeList.Add(new SelectListItem { Text = "-- Vendor Type --", Value = "" });
                 //if (vendorVM.CompanyID > 0)
                 {
                     if (dsIndustryType.Tables.Count > 0)
@@ -1933,7 +1945,8 @@ namespace ComplianceAuditWeb.Controllers
                     ViewModel.companydetails.Industry_Type_ID = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Industry_Type_ID"]);
 
                 }
-                string strXMLIndustryType = organizationClient.getDefaultIndustryType(ViewModel.CompanyID);
+                string strXMLIndustryType = organizationClient.GetIndustryType();
+                //string strXMLIndustryType = organizationClient.getDefaultIndustryType(ViewModel.CompanyID);
                 DataSet dsIndustryType = new DataSet();
                 dsIndustryType.ReadXml(new StringReader(strXMLIndustryType));
                 ViewModel.IndustryTypeList = new List<SelectListItem>();
@@ -1944,7 +1957,7 @@ namespace ComplianceAuditWeb.Controllers
                     {
                         foreach (System.Data.DataRow row in dsIndustryType.Tables[0].Rows)
                         {
-                            ViewModel.companydetails.Industry_Type_ID = Convert.ToInt32(dsIndustryType.Tables[0].Rows[0]["Industry_Type_ID"]);
+                            //ViewModel.companydetails.Industry_Type_ID = Convert.ToInt32(dsIndustryType.Tables[0].Rows[0]["Industry_Type_ID"]);
                             ViewModel.IndustryTypeList.Add(new SelectListItem() { Text = row["Industry_Name"].ToString(), Value = row["Industry_Type_ID"].ToString() });
                         }
                     }
@@ -2955,6 +2968,13 @@ namespace ComplianceAuditWeb.Controllers
         [HttpGet]
         public ActionResult AssignDessignVendors()
         {
+            int compid = 0;
+
+            //var copmpanyid = Request.QueryString["Orgid"];
+            //if (copmpanyid != null)
+            //{
+            //    compid = Convert.ToInt32(copmpanyid);
+            //}
             BranchViewModel branchVM = new BranchViewModel();
             try
             {
@@ -2963,9 +2983,18 @@ namespace ComplianceAuditWeb.Controllers
                 string strXMLGroupCompanyList = organizationservice.GetGroupCompaniesList();
                 DataSet dsGroupCompanyList = new DataSet();
                 dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
+               
                 branchVM.GroupCompaniesList = new List<SelectListItem>();
+                string strXMLCompanyList = "";
+               // if (compid == 0)
+                {
+                     strXMLCompanyList = organizationservice.getCompanyListDropDown(Convert.ToInt32(Session["GroupCompanyId"]));
+                }
+               // else
+                //{
+                    // strXMLCompanyList = organizationservice.getDefaultCompanyDetails(compid);
 
-                string strXMLCompanyList = organizationservice.getCompanyListDropDown(Convert.ToInt32(Session["GroupCompanyId"]));
+                //}
                 DataSet dsCompanyList = new DataSet();
                 dsCompanyList.ReadXml(new StringReader(strXMLCompanyList));
                 branchVM.CompaniesList = new List<SelectListItem>();
@@ -2974,11 +3003,11 @@ namespace ComplianceAuditWeb.Controllers
                 {
                     foreach (System.Data.DataRow row in dsCompanyList.Tables[0].Rows)
                     {
+                        //branchVM.CompanyID = Convert.ToInt32(dsCompanyList.Tables[0].Rows[0]["Org_Hier_ID"]);
                         branchVM.CompaniesList.Add(new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
                     }
                 }
 
-                int compid = 0;
                 string strXMLBranchList = organizationservice.getSpecificBranchListDropDown(compid);
                 DataSet dsBranchList = new DataSet();
                 dsBranchList.ReadXml(new StringReader(strXMLBranchList));
@@ -3019,100 +3048,107 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult AssignDessignVendors(BranchViewModel branchViewModel)
         {
-             branchViewModel.GroupCompanyID =Convert.ToInt32( Session["GroupCompanyID"]);
-
-            bool result = false;
-            branchViewModel.organization = new Organization();
-            branchViewModel.BranchList = new List<SelectListItem>();
-            branchViewModel.CompaniesList = new List<SelectListItem>();
-            branchViewModel.GroupCompaniesList = new List<SelectListItem>();
-            if (ModelState.IsValid)
+            try
             {
+                branchViewModel.GroupCompanyID = Convert.ToInt32(Session["GroupCompanyID"]);
                 VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
 
-                branchViewModel.IsVendorActive = true;
-                branchViewModel.AssignedList = Session["A"] as List<SelectListItem>;
-
-
-
-                foreach (var Citem in branchViewModel.assignedID)
+                bool result = false;
+                branchViewModel.organization = new Organization();
+                branchViewModel.BranchList = new List<SelectListItem>();
+                branchViewModel.CompaniesList = new List<SelectListItem>();
+                branchViewModel.GroupCompaniesList = new List<SelectListItem>();
+                if (ModelState.IsValid)
                 {
-                    if (branchViewModel.AssignedList.Count == 0 && Citem > 0)
-                    {
-                        branchViewModel.VendorsID = Citem;
-                        result = vendorServiceClient.insertVendorForBranch(branchViewModel.VendorsID, branchViewModel.BranchID,
-                           branchViewModel.VendorStartDate, Convert.ToDateTime(branchViewModel.VendorEndDate), branchViewModel.IsVendorActive);
-                        ViewBag.AMessage = "Assigned successfully";
 
-                    }
-                    else
+                    branchViewModel.IsVendorActive = true;
+                    branchViewModel.AssignedList = Session["A"] as List<SelectListItem>;
 
+
+
+                    foreach (var Citem in branchViewModel.assignedID)
                     {
-                        if (branchViewModel.AssignedList.Count != 0)
+                        if (branchViewModel.AssignedList.Count == 0 && Citem > 0)
                         {
-                            foreach (var item in branchViewModel.AssignedList)
+                            branchViewModel.VendorsID = Citem;
+                            result = vendorServiceClient.insertVendorForBranch(branchViewModel.VendorsID, branchViewModel.BranchID,
+                               branchViewModel.VendorStartDate, Convert.ToDateTime(branchViewModel.VendorEndDate), branchViewModel.IsVendorActive);
+                            ViewBag.AMessage = "Assigned successfully";
+
+                        }
+                        else
+
+                        {
+                            if (branchViewModel.AssignedList.Count != 0)
                             {
-                                if (item.Value == Citem.ToString())
+                                foreach (var item in branchViewModel.AssignedList)
                                 {
-
-                                }
-                                else if (item.Value != Citem.ToString())
-                                {
-                                    if (Citem > 0)
+                                    if (item.Value == Citem.ToString())
                                     {
-                                        branchViewModel.VendorsID = Citem;
-                                        result = vendorServiceClient.insertVendorForBranch(branchViewModel.VendorsID, branchViewModel.BranchID,
-                                           branchViewModel.VendorStartDate, Convert.ToDateTime(branchViewModel.VendorEndDate), branchViewModel.IsVendorActive);
-                                        ViewBag.AMessage = "Assigned successfully";
 
+                                    }
+                                    else if (item.Value != Citem.ToString())
+                                    {
+                                        if (Citem > 0)
+                                        {
+                                            branchViewModel.VendorsID = Citem;
+                                            result = vendorServiceClient.insertVendorForBranch(branchViewModel.VendorsID, branchViewModel.BranchID,
+                                               branchViewModel.VendorStartDate, Convert.ToDateTime(branchViewModel.VendorEndDate), branchViewModel.IsVendorActive);
+                                            ViewBag.AMessage = "Assigned successfully";
+
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
 
-                foreach (var item in branchViewModel.AssignedList)
-                {
-                    foreach (var Vitem in branchViewModel.VendorID)
+                    foreach (var item in branchViewModel.AssignedList)
                     {
-                        if (item.Value == Vitem.ToString())
+                        foreach (var Vitem in branchViewModel.VendorID)
                         {
-                            if (Vitem > 0)
+                            if (item.Value == Vitem.ToString())
                             {
-                                int[] Orgid = branchViewModel.VendorID;
-                                result = Convert.ToBoolean(vendorServiceClient.DeactivateVendorForBranch((Orgid), branchViewModel.BranchID));
-                                ViewBag.MessageDeallocated = "de-allocated successfully";
+                                if (Vitem > 0)
+                                {
+                                    int[] Orgid = branchViewModel.VendorID;
+                                    result = Convert.ToBoolean(vendorServiceClient.DeactivateVendorForBranch((Orgid), branchViewModel.BranchID));
+                                    ViewBag.MessageDeallocated = "de-allocated successfully";
+                                }
                             }
-                        }
 
+                        }
                     }
-                }
-                if (result != false)
-                {
-                    Session["GroupCompanyID"] = branchViewModel.GroupCompanyID;
-                    Session["CompanyID"] = branchViewModel.CompanyID;
-                    Session["BranchID"] = branchViewModel.BranchID;
-                    Session["VendorID"] = branchViewModel.VendorID;
-                    TempData["Assigned"] = "Assigned Successfully";
-                    TempData["BranchName"] = branchViewModel.organization.Company_Name;
-                    foreach (var item in branchViewModel.VendorID)
+                    if (result != false)
                     {
-                        TempData["VendorName"] = branchViewModel.VendorName;
+                        Session["GroupCompanyID"] = branchViewModel.GroupCompanyID;
+                        Session["CompanyID"] = branchViewModel.CompanyID;
+                        Session["BranchID"] = branchViewModel.BranchID;
+                        Session["VendorID"] = branchViewModel.VendorID;
+                        TempData["Assigned"] = "Assigned Successfully";
+                        TempData["BranchName"] = branchViewModel.organization.Company_Name;
+                        foreach (var item in branchViewModel.VendorID)
+                        {
+                            TempData["VendorName"] = branchViewModel.VendorName;
+                        }
+                        return View("View");
                     }
-                    return View("View");
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Error while assiging";
+                    }
                 }
                 else
                 {
-                    TempData["ErrorMessage"] = "Error while assiging";
+                    ModelState.AddModelError("", ConfigurationManager.AppSettings["Requried"]);
+                    branchViewModel.organization.Organization_Id = 0;
+
+                    branchViewModel = (BranchViewModel)Session["CompleteAssigningDetails"];
                 }
             }
-            else
+            catch(Exception)
             {
-                ModelState.AddModelError("", ConfigurationManager.AppSettings["Requried"]);
-                branchViewModel.organization.Organization_Id = 0;
-
-                branchViewModel = (BranchViewModel)Session["CompleteAssigningDetails"];
+                return View("ErrorPage");
             }
             return View("_AssignVendorToBranch", branchViewModel);
 
