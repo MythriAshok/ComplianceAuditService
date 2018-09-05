@@ -404,7 +404,7 @@ namespace Compliance.DataAccess
             }
             return ;
         }
-        public bool deletexreftypemapping(int compliancetypeid)
+        public bool deletexreftypemapping(int compliancetypeid,int Complianceid)
         {
             bool res = false;
             try
@@ -413,6 +413,7 @@ namespace Compliance.DataAccess
                 MySqlCommand cmd = new MySqlCommand("sp_delete_xref_comp_type_mapping", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Compliance_Type_ID", compliancetypeid);
+                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", Complianceid);
                 res = Convert.ToBoolean(cmd.ExecuteNonQuery());
             }
             catch
@@ -426,7 +427,7 @@ namespace Compliance.DataAccess
             return res;
         }
 
-        public DataSet GetxrefComplianceMapping(int compliancetypeid)
+        public DataSet GetxrefComplianceMapping(int compliancetypeid,int complianceXrefid)
         {
             DataSet ds = new DataSet();
             try
@@ -435,6 +436,31 @@ namespace Compliance.DataAccess
                 MySqlCommand cmd = new MySqlCommand("sp_get_xref_comp_type_mapping", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Compliance_Type_ID", compliancetypeid);
+                cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", complianceXrefid);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(ds);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return ds;
+        }
+
+        public DataSet Checkparentcompliancetype(int complianceparentid)
+        {
+            DataSet ds = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_checkparentcompliancetype", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Compliance_Type_ID", complianceparentid);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(ds);
             }

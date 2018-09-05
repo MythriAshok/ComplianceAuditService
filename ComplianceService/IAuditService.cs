@@ -19,7 +19,8 @@ namespace ComplianceService
 
         bool insertComplianceAudit(List<ComplianceAudit> auditdatalist);
         [OperationContract]
-
+        bool insertAuditEntries(ComplianceAudit auditdata);
+        [OperationContract]
         bool updateComplianceAudit(List<ComplianceAudit> auditdatalist);
 
         [OperationContract]

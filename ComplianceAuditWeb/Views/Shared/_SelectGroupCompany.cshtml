@@ -16,7 +16,7 @@
                     success: function (data) {
                         if (data.success) {
                             $('#bootstrapDialog').modal('hide');
-                            location.reload();
+                            location.href = location.href;                        
                         }
                         else {
                             $('#bootstrapDialog').html(data.message);

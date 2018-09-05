@@ -725,6 +725,11 @@ button.btn.primary-button {
 
 .primary-button {
     background: #FF0000 !important;
+    padding: 8px 15px;
+    color: #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+    box-shadow: none;
 }
 
 .new_section_box .tab-content .queContainer.active {

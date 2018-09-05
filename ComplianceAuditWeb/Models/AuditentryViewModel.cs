@@ -13,7 +13,17 @@ namespace ComplianceAuditWeb.Models
 
         public int actid { get; set; }
         
+        public List<Auditentry> auditentries { get; set; }
+
+        public int compliancetypeid { get; set; }
+
+    }
+
+    public class Auditentry
+    {
         public List<ComplianceAudit> audits { get; set; }
+
+        public int compliance_Xref_id { get; set; }
 
         public string Compliance_Title { get; set; }
 
@@ -22,6 +32,5 @@ namespace ComplianceAuditWeb.Models
         public string Periodicity { get; set; }
 
         public string Non_compliance { get; set; }
-
     }
 }
