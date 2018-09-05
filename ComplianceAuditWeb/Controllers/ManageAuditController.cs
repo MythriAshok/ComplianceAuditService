@@ -268,7 +268,7 @@ namespace ComplianceAuditWeb.Controllers
             AuditService.AuditServiceClient client = new AuditService.AuditServiceClient();
             
             client.insertAuditEntries(model);
-           var result = "";
+            var result = "Success";
             return Json(result);
         }
     }
