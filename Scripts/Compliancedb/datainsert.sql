@@ -1375,7 +1375,26 @@ INSERT INTO CITY VALUES 	(	1214	,	trim("	Asarganj	")	,	4	);
 INSERT INTO CITY VALUES 	(	1215	,	trim("	Sarsod	")	,	8	);
 
 
+INSERT INTO `compliancedb`.`industry_type_master` (`Industry_Type_ID`, `Industry_Name`) VALUES ('1', 'Manufacturing');
+INSERT INTO `compliancedb`.`industry_type_master` (`Industry_Type_ID`, `Industry_Name`) VALUES ('2', 'IT');
+INSERT INTO `compliancedb`.`industry_type_master` (`Industry_Type_ID`, `Industry_Name`) VALUES ('3', 'Textiles');
 
+ INSERT INTO `compliancedb`.`compliance_type` (`Compliance_Type_Name`, `Industry_Type_ID`, `Country_ID`, `Audit_Frequency`, `End_Date`, `Start_Date`)
+ VALUES ('Statutory Compliance', 1, 1, 2, ('2020-12-31'), ('2018-01-01'));
+INSERT INTO `compliancedb`.`compliance_type` (`Compliance_Type_Name`, `Industry_Type_ID`, `Country_ID`, `Audit_Frequency`, `End_Date`, `Start_Date`)
+ VALUES ('Financial Compliance', 1, 1, 4, ('2020-12-31'), ('2018-01-01'));
+INSERT INTO `compliancedb`.`compliance_type` (`Compliance_Type_Name`, `Industry_Type_ID`, `Country_ID`, `Audit_Frequency`, `End_Date`, `Start_Date`)
+ VALUES ('Labour Compliance', 2, 1, 1, ('2020-12-31'), ('2018-01-01'));
+INSERT INTO `compliancedb`.`compliance_type` (`Compliance_Type_Name`, `Industry_Type_ID`, `Country_ID`, `Audit_Frequency`, `End_Date`, `Start_Date`)
+ VALUES ('Statutory Compliance', 2, 1, 4, ('2020-12-31'), ('2018-01-01'));
+INSERT INTO `compliancedb`.`compliance_type` (`Compliance_Type_Name`, `Industry_Type_ID`, `Country_ID`, `Audit_Frequency`, `End_Date`, `Start_Date`)
+ VALUES ('Labour Compliance', 1, 2, 12, ('2020-12-31'), ('2018-01-01'));
+INSERT INTO `compliancedb`.`compliance_type` (`Compliance_Type_Name`, `Industry_Type_ID`, `Country_ID`, `Audit_Frequency`, `End_Date`, `Start_Date`)
+ VALUES ('Financial Complianve', 1, 2, 6, ('2020-12-31'), ('2018-01-01'));
+INSERT INTO `compliancedb`.`compliance_type` (`Compliance_Type_Name`, `Industry_Type_ID`, `Country_ID`, `Audit_Frequency`, `End_Date`, `Start_Date`)
+ VALUES ('Statutoty Compliance', 2, 2, 4, ('2020-12-31'), ('2018-01-01'));
+INSERT INTO `compliancedb`.`compliance_type` (`Compliance_Type_Name`, `Industry_Type_ID`, `Country_ID`, `Audit_Frequency`, `End_Date`, `Start_Date`)
+ VALUES ('Financial Compliance', 2, 2, 1, ('2020-12-31'), ('2018-01-01'));
 
 
 

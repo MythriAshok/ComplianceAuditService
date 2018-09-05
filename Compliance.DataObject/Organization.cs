@@ -14,8 +14,9 @@ namespace Compliance.DataObject
         
 
         public int Parent_Company_Id { get; set; }
-      
+       // [RegularExpression("^[\s\S]{0,250}$", ErrorMessage = "Please enter maximum of 250 characters")]
 
+        
         public string Description { get; set; }
         public int Level { get; set; }
         public bool Is_Leaf { get; set; }

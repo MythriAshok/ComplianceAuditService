@@ -34,9 +34,11 @@
         <div class="col-xs-10 subSelect ">
             <div class="input-field">
 
-                @Html.Label("Group Company")
+                @*@Html.Label("Group Company")*@
                 @*@Html.DropDownListFor(model => model.GroupCompanyID, Model.GroupCompaniesList, new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })*@
-                @Html.TextBoxFor(model => model.GroupCompanyName, new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
+                <h3>
+                    @Html.DisplayFor(model => model.GroupCompanyName, new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
+                </h3>
             </div>
         </div>
     }
@@ -66,7 +68,7 @@
                                         <i class="fa fa-check-circle"></i>
                                     </a>
                                 }
-                                <a href="@Url.Action("DeleteComapny", "ManageOrganization", new { Orgid = item.OrganizationID })"
+                                <a href="@Url.Action("DeleteCompany", "ManageOrganization", new { Orgid = item.OrganizationID })"
                                    onclick="return confirm('Are you sure you want to delete?')">
 
                                     <i class="fa fa-trash pull-right" style="color:red"></i>

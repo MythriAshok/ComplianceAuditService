@@ -54,3 +54,23 @@ end$$
 DELIMITER ;
 
 
+
+
+
+
+USE `compliancedb`;
+DROP procedure IF EXISTS `compliancedb`.`sp_getCompanyLists`;
+
+DELIMITER $$
+USE `compliancedb`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getCompanyLists`(p_Parent_Company_ID int)
+begin 
+if( p_Parent_Company_ID=0)
+then
+select * from org_hier where level = 2 and Is_Delete=0;
+else
+select * from org_hier where level = 2 and Is_Delete=0 and Parent_Company_ID=p_Parent_Company_ID  ;
+end if;
+end$$
+
+DELIMITER ;
