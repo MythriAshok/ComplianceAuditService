@@ -1,0 +1,46 @@
+﻿@model ComplianceAuditWeb.Models.ComplianceIndustryViewModel
+
+@{
+    ViewBag.Title = "Map Compliance types";
+}
+
+@using (Html.BeginForm())
+{
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Country", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.DropDownListFor(m => m.ComplianceType.CountryID, Model.CountryList, new { @class = "inputMaterial ui - autocomplete - input" })
+
+
+
+            @*@Html.ValidationMessageFor(model => model.branch.Country_Id, "", new { @class = "text-danger" })*@
+
+        </div>
+    </div>
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Industry Type", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.DropDownListFor(m => m.IndustryType.IndustryID, Model.IndustryTypeList, new { @class = "inputMaterial ui - autocomplete - input" })
+
+
+
+            @*@Html.ValidationMessageFor(model => model.branch.Country_Id, "", new { @class = "text-danger" })*@
+
+        </div>
+    </div>
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Compliance Type", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.TextBoxFor(m => m.ComplianceType.ComplianceTypeName , new { @class = "inputMaterial ui - autocomplete - input" })
+
+
+
+            @*@Html.ValidationMessageFor(model => model.branch.Country_Id, "", new { @class = "text-danger" })*@
+
+        </div>
+    </div>
+}
+

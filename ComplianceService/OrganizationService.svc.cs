@@ -886,6 +886,50 @@ namespace ComplianceService
         }
 
 
+        public int insertComplianceTypesMappedWithIndustryType(ComplianceType CompType)
+        {
+            int complianceID = 0;
+
+            bool insertResult = false;
+            try
+            {
+                OrganizationHelper organizationhelper = new OrganizationHelper();
+               
+              
+                complianceID = organizationhelper.insertupdateComplianceTypesMappedWithIndustryType(CompType, 'I');
+
+                {
+                    insertResult = true;
+                }
+            }
+            catch
+            {
+
+                throw;
+            }
+            return complianceID;
+        }
+        public int updateComplianceTypesMappedWithIndustryType(ComplianceType CompType)
+        {
+            int complianceID = 0;
+
+            bool updateResult = false;
+            try
+            {
+                OrganizationHelper organizationhelper = new OrganizationHelper();
+                complianceID = organizationhelper.insertupdateComplianceTypesMappedWithIndustryType(CompType, 'U');
+
+                {
+                    updateResult = true;
+                }
+            }
+            catch
+            {
+
+                throw;
+            }
+            return complianceID;
+        }
     }
 }
 

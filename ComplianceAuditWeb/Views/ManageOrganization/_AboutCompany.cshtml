@@ -71,13 +71,12 @@
             <div class="input-field">
                 @Html.Label("Compny Name")
 
-                @*@Html.ActionLink("Modify", "UpdateCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })*@
 
 
 
                 <a href=" @Url.Action("UpdateCompany", "ManageOrganization", new { Orgid = Model.CompanyID })" />
 
-                <i class="fa fa-pencil" aria-hidden="true"></i>
+                
                 @Html.TextBoxFor(m => m.CompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
 
             </div>
@@ -123,7 +122,7 @@
 
         <li>
             @*@Html.ActionLink("Delete", "DeleteCompany",  new { OrgID = Model.CompanyID , @class = "btn primary-button" },
-                new { onclick = "return confirm('Are you sure you want to delete?');" })*@
+        new { onclick = "return confirm('Are you sure you want to delete?');" })*@
             @Html.ActionLink("Delete", "DeleteCompany",  new{ Orgid = Model.CompanyID },
           new { @onclick = "return confirm('Are you sure you want to delete?');", @class = "btn primary-button" })
             @if (Model.Is_Active == true)
@@ -140,6 +139,7 @@
 
             }
 
+            @Html.ActionLink("Modify", "UpdateCompany", new { Orgid = Model.CompanyID }, new { @class = "btn primary-button" })
 
         </li>
         <li>
@@ -175,16 +175,28 @@
                             <div class="col-sm-3 QueList">
                                 <div class="queContainer">
                                     @*@item.OrganizationID = @Session["BranchID"];*@
-                                    <a href="@Url.Action("AboutBranch", "ManageOrganization", new { id = item.OrganizationID })">
-                                        @if (item.Is_Active == false)
-                                        {
+                                    @if (item.Is_Active == false)
+                                    {
+                                        <a href="@Url.Action("ActivateBranch", "ManageOrganization", new { Orgid = item.OrganizationID})"
+                                           onclick="return confirm('Are you sure you want to activate?')">
                                             <i class="fa fa-ban"></i>
-                                        }
-                                        else
-                                        {
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("DeactivateBranch", "ManageOrganization", new { Orgid = item.OrganizationID })"
+                                           onclick="return confirm('Are you sure you want to deactivate?')">
+
                                             <i class="fa fa-check-circle"></i>
-                                        }
-                                        <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
+                                        </a>
+                                    }
+                                    <a href="@Url.Action("DeleteBranch", "ManageOrganization", new { Orgid = item.OrganizationID })"
+                                       onclick="return confirm('Are you sure you want to delete?')">
+
+                                        <i class="fa fa-trash pull-right"></i>
+                                    </a>
+                                    <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
+                                    <a href="@Url.Action("UpdateBranch", "ManageOrganization", new { id = item.OrganizationID })">
 
                                         <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyNameList)</h3>
                                     </a>

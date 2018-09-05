@@ -1004,6 +1004,46 @@ namespace Compliance.DataAccess
             return result;
         }
 
+
+
+        public int insertupdateComplianceTypesMappedWithIndustryType(ComplianceType type, char Flag)
+        {
+            int ComplianceID = 0;
+            try
+            {
+                if (type != null)
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateComplianceTypeWithIndustry", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("p_Flag", Flag);
+                    cmd.Parameters.AddWithValue("p_Compliance_Type_ID", type.ComplianceTypeID);
+                    cmd.Parameters.AddWithValue("p_Industry_Type_ID",  type.IndustryTypeID);
+                    cmd.Parameters.AddWithValue("p_Country_ID",  type.CountryID);
+                    cmd.Parameters.AddWithValue("p_Compliance_Type_Name",  type.ComplianceTypeName);
+                    cmd.Parameters.AddWithValue("p_Audit_Frequency", type.AuditingFrequency);
+                    cmd.Parameters.AddWithValue("p_Start_Date",  Convert.ToDateTime(type.StartDate));
+                    cmd.Parameters.AddWithValue("p_End_Date",  type.EndDate);
+
+
+                    object objbranchlocationid = cmd.ExecuteScalar();
+                    if (Convert.ToInt32(objbranchlocationid) > 0)
+                    {
+                        ComplianceID = Convert.ToInt32(objbranchlocationid);
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return ComplianceID;
+        }
+
     }
 
 

@@ -10,6 +10,7 @@ namespace ComplianceAuditWeb.Models
     public class ListOfGroupCompanies
     {
         public string CompanyName { get; set; }
+        public string GroupCompanyName { get; set; }
         public int OrganizationID { get; set; }
         public bool IsActive { get; set; }
         public string Logo { get; set; }

@@ -14,7 +14,8 @@ namespace Compliance.DataObject
         //[Required]
         //public string Industry_Type { get; set; }
         public string Formal_Name { get; set; }
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode =true)]
+       //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode =true)]
+       [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode =true)]
         [DataType(DataType.Date)]
         public  DateTime Calender_StartDate { get; set; }
 

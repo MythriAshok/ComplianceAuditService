@@ -296,6 +296,18 @@
   <wsdl:message name="IOrganizationService_DeleteCompliance_OutputMessage">
     <wsdl:part name="parameters" element="tns:DeleteComplianceResponse" />
   </wsdl:message>
+  <wsdl:message name="IOrganizationService_insertComplianceTypesMappedWithIndustryType_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertComplianceTypesMappedWithIndustryType" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_insertComplianceTypesMappedWithIndustryType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertComplianceTypesMappedWithIndustryTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_updateComplianceTypesMappedWithIndustryType_InputMessage">
+    <wsdl:part name="parameters" element="tns:updateComplianceTypesMappedWithIndustryType" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_updateComplianceTypesMappedWithIndustryType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:updateComplianceTypesMappedWithIndustryTypeResponse" />
+  </wsdl:message>
   <wsdl:portType name="IOrganizationService">
     <wsdl:operation name="insertOrganization">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertOrganization" message="tns:IOrganizationService_insertOrganization_InputMessage" />
@@ -488,6 +500,14 @@
     <wsdl:operation name="DeleteCompliance">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/DeleteCompliance" message="tns:IOrganizationService_DeleteCompliance_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/DeleteComplianceResponse" message="tns:IOrganizationService_DeleteCompliance_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="insertComplianceTypesMappedWithIndustryType">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertComplianceTypesMappedWithIndustryType" message="tns:IOrganizationService_insertComplianceTypesMappedWithIndustryType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/insertComplianceTypesMappedWithIndustryTypeResponse" message="tns:IOrganizationService_insertComplianceTypesMappedWithIndustryType_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="updateComplianceTypesMappedWithIndustryType">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/updateComplianceTypesMappedWithIndustryType" message="tns:IOrganizationService_updateComplianceTypesMappedWithIndustryType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/updateComplianceTypesMappedWithIndustryTypeResponse" message="tns:IOrganizationService_updateComplianceTypesMappedWithIndustryType_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IOrganizationService" type="tns:IOrganizationService">
@@ -917,6 +937,24 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteCompliance">
       <soap:operation soapAction="http://tempuri.org/IOrganizationService/DeleteCompliance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="insertComplianceTypesMappedWithIndustryType">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/insertComplianceTypesMappedWithIndustryType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateComplianceTypesMappedWithIndustryType">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/updateComplianceTypesMappedWithIndustryType" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
