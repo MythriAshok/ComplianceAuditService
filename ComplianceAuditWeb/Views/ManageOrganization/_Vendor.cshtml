@@ -237,18 +237,18 @@
 
         <div class=" clearfix"></div>
 
-        <div class="col-xs-4 subSelect ">
+        @*<div class="col-xs-4 subSelect ">
             <div class="input-field">
                 @Html.Label("List ofCompliances", new { @class = "floating-label" })
                 @Html.ListBoxFor(m => m.ComplianceID, Model.ComplianceList, new { @class = "inputMaterial ui - autocomplete - input" })
                 <span id="loading_data_icon"></span>
             </div>
-        </div>
+        </div>*@
 
 
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Vendor Type", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.Label("Business Type", new { @class = "floating-label" })<span style="color:red">*</span>
                 @*@Html.DropDownListFor(m => m.organization.Industry_Type, new SelectList
                     (Enum.GetValues(typeof(ComplianceAuditWeb.Models.CompanyViewModel.IndustryType))),
                     "Select Vendor Type", new { @class = "inputMaterial ui - autocomplete - input", placeholder = ConfigurationManager.AppSettings["Industry_Type"] })*@

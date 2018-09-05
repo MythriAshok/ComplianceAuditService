@@ -53,6 +53,10 @@ namespace ComplianceAuditWeb.Models
         public int[] assignedID { get; set; }
         public List<SelectListItem> AssignedList { get; set; }
 
+        public List<BranchViewModel> viewmodel { get; set; }
+        public bool Is_Active { get; set; }
+        public string Logo { get; set; }
+        public string BranchName { get; set; }
 
     }
     public enum BranchAuditingfrequency

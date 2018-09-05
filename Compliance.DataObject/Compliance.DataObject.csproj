@@ -45,11 +45,13 @@
     <Compile Include="City.cs" />
     <Compile Include="CompanyDetails.cs" />
     <Compile Include="ComplianceAuditAuditTrail.cs" />
+    <Compile Include="ComplianceType.cs" />
     <Compile Include="ComplianceXref.cs" />
     <Compile Include="ComplianceAudit.cs" />
     <Compile Include="ComplianceOptions.cs" />
     <Compile Include="ComplianceXrefAuditTrail.cs" />
     <Compile Include="Country.cs" />
+    <Compile Include="IndustryType.cs" />
     <Compile Include="Menus.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

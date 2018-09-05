@@ -48,6 +48,12 @@
 <div class="mid_content_sec">
     @using (Html.BeginForm())
     {
+        <div class="pull-right fa fa-pull-right" style="font-size:large">
+            <i class="fa fa-plus"></i><font style="font-size:14px; color:dimgray; font-family:Arial">
+
+                @Html.ActionLink("Add Vendor", "AddVendor", new { Orgid = Model.CompanyID })
+            </font>
+        </div>
         <div class="col-xs-10 subSelect ">
             <div class="input-field">
 

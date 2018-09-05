@@ -302,6 +302,26 @@ namespace ComplianceAuditWeb.OrgService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/DeleteCompliance", ReplyAction="http://tempuri.org/IOrganizationService/DeleteComplianceResponse")]
         System.Threading.Tasks.Task<bool> DeleteComplianceAsync(int CompID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertComplianceTypesMappedWithIndustryTy" +
+            "pe", ReplyAction="http://tempuri.org/IOrganizationService/insertComplianceTypesMappedWithIndustryTy" +
+            "peResponse")]
+        int insertComplianceTypesMappedWithIndustryType(Compliance.DataObject.ComplianceType CompType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertComplianceTypesMappedWithIndustryTy" +
+            "pe", ReplyAction="http://tempuri.org/IOrganizationService/insertComplianceTypesMappedWithIndustryTy" +
+            "peResponse")]
+        System.Threading.Tasks.Task<int> insertComplianceTypesMappedWithIndustryTypeAsync(Compliance.DataObject.ComplianceType CompType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updateComplianceTypesMappedWithIndustryTy" +
+            "pe", ReplyAction="http://tempuri.org/IOrganizationService/updateComplianceTypesMappedWithIndustryTy" +
+            "peResponse")]
+        int updateComplianceTypesMappedWithIndustryType(Compliance.DataObject.ComplianceType CompType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updateComplianceTypesMappedWithIndustryTy" +
+            "pe", ReplyAction="http://tempuri.org/IOrganizationService/updateComplianceTypesMappedWithIndustryTy" +
+            "peResponse")]
+        System.Threading.Tasks.Task<int> updateComplianceTypesMappedWithIndustryTypeAsync(Compliance.DataObject.ComplianceType CompType);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -713,6 +733,22 @@ namespace ComplianceAuditWeb.OrgService {
         
         public System.Threading.Tasks.Task<bool> DeleteComplianceAsync(int CompID) {
             return base.Channel.DeleteComplianceAsync(CompID);
+        }
+        
+        public int insertComplianceTypesMappedWithIndustryType(Compliance.DataObject.ComplianceType CompType) {
+            return base.Channel.insertComplianceTypesMappedWithIndustryType(CompType);
+        }
+        
+        public System.Threading.Tasks.Task<int> insertComplianceTypesMappedWithIndustryTypeAsync(Compliance.DataObject.ComplianceType CompType) {
+            return base.Channel.insertComplianceTypesMappedWithIndustryTypeAsync(CompType);
+        }
+        
+        public int updateComplianceTypesMappedWithIndustryType(Compliance.DataObject.ComplianceType CompType) {
+            return base.Channel.updateComplianceTypesMappedWithIndustryType(CompType);
+        }
+        
+        public System.Threading.Tasks.Task<int> updateComplianceTypesMappedWithIndustryTypeAsync(Compliance.DataObject.ComplianceType CompType) {
+            return base.Channel.updateComplianceTypesMappedWithIndustryTypeAsync(CompType);
         }
     }
 }

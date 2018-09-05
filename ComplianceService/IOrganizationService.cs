@@ -152,6 +152,13 @@ namespace ComplianceService
         [OperationContract]
 
         bool DeleteCompliance(int CompID);
+        [OperationContract]
+
+        int insertComplianceTypesMappedWithIndustryType(ComplianceType CompType);
+        [OperationContract]
+
+        int updateComplianceTypesMappedWithIndustryType(ComplianceType CompType);
+
 
     }
 }

@@ -1,4 +1,5 @@
-﻿@model ComplianceAuditWeb.Models.ListOfGroupCompanies
+﻿@*@model ComplianceAuditWeb.Models.ListOfGroupCompanies*@
+@model ComplianceAuditWeb.Models.BranchViewModel
 
 @{
     ViewBag.Title = "List Of Branches";
@@ -45,14 +46,52 @@
 <h2 class="ML15">List Of Branches</h2>
 
 <div class="mid_content_sec">
+    @if (TempData["Company"] != null)
+    {
+        <center>
+            <p id="successMessage">@TempData["Company"] @TempData["Success"]</p>
+        </center>
+    }
+    @*@if (TempData["Branch'sCompanyName"] != null)
+        {
+            <center>
+                <p id="successMessage">@TempData["Success"] @TempData["Branch'sCompanyName"]</p>
+            </center>
+        }*@
+    @if (ViewBag.MessageBranch != string.Empty && ViewBag.Success != string.Empty)
+    {
+        <center>
+            <p id="successMessage"> @ViewBag.Success @ViewBag.MessageBranch</p>
+        </center>
+    }
+    else if (ViewBag.Success != string.Empty)
+    {
+        <center>
+            <p id="successMessage">@ViewBag.Success</p>
+        </center>
+    }
+    else
+    {
+        <center>
+            <p id="successMessage" style="color:red">@ViewBag.NotFound</p>
+        </center>
+    }
+    <div class="pull-right fa fa-pull-right" style="font-size:large">
+        <i class="fa fa-plus"></i><font style="font-size:14px; color:dimgray; font-family:Arial">
+
+            @Html.ActionLink("Add Branch", "AddBranch", new { Orgid = Model.organization.Parent_Company_Id })
+        </font>
+    </div>
     @using (Html.BeginForm())
     {
         <div class="col-xs-10 subSelect ">
             <div class="input-field">
 
                 @Html.Label("Group Company")
-                @Html.DropDownListFor(model => model.GroupCompanyID, Model.GroupCompaniesList, new { @onchange = "GetCompany(this.value);", @class = "inputMaterial ui - autocomplete - input" })
-                
+                @*@Html.DropDownListFor(model => model.GroupCompanyID, Model.GroupCompaniesList, new { @onchange = "GetCompany(this.value);", @class = "inputMaterial ui - autocomplete - input" })*@
+                @*@Html.TextBoxFor(model => model.GroupCompanyName, new { @onchange = "GetCompany(this.value);", @class = "inputMaterial ui - autocomplete - input" })*@
+                @Html.TextBoxFor(model => model.GroupCompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
+
             </div>
         </div>
 
@@ -63,30 +102,48 @@
                 @Html.DropDownListFor(model => model.CompanyID, Model.CompaniesList, new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
             </div>
         </div>
+        @Html.HiddenFor(m => m.GroupCompanyID);
+        @Html.HiddenFor(m => m.GroupCompanyName);
         @Html.HiddenFor(model => model.CompaniesList)
+        @Html.HiddenFor(model => model.CompanyID)
         <div class="clearfix"></div>
         <div class="new_section_box">
             <div class="tab-content">
                 <div id="home" class="tab-pane fade in active">
                     <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h2>
-                    @if (Model.listOfGroups.Count != 0)
+                    @if (Model.viewmodel.Count != 0)
                     {
-                        foreach (var item in Model.listOfGroups)
+                        foreach (var item in Model.viewmodel)
                         {
                             <div class="col-sm-3 QueList">
                                 <div class="queContainer">
                                     @*@item.OrganizationID = @Session["BranchID"];*@
-                                    <a href="@Url.Action("AboutBranch", "ManageOrganization", new { id = item.OrganizationID })">
-                                        @if (item.IsActive == false)
-                                        {
-                                            <i class="fa fa-ban"></i>
-                                        }
-                                        else
-                                        {
+                                    @if (item.Is_Active == false)
+                                    {
+                                        <a href="@Url.Action("ActivateBranch", "ManageOrganization", new { Orgid = item.BranchID})"
+                                           onclick="return confirm('Are you sure you want to activate?')">
+                                            <i class="fa fa-ban" style="color:black"></i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("DeactivateBranch", "ManageOrganization", new { Orgid = item.BranchID })"
+                                           onclick="return confirm('Are you sure you want to deactivate?')">
+
                                             <i class="fa fa-check-circle"></i>
-                                        }
-                                        <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
-                                        <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
+                                        </a>
+                                    }
+
+                                    <a href="@Url.Action("DeleteBranch", "ManageOrganization", new { Orgid = item.BranchID })"
+                                       onclick="return confirm('Are you sure you want to delete?')">
+
+                                        <i class="fa fa-trash pull-right" style="color:red"></i>
+                                    </a>
+
+                                    <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                                    <a href="@Url.Action("UpdateBranch", "ManageOrganization", new { OrgID = item.BranchID })">
+
+                                        <h3 class="PB25"> @Html.DisplayFor(modelItem => item.BranchName)</h3>
                                     </a>
                                     <div class="clearfix"></div>
                                 </div>
@@ -95,7 +152,7 @@
                     }
                     else
                     {
-                        <h4 > @ViewBag.Message</h4>
+                        <h4> @ViewBag.Message</h4>
                     }
 
 

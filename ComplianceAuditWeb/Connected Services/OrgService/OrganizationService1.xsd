@@ -54,4 +54,16 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="BranchLocation" nillable="true" type="tns:BranchLocation" />
+  <xs:complexType name="ComplianceType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AuditingFrequency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ComplianceTypeID" type="xs:int" />
+      <xs:element minOccurs="0" name="ComplianceTypeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CountryID" type="xs:int" />
+      <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IndustryTypeID" type="xs:int" />
+      <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ComplianceType" nillable="true" type="tns:ComplianceType" />
 </xs:schema>

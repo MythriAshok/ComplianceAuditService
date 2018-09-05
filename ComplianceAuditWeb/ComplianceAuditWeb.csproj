@@ -648,6 +648,7 @@
     <Compile Include="Models\CompanyViewModel.cs" />
     <Compile Include="Models\complianceActmappingViewModel.cs" />
     <Compile Include="Models\Compliancetype view model.cs" />
+    <Compile Include="Models\ComplianceIndustryViewModel.cs" />
     <Compile Include="Models\ComplianceViewModel.cs" />
     <Compile Include="Models\GroupCompanyViewModel.cs" />
     <Compile Include="Models\ListofComplianceViewModel.cs" />
@@ -750,6 +751,7 @@
     <Content Include="Views\ManageCompliance\_AssignRules.cshtml" />
     <Content Include="Views\ManageAudit\_auuditentry.cshtml" />
     <Content Include="Views\ManageOrganization\View1.cshtml" />
+    <Content Include="Views\ManageOrganization\_MapComplianceTypes.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
