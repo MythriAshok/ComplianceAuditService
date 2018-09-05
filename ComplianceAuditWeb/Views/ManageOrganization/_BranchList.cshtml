@@ -36,6 +36,15 @@
 
 
     </script>
+    @*<script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+            $("#CompanyID").change(function () {
+                window.location.reload(false);
+            });
+        });
+    </script>*@
+
+
 
 }
 
@@ -87,11 +96,12 @@
         <div class="col-xs-10 subSelect ">
             <div class="input-field">
 
-                @Html.Label("Group Company")
+                @*@Html.Label("Group Company")*@
                 @*@Html.DropDownListFor(model => model.GroupCompanyID, Model.GroupCompaniesList, new { @onchange = "GetCompany(this.value);", @class = "inputMaterial ui - autocomplete - input" })*@
                 @*@Html.TextBoxFor(model => model.GroupCompanyName, new { @onchange = "GetCompany(this.value);", @class = "inputMaterial ui - autocomplete - input" })*@
-                @Html.TextBoxFor(model => model.GroupCompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
-
+                <h3>
+                    @Html.DisplayFor(model => model.GroupCompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
+                </h3>
             </div>
         </div>
 

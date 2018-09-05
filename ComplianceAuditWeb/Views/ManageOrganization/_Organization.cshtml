@@ -66,6 +66,9 @@
         }
     </script>
 
+    <script type="text/javascript">
+        $("#organization_Description").bind("")
+    </script>
 }
 
 @if (Model.organization.Organization_Id == 0)
@@ -93,7 +96,7 @@
     }
     @using (Html.BeginForm(actionname, "ManageOrganization", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-       
+
         <div class="mid_content_sec">
             @Html.AntiForgeryToken()
             @*@Html.ValidationMessage("Error")*@
@@ -105,7 +108,7 @@
                 @*<p class="alert alert-warning">@TempData["Message"]</p>*@
                 <p style="color:red">@TempData["ErrorMessage"]</p>
             }
-       
+
             <div class="col-xs-4 subSelect ">
                 <div class="input-field">
                     @*@using (Html.BeginForm("AddGroupCompany", "ManageOrganization"))
