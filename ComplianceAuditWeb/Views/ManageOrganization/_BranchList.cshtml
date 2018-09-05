@@ -99,9 +99,9 @@
                 @*@Html.Label("Group Company")*@
                 @*@Html.DropDownListFor(model => model.GroupCompanyID, Model.GroupCompaniesList, new { @onchange = "GetCompany(this.value);", @class = "inputMaterial ui - autocomplete - input" })*@
                 @*@Html.TextBoxFor(model => model.GroupCompanyName, new { @onchange = "GetCompany(this.value);", @class = "inputMaterial ui - autocomplete - input" })*@
-                <h3>
-                    @Html.DisplayFor(model => model.GroupCompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
-                </h3>
+                @Html.TextBoxFor(model => model.GroupCompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.TextBoxFor(model => model.GroupCompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
+
             </div>
         </div>
 
