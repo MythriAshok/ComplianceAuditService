@@ -1826,6 +1826,8 @@ select * from tbl_org_hier where Parent_Company_ID=p_Parent_Company_ID and Is_Ve
 end$$
 
 DELIMITER ;
+
+call sp_getSpecificVendorListDropDown(251,252);
 -- -----------------------------------------------------
 -- procedure sp_getSpecifiySection
 -- -----------------------------------------------------
@@ -1835,6 +1837,7 @@ DROP procedure IF EXISTS `auditmoduledb`.`sp_getSpecifiySection`;
 
 DELIMITER $$
 USE `auditmoduledb`$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_getSpecifiySection`(p_Compliance_Xref_ID int)
 BEGIN
 SELECT * FROM `auditmoduledb`.`tbl_compliance_xref`
