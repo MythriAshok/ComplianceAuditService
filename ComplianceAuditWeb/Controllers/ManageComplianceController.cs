@@ -89,11 +89,15 @@ namespace ComplianceAuditWeb.Controllers
             string xmldata = client.GetActs(0);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
-            if (ds.Tables.Count > 0)
-            {
-                model.Actslist = bindCompliancelist(ds.Tables[0], model.Actslist);
+            DataView dv = new DataView(ds.Tables[0]);
+            dv.Sort = "Last_Updated_Date desc";
+            DataTable dt = dv.ToTable();
 
-                xmldata = client.GetRules(0);
+            if (dt.Rows.Count > 0)
+            {
+                model.Actslist = bindCompliancelist(dt, model.Actslist);
+
+                xmldata = client.Getlineitems(0);
                 ds = new DataSet();
                 ds.ReadXml(new StringReader(xmldata));
                 if (ds.Tables.Count > 0)
@@ -186,7 +190,7 @@ namespace ComplianceAuditWeb.Controllers
             {
                 ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
                 model.Compliance.User_ID = Convert.ToInt32(Session["UserId"]);
-                int id = client.insertRules(model.Compliance);
+                int id = client.insertRules(model.Compliance);                
                 if (id > 0)
                 {
                     TempData["Message"] = "Successfuly Created " + model.Compliance.Compliance_Title + model.Compliance.Comp_Category;
@@ -208,20 +212,61 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult ComplianceActMapping()
         {
             complianceActmappingViewModel model = new complianceActmappingViewModel();
-            ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
-            string xmldata = client.GetComplainceType(0);
-            DataSet ds = new DataSet();
-            ds.ReadXml(new StringReader(xmldata));
-            model.ComplianceType = new List<SelectListItem>();
-            if (ds.Tables.Count > 0)
+            OrgService.OrganizationServiceClient organizationService = new OrgService.OrganizationServiceClient();
+            string strXMLCountries = organizationService.GetCountryList();
+            DataSet dsCountries = new DataSet();
+            dsCountries.ReadXml(new StringReader(strXMLCountries));
+            model.Country = new List<SelectListItem>();
+           // model.Country.Add(new SelectListItem { Text = "-- Select Country --", Value = "" });
+            if (dsCountries.Tables.Count > 0)
             {
-                model.compliancetypeid = Convert.ToInt32(ds.Tables[0].Rows[0]["Compliance_Type_ID"]);
-
-                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                model.countryid = Convert.ToInt32(dsCountries.Tables[0].Rows[0]["Country_ID"]);
+                foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
                 {
-                    model.ComplianceType.Add(new SelectListItem { Text = Convert.ToString(row["Compliance_Type_Name"]), Value = Convert.ToString(row["Compliance_Type_ID"]) });
+                    model.Country.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
                 }
-            }           
+            }
+          
+            //ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
+            //string xmldata = client.GetComplainceType(0);
+            //DataSet ds = new DataSet();
+            //ds.ReadXml(new StringReader(xmldata));
+            model.ComplianceType = new List<SelectListItem>();
+            //if (ds.Tables.Count > 0)
+            //{
+            //    model.compliancetypeid = Convert.ToInt32(ds.Tables[0].Rows[0]["Compliance_Type_ID"]);
+
+            //    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            //    {
+            //        model.ComplianceType.Add(new SelectListItem { Text = Convert.ToString(row["Compliance_Type_Name"]), Value = Convert.ToString(row["Compliance_Type_ID"]) });
+            //    }
+            //}  
+
+            string strXMLIndustryType = organizationService.GetIndustryType();
+            DataSet dsIndustryType = new DataSet();
+            dsIndustryType.ReadXml(new StringReader(strXMLIndustryType));
+            model.IndustryType = new List<SelectListItem>();
+           // model.IndustryType.Add(new SelectListItem { Text = "-- Industry Type --", Value = "" });
+            if (dsIndustryType.Tables.Count > 0)
+            {
+                model.industryid = Convert.ToInt32(dsIndustryType.Tables[0].Rows[0]["Industry_Type_ID"]);
+                foreach (System.Data.DataRow row in dsIndustryType.Tables[0].Rows)
+                {
+                    model.IndustryType.Add(new SelectListItem() { Text = row["Industry_Name"].ToString(), Value = row["Industry_Type_ID"].ToString() });
+                }
+            }
+
+            string strXMLCompliances = organizationService.GetComplianceType(model.countryid, model.industryid);
+            DataSet dsCompliances = new DataSet();
+            dsCompliances.ReadXml(new StringReader(strXMLCompliances));
+            if (dsCompliances.Tables.Count > 0)
+            {
+                model.compliancetypeid = Convert.ToInt32(dsCompliances.Tables[0].Rows[0]["Compliance_Type_ID"]);
+                foreach (System.Data.DataRow row in dsCompliances.Tables[0].Rows)
+                {
+                    model.ComplianceType.Add(new SelectListItem() { Text = row["Compliance_Type_Name"].ToString(), Value = row["Compliance_Type_ID"].ToString() });
+                }
+            }
             return View("_ComplianceActMapping", model);
         }
 
@@ -241,8 +286,9 @@ namespace ComplianceAuditWeb.Controllers
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             DataSet dsact = new DataSet();
-            xmldata = client.GetXrefComplainceTypemapping(compliancetypeid);
+            xmldata = client.GetXrefComplainceTypemapping(compliancetypeid,0);
             dsact.ReadXml(new StringReader(xmldata));
+            Session["AssignedActs"] = dsact;
             if (ds.Tables.Count > 0)
             {
                 foreach (System.Data.DataRow row in ds.Tables[0].Rows)
@@ -274,14 +320,28 @@ namespace ComplianceAuditWeb.Controllers
             {
                 List<treenode> ruleslist = (new JavaScriptSerializer()).Deserialize<List<treenode>>(selectedItems);
                 int[] rules = new int[ruleslist.Count];
+                
                 int i = 0;
+                DataSet data = (DataSet)Session["AssignedActs"];
+                int[] Deleterules = new int[data.Tables[0].Rows.Count];
                 //int compliancetyid = Convert.ToInt32(Session["compliancetypeid"]);
                 foreach (var item in ruleslist)
                 {
                     rules[i++] = Convert.ToInt32(item.id);
                 }
+                i = 0;
+                foreach(System.Data.DataRow row in data.Tables[0].Rows)
+                {
+                    foreach (var item in rules)
+                    {
+                        if(Convert.ToInt32(row["Compliance_Xref_ID"])!=item)
+                        {
+                            Deleterules[i++] = item;
+                        }
+                    }
+                }
                 ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
-                client.deletexreftypemapping(compliancetypeid);
+                client.deletexreftypemapping(compliancetypeid,Deleterules);
                 client.insertxreftypemapping(rules, compliancetypeid);
             }
             return RedirectToAction("ComplianceActMapping");
@@ -489,7 +549,7 @@ namespace ComplianceAuditWeb.Controllers
             if (dscomp.Tables.Count > 0)
             {
                 DataView dv = new DataView(dscomp.Tables[0]);
-                dv.RowFilter = "level=1";
+                dv.RowFilter = "level=1";                
                 ds = dv.ToTable();
 
                 dv.Table = dscomp.Tables[0];
@@ -537,14 +597,8 @@ namespace ComplianceAuditWeb.Controllers
 
                     children.Add(act);
 
-                }
-                        
-                    }
-                    
-                       
-                    
-                
-            
+                }                        
+                    }                                                                                           
             // Add the sturcture to the root nodes children property
             root.children = children;
 
@@ -575,6 +629,44 @@ namespace ComplianceAuditWeb.Controllers
             else
                 TempData["Error"] = "Please select atleast one rule";
             return RedirectToAction("AssignRules", new { Branchid = Convert.ToString(Session["Branch_Id"]), Vendorid = Convert.ToInt32(Session["VendorId"]), Branchname = Convert.ToString(Session["BranchName"]) });
+        }
+
+        public ActionResult UpdateAct(int id)
+        {
+            ComplianceViewModel model = new ComplianceViewModel();
+            model.Compliance = new ComplianceXref();
+            ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
+
+            string xmldata = client.GetSpecificComplaince(id);
+             DataSet  ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            model.Compliance.Compliance_Xref_ID = id;
+            model.Compliance.Compliance_Parent_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["Compliance_Parent_ID"]);
+            model.Compliance.Compliance_Title = Convert.ToString(ds.Tables[0].Rows[0]["Compliance_Title"]);
+            model.Compliance.Comp_Description = Convert.ToString(ds.Tables[0].Rows[0]["Comp_Description"]);
+            model.Compliance.Effective_End_Date = Convert.ToDateTime(ds.Tables[0].Rows[0]["Effective_End_Date"]);
+            model.Compliance.Effective_Start_Date = Convert.ToDateTime(ds.Tables[0].Rows[0]["Effective_Start_Date"]);
+            return View("_UpdateAct",model);
+        }
+
+        public ActionResult UpdateLineitems(int id)
+        {
+            ComplianceViewModel model = new ComplianceViewModel();
+            model.Compliance = new ComplianceXref();
+            ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
+            string xmldata = client.GetSpecificComplaince(id);
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            model.Compliance.Compliance_Xref_ID = id;
+            model.Compliance.Compliance_Parent_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["Compliance_Parent_ID"]);
+            model.Compliance.Compliance_Title = Convert.ToString(ds.Tables[0].Rows[0]["Compliance_Title"]);
+            model.Compliance.compl_def_consequence = Convert.ToString(ds.Tables[0].Rows[0]["compl_def_consequence"]);
+            model.Compliance.Comp_Description = Convert.ToString(ds.Tables[0].Rows[0]["Comp_Description"]);
+            model.Compliance.Effective_End_Date = Convert.ToDateTime(ds.Tables[0].Rows[0]["Effective_End_Date"]);
+            model.Compliance.Effective_Start_Date = Convert.ToDateTime(ds.Tables[0].Rows[0]["Effective_Start_Date"]);
+           // model.Compliance.Risk_Category = Convert.ToString(ds.Tables[0].Rows[0]["Risk_Category"]);
+            //model.Compliance.compl_def_consequence = Convert.ToString(ds.Tables[0].Rows[0]["Risk_Description"]);
+            return View("_AddLineitems",model);
         }
 
     }

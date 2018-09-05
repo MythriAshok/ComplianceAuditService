@@ -50,8 +50,8 @@ namespace ComplianceService
         [OperationContract]
         bool insertxreftypemapping(int[] xrefid, int compliancetypeid);
         [OperationContract]
-        bool deletexreftypemapping(int compliancetypeid);
+        bool deletexreftypemapping(int compliancetypeid, int[] xrefid);
         [OperationContract]
-        string GetXrefComplainceTypemapping(int compliancetypeid);
+        string GetXrefComplainceTypemapping(int compliancetypeid,int complianceid);
     }
 }

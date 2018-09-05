@@ -118,16 +118,16 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         System.Threading.Tasks.Task<bool> insertxreftypemappingAsync(int[] xrefid, int compliancetypeid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/deletexreftypemapping", ReplyAction="http://tempuri.org/IComplianceXrefService/deletexreftypemappingResponse")]
-        bool deletexreftypemapping(int compliancetypeid);
+        bool deletexreftypemapping(int compliancetypeid, int[] xrefid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/deletexreftypemapping", ReplyAction="http://tempuri.org/IComplianceXrefService/deletexreftypemappingResponse")]
-        System.Threading.Tasks.Task<bool> deletexreftypemappingAsync(int compliancetypeid);
+        System.Threading.Tasks.Task<bool> deletexreftypemappingAsync(int compliancetypeid, int[] xrefid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetXrefComplainceTypemapping", ReplyAction="http://tempuri.org/IComplianceXrefService/GetXrefComplainceTypemappingResponse")]
-        string GetXrefComplainceTypemapping(int compliancetypeid);
+        string GetXrefComplainceTypemapping(int compliancetypeid, int complianceid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/GetXrefComplainceTypemapping", ReplyAction="http://tempuri.org/IComplianceXrefService/GetXrefComplainceTypemappingResponse")]
-        System.Threading.Tasks.Task<string> GetXrefComplainceTypemappingAsync(int compliancetypeid);
+        System.Threading.Tasks.Task<string> GetXrefComplainceTypemappingAsync(int compliancetypeid, int complianceid);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -293,20 +293,20 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
             return base.Channel.insertxreftypemappingAsync(xrefid, compliancetypeid);
         }
         
-        public bool deletexreftypemapping(int compliancetypeid) {
-            return base.Channel.deletexreftypemapping(compliancetypeid);
+        public bool deletexreftypemapping(int compliancetypeid, int[] xrefid) {
+            return base.Channel.deletexreftypemapping(compliancetypeid, xrefid);
         }
         
-        public System.Threading.Tasks.Task<bool> deletexreftypemappingAsync(int compliancetypeid) {
-            return base.Channel.deletexreftypemappingAsync(compliancetypeid);
+        public System.Threading.Tasks.Task<bool> deletexreftypemappingAsync(int compliancetypeid, int[] xrefid) {
+            return base.Channel.deletexreftypemappingAsync(compliancetypeid, xrefid);
         }
         
-        public string GetXrefComplainceTypemapping(int compliancetypeid) {
-            return base.Channel.GetXrefComplainceTypemapping(compliancetypeid);
+        public string GetXrefComplainceTypemapping(int compliancetypeid, int complianceid) {
+            return base.Channel.GetXrefComplainceTypemapping(compliancetypeid, complianceid);
         }
         
-        public System.Threading.Tasks.Task<string> GetXrefComplainceTypemappingAsync(int compliancetypeid) {
-            return base.Channel.GetXrefComplainceTypemappingAsync(compliancetypeid);
+        public System.Threading.Tasks.Task<string> GetXrefComplainceTypemappingAsync(int compliancetypeid, int complianceid) {
+            return base.Channel.GetXrefComplainceTypemappingAsync(compliancetypeid, complianceid);
         }
     }
 }

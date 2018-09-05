@@ -35,6 +35,14 @@ namespace ComplianceService
             return result;
         }
 
+        public bool insertAuditEntries(ComplianceAudit auditdata)
+        {
+            bool result = false;
+            ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
+            result = complianceAuditHelper.insertupdateAuditentries(auditdata, 'I');           
+            return result;
+        }
+
         public bool updateComplianceAudit(List<ComplianceAudit> auditdatalist)
         {
             bool result = false;

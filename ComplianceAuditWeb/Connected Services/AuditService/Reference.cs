@@ -27,6 +27,12 @@ namespace ComplianceAuditWeb.AuditService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/insertComplianceAudit", ReplyAction="http://tempuri.org/IAuditService/insertComplianceAuditResponse")]
         System.Threading.Tasks.Task<bool> insertComplianceAuditAsync(Compliance.DataObject.ComplianceAudit[] auditdatalist);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/insertAuditEntries", ReplyAction="http://tempuri.org/IAuditService/insertAuditEntriesResponse")]
+        bool insertAuditEntries(Compliance.DataObject.ComplianceAudit auditdata);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/insertAuditEntries", ReplyAction="http://tempuri.org/IAuditService/insertAuditEntriesResponse")]
+        System.Threading.Tasks.Task<bool> insertAuditEntriesAsync(Compliance.DataObject.ComplianceAudit auditdata);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/updateComplianceAudit", ReplyAction="http://tempuri.org/IAuditService/updateComplianceAuditResponse")]
         bool updateComplianceAudit(Compliance.DataObject.ComplianceAudit[] auditdatalist);
         
@@ -123,6 +129,14 @@ namespace ComplianceAuditWeb.AuditService {
         
         public System.Threading.Tasks.Task<bool> insertComplianceAuditAsync(Compliance.DataObject.ComplianceAudit[] auditdatalist) {
             return base.Channel.insertComplianceAuditAsync(auditdatalist);
+        }
+        
+        public bool insertAuditEntries(Compliance.DataObject.ComplianceAudit auditdata) {
+            return base.Channel.insertAuditEntries(auditdata);
+        }
+        
+        public System.Threading.Tasks.Task<bool> insertAuditEntriesAsync(Compliance.DataObject.ComplianceAudit auditdata) {
+            return base.Channel.insertAuditEntriesAsync(auditdata);
         }
         
         public bool updateComplianceAudit(Compliance.DataObject.ComplianceAudit[] auditdatalist) {

@@ -45,7 +45,16 @@ namespace ComplianceService
             compliance.level = 2;
             //compliance.Comp_Category = "Rule";
             compliance.Version = 1;
-            return helper.insertupdateComplianceXref(compliance,'I');
+            int complianeid=helper.insertupdateComplianceXref(compliance,'I');
+            DataSet ds= helper.GetxrefComplianceMapping(0,compliance.Compliance_Parent_ID);
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    helper.insertxreftypemapping(complianeid,Convert.ToInt32(row["Compliance_Type_ID"]), "Rule");
+                }
+            }
+            return complianeid;
         }
         public int UpdateActs(ComplianceXref compliance)
         {
@@ -196,25 +205,28 @@ namespace ComplianceService
             return res;
         }
 
-       public bool deletexreftypemapping(int compliancetypeid)
+       public bool deletexreftypemapping(int compliancetypeid, int[] xrefid)
         {
+            bool res = false;
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
-            bool res = helper.deletexreftypemapping(compliancetypeid);
+            foreach (var id in xrefid)
+            {
+                res = helper.deletexreftypemapping(compliancetypeid, id);
+            }
             return res;
         }
 
-        public string GetXrefComplainceTypemapping(int compliancetypeid)
+        public string GetXrefComplainceTypemapping(int compliancetypeid,int complianceid)
         {
-            return bindXrefComplainceTypemapping(compliancetypeid);
+            return bindXrefComplainceTypemapping(compliancetypeid,complianceid);
         }
-        private string bindXrefComplainceTypemapping(int compliancetypeid)
+        private string bindXrefComplainceTypemapping(int compliancetypeid,int complianceid)
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();
-            DataSet ds = helper.GetxrefComplianceMapping(compliancetypeid);
+            DataSet ds = helper.GetxrefComplianceMapping(compliancetypeid,complianceid);
             UtilityHelper utilityHelper = new UtilityHelper();
             ds = utilityHelper.ConvertNullsToEmptyString(ds);
             return ds.GetXml();
-        }
-
+        }               
     }
 }

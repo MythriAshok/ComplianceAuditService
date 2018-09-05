@@ -9,6 +9,14 @@ namespace ComplianceAuditWeb.Models
     {
         public List<SelectListItem> ComplianceType { get; set; }
         public List<CheckActList> ActList { get; set; }       
+
+        public List<SelectListItem> Country { get; set; }
+
+        public List<SelectListItem> IndustryType { get; set; }
+
+        public int industryid { get; set; }
+
+        public int countryid { get; set; }
         public int compliancetypeid { get; set; }
     }
 

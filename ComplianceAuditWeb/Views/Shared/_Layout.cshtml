@@ -14,7 +14,7 @@
     <script src="~/Content/bootstrap-3.3.7-dist/js/jquery.min.js"></script>
     <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-ui.min.js"></script>
     <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+    @*<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>*@
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
     <link href="~/Content/font-awesome.css" rel="stylesheet" />
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
@@ -42,17 +42,21 @@
                                     if (Session["GroupCompanyName"] != null)
                                     {
                                         <label>@Session["GroupCompanyName"]</label>
-                                        <button id="GroupCompany" class="btn primary-button">Change</button>
-                                    }
-                                    else
-                                    {
-                                        <button id="GroupCompany" class="btn primary-button">Select Group Company</button>
-                                    }
-                                    <div class="modal fade" id="bootstrapDialog" tabindex="-1" role="dialog" aria-labelledby="myModal-label" aria-hidden="true"
-                                         data-url='@Url.Action("SelectGroupCompany","Common")'>
-                                    </div>
-                                }
-                            </div>
+                                   
+                                                <button id="GroupCompany" class="btn primary-button">Change</button>
+                                             
+                                                }
+                                                else
+                                                {
+                                              
+                                                        <button id="GroupCompany" class="btn primary-button">Select Group Company</button>
+                                                
+                                                        }
+                                                        <div class="modal fade" id="bootstrapDialog" tabindex="-1" role="dialog" aria-labelledby="myModal-label" aria-hidden="true"
+                                                             data-url='@Url.Action("SelectGroupCompany","Common")'>
+                                                        </div>
+                                                        }
+</div>
                         </div>
                     </div>
                 </div>

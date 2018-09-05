@@ -12,7 +12,7 @@
 .accordion-body {
     display: none;
     padding: 10px 20px 14px;
-    background-color: #2f1818;
+    background-color: aliceblue;
     border-radius: 5px;
     margin: 4px 0;
 }
@@ -24,7 +24,7 @@
 
 .accordion-header {
     /*background: #ff1818 url("../img/accordion-closed.png") no-repeat 20px center;*/
-    background: #ff1818 url('../../../images/accordion-closed.png') no-repeat 20px center;
+    background: #000 url('../../../images/accordion-closed.png') no-repeat 20px center;
     margin: 8px 0;
     color: #fff;
     padding: 8px 40px;
@@ -35,7 +35,7 @@
 
     .accordion-header.open {
         /*background: #ff1818 url("../img/accordion-opened.png") no-repeat 19px center;*/
-        background: #ff1818 url('../../../images/accordion-opened.png') no-repeat 19px center;
+        background: #000 url('../../../images/accordion-opened.png') no-repeat 19px center;
         color: #fff;
         font-weight: bold
     }
