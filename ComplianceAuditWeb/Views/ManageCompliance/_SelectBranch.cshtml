@@ -41,10 +41,12 @@
         @Html.AntiForgeryToken()
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @*@if (TempData["Message"] != null)
+        @if (Model != null)
+        {
+        @*@if (@ViewBag.Message != null)
         {
             <p class="alert alert-warning">@TempData["Message"]</p>
-            <p style="color:red">@TempData["Message"]</p>
+            <p style="color:red;text-align:center">@ViewBag.Message</p>
         }*@
 
         <div class="col-xs-6 subSelect ">
@@ -73,7 +75,7 @@
                             {
                                 if (Convert.ToInt32(item.Value) == Model.branchid)
                                 {
-                                    
+
                             <div class="col-sm-3 QueList">
                                 <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h4>
                                 <div class="queContainer">
@@ -96,7 +98,7 @@
                             {
                                 <div class="col-sm-3 QueList">
                                     <div class="queContainer">
-                                        <a href="@Url.Action("AssignRules", "ManageCompliance", new { branchid=Model.branchid,vendorid = item.Company_Id,vendorname=item.Company_Name })">
+                                        <a href="@Url.Action("AssignRules", "ManageCompliance", new { branchid = Model.branchid, vendorid = item.Company_Id, vendorname = item.Company_Name })">
                                             <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
                                             <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
                                         </a>
@@ -109,6 +111,8 @@
                     </div>
                 </div>
             }
+            
         </div>
+        }
     </div>
 }

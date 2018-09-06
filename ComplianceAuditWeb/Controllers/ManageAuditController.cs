@@ -30,44 +30,49 @@ namespace ComplianceAuditWeb.Controllers
 
             OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
             int groupid = Convert.ToInt32(Session["GroupCompanyId"]);
-            string xmldata = client.getCompanyListDropDown(groupid);
-            DataSet ds = new DataSet();
-            ds.ReadXml(new StringReader(xmldata));
-            model.companyList = new List<SelectListItem>();
-            if (ds.Tables.Count > 0)
+            if (groupid != 0)
             {
-                model.companyid = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
-                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                string xmldata = client.getCompanyListDropDown(groupid);
+                DataSet ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+                model.companyList = new List<SelectListItem>();
+                if (ds.Tables.Count > 0)
                 {
-                    model.companyList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                    model.companyid = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
+                    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                    {
+                        model.companyList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                    }
                 }
-            }
-            model.BranchList = new List<SelectListItem>();
-            xmldata = client.GeSpecifictBranchList(model.companyid);
-            ds = new DataSet();
-            ds.ReadXml(new StringReader(xmldata));
-            if (ds.Tables.Count > 0)
-            {
-                model.branchid = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
-                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                model.BranchList = new List<SelectListItem>();
+                xmldata = client.GeSpecifictBranchList(model.companyid);
+                ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+                if (ds.Tables.Count > 0)
                 {
-                    model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                    model.branchid = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
+                    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                    {
+                        model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                    }
                 }
-            }
 
-            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
-            xmldata = vendorServiceClient.GetAssignedVendorsforBranch(model.branchid);
-            ds = new DataSet();
-            ds.ReadXml(new StringReader(xmldata));
-            if (ds.Tables.Count > 0)
-            {
-                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+                xmldata = vendorServiceClient.GetAssignedVendorsforBranch(model.branchid);
+                ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+                if (ds.Tables.Count > 0)
                 {
-                    model.VendorList.Add(new Organization { Company_Name = Convert.ToString(row["Company_Name"]), Company_Id = Convert.ToInt32(row["Vendor_ID"]), logo = Convert.ToString(row["logo"]) });
+                    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                    {
+                        model.VendorList.Add(new Organization { Company_Name = Convert.ToString(row["Company_Name"]), Company_Id = Convert.ToInt32(row["Vendor_ID"]), logo = Convert.ToString(row["logo"]) });
+                    }
                 }
+                else
+                    TempData["Message"] = "No Vendors assigned for the selected branch.";
             }
             else
-                TempData["Message"] = "No Vendors assigned for the selected branch.";
+                ModelState.AddModelError("", ConfigurationManager.AppSettings["SelectGroupCompany"]);
 
             return View("_SelectBranch", model);
         }
@@ -268,7 +273,7 @@ namespace ComplianceAuditWeb.Controllers
             AuditService.AuditServiceClient client = new AuditService.AuditServiceClient();
             
             client.insertAuditEntries(model);
-           var result = "";
+            var result = "Success";
             return Json(result);
         }
     }
