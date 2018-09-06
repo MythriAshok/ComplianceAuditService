@@ -25,40 +25,15 @@ namespace ComplianceAuditWeb.Models
         public int CompanyID { get; set; }
         public string CompanyName { get; set; }
         public string ChildCompanyName { get; set; }
-        //public string ComplianceType { get; set; }
-        //public List<SelectListItem> ComplianceTypeList { get; set; }
-        //public int[] ComplianceTypeID { get; set; }
-        //public string IndustryType { get; set; }
+
         public List<SelectListItem> IndustryTypeList { get; set; }
-        // public int IndustryTypeID { get; set; }
-
-        //public string[] TpeofAuditList { get; set; }
-
-        //public List<SelectListItem> ComplianceAuditTypeList { get; set; }
-        //public int[] ComplianceAuditTypeID { get; set; }
+       
 
         public List<SelectListItem> ComplianceList { get; set; }
         public int[] ComplianceID { get; set; }
-        public int SingleComplianceID { get; set; }
 
-        public enum Auditingfrequency
-        {
-            Quarterly,
-            Half_Yearly,
-            Annually
-        }
+      
 
-        //public enum IndustryType
-        //{
-        //    IT,
-        //    Manufacturing,
-        //    HeadQuarter
-        //}
-
-        //public enum AuditType
-        //{
-        //    LabourAudit,
-        //    StatutoryAudit
-        //}
+     
     }
 }

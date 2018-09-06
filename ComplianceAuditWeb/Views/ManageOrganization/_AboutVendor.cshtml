@@ -35,7 +35,7 @@
         }
         <div class="pull-right fa fa-pull-right" style="font-size:large">
             <i class="fa fa-plus"></i><font style="font-size:14px; color:dimgray; font-family:Arial">
-                @Html.ActionLink("Create New", "AddVendor", new { Orgid = Model.ParentCompanyID })
+                @Html.ActionLink("Add Vendor", "AddVendor", new { Orgid = Model.ParentCompanyID })
             </font>
         </div>
 
@@ -74,7 +74,8 @@
         <ul class="list-inline continueBtn">
             <li>
                 @Html.ActionLink("Modify", "UpdateVendor", new { OrgID = Model.CompanyID }, new { @class = "btn primary-button" })
-                <input type="submit" value="Cancel" class="btn primary-button">
+
+                <input type="submit" value="Cancel" onclick="SelectCompanyForVendor" class="btn primary-button">
                 <span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
                 @Html.ActionLink("Delete", "DeleteVendorUnderCompany",  new{ Orgid = Model.CompanyID },
          new { @onclick = "return confirm('Are you sure you want to delete?');", @class = "btn primary-button" })

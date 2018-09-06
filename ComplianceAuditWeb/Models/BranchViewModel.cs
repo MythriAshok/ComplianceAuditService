@@ -14,7 +14,6 @@ namespace ComplianceAuditWeb.Models
         public Organization organization { get; set; }
         public BranchLocation branch { get; set; }
         public string branchAuditingFrequency { get; set; }
-       // public TypeOfBranch branchType { get; set; }
      
         public List<SelectListItem> Country { get; set; }
         public List<SelectListItem> State { get; set; }
@@ -44,10 +43,10 @@ namespace ComplianceAuditWeb.Models
 
         public List<SelectListItem> ComplianceList { get; set; }
         public int[] ComplianceID { get; set; }
-        public int SingleComplianceID { get; set; }
+        //public int SingleComplianceID { get; set; }
 
-        public int[] currentID { get; set; }
-        public List<SelectListItem> currentList { get; set; }
+       // public int[] currentID { get; set; }
+        //public List<SelectListItem> currentList { get; set; }
 
 
         public int[] assignedID { get; set; }
@@ -59,15 +58,5 @@ namespace ComplianceAuditWeb.Models
         public string BranchName { get; set; }
 
     }
-    public enum BranchAuditingfrequency
-    {
-        Quarterly,
-        Half_Yearly,
-        Annually
-    }
-    public enum TypeOfBranch
-    {
-        Sales_Office,
-        Head_Office
-    }
+   
 }

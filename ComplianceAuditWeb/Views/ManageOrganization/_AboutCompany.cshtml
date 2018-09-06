@@ -50,7 +50,7 @@
     <div class="pull-right fa fa-pull-right" style="font-size:large">
 
         <i class="fa fa-plus"></i><font style="font-size:14px; color:dimgray; font-family:Arial">
-            @Html.ActionLink("Create New", "AddCompany", new { Orgid = Model.ParentCompanyID })
+            @Html.ActionLink("Add Company", "AddCompany", new { Orgid = Model.ParentCompanyID })
         </font>
 
         @*@TempData["ParentCompanyID"] = Model.ParentCompanyID;*@
@@ -152,7 +152,7 @@
 
         </li>
         <li>
-            @Html.ActionLink("Cancel", "SelectGroupCompany", new { Orgid = Model.ParentCompanyID }, new { @class = "btn primary-button" })
+            @Html.ActionLink("Back", "SelectGroupCompany", new { Orgid = Model.ParentCompanyID }, new { @class = "btn primary-button" })
 
         </li>
 

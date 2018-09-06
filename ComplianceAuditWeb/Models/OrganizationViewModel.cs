@@ -12,33 +12,13 @@ namespace ComplianceAuditWeb.Models
     public class OrganizationViewModel
     {
         public Organization organization { get; set; }
-       // public BranchLocation branch { get; set; }
-       // public CompanyDetails companydetails { get; set; }
-       // public  List<SelectListItem> Country { get; set; }
+   
 
-      //  public List<SelectListItem>  State { get; set; }
-       // public List<SelectListItem>  City { get; set; }
+      
 
-        public enum AuditingFrequency
-        {
-            Quarterly,
-            Half_Yearly,
-            Annaully
-        }
+       
 
-        public enum IndustryType
-        {
-           IT,
-           Manufacturing
-        }
-
-        public enum BranchType
-        {
-            Sales_Office,
-            Manufacturing,
-            Service
-           
-        }
+      
 
 
     }

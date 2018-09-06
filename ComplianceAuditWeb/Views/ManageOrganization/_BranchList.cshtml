@@ -49,17 +49,18 @@
 }
 
 <ul class="breadcrumb ML15">
-    <li><a href="/ManageOrganization/SelectCompany">Branch Management</a></li>
+    <li><a href="/Common/dashboard?pid=9">Branch Management</a></li>
     <li>List Of Branches</li>
 </ul>
 <h2 class="ML15">List Of Branches</h2>
 
 <div class="mid_content_sec">
+
     @if (TempData["Company"] != null)
     {
-        <center>
-            <p id="successMessage">@TempData["Company"] @TempData["Success"]</p>
-        </center>
+    <center>
+        <p id="successMessage">@TempData["Company"] @TempData["Success"]</p>
+    </center>
     }
     @*@if (TempData["Branch'sCompanyName"] != null)
         {
@@ -69,30 +70,36 @@
         }*@
     @if (ViewBag.MessageBranch != string.Empty && ViewBag.Success != string.Empty)
     {
-        <center>
-            <p id="successMessage"> @ViewBag.Success @ViewBag.MessageBranch</p>
-        </center>
+    <center>
+        <p id="successMessage"> @ViewBag.Success @ViewBag.MessageBranch</p>
+    </center>
     }
     else if (ViewBag.Success != string.Empty)
     {
-        <center>
-            <p id="successMessage">@ViewBag.Success</p>
-        </center>
+    <center>
+        <p id="successMessage">@ViewBag.Success</p>
+    </center>
     }
     else
     {
-        <center>
-            <p id="successMessage" style="color:red">@ViewBag.NotFound</p>
-        </center>
+    <center>
+        <p id="successMessage" style="color:red">@ViewBag.NotFound</p>
+    </center>
     }
-    <div class="pull-right fa fa-pull-right" style="font-size:large">
-        <i class="fa fa-plus"></i><font style="font-size:14px; color:dimgray; font-family:Arial">
 
-            @Html.ActionLink("Add Branch", "AddBranch", new { Orgid = Model.organization.Parent_Company_Id })
-        </font>
-    </div>
     @using (Html.BeginForm())
     {
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        if (Model != null)
+        {
+
+        <div class="pull-right fa fa-pull-right" style="font-size:large">
+            <i class="fa fa-plus"></i><font style="font-size:14px; color:dimgray; font-family:Arial">
+          
+                @Html.ActionLink("Add Branch", "AddBranch", new { Orgid = Model.organization.Parent_Company_Id })
+          
+            </font>
+        </div>
         <div class="col-xs-10 subSelect ">
             <div class="input-field">
 
@@ -106,9 +113,11 @@
 
         <div class="col-xs-10 subSelect ">
             <div class="input-field">
-
+                @if (Model.CompanyID != 0)
+                {
                 @Html.Label("Company")
                 @Html.DropDownListFor(model => model.CompanyID, Model.CompaniesList, new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
+                }
             </div>
         </div>
         @Html.HiddenFor(m => m.GroupCompanyID);
@@ -120,7 +129,7 @@
             <div class="tab-content">
                 <div id="home" class="tab-pane fade in active">
                     <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h2>
-                    @if (Model.viewmodel.Count != 0)
+                    @if (Model.viewmodel != null)
                     {
                         var listcount = 0;
 
@@ -134,7 +143,7 @@
                                     @*@item.OrganizationID = @Session["BranchID"];*@
                                     @if (item.Is_Active == false)
                                     {
-                                        <a href="@Url.Action("ActivateBranch", "ManageOrganization", new { Orgid = item.BranchID})"
+                                        <a href="@Url.Action("ActivateBranch", "ManageOrganization", new { Orgid = item.BranchID })"
                                            onclick="return confirm('Are you sure you want to activate?')">
                                             <i class="fa fa-ban" style="color:black"></i>
                                         </a>
@@ -162,7 +171,7 @@
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
-                            if (4 % listcount == 0)
+                            if (4 - listcount == 0)
                             {
                                 <div class="clearfix"></div>
 
@@ -184,6 +193,8 @@
             </div>
 
         </div>
+    }
+
     }
 </div>
 
