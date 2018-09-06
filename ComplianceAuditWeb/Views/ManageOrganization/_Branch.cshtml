@@ -481,15 +481,24 @@
                     <input type="submit" value="@button" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
 
                     <input type="reset" value="Reset" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
-                    @*@Html.ActionLink("Cancel", "AddBranch", new { Orgid = Model.organization.Organization_Id }, new { @class = "btn primary-button" })*@
-                    <a href="@Url.Action("dashboard","Common",new { pid=9})" class="btn primary-button">Cancel</a>
 
+                    @*@Html.ActionLink("Cancel", "AddBranch", new { Orgid = Model.organization.Organization_Id }, new { @class = "btn primary-button" })*@
+
+                    @if (actionname == "UpdateBranch")
+                    {
+                        <a href="@Url.Action("SelectCompany", "ManageOrganization", new { compid = Model.organization.Parent_Company_Id})" class="btn primary-button">Cancel</a>
+
+                    }
+                    else
+                    {
+                    <a href="@Url.Action("dashboard", "Common", new { pid = 9 })" class="btn primary-button">Cancel</a>
+                    }
                     @*<input type="submit" value="Reset" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
 
-                    <input type="submit" value="Delete" class="btn primary-button"  ><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+            <input type="submit" value="Delete" class="btn primary-button"  ><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
 
 
-                <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="@button">Create<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>*@
+        <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="@button">Create<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>*@
                 </li>
             </ul>
 

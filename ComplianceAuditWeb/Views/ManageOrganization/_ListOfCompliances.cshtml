@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ComplianceAuditWeb.Models.ComplianceIndustryViewModel>
+@{ Layout = null;}
+
+<table class="table">
+    <tr>
+        <th>Country</th>
+
+        <th>Industry Type</th>
+        <th>Compliance Types</th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CountryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IndustryName)
+            </td>
+          
+            <td>
+
+                @foreach (var row in item.MappedComplianceList)
+                {
+                    @Html.DisplayFor(modelItem => row.Text)<br />
+                }
+            </td>
+        </tr>
+    }
+</table>

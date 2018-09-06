@@ -50,7 +50,7 @@
     <div class="pull-right fa fa-pull-right" style="font-size:large">
 
         <i class="fa fa-plus"></i><font style="font-size:14px; color:dimgray; font-family:Arial">
-            @Html.ActionLink("Create New", "AddCompany", new { Orgid = Model.ParentCompanyID })
+            @Html.ActionLink("Add Company", "AddCompany", new { Orgid = Model.ParentCompanyID })
         </font>
 
         @*@TempData["ParentCompanyID"] = Model.ParentCompanyID;*@
@@ -152,7 +152,7 @@
 
         </li>
         <li>
-            @Html.ActionLink("Cancel", "SelectGroupCompany", new { Orgid = Model.ParentCompanyID }, new { @class = "btn primary-button" })
+            @Html.ActionLink("Back", "SelectGroupCompany", new { Orgid = Model.ParentCompanyID }, new { @class = "btn primary-button" })
 
         </li>
 
@@ -172,7 +172,7 @@
 
                         @foreach (var item in Model.AboutCompany)
                         {
-                            <div class="col-sm-3 QueList">
+                            <div class="col-sm-6 QueList">
                                 <div class="queContainer">
                                     @*@item.OrganizationID = @Session["BranchID"];*@
                                     @if (item.Is_Active == false)
@@ -233,7 +233,7 @@
                         <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">List of Vendors:</h4>
                         @foreach (var item in Model.AboutBranch)
                         {
-                            <div class="col-sm-3 QueList">
+                            <div class="col-sm-6 QueList">
                                 <div class="queContainer">
                                     <a href="@Url.Action("AboutVendor", "ManageOrganization", new { id = item.OrganizationID })">
                                         <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>

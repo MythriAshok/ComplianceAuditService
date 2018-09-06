@@ -151,7 +151,19 @@
 
     }
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    if (ViewBag.AMessage != null)
+    {
+        <center>
+            <p style="color:green">@ViewBag.AMessage</p>
+        </center>
+    }
+    if (ViewBag.MessageDeallocated != null)
+    {
+        <center>
 
+            <p style="color:green">@ViewBag.MessageDeallocated</p>
+        </center>
+    }
 
     <div class="col-xs-4 subSelect ">
         <div class="input-field">
@@ -197,7 +209,6 @@
 
             @Html.HiddenFor(m => m.assignedID)
             @Html.HiddenFor(m => m.VendorID)
-            @Html.HiddenFor(m => m.currentID)
 
         </div>
     </div>

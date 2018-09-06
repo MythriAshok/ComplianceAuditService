@@ -12,7 +12,6 @@ namespace ComplianceAuditWeb.Models
     public class VendorViewModel
     {
         public Organization organization { get; set; }
-       // public BranchLocation branch { get; set; }
         public CompanyDetails companydetails { get; set; }
         public List<SelectListItem> Country { get; set; }
         public List<SelectListItem> State { get; set; }
@@ -31,35 +30,12 @@ namespace ComplianceAuditWeb.Models
 
         public List<SelectListItem> ComplianceList { get; set; }
         public int[] ComplianceID { get; set; }
-        public int SingleComplianceID { get; set; }
 
 
-        //public string[] TpeofAuditList { get; set; }
-
-        //public List<SelectListItem> ComplianceAuditTypeList { get; set; }
-        //public int[] ComplianceAuditTypeID { get; set; }
         public List<SelectListItem> IndustryTypeList { get; set; }
 
         
 
-        public enum Auditingfrequency
-        {
-            Quarterly,
-            Half_Yearly,
-            Annually
-        }
-
-        public enum IndustryType
-        {
-            IT,
-            Manufacturing,
-            HeadQuarter
-        }
-
-        //public enum AuditType
-        //{
-        //    LabourAudit,
-        //    StatutoryAudit
-        //}
+      
     }
 }

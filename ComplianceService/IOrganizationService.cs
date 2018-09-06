@@ -158,6 +158,9 @@ namespace ComplianceService
         [OperationContract]
 
         int updateComplianceTypesMappedWithIndustryType(ComplianceType CompType);
+        [OperationContract]
+
+        string GetMappedCompliance(int ComplianceID);
 
 
     }
