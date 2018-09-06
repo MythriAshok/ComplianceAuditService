@@ -4,7 +4,10 @@
 <div class="">
     <div class="modal-title" style="margin: 10px;">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        @{ string submit = "Save";}
+        @{ string submit = "Save";
+            string Title = Model.Compliance.Comp_Category + " Title";
+            string Description = Model.Compliance.Comp_Category + " Description";
+            }
         @if (Model.Compliance.Compliance_Xref_ID != 0)
         {
         <h2>Update @Model.Compliance.Comp_Category</h2>
@@ -32,7 +35,7 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="col-xs-12 subSelect ">
         <div class="input-field">
-            @Html.Label("Title", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.Label(Title, new { @class = "floating-label" })<span style="color:red">*</span>
 
             @Html.TextBoxFor(model => model.Compliance.Compliance_Title, new { @class = "inputMaterial ui - autocomplete - input" })
             <span id="loading_data_icon"></span>
@@ -51,7 +54,7 @@
     <div class="clearfix"></div>
     <div class="col-xs-12 subSelect ">
         <div class="input-field">
-            @Html.Label("Description", new { @class = "floating-label" })
+            @Html.Label(Description, new { @class = "floating-label" })
 
             @Html.TextAreaFor(model => model.Compliance.Comp_Description, new { @class = "inputMaterial ui - autocomplete - input" })
             <span id="loading_data_icon"></span>
