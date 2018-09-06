@@ -122,8 +122,13 @@
                     <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h2>
                     @if (Model.viewmodel.Count != 0)
                     {
+                        var listcount = 0;
+
                         foreach (var item in Model.viewmodel)
                         {
+
+                            listcount++;
+
                             <div class="col-sm-3 QueList">
                                 <div class="queContainer">
                                     @*@item.OrganizationID = @Session["BranchID"];*@
@@ -157,6 +162,11 @@
                                     <div class="clearfix"></div>
                                 </div>
                             </div>
+                            if (4 % listcount == 0)
+                            {
+                                <div class="clearfix"></div>
+
+                            }
                         }
                     }
                     else

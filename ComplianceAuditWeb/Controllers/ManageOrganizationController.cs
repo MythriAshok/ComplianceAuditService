@@ -2386,7 +2386,10 @@ namespace ComplianceAuditWeb.Controllers
                 model.CompaniesList.Add(new SelectListItem { Text = "-- Select Company --", Value = "0" });
                 if (dsCompanyList.Tables.Count > 0)
                 {
-                    model.CompanyID = Convert.ToInt32(dsCompanyList.Tables[0].Rows[0]["Org_Hier_ID"]);
+                    if (model.CompanyID == 0)
+                    {
+                        model.CompanyID = Convert.ToInt32(dsCompanyList.Tables[0].Rows[0]["Org_Hier_ID"]);
+                    }
                    // model.ChildCompanyName = Convert.ToString(dsCompanyList.Tables[0].Rows[0]["Company_Name"]);
                     foreach (System.Data.DataRow row in dsCompanyList.Tables[0].Rows)
                     {
