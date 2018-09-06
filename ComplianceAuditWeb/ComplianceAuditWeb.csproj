@@ -775,6 +775,7 @@
     <Content Include="Views\ManageAudit\_auuditentry.cshtml" />
     <Content Include="Views\ManageOrganization\View1.cshtml" />
     <Content Include="Views\ManageOrganization\_MapComplianceTypes.cshtml" />
+    <Content Include="Views\ManageOrganization\_ListOfCompliances.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

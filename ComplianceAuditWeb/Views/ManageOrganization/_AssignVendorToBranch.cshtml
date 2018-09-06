@@ -151,7 +151,19 @@
 
     }
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    if (TempData["Assigned"] != null)
+    {
+        <center>
+            <p style="color:green">@TempData["Assigned"]</p>
+        </center>
+    }
+    if (ViewBag.MessageDeallocated != null)
+    {
+        <center>
 
+            <p style="color:green">@ViewBag.MessageDeallocated</p>
+        </center>
+    }
 
     <div class="col-xs-4 subSelect ">
         <div class="input-field">

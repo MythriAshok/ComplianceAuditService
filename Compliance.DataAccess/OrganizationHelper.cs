@@ -1044,6 +1044,30 @@ namespace Compliance.DataAccess
             return ComplianceID;
         }
 
+        public DataSet getMappedComplianceType(int ComplianceID)
+        {
+            DataSet dsMappedCompliance = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getCompanyLists", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Compliance_Type_ID", ComplianceID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsMappedCompliance);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsMappedCompliance;
+        }
+
+
     }
 
 

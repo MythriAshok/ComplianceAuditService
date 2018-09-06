@@ -930,6 +930,21 @@ namespace ComplianceService
             }
             return complianceID;
         }
+
+        public string GetMappedCompliance(int ComplianceID)
+        {
+            return bindMappedCompliance(ComplianceID);
+        }
+
+        private string bindMappedCompliance(int ComplianceID)
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsCompliancetypes = OrganizationHelper.getMappedComplianceType(ComplianceID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCompliancetypes = utilityHelper.ConvertNullsToEmptyString(dsCompliancetypes);
+            string xmlCompaniesList = dsCompliancetypes.GetXml();
+            return xmlCompaniesList;
+        }
     }
 }
 

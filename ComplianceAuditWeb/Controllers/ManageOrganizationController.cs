@@ -1556,7 +1556,15 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult UpdateBranch(BranchViewModel BranchVM, HttpPostedFileBase file)
         {
-            BranchVM.organization.logo = Convert.ToString(Session["Logo"]);
+            try
+            {
+                BranchVM.organization.logo = Convert.ToString(Session["Logo"]);
+            }
+            catch(Exception)
+            {
+                return View("ErrorPage");
+
+            }
             if (file != null)
             {
                 CommonController common = new CommonController();
@@ -2242,70 +2250,78 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult SelectGroupCompany()
         {
             Models.ListOfGroupCompanies model = new ListOfGroupCompanies();
-            model.GroupCompaniesList = new List<SelectListItem>();
-            List<ListOfGroupCompanies> companylist = new List<ListOfGroupCompanies>();
 
-
-
-
-            if (Convert.ToInt32(Session["GroupCompanyID"]) != 0)
+            try
             {
+                model.GroupCompaniesList = new List<SelectListItem>();
+                List<ListOfGroupCompanies> companylist = new List<ListOfGroupCompanies>();
 
 
-                var id = Request.QueryString["Orgid"];
-            if (id != null)
-            {
-                model.GroupCompanyID = Convert.ToInt32(id);
 
-            }
-            model.GroupCompanyID = Convert.ToInt32(Session["GroupCompanyID"]);
-            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
-            string strXMLGroupCompanyList = organizationservice.getParticularGroupCompaniesList(Convert.ToInt32(Session["GroupCompanyID"]));//
-            DataSet dsGroupCompanyList = new DataSet();
-            dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
-            model.GroupCompanyName = Convert.ToString(dsGroupCompanyList.Tables[0].Rows[0]["Company_Name"]);
 
-            string strxmlCompanies = organizationservice.GeSpecifictCompaniesList(Convert.ToInt32(Session["GroupCompanyID"]));
-            DataSet dsSpecificCompaniesList = new DataSet();
-            dsSpecificCompaniesList.ReadXml(new StringReader(strxmlCompanies));
-            if (Convert.ToInt32(Session["GroupCompanyID"]) != 0)
-            {
-                if (dsSpecificCompaniesList.Tables.Count > 0)
+                if (Convert.ToInt32(Session["GroupCompanyID"]) != 0)
                 {
-                    DataView dv = new DataView(dsSpecificCompaniesList.Tables[0]);
-                    dv.Sort = "Is_Active desc";
-                    DataTable dtdeactive = dv.ToTable();
 
-                    foreach (System.Data.DataRow row in dtdeactive.Rows)
+
+                    var id = Request.QueryString["Orgid"];
+                    if (id != null)
                     {
-                        ListOfGroupCompanies listOfCompany = new ListOfGroupCompanies
-                        {
-                            OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
-                            CompanyName = row["Company_Name"].ToString(),
-                            IsActive = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
-                            Logo = row["logo"].ToString()
+                        model.GroupCompanyID = Convert.ToInt32(id);
 
-                        };
-                        companylist.Add(listOfCompany);
+                    }
+                    model.GroupCompanyID = Convert.ToInt32(Session["GroupCompanyID"]);
+                    OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+                    string strXMLGroupCompanyList = organizationservice.getParticularGroupCompaniesList(Convert.ToInt32(Session["GroupCompanyID"]));//
+                    DataSet dsGroupCompanyList = new DataSet();
+                    dsGroupCompanyList.ReadXml(new StringReader(strXMLGroupCompanyList));
+                    model.GroupCompanyName = Convert.ToString(dsGroupCompanyList.Tables[0].Rows[0]["Company_Name"]);
+
+                    string strxmlCompanies = organizationservice.GeSpecifictCompaniesList(Convert.ToInt32(Session["GroupCompanyID"]));
+                    DataSet dsSpecificCompaniesList = new DataSet();
+                    dsSpecificCompaniesList.ReadXml(new StringReader(strxmlCompanies));
+                    if (Convert.ToInt32(Session["GroupCompanyID"]) != 0)
+                    {
+                        if (dsSpecificCompaniesList.Tables.Count > 0)
+                        {
+                            DataView dv = new DataView(dsSpecificCompaniesList.Tables[0]);
+                            dv.Sort = "Is_Active desc";
+                            DataTable dtdeactive = dv.ToTable();
+
+                            foreach (System.Data.DataRow row in dtdeactive.Rows)
+                            {
+                                ListOfGroupCompanies listOfCompany = new ListOfGroupCompanies
+                                {
+                                    OrganizationID = Convert.ToInt32(row["Org_Hier_ID"]),
+                                    CompanyName = row["Company_Name"].ToString(),
+                                    IsActive = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
+                                    Logo = row["logo"].ToString()
+
+                                };
+                                companylist.Add(listOfCompany);
+                            }
+                        }
+                    }
+                    model.listOfGroups = companylist;
+                    Session["GroupCompany"] = model.GroupCompaniesList;
+
+
+                    model.CompanyName = Convert.ToString(TempData["CName"]);
+                    ViewBag.MessageCompany = model.CompanyName;
+
+                    ViewBag.Success = Convert.ToString(TempData["Success"]);
+                    if (model.listOfGroups.Count == 0)
+                    {
+                        ViewBag.NotFound = "No companies found";
                     }
                 }
+                else
+                {
+                    ModelState.AddModelError("", ConfigurationManager.AppSettings["SelectGroupCompany"]);
+                }
             }
-            model.listOfGroups = companylist;
-            Session["GroupCompany"] = model.GroupCompaniesList;
-
-
-            model.CompanyName = Convert.ToString(TempData["CName"]);
-            ViewBag.MessageCompany = model.CompanyName;
-
-            ViewBag.Success = Convert.ToString(TempData["Success"]);
-            if (model.listOfGroups.Count == 0)
+            catch(Exception)
             {
-                ViewBag.NotFound = "No companies found";
-            }
-        }
-        else
-            {
-                ModelState.AddModelError("", ConfigurationManager.AppSettings["SelectGroupCompany"]);
+                return View("ErrorPage");
             }
             return View("_CompanyList", model);
         }
@@ -2852,8 +2868,9 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult AboutVendor(int id)
         {
             AboutCompanyViewModel aboutCompanyViewModel = new AboutCompanyViewModel();
+            try
+            {
 
-           
 
                 OrgService.OrganizationServiceClient organizationServiceClient = new OrgService.OrganizationServiceClient();
                 string aboutcompany = organizationServiceClient.getCompanyListsforBranch(id);
@@ -2883,11 +2900,11 @@ namespace ComplianceAuditWeb.Controllers
                 dsbranchList.ReadXml(new StringReader(branchListofCompany));
                 aboutCompanyViewModel.CompaniesList = new List<SelectListItem>();
                 if (dsbranchList.Tables.Count > 0)
-            {
-                DataView dv = new DataView(dsbranchList.Tables[0]);
-                dv.Sort = "Is_Active desc";
-                DataTable dtdeactive = dv.ToTable();
-                foreach (System.Data.DataRow row in dtdeactive.Rows)
+                {
+                    DataView dv = new DataView(dsbranchList.Tables[0]);
+                    dv.Sort = "Is_Active desc";
+                    DataTable dtdeactive = dv.ToTable();
+                    foreach (System.Data.DataRow row in dtdeactive.Rows)
                     {
                         AboutCompanyViewModel listOfBranch = new AboutCompanyViewModel
                         {
@@ -2902,7 +2919,7 @@ namespace ComplianceAuditWeb.Controllers
                     }
 
                 }
-                
+
                 aboutCompanyViewModel.AboutGroupCompany = branchList;
                 if (TempData["Success"] != null)
                 {
@@ -2912,6 +2929,11 @@ namespace ComplianceAuditWeb.Controllers
                 {
                     ViewBag.Message = "No branch associated with";
                 }
+            }
+            catch(Exception)
+            {
+                return View("ErrorPage");
+            }
             
           
 
@@ -3371,7 +3393,7 @@ namespace ComplianceAuditWeb.Controllers
                                 {
                                     int[] Orgid = branchViewModel.VendorID;
                                     result = Convert.ToBoolean(vendorServiceClient.DeactivateVendorForBranch((Orgid), branchViewModel.BranchID));
-                                    ViewBag.MessageDeallocated = "de-allocated successfully";
+                                    ViewBag.MessageDeallocated = "de-allocated successfully.";
                                 }
                             }
 
@@ -3389,7 +3411,7 @@ namespace ComplianceAuditWeb.Controllers
                         {
                             TempData["VendorName"] = branchViewModel.VendorName;
                         }
-                        return View("_AssignVendorToBranch");
+                        return RedirectToAction("AssignDessignVendors");
                     }
                     else
                     {
@@ -3416,103 +3438,161 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult IndustryTypeMapCompliance()
         {
             ComplianceIndustryViewModel model = new ComplianceIndustryViewModel();
-            OrgService.OrganizationServiceClient organizationService = new OrgService.OrganizationServiceClient();
-           // model.IndustryType = new Compliance.DataObject.IndustryType();
-            model.ComplianceType = new Compliance.DataObject.ComplianceType();
-            string strXMLCountries = organizationService.GetCountryList();
-            DataSet dsCountries = new DataSet();
-            dsCountries.ReadXml(new StringReader(strXMLCountries));
-            model.CountryList = new List<SelectListItem>();
-            model.CountryList.Add(new SelectListItem { Text = "-- Select Country --", Value = "" });
-            if (dsCountries.Tables.Count > 0)
+            try
             {
-                foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
+                OrgService.OrganizationServiceClient organizationService = new OrgService.OrganizationServiceClient();
+                model.MappedComplianceList = new List<SelectListItem>();
+                // model.IndustryType = new Compliance.DataObject.IndustryType();
+                model.ComplianceType = new Compliance.DataObject.ComplianceType();
+                string strXMLCountries = organizationService.GetCountryList();
+                DataSet dsCountries = new DataSet();
+                dsCountries.ReadXml(new StringReader(strXMLCountries));
+                model.CountryList = new List<SelectListItem>();
+                model.CountryList.Add(new SelectListItem { Text = "-- Select Country --", Value = "" });
+                if (dsCountries.Tables.Count > 0)
                 {
-                    model.CountryList.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
+                    foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
+                    {
+                        model.CountryList.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
+                    }
+                }
+
+                string strXMLIndustryType = organizationService.GetIndustryType();
+                DataSet dsIndustryType = new DataSet();
+                dsIndustryType.ReadXml(new StringReader(strXMLIndustryType));
+                model.IndustryTypeList = new List<SelectListItem>();
+                model.IndustryTypeList.Add(new SelectListItem { Text = "-- Industry Type --", Value = "" });
+                if (dsIndustryType.Tables.Count > 0)
+                {
+                    foreach (System.Data.DataRow row in dsIndustryType.Tables[0].Rows)
+                    {
+                        model.IndustryTypeList.Add(new SelectListItem() { Text = row["Industry_Name"].ToString(), Value = row["Industry_Type_ID"].ToString() });
+                    }
+                }
+
+                model.AuditfrequencyList = new List<SelectListItem>();
+                model.AuditfrequencyList.Add(new SelectListItem { Text = "-- Audit Frequency --", Value = "" });
+                model.ComplianceType.StartDate = DateTime.Now;
+                model.ComplianceType.EndDate = model.ComplianceType.StartDate.AddYears(1);
+
+
+
+                List<ComplianceIndustryViewModel> compmodel = new List<ComplianceIndustryViewModel>();
+                string strXMLMappedCompliance = organizationService.GetComplianceType(model.ComplianceType.IndustryTypeID, model.ComplianceType.CountryID);
+                DataSet dsMappedCompliance = new DataSet();
+                dsMappedCompliance.ReadXml(new StringReader(strXMLMappedCompliance));
+                if (model.ComplianceType.IndustryTypeID > 0 && model.ComplianceType.CountryID > 0)
+                {
+                    if (dsMappedCompliance.Tables.Count > 0)
+                    {
+                        //foreach (System.Data.DataRow row in dsMappedCompliance.Tables[0].Rows)
+                        //{
+                        //    model.MappedComplianceList.Add(new SelectListItem() { Text = row["Compliance_Type_Name"].ToString(), Value = row["Compliance_Type_ID"].ToString() });
+                        //}
+
+                        foreach (System.Data.DataRow row in dsMappedCompliance.Tables[0].Rows)
+                        {
+                            model = new ComplianceIndustryViewModel();
+                            model.ComplianceType = new ComplianceType();
+                            model.MappedComplianceList = new List<SelectListItem>();
+
+                            model.IndustryName = Convert.ToString(Convert.ToInt32(row["Industry_Name"]));
+                            model.CountryName = Convert.ToString(Convert.ToInt32(row["Country_Name"]));
+
+
+                            model.ComplianceType.ComplianceTypeID = Convert.ToInt32(row["compliance_Type_ID"]);
+                            model.ComplianceType.ComplianceTypeName = Convert.ToString(row["Compliance_Type_Name"]);
+                        }
+                    }
                 }
             }
-
-            string strXMLIndustryType = organizationService.GetIndustryType();
-            DataSet dsIndustryType = new DataSet();
-            dsIndustryType.ReadXml(new StringReader(strXMLIndustryType));
-            model.IndustryTypeList = new List<SelectListItem>();
-            model.IndustryTypeList.Add(new SelectListItem { Text = "-- Industry Type --", Value = "" });
-            if (dsIndustryType.Tables.Count > 0)
+            catch(Exception)
             {
-                foreach (System.Data.DataRow row in dsIndustryType.Tables[0].Rows)
-                {
-                    model.IndustryTypeList.Add(new SelectListItem() { Text = row["Industry_Name"].ToString(), Value = row["Industry_Type_ID"].ToString() });
-                }
+                return View("ErrorPage");
             }
+           
 
-            model.AuditfrequencyList = new List<SelectListItem>();
-            model.AuditfrequencyList.Add(new SelectListItem { Text = "-- Audit Frequency --", Value = "" });
-            model.ComplianceType.StartDate = DateTime.Now;
-            model.ComplianceType.EndDate = model.ComplianceType.StartDate.AddYears(1);
+
+
+
+
 
             return View("_MapComplianceTypes", model);
         }
         [HttpPost]
         public ActionResult IndustryTypeMapCompliance(ComplianceIndustryViewModel model)
         {
-            
-            OrgService.OrganizationServiceClient organizationService = new OrgService.OrganizationServiceClient();
-            int id = organizationService.insertComplianceTypesMappedWithIndustryType(model.ComplianceType);
+            try
+            {
+                OrgService.OrganizationServiceClient organizationService = new OrgService.OrganizationServiceClient();
+                int id = organizationService.insertComplianceTypesMappedWithIndustryType(model.ComplianceType);
+            }
+            catch(Exception)
+            {
+                return View("ErrorPage");
+            }
             return RedirectToAction("dashboard", "common", new { pid = 0 });
 
         }
 
         [HttpGet]
-        public ActionResult UpdateIndustryTypeMapCompliance()
+        public ActionResult UpdateIndustryTypeMapCompliance(int ComplianceID)
         {
             ComplianceIndustryViewModel model = new ComplianceIndustryViewModel();
-            model.ComplianceType = new Compliance.DataObject.ComplianceType();
-
-            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
-            string strxmlUpdatedData = client.getMappedCompalince(ComplianceID);
-            DataSet dsUpdatedData = new DataSet();
-            dsUpdatedData.ReadXml(new StringReader(strxmlUpdatedData));
-
-            model.ComplianceType.ComplianceTypeID = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Compliance_Type_ID"]);
-            model.ComplianceType.ComplianceTypeName = Convert.ToString(dsUpdatedData.Tables[0].Rows[0]["Compliance_Type_Name"]);
-            model.ComplianceType.EndDate = Convert.ToDateTime(dsUpdatedData.Tables[0].Rows[0]["End_Date"]);
-            model.ComplianceType.StartDate = Convert.ToDateTime(dsUpdatedData.Tables[0].Rows[0]["Start_Date"]);
-
-            string strXMLIndustryType = client.GetIndustryType();
-            DataSet dsIndustryType = new DataSet();
-            dsIndustryType.ReadXml(new StringReader(strXMLIndustryType));
-            model.IndustryTypeList = new List<SelectListItem>();
-            model.IndustryTypeList.Add(new SelectListItem { Text = "-- Industry Type --", Value = "" });
-            if (dsIndustryType.Tables.Count > 0)
+            try
             {
-                foreach (System.Data.DataRow row in dsIndustryType.Tables[0].Rows)
+                model.ComplianceType = new Compliance.DataObject.ComplianceType();
+
+                OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
+                string strxmlUpdatedData = client.GetMappedCompliance(ComplianceID);
+                DataSet dsUpdatedData = new DataSet();
+                dsUpdatedData.ReadXml(new StringReader(strxmlUpdatedData));
+
+                model.ComplianceType.ComplianceTypeID = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Compliance_Type_ID"]);
+                model.ComplianceType.ComplianceTypeName = Convert.ToString(dsUpdatedData.Tables[0].Rows[0]["Compliance_Type_Name"]);
+                model.ComplianceType.EndDate = Convert.ToDateTime(dsUpdatedData.Tables[0].Rows[0]["End_Date"]);
+                model.ComplianceType.StartDate = Convert.ToDateTime(dsUpdatedData.Tables[0].Rows[0]["Start_Date"]);
+
+                string strXMLIndustryType = client.GetIndustryType();
+                DataSet dsIndustryType = new DataSet();
+                dsIndustryType.ReadXml(new StringReader(strXMLIndustryType));
+                model.IndustryTypeList = new List<SelectListItem>();
+                model.IndustryTypeList.Add(new SelectListItem { Text = "-- Industry Type --", Value = "" });
+                if (dsIndustryType.Tables.Count > 0)
                 {
-                    model.ComplianceType.IndustryTypeID = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Industry_Type_ID"]);
-                    model.IndustryTypeList.Add(new SelectListItem() { Text = row["Industry_Name"].ToString(), Value = row["Industry_Type_ID"].ToString() });
+                    foreach (System.Data.DataRow row in dsIndustryType.Tables[0].Rows)
+                    {
+                        model.ComplianceType.IndustryTypeID = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Industry_Type_ID"]);
+                        model.IndustryTypeList.Add(new SelectListItem() { Text = row["Industry_Name"].ToString(), Value = row["Industry_Type_ID"].ToString() });
+                    }
                 }
+
+
+
+                string strXMLCountries = client.GetCountryList();
+                DataSet dsCountries = new DataSet();
+                dsCountries.ReadXml(new StringReader(strXMLCountries));
+                model.CountryList = new List<SelectListItem>();
+                model.CountryList.Add(new SelectListItem { Text = "-- Select Country --", Value = "" });
+                if (dsCountries.Tables.Count > 0)
+                {
+                    foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
+                    {
+                        model.ComplianceType.CountryID = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Country_ID"]);
+                        model.CountryList.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
+                    }
+                }
+                model.AuditfrequencyList = new List<SelectListItem>();
+                model.AuditfrequencyList.Add(new SelectListItem { Text = "-- Audit Frequency --", Value = "" });
+                model.ComplianceType.AuditingFrequency = Convert.ToString(dsUpdatedData.Tables[0].Rows[0]["Audit_Frequency"]);
+
+                model.ComplianceType.StartDate = DateTime.Now;
+                model.ComplianceType.EndDate = model.ComplianceType.StartDate.AddYears(1);
             }
-
-
-
-            string strXMLCountries = client.GetCountryList();
-            DataSet dsCountries = new DataSet();
-            dsCountries.ReadXml(new StringReader(strXMLCountries));
-            model.CountryList = new List<SelectListItem>();
-            model.CountryList.Add(new SelectListItem { Text = "-- Select Country --", Value = "" });
-            if (dsCountries.Tables.Count > 0)
+            catch(Exception)
             {
-                foreach (System.Data.DataRow row in dsCountries.Tables[0].Rows)
-                {
-                    model.ComplianceType.CountryID = Convert.ToInt32(dsUpdatedData.Tables[0].Rows[0]["Country_ID"]);
-                    model.CountryList.Add(new SelectListItem() { Text = row["Country_Name"].ToString(), Value = row["Country_ID"].ToString() });
-                }
+                return View("ErrorPage");
             }
-            model.AuditfrequencyList = new List<SelectListItem>();
-            model.AuditfrequencyList.Add(new SelectListItem { Text = "-- Audit Frequency --", Value = "" });
-            model.ComplianceType.AuditingFrequency = Convert.ToString(dsUpdatedData.Tables[0].Rows[0]["Audit_Frequency"]);
-
-            model.ComplianceType.StartDate = DateTime.Now;
-            model.ComplianceType.EndDate = model.ComplianceType.StartDate.AddYears(1);
 
             return View("_MapComplianceTypes", model);
 
@@ -3521,22 +3601,30 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult UpdateIndustryTypeMapCompliance(ComplianceIndustryViewModel model)
         {
-
-            OrgService.OrganizationServiceClient organizationService = new OrgService.OrganizationServiceClient();
-            int id = organizationService.updateComplianceTypesMappedWithIndustryType(model.ComplianceType);
-            if(id!= 0)
+            try
             {
-                TempData["Success"] = "Updated successfully";
+                OrgService.OrganizationServiceClient organizationService = new OrgService.OrganizationServiceClient();
+                int id = organizationService.updateComplianceTypesMappedWithIndustryType(model.ComplianceType);
+                if (id != 0)
+                {
+                    TempData["Success"] = "Updated successfully";
+                }
+                else
+                {
+                    TempData["Success"] = "Could not update successfully";
+
+
+                }
             }
-            else
+            catch(Exception)
             {
-                TempData["Success"] = "Could not update successfully";
-                
-
+                return View("ErrorPage");
             }
             return RedirectToAction("dashboard", "common", new { pid = 0 });
 
         }
+
+    
     }
 }
 

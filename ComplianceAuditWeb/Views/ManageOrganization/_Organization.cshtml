@@ -67,7 +67,7 @@
     </script>
 
     <script type="text/javascript">
-        $("#organization_Description").bind("")
+        $('#organization_Description').charCounter(1000);
     </script>
 }
 
@@ -140,7 +140,7 @@
                 <div class="input-field">
 
                     @Html.Label("Group Company Description", new { @class = "floating-label" })
-                    @Html.TextAreaFor(m => m.organization.Description, new { @class = "inputMaterial ui - autocomplete - input" })
+                    @Html.TextAreaFor(m => m.organization.Description, new { @class = "inputMaterial ui - autocomplete - input"})
 
                 </div>
             </div>

@@ -322,6 +322,12 @@ namespace ComplianceAuditWeb.OrgService {
             "pe", ReplyAction="http://tempuri.org/IOrganizationService/updateComplianceTypesMappedWithIndustryTy" +
             "peResponse")]
         System.Threading.Tasks.Task<int> updateComplianceTypesMappedWithIndustryTypeAsync(Compliance.DataObject.ComplianceType CompType);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetMappedCompliance", ReplyAction="http://tempuri.org/IOrganizationService/GetMappedComplianceResponse")]
+        string GetMappedCompliance(int ComplianceID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetMappedCompliance", ReplyAction="http://tempuri.org/IOrganizationService/GetMappedComplianceResponse")]
+        System.Threading.Tasks.Task<string> GetMappedComplianceAsync(int ComplianceID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -749,6 +755,14 @@ namespace ComplianceAuditWeb.OrgService {
         
         public System.Threading.Tasks.Task<int> updateComplianceTypesMappedWithIndustryTypeAsync(Compliance.DataObject.ComplianceType CompType) {
             return base.Channel.updateComplianceTypesMappedWithIndustryTypeAsync(CompType);
+        }
+        
+        public string GetMappedCompliance(int ComplianceID) {
+            return base.Channel.GetMappedCompliance(ComplianceID);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetMappedComplianceAsync(int ComplianceID) {
+            return base.Channel.GetMappedComplianceAsync(ComplianceID);
         }
     }
 }
