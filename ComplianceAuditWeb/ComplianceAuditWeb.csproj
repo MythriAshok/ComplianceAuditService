@@ -254,6 +254,7 @@
     <Content Include="Content\assets\images\kpi_alert.png" />
     <Content Include="Content\assets\images\kpi_funnel.png" />
     <Content Include="Content\assets\images\logo_new.png" />
+    <Content Include="Content\assets\images\logo_new1.png" />
     <Content Include="Content\assets\images\manageActs.png" />
     <Content Include="Content\assets\images\manageBranch.png" />
     <Content Include="Content\assets\images\manageCompany.png" />

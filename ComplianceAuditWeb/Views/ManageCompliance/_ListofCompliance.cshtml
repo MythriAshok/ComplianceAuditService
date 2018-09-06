@@ -41,29 +41,6 @@
         });
     </script>
     <script>
-        //$(".btn-bootstrap-dialog").click(function () {
-        //    var $buttonClicked = $(this);
-        //    var options = {
-        //        "backdrop": "static",
-        //        keyboard: true
-        //    };
-        //    $.ajax({
-        //        type: "GET",
-        //        url: $(this).data("url"),
-        //        contentType: "application/json; charset=utf-8",
-        //        datatype: "json",
-        //        success: function (data) {
-        //            $('#myModalContent').html(data);
-        //            $('#myModal').modal(options);
-        //            $('#myModal').modal('show');
-        //        },
-        //        error: function () {
-        //            alert("Not able to load content.")
-        //        }
-        //    });
-        //});
-
-
         $(document).ready(function () {
             $('[data-behavior=accordion]').simpleAccordion({ cbOpen: accOpen, cbClose: accClose });
         });
@@ -76,92 +53,185 @@
         }
 
     </script>
-    <style>
-        #updatepopup {
-       
-            color: white;
-        }      
-    </style>
-}
-<div class="mid_content_sec">
-    @if (ViewBag.Message != null)
-    {
-        @*<p class="alert alert-success">@ViewBag.Message</p>*@
-        <p id="successMessage">@ViewBag.Message</p>
-    }
-    @if (TempData["Error"] != null)
-    {
-        @*<p class="alert alert-warning">@TempData["Error"]</p>*@
-        <p style="color:red;">@TempData["Error"]</p>
-    }
-    <div style="margin-right:10px;text-align:right">
-        <span class="fa fa-plus"></span>@Html.ActionLink("Add Act", "CreateActs", new { @class = "btn primary-button" })
-    </div>
-    @if (Model.Actslist != null)
-    {
-        foreach (var Act in Model.Actslist)
-        {
-            <div class="accordion-group" data-behavior="accordion">
+    <script>
+        function reloadthepage(_countryid) {
+            var url = "/Common/getCompliance";
 
-                <p class="accordion-header default-open">
-                  
-                    <a class="modal-link" id="updatepopup" href=@Url.Action("UpdateAct", "ManageCompliance", new { id = Act.Compliance_Xref_ID })>
-                        <i class="fa fa-legal"></i>
-                        @Html.DisplayFor(modelItem => Act.Compliance_Title)
-                    </a>
-                    @*@Html.ActionLink("Edit", "UpdateAct", "ComplianceManagement", new { id = Act.Compliance_Xref_ID }, new { @class = "modal-link btn btn-success" })*@
-                    @*<button class="btn-bootstrap-dialog" id="updatepopup" data-url="@Url.Action("UpdateAct", "ComplianceManagement",new { id=Act.Compliance_Xref_ID})"><i class="fa fa-edit"></i></button>*@
-                </p>
+            $.ajax({
+                url: url,
+                data: { countryid: _countryid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }        
+    </script>
+    <script>
+        function GetCompliance() {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#ComplianceID").html(procemessage).show();
+            var countryid = $("#countryid").val();
+            var industrytypeid = $("#industrytypeid").val();
+            var url = "/Common/getCompliance";
 
-                <div class="accordion-body">
-                    @foreach (var Rule in Model.Rulelist)
-                    {
+            $.ajax({
+                url: url,
+                data: { countryid: countryid, industrytypeid: industrytypeid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
 
-                        if (Act.Compliance_Xref_ID == Rule.Compliance_Parent_ID)
-                        {
-                            <p>
-                                
-                                <a class="modal-link"  href=@Url.Action("Updatelineitems", "ManageCompliance", new { id = Rule.Compliance_Xref_ID})>
-                                    <i class="fa fa-leanpub"></i>
-                                    @Html.DisplayFor(modelItem => Rule.Compliance_Title)
-                                </a>
-                                @*<button class="btn-bootstrap-dialog" id="updaterulepopup" data-url='@Url.Action("UpdateRule", "ComplianceManagement", new { id = Rule.Compliance_Xref_ID})'><i class="fa fa-edit"></i></button>*@
-                            </p>
-
-                        }
+                    var markup = "<option value='0' >-- Select Compliance Type --</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
                     }
 
-                    <ul class="list-inline accordinBtn">
-                        <li>
-                            <a class="modal-link btn primary-button" href=@Url.Action("Createlineitems", "ManageCompliance", new { Parentid = Act.Compliance_Xref_ID, type = "Rule" })><i class="fa fa-book">Add Rule</i></a>
-                            <a class="modal-link btn primary-button" href=@Url.Action("Createlineitems", "ManageCompliance", new { Parentid = Act.Compliance_Xref_ID, type = "Form" })><i class="fa fa-book">Add Form</i></a>
-                            <a class="modal-link btn primary-button" href=@Url.Action("Createlineitems", "ManageCompliance", new { Parentid = Act.Compliance_Xref_ID, type = "Register" })><i class="fa fa-book">Add Register</i></a>
-                            <a class="modal-link btn primary-button" href=@Url.Action("Createlineitems", "ManageCompliance", new { Parentid = Act.Compliance_Xref_ID, type = "Licence" })><i class="fa fa-book">Add License</i></a>
-                            <a class="modal-link btn primary-button" href=@Url.Action("Createlineitems", "ManageCompliance", new { Parentid = Act.Compliance_Xref_ID, type = "Return" })><i class="fa fa-book">Add Return</i></a>
-                        </li>
-                    </ul>
-                </div>
-                    
-                  
-                </div>
-
+                    $("#compliancetypeid").html("").show();
+                    $("#compliancetypeid").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
         }
-    }
-    else
-    {
-        @*<p class="alert alert-success">@TempData["Message"]</p>*@
-        <p id="successMessage">@TempData["Message"]</p>
-    }
-    <div class="clearfix"></div>
-    <ul class="list-inline accordinBtn">
-        <li>
-            @*@Html.ActionLink("Add Act", "CreateActs", new { @class = "btn primary-button" })*@
-            <a href="@Url.Action("CreateActs","ManageCompliance")" class="btn primary-button">Add Act</a>
-            <a href="@Url.Action("dashboard","common",new { pid=14})" class="btn primary-button">Cancel</a>
-        </li>
-    </ul>
+        function getfilteract(_compliancetypeid) {
+            var countryid = $("#countryid").val();
+            window.loaction.href = window.location.href + " ? countryid =" + countryid + " & compliancetypeid=" + _compliancetypeid;
+        }
+        //function getactlist(_compliancetypeid) {
+        //    var procemessage = "<option value='0'> Please wait...</option>";
+        //    $("#ComplianceID").html(procemessage).show();
+        //    var countryid = $("#countryid").val();
+        //    var url = "/ManageCompliance/ListofCompliance";
 
-    @*<div id='myModal' class="modal fade" role="dialog" aria-hidden="true">
+        //    $.ajax({
+        //        url: url,
+        //        data: { countryid: countryid, compliancetypeid: _compliancetypeid },
+        //        cache: false,
+        //        type:"GET",
+        //        success: function (data) {
+        //            var data = "Success";
+        //        },
+        //        error: function (reponse) {
+        //            alert("error : " + reponse);
+        //        }
+        //    });
+        //}
+    </script>
+    <style>
+        #updatepopup {
+            color: white;
+        }
+    </style>
+}
+    <div class="mid_content_sec">
+        @if (ViewBag.Message != null)
+        {
+            @*<p class="alert alert-success">@ViewBag.Message</p>*@
+            <p id="successMessage">@ViewBag.Message</p>
+        }
+        @if (TempData["Error"] != null)
+        {
+            @*<p class="alert alert-warning">@TempData["Error"]</p>*@
+            <p style="color:red;">@TempData["Error"]</p>
+        }
+        <div style="margin-right:10px;text-align:right">
+            <span class="fa fa-plus"></span>@Html.ActionLink("Add Act", "CreateActs", new { @class = "btn primary-button" })
+        </div>
+
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Country", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(model => model.countryid, Model.CountryList, new { @onchange = "javascript:GetCompliance();reloadthepage(this.value);", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.countryid, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Industry Type", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(model => model.industrytypeid, Model.IndustryTypeList, new { @onchange = "javascript:GetCompliance(); ", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.industrytypeid, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Compliance Type", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(model => model.compliancetypeid, Model.ComplianceTypeList, new { @onchange = "getfilteract(this.value);", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.compliancetypeid, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+        <div class="clearfix"></div>
+        @if (Model.Actslist != null)
+        {
+            foreach (var Act in Model.Actslist)
+            {
+                <div class="accordion-group" data-behavior="accordion">
+
+                    <p class="accordion-header default-open">
+
+                        <a class="modal-link" id="updatepopup" href=@Url.Action("UpdateAct", "ManageCompliance", new { id = Act.Compliance_Xref_ID })>
+                            <i class="fa fa-legal"></i>
+                            @Html.DisplayFor(modelItem => Act.Compliance_Title)
+                        </a>
+                        @*@Html.ActionLink("Edit", "UpdateAct", "ComplianceManagement", new { id = Act.Compliance_Xref_ID }, new { @class = "modal-link btn btn-success" })*@
+                        @*<button class="btn-bootstrap-dialog" id="updatepopup" data-url="@Url.Action("UpdateAct", "ComplianceManagement",new { id=Act.Compliance_Xref_ID})"><i class="fa fa-edit"></i></button>*@
+                    </p>
+
+                    <div class="accordion-body">
+                        @foreach (var Rule in Model.Rulelist)
+                        {
+
+                            if (Act.Compliance_Xref_ID == Rule.Compliance_Parent_ID)
+                            {
+                                <p>
+
+                                    <a class="modal-link" href=@Url.Action("Updatelineitems", "ManageCompliance", new { id = Rule.Compliance_Xref_ID})>
+                                        <i class="fa fa-leanpub"></i>
+                                        @Html.DisplayFor(modelItem => Rule.Compliance_Title)
+                                    </a>
+                                    @*<button class="btn-bootstrap-dialog" id="updaterulepopup" data-url='@Url.Action("UpdateRule", "ComplianceManagement", new { id = Rule.Compliance_Xref_ID})'><i class="fa fa-edit"></i></button>*@
+                                </p>
+
+                            }
+                        }
+
+                        <ul class="list-inline accordinBtn">
+                            <li>
+                                <a class="modal-link btn primary-button" href=@Url.Action("Createlineitems", "ManageCompliance", new { Parentid = Act.Compliance_Xref_ID, type = "Rule" })><i class="fa fa-book">Add Rule</i></a>
+                                <a class="modal-link btn primary-button" href=@Url.Action("Createlineitems", "ManageCompliance", new { Parentid = Act.Compliance_Xref_ID, type = "Form" })><i class="fa fa-book">Add Form</i></a>
+                                <a class="modal-link btn primary-button" href=@Url.Action("Createlineitems", "ManageCompliance", new { Parentid = Act.Compliance_Xref_ID, type = "Register" })><i class="fa fa-book">Add Register</i></a>
+                                <a class="modal-link btn primary-button" href=@Url.Action("Createlineitems", "ManageCompliance", new { Parentid = Act.Compliance_Xref_ID, type = "Licence" })><i class="fa fa-book">Add License</i></a>
+                                <a class="modal-link btn primary-button" href=@Url.Action("Createlineitems", "ManageCompliance", new { Parentid = Act.Compliance_Xref_ID, type = "Return" })><i class="fa fa-book">Add Return</i></a>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                </div>
+
+            }
+        }
+        else
+        {
+            @*<p class="alert alert-success">@TempData["Message"]</p>*@
+            <p id="successMessage">@TempData["Message"]</p>
+        }
+        <div class="clearfix"></div>
+        <ul class="list-inline accordinBtn">
+            <li>
+                @*@Html.ActionLink("Add Act", "CreateActs", new { @class = "btn primary-button" })*@
+                <a href="@Url.Action("CreateActs","ManageCompliance")" class="btn primary-button">Add Act</a>
+                <a href="@Url.Action("dashboard","common",new { pid=14})" class="btn primary-button">Cancel</a>
+            </li>
+        </ul>
+
+        @*<div id='myModal' class="modal fade" role="dialog" aria-hidden="true">
             <div class="modal-dialog-centered" style="width:900px;height:400px; padding:10px;">
                 <div class="modal-content" style="padding:10px;">
                     <div id='myModalContent' class="modal-body" style="padding:10px">
@@ -170,9 +240,9 @@
             </div>
         </div>*@
 
-    <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">  
-        <div class="modal-content" style="width:800px !important; margin:30px auto !important;border:4px solid darkgray">
+        <div id="modal-container" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-content" style="width:800px !important; margin:30px auto !important;border:4px solid darkgray">
+            </div>
         </div>
     </div>
-</div>
 

@@ -75,13 +75,12 @@
         }
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Act Title", new { @class = "floating-label" })<span style="color:red">*</span>
-
-                @Html.TextBoxFor(model => model.Compliance.Compliance_Title, new { @class = "inputMaterial ui - autocomplete - input" })
-                <span id="loading_data_icon"></span>
-                @Html.ValidationMessageFor(model => model.Compliance.Compliance_Title, "", new { @class = "text-danger" })
+                @Html.Label("Country", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(model => model.Compliance.Country_ID, Model.Countrylist, new { @onchange = "javascript:GetState(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.Compliance.Country_ID, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
                 @Html.Label("Level", new { @class = "floating-label" })<span style="color:red">*</span>
@@ -90,15 +89,17 @@
                 @Html.ValidationMessageFor(model => model.ActTypeID, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Effective Start Date", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.TextBox("Compliance_Effective_Start_Date", String.Format("{0:d}", Model.Compliance.Effective_Start_Date.ToShortDateString()), new { @class = "datefield", type = "date" })
-                @*@Html.EditorFor(model => model.Compliance.Effective_Start_Date)*@
+                @Html.Label("Act Title", new { @class = "floating-label" })<span style="color:red">*</span>
+
+                @Html.TextBoxFor(model => model.Compliance.Compliance_Title, new { @class = "inputMaterial ui - autocomplete - input" })
                 <span id="loading_data_icon"></span>
-                @Html.ValidationMessageFor(model => model.Compliance.Effective_Start_Date, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Compliance.Compliance_Title, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="clearfix"></div>
         <div class="col-xs-12 subSelect ">
             <div class="input-field">
@@ -113,9 +114,11 @@
         <div class="clearfix"></div>
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Country", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.DropDownListFor(model => model.Compliance.Country_ID, Model.Countrylist, new { @onchange = "javascript:GetState(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
-                @Html.ValidationMessageFor(model => model.Compliance.Country_ID, "", new { @class = "text-danger" })
+                @Html.Label("Effective Start Date", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.TextBox("Compliance_Effective_Start_Date", String.Format("{0:d}", Model.Compliance.Effective_Start_Date.ToShortDateString()), new { @class = "datefield", type = "date" })
+                @*@Html.EditorFor(model => model.Compliance.Effective_Start_Date)*@
+                <span id="loading_data_icon"></span>
+                @Html.ValidationMessageFor(model => model.Compliance.Effective_Start_Date, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -140,7 +143,7 @@
         <ul class="list-inline continueBtn">
             <li>
                 <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Save<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
-                <button type="reset" class="btn primary-button" >Reset</button>
+                <button type="reset" class="btn primary-button">Reset</button>
                 <button type="button" data-url="@Url.Action("dashboard","common",new { pid=14})" class="btn primary-button">Cancel</button>
                 @*<a href="@Url.Action("dashboard","common",new { pid=14})" class="btn primary-button">Cancel</a>*@
             </li>

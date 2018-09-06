@@ -270,6 +270,7 @@ namespace ComplianceAuditWeb.Controllers
             model.Org_Hier_Id = Convert.ToInt32(Session["BranchID"]);
             model.Vendor_Id= Convert.ToInt32(Session["Vendorid"]);
             model.Auditor_Id=Convert.ToInt32(Session["UserId"]);
+            model.Version = 0;
             AuditService.AuditServiceClient client = new AuditService.AuditServiceClient();
             
             client.insertAuditEntries(model);
