@@ -55,7 +55,7 @@
     </script>
     <script>
         function reloadthepage(_countryid) {
-            var url = "/Common/getCompliance";
+            var url = "/ManageCompliance/ListofCompliance";
 
             $.ajax({
                 url: url,
@@ -140,16 +140,16 @@
             <p style="color:red;">@TempData["Error"]</p>
         }
         <div style="margin-right:10px;text-align:right">
-            <span class="fa fa-plus"></span>@Html.ActionLink("Add Act", "CreateActs", new { @class = "btn primary-button" })
+            <span class="fa fa-plus"></span>@Html.ActionLink("Add Act", "CreateActs", new { @class = "modal-link btn primary-button" })
         </div>
 
-        <div class="col-xs-4 subSelect ">
+        @*<div class="col-xs-4 subSelect ">
             <div class="input-field">
                 @Html.Label("Country", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.DropDownListFor(model => model.countryid, Model.CountryList, new { @onchange = "javascript:GetCompliance();reloadthepage(this.value);", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.DropDownListFor(model => model.countryid, Model.CountryList, new { @onchange = "javascript:reloadthepage(this.value);", @class = "inputMaterial ui - autocomplete - input" })
                 @Html.ValidationMessageFor(model => model.countryid, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         @*<div class="col-xs-4 subSelect ">
             <div class="input-field">
@@ -226,7 +226,7 @@
         <ul class="list-inline accordinBtn">
             <li>
                 @*@Html.ActionLink("Add Act", "CreateActs", new { @class = "btn primary-button" })*@
-                <a href="@Url.Action("CreateActs","ManageCompliance")" class="btn primary-button">Add Act</a>
+                <a href="@Url.Action("CreateActs","ManageCompliance")" class="modal-link btn primary-button">Add Act</a>
                 <a href="@Url.Action("dashboard","common",new { pid=14})" class="btn primary-button">Cancel</a>
             </li>
         </ul>

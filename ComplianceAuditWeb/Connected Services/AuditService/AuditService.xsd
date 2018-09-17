@@ -170,4 +170,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="getcomplianceonorg">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OrgID" type="xs:int" />
+        <xs:element minOccurs="0" name="VendorID" type="xs:int" />
+        <xs:element minOccurs="0" name="version" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getcomplianceonorgResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getcomplianceonorgResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

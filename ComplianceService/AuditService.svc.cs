@@ -186,6 +186,18 @@ namespace ComplianceService
             return strxmlCompliance;
 
         }
+        public string getcomplianceonorg(int OrgID, int VendorID, int version)
+        {
+            return bindgetComplianceonorg(OrgID, VendorID, version);
+        }
 
+        public string bindgetComplianceonorg(int OrgID, int VendorID, int version)
+        {
+            ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
+            DataSet dsCompliance = complianceAuditHelper.getComlianceAuditonorg(OrgID, VendorID, version);
+            string strxmlCompliance = dsCompliance.GetXml();
+            return strxmlCompliance;
+
+        }
     }
 }

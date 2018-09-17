@@ -96,7 +96,7 @@
                             {
                                 <div class="col-sm-3 QueList">
                                     <div class="queContainer">
-                                        <a href="@Url.Action("Listofvendors", "ComplianceManagement", new { branchid=Model.branchid,vendorid = item.Company_Id,vendorname=item.Company_Name })">
+                                        <a href="@Url.Action("selectauditfrequency", "ManageAudit", new { branchid=Model.branchid,vendorid = item.Company_Id,vendorname=item.Company_Name })">
                                             <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
                                             <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
                                         </a>

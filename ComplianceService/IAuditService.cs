@@ -52,5 +52,8 @@ namespace ComplianceService
 
         string getComplianceActList(int OrgID, int VendorID, int compliancetypeid);
 
+        [OperationContract]
+        string getcomplianceonorg(int OrgID, int VendorID, int version);
+
     }
 }

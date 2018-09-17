@@ -146,7 +146,32 @@ namespace Compliance.DataAccess
             }
             return dsComplianceAudit;
         }
+        
 
+              public DataSet getComlianceAuditonorg(int org_id,int vendor_id,int version)
+        {
+            DataSet dsComplianceAudit = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_get_compliance_audit_on_org", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", org_id);
+                cmd.Parameters.AddWithValue("p_Vendor_ID", vendor_id);
+                cmd.Parameters.AddWithValue("p_Version", version);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsComplianceAudit);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsComplianceAudit;
+        }
         public bool deleteComlianceAudit(int Compliance_Audit_ID)
         {
             bool resultComplianceAudit = false;

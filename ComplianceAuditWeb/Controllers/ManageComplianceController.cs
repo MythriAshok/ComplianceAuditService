@@ -53,7 +53,7 @@ namespace ComplianceAuditWeb.Controllers
             model.Compliance = new ComplianceXref();
             model.Compliance.Compliance_Xref_ID = 0;
             Session["Actmodel"] = model;
-            return View("_AddActs", model);
+            return PartialView("_AddActs", model);
         }
 
         [HttpPost]
@@ -78,7 +78,7 @@ namespace ComplianceAuditWeb.Controllers
 
             model = (ComplianceViewModel)Session["Actmodel"];
             Session.Remove("Actmodel");
-            return View("_AddActs", model);
+            return RedirectToAction("ListofCompliance");
         }
 
         public ActionResult ListofCompliance()
@@ -305,6 +305,7 @@ namespace ComplianceAuditWeb.Controllers
                 text = "Select All",
                 state = new Models.State(true, false, false)
             };
+
             var children = new List<treenode>();
             string xmldata = client.GetActs(0);
             DataSet ds = new DataSet();
@@ -344,32 +345,40 @@ namespace ComplianceAuditWeb.Controllers
             {
                 List<treenode> ruleslist = (new JavaScriptSerializer()).Deserialize<List<treenode>>(selectedItems);
                 int[] rules = new int[ruleslist.Count];
-                
                 int i = 0;
-                DataSet data = (DataSet)Session["AssignedActs"];
-                int[] Deleterules = new int[data.Tables[0].Rows.Count];
-                //int compliancetyid = Convert.ToInt32(Session["compliancetypeid"]);
                 foreach (var item in ruleslist)
                 {
                     rules[i++] = Convert.ToInt32(item.id);
                 }
-                i = 0;
-                foreach(System.Data.DataRow row in data.Tables[0].Rows)
+                ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
+
+                 
+                DataSet data = (DataSet)Session["AssignedActs"];
+                if (data.Tables.Count > 0     )                
                 {
-                    foreach (var item in rules)
+                    
+                    int[] Deleterules = new int[data.Tables[0].Rows.Count];
+
+                    //int compliancetyid = Convert.ToInt32(Session["compliancetypeid"]);
+
+                    i = 0;
+                    foreach (System.Data.DataRow row in data.Tables[0].Rows)
                     {
-                        if (Convert.ToInt32(row["Compliance_Xref_ID"]) == item)
+                        foreach (var item in rules)
                         {
-                            break;
-                        }
-                        else if (Convert.ToInt32(row["Compliance_Xref_ID"])!=item)
-                        {
-                            Deleterules[i++] = Convert.ToInt32(row["Compliance_Xref_ID"]);
+                            if (Convert.ToInt32(row["Compliance_Xref_ID"]) == item)
+                            {
+                                break;
+                            }
+                            else if (Convert.ToInt32(row["Compliance_Xref_ID"]) != item)
+                            {
+                                Deleterules[i++] = Convert.ToInt32(row["Compliance_Xref_ID"]);
+                            }
                         }
                     }
+                    client.deletexreftypemapping(compliancetypeid, Deleterules);
                 }
-                ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
-                client.deletexreftypemapping(compliancetypeid,Deleterules);
+               
                 client.insertxreftypemapping(rules, compliancetypeid);
             }
             return RedirectToAction("ComplianceActMapping");
@@ -380,13 +389,13 @@ namespace ComplianceAuditWeb.Controllers
         {
             AuditorpageViewModel model = new AuditorpageViewModel();
 
+            model.companyList = new List<SelectListItem>();
+            model.BranchList = new List<SelectListItem>();
+            model.VendorList = new List<Organization>();
             int groupid = Convert.ToInt32(Session["GroupCompanyId"]);
             if (groupid != 0)
             {
                 
-                model.companyList = new List<SelectListItem>();
-                model.BranchList = new List<SelectListItem>();
-                model.VendorList = new List<Organization>();
                 OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
                 string xmldata = client.getCompanyListDropDown(groupid);
                 DataSet ds = new DataSet();

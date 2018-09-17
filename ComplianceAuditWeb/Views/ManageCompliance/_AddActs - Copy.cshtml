@@ -2,8 +2,13 @@
 
 @{
     ViewBag.Title = "Add Acts Page";
-    Layout = null;
 }
+<ul class="breadcrumb ML15">
+    <li><a href="/Common/dashboard?pid=14">Compliance Management</a></li>
+    <li>Act</li>
+</ul>
+<h2 class="ML15">Add Act</h2>
+@section scripts{
     <script language="javascript" type="text/javascript">
         function GetState(_CountryId) {
             var procemessage = "<option value='0'> Please wait...</option>";
@@ -50,19 +55,15 @@
 
         function Visible(_actype) {
             var state = document.getElementById("state");
-            state.style.visibility = _actype > 1 ? "visible" : "hidden";
+            state.style.visibility = _actype >1 ? "visible" : "hidden";
             var city = document.getElementById("city");
-            city.style.visibility = _actype > 2 ? "visible" : "hidden";
+            city.style.visibility = _actype > 2 ? "visible" : "hidden";            
         }
-    </script>
+    </script>   
+}
 
-<div class="">
-    <div class="modal-title" style="margin: 10px;">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h2 class="ML15">Add Act</h2>
-    </div>
-        @using (Html.BeginForm())
-        {
+@using (Html.BeginForm())
+{
     <div class="mid_content_sec">
         @Html.AntiForgeryToken()
 
@@ -139,25 +140,13 @@
         </div>
 
         <div class="clearfix"></div>
-        <div class="modal-footer" style="padding:0px">
-            <ul class="list-inline continueBtn">
-                <li>
-                    <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Save<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
-                    <button type="reset" class="btn primary-button">Reset</button>
-                    <button class="btn primary-button" data-dismiss="modal" id="btnCancel">Cancel</button>
-                    @*<button type="button" data-url="@Url.Action("dashboard","common",new { pid=14})" class="btn primary-button">Cancel</button>*@
-                    @*<a href="@Url.Action("dashboard","common",new { pid=14})" class="btn primary-button">Cancel</a>*@
-                </li>
-            </ul>
-        </div>
-        </div>
-        }
-
+        <ul class="list-inline continueBtn">
+            <li>
+                <button type="submit" class="btn primary-button" id="btnProceed" name="Button" value="Submit">Save<span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span></button>
+                <button type="reset" class="btn primary-button">Reset</button>
+                <button type="button" data-url="@Url.Action("dashboard","common",new { pid=14})" class="btn primary-button">Cancel</button>
+                @*<a href="@Url.Action("dashboard","common",new { pid=14})" class="btn primary-button">Cancel</a>*@
+            </li>
+        </ul>
     </div>
-<script type="text/javascript">
-    $(function () {
-        $('#approve-btn').click(function () {
-            $('#modal-container').modal('hide');
-        });
-    });
-</script>
+}
