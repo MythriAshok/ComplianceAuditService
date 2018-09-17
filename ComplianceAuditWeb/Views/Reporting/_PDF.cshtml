@@ -1,0 +1,110 @@
+﻿@*@model IEnumerable<ComplianceAuditWeb.Models.ReportViewModel>*@
+@model IEnumerable<Compliance.DataObject.ComplianceAudit> 
+@{
+    Layout = null;
+    ViewBag.Title = "Branch Level Reports";
+  
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title </title>
+
+    <link href="~/Content/assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/pagestyle.css" rel="stylesheet" />
+
+    <script src="~/Content/assets/js/bootstrap.js"></script>
+    <script src="~/Content/assets/js/jquery.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-ui.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+</head>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+</style>
+<body>
+    <div class="main_body pull-right none">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="col-md-9"><h1><img src="~/Content/assets/images/logo_new.png" /></h1></div>
+                <div class="col-md-3 pull-right"><h1 class="pull-right"><img src="" alt="" /></h1></div>
+            </div>
+            <h3 class="page-header" style="text-align:center; font-size:large">@ViewBag.Name</h3>
+
+            <div>
+                <table class="table">
+                    <tr>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Audit_Status)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Risk_Category)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Audit_Remarks)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Company_Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Evidences)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Audit_Status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Risk_Category)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Audit_Remarks)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Company_Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Evidences)
+                            </td>
+
+                        </tr>
+                    }
+
+                </table>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

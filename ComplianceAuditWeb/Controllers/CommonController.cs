@@ -338,6 +338,10 @@ namespace ComplianceAuditWeb.Controllers
             }
             List<SelectListItem> cities = new List<SelectListItem>();
             int CID = Convert.ToInt32(countryid);
+            if (industrytypeid == "")
+            {
+                industrytypeid = Convert.ToString(0);
+            }
             int IndustryID = Convert.ToInt32(industrytypeid);
             OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
             string strXMLCompliances = organizationservice.GetComplianceType(CID, IndustryID);
@@ -397,6 +401,49 @@ namespace ComplianceAuditWeb.Controllers
                 
             }
             return Json(cities, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+        public ActionResult GetComplianceToBindGrid(string countryid, string industrytypeid)
+        {
+            List<ComplianceIndustryViewModel> objCompList = new List<ComplianceIndustryViewModel>();
+            if (countryid == "")
+            {
+                countryid = Convert.ToString(0);
+            }
+            int CID = Convert.ToInt32(countryid);
+
+            if (industrytypeid == "")
+            {
+                industrytypeid = Convert.ToString(0);
+            }
+            int IndustryID = Convert.ToInt32(industrytypeid);
+            
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+            string strXMLCompliances = organizationservice.GetComplianceType(CID, IndustryID);
+            DataSet dsCompliances = new DataSet();
+            dsCompliances.ReadXml(new StringReader(strXMLCompliances));
+            if (dsCompliances.Tables.Count > 0)
+            {
+                //ComplianceIndustryViewModel objComp1 = new ComplianceIndustryViewModel();
+                //objComp1.CountryName = Convert.ToString(dsCompliances.Tables[0].Rows[0]["Country_Name"]);
+                //objComp1.IndustryName = dsCompliances.Tables[0].Rows[0]["Industry_Name"].ToString();
+                //objCompList.Add(objComp1);
+                for (int i = 0; i < dsCompliances.Tables[0].Rows.Count; i++)
+                {
+                ComplianceIndustryViewModel objComp = new ComplianceIndustryViewModel();
+
+                    objComp.CountryName = Convert.ToString(dsCompliances.Tables[0].Rows[i]["Country_Name"]);
+                    objComp.IndustryName = dsCompliances.Tables[0].Rows[i]["Industry_Name"].ToString();
+                    objComp.ComplianceType = new ComplianceType();
+                    objComp.ComplianceType.ComplianceTypeName = dsCompliances.Tables[0].Rows[i]["Compliance_Type_Name"].ToString();
+                    objComp.ComplianceType.ComplianceTypeID =Convert.ToInt32( dsCompliances.Tables[0].Rows[i]["Compliance_Type_ID"]);
+                    objCompList.Add(objComp);
+                }
+            }
+            return Json(objCompList, JsonRequestBehavior.AllowGet);
         }
     }
 }

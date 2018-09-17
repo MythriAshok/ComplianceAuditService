@@ -1,0 +1,123 @@
+﻿@{
+    /**/
+
+    ViewBag.Title = "Chart";
+}
+<script src="~/Scripts/chart/exporting.js"></script>
+<script src="~/Scripts/chart/highcharts.js"></script>
+<script src="~/Scripts/chart/highcharts-3d.js"></script>
+@*<script>
+    $(document).ready(
+        function () {
+            var ctx = document.getElementById("mychart")
+        })
+</script>*@
+
+<div class="jumbotron">
+
+
+    <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+
+</div>
+<script>
+    $(document).ready(function () {
+        $.getJSON("/Reporting/GetData", function (data) {
+
+
+            Highcharts.setOptions({
+                colors: ['green', 'red', 'orange',]
+            });
+            $(function () {
+                $('#container').highcharts({
+                    chart: {
+                        type: 'pie',
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        options3d: {
+                            enabled: true,
+                            alpha: 50,
+                            beta: 0
+                        },
+                        id: 'mychart'
+                    },
+                    title: {
+                        text: data.Name + ',' + 'Compliance Status' + ',' + data.Date,
+
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                               
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                }
+                            }
+                        }
+
+                    },
+                    plotOptions: {
+                        series: {
+                            allowPointSelect: true,
+                            size: 300,
+                            depth: 40,
+                            cursor: 'pointer',
+                            formatter: function () {
+                                return Math.round(this.percentage * 100) / 100 + ' %';
+                            },
+                            distance: -30,
+                            color: 'black',
+                            point: {
+                                events: {
+                                    click: function (e) {
+                                        location.href = this.options.url;
+
+                                    }
+                                }
+
+                            }
+                        }
+                    },
+
+
+
+                    series: [{
+
+                        name: 'Rate of Compliance',
+                        colorByPoint: true,
+                        data: [{
+                            name: 'Complianced',
+                            y: data.Complianced,
+                            x: data.ID,
+                            url: '/Reporting/GetBranchReports/?x' + '&x=' + data.ID
+
+                        }, {
+                            name: 'Non-Complianced',
+                            y: data.Non_Complianced,
+                            url: '/Reporting/GetBranchReports'
+                        }, {
+                            name: 'Partially-Complianced',
+                            y: data.Partially_Complianced,
+                            url: '/Reporting/GetBranchReports'
+                        }]
+                    }]
+                });
+            });
+        });
+    });
+
+
+
+
+
+</script>
+
+

@@ -73,55 +73,67 @@
                 </div>
             </div>
         }
-    <div class="clearfix"></div>
-    <div class="new_section_box">
-        <div class="tab-content">
-            <div id="home" class="tab-pane fade in active">
-                <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h2>
-                @if (Model.listOfGroups != null)
-                {
-                    int listcount = 0;
-                    foreach (var item in Model.listOfGroups)
+        <div class="clearfix"></div>
+        <div class="new_section_box">
+            <div class="tab-content">
+                <div id="home" class="tab-pane fade in active">
+                    <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h2>
+                    @if (Model.listOfGroups != null)
                     {
-                        listcount++;
-                        <div class="col-sm-3 QueList">
-                            <div class="queContainer">
-                                <a href="@Url.Action("AboutVendor", "ManageOrganization", new { id = item.OrganizationID })">
+                        int listcount = 0;
+                        foreach (var item in Model.listOfGroups)
+                        {
+                            listcount++;
+                            <div class="col-sm-3 QueList">
+                                <div class="queContainer">
                                     @if (item.IsActive == false)
                                     {
-                                        <i class="fa fa-ban"></i>
+                                        <a href="@Url.Action("ActivateVendorUnderCompany", "ManageOrganization", new { Orgid = item.OrganizationID })"
+                                           onclick="return confirm('Are you sure you want to activate?')">
+                                            <i class="fa fa-ban"></i>
+                                        </a>
                                     }
                                     else
                                     {
-                                        <i class="fa fa-check-circle"></i>
+                                        <a href="@Url.Action("DeactivateVendorUnderCompany", "ManageOrganization", new { Orgid = item.OrganizationID })"
+                                           onclick="return confirm('Are you sure you want to activate?')">
+                                            <i class="fa fa-check-circle"></i>
+                                        </a>
                                     }
-                                    <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
-                                    <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
-                                </a>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        if (4 - listcount == 0)
-                        {
-                            <div class="clearfix"></div>
+                                    <a href="@Url.Action("DeleteVendorUnderCompany", "ManageOrganization", new { Orgid = item.OrganizationID })"
+                                       onclick="return confirm('Are you sure you want to delete?')">
 
+                                        <i class="fa fa-trash pull-right" style="color:red"></i>
+                                    </a>
+                                    <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                                    <a href="@Url.Action("AboutVendor", "ManageOrganization", new { id = item.OrganizationID })">
+
+                                        <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
+                                    </a>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            if (4 - listcount == 0)
+                            {
+                                <div class="clearfix"></div>
+
+                            }
                         }
                     }
-                }
 
-                else
-                {
-                    <h4> @ViewBag.Message</h4>
-                }
+                    else
+                    {
+                        <h4> @ViewBag.Message</h4>
+                    }
 
 
-                <div class="clearfix"></div>
+                    <div class="clearfix"></div>
+
+                </div>
 
             </div>
 
         </div>
-
-    </div>
     }
 </div>
 

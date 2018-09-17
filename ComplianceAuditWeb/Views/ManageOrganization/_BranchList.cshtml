@@ -106,7 +106,7 @@
                 @*@Html.Label("Group Company")*@
                 @*@Html.DropDownListFor(model => model.GroupCompanyID, Model.GroupCompaniesList, new { @onchange = "GetCompany(this.value);", @class = "inputMaterial ui - autocomplete - input" })*@
                 @*@Html.TextBoxFor(model => model.GroupCompanyName, new { @onchange = "GetCompany(this.value);", @class = "inputMaterial ui - autocomplete - input" })*@
-                @Html.TextBoxFor(model => model.GroupCompanyName, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.TextBoxFor(model => model.GroupCompanyName, new { @class = "inputMaterial ui - autocomplete - input", @readonly = "readonly" })
 
             </div>
         </div>
