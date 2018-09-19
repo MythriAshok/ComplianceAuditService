@@ -448,6 +448,7 @@ namespace ComplianceAuditWeb.Controllers
 
                     int CountryID = 0;
                     int IndustryTypeID = 0;
+                    
                     string xmlComplianceType = organizationservice.GetComplianceType(CountryID, IndustryTypeID);
                     DataSet dsCompliance = new DataSet();
                     dsCompliance.ReadXml(new StringReader(xmlComplianceType));
@@ -545,31 +546,31 @@ namespace ComplianceAuditWeb.Controllers
                     {
                         TempData["ParentCompany_ID"] = companyVM.organization.Parent_Company_Id;
                         TempData["Success"] = "created successfully!!!";
-                        BranchViewModel branchViewModel = new BranchViewModel();
-                        branchViewModel.organization = new Organization();
-                        branchViewModel.branch = new BranchLocation();
-                        branchViewModel.organization.Is_Active = true;
-                        branchViewModel.organization.Level = 3;
-                        branchViewModel.organization.Is_Leaf = true;
-                        branchViewModel.organization.Is_Vendor = false;
-                        branchViewModel.organization.Parent_Company_Id = id;
-                        branchViewModel.organization.User_Id = Convert.ToInt32(Session["UserID"]);
-                        branchViewModel.branch.Country_Id = companyVM.branch.Country_Id;
-                        branchViewModel.branch.State_Id = companyVM.branch.State_Id;
-                        branchViewModel.branch.City_Id = companyVM.branch.City_Id;
-                        branchViewModel.organization.Company_Name = "HeadQuarter" + companyVM.organization.Company_Name;
-                        branchViewModel.organization.Type = "Head Quarter";
-                        branchViewModel.branch.Postal_Code = companyVM.branch.Postal_Code;
-                        string strXMLComplianceTyp = organizationClient.GetAssignedComplianceTypes(id);
-                        DataSet dsComplianceTyp = new DataSet();
-                        dsComplianceTyp.ReadXml(new StringReader(strXMLComplianceTyp));
-                        branchViewModel.ComplianceList = new List<SelectListItem>();
-                        foreach (System.Data.DataRow row in dsComplianceTyp.Tables[0].Rows)
-                        {
-                            branchViewModel.ComplianceList.Add(new SelectListItem() { Text = row["Compliance_Type_Name"].ToString(), Value = row["Compliance_Type_ID"].ToString() });
-                        }
-                        int headQuarterid = Convert.ToInt32(organizationClient.insertBranch(branchViewModel.organization, branchViewModel.branch));
-                        int resid = organizationClient.insertcomplianceTypes(companyVM.ComplianceID, headQuarterid);
+                        //BranchViewModel branchViewModel = new BranchViewModel();
+                        //branchViewModel.organization = new Organization();
+                        //branchViewModel.branch = new BranchLocation();
+                        //branchViewModel.organization.Is_Active = true;
+                        //branchViewModel.organization.Level = 3;
+                        //branchViewModel.organization.Is_Leaf = true;
+                        //branchViewModel.organization.Is_Vendor = false;
+                        //branchViewModel.organization.Parent_Company_Id = id;
+                        //branchViewModel.organization.User_Id = Convert.ToInt32(Session["UserID"]);
+                        //branchViewModel.branch.Country_Id = companyVM.branch.Country_Id;
+                        //branchViewModel.branch.State_Id = companyVM.branch.State_Id;
+                        //branchViewModel.branch.City_Id = companyVM.branch.City_Id;
+                        //branchViewModel.organization.Company_Name = "HeadQuarter" + companyVM.organization.Company_Name;
+                        //branchViewModel.organization.Type = "Head Quarter";
+                        //branchViewModel.branch.Postal_Code = companyVM.branch.Postal_Code;
+                        //string strXMLComplianceTyp = organizationClient.GetAssignedComplianceTypes(id);
+                        //DataSet dsComplianceTyp = new DataSet();
+                        //dsComplianceTyp.ReadXml(new StringReader(strXMLComplianceTyp));
+                        //branchViewModel.ComplianceList = new List<SelectListItem>();
+                        //foreach (System.Data.DataRow row in dsComplianceTyp.Tables[0].Rows)
+                        //{
+                        //    branchViewModel.ComplianceList.Add(new SelectListItem() { Text = row["Compliance_Type_Name"].ToString(), Value = row["Compliance_Type_ID"].ToString() });
+                        //}
+                        //int headQuarterid = Convert.ToInt32(organizationClient.insertBranch(branchViewModel.organization, branchViewModel.branch));
+                        //int resid = organizationClient.insertcomplianceTypes(companyVM.ComplianceID, headQuarterid);
 
                         //return RedirectToAction("AboutCompany", new { id = id });
                         return RedirectToAction("SelectGroupCompany", new { id = id });
@@ -2778,7 +2779,7 @@ namespace ComplianceAuditWeb.Controllers
                         {
                             OrganizationID = Convert.ToInt32(row["Vendor_ID"]),
                             CompanyNameList = row["Company_Name"].ToString(),
-                            IndustryType = row["Industry_Type"].ToString(),
+                            IndustryType = row["Type"].ToString(),
                             Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
                             logo = row["logo"].ToString()
                         };
@@ -2800,6 +2801,7 @@ namespace ComplianceAuditWeb.Controllers
             }
             catch(Exception)
             {
+                throw;
                 return View("ErrorPage");
             }
             
@@ -3353,7 +3355,7 @@ namespace ComplianceAuditWeb.Controllers
                             branchViewModel.VendorsID = Citem;
                             result = vendorServiceClient.insertVendorForBranch(branchViewModel.VendorsID, branchViewModel.BranchID,
                                branchViewModel.VendorStartDate, Convert.ToDateTime(branchViewModel.VendorEndDate), branchViewModel.IsVendorActive);
-                            ViewBag.AMessage = "Assigned successfully";
+                           TempData["Assigned"] = "Assigned successfully";
 
                         }
                         else
@@ -3374,7 +3376,7 @@ namespace ComplianceAuditWeb.Controllers
                                             branchViewModel.VendorsID = Citem;
                                             result = vendorServiceClient.insertVendorForBranch(branchViewModel.VendorsID, branchViewModel.BranchID,
                                                branchViewModel.VendorStartDate, Convert.ToDateTime(branchViewModel.VendorEndDate), branchViewModel.IsVendorActive);
-                                            ViewBag.AMessage = "Assigned successfully";
+                                            TempData["Assigned"] = "Assigned successfully";
 
                                         }
                                     }
@@ -3393,7 +3395,7 @@ namespace ComplianceAuditWeb.Controllers
                                 {
                                     int[] Orgid = branchViewModel.VendorID;
                                     result = Convert.ToBoolean(vendorServiceClient.DeactivateVendorForBranch((Orgid), branchViewModel.BranchID));
-                                    ViewBag.MessageDeallocated = "de-allocated successfully.";
+                                    TempData["Deleted"] = "de-allocated successfully.";
                                 }
                             }
 
@@ -3405,7 +3407,7 @@ namespace ComplianceAuditWeb.Controllers
                         Session["CompanyID"] = branchViewModel.CompanyID;
                         Session["BranchID"] = branchViewModel.BranchID;
                         Session["VendorID"] = branchViewModel.VendorID;
-                        TempData["Assigned"] = "Assigned Successfully";
+                        //TempData["Assigned"] = "Assigned Successfully";
                         TempData["BranchName"] = branchViewModel.organization.Company_Name;
                         foreach (var item in branchViewModel.VendorID)
                         {
@@ -3441,7 +3443,7 @@ namespace ComplianceAuditWeb.Controllers
             try
             {
                 OrgService.OrganizationServiceClient organizationService = new OrgService.OrganizationServiceClient();
-                model.MappedComplianceList = new List<SelectListItem>();
+               // model.MappedComplianceList = new List<SelectListItem>();
                 // model.IndustryType = new Compliance.DataObject.IndustryType();
                 model.ComplianceType = new Compliance.DataObject.ComplianceType();
                 string strXMLCountries = organizationService.GetCountryList();
@@ -3477,34 +3479,45 @@ namespace ComplianceAuditWeb.Controllers
 
 
 
-                List<ComplianceIndustryViewModel> compmodel = new List<ComplianceIndustryViewModel>();
-                string strXMLMappedCompliance = organizationService.GetComplianceType(model.ComplianceType.IndustryTypeID, model.ComplianceType.CountryID);
+                // List<ComplianceIndustryViewModel> compmodel = new List<ComplianceIndustryViewModel>();
+
+                //string strXMLMappedCompliance = organizationService.GetComplianceType(model.ComplianceType.IndustryTypeID, model.ComplianceType.CountryID);
+                int CountryID = 0;
+                int IndustryTypeID = 0;
+                string strXMLMappedCompliance = organizationService.GetComplianceType(CountryID, IndustryTypeID);
                 DataSet dsMappedCompliance = new DataSet();
                 dsMappedCompliance.ReadXml(new StringReader(strXMLMappedCompliance));
-                if (model.ComplianceType.IndustryTypeID > 0 && model.ComplianceType.CountryID > 0)
-                {
-                    if (dsMappedCompliance.Tables.Count > 0)
-                    {
-                        //foreach (System.Data.DataRow row in dsMappedCompliance.Tables[0].Rows)
-                        //{
-                        //    model.MappedComplianceList.Add(new SelectListItem() { Text = row["Compliance_Type_Name"].ToString(), Value = row["Compliance_Type_ID"].ToString() });
-                        //}
+                
+              
 
-                        foreach (System.Data.DataRow row in dsMappedCompliance.Tables[0].Rows)
-                        {
-                            model = new ComplianceIndustryViewModel();
-                            model.ComplianceType = new ComplianceType();
-                            model.MappedComplianceList = new List<SelectListItem>();
+                model.ComplianceTypeList = new List<SelectListItem>();
+                //if (model.ComplianceType.IndustryTypeID > 0 && model.ComplianceType.CountryID > 0)
+                //{
+                //    if (dsMappedCompliance.Tables.Count > 0)
+                //    {
+                //        //foreach (System.Data.DataRow row in dsMappedCompliance.Tables[0].Rows)
+                //        //{
+                //        //    model.MappedComplianceList.Add(new SelectListItem() { Text = row["Compliance_Type_Name"].ToString(), Value = row["Compliance_Type_ID"].ToString() });
+                //        //}
 
-                            model.IndustryName = Convert.ToString(Convert.ToInt32(row["Industry_Name"]));
-                            model.CountryName = Convert.ToString(Convert.ToInt32(row["Country_Name"]));
+                //        foreach (System.Data.DataRow row in dsMappedCompliance.Tables[0].Rows)
+                //        {
+                //            model = new ComplianceIndustryViewModel();
+                //            model.ComplianceType = new ComplianceType();
+                //            model.MappedComplianceList = new List<SelectListItem>();
+
+                //            model.IndustryName = Convert.ToString(Convert.ToInt32(row["Industry_Name"]));
+                //            model.CountryName = Convert.ToString(Convert.ToInt32(row["Country_Name"]));
 
 
-                            model.ComplianceType.ComplianceTypeID = Convert.ToInt32(row["compliance_Type_ID"]);
-                            model.ComplianceType.ComplianceTypeName = Convert.ToString(row["Compliance_Type_Name"]);
-                        }
-                    }
-                }
+                //            //model.ComplianceType.ComplianceTypeID = Convert.ToInt32(row["compliance_Type_ID"]);
+                //            //model.ComplianceType.ComplianceTypeName = Convert.ToString(row["Compliance_Type_Name"]);
+
+                //            model.MappedComplianceList.Add(new SelectListItem() { Text = row["Compliance_Type_Name"].ToString(), Value = row["Compliance_Type_ID"].ToString() });
+
+                //        }
+                //    }
+                //}
             }
             catch(Exception)
             {

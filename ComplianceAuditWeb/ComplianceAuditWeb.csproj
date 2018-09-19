@@ -55,6 +55,9 @@
     <Reference Include="Microsoft.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebHelpers.3.2.6\lib\net45\Microsoft.Web.Helpers.dll</HintPath>
     </Reference>
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.7.2\lib\net461\Rotativa.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
@@ -112,6 +115,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="Connected Services\AccessService\AccessService.wsdl" />
     <None Include="Connected Services\AccessService\AccessService.xsd">
       <SubType>Designer</SubType>
@@ -186,6 +190,13 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Connected Services\ReportingService\ReportingService.wsdl" />
+    <None Include="Connected Services\ReportingService\ReportingService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\ReportingService\ReportingService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\UserService\UserService.wsdl" />
     <None Include="Connected Services\UserService\UserService.xsd">
       <SubType>Designer</SubType>
@@ -210,6 +221,13 @@
     <None Include="Connected Services\UserService\configuration91.svcinfo" />
     <None Include="Connected Services\UserService\configuration.svcinfo" />
     <None Include="Connected Services\UserService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\ReportingService\ReportingService.disco" />
+    <None Include="Connected Services\ReportingService\configuration91.svcinfo" />
+    <None Include="Connected Services\ReportingService\configuration.svcinfo" />
+    <None Include="Connected Services\ReportingService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -359,6 +377,10 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Properties\DataSources\Compliance.DataObject.UserGroup.datasource" />
@@ -401,6 +423,9 @@
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile3.pubxml" />
+    <Content Include="Scripts\chart\exporting.js" />
+    <Content Include="Scripts\chart\highcharts-3d.js" />
+    <Content Include="Scripts\chart\highcharts.js" />
     <Content Include="Scripts\free-jqGrid\i18n\grid.locale-ar.js" />
     <Content Include="Scripts\free-jqGrid\i18n\grid.locale-bg.js" />
     <Content Include="Scripts\free-jqGrid\i18n\grid.locale-bs.js" />
@@ -645,6 +670,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\ReportingService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\UserService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -659,6 +689,8 @@
     <Compile Include="Controllers\ManageAccessController.cs" />
     <Compile Include="Controllers\ManageAuditController.cs" />
     <Compile Include="Controllers\ManageComplianceController.cs" />
+    <Compile Include="Controllers\PDFController.cs" />
+    <Compile Include="Controllers\ReportingController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -682,6 +714,7 @@
     <Compile Include="Controllers\ManageOrganizationController.cs" />
     <Compile Include="Models\OrgActivateDeactivateViewModel.cs" />
     <Compile Include="Models\OrganizationViewModel.cs" />
+    <Compile Include="Models\ReportViewModel.cs" />
     <Compile Include="Models\ResetPasswordModel.cs" />
     <Compile Include="Models\RolesViewModel.cs" />
     <Compile Include="Models\treenode.cs" />
@@ -777,7 +810,12 @@
     <Content Include="Views\ManageOrganization\View1.cshtml" />
     <Content Include="Views\ManageOrganization\_MapComplianceTypes.cshtml" />
     <Content Include="Views\ManageOrganization\_ListOfCompliances.cshtml" />
+    <Content Include="Views\Reporting\_SelectBranch.cshtml" />
+    <Content Include="Views\Reporting\_Report.cshtml" />
+    <Content Include="Views\Reporting\_PDF.cshtml" />
+    <Content Include="Views\Reporting\_Chart.cshtml" />
     <Content Include="Views\ManageCompliance\_AddActs - Copy.cshtml" />
+    <Content Include="Views\Reporting\_SelectFrequency.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -790,6 +828,7 @@
     <Folder Include="Views\AboutCompany\" />
     <Folder Include="Views\ManageAccess\" />
     <Folder Include="Views\ManageVendor\" />
+    <Folder Include="Views\PDF\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Compliance.DataObject\Compliance.DataObject.csproj">
@@ -809,6 +848,7 @@
     <WCFMetadataStorage Include="Connected Services\AuditService\" />
     <WCFMetadataStorage Include="Connected Services\ComplianceXrefService\" />
     <WCFMetadataStorage Include="Connected Services\OrgService\" />
+    <WCFMetadataStorage Include="Connected Services\ReportingService\" />
     <WCFMetadataStorage Include="Connected Services\UserService\" />
     <WCFMetadataStorage Include="Connected Services\VendorService\" />
   </ItemGroup>

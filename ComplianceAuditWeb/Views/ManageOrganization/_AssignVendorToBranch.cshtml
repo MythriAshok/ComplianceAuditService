@@ -151,13 +151,13 @@
 
     }
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    if (ViewBag.AMessage != null)
+    if (TempData["Assigned"] != null)
     {
         <center>
             <p style="color:green">@ViewBag.AMessage</p>
         </center>
     }
-    if (ViewBag.MessageDeallocated != null)
+    if (TempData["Deleted"] != null)
     {
         <center>
 

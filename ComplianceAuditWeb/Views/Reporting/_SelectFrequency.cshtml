@@ -1,0 +1,79 @@
+﻿@model ComplianceAuditWeb.Models.Compliancetype_view_model
+
+@{
+    ViewBag.Title = "Auditor Page";
+}
+<ul class="breadcrumb ML15">
+    <li><a href="/Common/dashboard?pid=18">Audit Management</a></li>
+    <li>Auditor Dashboard</li>
+</ul>
+<h2 class="ML15">Auditor Dashboard</h2>
+@using (Html.BeginForm())
+{
+    <div class="mid_content_sec">
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.Label("Name : ")
+        @Html.DisplayFor(model => model.vendorname)
+        <div class="clearfix"></div>
+        @*<div class="col-xs-12 subSelect ">*@
+            @if (Model != null)
+            {
+                <div class="new_section_box">
+                    <div class="tab-content">
+                        <div id="home" class="tab-pane fade in active">
+
+                            @foreach (var item in Model.compliance_Types)
+                            {
+                                <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">@item.Name</h4>
+                                // string enumfrequency = "fullcalender";
+                                DateTime sdate = item.startdate;
+                                DateTime edate = item.enddate;
+                                edate.AddDays((item.enddate.Date.Day) - 1);
+                                int inc = 1;
+                                if (item.auditfrequency == 1)
+                                {
+                                    inc = 12;
+                                }
+                                else if (item.auditfrequency == 2)
+                                {
+                                    inc = 6;
+                                }
+                                else if (item.auditfrequency == 4)
+                                {
+                                    inc = 4;
+                                }
+                                else
+                                {
+                                    inc = 1;
+                                }
+                                for (int i = 0, j = 12; i < item.auditfrequency; i = i + inc, j = j - inc)
+                                {
+                                    <div class="col-sm-3 QueList">
+                                        <div class="queContainer">
+                                            <a href="@Url.Action("GoToChart", "Reporting", new { compliancetypeid = item.complianceid,
+                                                    branchid =Model.branchid,vendorid=Model.vendorid, sdate= @sdate , edate=@edate})">
+                                                <span class="qIcon"></span>
+                                                <h3 class="PB25">@sdate.AddMonths(i).ToShortDateString() - @edate.AddMonths(i + 1).ToShortDateString()</h3>
+                                                </a>
+                                                <div class="clearfix"></div>
+                                            
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class="clearfix"></div>
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+        @*</div>*@
+
+    </div>
+    <div class="clearfix"></div>
+}
