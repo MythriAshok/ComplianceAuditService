@@ -19,6 +19,12 @@
   <wsdl:message name="IAuditService_insertComplianceAudit_OutputMessage">
     <wsdl:part name="parameters" element="tns:insertComplianceAuditResponse" />
   </wsdl:message>
+  <wsdl:message name="IAuditService_insertCustomAuditEntries_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertCustomAuditEntries" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_insertCustomAuditEntries_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertCustomAuditEntriesResponse" />
+  </wsdl:message>
   <wsdl:message name="IAuditService_insertAuditEntries_InputMessage">
     <wsdl:part name="parameters" element="tns:insertAuditEntries" />
   </wsdl:message>
@@ -94,6 +100,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/insertComplianceAudit" message="tns:IAuditService_insertComplianceAudit_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/insertComplianceAuditResponse" message="tns:IAuditService_insertComplianceAudit_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="insertCustomAuditEntries">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/insertCustomAuditEntries" message="tns:IAuditService_insertCustomAuditEntries_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/insertCustomAuditEntriesResponse" message="tns:IAuditService_insertCustomAuditEntries_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="insertAuditEntries">
       <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/insertAuditEntries" message="tns:IAuditService_insertAuditEntries_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/insertAuditEntriesResponse" message="tns:IAuditService_insertAuditEntries_OutputMessage" />
@@ -152,6 +162,15 @@
     </wsdl:operation>
     <wsdl:operation name="insertComplianceAudit">
       <soap:operation soapAction="http://tempuri.org/IAuditService/insertComplianceAudit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="insertCustomAuditEntries">
+      <soap:operation soapAction="http://tempuri.org/IAuditService/insertCustomAuditEntries" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

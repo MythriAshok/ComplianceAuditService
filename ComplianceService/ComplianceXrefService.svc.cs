@@ -26,17 +26,12 @@ namespace ComplianceService
             compliance.Compliance_Parent_ID = 0;
             return helper.insertupdateComplianceXref(compliance,'I');
         }
-        //public int insertSection(ComplianceXref compliance)
-        //{
-        //    ComplianceXrefHelper helper = new ComplianceXrefHelper();
-        //    compliance.Is_Active = true;
-        //    compliance.Is_Header = true;
-        //    compliance.level = 2;
-        //    compliance.Comp_Category = "Section";
-        //    compliance.Comp_Order = 2;
-        //    compliance.Version = 1;
-        //    return helper.insertupdateComplianceXref(compliance,'I');
-        //}
+
+        public int insertCustomxref(ComplianceXref compliance)
+        {
+            ComplianceXrefHelper helper = new ComplianceXrefHelper();
+            return helper.insertupdateCustomComplianceXref(compliance);
+        }
         public int insertRules(ComplianceXref compliance)
         {
             ComplianceXrefHelper helper = new ComplianceXrefHelper();

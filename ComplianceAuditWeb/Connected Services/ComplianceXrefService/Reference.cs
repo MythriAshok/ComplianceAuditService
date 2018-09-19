@@ -27,6 +27,12 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/insertRules", ReplyAction="http://tempuri.org/IComplianceXrefService/insertRulesResponse")]
         System.Threading.Tasks.Task<int> insertRulesAsync(Compliance.DataObject.ComplianceXref compliance);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/insertCustomxref", ReplyAction="http://tempuri.org/IComplianceXrefService/insertCustomxrefResponse")]
+        int insertCustomxref(Compliance.DataObject.ComplianceXref compliance);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/insertCustomxref", ReplyAction="http://tempuri.org/IComplianceXrefService/insertCustomxrefResponse")]
+        System.Threading.Tasks.Task<int> insertCustomxrefAsync(Compliance.DataObject.ComplianceXref compliance);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IComplianceXrefService/UpdateActs", ReplyAction="http://tempuri.org/IComplianceXrefService/UpdateActsResponse")]
         int UpdateActs(Compliance.DataObject.ComplianceXref compliance);
         
@@ -171,6 +177,14 @@ namespace ComplianceAuditWeb.ComplianceXrefService {
         
         public System.Threading.Tasks.Task<int> insertRulesAsync(Compliance.DataObject.ComplianceXref compliance) {
             return base.Channel.insertRulesAsync(compliance);
+        }
+        
+        public int insertCustomxref(Compliance.DataObject.ComplianceXref compliance) {
+            return base.Channel.insertCustomxref(compliance);
+        }
+        
+        public System.Threading.Tasks.Task<int> insertCustomxrefAsync(Compliance.DataObject.ComplianceXref compliance) {
+            return base.Channel.insertCustomxrefAsync(compliance);
         }
         
         public int UpdateActs(Compliance.DataObject.ComplianceXref compliance) {

@@ -16,8 +16,8 @@ namespace ComplianceService
         int insertActs(ComplianceXref compliance);
         [OperationContract]
         int insertRules(ComplianceXref compliance);
-        //[OperationContract]
-        //int insertSection(ComplianceXref compliance);
+        [OperationContract]
+        int insertCustomxref(ComplianceXref compliance);
         [OperationContract]
         int UpdateActs(ComplianceXref compliance);
         [OperationContract]

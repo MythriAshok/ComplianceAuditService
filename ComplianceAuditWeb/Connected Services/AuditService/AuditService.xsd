@@ -25,10 +25,24 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="insertAuditEntries">
+  <xs:element name="insertCustomAuditEntries">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdata" nillable="true" type="q2:ComplianceAudit" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="insertCustomAuditEntriesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="insertCustomAuditEntriesResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="insertAuditEntries">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdata" nillable="true" type="q3:ComplianceAudit" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -42,7 +56,7 @@
   <xs:element name="updateComplianceAudit">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdatalist" nillable="true" type="q3:ArrayOfComplianceAudit" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdatalist" nillable="true" type="q4:ArrayOfComplianceAudit" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -84,7 +98,7 @@
   <xs:element name="insertComplianceAuditTrail">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdatalisttrail" nillable="true" type="q4:ArrayOfComplianceAuditAuditTrail" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdatalisttrail" nillable="true" type="q5:ArrayOfComplianceAuditAuditTrail" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -176,6 +190,8 @@
         <xs:element minOccurs="0" name="OrgID" type="xs:int" />
         <xs:element minOccurs="0" name="VendorID" type="xs:int" />
         <xs:element minOccurs="0" name="version" type="xs:int" />
+        <xs:element minOccurs="0" name="sdate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="edate" type="xs:dateTime" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

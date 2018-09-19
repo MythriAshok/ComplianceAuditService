@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Compliance.DataObject;
+using System.ComponentModel.DataAnnotations;
 
 namespace ComplianceAuditWeb.Models
 {
@@ -23,6 +24,9 @@ namespace ComplianceAuditWeb.Models
     {
         public ComplianceAudit audits { get; set; }
 
+        public string Applicability { get; set; }
+        public string Audit_Status { get; set; }
+        public string Audit_Remarks { get; set; }
         public int compliance_Xref_id { get; set; }
 
         public string Compliance_Title { get; set; }
@@ -32,5 +36,11 @@ namespace ComplianceAuditWeb.Models
         public string Periodicity { get; set; }
 
         public string Non_compliance { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime Start_Date { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime End_Date { get; set; }
+        public int Compliance_Audit_Id { get; set; }
     }
 }

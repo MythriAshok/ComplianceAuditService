@@ -43,6 +43,14 @@ namespace ComplianceService
             return result;
         }
 
+        public bool insertCustomAuditEntries(ComplianceAudit auditdata)
+        {
+            bool result = false;
+            ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
+            result = complianceAuditHelper.insertupdatecustomAuditentries(auditdata);
+            return result;
+        }
+
         public bool updateComplianceAudit(List<ComplianceAudit> auditdatalist)
         {
             bool result = false;
@@ -186,15 +194,15 @@ namespace ComplianceService
             return strxmlCompliance;
 
         }
-        public string getcomplianceonorg(int OrgID, int VendorID, int version)
+        public string getcomplianceonorg(int OrgID, int VendorID, int version,DateTime sdate,DateTime edate)
         {
-            return bindgetComplianceonorg(OrgID, VendorID, version);
+            return bindgetComplianceonorg(OrgID, VendorID, version,sdate,edate);
         }
 
-        public string bindgetComplianceonorg(int OrgID, int VendorID, int version)
+        public string bindgetComplianceonorg(int OrgID, int VendorID, int version,DateTime sdate,DateTime edate)
         {
             ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
-            DataSet dsCompliance = complianceAuditHelper.getComlianceAuditonorg(OrgID, VendorID, version);
+            DataSet dsCompliance = complianceAuditHelper.getComlianceAuditonorg(OrgID, VendorID, version,sdate,edate);
             string strxmlCompliance = dsCompliance.GetXml();
             return strxmlCompliance;
 

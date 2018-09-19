@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Branch";
 }
+
 @section scripts{
     <script language="javascript" type="text/javascript">
         function GetState(_CountryId) {
@@ -25,8 +26,8 @@
                     alert("error : " + reponse);
                 }
             });
-
         }
+
         function GetCity(_StateId) {
             var procemessage = "<option value='0'> Please wait...</option>";
             $("#branch_City_Id").html(procemessage).show();
@@ -47,7 +48,6 @@
                     alert("error : " + reponse);
                 }
             });
-
         }
 
         function GetCompany(_Groupcompid) {
@@ -71,9 +71,7 @@
                     alert("error : " + reponse);
                 }
             });
-
         }
-
 
     </script>
 
