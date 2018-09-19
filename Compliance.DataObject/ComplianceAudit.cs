@@ -15,6 +15,7 @@ namespace Compliance.DataObject
         public DateTime Audit_Date { get; set; }
         [DataType(DataType.Date)]
         public DateTime Start_Date { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime End_Date { get; set; }
         [DataType(DataType.Date)]

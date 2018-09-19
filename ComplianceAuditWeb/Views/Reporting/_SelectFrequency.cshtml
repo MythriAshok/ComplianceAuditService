@@ -54,13 +54,15 @@
                                     <div class="col-sm-3 QueList">
                                         <div class="queContainer">
                                             <a href="@Url.Action("GoToChart", "Reporting", new { compliancetypeid = item.complianceid,
-                                                    branchid =Model.branchid,vendorid=Model.vendorid, sdate= @sdate , edate=@edate})">
-                                                <span class="qIcon"></span>
-                                                <h3 class="PB25">@sdate.AddMonths(i).ToShortDateString() - @edate.AddMonths(i + 1).ToShortDateString()</h3>
+                                                    branchid =Model.branchid,vendorid=Model.vendorid,sd= item.startdate.ToShortDateString(),ed= item.enddate.ToShortDateString()})">
+
+
+                                                    <span class="qIcon"></span>
+                                                    <h3 class="PB25">@sdate.AddMonths(i).ToShortDateString() - @edate.AddMonths(i + 1).ToShortDateString()</h3>
                                                 </a>
                                                 <div class="clearfix"></div>
-                                            
-                                        </div>
+
+</div>
                                     </div>
                                 }
 

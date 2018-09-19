@@ -181,7 +181,12 @@ namespace ComplianceAuditWeb.Controllers
             var id = Request.QueryString["x"];
             int branchid =Convert.ToInt32( id);
             string status = Request.QueryString["n"];
-            //DateTime StartDate =Convert.ToDateTime( Request.QueryString["sd"]);
+            string sdate = Request.QueryString["sd"];
+            //DateTime StartDate = DateTime.ParseExact(sdate,"dd-mm-yyyy", System.Globalization.CultureInfo.InvariantCulture);
+
+            //sdate = string.Format("dd-mm-yyyy",sdate);
+            DateTime StartDate = Convert.ToDateTime(sdate);
+            //string edate = Request.QueryString["ed"];
             //DateTime EndDate =Convert.ToDateTime( Request.QueryString["ed"]);
 
             ReportViewModel model = new ReportViewModel();
@@ -308,29 +313,35 @@ namespace ComplianceAuditWeb.Controllers
             model.ComplianceAudit = new ComplianceAudit();
 
             var id = Request.QueryString["branchid"];
-            var sdate = Request.QueryString["sdate"];
+            DateTime sdate =Convert.ToDateTime( Request.QueryString["sd"]);
             if(sdate!= null)
             {
-                model.ComplianceAudit.Start_Date =Convert.ToDateTime( sdate);
+                model.ComplianceAudit.Start_Date = sdate;
             }
-            var edate = Request.QueryString["edate"];
-
+              string edate =Request.QueryString["ed"];
             if (edate != null)
             {
-                //model.ComplianceAudit.End_Date = Convert.ToDateTime(edate);
+                model.ComplianceAudit.End_Date = Convert.ToDateTime(edate);
             }
+            //model.ComplianceAudit.End_Date.ToString(edate);
+            //model.dtime= DateTime.ParseExact(edate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+
+          
             model.branchid = Convert.ToInt32(id);
             if (id != null)
             {
                 TempData["ID"] = id;
             }
-           
+            Session["model"] = model;
             return View("_Chart",model);
         }
         public ActionResult GetData()
         {
             int id =Convert.ToInt32( TempData["ID"]);
+            
             ReportViewModel audit = new ReportViewModel();
+            audit.ComplianceAudit = new ComplianceAudit();
+            audit =(ReportViewModel) Session["model"];
             ReportingService.ReportingServiceClient client = new ReportingService.ReportingServiceClient();
             Ratio objratio = new Ratio();
            // int OrgID =Convert.ToInt32( Session["GroupCompanyId"]);
@@ -364,10 +375,9 @@ namespace ComplianceAuditWeb.Controllers
                     objratio.Complianced = complianced;
                     objratio.Non_Complianced = non_complianced;
                     objratio.Partially_Complianced = partially_complianced;
-                   
-                    
-
                 }
+                objratio.StartDate = audit.ComplianceAudit.Start_Date;
+                objratio.EndDate = audit.ComplianceAudit.End_Date;
             }
             return Json(objratio, JsonRequestBehavior.AllowGet);
 

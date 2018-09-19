@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -38,7 +39,6 @@ namespace ComplianceAuditWeb.Models
         public List<ComplianceAudit> PartiallyCompliancedRuleList { get; set; }
         //public int ParentID { get; set; }
         //public List< ParentID> PID { get; set; }
-
-
+    
     }
 }
