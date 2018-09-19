@@ -175,7 +175,7 @@ namespace ComplianceAuditWeb.Controllers
             return View("_SelectFrequency", model);
         }
 
-        public ActionResult Auditentry(int compliancetypeid,int branchid, int vendorid)
+        public ActionResult Auditentry(int compliancetypeid,int branchid, int vendorid,DateTime sdate,DateTime edate)
         {
             AuditentryViewModel model = new AuditentryViewModel();
             model.ActList = new List<SelectListItem>();
@@ -192,39 +192,70 @@ namespace ComplianceAuditWeb.Controllers
                     model.ActList.Add(new SelectListItem() { Text = Convert.ToString(row["Compliance_Title"]), Value = Convert.ToString(row["Compliance_Xref_ID"]) });
                 }
             }
-            Session["ComplianceID"] = compliancetypeid;
+            Session["CompliancetypeID"] = compliancetypeid;
             Session["BranchID"] = branchid;
             Session["Vendorid"] = vendorid;
+            Session["Sdate"] = sdate;
+            Session["Edate"] = edate;
             return View("_auuditentry",model);
         }
 
         public JsonResult GetAuditData(string sidx, string sord, int page, int rows,int actid)
         {
+            Session["Actid"] = actid;
             int pageIndex = Convert.ToInt32(page) - 1;
             int pageSize = rows;
             AuditentryViewModel model = new AuditentryViewModel();
             model.auditentries = new List<Auditentry>();
             AuditService.AuditServiceClient client = new AuditService.AuditServiceClient();
-           // int actid = Convert.ToInt32(form["actid"]);
-            string xmldata  = client.getComplianceXref(Convert.ToInt32(Session["BranchID"]), Convert.ToInt32(Session["Vendorid"]), Convert.ToInt32(Session["ComplianceID"]),1);
+            // int actid = Convert.ToInt32(form["actid"]);
+            int branchid = Convert.ToInt32(Session["BranchID"]);
+            int vendorid = Convert.ToInt32(Session["Vendorid"]);
+            int compliancetypeid = Convert.ToInt32(Session["CompliancetypeID"]);
+            string xmldata  = client.getComplianceXref(branchid,vendorid ,compliancetypeid ,1);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
-
-            if(ds.Tables.Count>0)
-            {
+            xmldata = client.getcomplianceonorg(branchid, vendorid, 0,Convert.ToDateTime(Session["Sdate"]),Convert.ToDateTime(Session["Edate"]));
+            DataSet dsaudit = new DataSet();
+            dsaudit.ReadXml(new StringReader(xmldata));
+            if (ds.Tables.Count>0)
+            {                
                 foreach(System.Data.DataRow row in ds.Tables[0].Rows)
                 {
-                    
-                    
-                    model.auditentries.Add(new Auditentry
+                    Auditentry auditentry = new Auditentry
                     {
                         Compliance_Title = Convert.ToString(row["Compliance_Title"]),
                         Description = Convert.ToString(row["Comp_Description"]),
                         Non_compliance = Convert.ToString(row["compl_def_consequence"]),
                         Periodicity = Convert.ToString(row["Periodicity"]),
-                        compliance_Xref_id=Convert.ToInt32(row["Compliance_Xref_ID"]),
-                        audits = new ComplianceAudit()
-                    });
+                        compliance_Xref_id = Convert.ToInt32(row["Compliance_Xref_ID"]),
+                        Start_Date = Convert.ToDateTime(Session["Sdate"]),
+                        End_Date = Convert.ToDateTime(Session["Edate"]),
+                        Compliance_Audit_Id = 0
+
+                    };
+                    ComplianceAudit audit = new ComplianceAudit();
+                    if (dsaudit.Tables.Count > 0)
+                    {
+                        foreach (System.Data.DataRow item in dsaudit.Tables[0].Rows)
+                        {
+                            if (auditentry.compliance_Xref_id == Convert.ToInt32(item["Compliance_Xref_ID"]))
+                            {
+                                auditentry.Applicability = Convert.ToString(item["Applicability"]);
+                                audit.Audit_Followup_Date = Convert.ToDateTime(item["Audit_Followup_Date"]);
+                                audit.Risk_Category = Convert.ToString(item["Risk_Category"]);
+                                auditentry.Audit_Remarks = Convert.ToString(item["Audit_Remarks"]);
+                                auditentry.Audit_Status = Convert.ToString(item["Compliance_Status"]);
+                                auditentry.Compliance_Audit_Id = Convert.ToInt32(item["Compliance_Audit_ID"]);
+                                audit.Xref_Comp_Type_Map_ID = Convert.ToInt32(item["Xref_Comp_Type_Map_ID"]);
+                                break;
+                            }
+                        }
+                    }
+                    
+                    auditentry.audits = audit;
+                    model.auditentries.Add(auditentry);
+                   
                 }
             }
 
@@ -252,43 +283,72 @@ namespace ComplianceAuditWeb.Controllers
             
         }
 
-        public JsonResult EditAuditdata(FormCollection form)
+        public JsonResult EditAuditdata(FormCollection form, HttpPostedFileBase file)
         {
             ComplianceAudit model = new ComplianceAudit();
-
-            string option = form["oper"];
-
-            if(option=="save")
-            {
-
-            }
-            else if(option == "del")
-            {
-
-            }
+            HttpPostedFileBase httpfile = Request.Files["Evidences"];
+            // HttpFileCollection httpFile = Request.Files["Evidences"];
+            model.Auditor_Id = Convert.ToInt32(form["auditid"]);
             model.Applicability = form["Applicability"];
             model.Start_Date = Convert.ToDateTime(form["Start_Date"]);
-            model.End_Date = Convert.ToDateTime(form["End_Date"]);                       
+            model.End_Date = Convert.ToDateTime(form["End_Date"]);
             model.Audit_Followup_Date = Convert.ToDateTime(form["Audit_Followup_Date"]);
-            model.Audit_Status= form["Audit_Status"];
-            model.Audit_Remarks= form["Audit_Remarks"];
-            string ope = form["oper"];
+            model.Audit_Status = form["Audit_Status"];
+            model.Audit_Remarks = form["Audit_Remarks"];
+            model.Auditor_Id = Convert.ToInt32(Session["UserId"]);
+            model.Org_Hier_Id = Convert.ToInt32(Session["BranchID"]);
+            model.Vendor_Id = Convert.ToInt32(Session["Vendorid"]);
+
+            model.Version = 0;
+
+            string option = form["oper"];
+            AuditService.AuditServiceClient client = new AuditService.AuditServiceClient();
+
+            if (option=="add")
+            {
+                
+                ComplianceXref custom = new ComplianceXref();
+                custom.Compliance_Parent_ID = Convert.ToInt32(Session["Actid"]);
+                custom.Compliance_Title = form["Compliance_Title"];
+                custom.Compliance_Type_ID = Convert.ToInt32(Session["CompliancetypeID"]);
+                custom.compl_def_consequence = form["Non_compliance"];
+                custom.Comp_Category = "Rule";
+                custom.Comp_Description = form["Description"];
+                custom.Risk_Description = form["Details"];
+                //custom.Country_ID = Convert.ToInt32(form[""]);
+                //custom.State_ID = Convert.ToInt32(form[""]);
+                //custom.City_ID = Convert.ToInt32(form[""]);
+                custom.Country_ID =0;
+                custom.State_ID = 0;
+                custom.City_ID = 0;
+                custom.Effective_Start_Date = Convert.ToDateTime(form["Start_Date"]);
+                custom.Effective_End_Date = Convert.ToDateTime(form["End_Date"]);
+                custom.Periodicity = form["Periodicity"];
+                custom.Is_Header = false;
+                custom.Comp_Order = 2;
+                custom.level = 2;
+                custom.Is_Best_Practice = true;
+                custom.Version = 1;
+                ComplianceXrefService.ComplianceXrefServiceClient service = new ComplianceXrefService.ComplianceXrefServiceClient();
+                model.Xref_Comp_Type_Map_ID = service.insertCustomxref(custom);
+                client.insertCustomAuditEntries(model);
+
+            }
+            else 
+            {
+                int compliancexrefid = Convert.ToInt32(form["compliance_Xref_id"]);
+                ComplianceXrefService.ComplianceXrefServiceClient serviceClient = new ComplianceXrefService.ComplianceXrefServiceClient();
+                string xmldata = serviceClient.GetXrefComplainceTypemapping(Convert.ToInt32(Session["CompliancetypeID"]), compliancexrefid);
+                DataSet ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+                model.Xref_Comp_Type_Map_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["Xref_Comp_Type_Map_ID"]);
+                            
+                client.insertAuditEntries(model);
+            }
+         
 
             //int compliancexrefid=Convert.ToInt32(form["ID"]);          
-            int compliancexrefid = Convert.ToInt32(form["compliance_Xref_id"]);
-            ComplianceXrefService.ComplianceXrefServiceClient serviceClient = new ComplianceXrefService.ComplianceXrefServiceClient();
-            string xmldata= serviceClient.GetXrefComplainceTypemapping(Convert.ToInt32(Session["ComplianceID"]), compliancexrefid);
-            DataSet ds = new DataSet();
-            ds.ReadXml(new StringReader(xmldata));
-            model.Xref_Comp_Type_Map_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["Xref_Comp_Type_Map_ID"]);
-
-            model.Org_Hier_Id = Convert.ToInt32(Session["BranchID"]);
-            model.Vendor_Id= Convert.ToInt32(Session["Vendorid"]);
-            model.Auditor_Id=Convert.ToInt32(Session["UserId"]);
-            model.Version = 0;
-            AuditService.AuditServiceClient client = new AuditService.AuditServiceClient();
-            
-            client.insertAuditEntries(model);
+          
             var result = "Success";
             return Json(result);
         }

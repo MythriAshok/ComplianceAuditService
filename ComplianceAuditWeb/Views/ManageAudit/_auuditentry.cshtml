@@ -8,46 +8,51 @@
     @*<link href="~/Content/assets/jquery-ui-1.12.1.custom/jquery-ui.theme.css" rel="stylesheet" />*@
     <link href="~/Content/ui.jqgrid.min.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-1.10.2.js"></script>
-    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery.min.js"></script>
+    @*<script src="~/Content/bootstrap-3.3.7-dist/js/jquery.min.js"></script>*@
     <script src="~/Scripts/free-jqGrid/jquery.jqgrid.min.js"></script>
-    <link href="~/Content/themes/base/jquery.ui.datepicker.css" rel="stylesheet" />
+    @*<link href="~/Content/themes/base/jquery.ui.datepicker.css" rel="stylesheet" />*@
     <style>
-        tr.jqgrow {
-            height: 80px;
-        }
+        tr.jqgrow { height: 80px; }
     </style>
 
     <script>
         //<![CDATA[
 
         $(function () {
+            
             "use strict";
+            var cmeditTemplate = { align: 'center', sortable: false, editable: true, width: 150 };
+            var cmTemplate = { align: 'center', sortable: false, editable: true, width: 150 }
             $("#grid").jqGrid({
                 url: "/ManageAudit/GetAuditData/",
                 datatype: "json",
-                colNames: ['ID', 'compliance_Xref_id', 'Compliance Title', 'Description', 'Details', 'Applicability', 'Periodicity of Activity', 'Start Date', 'End Date', 'Compliance Status',
+                colNames: ['ID', 'compliance_Xref_id','auditid', 'Compliance Title', 'Description', 'Details', 'Applicability', 'Periodicity of Activity', 'Start Date', 'End Date', 'Compliance Status',
                     'Risk Category', 'Effect of Non-compliance', 'Date of Audit', 'Followup audit date', 'Auditor Remarks', 'Evidences/Supportives', 'Actual_Date', 'Due Date'],
                 colModel: [
                     { key: true, hidden: true, name: 'ID', frozen: true },
                     { key: false, hidden: true, name: 'compliance_Xref_id', editable: true, frozen: true },
-                    { name: "Compliance_Title", frozen: true },
-                    { name: "Description", edittype: "textarea", editoptions: { rows: "4", cols: "20" }, height: 250, frozen: true },
-                    { name: "Details", edittype: "textarea", editoptions: { rows: "4", cols: "20" }, frozen: true },
+                    { key: false, hidden: true, name: 'Compliance_Audit_Id', editable: true, frozen: true },
+                    { name: "Compliance_Title", frozen: true, template: cmTemplate },
+                    { name: "Description", edittype: "textarea", editoptions: { rows: "4", cols: "20" }, height: 250, frozen: true, template: cmTemplate },
+                    { name: "Details", edittype: "textarea", editoptions: { rows: "4", cols: "20" }, frozen: true, template: cmTemplate },
                     {
                         name: "Applicability", editable: true, align: 'center', edittype: 'checkbox', editoptions: { value: 'Yes:No' }
                     },
                     { name: "Periodicity" },
+                    { name: "Start_Date", editable: true, formatter: 'date' },
                     {
-                        name: "Start_Date", index:"Start_Date", editable: true
-                    },
-                    {
-                        name: "End_Date", editable: true, formatter: 'date', formatoptions: { newformat: 'd/m/Y' }
+                        name: "End_Date", editable: true, formatter: 'date'
+                       //,editoptions: {
+                       //     size: 20,
+                       //     dataInit: function (el) {
+                       //         $(el).datepicker({ dateFormat: 'dd-mm-yy' });
+                       //     },  
                     },
                     { name: "Audit_Status", editable: true, edittype: "select", editoptions: { value: "Compliance:Compliance;Non-Compliance:Non-Compliance;Partially complianced:Partially Complianced;Not Applicable:Not Applicable" } },
                     { name: "Risk_Category", editable: true, edittype: "select", editoptions: { value: "High:High;Medium:Medium;Low:Low" } },
-                    { name: "Non_compliance", edittype: "textarea", editrules: { required: true }, editoptions: { rows: "4", cols: "20" } },
-                    { name: "Audit_Date", formatoptions: { newformat: 'd/m/Y' } },
-                    { name: "Audit_Followup_Date", editable: true, formatoptions: { newformat: 'd/m/Y' } },
+                    { name: "Non_compliance", editable: true, edittype: "textarea", editoptions: { rows: "4", cols: "20" } },
+                    { name: "Audit_Date", formatter: 'date'},
+                    { name: "Audit_Followup_Date", editable: true, formatter: 'date' },
                     { name: "Audit_Remarks", editable: true, edittype: "textarea", editoptions: { rows: "4", cols: "20" } },
                     {
                         name: "Evidences", editable: true, edittype: 'file',
@@ -55,10 +60,10 @@
                             enctype: "multipart/form-data"
                         },
                     },
-                    { name: "Actual_Date", editable: true, formatter: 'date', formatoptions: { newformat: 'd/m/Y' } },
-                    { name: "Due_Date", editable: true, formatoptions: { newformat: 'd/m/Y' } }
+                    { name: "Actual_Date", editable: true, formatter: 'date' },
+                    { name: "Due_Date", editable: true, formatter: 'date'  }
                 ],
-                postData: { actid: $("#actid").val() },
+                postData: { actid: $('#actid').val() },
                 editurl: "/ManageAudit/EditAuditdata",
                 caption: "Input Types",
                 viewrecords: true,
@@ -69,27 +74,41 @@
                 shrinkToFit: false,
                 caption: "Audit Entry",
                 emptyrecords: 'No Records are Available to Display',
-                height: 300,
+                height: 'auto',
                 onSelectRow: editRow
             });
             jQuery("#grid").jqGrid('setFrozenColumns');
             $("#grid").jqGrid('navGrid', '#pager12', {
                 edit: false, add: false, save: false, cancel: false,
-                search: false, refresh: true, del: true, view: true
+                search: false, refresh: true, del: false, view: true
             });
             $("#grid").jqGrid('inlineNav', '#pager12', {
-                edit: true, add: true, save: true, cancel: true
+                edit: true, add: true, save: true, cancel: true, del: false, search: false,
+                addParams: {
+                    keys: true,
+                    position: 'last'
+                }
             });
         });
-        //]]>
+        //]]>     
 
-        function changeact(_id, _name) {
-            alert();
-            $("#actid").val(_id);
-            $("ActName").text = _name;
-            //_actid = _id;
+        //jQuery('input[value=New Record]').click(function () {
+        //    jQuery("#grid").setGridParam({ datatype: 'local', loadonce: true }); // Stop refresh?
+        //    jQuery("#grid").addRowData(0, { id: "0", entryDate: getToday(), … }, "last"); // Insert blank record
+        //    jQuery("#grid").editRow(0, true); // Activate record for editing
+        //});
+
+        function changeact(clicked_id) {
+            
+            $('#actid').val(clicked_id);
+            $("#grid id").setGridParam({ postData: { actid: clicked_id } });
+            
             $("#grid").jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');
-            return true;
+        }
+
+        function rate() {
+            var text = $(this).val();
+            alert(text);
         }
 
         function pickdates(id) {
@@ -100,6 +119,12 @@
         function editRow(id) {
             if (id && id !== lastSelection) {
                 var grid = $("#grid");
+                var colContent = grid.jqGrid('getCell', id, 'myColumn');
+                if (colContent.length > 0)
+                    grid.setColProp('myColumn', { editable: false });
+                else
+                    grid.setColProp('myColumn', { editable: true });  
+
                 grid.jqGrid('restoreRow', lastSelection);
                 grid.jqGrid('editRow', id, {
                     keys: true,
@@ -108,10 +133,11 @@
                             $(this).jqGrid("saveRow", rowid, options);
                         }
                     }
-                }, pickdates);
+                });
                 lastSelection = id;
             }
         }
+      
     </script>
     <script>
         $(function () {
@@ -124,12 +150,13 @@
 @using (Html.BeginForm())
 {
     <div id="tabs">
-        <ul class="nav nav-justified" >
+        <ul class="nav nav-justified">
             @foreach (var item in Model.ActList)
             {
-                @*<li><a href="#tab1danger">@item.Text</a></li>*@                
-                @*<li><button onclick="javascript: changeact(@item.Value,@item.Text);">@item.Text</button></li>*@
-                <li><a href="">@item.Text</a></li>
+                @*<li><a href="#tab1danger">@item.Text</a></li>*@
+                @*<li><button id=@item.Value onclick="javascript: changeact(this.id); ">@item.Text</button></li>*@
+                @*<li><a href="">@item.Text</a></li>*@
+                <li><a id=@item.Value href="#tab1danger" onclick="changeact(this.id);" >@item.Text</a></li>
             }
         </ul>
 

@@ -475,6 +475,52 @@ namespace Compliance.DataAccess
 
             return ds;
         }
+
+        public int insertupdateCustomComplianceXref(ComplianceXref xref)
+        {
+            int ComplianceXref = 0;
+            try
+            {
+                if (xref != null)
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateComplianceXref", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("p_Custom_Xref_ID", xref.Compliance_Xref_ID);
+                    cmd.Parameters.AddWithValue("p_Compliance_Parent_ID", xref.Compliance_Parent_ID);
+                    cmd.Parameters.AddWithValue("p_Compliance_Title", xref.Compliance_Title);
+                    cmd.Parameters.AddWithValue("p_Comp_Category", xref.Comp_Category);
+                    cmd.Parameters.AddWithValue("p_Comp_Description", xref.Comp_Description);
+                    cmd.Parameters.AddWithValue("p_compl_def_consequence", xref.compl_def_consequence);
+                    cmd.Parameters.AddWithValue("p_Is_Header", xref.Is_Header);
+                    cmd.Parameters.AddWithValue("p_Level", xref.level);
+                    cmd.Parameters.AddWithValue("p_Comp_Order", xref.Comp_Order);
+                    cmd.Parameters.AddWithValue("p_Risk_Description", xref.Risk_Description);
+                    cmd.Parameters.AddWithValue("p_Periodicity", xref.Periodicity);  
+                    cmd.Parameters.AddWithValue("p_Is_Best_Practice", xref.Is_Best_Practice);
+                    cmd.Parameters.AddWithValue("p_Version", xref.Version);
+                    cmd.Parameters.AddWithValue("p_Effective_Start_Date", xref.Effective_Start_Date);
+                    cmd.Parameters.AddWithValue("p_Effective_End_Date", xref.Effective_End_Date);
+                    cmd.Parameters.AddWithValue("p_Country_ID", xref.Country_ID);
+                    cmd.Parameters.AddWithValue("p_State_ID", xref.State_ID);
+                    cmd.Parameters.AddWithValue("p_City_ID", xref.City_ID);
+                    cmd.Parameters.AddWithValue("p_User_ID", xref.User_ID);
+                    cmd.Parameters.AddWithValue("p_Compliance_Type_ID", xref.Compliance_Type_ID);
+                                  
+                    ComplianceXref = Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return ComplianceXref;
+        }
+
     }
 }
     

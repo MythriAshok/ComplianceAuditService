@@ -19,6 +19,8 @@ namespace ComplianceService
 
         bool insertComplianceAudit(List<ComplianceAudit> auditdatalist);
         [OperationContract]
+        bool insertCustomAuditEntries(ComplianceAudit auditdata);
+        [OperationContract]
         bool insertAuditEntries(ComplianceAudit auditdata);
         [OperationContract]
         bool updateComplianceAudit(List<ComplianceAudit> auditdatalist);
@@ -53,7 +55,7 @@ namespace ComplianceService
         string getComplianceActList(int OrgID, int VendorID, int compliancetypeid);
 
         [OperationContract]
-        string getcomplianceonorg(int OrgID, int VendorID, int version);
+        string getcomplianceonorg(int OrgID, int VendorID, int version,DateTime sdate,DateTime edate);
 
     }
 }

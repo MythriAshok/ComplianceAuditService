@@ -27,6 +27,12 @@ namespace ComplianceAuditWeb.AuditService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/insertComplianceAudit", ReplyAction="http://tempuri.org/IAuditService/insertComplianceAuditResponse")]
         System.Threading.Tasks.Task<bool> insertComplianceAuditAsync(Compliance.DataObject.ComplianceAudit[] auditdatalist);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/insertCustomAuditEntries", ReplyAction="http://tempuri.org/IAuditService/insertCustomAuditEntriesResponse")]
+        bool insertCustomAuditEntries(Compliance.DataObject.ComplianceAudit auditdata);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/insertCustomAuditEntries", ReplyAction="http://tempuri.org/IAuditService/insertCustomAuditEntriesResponse")]
+        System.Threading.Tasks.Task<bool> insertCustomAuditEntriesAsync(Compliance.DataObject.ComplianceAudit auditdata);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/insertAuditEntries", ReplyAction="http://tempuri.org/IAuditService/insertAuditEntriesResponse")]
         bool insertAuditEntries(Compliance.DataObject.ComplianceAudit auditdata);
         
@@ -88,10 +94,10 @@ namespace ComplianceAuditWeb.AuditService {
         System.Threading.Tasks.Task<string> getComplianceActListAsync(int OrgID, int VendorID, int compliancetypeid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getcomplianceonorg", ReplyAction="http://tempuri.org/IAuditService/getcomplianceonorgResponse")]
-        string getcomplianceonorg(int OrgID, int VendorID, int version);
+        string getcomplianceonorg(int OrgID, int VendorID, int version, System.DateTime sdate, System.DateTime edate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getcomplianceonorg", ReplyAction="http://tempuri.org/IAuditService/getcomplianceonorgResponse")]
-        System.Threading.Tasks.Task<string> getcomplianceonorgAsync(int OrgID, int VendorID, int version);
+        System.Threading.Tasks.Task<string> getcomplianceonorgAsync(int OrgID, int VendorID, int version, System.DateTime sdate, System.DateTime edate);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -135,6 +141,14 @@ namespace ComplianceAuditWeb.AuditService {
         
         public System.Threading.Tasks.Task<bool> insertComplianceAuditAsync(Compliance.DataObject.ComplianceAudit[] auditdatalist) {
             return base.Channel.insertComplianceAuditAsync(auditdatalist);
+        }
+        
+        public bool insertCustomAuditEntries(Compliance.DataObject.ComplianceAudit auditdata) {
+            return base.Channel.insertCustomAuditEntries(auditdata);
+        }
+        
+        public System.Threading.Tasks.Task<bool> insertCustomAuditEntriesAsync(Compliance.DataObject.ComplianceAudit auditdata) {
+            return base.Channel.insertCustomAuditEntriesAsync(auditdata);
         }
         
         public bool insertAuditEntries(Compliance.DataObject.ComplianceAudit auditdata) {
@@ -217,12 +231,12 @@ namespace ComplianceAuditWeb.AuditService {
             return base.Channel.getComplianceActListAsync(OrgID, VendorID, compliancetypeid);
         }
         
-        public string getcomplianceonorg(int OrgID, int VendorID, int version) {
-            return base.Channel.getcomplianceonorg(OrgID, VendorID, version);
+        public string getcomplianceonorg(int OrgID, int VendorID, int version, System.DateTime sdate, System.DateTime edate) {
+            return base.Channel.getcomplianceonorg(OrgID, VendorID, version, sdate, edate);
         }
         
-        public System.Threading.Tasks.Task<string> getcomplianceonorgAsync(int OrgID, int VendorID, int version) {
-            return base.Channel.getcomplianceonorgAsync(OrgID, VendorID, version);
+        public System.Threading.Tasks.Task<string> getcomplianceonorgAsync(int OrgID, int VendorID, int version, System.DateTime sdate, System.DateTime edate) {
+            return base.Channel.getcomplianceonorgAsync(OrgID, VendorID, version, sdate, edate);
         }
     }
 }

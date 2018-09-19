@@ -30,32 +30,36 @@
                                 <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">@item.Name</h4>
                                 // string enumfrequency = "fullcalender";
                                 DateTime sdate = item.startdate;
-                                DateTime edate = item.startdate;
-                                edate.AddDays((item.enddate.Date.Day) - 1);
+                                DateTime edate = item.enddate;
+
+                                // edate.AddDays(2);
                                 int inc = 1;
                                 if (item.auditfrequency == 1)
                                 {
-                                    inc = 12;
+                                    inc = 11;
                                 }
                                 else if (item.auditfrequency == 2)
                                 {
-                                    inc = 6;
+                                    inc = 5;
                                 }
                                 else if (item.auditfrequency == 4)
                                 {
-                                    inc = 4;
+                                    inc = 3;                             
                                 }
                                 else
                                 {
                                     inc = 1;
+                                    //int days = item.enddate.Day - 1;
+                                    //edate = edate.AddDays(days);
                                 }
-                                for (int i = 0, j = 12; i < item.auditfrequency; i = i + inc, j = j - inc)
+                                for (int i = 0, j = 0; j < item.auditfrequency; i = i + inc, j++)
                                 {
                                     <div class="col-sm-3 QueList">
                                         <div class="queContainer">
-                                            <a href="@Url.Action("Auditentry", "ManageAudit", new { compliancetypeid = item.complianceid,branchid=Model.branchid,vendorid=Model.vendorid })">
+                                            <a href="@Url.Action("Auditentry", "ManageAudit", new { compliancetypeid = item.complianceid,branchid=Model.branchid,vendorid=Model.vendorid,sdate=@sdate.AddMonths(i),edate=@edate.AddMonths(i) })">
                                                 <span class="qIcon"></span>
-                                                <h3 class="PB25">@sdate.AddMonths(i).ToShortDateString() - @sdate.AddMonths(i + 1).ToShortDateString()</h3>
+                                                
+                                                <h3 class="PB25">  @sdate.AddMonths(i).ToString("dd - MMM - yyyy") - @edate.AddMonths(i).ToString("dd - MMM - yyyy")</h3>
                                                 </a>
                                                 <div class="clearfix"></div>
                                             

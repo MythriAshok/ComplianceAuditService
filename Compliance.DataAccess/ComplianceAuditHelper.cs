@@ -148,7 +148,7 @@ namespace Compliance.DataAccess
         }
         
 
-              public DataSet getComlianceAuditonorg(int org_id,int vendor_id,int version)
+              public DataSet getComlianceAuditonorg(int org_id,int vendor_id,int version,DateTime sdate,DateTime edate)
         {
             DataSet dsComplianceAudit = new DataSet();
             try
@@ -159,6 +159,8 @@ namespace Compliance.DataAccess
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID", org_id);
                 cmd.Parameters.AddWithValue("p_Vendor_ID", vendor_id);
                 cmd.Parameters.AddWithValue("p_Version", version);
+                cmd.Parameters.AddWithValue("p_sdate",sdate);
+                cmd.Parameters.AddWithValue("p_edate", edate);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsComplianceAudit);
             }
@@ -295,6 +297,52 @@ namespace Compliance.DataAccess
                 conn.Close();
             }
             return dsSpecificBranchList;
+        }
+
+        public bool insertupdatecustomAuditentries(ComplianceAudit audit)
+        {
+            bool ComplianceAuditResult = false;
+            try
+            {
+                if (audit != null)
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("sp_insert_update_Custom_audit", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("p_Custom_Audit_ID", audit.Compliance_Audit_Id);
+                    cmd.Parameters.AddWithValue("p_Org_Hier_ID", audit.Org_Hier_Id);
+                    cmd.Parameters.AddWithValue("p_Auditor_ID", audit.Auditor_Id);
+                    cmd.Parameters.AddWithValue("p_Audit_Followup_Date", audit.Audit_Followup_Date);
+                    cmd.Parameters.AddWithValue("p_Audit_Remarks", audit.Audit_Remarks);
+                    cmd.Parameters.AddWithValue("p_Is_Active", audit.Is_Active);
+                    cmd.Parameters.AddWithValue("p_Version", audit.Version);
+                    cmd.Parameters.AddWithValue("p_Compliance_Status", audit.Audit_Status);
+                    cmd.Parameters.AddWithValue("p_Applicability", audit.Applicability);
+                    cmd.Parameters.AddWithValue("p_Start_Date", audit.Start_Date);
+                    cmd.Parameters.AddWithValue("p_End_Date", audit.End_Date);
+                    cmd.Parameters.AddWithValue("p_Risk_Category", audit.Risk_Category);
+                    cmd.Parameters.AddWithValue("p_Vendor_ID", audit.Vendor_Id);
+                    cmd.Parameters.AddWithValue("p_Evidences", audit.Evidences);
+                    cmd.Parameters.AddWithValue("p_Custom_Xref_ID", audit.Xref_Comp_Type_Map_ID);
+
+                    int objcomplianceauditid = cmd.ExecuteNonQuery();
+                    if (objcomplianceauditid > 0)
+                    {
+                        ComplianceAuditResult = true;
+                    }
+                }
+
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return ComplianceAuditResult;
         }
     }
 }
