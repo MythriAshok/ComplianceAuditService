@@ -39,6 +39,7 @@ namespace Compliance.DataObject
         public string Company_Name { get; set; }
         public string Description { get; set; }
         public string Title { get; set; }
+        public int ParentID { get; set; }
 
 
 

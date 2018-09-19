@@ -20,5 +20,14 @@ namespace ComplianceService
         //[OperationContract]
 
         //ViewAsPdf GeneratePDF(List<ComplianceAudit> model);
+        [OperationContract]
+
+        string getBranchStatusReport(int BranchID, string status);
+        [OperationContract]
+
+        string getBranchRACTeport(int BranchID);
+        [OperationContract]
+
+        string getBranchStatusACTReport(int BranchID, string status);
     }
 }

@@ -24,4 +24,48 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="getBranchStatusReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BranchID" type="xs:int" />
+        <xs:element minOccurs="0" name="status" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getBranchStatusReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getBranchStatusReportResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getBranchRACTeport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BranchID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getBranchRACTeportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getBranchRACTeportResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getBranchStatusACTReport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BranchID" type="xs:int" />
+        <xs:element minOccurs="0" name="status" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getBranchStatusACTReportResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getBranchStatusACTReportResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

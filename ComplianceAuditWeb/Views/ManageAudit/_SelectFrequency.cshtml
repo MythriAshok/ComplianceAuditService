@@ -30,7 +30,8 @@
                                 <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">@item.Name</h4>
                                 // string enumfrequency = "fullcalender";
                                 DateTime sdate = item.startdate;
-                                DateTime edate = item.startdate;
+                                //DateTime edate = item.startdate;
+                                DateTime edate = item.enddate;
                                 edate.AddDays((item.enddate.Date.Day) - 1);
                                 int inc = 1;
                                 if (item.auditfrequency == 1)
@@ -53,7 +54,7 @@
                                 {
                                     <div class="col-sm-3 QueList">
                                         <div class="queContainer">
-                                            <a href="@Url.Action("Auditentry", "ManageAudit", new { compliancetypeid = item.complianceid,branchid=Model.branchid,vendorid=Model.vendorid })">
+                                            <a href="@Url.Action("Auditentry", "ManageAudit", new { compliancetypeid = item.complianceid,branchid=Model.branchid,vendorid=Model.vendorid})">
                                                 <span class="qIcon"></span>
                                                 <h3 class="PB25">@sdate.AddMonths(i).ToShortDateString() - @sdate.AddMonths(i + 1).ToShortDateString()</h3>
                                                 </a>

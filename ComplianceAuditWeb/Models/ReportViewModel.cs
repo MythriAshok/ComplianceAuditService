@@ -21,15 +21,24 @@ namespace ComplianceAuditWeb.Models
         //public CustomAudit ComplianceAudit { get; set; }
         //public CustomAuditAuditTrail ComplianceAuditAuditTrail { get; set; }
 
-        public string  Description { get; set; }
-        public string  ComplianceStatus { get; set; }
-        public string  RiskCategory { get; set; }
-        public string  Remarks { get; set; }
-        public string  CompanyName { get; set; }
-        public string  Evidences { get; set; }
+        //public string  Description { get; set; }
+        //public string  ComplianceStatus { get; set; }
+        //public string  RiskCategory { get; set; }
+        //public string  Remarks { get; set; }
+        //public string  CompanyName { get; set; }
+        //public string  Evidences { get; set; }
 
 
         public List<ReportViewModel> reportList { get; set; }
+        public List<ComplianceXref> ActList { get; set; }
+        public List<ComplianceAudit> CompliancedRuleList { get; set; }
+        public List<ComplianceAudit> NonCompliancedRuleListHighRisk { get; set; }
+        public List<ComplianceAudit> NonCompliancedRuleListLowRisk { get; set; }
+        public List<ComplianceAudit> NonCompliancedRuleListMediumRisk { get; set; }
+        public List<ComplianceAudit> PartiallyCompliancedRuleList { get; set; }
+        //public int ParentID { get; set; }
+        //public List< ParentID> PID { get; set; }
+
 
     }
 }

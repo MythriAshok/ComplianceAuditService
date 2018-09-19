@@ -18,6 +18,24 @@
   <wsdl:message name="IReportingService_getBranchReport_OutputMessage">
     <wsdl:part name="parameters" element="tns:getBranchReportResponse" />
   </wsdl:message>
+  <wsdl:message name="IReportingService_getBranchStatusReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:getBranchStatusReport" />
+  </wsdl:message>
+  <wsdl:message name="IReportingService_getBranchStatusReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getBranchStatusReportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReportingService_getBranchRACTeport_InputMessage">
+    <wsdl:part name="parameters" element="tns:getBranchRACTeport" />
+  </wsdl:message>
+  <wsdl:message name="IReportingService_getBranchRACTeport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getBranchRACTeportResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReportingService_getBranchStatusACTReport_InputMessage">
+    <wsdl:part name="parameters" element="tns:getBranchStatusACTReport" />
+  </wsdl:message>
+  <wsdl:message name="IReportingService_getBranchStatusACTReport_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getBranchStatusACTReportResponse" />
+  </wsdl:message>
   <wsdl:portType name="IReportingService">
     <wsdl:operation name="DoWork">
       <wsdl:input wsaw:Action="http://tempuri.org/IReportingService/DoWork" message="tns:IReportingService_DoWork_InputMessage" />
@@ -26,6 +44,18 @@
     <wsdl:operation name="getBranchReport">
       <wsdl:input wsaw:Action="http://tempuri.org/IReportingService/getBranchReport" message="tns:IReportingService_getBranchReport_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IReportingService/getBranchReportResponse" message="tns:IReportingService_getBranchReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getBranchStatusReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReportingService/getBranchStatusReport" message="tns:IReportingService_getBranchStatusReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReportingService/getBranchStatusReportResponse" message="tns:IReportingService_getBranchStatusReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getBranchRACTeport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReportingService/getBranchRACTeport" message="tns:IReportingService_getBranchRACTeport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReportingService/getBranchRACTeportResponse" message="tns:IReportingService_getBranchRACTeport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getBranchStatusACTReport">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReportingService/getBranchStatusACTReport" message="tns:IReportingService_getBranchStatusACTReport_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReportingService/getBranchStatusACTReportResponse" message="tns:IReportingService_getBranchStatusACTReport_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IReportingService" type="tns:IReportingService">
@@ -41,6 +71,33 @@
     </wsdl:operation>
     <wsdl:operation name="getBranchReport">
       <soap:operation soapAction="http://tempuri.org/IReportingService/getBranchReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBranchStatusReport">
+      <soap:operation soapAction="http://tempuri.org/IReportingService/getBranchStatusReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBranchRACTeport">
+      <soap:operation soapAction="http://tempuri.org/IReportingService/getBranchRACTeport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBranchStatusACTReport">
+      <soap:operation soapAction="http://tempuri.org/IReportingService/getBranchStatusACTReport" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

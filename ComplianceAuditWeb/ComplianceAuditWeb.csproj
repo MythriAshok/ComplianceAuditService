@@ -814,8 +814,8 @@
     <Content Include="Views\Reporting\_Report.cshtml" />
     <Content Include="Views\Reporting\_PDF.cshtml" />
     <Content Include="Views\Reporting\_Chart.cshtml" />
-    <Content Include="Views\Reporting\_SelectFrequency.cshtml" />
     <Content Include="Views\ManageCompliance\_AddActs - Copy.cshtml" />
+    <Content Include="Views\Reporting\_SelectFrequency.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
