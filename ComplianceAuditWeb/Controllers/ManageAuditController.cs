@@ -161,15 +161,17 @@ namespace ComplianceAuditWeb.Controllers
                         model.compliance_Types.Add(new compliance_type
                         {
                             complianceid = Convert.ToInt32(row["Compliance_Type_ID"]),
-                            auditfrequency = Convert.ToString(row["Audit_Frequency"]),
+                            auditfrequency = Convert.ToInt32(row["Audit_Frequency"]),
                             Name = Convert.ToString(row["Compliance_Type_Name"]),
                             startdate = Convert.ToDateTime(row["Start_Date"]),
                             enddate = Convert.ToDateTime(row["End_Date"])
                         });
                     }
-                }
+                }                                  
             }
             
+
+
             return View("_SelectFrequency", model);
         }
 
@@ -212,6 +214,8 @@ namespace ComplianceAuditWeb.Controllers
             {
                 foreach(System.Data.DataRow row in ds.Tables[0].Rows)
                 {
+                    
+                    
                     model.auditentries.Add(new Auditentry
                     {
                         Compliance_Title = Convert.ToString(row["Compliance_Title"]),
@@ -219,7 +223,7 @@ namespace ComplianceAuditWeb.Controllers
                         Non_compliance = Convert.ToString(row["compl_def_consequence"]),
                         Periodicity = Convert.ToString(row["Periodicity"]),
                         compliance_Xref_id=Convert.ToInt32(row["Compliance_Xref_ID"]),
-                        audits = new List<ComplianceAudit>()
+                        audits = new ComplianceAudit()
                     });
                 }
             }
@@ -251,6 +255,17 @@ namespace ComplianceAuditWeb.Controllers
         public JsonResult EditAuditdata(FormCollection form)
         {
             ComplianceAudit model = new ComplianceAudit();
+
+            string option = form["oper"];
+
+            if(option=="save")
+            {
+
+            }
+            else if(option == "del")
+            {
+
+            }
             model.Applicability = form["Applicability"];
             model.Start_Date = Convert.ToDateTime(form["Start_Date"]);
             model.End_Date = Convert.ToDateTime(form["End_Date"]);                       

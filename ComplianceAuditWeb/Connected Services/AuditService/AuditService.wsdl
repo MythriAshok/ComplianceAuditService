@@ -79,6 +79,12 @@
   <wsdl:message name="IAuditService_getComplianceActList_OutputMessage">
     <wsdl:part name="parameters" element="tns:getComplianceActListResponse" />
   </wsdl:message>
+  <wsdl:message name="IAuditService_getcomplianceonorg_InputMessage">
+    <wsdl:part name="parameters" element="tns:getcomplianceonorg" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_getcomplianceonorg_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getcomplianceonorgResponse" />
+  </wsdl:message>
   <wsdl:portType name="IAuditService">
     <wsdl:operation name="DoWork">
       <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/DoWork" message="tns:IAuditService_DoWork_InputMessage" />
@@ -127,6 +133,10 @@
     <wsdl:operation name="getComplianceActList">
       <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/getComplianceActList" message="tns:IAuditService_getComplianceActList_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/getComplianceActListResponse" message="tns:IAuditService_getComplianceActList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getcomplianceonorg">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/getcomplianceonorg" message="tns:IAuditService_getcomplianceonorg_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/getcomplianceonorgResponse" message="tns:IAuditService_getcomplianceonorg_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IAuditService" type="tns:IAuditService">
@@ -232,6 +242,15 @@
     </wsdl:operation>
     <wsdl:operation name="getComplianceActList">
       <soap:operation soapAction="http://tempuri.org/IAuditService/getComplianceActList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getcomplianceonorg">
+      <soap:operation soapAction="http://tempuri.org/IAuditService/getcomplianceonorg" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

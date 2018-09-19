@@ -1,48 +1,51 @@
 ﻿@model ComplianceAuditWeb.Models.AuditentryViewModel
 
 @section scripts{
-    <link href="~/Content/assets/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />
+    @*<link href="~/Content/assets/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet" />*@
     <script src="~/Content/assets/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
-    <link href="~/Content/assets/jquery-ui-1.12.1.custom/jquery-ui.theme.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.theme.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.all.css" rel="stylesheet" />
+    @*<link href="~/Content/assets/jquery-ui-1.12.1.custom/jquery-ui.theme.css" rel="stylesheet" />*@
     <link href="~/Content/ui.jqgrid.min.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-1.10.2.js"></script>    
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery.min.js"></script>
     <script src="~/Scripts/free-jqGrid/jquery.jqgrid.min.js"></script>
+    <link href="~/Content/themes/base/jquery.ui.datepicker.css" rel="stylesheet" />
     <style>
         tr.jqgrow {
             height: 80px;
-        }        
+        }
     </style>
 
     <script>
         //<![CDATA[
 
-        $(function () {         
+        $(function () {
             "use strict";
             $("#grid").jqGrid({
-                url: "/ManageAudit/GetAuditData/",                
+                url: "/ManageAudit/GetAuditData/",
                 datatype: "json",
-                colNames: ['ID','compliance_Xref_id','Compliance Title', 'Description', 'Details', 'Applicability', 'Periodicity of Activity', 'Start Date', 'End Date', 'Compliance Status',
+                colNames: ['ID', 'compliance_Xref_id', 'Compliance Title', 'Description', 'Details', 'Applicability', 'Periodicity of Activity', 'Start Date', 'End Date', 'Compliance Status',
                     'Risk Category', 'Effect of Non-compliance', 'Date of Audit', 'Followup audit date', 'Auditor Remarks', 'Evidences/Supportives', 'Actual_Date', 'Due Date'],
                 colModel: [
-                    { key: true, hidden: true, name: 'ID' },
-                    { key: false, hidden: true, name: 'compliance_Xref_id', editable: true },
+                    { key: true, hidden: true, name: 'ID', frozen: true },
+                    { key: false, hidden: true, name: 'compliance_Xref_id', editable: true, frozen: true },
                     { name: "Compliance_Title", frozen: true },
-                    { name: "Description", edittype: "textarea", editoptions: { rows: "4", cols: "20" }, height: 250 },
-                    { name: "Details", edittype: "textarea", editoptions: { rows: "4", cols: "20" } },
+                    { name: "Description", edittype: "textarea", editoptions: { rows: "4", cols: "20" }, height: 250, frozen: true },
+                    { name: "Details", edittype: "textarea", editoptions: { rows: "4", cols: "20" }, frozen: true },
                     {
                         name: "Applicability", editable: true, align: 'center', edittype: 'checkbox', editoptions: { value: 'Yes:No' }
                     },
                     { name: "Periodicity" },
                     {
-                        name: "Start_Date", editable: true
+                        name: "Start_Date", index:"Start_Date", editable: true
                     },
                     {
                         name: "End_Date", editable: true, formatter: 'date', formatoptions: { newformat: 'd/m/Y' }
                     },
                     { name: "Audit_Status", editable: true, edittype: "select", editoptions: { value: "Compliance:Compliance;Non-Compliance:Non-Compliance;Partially complianced:Partially Complianced;Not Applicable:Not Applicable" } },
                     { name: "Risk_Category", editable: true, edittype: "select", editoptions: { value: "High:High;Medium:Medium;Low:Low" } },
-                    { name: "Non_compliance", edittype: "textarea", editrules: { required: true },editoptions: { rows: "4", cols: "20" } },
+                    { name: "Non_compliance", edittype: "textarea", editrules: { required: true }, editoptions: { rows: "4", cols: "20" } },
                     { name: "Audit_Date", formatoptions: { newformat: 'd/m/Y' } },
                     { name: "Audit_Followup_Date", editable: true, formatoptions: { newformat: 'd/m/Y' } },
                     { name: "Audit_Remarks", editable: true, edittype: "textarea", editoptions: { rows: "4", cols: "20" } },
@@ -50,9 +53,9 @@
                         name: "Evidences", editable: true, edittype: 'file',
                         editoptions: {
                             enctype: "multipart/form-data"
+                        },
                     },
-                    },
-                    { name: "Actual_Date", editable: true, formatter:'date', formatoptions: { newformat: 'd/m/Y' } },
+                    { name: "Actual_Date", editable: true, formatter: 'date', formatoptions: { newformat: 'd/m/Y' } },
                     { name: "Due_Date", editable: true, formatoptions: { newformat: 'd/m/Y' } }
                 ],
                 postData: { actid: $("#actid").val() },
@@ -70,20 +73,27 @@
                 onSelectRow: editRow
             });
             jQuery("#grid").jqGrid('setFrozenColumns');
-            //jQuery("#grid").jqGrid('navGrid', '#pager12', { add: false, edit: false, del: false });
+            $("#grid").jqGrid('navGrid', '#pager12', {
+                edit: false, add: false, save: false, cancel: false,
+                search: false, refresh: true, del: true, view: true
+            });
+            $("#grid").jqGrid('inlineNav', '#pager12', {
+                edit: true, add: true, save: true, cancel: true
+            });
         });
         //]]>
 
         function changeact(_id, _name) {
             alert();
+            $("#actid").val(_id);
             $("ActName").text = _name;
             //_actid = _id;
-            $(this).jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');
+            $("#grid").jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');
             return true;
         }
 
         function pickdates(id) {
-            jQuery("#"+id+"Start_Date", "#grid").datepicker({ dateFormat: "yy-mm-dd" });
+            jQuery("#" + id + "_Start_Date", "#grid").datepicker({ dateFormat: "yy-mm-dd" });
         }
         var lastSelection;
 
@@ -92,13 +102,13 @@
                 var grid = $("#grid");
                 grid.jqGrid('restoreRow', lastSelection);
                 grid.jqGrid('editRow', id, {
-                    keys: true,                    
+                    keys: true,
                     onEnter: function (rowid, options, event) {
                         if (confirm("Save the row with ID: " + rowid) === true) {
                             $(this).jqGrid("saveRow", rowid, options);
                         }
                     }
-                });
+                }, pickdates);
                 lastSelection = id;
             }
         }
@@ -114,19 +124,21 @@
 @using (Html.BeginForm())
 {
     <div id="tabs">
-        <ul class="nav nav-tabs nav-justified">
+        <ul class="nav nav-justified" >
             @foreach (var item in Model.ActList)
             {
-                <li><a href="javascript: changeact(@item.Value,@item.Text);">@item.Text</a></li>
+                @*<li><a href="#tab1danger">@item.Text</a></li>*@                
+                @*<li><button onclick="javascript: changeact(@item.Value,@item.Text);">@item.Text</button></li>*@
+                <li><a href="">@item.Text</a></li>
             }
         </ul>
-    </div>
-    @Html.HiddenFor(model => model.actid)
-    <div id="tab1danger">
-        @Html.Display("ActName")
-        <table id="grid"></table>
-        <div id="pager12"></div>
-    </div>
 
+        @Html.HiddenFor(model => model.actid)
+        <div id="tab1danger">
+            @Html.Display("ActName")
+            <table id="grid"></table>
+            <div id="pager12"></div>
+        </div>
+    </div>
 
 }

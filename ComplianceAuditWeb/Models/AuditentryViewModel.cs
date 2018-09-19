@@ -21,7 +21,7 @@ namespace ComplianceAuditWeb.Models
 
     public class Auditentry
     {
-        public List<ComplianceAudit> audits { get; set; }
+        public ComplianceAudit audits { get; set; }
 
         public int compliance_Xref_id { get; set; }
 

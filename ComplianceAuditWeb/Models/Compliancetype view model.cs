@@ -14,13 +14,15 @@ namespace ComplianceAuditWeb.Models
         public int vendorid { get; set; }
 
         public string vendorname { get; set; }
+        
+        //public List<DateTime> date { get; set; }
 
     }
 
     public class compliance_type
     {
         public int complianceid { get; set; }
-        public string auditfrequency { get; set; }
+        public int auditfrequency { get; set; }
         public DateTime startdate { get; set; }
         public DateTime enddate { get; set; }
         public String Name { get; set; }

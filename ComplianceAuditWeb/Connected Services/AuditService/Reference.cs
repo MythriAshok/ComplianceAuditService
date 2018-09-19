@@ -86,6 +86,12 @@ namespace ComplianceAuditWeb.AuditService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getComplianceActList", ReplyAction="http://tempuri.org/IAuditService/getComplianceActListResponse")]
         System.Threading.Tasks.Task<string> getComplianceActListAsync(int OrgID, int VendorID, int compliancetypeid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getcomplianceonorg", ReplyAction="http://tempuri.org/IAuditService/getcomplianceonorgResponse")]
+        string getcomplianceonorg(int OrgID, int VendorID, int version);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/getcomplianceonorg", ReplyAction="http://tempuri.org/IAuditService/getcomplianceonorgResponse")]
+        System.Threading.Tasks.Task<string> getcomplianceonorgAsync(int OrgID, int VendorID, int version);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -209,6 +215,14 @@ namespace ComplianceAuditWeb.AuditService {
         
         public System.Threading.Tasks.Task<string> getComplianceActListAsync(int OrgID, int VendorID, int compliancetypeid) {
             return base.Channel.getComplianceActListAsync(OrgID, VendorID, compliancetypeid);
+        }
+        
+        public string getcomplianceonorg(int OrgID, int VendorID, int version) {
+            return base.Channel.getcomplianceonorg(OrgID, VendorID, version);
+        }
+        
+        public System.Threading.Tasks.Task<string> getcomplianceonorgAsync(int OrgID, int VendorID, int version) {
+            return base.Channel.getcomplianceonorgAsync(OrgID, VendorID, version);
         }
     }
 }

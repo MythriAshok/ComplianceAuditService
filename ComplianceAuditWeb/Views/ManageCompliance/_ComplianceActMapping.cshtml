@@ -14,83 +14,90 @@
     <link href="~/Content/font-awesome.min.css" rel="stylesheet" />*@
     <link href="~/Content/themes/CustomJstreecss.css" rel="stylesheet" />
     <script>
-        function GetComplianceList() {
-            $('#actjstree').jstree('destroy');
-            var procemessage = "<option value='0'> Please wait...</option>";
-            $("#ComplianceID").html(procemessage).show();
-            var countryid = $("#countryid").val();
-            var industrytypeid = $("#industryid").val();
-            var url = "/Common/getCompliance";
+    
+            function GetComplianceList() {
+                $('#actjstree').jstree('destroy');
+                var epty = null;
+                $('#selectedItems').val(apty);  
+                var procemessage = "<option value='0'> Please wait...</option>";
+                $("#ComplianceID").html(procemessage).show();
+                var countryid = $("#countryid").val();
+                var industrytypeid = $("#industryid").val();
+                var url = "/Common/getCompliance";
+              
+                $.ajax({
+                    url: url,
+                    data: { countryid: countryid, industrytypeid: industrytypeid },
+                    cache: false,
+                    type: "POST",
+                    success: function (data) {
 
-            $.ajax({
-                url: url,
-                data: { countryid: countryid, industrytypeid: industrytypeid },
-                cache: false,
-                type: "POST",
-                success: function (data) {
-
-                    var markup = "<option value='0' >-- Select Compliance Type --</option>";
-                    for (var x = 0; x < data.length; x++) {
-                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                        //var markup = "<option value='0' >-- Select Compliance Type --</option>";
+                        var markup = "";
+                        for (var x = 0; x < data.length; x++) {
+                            markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                        }
+                        $("#compliancetypeid").html("").show();
+                        $("#compliancetypeid").html(markup).show();
+                        LoadJSTree();
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
                     }
-
-                    $("#compliancetypeid").html("").show();
-                    $("#compliancetypeid").html(markup).show();
-                },
-                error: function (reponse) {
-                    alert("error : " + reponse);
-                }
-            });
+                });
         }
-        $('#actjstree').on('changed.jstree', function (e, data) {
 
-            var i, j;
-            var selectedItems = [];
-            for (i = 0, j = data.selected.length; i < j; i++) {
+            $('#actjstree').on('changed.jstree', function (e, data) {
+                var i, j;
+                var selectedItems = [];
+                
+                for (i = 0, j = data.selected.length; i < j; i++) {
 
-                //Fetch the Id.
-                var id = data.selected[i];
-                var selectednode = data.instance.get_node(data.selected[i]);
-                if (selectednode.original.categorytype == "Act") {
-                    selectedItems.push({
-                        text: data.instance.get_node(data.selected[i]).text,
-                        id: id,
-                        //categorytype: data.instance.get_node(dat.selected[i]).orginal.categorytype
-                    });
+                    //Fetch the Id.
+                    var id = data.selected[i];
+                    var selectednode = data.instance.get_node(data.selected[i]);
+                    if (selectednode.original.categorytype == "Act") {
+                        selectedItems.push({
+                            text: data.instance.get_node(data.selected[i]).text,
+                            id: id,
+                            //categorytype: data.instance.get_node(dat.selected[i]).orginal.categorytype
+                        });
+                    }
+                    $('#selectedItems').val(JSON.stringify(selectedItems));             
                 }
-                $('#selectedItems').val(JSON.stringify(selectedItems));
+        });
 
+            $(function () {
+                var _acttyid = $('#compliancetypeid').val();
+                $('#actjstree').jstree({
+                    'plugins': ["checkbox"],
+                    'core': {
+                        'data': {
+                            'url': '/ManageCompliance/getcompliancetypeact',
+                            'data': { compliancetypeid: _acttyid },
+                            'dataType': 'json'
+                        },
+                    }
+                });
+            });
+
+            function LoadJSTree() {
+                $('#actjstree').jstree('destroy');
+                //$('#selectedItems').val();
+                var _acttyid = $('#compliancetypeid').val();
+                //var _acttype = $('#ActTypeID').val();
+                $('#actjstree').jstree({
+                    'plugins': ["checkbox"],
+                    'core': {
+                        'data': {
+                            'url': '/ManageCompliance/getcompliancetypeact',
+                            'data': { compliancetypeid: _acttyid },
+                            'dataType': 'json'
+                        },
+                    }
+                });
             }
-        });
-        $(function () {
-            var _acttyid = $('#compliancetypeid').val();
-            $('#actjstree').jstree({
-                'plugins': ["checkbox"],
-                'core': {
-                    'data': {
-                        'url': '/ManageCompliance/getcompliancetypeact',
-                        'data': { compliancetypeid: _acttyid },
-                        'dataType': 'json'
-                    },
-                }
-            });
-        });
-
-        function LoadJSTree() {
-            $('#actjstree').jstree('destroy');
-            var _acttyid = $('#compliancetypeid').val();
-            //var _acttype = $('#ActTypeID').val();
-            $('#actjstree').jstree({
-                'plugins': ["checkbox"],
-                'core': {
-                    'data': {
-                        'url': '/ManageCompliance/getcompliancetypeact',
-                        'data': { compliancetypeid: _acttyid },
-                        'dataType': 'json'
-                    },
-                }
-            });
-        }
+      
     </script>
 }
 <ul class="breadcrumb ML15">
