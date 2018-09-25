@@ -7,122 +7,134 @@
 <script src="~/Scripts/chart/exporting.js"></script>
 <script src="~/Scripts/chart/highcharts.js"></script>
 <script src="~/Scripts/chart/highcharts-3d.js"></script>
-@*<script>
-        $(document).ready(
-            function () {
-                var ctx = document.getElementById("mychart")
-            })
-    </script>*@
 
-<div class="jumbotron">
+
+@*<div class="jumbotron">
 
 
     <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 
-</div>
+</div>*@
+<div id="charts"></div>
 <script>
-    $(document).ready(function () {
-        $.getJSON("/Reporting/GetData", function (data) {
 
+    (function () {
+        $(document).ready(function () {
+            $.getJSON("/Reporting/GetData", function (data) {
+                $chart.setOptions({
+                    colors: ['green', 'red', 'orange',]
+                });
+                $charts = $('#charts');
+                $.each(data, function (key, item) {
+                    $charts.append('<div id="container' + key + '"></div>');
+                    var $chart = $('#container' + key);
 
-            Highcharts.setOptions({
-                colors: ['green', 'red', 'orange',]
-            });
-            $(function () {
-                $('#container').highcharts({
-                    chart: {
-                        type: 'pie',
-                        
-                        plotBackgroundColor: null,
-                        plotBorderWidth: null,
-                        plotShadow: false,
-                        options3d: {
-                            enabled: true,
-                            alpha: 50,
-                            beta: 0
-                        },
-                        id: 'mychart'
-                    },
-                    title: {
-                        text: data.Name + ',' + 'Compliance Status' + ',' + data.Date,
+                    var data = [];
+                    $.each(item, function (prop, value) {
+                        data.push({
+                            name: prop,
+                            y: value
+                        });
+                    });
 
-                    },
-                    tooltip: {
-                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                    },
+                    $chart.highcharts({
+                        chart: {
+                            type: 'pie',
 
-                    plotOptions: {
-                        pie: {
-                            allowPointSelect: true,
-                            cursor: 'pointer',
-                            dataLabels: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false,
+                            options3d: {
                                 enabled: true,
-                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-
-                                style: {
-                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                                }
-                            }
-                        }
-
-                    },
-                    plotOptions: {
-                        series: {
-                            allowPointSelect: true,
-                            size: 350,
-                            depth: 45,
-                            cursor: 'pointer',
-                            formatter: function () {
-                                return Math.round(this.percentage * 100) / 100 + ' %';
+                                alpha: 50,
+                                beta: 0
                             },
-                            distance: -30,
-                            color: 'black',
-                            point: {
-                                events: {
-                                    click: function (e) {
-                                        location.href = this.options.url;
+                            id: 'mychart'
+                        },
+                        title: {
+                            text: data.Name + ',' + 'Compliance Status' + ',' + data.Date + ' ' + '<br>' +
+                                'Audit Period' + '=' + '   ' + data.StartDate + ' ' + 'To' + ' ' + data.EndDate,
 
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+
+                                    style: {
+                                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                                     }
                                 }
-
                             }
-                        }
-                    },
+
+                        },
+                        plotOptions: {
+                            series: {
+                                allowPointSelect: true,
+                                size: 350,
+                                depth: 45,
+
+                                cursor: 'pointer',
+                                formatter: function () {
+                                    return Math.round(this.percentage * 100) / 100 + ' %';
+                                },
+                                distance: -30,
+                                color: 'black',
+                                point: {
+                                    events: {
+                                        click: function (e) {
+                                            location.href = this.options.url;
+
+                                        }
+                                    }
+
+                                }
+                            }
+                        },
 
 
 
-                    series: [{
+                        series: [{
 
-                        name: 'Rate of Compliance',
-                        colorByPoint: true,
-                        data: [{
-                            name: 'Complianced',
-                            y: data.Complianced,
-                            x: data.ID,
-                           
-                            url: '/Reporting/GetBranchReports/?x?n?sd?ed' + '&x=' + data.ID + '&n=' + 'Complianced' + '&sd=' + data.StartDate + '&ed=' + data.EndDate
+                            name: 'Rate of Compliance',
+                            colorByPoint: true,
+                            data: [{
+                                name: 'Complianced',
+                                y: data.Complianced,
+                                x: data.ID,
 
-                        }, {
-                            name: 'Non-Complianced',
-                            y: data.Non_Complianced,
-                            url: '/Reporting/GetBranchReports/?x?n' + '&x=' + data.ID + '&n=' + 'Non_Complianced'
-                        }, {
-                            name: 'Partially-Complianced',
-                            y: data.Partially_Complianced,
-                            url: '/Reporting/GetBranchReports/?x?n' + '&x=' + data.ID + '&n=' + 'Partially_Complianced'
+
+                                url: '/Reporting/GetBranchReports/?x?y?n?sdate?edate' + '&x=' + data.ID + '&y=' + data.VendorID + '&n=' + 'Complianced' + '&sdate=' + data.StartDate + '&edate=' + data.EndDate
+
+                            }, {
+                                name: 'Non-Complianced',
+                                y: data.Non_Complianced,
+                                url: '/Reporting/GetBranchReports/?x?y?n?sdate?edate' + '&x=' + data.ID + '&y=' + data.VendorID + '&n=' + 'Non_Complianced' + '&sdate=' + data.StartDate + '&edate=' + data.EndDate
+                            }, {
+                                name: 'Partially-Complianced',
+                                y: data.Partially_Complianced,
+                                url: '/Reporting/GetBranchReports/?x?y?n?sdate?edate' + '&x=' + data.ID + '&y=' + data.VendorID + '&n=' + 'Partially_Complianced' + '&sdate=' + data.StartDate + '&edate=' + data.EndDate
+                            }]
                         }]
-                    }]
+                    });
                 });
             });
         });
-    });
+    })();
 
 
 
 
 
 </script>
+@Html.HiddenFor(m => m.Vendorid)
 
-
-@Html.ActionLink("Get Detailed Report", "GetBranchReports", new { x = Model.branchid })
+@Html.ActionLink("Get Detailed Report", "GetBranchReports", new { x = Model.branchid, y = Model.Vendorid, sdate = Model.ComplianceAudit.Start_Date.ToShortDateString(), edate = Model.ComplianceAudit.End_Date.ToShortDateString() })
 @*<a href="@Url.Action("GoToChart", "Reporting", new { compliancetypeid = item.complianceid,branchid=Model.branchid,vendorid=Model.vendorid })"/>*@

@@ -21,16 +21,16 @@ namespace ComplianceService
         {
         }
 
-        public string getBranchReport(int BranchID)
+        public string getBranchReport(int BranchID, DateTime StartDate, DateTime EndDate, int ComplianceTypeID)
         {
-            return bindBranchReport(BranchID);
+            return bindBranchReport(BranchID, StartDate, EndDate, ComplianceTypeID);
         }
 
-        private string bindBranchReport(int BranchID)
+        private string bindBranchReport(int BranchID , DateTime StartDate, DateTime EndDate, int ComplianceTypeID)
         {
             ComplianceAudit auditReport = new ComplianceAudit();
             ReportHelper reportHelper = new ReportHelper();
-            DataSet dsBranchReport = reportHelper.getBranchComlianceAuditReport(BranchID);
+            DataSet dsBranchReport = reportHelper.getBranchComlianceAuditReport(BranchID, StartDate, EndDate, ComplianceTypeID);
             UtilityHelper utilityHelper = new UtilityHelper();
             dsBranchReport = utilityHelper.ConvertNullsToEmptyString(dsBranchReport);
             string xmlBranchReport = dsBranchReport.GetXml();
@@ -54,16 +54,16 @@ namespace ComplianceService
         }
 
 
-        public string getBranchStatusReport(int BranchID, string status)
+        public string getBranchStatusReport(int BranchID, string status, DateTime StartDate, DateTime EndDate, int ComplianceID)
         {
-            return bindBranchStatusReport(BranchID, status);
+            return bindBranchStatusReport(BranchID, status, StartDate, EndDate, ComplianceID);
         }
 
-        private string bindBranchStatusReport(int BranchID, string status)
+        private string bindBranchStatusReport(int BranchID, string status, DateTime StartDate, DateTime EndDate, int ComplianceID)
         {
             ComplianceAudit auditReport = new ComplianceAudit();
             ReportHelper reportHelper = new ReportHelper();
-            DataSet dsBranchReport = reportHelper.getBranchStatusComlianceAuditReport(BranchID, status);
+            DataSet dsBranchReport = reportHelper.getBranchStatusComlianceAuditReport(BranchID, status, StartDate, EndDate, ComplianceID);
             UtilityHelper utilityHelper = new UtilityHelper();
             dsBranchReport = utilityHelper.ConvertNullsToEmptyString(dsBranchReport);
             string xmlBranchReport = dsBranchReport.GetXml();
@@ -86,6 +86,36 @@ namespace ComplianceService
             return xmlBranchReport;
         }
 
+        public string getBranchpieReport(int BranchID)
+        {
+            return bindBranchpieReport(BranchID);
+        }
 
+        private string bindBranchpieReport(int BranchID)
+        {
+            ComplianceAudit auditReport = new ComplianceAudit();
+            ReportHelper reportHelper = new ReportHelper();
+            DataSet dsBranchReport = reportHelper.getpieBranchComlianceAuditReport(BranchID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsBranchReport = utilityHelper.ConvertNullsToEmptyString(dsBranchReport);
+            string xmlBranchReport = dsBranchReport.GetXml();
+            return xmlBranchReport;
+        }
+
+        //public string getYearForAuditReport(int OrgID)
+        //{
+        //    return bindYearForAuditReport(OrgID);
+        //}
+
+        //private string bindYearForAuditReport(int OrgID)
+        //{
+        //    ComplianceAudit auditReport = new ComplianceAudit();
+        //    ReportHelper reportHelper = new ReportHelper();
+        //    DataSet dsBranchReport = reportHelper.getYearforAuditReports(OrgID);
+        //    UtilityHelper utilityHelper = new UtilityHelper();
+        //    dsBranchReport = utilityHelper.ConvertNullsToEmptyString(dsBranchReport);
+        //    string xmlBranchReport = dsBranchReport.GetXml();
+        //    return xmlBranchReport;
+        //}
     }
 }

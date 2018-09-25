@@ -31,8 +31,33 @@
                     alert("error : " + reponse);
                 }
             });
+          
 
         }
+        function GetComplianceType(_CompanyId) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#complianceTypeid").html(procemessage).show();
+            var url = "/Common/getcompliancelistundercompany";
+
+            $.ajax({
+                url: url,
+                data: { compid: _CompanyId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>-- Select Compliance --</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#complianceTypeid").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+            GetBranch(_CompanyId);
+        }
+
     </script>
 }
 @using (Html.BeginForm())
@@ -47,20 +72,46 @@
             <p style="color:red">@TempData["Message"]</p>
         }*@
 
-        <div class="col-xs-6 subSelect ">
+        <div class="col-xs-4 subSelect ">
             <div class="input-field">
                 @Html.Label("Company", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.DropDownListFor(model => model.companyid, Model.companyList, new { @onchange = "javascript:GetBranch(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.DropDownListFor(model => model.companyid, Model.companyList, new { @onchange = "javascript:GetComplianceType(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
                 @Html.ValidationMessageFor(model => model.companyList, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="col-xs-6 subSelect ">
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("ComplianceType", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(model => model.complianceTypeid, Model.ComplianceTypeList, new  { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.ComplianceTypeList, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Frequency", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(m => m.frequencyid, Model.frequency, new { @class = "inputMaterial ui - autocomplete - input" })
+
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Year", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(m=>m.yearid, Enumerable.Range(2000, DateTime.Now.Year - 1999).Select(i=> new SelectListItem { Value = i.ToString(), Text = i.ToString() }),
+               "Year", new { @class = "inputMaterial ui - autocomplete - input" })
+            </div>
+        </div>
+        <div class="col-xs-4 subSelect ">
             <div class="input-field">
                 @Html.Label("Branch", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.DropDownListFor(model => model.branchid, Model.BranchList, new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.DropDownListFor(model => model.branchid, Model.BranchList,
+               new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
                 @Html.ValidationMessageFor(model => model.branchid, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="clearfix"></div>
         <div class="col-xs-12 subSelect ">
             @if (Model.VendorList != null)
@@ -73,19 +124,23 @@
                             {
                                 if (Convert.ToInt32(item.Value) == Model.branchid)
                                 {
-                                    
-                            <div class="col-sm-3 QueList">
-                                <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h4>
-                                <div class="queContainer">
-                                    <a href="@Url.Action("selectauditfrequency", "Reporting", new { branchid = Model.branchid, vendorid = item.Value, vendorname = item.Text })">
 
-                                        @*<a href="@Url.Action("GoToChart", "Reporting", new { branchid = Model.branchid, vendorid = item.Value, vendorname = item.Text })">*@
-                                            <span class="qIcon"><img src="~/UploadedFiles/noimage.png" alt="" style="height:60px;width:75px"></span>
-                                            <h3 class="PB25"> @Html.DisplayFor(modelitem => item.Text)</h3>
-                                        </a>
-                                        <div class="clearfix"></div>
-                                </div>
-                            </div>
+                                    <div class="col-sm-3 QueList">
+                                        <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h4>
+                                        <div class="queContainer">
+                                            <a href="@Url.Action("selectauditfrequency", "Reporting",
+                                                    new { branchid = Model.branchid, vendorid = item.Value, vendorname = item.Text,
+                                                    yearid = Model.yearid, frequencyid = Model.frequencyid, compliancid = Model.complianceTypeid
+
+                                                    })">
+
+                                                @*<a href="@Url.Action("GoToChart", "Reporting", new { branchid = Model.branchid, vendorid = item.Value, vendorname = item.Text })">*@
+                                                <span class="qIcon"><img src="~/UploadedFiles/noimage.png" alt="" style="height:60px;width:75px"></span>
+                                                <h3 class="PB25"> @Html.DisplayFor(modelitem => item.Text)</h3>
+                                            </a>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
                                 }
                             }
 
@@ -98,12 +153,18 @@
                             {
                                 <div class="col-sm-3 QueList">
                                     <div class="queContainer">
-                                        <a href="@Url.Action("Listofvendors", "ComplianceManagement", new { branchid=Model.branchid,vendorid = item.Company_Id,vendorname=item.Company_Name })">
-                                            <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
-                                            <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
-                                        </a>
-                                        <div class="clearfix"></div>
-                                    </div>
+                                        @*<a href="@Url.Action("selectauditfrequency", "Reporting", new { branchid=Model.branchid,vendorid = item.Company_Id,vendorname=item.Company_Name })">*@
+
+                                            <a href="@Url.Action("selectauditfrequency", "Reporting",
+                                                    new { branchid = Model.branchid, vendorid = item.Company_Id, vendorname=item.Company_Name,
+                                                    yearid = Model.yearid, frequencyid = Model.frequencyid, compliancid = Model.complianceTypeid
+
+                                                    })">
+                                                <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
+                                                <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
+                                            </a>
+                                            <div class="clearfix"></div>
+</div>
                                 </div>
                             }
                             <div class="clearfix"></div>
@@ -113,6 +174,6 @@
             }
         </div>
     </div>
-
+   
 
 }

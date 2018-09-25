@@ -22,16 +22,16 @@ namespace ComplianceAuditWeb.ReportingService {
         System.Threading.Tasks.Task DoWorkAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReportingService/getBranchReport", ReplyAction="http://tempuri.org/IReportingService/getBranchReportResponse")]
-        string getBranchReport(int BranchID);
+        string getBranchReport(int BranchID, System.DateTime StartDate, System.DateTime EndDate, int ComplianceID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReportingService/getBranchReport", ReplyAction="http://tempuri.org/IReportingService/getBranchReportResponse")]
-        System.Threading.Tasks.Task<string> getBranchReportAsync(int BranchID);
+        System.Threading.Tasks.Task<string> getBranchReportAsync(int BranchID, System.DateTime StartDate, System.DateTime EndDate, int ComplianceID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReportingService/getBranchStatusReport", ReplyAction="http://tempuri.org/IReportingService/getBranchStatusReportResponse")]
-        string getBranchStatusReport(int BranchID, string status);
+        string getBranchStatusReport(int BranchID, string status, System.DateTime StartDate, System.DateTime EndDate, int ComplianceID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReportingService/getBranchStatusReport", ReplyAction="http://tempuri.org/IReportingService/getBranchStatusReportResponse")]
-        System.Threading.Tasks.Task<string> getBranchStatusReportAsync(int BranchID, string status);
+        System.Threading.Tasks.Task<string> getBranchStatusReportAsync(int BranchID, string status, System.DateTime StartDate, System.DateTime EndDate, int ComplianceID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReportingService/getBranchRACTeport", ReplyAction="http://tempuri.org/IReportingService/getBranchRACTeportResponse")]
         string getBranchRACTeport(int BranchID);
@@ -44,6 +44,12 @@ namespace ComplianceAuditWeb.ReportingService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReportingService/getBranchStatusACTReport", ReplyAction="http://tempuri.org/IReportingService/getBranchStatusACTReportResponse")]
         System.Threading.Tasks.Task<string> getBranchStatusACTReportAsync(int BranchID, string status);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReportingService/getBranchpieReport", ReplyAction="http://tempuri.org/IReportingService/getBranchpieReportResponse")]
+        string getBranchpieReport(int BranchID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IReportingService/getBranchpieReport", ReplyAction="http://tempuri.org/IReportingService/getBranchpieReportResponse")]
+        System.Threading.Tasks.Task<string> getBranchpieReportAsync(int BranchID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -81,20 +87,20 @@ namespace ComplianceAuditWeb.ReportingService {
             return base.Channel.DoWorkAsync();
         }
         
-        public string getBranchReport(int BranchID) {
-            return base.Channel.getBranchReport(BranchID);
+        public string getBranchReport(int BranchID, System.DateTime StartDate, System.DateTime EndDate, int ComplianceID) {
+            return base.Channel.getBranchReport(BranchID, StartDate, EndDate, ComplianceID);
         }
         
-        public System.Threading.Tasks.Task<string> getBranchReportAsync(int BranchID) {
-            return base.Channel.getBranchReportAsync(BranchID);
+        public System.Threading.Tasks.Task<string> getBranchReportAsync(int BranchID, System.DateTime StartDate, System.DateTime EndDate, int ComplianceID) {
+            return base.Channel.getBranchReportAsync(BranchID, StartDate, EndDate, ComplianceID);
         }
         
-        public string getBranchStatusReport(int BranchID, string status) {
-            return base.Channel.getBranchStatusReport(BranchID, status);
+        public string getBranchStatusReport(int BranchID, string status, System.DateTime StartDate, System.DateTime EndDate, int ComplianceID) {
+            return base.Channel.getBranchStatusReport(BranchID, status, StartDate, EndDate, ComplianceID);
         }
         
-        public System.Threading.Tasks.Task<string> getBranchStatusReportAsync(int BranchID, string status) {
-            return base.Channel.getBranchStatusReportAsync(BranchID, status);
+        public System.Threading.Tasks.Task<string> getBranchStatusReportAsync(int BranchID, string status, System.DateTime StartDate, System.DateTime EndDate, int ComplianceID) {
+            return base.Channel.getBranchStatusReportAsync(BranchID, status, StartDate, EndDate, ComplianceID);
         }
         
         public string getBranchRACTeport(int BranchID) {
@@ -111,6 +117,14 @@ namespace ComplianceAuditWeb.ReportingService {
         
         public System.Threading.Tasks.Task<string> getBranchStatusACTReportAsync(int BranchID, string status) {
             return base.Channel.getBranchStatusACTReportAsync(BranchID, status);
+        }
+        
+        public string getBranchpieReport(int BranchID) {
+            return base.Channel.getBranchpieReport(BranchID);
+        }
+        
+        public System.Threading.Tasks.Task<string> getBranchpieReportAsync(int BranchID) {
+            return base.Channel.getBranchpieReportAsync(BranchID);
         }
     }
 }

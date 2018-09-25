@@ -1,0 +1,562 @@
+@model ComplianceAuditWeb.Models.ReportViewModel
+@*@model IEnumerable<Compliance.DataObject.ComplianceAudit>*@
+
+
+<script src="~/Scripts/chart/exporting.js"></script>
+<script src="~/Scripts/chart/highcharts.js"></script>
+<script src="~/Scripts/chart/highcharts-3d.js"></script>
+
+<div class="small">
+
+
+    <div id="container" style="min-width: 310px; height: 400px; max-width:600px; margin: 0 auto"></div>
+
+</div>
+<script>
+    $(document).ready(function () {
+        $.getJSON("/Reporting/GetData", function (data) {
+
+
+            Highcharts.setOptions({
+                colors: ['green', 'red', 'orange',]
+            });
+            $(function () {
+                $('#container').highcharts({
+                    chart: {
+                        type: 'pie',
+
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        options3d: {
+                            enabled: true,
+                            alpha: 50,
+                            beta: 0
+                        },
+                        id: 'mychart'
+                    },
+                    title: {
+                        text: data.Name + ',' + 'Compliance Status' + ',' + data.Date + ' ' + '<br>' +
+                            'Audit Period' + '=' + '   ' + data.StartDate + ' ' + 'To' + ' ' + data.EndDate,
+
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                }
+                            }
+                        }
+
+                    },
+                    plotOptions: {
+                        series: {
+                            allowPointSelect: true,
+                            size: 350,
+                            depth: 45,
+
+                            cursor: 'pointer',
+                            formatter: function () {
+                                return Math.round(this.percentage * 100) / 100 + ' %';
+                            },
+                            distance: -30,
+                            color: 'black',
+                            point: {
+                                events: {
+                                    click: function (e) {
+                                        location.href = this.options.url;
+
+                                    }
+                                }
+
+                            }
+                        }
+                    },
+
+
+
+                    series: [{
+
+                        name: 'Rate of Compliance',
+                        colorByPoint: true,
+                        data: [{
+                            name: 'Complianced',
+                            y: data.Complianced,
+                            x: data.ID,
+
+
+                            url: '/Reporting/GetBranchReports/?x?n?sdate?edate' + '&x=' + data.ID + '&n=' + 'Complianced' + '&sdate=' + data.StartDate + '&edate=' + data.EndDate
+
+                        }, {
+                            name: 'Non-Complianced',
+                            y: data.Non_Complianced,
+                            url: '/Reporting/GetBranchReports/?x?n?sdate?edate' + '&x=' + data.ID + '&n=' + 'Non_Complianced' + '&sdate=' + data.StartDate + '&edate=' + data.EndDate
+                        }, {
+                            name: 'Partially-Complianced',
+                            y: data.Partially_Complianced,
+                            url: '/Reporting/GetBranchReports/?x?n?sdate?edate' + '&x=' + data.ID + '&n=' + 'Partially_Complianced' + '&sdate=' + data.StartDate + '&edate=' + data.EndDate
+                        }]
+                    }]
+                });
+            });
+        });
+    });
+</script>
+
+
+
+
+<div class="pull-right">
+    @Html.ActionLink("Generate PDF", "BranchReport")
+</div>
+<style>
+    th {
+        background-color: lightgrey;
+    }
+</style>
+
+<div>
+    <h2 class="page-header" style="text-align:center; font-size:large">@ViewBag.Name</h2>
+
+
+    @if (Model.CompliancedRuleList != null)
+    {
+        if (Model.ActList != null)
+        {
+            <h3 style="background-color:forestgreen">Complianced</h3>
+
+            foreach (var act in Model.ActList)
+            {
+
+                @*if (Model.ComplianceStatus != null)
+                    {
+                        <div style="background-color:antiquewhite">
+                            <i class="fa fa-legal"></i>
+                            @Html.DisplayFor(modelItem => act.Compliance_Title)
+                        </div>
+                    }
+
+                    if (Model.NonComplianceStatus != null)
+                    {
+                        <div style="background-color:antiquewhite">
+                            <i class="fa fa-legal"></i>
+                            @Html.DisplayFor(modelItem => act.Compliance_Title)
+                        </div>
+                    }
+
+                    if (Model.PartiallyComplianceStatus != null)
+                    {
+                        <div style="background-color:antiquewhite">
+                            <i class="fa fa-legal"></i>
+                            @Html.DisplayFor(modelItem => act.Compliance_Title)
+                        </div>
+                    }*@
+
+                bool ruleexists = true;
+                foreach (var rule in Model.CompliancedRuleList)
+                {
+                    if (rule.ParentID == act.Compliance_Xref_ID)
+                    {
+                        if (ruleexists)
+                        {
+                            @*<div style="background-color:limegreen">*@
+                                <div >
+
+                                    <div style="font-size:large"> <i class="fa fa-legal"></i> @Html.DisplayFor(modelItem => act.Compliance_Title)</div>
+                                </div>
+                                ruleexists = false;
+                                }
+
+                                <table class="table">
+
+                                    <tr>
+                                        <td>
+                                            <div style="background-color:lightgray; margin-left:10px" >
+                                                <i class="fa fa-leanpub"></i>
+                                                @Html.DisplayFor(modelItem => rule.Title)
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table class="table" style="background-color:darkgray">
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayNameFor(modelItem => rule.Description)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(modelItem => rule.Audit_Status)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(modelItem => rule.Risk_Category)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(modelItem => rule.Audit_Remarks)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(modelItem => rule.Evidences)
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => rule.Description)
+                                        </td>
+
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => rule.Audit_Status)
+                                        </td>
+
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => rule.Risk_Category)
+                                        </td>
+
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => rule.Audit_Remarks)
+                                        </td>
+
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => rule.Evidences)
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                }
+                                }
+                                }
+                                }
+                                }
+
+
+
+                                @if (Model.PartiallyCompliancedRuleList != null)
+                                {
+                                    <h3>Partially-Complianced</h3>
+
+                                    if (Model.ActList != null)
+                                    {
+                                        foreach (var act in Model.ActList)
+                                        {
+
+
+                                            foreach (var rule in Model.PartiallyCompliancedRuleList)
+                                            {
+                                                if (rule.ParentID == act.Compliance_Xref_ID)
+                                                {
+                                                    <div style="background-color:greenyellow">
+
+                                                        <div style="font-size:large">  <i class="fa fa-legal"></i> @Html.DisplayFor(modelItem => act.Compliance_Title)</div>
+                                                    </div>
+                                                    <table class="table">
+                                                        @*<tr>
+                                                                <th>
+                                                                    @Html.DisplayNameFor(model => model.ComplianceAudit.Title)
+                                                                </th>
+                                                            </tr>*@
+                                                        <tr>
+                                                            <td>
+                                                                <div style="background-color:lightgray">
+                                                                    <i class="fa fa-leanpub"></i>
+                                                                    @Html.DisplayFor(modelItem => rule.Title)
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <table class="table">
+                                                        <tr>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Description)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Audit_Status)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Risk_Category)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Audit_Remarks)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Evidences)
+                                                            </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Description)
+                                                            </td>
+
+
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Audit_Status)
+                                                            </td>
+
+
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Risk_Category)
+                                                            </td>
+
+
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Audit_Remarks)
+                                                            </td>
+
+
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Evidences)
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+
+
+
+
+
+                                @if (Model.NonCompliancedRuleListHighRisk != null)
+                                {
+                                    <h3>Non-Complianced  High-Risk</h3>
+
+                                    if (Model.ActList != null)
+                                    {
+                                        foreach (var acts in Model.ActList)
+                                        {
+
+                                            foreach (var rule in Model.NonCompliancedRuleListHighRisk)
+                                            {
+                                                if (rule.ParentID == acts.Compliance_Xref_ID)
+                                                {
+                                                    <div style="background-color:red">
+
+                                                        <div style="color:white; font-size:large"><i class="fa fa-legal"></i> @Html.DisplayFor(modelItem => acts.Compliance_Title)</div>
+                                                    </div>
+                                                    <table class="table">
+                                                        @*<tr>
+                                                                <th>
+                                                                    @Html.DisplayNameFor(model => model.ComplianceAudit.Title)
+                                                                </th>
+                                                            </tr>*@
+                                                        <tr>
+                                                            <td>
+                                                                <div style="background-color:lightgrey">
+                                                                    <i class="fa fa-leanpub"></i>
+                                                                    @Html.DisplayFor(modelItem => rule.Title)
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <table class="table">
+                                                        <tr>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Description)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Audit_Status)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Risk_Category)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Audit_Remarks)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Evidences)
+                                                            </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Description)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Audit_Status)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Risk_Category)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Audit_Remarks)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Evidences)
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                                @if (Model.NonCompliancedRuleListMediumRisk != null)
+                                {
+                                    <h3>Non-Complianced  Medium-Risk</h3>
+
+                                    if (Model.ActList != null)
+                                    {
+                                        foreach (var acts in Model.ActList)
+                                        {
+
+
+                                            foreach (var rule in Model.NonCompliancedRuleListMediumRisk)
+                                            {
+                                                if (rule.ParentID == acts.Compliance_Xref_ID)
+                                                {
+                                                    <div style="background-color:orange">
+
+                                                        <div style="font-size:large">  <i class="fa fa-legal"></i>@Html.DisplayFor(modelItem => acts.Compliance_Title)</div>
+                                                    </div>
+                                                    <table class="table">
+                                                        @*<tr>
+                                                                <th>
+                                                                    @Html.DisplayNameFor(model => model.ComplianceAudit.Title)
+                                                                </th>
+                                                            </tr>*@
+                                                        <tr>
+                                                            <td>
+                                                                <div style="background-color:lightgrey">
+                                                                    <i class="fa fa-leanpub"></i>
+                                                                    @Html.DisplayFor(modelItem => rule.Title)
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <table class="table">
+                                                        <tr>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Description)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Audit_Status)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Risk_Category)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Audit_Remarks)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Evidences)
+                                                            </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Description)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Audit_Status)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Risk_Category)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Audit_Remarks)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Evidences)
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+
+
+                                @if (Model.NonCompliancedRuleListLowRisk != null)
+                                {
+                                    if (Model.ActList != null)
+                                    {
+                                        foreach (var acts in Model.ActList)
+                                        {
+                                            <h3>Non-Complianced  Low-Risk</h3>
+
+
+                                            foreach (var rule in Model.NonCompliancedRuleListLowRisk)
+                                            {
+                                                if (rule.ParentID == acts.Compliance_Xref_ID)
+                                                {
+                                                    <div style="background-color:lightgreen">
+
+                                                        <div style="font-size:large"><i class="fa fa-legal"></i>  @Html.DisplayFor(modelItem => acts.Compliance_Title)</div>
+                                                    </div>
+                                                    <table class="table">
+                                                        @*<tr>
+                                                                <th>
+                                                                    @Html.DisplayNameFor(model => model.ComplianceAudit.Title)
+                                                                </th>
+                                                            </tr>*@
+                                                        <tr>
+                                                            <td>
+                                                                <div style="background-color:lightgray">
+                                                                    <i class="fa fa-leanpub"></i>
+                                                                    @Html.DisplayFor(modelItem => rule.Title)
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <table class="table">
+                                                        <tr>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Description)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Audit_Status)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Risk_Category)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Audit_Remarks)
+                                                            </th>
+                                                            <th>
+                                                                @Html.DisplayNameFor(modelItem => rule.Evidences)
+                                                            </th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Description)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Audit_Status)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Risk_Category)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Audit_Remarks)
+                                                            </td>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => rule.Evidences)
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+
+                            </div>
+
+
