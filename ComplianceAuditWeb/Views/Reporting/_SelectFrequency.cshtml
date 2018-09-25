@@ -77,7 +77,7 @@
                             data.push({
                                 name: prop,
                                 y: value
-                              
+
                             });
                         });
 
@@ -100,13 +100,13 @@
                                 text: item.Name + ',' + 'Compliance Status' + ',' + item.Date + ' ' + '<br>' +
                                     'Audit Period' + '=' + '   ' + item.StartDate + ' ' + 'To' + ' ' + item.EndDate,
 
-                                 href: '/Reporting/GetBranchReports/?x?y?sdate?edate?compliancetypeid' + '&x=' + item.ID
+                                href: '/Reporting/GetBranchReports/?x?y?sdate?edate?compliancetypeid' + '&x=' + item.ID
                                     + '&y=' + item.VendorID +
                                     '&sdate=' + item.StartDate + '&edate=' + item.EndDate + '&compliancetypeid=' + item.compliancetypeid
 
 
                             },
-                          
+
                             tooltip: {
                                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
                             },
@@ -162,21 +162,24 @@
                                     y: item.Complianced,
                                     x: item.ID,
                                     z: item.compliancetypeid,
-                                    url: '/Reporting/GetBranchReports/?x?y?n?sdate?edate?compliancetypeid' + '&x=' + item.ID +
+                                    url: '/Reporting/GetBranchReports/?x?y?n?sdate?edate?compliancetypeid?frequencyid' + '&x=' + item.ID +
                                         '&y=' + item.VendorID + '&n=' + 'Complianced' +
-                                        '&sdate=' + item.StartDate + '&edate=' + item.EndDate + '&compliancetypeid=' + item.compliancetypeid
+                                        '&sdate=' + item.StartDate + '&edate=' + item.EndDate + '&compliancetypeid=' + item.compliancetypeid +
+                                    '&frequencyid=' + item.frequencyid
                                 }, {
                                     name: 'Non-Complianced',
                                     y: item.Non_Complianced,
-                                    url: '/Reporting/GetBranchReports/?x?y?n?sdate?edate?compliancetypeid' + '&x=' + item.ID
+                                        url: '/Reporting/GetBranchReports/?x?y?n?sdate?edate?compliancetypeid?frequencyid' + '&x=' + item.ID
                                         + '&y=' + item.VendorID + '&n=' + 'Non_Complianced' +
-                                        '&sdate=' + item.StartDate + '&edate=' + item.EndDate + '&compliancetypeid=' + item.compliancetypeid
+                                            '&sdate=' + item.StartDate + '&edate=' + item.EndDate + '&compliancetypeid=' + item.compliancetypeid +
+                                        '&frequencyid=' + item.frequencyid
                                 }, {
                                     name: 'Partially-Complianced',
                                     y: item.Partially_Complianced,
-                                    url: '/Reporting/GetBranchReports/?x?y?n?sdate?edate?compliancetypeid' + '&x=' + item.ID
+                                        url: '/Reporting/GetBranchReports/?x?y?n?sdate?edate?compliancetypeid?frequencyid' + '&x=' + item.ID
                                         + '&y=' + item.VendorID + '&n=' + 'Partially_Complianced' +
-                                        '&sdate=' + item.StartDate + '&edate=' + item.EndDate + '&compliancetypeid=' + item.compliancetypeid
+                                            '&sdate=' + item.StartDate + '&edate=' + item.EndDate + '&compliancetypeid=' + item.compliancetypeid +
+                                        '&frequencyid=' + item.frequencyid
                                 },
 
                                 ]
@@ -197,30 +200,37 @@
     </script>
     @foreach (var dates in Model.startEndDates)
     {
-    DateTime sdate = dates.StartDate;
-    DateTime edate = dates.EndDate;
-    <a href="@Url.Action("GetBranchReports", "Reporting",
+        DateTime sdate = dates.StartDate;
+        DateTime edate = dates.EndDate;
+        <a href="@Url.Action("GetBranchReports", "Reporting",
                                                     new {    x = Model.branchid,
                         y = Model.Vendorid,
                         compliancetypeid = Model.complianceTypeid,
                         sdate = sdate.ToShortDateString(),
                         edate = edate.ToShortDateString() })">
-        <span class="qIcon"></span>
+            <span class="qIcon"></span>
 
-        <h3 class="PB25">  @sdate.ToString("dd - MMM - yyyy") - @edate.ToString("dd - MMM - yyyy")</h3>
-    </a>
-    @*<div class="pull-right">
-            @Html.ActionLink(@dates.StartDate.ToShortDateString()-dates.EndDate.ToShortDateString(), "GetBranchReports",
-                new
-                {
-                    x = Model.branchid,
-                    y = Model.Vendorid,
-                    compliancetypeid = Model.complianceTypeid,
-                    sdate = Model.ComplianceAudit.Start_Date.ToShortDateString(),
-                    edate = Model.ComplianceAudit.End_Date.ToShortDateString()
-                })
-        </div>*@
+            <h3 class="PB25">  @sdate.ToString("dd - MMM - yyyy") - @edate.ToString("dd - MMM - yyyy")</h3>
+        </a>
+        @*<div class="pull-right">
+                @Html.ActionLink(@dates.StartDate.ToShortDateString()-dates.EndDate.ToShortDateString(), "GetBranchReports",
+                    new
+                    {
+                        x = Model.branchid,
+                        y = Model.Vendorid,
+                        compliancetypeid = Model.complianceTypeid,
+                        sdate = Model.ComplianceAudit.Start_Date.ToShortDateString(),
+                        edate = Model.ComplianceAudit.End_Date.ToShortDateString()
+                    })
+            </div>*@
     }
 
+    <div class="clearfix"></div>
+    <ul class="list-inline continueBtn">
+        <li>
+            <a href="@Url.Action("selectbranch","Reporting",new { pid=0})" class="btn primary-button">Cancel</a>
+
+        </li>
+    </ul>
 </div>
 

@@ -2039,7 +2039,7 @@ namespace ComplianceAuditWeb.Controllers
                     vendorVM.organization.Parent_Company_Id = vendorVM.CompanyID;
                     vendorVM.organization.User_Id = 1;
                     int id = Convert.ToInt32(organizationClient.insertVendor(vendorVM.organization, vendorVM.companydetails));
-                    //int resultID = organizationClient.insertcomplianceTypes(vendorVM.ComplianceID, id);
+                    int resultID = organizationClient.insertcomplianceTypes(vendorVM.ComplianceID, id);
 
 
                     if (id != 0)
@@ -2165,36 +2165,36 @@ namespace ComplianceAuditWeb.Controllers
 
 
 
-                //string xmldata = organizationClient.GetAssignedComplianceTypes(ViewModel.CompanyID);
-                //DataSet ds = new DataSet();
-                //ds.ReadXml(new StringReader(xmldata));
-                //ViewModel.ComplianceList = new List<SelectListItem>();
-                //DataSet dsrole = new DataSet();
-                //xmldata = organizationClient.GetAssignedComplianceTypes(ViewModel.organization.Organization_Id);
-                //dsrole.ReadXml(new StringReader(xmldata));
-                //if (ds.Tables.Count > 0)
-                //{
-                //    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
-                //    {
-                //        bool selected = false;
-                //        if (dsrole.Tables.Count > 0)
-                //        {
-                //            foreach (System.Data.DataRow id in dsrole.Tables[0].Rows)
-                //            {
-                //                if (Convert.ToInt32(id["Compliance_Type_ID"]) == Convert.ToInt32(row["Compliance_Type_ID"]))
-                //                {
-                //                    selected = true;
-                //                    break;
-                //                }
-                //            }
-                //        }
-                //        ViewModel.ComplianceList.Add(new SelectListItem() { Text = row["Compliance_Type_Name"].ToString(), Value = row["Compliance_Type_ID"].ToString(), Selected = selected });
-                //    }
-                //}
+                string xmldata = organizationClient.GetAssignedComplianceTypes(ViewModel.CompanyID);
+                DataSet ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+                ViewModel.ComplianceList = new List<SelectListItem>();
+                DataSet dsrole = new DataSet();
+                xmldata = organizationClient.GetAssignedComplianceTypes(ViewModel.organization.Organization_Id);
+                dsrole.ReadXml(new StringReader(xmldata));
+                if (ds.Tables.Count > 0)
+                {
+                    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                    {
+                        bool selected = false;
+                        if (dsrole.Tables.Count > 0)
+                        {
+                            foreach (System.Data.DataRow id in dsrole.Tables[0].Rows)
+                            {
+                                if (Convert.ToInt32(id["Compliance_Type_ID"]) == Convert.ToInt32(row["Compliance_Type_ID"]))
+                                {
+                                    selected = true;
+                                    break;
+                                }
+                            }
+                        }
+                        ViewModel.ComplianceList.Add(new SelectListItem() { Text = row["Compliance_Type_Name"].ToString(), Value = row["Compliance_Type_ID"].ToString(), Selected = selected });
+                    }
+                }
 
 
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return View("ErrorPage");
             }
@@ -2228,8 +2228,8 @@ namespace ComplianceAuditWeb.Controllers
                 OrgService.OrganizationServiceClient organizationClient = new OrgService.OrganizationServiceClient();
                 vendorViewModel.companydetails.Org_Hier_ID = vendorViewModel.organization.Organization_Id;
                 result = organizationClient.updateVendor(vendorViewModel.organization, vendorViewModel.companydetails);
-                //organizationClient.DeleteCompliance(vendorViewModel.organization.Organization_Id);
-               // organizationClient.insertcomplianceTypes(vendorViewModel.ComplianceID, vendorViewModel.organization.Organization_Id);
+                organizationClient.DeleteCompliance(vendorViewModel.organization.Organization_Id);
+               organizationClient.insertcomplianceTypes(vendorViewModel.ComplianceID, vendorViewModel.organization.Organization_Id);
                 if (result != false)
                 {
                     TempData["Success"] = "Vendor details updated succesfully!!!";

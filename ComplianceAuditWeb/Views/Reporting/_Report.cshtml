@@ -534,6 +534,14 @@
     }
 
 
+    <ul class="list-inline continueBtn">
+        <li>
+            <a href="@Url.Action("selectauditfrequency", "Reporting", new { branchid = Model.branchid, vendorid = Model.Vendorid, vendorname = Model.Vendorname,
+                    frequencyid = Model.frequencyid, yearid = Model.StartDate.Year,compliancid=Model.complianceTypeid
+                })" class="btn primary-button">Cancel</a>
+
+        </li>
+    </ul>
 </div>
 
 

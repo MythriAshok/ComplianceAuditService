@@ -36,7 +36,9 @@
                    //    $("#gridTbl").append(trHTML);
 
                    success: (function (response) {
-                    
+
+                       $('#gridTbl td').empty();
+                       
                        $.each(response, function (i, item) {
                            item.legth;
                            $('<tr>').append(
@@ -44,6 +46,7 @@
                                $('<td>').text(item.IndustryName),
                                $('<td>').text(item.ComplianceType.ComplianceTypeName)
                            ).appendTo('#gridTbl');
+                           
                        })
                    }),
                         error:function()
@@ -173,30 +176,32 @@
 
 
 
-                <table id="gridTbl" class="table" >
-                    <tr style="border: 1px solid black;">
-                        <th >
+                <table id="gridTbl" class="table">
+                    <thead class="table">
+                        <tr style="border: 1px solid black;">
 
-                            @Html.DisplayNameFor(e => e.CountryName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(e => e.IndustryName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(e => e.ComplianceType.ComplianceTypeName)
-                        </th>
+                            <th>
 
-                    </tr>
+                                @Html.DisplayNameFor(e => e.CountryName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(e => e.IndustryName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(e => e.ComplianceType.ComplianceTypeName)
+                            </th>
 
-                    @*@foreach (var a in ViewBag.EmployeeDetailsGrid)
-                    {
-                        <tr>
-                            <td>@a.CountryName</td>
-                            <td>@a.IndustryName</td>
-                            <td>@a.ComplianceType.ComplianceTypeName</td>
                         </tr>
+                    </thead>
+                    @*@foreach (var a in ViewBag.EmployeeDetailsGrid)
+        {
+            <tr>
+                <td>@a.CountryName</td>
+                <td>@a.IndustryName</td>
+                <td>@a.ComplianceType.ComplianceTypeName</td>
+            </tr>
 
-                    }*@
+        }*@
 
                 </table>
             </div>

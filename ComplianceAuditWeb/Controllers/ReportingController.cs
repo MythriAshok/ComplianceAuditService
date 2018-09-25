@@ -336,7 +336,10 @@ namespace ComplianceAuditWeb.Controllers
             int branchid = 0;
             var id = Request.QueryString["x"];
             var vendorid = Request.QueryString["y"];
+            var frequencyid = Request.QueryString["frequencyid"];
+
             var compliancetypeid = Request.QueryString["compliancetypeid"];
+
            
             if (id == vendorid)
             {
@@ -360,6 +363,9 @@ namespace ComplianceAuditWeb.Controllers
             model.ComplianceAudit = new ComplianceAudit();
             model.ComplianceAudit.Start_Date =Convert.ToDateTime( sdate);
             model.ComplianceAudit.End_Date = Convert.ToDateTime(edate);
+            model.Vendorid =Convert.ToInt32( vendorid);
+            model.frequencyid = Convert.ToInt32(frequencyid);
+
 
             model.complianceTypeid =Convert.ToInt32( compliancetypeid);
             
@@ -468,7 +474,10 @@ namespace ComplianceAuditWeb.Controllers
             Session["BranchPartiallyCompliancedRuleList"] = model.PartiallyCompliancedRuleList;
             Session["BranchActList"] = model.ActList;
             ViewBag.Name = Session["Name"];
+            model.Vendorname =Convert.ToString( Session["Name"]);
             model.branchid =Convert.ToInt32( id);
+            model.StartDate = model.ComplianceAudit.Start_Date;
+            model.EndDate = model.ComplianceAudit.End_Date;
             return View("_Report", model);
 
         }
@@ -584,6 +593,7 @@ namespace ComplianceAuditWeb.Controllers
                         }
                         objratio.StartDate = date.StartDate.ToString("MMM/dd/yyyy");
                         objratio.EndDate = date.EndDate.ToString("MMM/dd/yyyy");
+                        objratio.frequencyid = audit.frequencyid;
                     }
                     objratiolist.Add(objratio);
                 }
@@ -657,7 +667,8 @@ namespace ComplianceAuditWeb.Controllers
             public string Date { get; set; }
             public string StartDate { get; set; }
             public string EndDate { get; set; }
-         
+            public int frequencyid { get; set; }
+
             public List<ComplianceAudit> auditList { get; set; }
             public List<ComplianceAudit> auditListSecond { get; set; }
         }
