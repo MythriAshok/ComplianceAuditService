@@ -1,7 +1,9 @@
 ﻿@model ComplianceAuditWeb.Models.ReportViewModel
 
 @{
-    ViewBag.Title = "Auditor Page";
+    ViewBag.Title = "Reporting Page";
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
 }
 <ul class="breadcrumb ML15">
     <li><a href="/common/dashboard?pid=0">Report Management</a></li>
@@ -74,23 +76,25 @@
 
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Company", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.Label("Select Company", new { @class = "floating-label" })<span style="color:red">*</span>
                 @Html.DropDownListFor(model => model.companyid, Model.companyList, new { @onchange = "javascript:GetComplianceType(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
-                @Html.ValidationMessageFor(model => model.companyList, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.companyid, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("ComplianceType", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.Label("Select ComplianceType", new { @class = "floating-label" })<span style="color:red">*</span>
                 @Html.DropDownListFor(model => model.complianceTypeid, Model.ComplianceTypeList, new { @class = "inputMaterial ui - autocomplete - input" })
-                @Html.ValidationMessageFor(model => model.ComplianceTypeList, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.complianceTypeid, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Frequency", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.Label("Select Frequency", new { @class = "floating-label" })<span style="color:red">*</span>
                 @Html.DropDownListFor(m => m.frequencyid, Model.frequency, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.frequencyid, "", new { @class = "text-danger" })
+
 
             </div>
         </div>
@@ -98,14 +102,16 @@
 
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Year", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.Label("Select Year", new { @class = "floating-label" })<span style="color:red">*</span>
                 @Html.DropDownListFor(m=>m.yearid, Enumerable.Range(2000, DateTime.Now.Year - 1999).Select(i=> new SelectListItem { Value = i.ToString(), Text = i.ToString() }),
                "Year", new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.yearid, "", new { @class = "text-danger" })
+
             </div>
         </div>
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Branch", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.Label("Select Branch", new { @class = "floating-label" })<span style="color:red">*</span>
                 @Html.DropDownListFor(model => model.branchid, Model.BranchList,
                new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
                 @Html.ValidationMessageFor(model => model.branchid, "", new { @class = "text-danger" })
@@ -179,6 +185,8 @@
     <div class="clearfix"></div>
     <ul class="list-inline continueBtn">
         <li>
+            <input type="reset" value="Reset" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+
             <a href="@Url.Action("dashboard","Common",new { pid=0})" class="btn primary-button">Cancel</a>
 
         </li>

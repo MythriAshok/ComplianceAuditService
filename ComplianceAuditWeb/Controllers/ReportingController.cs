@@ -111,6 +111,7 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult selectbranch(ReportViewModel model)
         {
+
             model.companyList = new List<SelectListItem>();
             model.BranchList = new List<SelectListItem>();
             model.VendorList = new List<Organization>();
@@ -591,8 +592,8 @@ namespace ComplianceAuditWeb.Controllers
                             objratio.Non_Complianced = non_complianced;
                             objratio.Partially_Complianced = partially_complianced;
                         }
-                        objratio.StartDate = date.StartDate.ToString("MMM/dd/yyyy");
-                        objratio.EndDate = date.EndDate.ToString("MMM/dd/yyyy");
+                        objratio.StartDate = date.StartDate.ToString("dd/MMM/yyyy");
+                        objratio.EndDate = date.EndDate.ToString("dd/MMM/yyyy");
                         objratio.frequencyid = audit.frequencyid;
                     }
                     objratiolist.Add(objratio);

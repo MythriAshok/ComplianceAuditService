@@ -1,13 +1,20 @@
 ﻿@model ComplianceAuditWeb.Models.ReportViewModel
 
 @{
-    ViewBag.Title = "Auditor Page";
+    ViewBag.Title = "Reporting Page";
 }
 <ul class="breadcrumb ML15">
-    <li><a href="/Common/dashboard?pid=18">Audit Management</a></li>
-    <li>Auditor Dashboard</li>
+    <li><a href="/Common/dashboard?pid=18">Report Management</a></li>
+    <li>Reporting Dashboard</li>
 </ul>
-<h2 class="ML15">Auditor Dashboard</h2>
+<h2 class="ML15">Reporting Dashboard</h2>
+
+<style>
+    .tspan {
+        font-size:10px;
+    }
+</style>
+
 @using (Html.BeginForm())
 {
 <div class="mid_content_sec">
@@ -52,7 +59,7 @@
 
 
 <div>
-    <div id="charts"></div>
+    <div id="charts" style="font-size:small"></div>
     <script>
 
         (function () {
@@ -71,14 +78,20 @@
                     $.each(data, function (key, item) {
                         $charts.append('<div id="container' + key + '"></div>');
                         var $chart = $('#container' + key);
+                       
+
+
+                       
 
                         var data = [];
                         $.each(item, function (prop, value) {
                             data.push({
                                 name: prop,
                                 y: value
+                                
 
                             });
+                            
                         });
 
                         $chart.highcharts({
@@ -98,7 +111,7 @@
                             },
                             title: {
                                 text: item.Name + ',' + 'Compliance Status' + ',' + item.Date + ' ' + '<br>' +
-                                    'Audit Period' + '=' + '   ' + item.StartDate + ' ' + 'To' + ' ' + item.EndDate,
+                                    'Audit Period' + ' ' + 'is' + '   ' + item.StartDate + ' ' + 'To' + ' ' + item.EndDate,
 
                                 href: '/Reporting/GetBranchReports/?x?y?sdate?edate?compliancetypeid' + '&x=' + item.ID
                                     + '&y=' + item.VendorID +
@@ -158,7 +171,7 @@
                                 name: 'Rate of Compliance',
                                 colorByPoint: true,
                                 data: [{
-                                    name: 'Complianced',
+                                    name: 'Compliant',
                                     y: item.Complianced,
                                     x: item.ID,
                                     z: item.compliancetypeid,
@@ -167,32 +180,35 @@
                                         '&sdate=' + item.StartDate + '&edate=' + item.EndDate + '&compliancetypeid=' + item.compliancetypeid +
                                     '&frequencyid=' + item.frequencyid
                                 }, {
-                                    name: 'Non-Complianced',
+                                    name: 'Non-Compliant',
                                     y: item.Non_Complianced,
                                         url: '/Reporting/GetBranchReports/?x?y?n?sdate?edate?compliancetypeid?frequencyid' + '&x=' + item.ID
                                         + '&y=' + item.VendorID + '&n=' + 'Non_Complianced' +
                                             '&sdate=' + item.StartDate + '&edate=' + item.EndDate + '&compliancetypeid=' + item.compliancetypeid +
                                         '&frequencyid=' + item.frequencyid
                                 }, {
-                                    name: 'Partially-Complianced',
+                                    name: 'Partially-Compliant',
                                     y: item.Partially_Complianced,
                                         url: '/Reporting/GetBranchReports/?x?y?n?sdate?edate?compliancetypeid?frequencyid' + '&x=' + item.ID
                                         + '&y=' + item.VendorID + '&n=' + 'Partially_Complianced' +
                                             '&sdate=' + item.StartDate + '&edate=' + item.EndDate + '&compliancetypeid=' + item.compliancetypeid +
                                         '&frequencyid=' + item.frequencyid
-                                },
+                                    },
+
 
                                 ]
 
 
-
                             }]
+
+
                         });
+
                     });
+
                 });
             });
         })();
-
 
 
 
