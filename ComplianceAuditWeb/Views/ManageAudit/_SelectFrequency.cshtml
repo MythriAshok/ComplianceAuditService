@@ -60,8 +60,14 @@
                                                     new { compliancetypeid = item.complianceid,branchid=Model.branchid,vendorid=Model.vendorid,
                                                         sdate =@sdate.AddMonths(i),edate=@edate.AddMonths(i) })">
                                                 <span class="qIcon"></span>
-                                                
-                                                <h3 class="PB25">  @sdate.AddMonths(i).ToString("dd - MMM - yyyy") - @edate.AddMonths(i).ToString("dd - MMM - yyyy")</h3>
+                                                @if (inc == 1)
+                                                {
+                                                <h3 class="PB25">  @sdate.AddMonths(i).ToString("MMM")</h3>
+                                                }
+                                                else
+                                                {
+                                                <h3 class="PB25">  @sdate.AddMonths(i).ToString("MMM") - @edate.AddMonths(i).ToString("MMM")</h3>
+                                                }
                                                 </a>
                                                 <div class="clearfix"></div>
                                             

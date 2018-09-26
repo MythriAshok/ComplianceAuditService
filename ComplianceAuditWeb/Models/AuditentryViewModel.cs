@@ -18,6 +18,14 @@ namespace ComplianceAuditWeb.Models
 
         public int compliancetypeid { get; set; }
 
+        public string Overallremarks { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime SDate { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime EDate { get; set; }
+
     }
 
     public class Auditentry
@@ -33,8 +41,11 @@ namespace ComplianceAuditWeb.Models
 
         public string Description { get; set; }
 
-        public string Periodicity { get; set; }
+        public string Details { get; set; }
 
+        public string Periodicity { get; set; }
+        public string Risk_Category { get; set; }
+        public DateTime Audit_Followup_Date { get; set; }
         public string Non_compliance { get; set; }
         [DataType(DataType.Date)]
         public DateTime Start_Date { get; set; }

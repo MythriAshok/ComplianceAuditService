@@ -165,8 +165,8 @@ namespace ComplianceAuditWeb.Controllers
                     Compliance_Title = Convert.ToString(row["Compliance_Title"]),
                     Comp_Category = Convert.ToString(row["Comp_Category"]),
                     Comp_Description = Convert.ToString(row["Comp_Description"]),
-                    compl_def_consequence = Convert.ToString(row["compl_def_consequence"]),
-                    Comp_Order = Convert.ToInt32(row["Comp_Order"]),
+                    compl_def_consequence = Convert.ToString(row["Consequence"]),
+                    //Comp_Order = Convert.ToInt32(row["Comp_Order"]),
                     Country_ID = Convert.ToInt32(row["Country_ID"]),
                     City_ID = Convert.ToInt32(row["City_ID"]),
                     Effective_End_Date = Convert.ToDateTime(row["Effective_Start_Date"]),
@@ -176,11 +176,11 @@ namespace ComplianceAuditWeb.Controllers
                     State_ID = Convert.ToInt32(row["State_ID"]),
                     User_ID = Convert.ToInt32(row["User_ID"]),
                     Is_Active = Convert.ToBoolean(Convert.ToInt32(row["Is_Active"])),
-                    Is_Best_Practice = Convert.ToBoolean(Convert.ToInt32(row["Is_Best_Practice"])),
-                    Risk_Category = Convert.ToString(row["Risk_Category"]),
+                    //Is_Best_Practice = Convert.ToBoolean(Convert.ToInt32(row["Is_Best_Practice"])),
+                    //Risk_Category = Convert.ToString(row["Risk_Category"]),
                     Last_Updated_Date = Convert.ToDateTime(row["Last_Updated_Date"]),
                     Periodicity = Convert.ToString(row["Periodicity"]),
-                    Risk_Description = Convert.ToString(row["Risk_Description"]),
+                    Risk_Description = Convert.ToString(row["Details"]),
                     Version = Convert.ToInt32(row["Version"])
                 });
             }
@@ -287,18 +287,22 @@ namespace ComplianceAuditWeb.Controllers
             if (dsCompliances.Tables.Count > 0)
             {
                 model.compliancetypeid = Convert.ToInt32(dsCompliances.Tables[0].Rows[0]["Compliance_Type_ID"]);
+                Session["compliancetypeid"]= Convert.ToInt32(dsCompliances.Tables[0].Rows[0]["Compliance_Type_ID"]);
                 foreach (System.Data.DataRow row in dsCompliances.Tables[0].Rows)
                 {
                     model.ComplianceType.Add(new SelectListItem() { Text = row["Compliance_Type_Name"].ToString(), Value = row["Compliance_Type_ID"].ToString() });
                 }
             }
-            return View("_ComplianceActMapping", model);
-        }
+            return View("_complianceActMap", model);
+        }      
 
-        public JsonResult getcompliancetypeact(int compliancetypeid)
+            public JsonResult getcompliancetypeact()
         {
+
+            string compliancetype = Request.QueryString["compliancetype"];
+           // int compliancetypeid = Convert.ToInt32(Session["compliancetypeid"]);
             ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
-            Session["compliancetypeid"] = compliancetypeid;
+            //Session["compliancetypeid"] = compliancetypeid;
 
             var root = new treenode() //Create our root node and ensure it is opened
             {
@@ -745,12 +749,12 @@ namespace ComplianceAuditWeb.Controllers
             model.Compliance.Compliance_Xref_ID = id;
             model.Compliance.Compliance_Parent_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["Compliance_Parent_ID"]);
             model.Compliance.Compliance_Title = Convert.ToString(ds.Tables[0].Rows[0]["Compliance_Title"]);
-            model.Compliance.compl_def_consequence = Convert.ToString(ds.Tables[0].Rows[0]["compl_def_consequence"]);
+            model.Compliance.compl_def_consequence = Convert.ToString(ds.Tables[0].Rows[0]["Consequence"]);
             model.Compliance.Comp_Description = Convert.ToString(ds.Tables[0].Rows[0]["Comp_Description"]);
             model.Compliance.Effective_End_Date = Convert.ToDateTime(ds.Tables[0].Rows[0]["Effective_End_Date"]);
             model.Compliance.Effective_Start_Date = Convert.ToDateTime(ds.Tables[0].Rows[0]["Effective_Start_Date"]);
             model.Compliance.Periodicity = Convert.ToString(ds.Tables[0].Rows[0]["Periodicity"]);
-            model.Compliance.Risk_Description = Convert.ToString(ds.Tables[0].Rows[0]["Risk_Description"]);
+            model.Compliance.Risk_Description = Convert.ToString(ds.Tables[0].Rows[0]["Details"]);
             //model.Compliance.compl_def_consequence = Convert.ToString(ds.Tables[0].Rows[0]["Risk_Description"]);
             return View("_AddLineitems", model);
         }

@@ -11,10 +11,24 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="UpdatetAuditEntries">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdata" nillable="true" type="q1:ComplianceAudit" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdatetAuditEntriesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UpdatetAuditEntriesResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="insertComplianceAudit">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdatalist" nillable="true" type="q1:ArrayOfComplianceAudit" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdatalist" nillable="true" type="q2:ArrayOfComplianceAudit" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -28,7 +42,7 @@
   <xs:element name="insertCustomAuditEntries">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdata" nillable="true" type="q2:ComplianceAudit" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdata" nillable="true" type="q3:ComplianceAudit" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -42,7 +56,7 @@
   <xs:element name="insertAuditEntries">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdata" nillable="true" type="q3:ComplianceAudit" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdata" nillable="true" type="q4:ComplianceAudit" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -56,7 +70,7 @@
   <xs:element name="updateComplianceAudit">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdatalist" nillable="true" type="q4:ArrayOfComplianceAudit" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdatalist" nillable="true" type="q5:ArrayOfComplianceAudit" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -98,7 +112,7 @@
   <xs:element name="insertComplianceAuditTrail">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdatalisttrail" nillable="true" type="q5:ArrayOfComplianceAuditAuditTrail" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="auditdatalisttrail" nillable="true" type="q6:ArrayOfComplianceAuditAuditTrail" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

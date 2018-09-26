@@ -13,6 +13,12 @@
   <wsdl:message name="IAuditService_DoWork_OutputMessage">
     <wsdl:part name="parameters" element="tns:DoWorkResponse" />
   </wsdl:message>
+  <wsdl:message name="IAuditService_UpdatetAuditEntries_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatetAuditEntries" />
+  </wsdl:message>
+  <wsdl:message name="IAuditService_UpdatetAuditEntries_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdatetAuditEntriesResponse" />
+  </wsdl:message>
   <wsdl:message name="IAuditService_insertComplianceAudit_InputMessage">
     <wsdl:part name="parameters" element="tns:insertComplianceAudit" />
   </wsdl:message>
@@ -96,6 +102,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/DoWork" message="tns:IAuditService_DoWork_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/DoWorkResponse" message="tns:IAuditService_DoWork_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="UpdatetAuditEntries">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/UpdatetAuditEntries" message="tns:IAuditService_UpdatetAuditEntries_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/UpdatetAuditEntriesResponse" message="tns:IAuditService_UpdatetAuditEntries_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="insertComplianceAudit">
       <wsdl:input wsaw:Action="http://tempuri.org/IAuditService/insertComplianceAudit" message="tns:IAuditService_insertComplianceAudit_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAuditService/insertComplianceAuditResponse" message="tns:IAuditService_insertComplianceAudit_OutputMessage" />
@@ -153,6 +163,15 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="DoWork">
       <soap:operation soapAction="http://tempuri.org/IAuditService/DoWork" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdatetAuditEntries">
+      <soap:operation soapAction="http://tempuri.org/IAuditService/UpdatetAuditEntries" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -21,6 +21,12 @@ namespace ComplianceAuditWeb.AuditService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/DoWork", ReplyAction="http://tempuri.org/IAuditService/DoWorkResponse")]
         System.Threading.Tasks.Task DoWorkAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/UpdatetAuditEntries", ReplyAction="http://tempuri.org/IAuditService/UpdatetAuditEntriesResponse")]
+        bool UpdatetAuditEntries(Compliance.DataObject.ComplianceAudit auditdata);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/UpdatetAuditEntries", ReplyAction="http://tempuri.org/IAuditService/UpdatetAuditEntriesResponse")]
+        System.Threading.Tasks.Task<bool> UpdatetAuditEntriesAsync(Compliance.DataObject.ComplianceAudit auditdata);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAuditService/insertComplianceAudit", ReplyAction="http://tempuri.org/IAuditService/insertComplianceAuditResponse")]
         bool insertComplianceAudit(Compliance.DataObject.ComplianceAudit[] auditdatalist);
         
@@ -133,6 +139,14 @@ namespace ComplianceAuditWeb.AuditService {
         
         public System.Threading.Tasks.Task DoWorkAsync() {
             return base.Channel.DoWorkAsync();
+        }
+        
+        public bool UpdatetAuditEntries(Compliance.DataObject.ComplianceAudit auditdata) {
+            return base.Channel.UpdatetAuditEntries(auditdata);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UpdatetAuditEntriesAsync(Compliance.DataObject.ComplianceAudit auditdata) {
+            return base.Channel.UpdatetAuditEntriesAsync(auditdata);
         }
         
         public bool insertComplianceAudit(Compliance.DataObject.ComplianceAudit[] auditdatalist) {
