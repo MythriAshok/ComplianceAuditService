@@ -12,7 +12,7 @@ namespace Compliance.DataAccess
     {
         MySqlConnection conn = DBConnection.getconnection();
 
-        public DataSet getBranchComlianceAuditReport(int Org_Hier_ID, DateTime StartDate, DateTime EndDate, int ComplianceTypeID)
+        public DataSet getBranchComlianceAuditReport(int Org_Hier_ID, DateTime StartDate, DateTime EndDate, int ComplianceTypeID, int VendorID)
         {
             DataSet dsComplianceAudit = new DataSet();
             try
@@ -22,9 +22,11 @@ namespace Compliance.DataAccess
                 MySqlCommand cmd = new MySqlCommand("sp_getDetailedBranchComplianceAuditReport", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID", Org_Hier_ID);
+                
                 cmd.Parameters.AddWithValue("p_Start_Date", StartDate);
                 cmd.Parameters.AddWithValue("p_End_Date",EndDate);
                 cmd.Parameters.AddWithValue("p_Compliance_Type_ID", ComplianceTypeID);
+                cmd.Parameters.AddWithValue("p_Vendor_ID", VendorID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsComplianceAudit);
             }
@@ -62,7 +64,7 @@ namespace Compliance.DataAccess
             return dsComplianceAudit;
         }
 
-        public DataSet getBranchStatusComlianceAuditReport(int Org_Hier_ID, string status, DateTime StartDate, DateTime EndDate, int ComplianceID)
+        public DataSet getBranchStatusComlianceAuditReport(int Org_Hier_ID, string status, DateTime StartDate, DateTime EndDate, int ComplianceID, int VendorID)
         {
             DataSet dsComplianceAudit = new DataSet();
             try
@@ -71,6 +73,7 @@ namespace Compliance.DataAccess
                 MySqlCommand cmd = new MySqlCommand("sp_getCompiledBranchComplianceAuditReport", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID", Org_Hier_ID);
+                cmd.Parameters.AddWithValue("p_Vendor_ID", Org_Hier_ID);
                 cmd.Parameters.AddWithValue("p_Compliance_Status", status);
                 cmd.Parameters.AddWithValue("p_Start_Date", StartDate);
                 cmd.Parameters.AddWithValue("p_End_Date", EndDate);

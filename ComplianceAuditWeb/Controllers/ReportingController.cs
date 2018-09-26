@@ -341,6 +341,7 @@ namespace ComplianceAuditWeb.Controllers
 
             var compliancetypeid = Request.QueryString["compliancetypeid"];
 
+
            
             if (id == vendorid)
             {
@@ -376,7 +377,7 @@ namespace ComplianceAuditWeb.Controllers
             string xmlbranchACTdata ="";
             if (status == null)
             {
-                 xmlbranchdata = clientBranch.getBranchReport(branchid, model.ComplianceAudit.Start_Date, model.ComplianceAudit.End_Date, model.complianceTypeid);
+                 xmlbranchdata = clientBranch.getBranchReport(branchid, model.ComplianceAudit.Start_Date, model.ComplianceAudit.End_Date, model.complianceTypeid, model.Vendorid);
                 xmlbranchACTdata = clientBranch.getBranchRACTeport(branchid);
                 DataSet dsBranchACTReport = new DataSet();
                 dsBranchACTReport.ReadXml(new StringReader(xmlbranchACTdata));
@@ -388,7 +389,8 @@ namespace ComplianceAuditWeb.Controllers
             //else if(status!= null)
             else 
             {
-                xmlbranchdata = clientBranch.getBranchStatusReport(branchid,status, model.ComplianceAudit.Start_Date, model.ComplianceAudit.End_Date, model.complianceTypeid);
+                xmlbranchdata = clientBranch.getBranchStatusReport(branchid,status, model.ComplianceAudit.Start_Date,
+                    model.ComplianceAudit.End_Date, model.complianceTypeid, model.Vendorid);
                 xmlbranchACTdata = clientBranch.getBranchStatusACTReport(branchid, status);
                 DataSet dsBranchACTReport = new DataSet();
                 dsBranchACTReport.ReadXml(new StringReader(xmlbranchACTdata));
@@ -566,7 +568,7 @@ namespace ComplianceAuditWeb.Controllers
                 foreach (var date in audit.startEndDates)
                 {
                     Ratio objratio = new Ratio();
-                    string xmlbranchdata = client.getBranchReport(BranchID,date.StartDate, date.EndDate,audit.complianceTypeid);
+                    string xmlbranchdata = client.getBranchReport(BranchID,date.StartDate, date.EndDate,audit.complianceTypeid, audit.Vendorid);
                     DataSet dsBranchReport = new DataSet();
                     dsBranchReport.ReadXml(new StringReader(xmlbranchdata));
                     objratio.compliancetypeid = audit.complianceTypeid;

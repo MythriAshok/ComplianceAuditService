@@ -17,6 +17,7 @@
         <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
         <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
         <xs:element minOccurs="0" name="ComplianceID" type="xs:int" />
+        <xs:element minOccurs="0" name="VendorID" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -35,6 +36,7 @@
         <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
         <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
         <xs:element minOccurs="0" name="ComplianceID" type="xs:int" />
+        <xs:element minOccurs="0" name="VendorID" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -21,16 +21,16 @@ namespace ComplianceService
         {
         }
 
-        public string getBranchReport(int BranchID, DateTime StartDate, DateTime EndDate, int ComplianceTypeID)
+        public string getBranchReport(int BranchID, DateTime StartDate, DateTime EndDate, int ComplianceTypeID, int VendorID)
         {
-            return bindBranchReport(BranchID, StartDate, EndDate, ComplianceTypeID);
+            return bindBranchReport(BranchID, StartDate, EndDate, ComplianceTypeID, VendorID);
         }
 
-        private string bindBranchReport(int BranchID , DateTime StartDate, DateTime EndDate, int ComplianceTypeID)
+        private string bindBranchReport(int BranchID , DateTime StartDate, DateTime EndDate, int ComplianceTypeID, int VendorID)
         {
             ComplianceAudit auditReport = new ComplianceAudit();
             ReportHelper reportHelper = new ReportHelper();
-            DataSet dsBranchReport = reportHelper.getBranchComlianceAuditReport(BranchID, StartDate, EndDate, ComplianceTypeID);
+            DataSet dsBranchReport = reportHelper.getBranchComlianceAuditReport(BranchID, StartDate, EndDate, ComplianceTypeID, VendorID);
             UtilityHelper utilityHelper = new UtilityHelper();
             dsBranchReport = utilityHelper.ConvertNullsToEmptyString(dsBranchReport);
             string xmlBranchReport = dsBranchReport.GetXml();
@@ -54,16 +54,16 @@ namespace ComplianceService
         }
 
 
-        public string getBranchStatusReport(int BranchID, string status, DateTime StartDate, DateTime EndDate, int ComplianceID)
+        public string getBranchStatusReport(int BranchID, string status, DateTime StartDate, DateTime EndDate, int ComplianceID, int VendorID)
         {
-            return bindBranchStatusReport(BranchID, status, StartDate, EndDate, ComplianceID);
+            return bindBranchStatusReport(BranchID, status, StartDate, EndDate, ComplianceID, VendorID);
         }
 
-        private string bindBranchStatusReport(int BranchID, string status, DateTime StartDate, DateTime EndDate, int ComplianceID)
+        private string bindBranchStatusReport(int BranchID, string status, DateTime StartDate, DateTime EndDate, int ComplianceID, int VendorID)
         {
             ComplianceAudit auditReport = new ComplianceAudit();
             ReportHelper reportHelper = new ReportHelper();
-            DataSet dsBranchReport = reportHelper.getBranchStatusComlianceAuditReport(BranchID, status, StartDate, EndDate, ComplianceID);
+            DataSet dsBranchReport = reportHelper.getBranchStatusComlianceAuditReport(BranchID, status, StartDate, EndDate, ComplianceID, VendorID);
             UtilityHelper utilityHelper = new UtilityHelper();
             dsBranchReport = utilityHelper.ConvertNullsToEmptyString(dsBranchReport);
             string xmlBranchReport = dsBranchReport.GetXml();
