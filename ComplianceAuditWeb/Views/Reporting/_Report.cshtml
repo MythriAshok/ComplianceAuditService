@@ -24,7 +24,7 @@
     {
         if (Model.ActList != null)
         {
-            <h3 style="background-color:forestgreen">Complianced</h3>
+            <h3 style="background-color:forestgreen">Compliant</h3>
             foreach (var act in Model.ActList)
             {
                 bool ruleexists = true;
@@ -122,7 +122,7 @@
 
     @if (Model.PartiallyCompliancedRuleList != null)
     {
-        <h3 style="background-color:lime">Partially-Complianced</h3>
+        <h3 style="background-color:lime">Partially-Compliant</h3>
         if (Model.ActList != null)
         {
             foreach (var act in Model.ActList)
@@ -228,7 +228,7 @@
 
     @if (Model.NonCompliancedRuleListHighRisk != null)
     {
-        <h3 style="background-color:red">Non-Complianced  High-Risk</h3>
+        <h3 style="background-color:red">Non-Compliant  High-Risk</h3>
 
         if (Model.ActList != null)
         {
@@ -330,7 +330,7 @@
 
     @if (Model.NonCompliancedRuleListMediumRisk != null)
     {
-        <h3 style="background-color:limegreen">Non-Complianced  Medium-Risk</h3>
+        <h3 style="background-color:limegreen">Non-Compliant  Medium-Risk</h3>
 
         if (Model.ActList != null)
         {
@@ -438,7 +438,7 @@
         {
             foreach (var acts in Model.ActList)
             {
-                <h3 style="background-color:lightgreen">Non-Complianced  Low-Risk</h3>
+                <h3 style="background-color:lightgreen">Non-Compliant  Low-Risk</h3>
 
                 bool ruleexists = true;
                 foreach (var rule in Model.NonCompliancedRuleListLowRisk)
