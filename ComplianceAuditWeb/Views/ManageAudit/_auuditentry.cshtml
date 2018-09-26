@@ -13,6 +13,10 @@
     @*<link href="~/Content/themes/base/jquery.ui.datepicker.css" rel="stylesheet" />*@
     <style>
         tr.jqgrow { height: 80px; }
+        .acttab a {
+            color: black;
+            background-color: aliceblue;
+        }
     </style>
 
     <script>
@@ -27,7 +31,7 @@
                 url: "/ManageAudit/GetAuditData/",
                 datatype: "json",
                 colNames: ['ID', 'compliance_Xref_id','auditid', 'Compliance Title', 'Description', 'Details', 'Applicability', 'Periodicity of Activity', 'Start Date', 'End Date', 'Compliance Status',
-                    'Risk Category', 'Effect of Non-compliance', 'Date of Audit', 'Followup audit date', 'Auditor Remarks', 'Evidences/Supportives', 'Actual_Date', 'Due Date'],
+                    'Risk Category', 'Effect of Non-compliance','Followup audit date', 'Auditor Remarks', 'Evidences/Supportives', 'Actual_Date', 'Due Date'],
                 colModel: [
                     { key: true, hidden: true, name: 'ID', frozen: true },
                     { key: false, hidden: true, name: 'compliance_Xref_id', editable: true, frozen: true },
@@ -36,22 +40,22 @@
                     { name: "Description", edittype: "textarea", editoptions: { rows: "4", cols: "20" }, height: 250, frozen: true, template: cmTemplate },
                     { name: "Details", edittype: "textarea", editoptions: { rows: "4", cols: "20" }, frozen: true, template: cmTemplate },
                     {
-                        name: "Applicability", editable: true, align: 'center', edittype: 'checkbox', editoptions: { value: 'Yes:No' }
+                        name: "Applicability", editable: true, align: 'center', edittype: 'checkbox', editoptions: { value: 'Yes:No' },defval:'Yes'
                     },
                     { name: "Periodicity" },
                     { name: "Start_Date", editable: true, formatter: 'date' },
                     {
                         name: "End_Date", editable: true, formatter: 'date'
                        //,editoptions: {
-                       //     size: 20,
+                          
                        //     dataInit: function (el) {
                        //         $(el).datepicker({ dateFormat: 'dd-mm-yy' });
                        //     },  
                     },
-                    { name: "Audit_Status", editable: true, edittype: "select", editoptions: { value: "Compliance:Compliance;Non-Compliance:Non-Compliance;Partially complianced:Partially Complianced;Not Applicable:Not Applicable" } },
-                    { name: "Risk_Category", editable: true, edittype: "select", editoptions: { value: "High:High;Medium:Medium;Low:Low" } },
+                    { name: "Audit_Status", editable: true, edittype: "select", editoptions: { value: "Compliant:Compliant;Non-Compliant:Non-Compliant;Partially compliant:Partially Compliant;Not Applicable:Not Applicable" } },
+                    { name: "Risk_Category", editable: true, edittype: "select", editoptions: { value: "High:High;Medium:Medium;Low:Low;None:None" } },
                     { name: "Non_compliance", editable: true, edittype: "textarea", editoptions: { rows: "4", cols: "20" } },
-                    { name: "Audit_Date", formatter: 'date'},
+                    //{ name: "Audit_Date", formatter: 'date'},
                     { name: "Audit_Followup_Date", editable: true, formatter: 'date' },
                     { name: "Audit_Remarks", editable: true, edittype: "textarea", editoptions: { rows: "4", cols: "20" } },
                     {
@@ -89,6 +93,7 @@
                     position: 'last'
                 }
             });
+
         });
         //]]>     
 
@@ -99,16 +104,30 @@
         //});
 
         function changeact(clicked_id) {
+            var state = document.getElementById("tab1danger");
+            state.style.visibility = "visible";
+            var city = document.getElementById("Finalsubmit");
+            city.style.visibility = "hidden";
+            $.post('/Common/SetSessionVariable',
+                    { key: "Actid", value: clicked_id }, function (data) {
+                        //alert("Success " + data.success);
+                    });
             
-            $('#actid').val(clicked_id);
-            $("#grid id").setGridParam({ postData: { actid: clicked_id } });
+            
+            //$('#actid').val(clicked_id);
+            //$("#grid id").setGridParam({ postData: { actid: clicked_id } });
             
             $("#grid").jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');
         }
 
-        function rate() {
-            var text = $(this).val();
-            alert(text);
+        function visiblediv()
+        {
+            
+            var state = document.getElementById("tab1danger");
+                state.style.visibility =  "hidden";
+            var city = document.getElementById("Finalsubmit");
+                city.style.visibility = "visible";
+            
         }
 
         function pickdates(id) {
@@ -118,12 +137,12 @@
 
         function editRow(id) {
             if (id && id !== lastSelection) {
-                var grid = $("#grid");
-                var colContent = grid.jqGrid('getCell', id, 'myColumn');
-                if (colContent.length > 0)
-                    grid.setColProp('myColumn', { editable: false });
-                else
-                    grid.setColProp('myColumn', { editable: true });  
+                //var grid = $("#grid");
+                //var colContent = grid.jqGrid('getCell', id, 'myColumn');
+                //if (colContent.length > 0)
+                //    grid.setColProp('myColumn', { editable: false });
+                //else
+                //    grid.setColProp('myColumn', { editable: true });  
 
                 grid.jqGrid('restoreRow', lastSelection);
                 grid.jqGrid('editRow', id, {
@@ -149,23 +168,40 @@
 <br />
 @using (Html.BeginForm())
 {
-    <div id="tabs">
-        <ul class="nav nav-justified">
-            @foreach (var item in Model.ActList)
-            {
-                @*<li><a href="#tab1danger">@item.Text</a></li>*@
-                @*<li><button id=@item.Value onclick="javascript: changeact(this.id); ">@item.Text</button></li>*@
-                @*<li><a href="">@item.Text</a></li>*@
-                <li><a id=@item.Value href="#tab1danger" onclick="changeact(this.id);" >@item.Text</a></li>
-            }
-        </ul>
+<div id="tabs">
+    <ul class="nav nav-pills">
+        @foreach (var item in Model.ActList)
+        {
+            @*<li><a href="#tab1danger">@item.Text</a></li>*@
+            @*<li><button id=@item.Value onclick="javascript: changeact(this.id); ">@item.Text</button></li>*@
+            @*<li><a href="">@item.Text</a></li>*@
+            <li class="acttab" style="text-decoration-color:white;font-weight:bold">
+                <a id=@item.Value href="#tab1danger" onclick="changeact(this.id);">@item.Text</a>
+            </li>
+        }
+        <li class="acttab" style="text-decoration-color:white;font-weight:bold"> <a onclick="visiblediv();">Final Submission</a></li>
+    </ul>
 
-        @Html.HiddenFor(model => model.actid)
-        <div id="tab1danger">
-            @Html.Display("ActName")
-            <table id="grid"></table>
-            <div id="pager12"></div>
-        </div>
+    <div id="Finalsubmit" style="visibility:hidden">
+        <form action=@Url.Action("SubmitAudit","ManageAudit",new { sdate = Model.SDate, edate = Model.EDate })>
+            @Html.Label("Enter Over All Remarks ")
+                    @Html.TextAreaFor(model => model.Overallremarks,new { cols=180,rows=2})
+            <br/>
+                    <button type="submit" class="btn primary-button" style="margin-left:10px">Submit</button>
+        </form>
     </div>
+    @Html.HiddenFor(model => model.actid)
+    <div id="tab1danger">
+        @Html.Display("ActName")
+        <table id="grid"></table>
+        <div id="pager12"></div>
+    </div>
+    <div>
+        @*@using (Html.BeginForm("SubitAudit", "ManageAudit")
+            {*@
+
+        @* } *@
+    </div>
+</div>
 
 }

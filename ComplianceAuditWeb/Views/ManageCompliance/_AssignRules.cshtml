@@ -23,6 +23,7 @@
                 var id = data.selected[i];
                 var selectednode = data.instance.get_node(data.selected[i]);
                 if (selectednode.original.categorytype == "Rule") {
+                    alert(id);
                     selectedItems.push({
                         text: data.instance.get_node(data.selected[i]).text,
                         id: id,

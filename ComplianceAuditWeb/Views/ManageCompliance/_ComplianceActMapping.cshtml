@@ -16,15 +16,15 @@
     <script>
     
             function GetComplianceList() {
-                $('#actjstree').jstree('destroy');
-                var epty = null;
-                $('#selectedItems').val(apty);  
+                //$('#actjstree').jstree('destroy');
+                //var epty = null;
+                //$('#selectedItems').removeData();  
                 var procemessage = "<option value='0'> Please wait...</option>";
                 $("#ComplianceID").html(procemessage).show();
                 var countryid = $("#countryid").val();
                 var industrytypeid = $("#industryid").val();
                 var url = "/Common/getCompliance";
-              
+                alert("Compliancelist");
                 $.ajax({
                     url: url,
                     data: { countryid: countryid, industrytypeid: industrytypeid },
@@ -56,19 +56,21 @@
                     //Fetch the Id.
                     var id = data.selected[i];
                     var selectednode = data.instance.get_node(data.selected[i]);
-                    if (selectednode.original.categorytype == "Act") {
+                    //if (selectednode.original.categorytype == "Act") {
+                        alert(id);
                         selectedItems.push({
                             text: data.instance.get_node(data.selected[i]).text,
                             id: id,
                             //categorytype: data.instance.get_node(dat.selected[i]).orginal.categorytype
                         });
-                    }
+                   // }
                     $('#selectedItems').val(JSON.stringify(selectedItems));             
                 }
         });
 
             $(function () {
                 var _acttyid = $('#compliancetypeid').val();
+                alert("intiliaze");
                 $('#actjstree').jstree({
                     'plugins': ["checkbox"],
                     'core': {
@@ -81,7 +83,8 @@
                 });
             });
 
-            function LoadJSTree() {
+        function LoadJSTree() {
+            alert("loadjs");
                 $('#actjstree').jstree('destroy');
                 //$('#selectedItems').val();
                 var _acttyid = $('#compliancetypeid').val();

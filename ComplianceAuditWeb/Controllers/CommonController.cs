@@ -445,5 +445,14 @@ namespace ComplianceAuditWeb.Controllers
             }
             return Json(objCompList, JsonRequestBehavior.AllowGet);
         }
+
+
+            public ActionResult SetSessionVariable(string key, string value)
+            {
+                Session[key] = value;
+
+                return this.Json(new { success = true });
+            }
+        
     }
 }

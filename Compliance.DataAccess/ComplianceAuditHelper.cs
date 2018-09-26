@@ -344,5 +344,43 @@ namespace Compliance.DataAccess
             }
             return ComplianceAuditResult;
         }
+
+        public bool updateAuditentries(ComplianceAudit audit)
+        {
+            bool ComplianceAuditResult = false;
+            try
+            {
+                if (audit != null)
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("sp_update_compliance_audit", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("p_Compliance_Audit_ID", audit.Compliance_Audit_Id);
+                    cmd.Parameters.AddWithValue("p_Version", audit.Version);
+                    cmd.Parameters.AddWithValue("p_Auditor_ID", audit.Auditor_Id);
+                    cmd.Parameters.AddWithValue("p_Vendor_ID", audit.Vendor_Id);
+                    cmd.Parameters.AddWithValue("p_Start_Date", audit.Start_Date);
+                    cmd.Parameters.AddWithValue("p_End_Date", audit.End_Date);
+                    cmd.Parameters.AddWithValue("p_Audit_Remarks", audit.Audit_Remarks);
+                    cmd.Parameters.AddWithValue("p_Is_Active", audit.Is_Active);
+
+                    int objcomplianceauditid = cmd.ExecuteNonQuery();
+                    if (objcomplianceauditid > 0)
+                    {
+                        ComplianceAuditResult = true;
+                    }
+                }
+
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return ComplianceAuditResult;
+        }
     }
 }

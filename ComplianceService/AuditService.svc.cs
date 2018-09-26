@@ -43,6 +43,14 @@ namespace ComplianceService
             return result;
         }
 
+        public bool UpdatetAuditEntries(ComplianceAudit auditdata)
+        {
+            bool result = false;
+            ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
+            result = complianceAuditHelper.updateAuditentries(auditdata);
+            return result;
+        }
+
         public bool insertCustomAuditEntries(ComplianceAudit auditdata)
         {
             bool result = false;
@@ -175,8 +183,8 @@ namespace ComplianceService
         {
             ComplianceAuditHelper complianceAuditHelper = new ComplianceAuditHelper();
             DataSet dsCompliance = complianceAuditHelper.getComlianceXrefDataForSeletedBranch(OrgID, VendorID,compliancetypeid,complianceparentid);
-           // UtilityHelper utilityHelper = new UtilityHelper();
-           //dsCompliance = utilityHelper.ConvertNullsToEmptyString(dsCompliance);
+            UtilityHelper utilityHelper = new UtilityHelper();
+           dsCompliance = utilityHelper.ConvertNullsToEmptyString(dsCompliance);
             string strxmlCompliance = dsCompliance.GetXml();
             return strxmlCompliance;
         }

@@ -622,6 +622,7 @@
     <Content Include="Scripts\free-jqGrid\i18n\min\grid.locale-ca.js.map" />
     <Content Include="Scripts\free-jqGrid\i18n\min\grid.locale-bg.js.map" />
     <Content Include="Scripts\free-jqGrid\i18n\min\grid.locale-ar.js.map" />
+    <None Include="Properties\PublishProfiles\FolderProfile4.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\free-jqGrid\plugins\ui.multiselect.js" />
     <Content Include="Scripts\JavaScript.js" />
@@ -816,6 +817,7 @@
     <Content Include="Views\Reporting\_Chart.cshtml" />
     <Content Include="Views\ManageCompliance\_AddActs - Copy.cshtml" />
     <Content Include="Views\Reporting\_SelectFrequency.cshtml" />
+    <Content Include="Views\ManageCompliance\_complianceActMap.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

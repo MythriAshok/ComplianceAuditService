@@ -41,6 +41,7 @@ namespace Compliance.DataObject
         public string Title { get; set; }
         public int ParentID { get; set; }
 
+        public string Periodicity { get; set; }
 
 
 
