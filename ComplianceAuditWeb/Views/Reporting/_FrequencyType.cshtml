@@ -1,0 +1,129 @@
+﻿@model ComplianceAuditWeb.Models.Compliancetype_view_model
+
+    @{
+        ViewBag.Title = "Auditor Page";
+    }
+    <ul class="breadcrumb ML15">
+        <li><a href="/Common/dashboard?pid=18">Audit Management</a></li>
+        <li>Auditor Dashboard</li>
+    </ul>
+    <h2 class="ML15">Auditor Dashboard</h2>
+@section scripts{
+    <script language="javascript" type="text/javascript">
+
+        //function handleLinks() {
+        //    var id = $('#frequencyid').val()
+        //    alert(id);
+        //    if ($('#frequencyid').val() == 1) {
+        //        $('#link1').show();
+        //        var idlink = $('#link1').val()
+        //        alert(idlink);
+        //        $('#link2').hide();
+        //        $('#link3').hide();
+        //    }
+        //    else {
+        //        $('#link1').hide();
+        //        $('#link2').show();
+        //        $('#link3').show();
+        //    }
+        //}
+        //$(function () {
+        //    handleLinks();
+        //    $('#frequencyid').change(handleLinks);
+        //});
+        @*function NaviagtePage() {
+            var selectedvalue = document.getElementById('frequencyid').value;
+            if (selectedvalue == "Yearly")
+                document.location = '@Url.Action("Reporting","GoToChart")';
+            else if (selectedvalue == "Half-Yearly")
+                document.location = '@Url.Action("Reporting","GetData")';
+            else
+                document.location = '@Url.Action("Reporting","GetData")';
+
+
+
+        }*@
+        function GetLinks() {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#LinkID").html(procemessage).show();
+            var countryid = $("#frequencyid").val();
+            var industrytypeid = $("#yearid").val();
+            var url = "/Reporting/getLinks";
+
+            $.ajax({
+                url: url,
+
+                data: { frequencyid: frequencyid, yearid: yearid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#LinkID").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+
+
+        </script>
+    }
+
+@using (Html.BeginForm())
+{
+    <div class="mid_content_sec">
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @*@Html.DisplayFor(model => model.vendorname)*@
+
+
+
+
+        <div class="col-xs-3 subSelect ">
+            <div class="input-field">
+                @Html.Label("Frequency", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(m => m.frequencyid, Model.frequency)
+
+            </div>
+        </div>
+        <div class="col-xs-3 subSelect ">
+            <div class="input-field">
+                @Html.Label("Year", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(m=>m.yearid, Enumerable.Range(2000, DateTime.Now.Year - 1999).Select(i=> new SelectListItem { Value = i.ToString(), Text = i.ToString() }),
+               "Year")
+            </div>
+        </div>
+
+        <a id="link1" href="@Url.Action("GoToChart", "Reporting", new { id = 1 })"></a>
+        <a id="link2" href="@Url.Action("GoToChart", "Reporting", new { id = 2 })"></a>
+        <a id="link3" href="@Url.Action("GoToChart", "Reporting", new { id = 3 })"></a>
+
+        @*<a href="javascript:void(0);" onclick="NavigatePage();">click here</a>*@
+        @if(Model.compliance_Types!= null)
+
+        <div id="LinkID" class="col-sm-3 QueList">
+            <div class="queContainer">
+                @*<a href="@Url.Action("GoToChart", "Reporting", new { compliancetypeid = item.complianceid,
+                branchid =Model.branchid,vendorid=Model.vendorid,sd= item.startdate.ToShortDateString(),ed= item.enddate.ToShortDateString()})">*@
+
+                <a href="@Url.Action("GoToChart", "Reporting", new { compliancetypeid = 1,branchid=70,vendorid=70,
+                                                    })">
+
+                    <span class="qIcon"></span>
+                </a>
+                <div class="clearfix"></div>
+
+            </div>
+        </div>
+
+
+    </div>
+}
+    
+

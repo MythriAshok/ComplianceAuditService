@@ -18,110 +18,118 @@
         {
             if (ViewBag.MessageCompany != string.Empty)
             {
-            <center>
-                <p id="successMessage">@ViewBag.MessageCompany @ViewBag.Success</p>
-            </center>
+                <center>
+                    <p id="successMessage">@ViewBag.MessageCompany @ViewBag.Success</p>
+                </center>
             }
             else
             {
-            <center>
-                <p id="successMessage" style="color:red">@ViewBag.NotFound</p>
-            </center>
+                <center>
+                    <p id="successMessage" style="color:red">@ViewBag.NotFound</p>
+                </center>
             }
-        <div class="pull-right fa fa-pull-right" style="font-size:large">
-            <i class="fa fa-plus"></i><font style="font-size:14px; color:dimgray; font-family:Arial">
+            <div class="pull-right fa fa-pull-right" style="font-size:large">
+                <i class="fa fa-plus"></i><font style="font-size:14px; color:dimgray; font-family:Arial">
 
-                @Html.ActionLink("Add Company", "AddCompany", new { Orgid = Model.GroupCompanyID })
-            </font>
-        </div>
-        <div class="col-xs-10 subSelect ">
-            <div class="input-field">
-
-                @*@Html.Label("Group Company")*@
-                @*@Html.DropDownListFor(model => model.GroupCompanyID, Model.GroupCompaniesList, new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })*@
-                <h3>
-                    @Html.DisplayFor(model => model.GroupCompanyName, new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
-                </h3>
+                    @Html.ActionLink("Add Company", "AddCompany", new { Orgid = Model.GroupCompanyID })
+                </font>
             </div>
-        </div>
+            <div class="col-xs-10 subSelect ">
+                <div class="input-field">
 
-    <div class="clearfix"></div>
-    <div class="new_section_box">
-        <div class="tab-content">
-            <div id="home" class="tab-pane fade in active">
-                <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h2>
-                @if (Model.listOfGroups != null)
-                {
-                    int listcount = 0;
-                    foreach (var item in Model.listOfGroups)
-                    {
-                        listcount++;
-                        <div class="col-sm-3 QueList">
-                            <div class="queContainer">
-                                @if (item.IsActive == false)
-                                {
-                                    <a href="@Url.Action("ActivateCompany", "ManageOrganization", new { Orgid = item.OrganizationID })"
-                                       onclick="return confirm('Are you sure you want to activate?')">
-                                        <i class="fa fa-ban" style="color:black"></i>
-                                    </a>
-                                }
-                                else
-                                {
-                                    <a href="@Url.Action("DeactivateCompany", "ManageOrganization", new { Orgid = item.OrganizationID })"
-                                       onclick="return confirm('Are you sure you want to deactivate?')">
+                    @*@Html.Label("Group Company")*@
+                    @*@Html.DropDownListFor(model => model.GroupCompanyID, Model.GroupCompaniesList, new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })*@
+                    <h3>
+                        @Html.DisplayFor(model => model.GroupCompanyName, new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
+                    </h3>
+                </div>
+            </div>
 
-                                        <i class="fa fa-check-circle"></i>
-                                    </a>
-                                }
-                                <a href="@Url.Action("DeleteCompany", "ManageOrganization", new { Orgid = item.OrganizationID })"
-                                   onclick="return confirm('Are you sure you want to delete?')">
-
-                                    <i class="fa fa-trash pull-right" style="color:red"></i>
-                                </a>
-                                <a href="@Url.Action("AboutCompany", "ManageOrganization", new { id = item.OrganizationID })">
-
-                                    <span class="qIcon"><img src="/UploadedFiles/@item.Logo" alt="" style="height:60px;width:75px"></span>
-                                    <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
-                                </a>
-                                <div class="pull-right fa fa-pull-right" style="font-size:large">
-                                    <i class="fa fa-plus"></i><font style="font-size:14px; color:dimgray; font-family:Arial">
-
-                                        @Html.ActionLink("Add Branch", "AddBranch", new { Orgid = item.OrganizationID })
-                                    </font>
-                                </div>
-                                <div class="pull-left" style="font-size:large">
-                                    <i class="fa fa-plus"></i><font style="font-size:14px; color:dimgray; font-family:Arial">
-
-                                        @Html.ActionLink("Add Vendor", "AddVendor", new { Orgid = item.OrganizationID })
-                                    </font>
-                                </div>
-
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                        if (4 - listcount == 0)
+            <div class="clearfix"></div>
+            <div class="new_section_box">
+                <div class="tab-content">
+                    <div id="home" class="tab-pane fade in active">
+                        <h2 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h2>
+                        @if (Model.listOfGroups != null)
                         {
-                            <div class="clearfix"></div>
+                            int listcount = 0;
+                            foreach (var item in Model.listOfGroups)
+                            {
+                                listcount++;
+                                <div class="col-sm-3 QueList">
+                                    <div class="queContainer">
+                                        @if (item.IsActive == false)
+                                        {
+                                            <a href="@Url.Action("ActivateCompany", "ManageOrganization", new { Orgid = item.OrganizationID })"
+                                               onclick="return confirm('Are you sure you want to activate?')">
+                                                <i class="fa fa-ban" style="color:black"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("DeactivateCompany", "ManageOrganization", new { Orgid = item.OrganizationID })"
+                                               onclick="return confirm('Are you sure you want to deactivate?')">
 
+                                                <i class="fa fa-check-circle"></i>
+                                            </a>
+                                        }
+                                        <a href="@Url.Action("DeleteCompany", "ManageOrganization", new { Orgid = item.OrganizationID })"
+                                           onclick="return confirm('Are you sure you want to delete?')">
+
+                                            <i class="fa fa-trash pull-right" style="color:red"></i>
+                                        </a>
+                                        <a href="@Url.Action("AboutCompany", "ManageOrganization", new { id = item.OrganizationID })">
+
+                                            <span class="qIcon"><img src="/UploadedFiles/@item.Logo" alt="" style="height:60px;width:75px"></span>
+                                            <h3 class="PB25"> @Html.DisplayFor(modelItem => item.CompanyName)</h3>
+                                        </a>
+                                        <div class="pull-right fa fa-pull-right" style="font-size:large">
+                                            <i class="fa fa-plus"></i><font style="font-size:14px; color:dimgray; font-family:Arial">
+
+                                                @Html.ActionLink("Add Branch", "AddBranch", new { Orgid = item.OrganizationID })
+                                            </font>
+                                        </div>
+                                        <div class="pull-left" style="font-size:large">
+                                            <i class="fa fa-plus"></i><font style="font-size:14px; color:dimgray; font-family:Arial">
+
+                                                @Html.ActionLink("Add Vendor", "AddVendor", new { Orgid = item.OrganizationID })
+                                            </font>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                                if (4 - listcount == 0)
+                                {
+                                    <div class="clearfix"></div>
+
+                                }
+                            }
                         }
-                    }
-                }
-                else
-                {
-                    <h4> @ViewBag.Message</h4>
-                }
-                
+                        else
+                        {
+                            <h4> @ViewBag.Message</h4>
+                        }
 
-                <div class="clearfix"></div>
-                
+
+                        <div class="clearfix"></div>
+
+                    </div>
+
+                </div>
+
             </div>
-            
-        </div>
-        
-    </div>
         }
     }
+    <ul class="list-inline continueBtn">
+        <li>
 
+
+
+            <a href="@Url.Action("dashboard","Common",new { pid=9})" class="btn primary-button">Cancel</a>
+
+        </li>
+    </ul>
 </div>
 
 

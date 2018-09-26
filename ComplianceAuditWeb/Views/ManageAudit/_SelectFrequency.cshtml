@@ -56,7 +56,9 @@
                                 {
                                     <div class="col-sm-3 QueList">
                                         <div class="queContainer">
-                                            <a href="@Url.Action("Auditentry", "ManageAudit", new { compliancetypeid = item.complianceid,branchid=Model.branchid,vendorid=Model.vendorid,sdate=@sdate.AddMonths(i),edate=@edate.AddMonths(i) })">
+                                            <a href="@Url.Action("Auditentry", "ManageAudit",
+                                                    new { compliancetypeid = item.complianceid,branchid=Model.branchid,vendorid=Model.vendorid,
+                                                        sdate =@sdate.AddMonths(i),edate=@edate.AddMonths(i) })">
                                                 <span class="qIcon"></span>
                                                 @if (inc == 1)
                                                 {

@@ -818,6 +818,7 @@
     <Content Include="Views\ManageCompliance\_AddActs - Copy.cshtml" />
     <Content Include="Views\Reporting\_SelectFrequency.cshtml" />
     <Content Include="Views\ManageCompliance\_complianceActMap.cshtml" />
+    <Content Include="Views\Reporting\_FrequencyType.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

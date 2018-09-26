@@ -16,18 +16,24 @@ namespace ComplianceService
         [OperationContract]
         void DoWork();
         [OperationContract]
-        string getBranchReport(int BranchID);
+        string getBranchReport(int BranchID, DateTime StartDate, DateTime EndDate, int ComplianceID);
         //[OperationContract]
 
         //ViewAsPdf GeneratePDF(List<ComplianceAudit> model);
         [OperationContract]
 
-        string getBranchStatusReport(int BranchID, string status);
+        string getBranchStatusReport(int BranchID, string status, DateTime StartDate, DateTime EndDate, int ComplianceID);
         [OperationContract]
 
         string getBranchRACTeport(int BranchID);
         [OperationContract]
 
         string getBranchStatusACTReport(int BranchID, string status);
+        [OperationContract]
+
+        string getBranchpieReport(int BranchID);
+        //[OperationContract]
+
+        //string getYearForAuditReport(int OrgID);
     }
 }

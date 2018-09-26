@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ComplianceAuditWeb.Models
 {
@@ -14,8 +15,9 @@ namespace ComplianceAuditWeb.Models
         public int vendorid { get; set; }
 
         public string vendorname { get; set; }
-        
+
         //public List<DateTime> date { get; set; }
+      
 
     }
 
@@ -26,6 +28,7 @@ namespace ComplianceAuditWeb.Models
         public DateTime startdate { get; set; }
         public DateTime enddate { get; set; }
         public String Name { get; set; }
+    
     }
 
     public enum fullcalender

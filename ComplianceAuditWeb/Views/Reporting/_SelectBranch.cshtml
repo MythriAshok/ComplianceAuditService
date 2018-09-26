@@ -1,13 +1,15 @@
 ﻿@model ComplianceAuditWeb.Models.ReportViewModel
 
 @{
-    ViewBag.Title = "Auditor Page";
+    ViewBag.Title = "Reporting Page";
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
 }
 <ul class="breadcrumb ML15">
-    <li><a href="/Common/dashboard?pid=18">Audit Management</a></li>
-    <li>Auditor Dashboard</li>
+    <li><a href="/common/dashboard?pid=0">Report Management</a></li>
+    <li>Reporting Dashboard</li>
 </ul>
-<h2 class="ML15">Auditor Dashboard</h2>
+<h2 class="ML15">reporting Dashboard</h2>
 @section scripts{
     <script language="javascript" type="text/javascript">
         function GetBranch(_CompanyId) {
@@ -32,7 +34,32 @@
                 }
             });
 
+
         }
+        function GetComplianceType(_CompanyId) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#complianceTypeid").html(procemessage).show();
+            var url = "/Common/getcompliancelistundercompany";
+
+            $.ajax({
+                url: url,
+                data: { compid: _CompanyId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>-- Select Compliance --</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#complianceTypeid").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+            GetBranch(_CompanyId);
+        }
+
     </script>
 }
 @using (Html.BeginForm())
@@ -42,25 +69,55 @@
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @*@if (TempData["Message"] != null)
-        {
-            <p class="alert alert-warning">@TempData["Message"]</p>
-            <p style="color:red">@TempData["Message"]</p>
-        }*@
+            {
+                <p class="alert alert-warning">@TempData["Message"]</p>
+                <p style="color:red">@TempData["Message"]</p>
+            }*@
 
-        <div class="col-xs-6 subSelect ">
+        <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Company", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.DropDownListFor(model => model.companyid, Model.companyList, new { @onchange = "javascript:GetBranch(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
-                @Html.ValidationMessageFor(model => model.companyList, "", new { @class = "text-danger" })
+                @Html.Label("Select Company", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(model => model.companyid, Model.companyList, new { @onchange = "javascript:GetComplianceType(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.companyid, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="col-xs-6 subSelect ">
+        <div class="col-xs-4 subSelect ">
             <div class="input-field">
-                @Html.Label("Branch", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.DropDownListFor(model => model.branchid, Model.BranchList, new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.Label("Select ComplianceType", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(model => model.complianceTypeid, Model.ComplianceTypeList, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.complianceTypeid, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Select Frequency", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(m => m.frequencyid, Model.frequency, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.frequencyid, "", new { @class = "text-danger" })
+
+
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Select Year", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(m=>m.yearid, Enumerable.Range(2000, DateTime.Now.Year - 1999).Select(i=> new SelectListItem { Value = i.ToString(), Text = i.ToString() }),
+               "Year", new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.yearid, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Select Branch", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(model => model.branchid, Model.BranchList,
+               new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
                 @Html.ValidationMessageFor(model => model.branchid, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="clearfix"></div>
         <div class="col-xs-12 subSelect ">
             @if (Model.VendorList != null)
@@ -73,19 +130,23 @@
                             {
                                 if (Convert.ToInt32(item.Value) == Model.branchid)
                                 {
-                                    
-                            <div class="col-sm-3 QueList">
-                                <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h4>
-                                <div class="queContainer">
-                                    <a href="@Url.Action("selectauditfrequency", "Reporting", new { branchid = Model.branchid, vendorid = item.Value, vendorname = item.Text })">
 
-                                        @*<a href="@Url.Action("GoToChart", "Reporting", new { branchid = Model.branchid, vendorid = item.Value, vendorname = item.Text })">*@
-                                            <span class="qIcon"><img src="~/UploadedFiles/noimage.png" alt="" style="height:60px;width:75px"></span>
-                                            <h3 class="PB25"> @Html.DisplayFor(modelitem => item.Text)</h3>
-                                        </a>
-                                        <div class="clearfix"></div>
-                                </div>
-                            </div>
+                                    <div class="col-sm-3 QueList">
+                                        <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h4>
+                                        <div class="queContainer">
+                                            <a href="@Url.Action("selectauditfrequency", "Reporting",
+                                                    new { branchid = Model.branchid, vendorid = item.Value, vendorname = item.Text,
+                                                    yearid = Model.yearid, frequencyid = Model.frequencyid, compliancid = Model.complianceTypeid
+
+                                                    })">
+
+                                                @*<a href="@Url.Action("GoToChart", "Reporting", new { branchid = Model.branchid, vendorid = item.Value, vendorname = item.Text })">*@
+                                                <span class="qIcon"><img src="~/UploadedFiles/noimage.png" alt="" style="height:60px;width:75px"></span>
+                                                <h3 class="PB25"> @Html.DisplayFor(modelitem => item.Text)</h3>
+                                            </a>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
                                 }
                             }
 
@@ -98,7 +159,13 @@
                             {
                                 <div class="col-sm-3 QueList">
                                     <div class="queContainer">
-                                        <a href="@Url.Action("Listofvendors", "ComplianceManagement", new { branchid=Model.branchid,vendorid = item.Company_Id,vendorname=item.Company_Name })">
+                                        @*<a href="@Url.Action("selectauditfrequency", "Reporting", new { branchid=Model.branchid,vendorid = item.Company_Id,vendorname=item.Company_Name })">*@
+
+                                        <a href="@Url.Action("selectauditfrequency", "Reporting",
+                                                    new { branchid = Model.branchid, vendorid = item.Company_Id, vendorname=item.Company_Name,
+                                                    yearid = Model.yearid, frequencyid = Model.frequencyid, compliancid = Model.complianceTypeid
+
+                                                    })">
                                             <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
                                             <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
                                         </a>
@@ -112,7 +179,18 @@
                 </div>
             }
         </div>
+
+
     </div>
+    <div class="clearfix"></div>
+    <ul class="list-inline continueBtn">
+        <li>
+            <input type="reset" value="Reset" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+
+            <a href="@Url.Action("dashboard","Common",new { pid=0})" class="btn primary-button">Cancel</a>
+
+        </li>
+    </ul>
 
 
 }

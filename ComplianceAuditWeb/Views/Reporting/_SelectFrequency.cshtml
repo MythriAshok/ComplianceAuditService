@@ -1,79 +1,252 @@
-﻿@model ComplianceAuditWeb.Models.Compliancetype_view_model
+﻿@model ComplianceAuditWeb.Models.ReportViewModel
 
 @{
-    ViewBag.Title = "Auditor Page";
+    ViewBag.Title = "Reporting Page";
 }
 <ul class="breadcrumb ML15">
-    <li><a href="/Common/dashboard?pid=18">Audit Management</a></li>
-    <li>Auditor Dashboard</li>
+    <li><a href="/Common/dashboard?pid=18">Report Management</a></li>
+    <li>Reporting Dashboard</li>
 </ul>
-<h2 class="ML15">Auditor Dashboard</h2>
+<h2 class="ML15">Reporting Dashboard</h2>
+
+<style>
+    .tspan {
+        font-size:10px;
+    }
+</style>
+
 @using (Html.BeginForm())
 {
-    <div class="mid_content_sec">
-        @Html.AntiForgeryToken()
+<div class="mid_content_sec">
+    @Html.AntiForgeryToken()
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        @Html.Label("Name : ")
-        @Html.DisplayFor(model => model.vendorname)
-        <div class="clearfix"></div>
-        @*<div class="col-xs-12 subSelect ">*@
-            @if (Model != null)
-            {
-                <div class="new_section_box">
-                    <div class="tab-content">
-                        <div id="home" class="tab-pane fade in active">
+    @Html.Label("Name : ")
+    @Html.DisplayFor(model => model.Vendorname)
 
-                            @foreach (var item in Model.compliance_Types)
-                            {
-                                <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">@item.Name</h4>
-                                // string enumfrequency = "fullcalender";
-                                DateTime sdate = item.startdate;
-                                DateTime edate = item.enddate;
-                                edate.AddDays((item.enddate.Date.Day) - 1);
-                                int inc = 1;
-                                if (item.auditfrequency == 1)
-                                {
-                                    inc = 12;
-                                }
-                                else if (item.auditfrequency == 2)
-                                {
-                                    inc = 6;
-                                }
-                                else if (item.auditfrequency == 4)
-                                {
-                                    inc = 4;
-                                }
-                                else
-                                {
-                                    inc = 1;
-                                }
-                                for (int i = 0, j = 12; i < item.auditfrequency; i = i + inc, j = j - inc)
-                                {
-                                    <div class="col-sm-3 QueList">
-                                        <div class="queContainer">
-                                            <a href="@Url.Action("GoToChart", "Reporting", new { compliancetypeid = item.complianceid,
-                                                    branchid =Model.branchid,vendorid=Model.vendorid, sdate= @sdate , edate=@edate})">
-                                                <span class="qIcon"></span>
-                                                <h3 class="PB25">@sdate.AddMonths(i).ToShortDateString() - @edate.AddMonths(i + 1).ToShortDateString()</h3>
-                                                </a>
-                                                <div class="clearfix"></div>
-                                            
-                                        </div>
-                                    </div>
-                                }
 
-                                <div class="clearfix"></div>
-                            }
-                        </div>
 
-                    </div>
+    <div class="clearfix"></div>
+    @*<div class="col-xs-12 subSelect ">*@
+    @if (Model != null)
+    {
 
-                </div>
-            }
-        @*</div>*@
+        <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">@ViewBag.ComplianceName</h4>
 
-    </div>
+
+        foreach (var item in Model.compliance_Types)
+        {
+            @*<h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;">@item.Name</h4>*@
+            DateTime sdate = item.startdate;
+            DateTime edate = item.enddate;
+
+
+
+
+        }
+    }
+
+</div>
     <div class="clearfix"></div>
 }
+<script src="~/Scripts/chart/exporting.js"></script>
+<script src="~/Scripts/chart/highcharts.js"></script>
+<script src="~/Scripts/chart/highcharts-3d.js"></script>
+
+
+
+
+
+<div>
+    <div id="charts" style="font-size:small"></div>
+    <script>
+
+        (function () {
+
+
+
+
+
+            $(document).ready(function () {
+                $.getJSON("/Reporting/GetData", function (data) {
+                    Highcharts.setOptions({
+                        colors: ['green', 'red', 'orange',]
+                    });
+
+                    $charts = $('#charts');
+                    $.each(data, function (key, item) {
+                        $charts.append('<div id="container' + key + '"></div>');
+                        var $chart = $('#container' + key);
+                       
+
+
+                       
+
+                        var data = [];
+                        $.each(item, function (prop, value) {
+                            data.push({
+                                name: prop,
+                                y: value
+                                
+
+                            });
+                            
+                        });
+
+                        $chart.highcharts({
+                            chart: {
+                                type: 'pie',
+
+                                plotBackgroundColor: null,
+                                plotBorderWidth: null,
+                                plotShadow: false,
+
+                                options3d: {
+                                    enabled: true,
+                                    alpha: 50,
+                                    beta: 0
+                                },
+                                id: 'mychart'
+                            },
+                            title: {
+                                text: item.Name + ',' + 'Compliance Status' + ',' + item.Date + ' ' + '<br>' +
+                                    'Audit Period' + ' ' + 'is' + '   ' + item.StartDate + ' ' + 'To' + ' ' + item.EndDate,
+
+                                href: '/Reporting/GetBranchReports/?x?y?sdate?edate?compliancetypeid' + '&x=' + item.ID
+                                    + '&y=' + item.VendorID +
+                                    '&sdate=' + item.StartDate + '&edate=' + item.EndDate + '&compliancetypeid=' + item.compliancetypeid
+
+
+                            },
+
+                            tooltip: {
+                                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                            },
+
+                            plotOptions: {
+                                pie: {
+                                    allowPointSelect: true,
+
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+
+                                        style: {
+                                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                        }
+                                    }
+                                }
+
+                            },
+                            plotOptions: {
+                                series: {
+                                    allowPointSelect: true,
+                                    size: 350,
+                                    depth: 45,
+
+                                    cursor: 'pointer',
+                                    formatter: function () {
+                                        return Math.round(this.percentage * 100) / 100 + ' %';
+                                    },
+                                    distance: -30,
+                                    color: 'black',
+                                    point: {
+                                        events: {
+                                            click: function (e) {
+                                                location.href = this.options.url;
+
+                                            }
+                                        }
+
+                                    }
+                                }
+                            },
+
+
+
+                            series: [{
+
+                                name: 'Rate of Compliance',
+                                colorByPoint: true,
+                                data: [{
+                                    name: 'Compliant',
+                                    y: item.Complianced,
+                                    x: item.ID,
+                                    z: item.compliancetypeid,
+                                    url: '/Reporting/GetBranchReports/?x?y?n?sdate?edate?compliancetypeid?frequencyid' + '&x=' + item.ID +
+                                        '&y=' + item.VendorID + '&n=' + 'Complianced' +
+                                        '&sdate=' + item.StartDate + '&edate=' + item.EndDate + '&compliancetypeid=' + item.compliancetypeid +
+                                    '&frequencyid=' + item.frequencyid
+                                }, {
+                                    name: 'Non-Compliant',
+                                    y: item.Non_Complianced,
+                                        url: '/Reporting/GetBranchReports/?x?y?n?sdate?edate?compliancetypeid?frequencyid' + '&x=' + item.ID
+                                        + '&y=' + item.VendorID + '&n=' + 'Non_Complianced' +
+                                            '&sdate=' + item.StartDate + '&edate=' + item.EndDate + '&compliancetypeid=' + item.compliancetypeid +
+                                        '&frequencyid=' + item.frequencyid
+                                }, {
+                                    name: 'Partially-Compliant',
+                                    y: item.Partially_Complianced,
+                                        url: '/Reporting/GetBranchReports/?x?y?n?sdate?edate?compliancetypeid?frequencyid' + '&x=' + item.ID
+                                        + '&y=' + item.VendorID + '&n=' + 'Partially_Complianced' +
+                                            '&sdate=' + item.StartDate + '&edate=' + item.EndDate + '&compliancetypeid=' + item.compliancetypeid +
+                                        '&frequencyid=' + item.frequencyid
+                                    },
+
+
+                                ]
+
+
+                            }]
+
+
+                        });
+
+                    });
+
+                });
+            });
+        })();
+
+
+
+
+    </script>
+    @foreach (var dates in Model.startEndDates)
+    {
+        DateTime sdate = dates.StartDate;
+        DateTime edate = dates.EndDate;
+        <a href="@Url.Action("GetBranchReports", "Reporting",
+                                                    new {    x = Model.branchid,
+                        y = Model.Vendorid,
+                        compliancetypeid = Model.complianceTypeid,
+                        sdate = sdate.ToShortDateString(),
+                        edate = edate.ToShortDateString() })">
+            <span class="qIcon"></span>
+
+            <h3 class="PB25">  @sdate.ToString("dd - MMM - yyyy") - @edate.ToString("dd - MMM - yyyy")</h3>
+        </a>
+        @*<div class="pull-right">
+                @Html.ActionLink(@dates.StartDate.ToShortDateString()-dates.EndDate.ToShortDateString(), "GetBranchReports",
+                    new
+                    {
+                        x = Model.branchid,
+                        y = Model.Vendorid,
+                        compliancetypeid = Model.complianceTypeid,
+                        sdate = Model.ComplianceAudit.Start_Date.ToShortDateString(),
+                        edate = Model.ComplianceAudit.End_Date.ToShortDateString()
+                    })
+            </div>*@
+    }
+
+    <div class="clearfix"></div>
+    <ul class="list-inline continueBtn">
+        <li>
+            <a href="@Url.Action("selectbranch","Reporting",new { pid=0})" class="btn primary-button">Cancel</a>
+
+        </li>
+    </ul>
+</div>
+
