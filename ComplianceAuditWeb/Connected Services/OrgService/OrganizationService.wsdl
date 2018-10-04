@@ -314,6 +314,12 @@
   <wsdl:message name="IOrganizationService_GetMappedCompliance_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetMappedComplianceResponse" />
   </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetParticularCompliance_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetParticularCompliance" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_GetParticularCompliance_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetParticularComplianceResponse" />
+  </wsdl:message>
   <wsdl:portType name="IOrganizationService">
     <wsdl:operation name="insertOrganization">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertOrganization" message="tns:IOrganizationService_insertOrganization_InputMessage" />
@@ -518,6 +524,10 @@
     <wsdl:operation name="GetMappedCompliance">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GetMappedCompliance" message="tns:IOrganizationService_GetMappedCompliance_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GetMappedComplianceResponse" message="tns:IOrganizationService_GetMappedCompliance_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetParticularCompliance">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GetParticularCompliance" message="tns:IOrganizationService_GetParticularCompliance_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GetParticularComplianceResponse" message="tns:IOrganizationService_GetParticularCompliance_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IOrganizationService" type="tns:IOrganizationService">
@@ -974,6 +984,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetMappedCompliance">
       <soap:operation soapAction="http://tempuri.org/IOrganizationService/GetMappedCompliance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetParticularCompliance">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/GetParticularCompliance" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

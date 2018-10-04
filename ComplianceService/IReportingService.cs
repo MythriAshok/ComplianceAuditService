@@ -25,15 +25,24 @@ namespace ComplianceService
         string getBranchStatusReport(int BranchID, string status, DateTime StartDate, DateTime EndDate, int ComplianceID, int VendorID);
         [OperationContract]
 
-        string getBranchRACTeport(int BranchID);
+        string getBranchRACTeport(int BranchID, int VendorID);
         [OperationContract]
 
-        string getBranchStatusACTReport(int BranchID, string status);
+        string getBranchStatusACTReport(int BranchID, string status, int VendorID);
         [OperationContract]
 
         string getBranchpieReport(int BranchID);
         //[OperationContract]
 
         //string getYearForAuditReport(int OrgID);
+        [OperationContract]
+
+        string getBranchCount(int BranchID);
+        [OperationContract]
+
+        string getCompliantBranchCount(int Org_Hier_ID, DateTime StartDate, DateTime EndDate, int ComplianceTypeID);
+        [OperationContract]
+
+        string getNonCompliantBranchCount(int Org_Hier_ID, DateTime StartDate, DateTime EndDate, int ComplianceTypeID);
     }
 }

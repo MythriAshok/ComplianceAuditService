@@ -14,7 +14,6 @@ namespace Compliance.DataObject
         //[Required]
         //public string Industry_Type { get; set; }
         public string Formal_Name { get; set; }
-       //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode =true)]
        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode =true)]
         [DataType(DataType.Date)]
         public  DateTime Calender_StartDate { get; set; }
@@ -22,7 +21,12 @@ namespace Compliance.DataObject
         //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public  DateTime Calender_EndDate  { get; set; }
-      
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
+
+
+        public Nullable<DateTime> CalenderCompEndDate  { get; set; }
+
         public string Auditing_Frequency { get; set; }
         [Required(ErrorMessage ="Please enter the website")]
         public string Website { get; set; }

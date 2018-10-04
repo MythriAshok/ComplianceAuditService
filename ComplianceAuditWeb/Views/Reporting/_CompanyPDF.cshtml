@@ -1,0 +1,81 @@
+﻿@model ComplianceAuditWeb.Models.ReportViewModel
+
+@{
+    Layout = null;
+    ViewBag.Title = "Branch Level Reports";
+
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title </title>
+
+    <link href="~/Content/assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/pagestyle.css" rel="stylesheet" />
+
+    <script src="~/Content/assets/js/bootstrap.js"></script>
+    <script src="~/Content/assets/js/jquery.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-ui.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="main_body pull-right none">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="col-md-9"><h1><img src="~/Content/assets/images/logo_new.png" /></h1></div>
+                <div class="col-md-3 pull-right"><h1 class="pull-right"><img src="" alt="" /></h1></div>
+            </div>
+            <h3 class="page-header" style="text-align:center; font-size:large">@ViewBag.CompanyNamePDF - @ViewBag.Name - Audit Period is @ViewBag.sdate - @ViewBag.edate</h3>
+
+            <div>
+                @if (Model.CompliantBranchList != null)
+                {
+                    <h1 style="background-color:forestgreen">Compliant</h1>
+                    foreach (var branch in Model.CompliantBranchList)
+                    {
+                        <div>
+                            <div style="font-size:large">
+                                <i class="fa fa-check"></i><a href="@Url.Action("selectbranch","Reporting", new {Compid = Model.companyid})" />
+                                @Html.DisplayFor(modelItem => branch.Text)
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+
+            <div>
+                @if (Model.CompliantBranchList != null)
+                {
+                    <h1 style="background-color:forestgreen">Compliant</h1>
+                    foreach (var branch in Model.NonCompliantBranchList)
+                    {
+                        <div>
+                            <div style="font-size:large">
+                                <i class="fa fa-check"></i><a href="@Url.Action("selectbranch","Reporting", new {Compid = Model.companyid})" />
+                                @Html.DisplayFor(modelItem => branch.Text)
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+
+
+        </div>
+        </div>
+    
+
+
+
+</body>
+</html>
+

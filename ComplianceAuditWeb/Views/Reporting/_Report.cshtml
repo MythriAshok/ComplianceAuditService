@@ -8,7 +8,7 @@
 
 
 <div class="pull-right">
-    @Html.ActionLink("Generate PDF", "BranchReport", new { bid = Model.branchid })
+    @Html.ActionLink("Generate PDF", "BranchReport", new { bid = Model.branchid, companyname = Model.CompanyName, sdate = ViewBag.StartDate, edate = ViewBag.EndDate })
 </div>
 @*<style>
         th {
@@ -17,7 +17,12 @@
     </style>*@
 
 <div>
-    <h2 class="page-header" style="text-align:center; font-size:large">@ViewBag.Name</h2>
+    <h2 class="page-header" style="text-align:center; font-size:large">@ViewBag.CompanyName - @ViewBag.Name - Audit Period is @ViewBag.StartDate -@ViewBag.EndDate</h2>
+
+    @*<h2 class="page-header" style="text-align:center; font-size:large"></h2>
+
+    <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h4>*@
+
 
 
     @if (Model.CompliancedRuleList != null)

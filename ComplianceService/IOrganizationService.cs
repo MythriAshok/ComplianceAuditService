@@ -161,6 +161,9 @@ namespace ComplianceService
         [OperationContract]
 
         string GetMappedCompliance(int ComplianceID);
+        [OperationContract]
+
+        string GetParticularCompliance(int ComplianceTypeID);
 
 
     }

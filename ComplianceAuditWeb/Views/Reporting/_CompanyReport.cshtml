@@ -1,0 +1,62 @@
+﻿@model ComplianceAuditWeb.Models.ReportViewModel
+@*@model IEnumerable<Compliance.DataObject.ComplianceAudit>*@
+<div class="pull-right">
+    @Html.ActionLink("Generate PDF", "CompanyReport", new { companyname = Model.CompanyName, sdate = ViewBag.StartDate, edate = ViewBag.EndDate })
+</div>
+<div>
+    <h2 class="page-header" style="text-align:center; font-size:large">@ViewBag.CompanyName</h2>
+    <h3 class="info" style="text-align:center; font-size:large">@ViewBag.CompanyName -- Audit Period is @ViewBag.StartDate -@ViewBag.EndDate</h3>
+
+    <div>
+        <h2 style="background-color:forestgreen; color:white;  width:1415px;">Compliant</h2>
+
+        @if (Model.CompliantBranchList != null)
+        {
+            foreach (var branch in Model.CompliantBranchList)
+            {
+                <div>
+                    <div style="font-size:large">
+                        <i class="fa fa-check" style="color:green;"></i><a href="@Url.Action("selectbranch","Reporting", new {Compid = Model.companyid,
+                                                                            branchid = branch.Value, vendorid = branch.Value, vendorname = branch.Text,
+                                                    yearid = Model.yearid, frequencyid = Model.frequencyid, compliancid = Model.complianceTypeid,
+                                                    halfyearid = Model.HalfYearFrequencyid,
+                                                    monthid = Model.MonthFrequencyid, companyid = Model.companyid})" />
+                        @Html.DisplayFor(modelItem => branch.Text)
+                    </div>
+                </div>
+            }
+
+        }
+    </div>
+
+    <div class="clearfix"></div>
+    <div>
+        <h2 style="background-color:red; color:white; width:1415px;">Non-Compliant</h2>
+
+        @if (Model.NonCompliantBranchList != null)
+        {
+            foreach (var branch in Model.NonCompliantBranchList)
+            {
+                <div>
+                    <div style="font-size:large">
+                        <i class="fa fa-ban" style="color:red"></i><a href="@Url.Action("selectauditfrequency","Reporting", new {Compid = Model.companyid})" />
+                        @Html.DisplayFor(modelItem => branch.Text)
+                    </div>
+                </div>
+            }
+
+        }
+    </div>
+
+    <ul class="list-inline continueBtn">
+        <li>
+            <a href="@Url.Action("selectauditfrequency", "Reporting", new { branchid = Model.branchid, vendorid = Model.Vendorid, vendorname = Model.Vendorname,
+                    frequencyid = Model.frequencyid, yearid = Model.StartDate.Year,compliancid=Model.complianceTypeid
+                })" class="btn primary-button">Cancel</a>
+
+        </li>
+    </ul>
+</div>
+
+
+

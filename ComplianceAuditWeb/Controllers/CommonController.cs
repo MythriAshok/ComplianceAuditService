@@ -79,7 +79,7 @@ namespace ComplianceAuditWeb.Controllers
             }
             return Json(branch, JsonRequestBehavior.AllowGet);
         }
-
+       
 
 
         public JsonResult getcompany(string groupcompid)
@@ -453,6 +453,111 @@ namespace ComplianceAuditWeb.Controllers
 
                 return this.Json(new { success = true });
             }
-        
+
+        public JsonResult getyear(int compid, int compliancetypeid)
+        {
+            int sd = 0;
+            int ed = 0;
+            List<string> years = new List<string>();
+            ReportViewModel model = new ReportViewModel();
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+            string strxmlcompliancetype = organizationservice.GetParticularCompliance(compliancetypeid);
+            DataSet dsComplianceType = new DataSet();
+            dsComplianceType.ReadXml(new StringReader(strxmlcompliancetype));
+            if(dsComplianceType.Tables.Count>0)
+            {
+                string ComplianceName = Convert.ToString(dsComplianceType.Tables[0].Rows[0]["Compliance_Type_Name"]);
+                DateTime StartDate = Convert.ToDateTime(dsComplianceType.Tables[0].Rows[0]["Start_Date"]);
+                DateTime EndDate = Convert.ToDateTime(dsComplianceType.Tables[0].Rows[0]["End_date"]);
+
+                sd = StartDate.Year;
+                ed = EndDate.Year;
+            }
+
+            string strxmlyear = organizationservice.getDefaultCompanyDetails(compid);
+            DataSet dsyear = new DataSet();
+            dsyear.ReadXml(new StringReader(strxmlyear));
+            if (dsyear.Tables.Count > 0)
+            {
+                model.StartDate=Convert.ToDateTime(dsyear.Tables[0].Rows[0]["Calender_StartDate"]);
+                model.yearid = model.StartDate.Year;
+                if (sd == ed)
+                {
+                    model.years = Enumerable.Range(model.yearid, DateTime.Now.Year - (model.yearid - 1)).OrderByDescending(i=>i);
+                    //model.yearid = DateTime.Now.Year;
+                }
+                else
+                {
+                    int count = DateTime.Now.Year - (model.yearid - 1);
+                    for (int i = 1;i<=count; i++)
+                    {
+                        years.Add(model.yearid.ToString() + "-" + (model.yearid + 1));
+                        ++model.yearid;
+                    }
+                    years.Reverse();
+
+                    return Json(years, JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json(model.years, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult getfrequency(int frequencyid)
+        {
+            List<SelectListItem> frequency = new List<SelectListItem>();
+            ReportViewModel model = new ReportViewModel();
+            if(frequencyid == 1)
+            {
+
+            }
+            else if (frequencyid == 2)
+            {
+                //frequency.Add(new SelectListItem() { Text = "Select Half-Year", Value = "0" });
+                frequency.Add(new SelectListItem() { Text = "First Half", Value = "1" });
+                frequency.Add(new SelectListItem() { Text = "Second Half", Value = "2" });
+            }
+            else if (frequencyid == 3)
+            {
+                //frequency.Add(new SelectListItem() { Text = "Select Quarter", Value = "1" });
+                frequency.Add(new SelectListItem() { Text = "Quarter 1", Value = "2" });
+                frequency.Add(new SelectListItem() { Text = "Quarter 2", Value = "3" });
+                frequency.Add(new SelectListItem() { Text = "Quarter 3", Value = "4" });
+                frequency.Add(new SelectListItem() { Text = "Quarter 4", Value = "5" });
+            }
+            else if(frequencyid == 4)
+            {
+                //frequency.Add(new SelectListItem() { Text = "Select Month", Value = "0" });
+                frequency.Add(new SelectListItem() { Text = "January", Value = "1" });
+                frequency.Add(new SelectListItem() { Text = "February", Value = "2" });
+                frequency.Add(new SelectListItem() { Text = "March", Value = "3" });
+                frequency.Add(new SelectListItem() { Text = "April", Value = "4" });
+                frequency.Add(new SelectListItem() { Text = "May", Value = "5" });
+                frequency.Add(new SelectListItem() { Text = "June", Value = "6" });
+                frequency.Add(new SelectListItem() { Text = "July", Value = "7" });
+                frequency.Add(new SelectListItem() { Text = "August", Value = "8" });
+                frequency.Add(new SelectListItem() { Text = "September", Value = "9" });
+                frequency.Add(new SelectListItem() { Text = "October", Value = "10" });
+                frequency.Add(new SelectListItem() { Text = "November", Value = "11" });
+                frequency.Add(new SelectListItem() { Text = "December", Value = "12" });
+            }
+            else
+            {
+                //frequency.Add(new SelectListItem() { Text = "Select Month", Value = "0" });
+                frequency.Add(new SelectListItem() { Text = "January", Value = "1" });
+                frequency.Add(new SelectListItem() { Text = "February", Value = "2" });
+                frequency.Add(new SelectListItem() { Text = "March", Value = "3" });
+                frequency.Add(new SelectListItem() { Text = "April", Value = "4" });
+                frequency.Add(new SelectListItem() { Text = "May", Value = "5" });
+                frequency.Add(new SelectListItem() { Text = "June", Value = "6" });
+                frequency.Add(new SelectListItem() { Text = "July", Value = "7" });
+                frequency.Add(new SelectListItem() { Text = "August", Value = "8" });
+                frequency.Add(new SelectListItem() { Text = "September", Value = "9" });
+                frequency.Add(new SelectListItem() { Text = "October", Value = "10" });
+                frequency.Add(new SelectListItem() { Text = "November", Value = "11" });
+                frequency.Add(new SelectListItem() { Text = "December", Value = "12" });
+            }
+            return Json(frequency, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

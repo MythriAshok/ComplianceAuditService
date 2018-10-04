@@ -1,0 +1,360 @@
+﻿@model ComplianceAuditWeb.Models.ReportViewModel
+
+@{
+    ViewBag.Title = "Reporting Page";
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+<ul class="breadcrumb ML15">
+    <li><a href="/common/dashboard?pid=0">Report Management</a></li>
+    <li>Reporting Dashboard</li>
+</ul>
+<h2 class="ML15">reporting Dashboard</h2>
+@section scripts{
+    <script language="javascript" type="text/javascript">
+        function GetBranch(_CompanyId) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#branchid").html(procemessage).show();
+            var url = "/Common/getspecificbranchdropdown";
+
+            $.ajax({
+                url: url,
+                data: { compid: _CompanyId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>-- Select Branch --</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#branchid").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+
+
+        }
+        function GetComplianceType(_CompanyId) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#complianceTypeid").html(procemessage).show();
+            var url = "/Common/getcompliancelistundercompany";
+
+            $.ajax({
+                url: url,
+                data: { compid: _CompanyId },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>-- Select Compliance --</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#complianceTypeid").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+            GetBranch(_CompanyId);
+            GetYear();
+        }
+        function GetYear() {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#yearid").html(procemessage).show();
+            var companyid = $("#companyid").val();
+            var compliancetypeid = $("#complianceTypeid").val();
+            var url = "/Common/getYear";
+
+            $.ajax({
+                url: url,
+                data: { compid: companyid, compliancetypeid: compliancetypeid },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+
+
+
+
+                    var markup = "<option value='0'>-- SelectYear --</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x] + ">" + data[x] + "</option>";
+                    }
+                    $('#yearid').append(markup);
+                    $("#yearid").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+
+        function GetFrequency(_FrequencyID) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#HalfYearFrequencyid").html(procemessage).show();
+            var url = "/Common/getfrequency";
+
+            $.ajax({
+                url: url,
+                data: { frequencyid: _FrequencyID },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    var markup = "<option value='0'>-- Select --</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                    }
+                    $("#HalfYearFrequencyid").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+            Visible(_FrequencyID);
+        }
+
+        function Visible(_FrequencyID) {
+            if (_FrequencyID == 1) {
+                document.getElementById('From').style.visibility = "hidden";
+            }
+            else {
+                document.getElementById('From').style.visibility = "visible";
+
+            }
+
+            if (_FrequencyID == 5) {
+                document.getElementById('periodicTO').style.visibility = "visible";
+                var procemessage = "<option value='0'> Please wait...</option>";
+                $("#MonthFrequencyid").html(procemessage).show();
+                var url = "/Common/getfrequency";
+
+                $.ajax({
+                    url: url,
+                    data: { frequencyid: _FrequencyID },
+                    cache: false,
+                    type: "POST",
+                    success: function (data) {
+                        var markup = "<option value='0'>-- Select --</option>";
+                        for (var x = 0; x < data.length; x++) {
+                            markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                        }
+                        $("#MonthFrequencyid").html(markup).show();
+                    },
+                    error: function (reponse) {
+                        alert("error : " + reponse);
+                    }
+                });
+            }
+            else {
+                document.getElementById('periodicTO').style.visibility = "hidden";
+
+            }
+        }
+
+
+
+    </script>
+}
+@using (Html.BeginForm())
+{
+    <div class="mid_content_sec">
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*@if (TempData["Message"] != null)
+        {
+            <p class="alert alert-warning">@TempData["Message"]</p>
+            <p style="color:red">@TempData["Message"]</p>
+        }*@
+
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Select Company", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(model => model.companyid, Model.companyList, new { @onchange = "javascript:GetComplianceType(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.companyid, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Select ComplianceType", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(model => model.complianceTypeid, Model.ComplianceTypeList, new { @onchange = "javascript:GetYear(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.complianceTypeid, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-xs-4 subSelect">
+            <div class="input-field">
+                @Html.Label("Select Frequency", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(m => m.frequencyid, Model.frequency, new { @onchange = "javascript:GetFrequency(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.frequencyid, "", new { @class = "text-danger" })
+
+
+            </div>
+        </div>
+
+
+        <div class="col-xs-4 subSelect" id="From" style="visibility:hidden">
+            <div class="input-field">
+                @Html.Label("Select", new { @class = "floating-label" })
+                @Html.DropDownListFor(model => model.HalfYearFrequencyid, Model.halfYear, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.HalfYearFrequencyid, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="col-xs-4 subSelect " id="periodicTO" style="visibility:hidden">
+            <div class="input-field">
+                @Html.Label("To", new { @class = "floating-label" })
+                @Html.DropDownListFor(model => model.MonthFrequencyid, Model.month, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.MonthFrequencyid, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="clearfix"></div>
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Select Year", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(m => m.yearid, Model.years.Select(i => new SelectListItem { Value = i.ToString(), Text = i.ToString() }), new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.yearid, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("report Type", new { @class = "floating-label" })
+                @Html.DropDownListFor(model => model.ID, Model.yearlist, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.MonthFrequencyid, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @*<div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Select Branch", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(model => model.branchid, Model.BranchList,
+               new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.branchid, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+
+        <div class="clearfix"></div>
+        @*<div class="col-xs-12 subSelect ">
+            @if (Model.companyList != null)
+            {
+                <div class="new_section_box" >
+                    <div class="tab-content">
+                        <div id="home" class="tab-pane fade in active">
+                            <div class="col-sm-4 QueList"  style="height:20px;">
+                                <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h4>
+                                <div class="queContainer">
+                                    <a href="@Url.Action("selectauditfrequency", "Reporting",
+                            new
+                            {
+
+                                yearid = Model.yearid,
+                                frequencyid = Model.frequencyid,
+                                compliancid = Model.complianceTypeid,
+                                halfyearid = Model.HalfYearFrequencyid,
+                                monthid = Model.MonthFrequencyid,
+                                companyid = Model.companyid
+
+                            })">
+                                        <span class="qIcon"><img src="~/Content/assets/images/consolidatedreport.jpg" alt="" style="height:50px;width:75px"></span>
+
+                                        <h3 class="PB25">Consolidated Report</h3>
+                                    </a>
+
+
+
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="new_section_box">
+                    <div class="tab-content">
+                        <div id="home" class="tab-pane fade in active">
+                            <div class="col-sm-4 QueList">
+                                <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h4>
+                                <div class="queContainer">
+                                    <a href="@Url.Action("selectauditfrequency", "Reporting",
+                            new
+                            {
+                                branchid = Model.branchid,
+                                yearid = Model.yearid,
+                                frequencyid = Model.frequencyid,
+                                compliancid = Model.complianceTypeid,
+                                halfyearid = Model.HalfYearFrequencyid,
+                                monthid = Model.MonthFrequencyid,
+                                companyid = Model.companyid
+
+                            })">
+                                        <span class="qIcon"><img src="~/Content/assets/images/reportpie(1).png" alt="" style="height:50px;width:75px"></span>
+
+                                        <h3 class="PB25">Self Report</h3>
+                                    </a>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+            <div class="new_section_box">
+                <div class="tab-content">
+                    <div id="home" class="tab-pane fade in active">
+                        <div class="col-sm-4 QueList">
+                            <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h4>
+                            <div class="queContainer">
+                                <a href="@Url.Action("selectauditfrequency", "Reporting",
+                            new
+                            {
+                                branchid = Model.branchid,
+                                yearid = Model.yearid,
+                                frequencyid = Model.frequencyid,
+                                compliancid = Model.complianceTypeid,
+                                halfyearid = Model.HalfYearFrequencyid,
+                                monthid = Model.MonthFrequencyid,
+                                companyid = Model.companyid
+
+                            })">
+                                    <span class="qIcon"><img src="~/Content/assets/images/reportpie(1).png" alt="" style="height:50px;width:75px"></span>
+
+                                    <h3 class="PB25">Vendor Report</h3>
+                                </a>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    </div>
+    <div class="clearfix"></div>
+    <ul class="list-inline continueBtn">
+        <li>
+
+            <input type="submit" value="Get Report" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+
+            <input type="reset" value="Reset" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+
+            <a href="@Url.Action("dashboard","Common",new { pid=0})" class="btn primary-button">Cancel</a>
+
+        </li>
+    </ul>
+
+
+}
+
