@@ -231,7 +231,7 @@ namespace ComplianceAuditWeb.Controllers
                         Description = Convert.ToString(row["Comp_Description"]),
                         Non_compliance = Convert.ToString(row["Consequence"]),
                         Periodicity = Convert.ToString(row["Periodicity"]),
-                       // Details=Convert.ToString(row["Details"]),
+                        Details=Convert.ToString(row["Details"]),
                        compliance_Xref_id = Convert.ToInt32(row["Compliance_Xref_ID"]),
                         Start_Date = Convert.ToDateTime(Session["Sdate"]),
                         End_Date = Convert.ToDateTime(Session["Edate"]),
@@ -349,7 +349,7 @@ namespace ComplianceAuditWeb.Controllers
                 ds.ReadXml(new StringReader(xmldata));
                 model.Xref_Comp_Type_Map_ID = Convert.ToInt32(ds.Tables[0].Rows[0]["Xref_Comp_Type_Map_ID"]);
                             
-                client.insertAuditEntries(model);
+               // client.insertAuditEntries(model);
             }
          
 

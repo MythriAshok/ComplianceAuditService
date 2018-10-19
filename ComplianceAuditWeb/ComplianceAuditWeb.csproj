@@ -136,16 +136,6 @@
     <None Include="Connected Services\ComplianceXrefService\ComplianceXrefService2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\AuditService\AuditService.wsdl" />
-    <None Include="Connected Services\AuditService\AuditService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\AuditService\AuditService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\AuditService\AuditService11.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Connected Services\ComplianceXrefService\ComplianceXrefService3.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -173,13 +163,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\OrgService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Connected Services\AuditService\AuditService.disco" />
-    <None Include="Connected Services\AuditService\configuration91.svcinfo" />
-    <None Include="Connected Services\AuditService\configuration.svcinfo" />
-    <None Include="Connected Services\AuditService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -656,11 +639,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Connected Services\AuditService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Connected Services\ComplianceXrefService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -686,6 +664,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AuditController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
     <Compile Include="Controllers\ManageAccessController.cs" />
     <Compile Include="Controllers\ManageAuditController.cs" />
@@ -819,6 +798,8 @@
     <Content Include="Views\Reporting\_SelectFrequency.cshtml" />
     <Content Include="Views\ManageCompliance\_complianceActMap.cshtml" />
     <Content Include="Views\Reporting\_FrequencyType.cshtml" />
+    <Content Include="Views\AuditManagement\AuditWebgrid.cshtml" />
+    <Content Include="Views\Audit\_SelectBranch.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -848,7 +829,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\AccessService\" />
-    <WCFMetadataStorage Include="Connected Services\AuditService\" />
     <WCFMetadataStorage Include="Connected Services\ComplianceXrefService\" />
     <WCFMetadataStorage Include="Connected Services\OrgService\" />
     <WCFMetadataStorage Include="Connected Services\ReportingService\" />

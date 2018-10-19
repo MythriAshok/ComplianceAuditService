@@ -57,11 +57,11 @@
             //var url = '/ManageCompliance/getcompliancetypeact/1';
             //alert(url);
             //$('#actjstree').jstree(true).settings.core.url = url;
-            //var _acttyid = $('#compliancetypeid').val();  
-            //$.post('/Common/SetSessionVariable',
-            //    { key: "compliancetypeid", value: _acttyid }, function (data) {
-            //        //alert("Success " + data.success);
-            //    });
+            var _acttyid = $('#compliancetypeid').val();  
+            $.post('/Common/SetSessionVariable',
+                { key: "compliancetypeid", value: _acttyid }, function (data) {
+                    //alert("Success " + data.success);
+                });
 
             $('#actjstree').jstree(true).refresh();
            //$('#actjstree').jstree('destroy');

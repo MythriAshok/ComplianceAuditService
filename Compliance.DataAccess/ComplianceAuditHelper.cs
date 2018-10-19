@@ -104,6 +104,7 @@ namespace Compliance.DataAccess
                         cmd.Parameters.AddWithValue("p_Risk_Category", audit.Risk_Category);
                         cmd.Parameters.AddWithValue("p_Vendor_ID", audit.Vendor_Id);
                         cmd.Parameters.AddWithValue("p_Evidences", audit.Evidences);
+                        cmd.Parameters.AddWithValue("p_Periodicity", audit.Periodicity);
 
                         int objcomplianceauditid = cmd.ExecuteNonQuery();
                         if (objcomplianceauditid > 0)
@@ -381,6 +382,30 @@ namespace Compliance.DataAccess
                 conn.Close();
             }
             return ComplianceAuditResult;
+        }
+
+        public DataSet getComplianceTypemappedvendor(int ComplianceID,int branchid)
+        {
+            DataSet dsMappedCompliance = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_get_ComplianceType_map_Vendor", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_ComplinceTypeId", ComplianceID);
+                cmd.Parameters.AddWithValue("p_branchid", branchid);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsMappedCompliance);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsMappedCompliance;
         }
     }
 }
