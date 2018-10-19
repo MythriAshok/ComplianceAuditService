@@ -1,0 +1,33 @@
+﻿@model ComplianceAuditWeb.Models.CompanyViewModel
+@using System.Configuration;
+@{
+    ViewBag.Title = "Audit Calender";
+ 
+}
+
+
+
+@using (Html.BeginForm())
+{
+    <div class="mid_content_sec">
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Select Company", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(model => model.CompanyID, Model.CompaniesList, new { @onchange = "javascript:GetComplianceType(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.CompanyID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Select ComplianceType", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(model => model.ComplianceID, Model.ComplianceList, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.ComplianceID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+}

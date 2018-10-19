@@ -23,6 +23,7 @@
   <xs:complexType name="CompanyDetails">
     <xs:sequence>
       <xs:element minOccurs="0" name="Auditing_Frequency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CalenderCompEndDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Calender_EndDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Calender_StartDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Company_ContactNumber1" nillable="true" type="xs:string" />

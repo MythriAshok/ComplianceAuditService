@@ -27,6 +27,9 @@ namespace ComplianceAuditWeb.Controllers
             model.BranchList = new List<SelectListItem>();
             model.VendorList = new List<Organization>();
             model.frequency = new List<SelectListItem>();
+            model.halfYear = new List<SelectListItem>();
+            model.quarter = new List<SelectListItem>();
+            model.month = new List<SelectListItem>();
             model.ComplianceTypeList = new List<SelectListItem>();
 
 
@@ -38,6 +41,20 @@ namespace ComplianceAuditWeb.Controllers
             model.frequency.Add(new SelectListItem() { Text = "Quarterly", Value = "3" });
             model.frequency.Add(new SelectListItem() { Text = "Monthly", Value = "4" });
             model.frequency.Add(new SelectListItem() { Text = "Periodic", Value = "5" });
+
+
+            model.HalfYearFrequencyid = 0;
+            model.halfYear.Add(new SelectListItem() { Text = "-- Select --", Value = "0" });
+
+
+
+            model.QuarterFrequencyid = 0;
+            model.quarter.Add(new SelectListItem() { Text = "-- Select --", Value = "0" });
+
+
+
+            model.MonthFrequencyid = 0;
+            model.month.Add(new SelectListItem() { Text = "-- Select --", Value = "0" });
 
 
             OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
@@ -53,12 +70,28 @@ namespace ComplianceAuditWeb.Controllers
                 if (ds.Tables.Count > 0)
                 {
                     model.companyid = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
+                    model.StartDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["Calender_StartDate"]);
+                    var companyid = Request.QueryString["companyid"];
+                    if(companyid!= null)
+                    {
+                        model.companyid = Convert.ToInt32(companyid);
+                    }
                     foreach (System.Data.DataRow row in ds.Tables[0].Rows)
                     {
                         model.companyList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
                     }
+
+                    model.yearid = model.StartDate.Year;
+
+                    model.years = Enumerable.Range(model.yearid, DateTime.Now.Year - (model.yearid - 1)).OrderByDescending(i => i);
+                    model.yearid = DateTime.Now.Year;
+
                 }
-              
+
+
+
+
+
                 model.ComplianceTypeList = new List<SelectListItem>();
                 xmldata = client.GetAssignedComplianceTypes(model.companyid);
                 ds = new DataSet();
@@ -76,9 +109,12 @@ namespace ComplianceAuditWeb.Controllers
                 xmldata = client.GeSpecifictBranchList(model.companyid);
                 ds = new DataSet();
                 ds.ReadXml(new StringReader(xmldata));
+
+                model.BranchList.Add(new SelectListItem { Text = "-- Select Branch --", Value = "0" });
+                model.branchid = Convert.ToInt32(Request.QueryString["branchid"]);
                 if (ds.Tables.Count > 0)
                 {
-                    model.branchid = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
+                    //model.branchid = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
                     foreach (System.Data.DataRow row in ds.Tables[0].Rows)
                     {
                         model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
@@ -116,15 +152,44 @@ namespace ComplianceAuditWeb.Controllers
             model.BranchList = new List<SelectListItem>();
             model.VendorList = new List<Organization>();
             model.frequency = new List<SelectListItem>();
+            model.halfYear = new List<SelectListItem>();
+            model.quarter = new List<SelectListItem>();
+            model.month = new List<SelectListItem>();
 
 
-           
+
             model.frequency.Add(new SelectListItem() { Text = "Select Frequency", Value = "0" });
             model.frequency.Add(new SelectListItem() { Text = "Yearly", Value = "1" });
             model.frequency.Add(new SelectListItem() { Text = "Half-Yearly", Value = "2" });
             model.frequency.Add(new SelectListItem() { Text = "Quarterly", Value = "3" });
             model.frequency.Add(new SelectListItem() { Text = "Monthly", Value = "4" });
             model.frequency.Add(new SelectListItem() { Text = "Periodic", Value = "5" });
+
+            model.halfYear.Add(new SelectListItem() { Text = "Select Half-Year", Value = "0" });
+            model.halfYear.Add(new SelectListItem() { Text = "First Half", Value = "1" });
+            model.halfYear.Add(new SelectListItem() { Text = "Second Half", Value = "2" });
+
+
+            model.quarter.Add(new SelectListItem() { Text = "Select Quarter", Value = "0" });
+            model.quarter.Add(new SelectListItem() { Text = "Quarter 1", Value = "2" });
+            model.quarter.Add(new SelectListItem() { Text = "Quarter 2", Value = "3" });
+            model.quarter.Add(new SelectListItem() { Text = "Quarter 3", Value = "4" });
+            model.quarter.Add(new SelectListItem() { Text = "Quarter 4", Value = "5" });
+
+
+            model.month.Add(new SelectListItem() { Text = "Select Month", Value = "0" });
+            model.month.Add(new SelectListItem() { Text = "January", Value = "1" });
+            model.month.Add(new SelectListItem() { Text = "February", Value = "2" });
+            model.month.Add(new SelectListItem() { Text = "March", Value = "3" });
+            model.month.Add(new SelectListItem() { Text = "April", Value = "4" });
+            model.month.Add(new SelectListItem() { Text = "May", Value = "5" });
+            model.month.Add(new SelectListItem() { Text = "June", Value = "6" });
+            model.month.Add(new SelectListItem() { Text = "July", Value = "7" });
+            model.month.Add(new SelectListItem() { Text = "August", Value = "8" });
+            model.month.Add(new SelectListItem() { Text = "September", Value = "9" });
+            model.month.Add(new SelectListItem() { Text = "October", Value = "10" });
+            model.month.Add(new SelectListItem() { Text = "November", Value = "11" });
+            model.month.Add(new SelectListItem() { Text = "December", Value = "12" });
 
 
             OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
@@ -137,8 +202,12 @@ namespace ComplianceAuditWeb.Controllers
             {
                 foreach (System.Data.DataRow row in ds.Tables[0].Rows)
                 {
+                    model.StartDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["Calender_StartDate"]);
+
                     model.companyList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
                 }
+                //model.yearid = model.StartDate.Year;
+                model.years = Enumerable.Range(model.yearid, DateTime.Now.Year - (model.yearid - 1));
             }
             model.BranchList = new List<SelectListItem>();
             xmldata = client.GeSpecifictBranchList(model.companyid);
@@ -183,19 +252,24 @@ namespace ComplianceAuditWeb.Controllers
 
         }
 
-        public ActionResult selectauditfrequency(int branchid, int vendorid, string vendorname, int frequencyid, int yearid, int compliancid)
+        public ActionResult selectauditfrequency(int branchid, int vendorid, string vendorname, int frequencyid, int yearid, int compliancid, int companyid,
+            int halfyearid, int monthid)
         {
             // Compliancetype_view_model model1 = new Compliancetype_view_model();
             ReportViewModel model = new ReportViewModel();
 
             model.ComplianceAudit = new ComplianceAudit();
             model.compliance_Types = new List<compliance_type>();
+            model.companyid = companyid;
             model.branchid = branchid;
             model.Vendorid = vendorid;
             model.frequencyid = frequencyid;
             model.yearid = yearid;
             model.Vendorname = vendorname;
             model.complianceTypeid = compliancid;
+            model.HalfYearFrequencyid = halfyearid;
+
+            model.MonthFrequencyid = monthid;
             OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
             string xmldata = client.GetAssignedComplianceTypes(vendorid);
             DataSet ds = new DataSet();
@@ -229,82 +303,188 @@ namespace ComplianceAuditWeb.Controllers
                             startdate = Convert.ToDateTime(row["Start_Date"]),
                             enddate = Convert.ToDateTime(row["End_Date"])
                         });
-                  
-                }
+
+                    }
                     ViewBag.ComplianceName = ds.Tables[0].Rows[0]["Compliance_Type_Name"];
-            }
-              foreach (var item in model.compliance_Types)
+                }
+                foreach (var item in model.compliance_Types)
                 {
                     List<StartEndDates> dates = new List<StartEndDates>();
                     model.startEndDates = new List<StartEndDates>();
-                    DateTime sdate = new DateTime(yearid, item.startdate.Month, 01);
-
-                    int inc = 1;
+                    DateTime sdate = new DateTime(yearid, item.startdate.Month, item.startdate.Day);
+                    DateTime edate = new DateTime(yearid, item.enddate.Month, item.enddate.Day);
+                    //DateTime sdate = item.startdate;
+                    //DateTime edate = item.enddate;
+                    int k = 0;
                     if (model.frequencyid == 1)
                     {
-                        inc = 11;
-                        DateTime edate = new DateTime(yearid, item.startdate.Month + inc, 31);
-                        for (int k = 0, j = 0; j < model.frequencyid; k = k + inc, j++)
+                        model.startEndDates.Add(new StartEndDates
                         {
-                            model.startEndDates.Add(new StartEndDates
-                            {
-                                StartDate = sdate.AddMonths(k),
-                                EndDate= edate.AddMonths(k)
-                            });
-                        }
-
+                            StartDate = sdate,
+                            EndDate = edate
+                        });
                     }
                     else if (model.frequencyid == 2)
                     {
-                        model.frequencyvalue = 2;
-
-                        inc = 6;
-
-                        DateTime edate = new DateTime(yearid, item.startdate.Month + 5, 30);
-                        for (int k = 0, j = 0; j < model.frequencyid; k = k + inc, j++)
+                        if (model.HalfYearFrequencyid == 1)
                         {
                             model.startEndDates.Add(new StartEndDates
                             {
                                 StartDate = sdate.AddMonths(k),
-                                EndDate = edate.AddMonths(k)
-
+                                EndDate = edate.AddMonths(k - 6)
                             });
                         }
-                       
+                        else
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 6),
+                                EndDate = edate
+                            });
+                        }
                     }
                     else if (model.frequencyid == 3)
                     {
-                        model.frequencyvalue = 4;
-                        inc = 3;
-                        DateTime edate = new DateTime(yearid, item.startdate.Month + 2, 31);
-                        for (int k = 0, j = 0; j < model.frequencyvalue; k = k + inc, j++)
+                        if (model.QuarterFrequencyid == 1)
                         {
                             model.startEndDates.Add(new StartEndDates
                             {
                                 StartDate = sdate.AddMonths(k),
-                                EndDate = edate.AddMonths(k)
-
+                                EndDate = edate.AddMonths(k + 3)
+                            });
+                        }
+                        else if (model.QuarterFrequencyid == 2)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 3),
+                                EndDate = edate.AddMonths(k + 6)
+                            });
+                        }
+                        else if (model.QuarterFrequencyid == 3)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 6),
+                                EndDate = edate.AddMonths(k + 9)
+                            });
+                        }
+                        else
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 9),
+                                EndDate = edate
                             });
                         }
                     }
                     else if (model.frequencyid == 4)
                     {
-                        inc = 1;
-                        model.frequencyvalue = 12;
-                        
-                        DateTime edate = new DateTime(yearid, item.startdate.Month, 31);
-                        for (int k = 0, j = 0; j < model.frequencyvalue; k = k + inc, j++)
+                        if (model.MonthFrequencyid == 1)
                         {
                             model.startEndDates.Add(new StartEndDates
                             {
                                 StartDate = sdate.AddMonths(k),
-                                EndDate = edate.AddMonths(k)
-
+                                EndDate = edate.AddMonths(k + 1)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 2)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 2),
+                                EndDate = edate.AddMonths(k + 3)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 3)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 3),
+                                EndDate = edate.AddMonths(k + 4)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 4)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 4),
+                                EndDate = edate.AddMonths(k + 5)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 5)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 5),
+                                EndDate = edate.AddMonths(k + 6)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 6)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 6),
+                                EndDate = edate.AddMonths(k + 7)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 7)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 7),
+                                EndDate = edate.AddMonths(k + 8)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 8)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 8),
+                                EndDate = edate.AddMonths(k + 9)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 9)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 9),
+                                EndDate = edate.AddMonths(k + 10)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 10)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 10),
+                                EndDate = edate.AddMonths(k + 11)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 11)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 11),
+                                EndDate = edate.AddMonths(k + 12)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 12)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 12),
+                                EndDate = edate
                             });
                         }
                     }
                     else
                     {
+
+                        model.startEndDates.Add(new StartEndDates
+                        {
+                            StartDate = sdate.AddMonths(model.HalfYearFrequencyid - 1),
+                            EndDate = edate.AddMonths(model.MonthFrequencyid).AddYears(-1)
+                        });
 
 
                     }
@@ -325,59 +505,57 @@ namespace ComplianceAuditWeb.Controllers
                         TempData["ID"] = vendorid;
                     }
                 }
+                OrgService.OrganizationServiceClient orgclient = new OrgService.OrganizationServiceClient();
+                string xmlcompdata = orgclient.getDefaultCompanyDetails(model.companyid);
+                DataSet dsCompanyName = new DataSet();
+                dsCompanyName.ReadXml(new StringReader(xmlcompdata));
+                if (dsCompanyName.Tables.Count > 0)
+                {
+                    ViewBag.CompanyName = dsCompanyName.Tables[0].Rows[0]["Company_Name"];
+                    model.CompanyName = Convert.ToString(dsCompanyName.Tables[0].Rows[0]["Company_Name"]);
+                }
                 Session["model"] = model;
 
             }
             return View("_SelectFrequency", model);
 
         }
-        public ActionResult GetBranchReports( )
-
+        public ActionResult GetBranchReports()
         {
-            int branchid = 0;
-            var id = Request.QueryString["x"];
+            int BranchID = 0;
+            int VendorID = 0;
+            var branchid = Request.QueryString["x"];
+            var companyname = Request.QueryString["companyname"];
             var vendorid = Request.QueryString["y"];
             var frequencyid = Request.QueryString["frequencyid"];
-
             var compliancetypeid = Request.QueryString["compliancetypeid"];
-
-           
-            if (id == vendorid)
-            {
-
-                branchid = Convert.ToInt32(id);
-
-            }
-            else
-            {
-
-                branchid = Convert.ToInt32(vendorid);
-
-            }
-
-
             string status = Request.QueryString["n"];
             string sdate = Request.QueryString["sdate"];
             string edate = Request.QueryString["edate"];
-            
             ReportViewModel model = new ReportViewModel();
             model.ComplianceAudit = new ComplianceAudit();
-            model.ComplianceAudit.Start_Date =Convert.ToDateTime( sdate);
+            model.ComplianceAudit.Start_Date = Convert.ToDateTime(sdate);
             model.ComplianceAudit.End_Date = Convert.ToDateTime(edate);
-            model.Vendorid =Convert.ToInt32( vendorid);
+            model.Vendorid = Convert.ToInt32(vendorid);
+            model.branchid = Convert.ToInt32(branchid);
             model.frequencyid = Convert.ToInt32(frequencyid);
-
-
-            model.complianceTypeid =Convert.ToInt32( compliancetypeid);
-            
-
+            model.CompanyName = companyname;
+            model.complianceTypeid = Convert.ToInt32(compliancetypeid);
             ReportingService.ReportingServiceClient clientBranch = new ReportingService.ReportingServiceClient();
-            string xmlbranchdata ="";
-            string xmlbranchACTdata ="";
+            string xmlbranchdata = "";
+            string xmlbranchACTdata = "";
             if (status == null)
             {
-                 xmlbranchdata = clientBranch.getBranchReport(branchid, model.ComplianceAudit.Start_Date, model.ComplianceAudit.End_Date, model.complianceTypeid);
-                xmlbranchACTdata = clientBranch.getBranchRACTeport(branchid);
+                xmlbranchdata = clientBranch.getBranchReport(BranchID, model.ComplianceAudit.Start_Date,
+                    model.ComplianceAudit.End_Date, model.complianceTypeid, model.Vendorid);
+                if (BranchID == VendorID)
+                {
+                    xmlbranchACTdata = clientBranch.getBranchRACTeport(model.branchid, model.Vendorid);
+                }
+                else
+                {
+                    xmlbranchACTdata = clientBranch.getBranchRACTeport(model.branchid, model.Vendorid);
+                }
                 DataSet dsBranchACTReport = new DataSet();
                 dsBranchACTReport.ReadXml(new StringReader(xmlbranchACTdata));
                 if (dsBranchACTReport.Tables.Count > 0)
@@ -385,11 +563,18 @@ namespace ComplianceAuditWeb.Controllers
                     model.ActList = bindCompliancelist(dsBranchACTReport);
                 }
             }
-            //else if(status!= null)
-            else 
+            else
             {
-                xmlbranchdata = clientBranch.getBranchStatusReport(branchid,status, model.ComplianceAudit.Start_Date, model.ComplianceAudit.End_Date, model.complianceTypeid);
-                xmlbranchACTdata = clientBranch.getBranchStatusACTReport(branchid, status);
+                xmlbranchdata = clientBranch.getBranchStatusReport(model.branchid, status, model.ComplianceAudit.Start_Date,
+                    model.ComplianceAudit.End_Date, model.complianceTypeid, model.Vendorid);
+                if (model.branchid == model.Vendorid)
+                {
+                    xmlbranchACTdata = clientBranch.getBranchStatusACTReport(model.branchid, status, model.Vendorid);
+                }
+                else
+                {
+                    xmlbranchACTdata = clientBranch.getBranchStatusACTReport(model.branchid, status, model.Vendorid);
+                }
                 DataSet dsBranchACTReport = new DataSet();
                 dsBranchACTReport.ReadXml(new StringReader(xmlbranchACTdata));
                 if (dsBranchACTReport.Tables.Count > 0)
@@ -399,39 +584,31 @@ namespace ComplianceAuditWeb.Controllers
             }
             DataSet dsBranchReport = new DataSet();
             dsBranchReport.ReadXml(new StringReader(xmlbranchdata));
-
             if (dsBranchReport.Tables.Count > 0)
             {
-                //foreach(System.Data.DataRow rowstatus in dsBranchReport.Tables[0].Rows)
-                //{
-                //    model.ComplianceAudit.Audit_Status =Convert.ToString( dsBranchReport.Tables[0].Rows[0]["Compliance_Status"]);
-                //}
                 Session["Name"] = Convert.ToString(dsBranchReport.Tables[0].Rows[0]["Company_Name"]);
                 DataView dv = new DataView(dsBranchReport.Tables[0]);
-                dv.RowFilter = "Compliance_Status = 'Complianced'";
+                dv.RowFilter = "Compliance_Status = 'Compliant'";
                 DataTable dtComplianced = dv.ToTable();
                 if (dtComplianced.Rows.Count > 0)
                 {
                     model.ComplianceStatus = Convert.ToString(dtComplianced.Rows[0]["Compliance_Status"]);
                 }
                 dv = new DataView(dsBranchReport.Tables[0]);
-                dv.RowFilter = "Compliance_Status = 'Non_Complianced'";
+                dv.RowFilter = "Compliance_Status = 'Non Compliant'";
                 DataTable dtNonComplianced = dv.ToTable();
                 if (dtNonComplianced.Rows.Count > 0)
                 {
                     model.NonComplianceStatus = Convert.ToString(dtNonComplianced.Rows[0]["Compliance_Status"]);
                 }
-
-
                 dv = new DataView(dsBranchReport.Tables[0]);
-                dv.RowFilter = "Compliance_Status = 'Partially_Complianced'";
+                dv.RowFilter = "Compliance_Status = 'Partially Compliant'";
                 DataTable dtPartiallyComplianced = dv.ToTable();
                 if (dtPartiallyComplianced.Rows.Count > 0)
                 {
                     model.PartiallyComplianceStatus = Convert.ToString(dtPartiallyComplianced.Rows[0]["Compliance_Status"]);
-
                 }
-                if (dtComplianced.Rows.Count>0)
+                if (dtComplianced.Rows.Count > 0)
                 {
                     model.CompliancedRuleList = bindComplianceAuditRuleList(dtComplianced);
                 }
@@ -440,11 +617,9 @@ namespace ComplianceAuditWeb.Controllers
                     dv = new DataView(dtNonComplianced);
                     dv.RowFilter = "Risk_Category = 'high'";
                     DataTable dtNonCompliancedhighRisk = dv.ToTable();
-
                     dv = new DataView(dtNonComplianced);
                     dv.RowFilter = "Risk_Category = 'medium'";
                     DataTable dtNonCompliancedmediumRisk = dv.ToTable();
-
                     dv = new DataView(dtNonComplianced);
                     dv.RowFilter = "Risk_Category = 'low'";
                     DataTable dtNonCompliancedlowRisk = dv.ToTable();
@@ -475,26 +650,35 @@ namespace ComplianceAuditWeb.Controllers
             Session["BranchPartiallyCompliancedRuleList"] = model.PartiallyCompliancedRuleList;
             Session["BranchActList"] = model.ActList;
             ViewBag.Name = Session["Name"];
-            model.Vendorname =Convert.ToString( Session["Name"]);
-            model.branchid =Convert.ToInt32( id);
+            model.Vendorname = Convert.ToString(Session["Name"]);
+            //model.branchid =Convert.ToInt32( id);
             model.StartDate = model.ComplianceAudit.Start_Date;
             model.EndDate = model.ComplianceAudit.End_Date;
+            ViewBag.StartDate = sdate;
+            ViewBag.EndDate = edate;
+            ViewBag.CompanyName = model.CompanyName;
             return View("_Report", model);
 
         }
 
         public ActionResult BranchReport()
         {
+            var companyname = Request.QueryString["companyname"];
+            var sdate = Request.QueryString["sdate"];
+            var edate = Request.QueryString["edate"];
             ReportViewModel model = new ReportViewModel();
-           
-            model.ActList=(List<ComplianceXref>) Session["BranchActList"];
-            model.CompliancedRuleList = (List<ComplianceAudit>) Session["BranchCompliancedRuleList"];
-            model.NonCompliancedRuleListHighRisk = (List<ComplianceAudit>) Session["BranchNonCompliancedRuleListHighRisk"];
-            model.NonCompliancedRuleListMediumRisk = (List<ComplianceAudit>) Session["BranchNonCompliancedRuleListMediumRisk"];
+
+            model.ActList = (List<ComplianceXref>)Session["BranchActList"];
+            model.CompliancedRuleList = (List<ComplianceAudit>)Session["BranchCompliancedRuleList"];
+            model.NonCompliancedRuleListHighRisk = (List<ComplianceAudit>)Session["BranchNonCompliancedRuleListHighRisk"];
+            model.NonCompliancedRuleListMediumRisk = (List<ComplianceAudit>)Session["BranchNonCompliancedRuleListMediumRisk"];
             model.NonCompliancedRuleListLowRisk = (List<ComplianceAudit>)Session["BranchNonCompliancedRuleListLowRisk"];
             model.PartiallyCompliancedRuleList = (List<ComplianceAudit>)Session["BranchPartiallyCompliancedRuleList"];
             ViewBag.Name = Session["Name"];
-            model.branchid =Convert.ToInt32( Request.QueryString["bid"]);
+            ViewBag.CompanyNamePDF = companyname;
+            ViewBag.sdate = sdate;
+            ViewBag.edate = edate;
+            model.branchid = Convert.ToInt32(Request.QueryString["bid"]);
             string footer =
                "--footer-right \"Date: [date] [time]\" " + "--footer-center \"Page: [page] of " +
                "[toPage]\" --footer-line --footer-font-size \"9\" --footer-spacing 5 --footer-font-name \"calibri light\"";
@@ -541,32 +725,22 @@ namespace ComplianceAuditWeb.Controllers
         public ActionResult GetData()
         {
             int id = 0;
-            int BranchID = 0;
-            var bid = "";
-            if (TempData["ID"] != null)
-            {
-                id = Convert.ToInt32(TempData["ID"]);
-                BranchID = id;
-            }
-            else
-            {
-                 bid = (Request.QueryString["id"]);
-                BranchID = Convert.ToInt32(bid);
-            }
+
             ReportViewModel audit = new ReportViewModel();
             audit.ComplianceAudit = new ComplianceAudit();
             if (Session["model"] != null)
             {
                 audit = (ReportViewModel)Session["model"];
             }
+
             ReportingService.ReportingServiceClient client = new ReportingService.ReportingServiceClient();
             List<Ratio> objratiolist = new List<Ratio>();
-            if (id > 0)
+            if (audit.branchid > 0 && audit.Vendorid > 0)
             {
                 foreach (var date in audit.startEndDates)
                 {
                     Ratio objratio = new Ratio();
-                    string xmlbranchdata = client.getBranchReport(BranchID,date.StartDate, date.EndDate,audit.complianceTypeid);
+                    string xmlbranchdata = client.getBranchReport(audit.branchid, date.StartDate, date.EndDate, audit.complianceTypeid, audit.Vendorid);
                     DataSet dsBranchReport = new DataSet();
                     dsBranchReport.ReadXml(new StringReader(xmlbranchdata));
                     objratio.compliancetypeid = audit.complianceTypeid;
@@ -585,9 +759,9 @@ namespace ComplianceAuditWeb.Controllers
                                 Audit_Status = Convert.ToString(row["Compliance_Status"]),
                             });
                             //objratio.auditList = auditList;
-                            int complianced = auditList.Count(x => x.Audit_Status == "Complianced");
-                            int non_complianced = auditList.Where(x => x.Audit_Status == "Non_Complianced").Count();
-                            int partially_complianced = auditList.Where(x => x.Audit_Status == "Partially_Complianced").Count();
+                            int complianced = auditList.Count(x => x.Audit_Status == "Compliant");
+                            int non_complianced = auditList.Where(x => x.Audit_Status == "Non Compliant").Count();
+                            int partially_complianced = auditList.Where(x => x.Audit_Status == "Partially Compliant").Count();
                             objratio.Complianced = complianced;
                             objratio.Non_Complianced = non_complianced;
                             objratio.Partially_Complianced = partially_complianced;
@@ -595,65 +769,15 @@ namespace ComplianceAuditWeb.Controllers
                         objratio.StartDate = date.StartDate.ToString("dd/MMM/yyyy");
                         objratio.EndDate = date.EndDate.ToString("dd/MMM/yyyy");
                         objratio.frequencyid = audit.frequencyid;
+                        objratio.CompanyName = audit.CompanyName;
                     }
                     objratiolist.Add(objratio);
                 }
 
-                //string xmlSecbranchdata = client.getBranchReport(BranchID, audit.StartDateSecond, audit.EndDateSecond);
-                //DataSet dsSecBranchReport = new DataSet();
-                //dsSecBranchReport.ReadXml(new StringReader(xmlSecbranchdata));
-                //if (dsSecBranchReport.Tables.Count > 0)
-                //{
-                //    objratio.Name = Convert.ToString(dsSecBranchReport.Tables[0].Rows[0]["Company_Name"]);
-                //    objratio.ID = Convert.ToInt32(dsSecBranchReport.Tables[0].Rows[0]["Org_Hier_ID"]);
-                //    objratio.VendorID = Convert.ToInt32(dsSecBranchReport.Tables[0].Rows[0]["Vendor_ID"]);
-                //    DateTime d = Convert.ToDateTime(dsSecBranchReport.Tables[0].Rows[0]["Audit_Date"]);
-                //    objratio.Date = Convert.ToString(d.Year);
-                //    List<ComplianceAudit> auditListSecond = new List<ComplianceAudit>();
-                //    foreach (System.Data.DataRow row in dsSecBranchReport.Tables[0].Rows)
-                //    {
-                //        auditListSecond.Add(new ComplianceAudit
-                //        {
-                //            Audit_Status = Convert.ToString(row["Compliance_Status"]),
-                //        });
-                //        objratio.auditListSecond = auditListSecond;
-                //        int complianced = auditListSecond.Count(x => x.Audit_Status == "Complianced");
-                //        int non_complianced = auditListSecond.Where(x => x.Audit_Status == "Non_Complianced").Count();
-                //        int partially_complianced = auditListSecond.Where(x => x.Audit_Status == "Partially_Complianced").Count();
-                //        objratio.SecComplianced = complianced;
-                //        objratio.SecNon_Complianced = non_complianced;
-                //        objratio.SecPartially_Complianced = partially_complianced;
-                //    }
-                //    objratio.SecStartDate = audit.StartDateSecond.ToString("MMM/dd/yyyy");
-                //    objratio.SecEndDate = audit.EndDateSecond.ToString("MMM/dd/yyyy");
-                //}
+
 
             }
-            //if (bid!= null)
-            //{
-            //    string xmlpiebranchdata = client.getBranchpieReport(BranchID);
-            //    DataSet dspieBranchReport = new DataSet();
-            //    dspieBranchReport.ReadXml(new StringReader(xmlpiebranchdata));
-            //    if (dspieBranchReport.Tables.Count > 0)
-            //    {
-            //        List<ComplianceAudit> auditListpie = new List<ComplianceAudit>();
-            //        foreach (System.Data.DataRow row in dspieBranchReport.Tables[0].Rows)
-            //        {
-            //            auditListpie.Add(new ComplianceAudit
-            //            {
-            //                Audit_Status = Convert.ToString(row["Compliance_Status"]),
-            //            });
 
-            //            objratio.auditList = auditListpie;
-            //            int complianced = auditListpie.Count(x => x.Audit_Status == "Complianced");
-            //            int non_complianced = auditListpie.Where(x => x.Audit_Status == "Non_Complianced").Count();
-            //            int partially_complianced = auditListpie.Where(x => x.Audit_Status == "Partially_Complianced").Count();
-            //            objratio.Complianced = complianced;
-            //            objratio.Non_Complianced = non_complianced;
-            //            objratio.Partially_Complianced = partially_complianced;
-            //        }
-            //    }
-            //}
             return Json(objratiolist, JsonRequestBehavior.AllowGet);
         }
         public class Ratio
@@ -661,17 +785,22 @@ namespace ComplianceAuditWeb.Controllers
             public int Complianced { get; set; }
             public int Non_Complianced { get; set; }
             public int Partially_Complianced { get; set; }
-        public int compliancetypeid { get; set; }
+            public int compliancetypeid { get; set; }
             public int ID { get; set; }
             public int VendorID { get; set; }
             public string Name { get; set; }
             public string Date { get; set; }
+            public string CompanyName { get; set; }
+            public int CompanyID { get; set; }
             public string StartDate { get; set; }
             public string EndDate { get; set; }
             public int frequencyid { get; set; }
-
             public List<ComplianceAudit> auditList { get; set; }
-            public List<ComplianceAudit> auditListSecond { get; set; }
+            public int monthid { get; set; }
+            public int halfyearid { get; set; }
+            public int yearid { get; set; }
+            public int typeid { get; set; }
+
         }
 
 
@@ -750,123 +879,649 @@ namespace ComplianceAuditWeb.Controllers
             return model;
         }
 
-        //public ActionResult frequencytype()
-        //{
-        //    int branchid = 0; int vendorid = 0; string vendorname = "";
-        //    Compliancetype_view_model model = new Compliancetype_view_model();
-        //    model.compliance_Types = new List<compliance_type>();
-        //    model.branchid = branchid;
-        //    model.vendorid = vendorid;
-        //    model.vendorname = vendorname;
-        //    OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
-        //    string xmldata = client.GetAssignedComplianceTypes(vendorid);
-        //    DataSet ds = new DataSet();
-        //    DataSet dscompliancetype = new DataSet();
-        //    ds.ReadXml(new StringReader(xmldata));
-        //    int[] compliancetypeid = new int[ds.Tables[0].Rows.Count];
-        //    int i = 0;
+        [HttpGet]
+        public ActionResult getCompany()
+        {
+            ReportViewModel model = new ReportViewModel();
+            model.companyList = new List<SelectListItem>();
+            //model.BranchList = new List<SelectListItem>();
+            //model.VendorList = new List<Organization>();
+            model.frequency = new List<SelectListItem>();
+            model.halfYear = new List<SelectListItem>();
+            model.quarter = new List<SelectListItem>();
+            model.month = new List<SelectListItem>();
+            model.yearlist = new List<SelectListItem>();
+            model.ComplianceTypeList = new List<SelectListItem>();
 
-        //    if (ds.Tables.Count > 0)
-        //    {
-        //        foreach (System.Data.DataRow row in ds.Tables[0].Rows)
-        //        {
-        //            compliancetypeid[i++] = Convert.ToInt32(row["Compliance_Type_ID"]);
-        //        }
-        //    }
+            model.yearid = 0;
+            model.frequencyid = 0;
+            //model.frequency.Add(new SelectListItem() { Text = "Select Frequency", Value = "0" });
+            model.frequency.Add(new SelectListItem() { Text = "Yearly", Value = "1" });
+            model.frequency.Add(new SelectListItem() { Text = "Half-Yearly", Value = "2" });
+            model.frequency.Add(new SelectListItem() { Text = "Quarterly", Value = "3" });
+            model.frequency.Add(new SelectListItem() { Text = "Monthly", Value = "4" });
+            model.frequency.Add(new SelectListItem() { Text = "Periodic", Value = "5" });
 
-        //    ComplianceXrefService.ComplianceXrefServiceClient serviceClient = new ComplianceXrefService.ComplianceXrefServiceClient();
-        //    for (i = 0; i < compliancetypeid.Length; i++)
-        //    {
-        //        xmldata = serviceClient.GetComplainceType(compliancetypeid[i]);
-        //        ds = new DataSet();
-        //        ds.ReadXml(new StringReader(xmldata));
-        //        if (ds.Tables.Count > 0)
-        //        {
-        //            foreach (System.Data.DataRow row in ds.Tables[0].Rows)
-        //            {
-        //                model.compliance_Types.Add(new compliance_type
-        //                {
-        //                    complianceid = Convert.ToInt32(row["Compliance_Type_ID"]),
-        //                    auditfrequency = Convert.ToInt32(row["Audit_Frequency"]),
-        //                    Name = Convert.ToString(row["Compliance_Type_Name"]),
-        //                    startdate = Convert.ToDateTime(row["Start_Date"]),
-        //                    enddate = Convert.ToDateTime(row["End_Date"])
-        //                });
-        //            }
-        //        }
-        //    }
-        //    int OrgID = 70;
-        //    //ReportViewModel model = new ReportViewModel();
-        //    //model.yearlists = new List<SelectListItem>();
+            model.HalfYearFrequencyid = 0;
+            model.halfYear.Add(new SelectListItem() { Text = "-- Select --", Value = "0" });
 
-        //    //ReportingService.ReportingServiceClient client = new ReportingService.ReportingServiceClient();
-        //    //string xmldata = client.getYearForAuditReport(OrgID);
-        //    //DataSet ds = new DataSet();
-        //    //ds = new DataSet();
-        //    //ds.ReadXml(new StringReader(xmldata));
-        //    //if (ds.Tables.Count > 0)
-        //    //{
-        //    //    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
-        //    //    {
-        //    //        model.yearlist.Add(new SelectListItem
-        //    //        {
-        //    //            Text = Convert.ToString(row["Start_Date"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+            model.QuarterFrequencyid = 0;
+            model.quarter.Add(new SelectListItem() { Text = "-- Select --", Value = "0" });
 
+            model.MonthFrequencyid = 0;
+            model.month.Add(new SelectListItem() { Text = "-- Select --", Value = "0" });
 
-        //    //    }
-        //    //}
-        //    model.yearid = 0;
-        //    model.frequency = new List<SelectListItem>();
-        //    model.frequency.Add(new SelectListItem { Text = "Select Frequency", Value = "0" });
-        //    model.frequency.Add(new SelectListItem { Text = "Yearly", Value = "1" });
-        //    model.frequency.Add(new SelectListItem { Text = "Half-Yearly", Value = "2" });
-        //    model.frequency.Add(new SelectListItem { Text = "Quarterly", Value = "3" });
-        //    model.frequency.Add(new SelectListItem { Text = "Monthly", Value = "4" });
-        //    model.frequency.Add(new SelectListItem { Text = "Periodic", Value = "5"});
-            
-       
+            model.ID = 0;
+            model.yearlist.Add(new SelectListItem() { Text = "Select Report Type", Value = "0" });
+            model.yearlist.Add(new SelectListItem() { Text = "Consolidated", Value = "1" });
+            model.yearlist.Add(new SelectListItem() { Text = "Self", Value = "2" });
+            model.yearlist.Add(new SelectListItem() { Text = "Vendor", Value = "3" });
+
+            model.yearid = 0;
+            model.years = Enumerable.Range(model.yearid, DateTime.Now.Year - (model.yearid - 1)).OrderByDescending(i => i);
+
+            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
+            int groupid = Convert.ToInt32(Session["GroupCompanyId"]);
            
+            if (groupid != 0)
+            {
+                string xmldata = client.getCompanyListDropDown(groupid);
+                DataSet ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+                model.companyList = new List<SelectListItem>();
+                if (ds.Tables.Count > 0)
+                {
+                    model.companyid = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
+                    model.StartDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["Calender_StartDate"]);
+                    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                    {
+                        model.companyList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                    }
+                    model.yearid = model.StartDate.Year;
+                    model.years = Enumerable.Range(model.yearid, DateTime.Now.Year - (model.yearid - 1)).OrderByDescending(i => i);
+                    model.yearid = DateTime.Now.Year;
+                }
+
+                model.ComplianceTypeList = new List<SelectListItem>();
+                xmldata = client.GetAssignedComplianceTypes(model.companyid);
+                ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+                if (ds.Tables.Count > 0)
+                {
+                    //model.branchid = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
+                    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                    {
+                        //model.complianceTypeid = Convert.ToInt32(ds.Tables[0].Rows[0]["Compliance_Type_ID"]);
+                        model.ComplianceTypeList.Add(new SelectListItem { Text = Convert.ToString(row["Compliance_Type_Name"]), Value = Convert.ToString(row["Compliance_Type_ID"]) });
+                    }
+                }
+
+                //model.BranchList = new List<SelectListItem>();
+                //xmldata = client.GeSpecifictBranchList(model.companyid);
+                //ds = new DataSet();
+                //ds.ReadXml(new StringReader(xmldata));
+                //if (ds.Tables.Count > 0)
+                //{
+                //    model.branchid = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
+                //    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                //    {
+                //        model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                //    }
+                //}
+
+                //VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+                //xmldata = vendorServiceClient.GetAssignedVendorsforBranch(model.branchid);
+                //ds = new DataSet();
+                //ds.ReadXml(new StringReader(xmldata));
+                //if (ds.Tables.Count > 0)
+                //{
+                //    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                //    {
+                //        model.VendorList.Add(new Organization { Company_Name = Convert.ToString(row["Company_Name"]), Company_Id = Convert.ToInt32(row["Vendor_ID"]), logo = Convert.ToString(row["logo"]) });
+                //    }
+                //}
+                //else
+                //{
+                //    TempData["Message"] = "No Vendors assigned for the selected branch.";
+                //}
+
+            }
+            else
+                ModelState.AddModelError("", ConfigurationManager.AppSettings["SelectGroupCompany"]);
+
+            return View("_getCompany", model);
+        }
+
+        [HttpPost]
+        public ActionResult getCompany(ReportViewModel model)
+        {
+
+            model.companyList = new List<SelectListItem>();
+            //model.BranchList = new List<SelectListItem>();
+            //model.VendorList = new List<Organization>();
+            model.frequency = new List<SelectListItem>();
+            model.halfYear = new List<SelectListItem>();
+            model.quarter = new List<SelectListItem>();
+            model.month = new List<SelectListItem>();
+            model.yearlist = new List<SelectListItem>();
+
+            model.frequency.Add(new SelectListItem() { Text = "Select Frequency", Value = "0" });
+            model.frequency.Add(new SelectListItem() { Text = "Yearly", Value = "1" });
+            model.frequency.Add(new SelectListItem() { Text = "Half-Yearly", Value = "2" });
+            model.frequency.Add(new SelectListItem() { Text = "Quarterly", Value = "3" });
+            model.frequency.Add(new SelectListItem() { Text = "Monthly", Value = "4" });
+            model.frequency.Add(new SelectListItem() { Text = "Periodic", Value = "5" });
+
+            model.halfYear.Add(new SelectListItem() { Text = "Select Half-Year", Value = "0" });
+            model.halfYear.Add(new SelectListItem() { Text = "First Half", Value = "1" });
+            model.halfYear.Add(new SelectListItem() { Text = "Second Half", Value = "2" });
+
+            model.quarter.Add(new SelectListItem() { Text = "Select Quarter", Value = "0" });
+            model.quarter.Add(new SelectListItem() { Text = "Quarter 1", Value = "2" });
+            model.quarter.Add(new SelectListItem() { Text = "Quarter 2", Value = "3" });
+            model.quarter.Add(new SelectListItem() { Text = "Quarter 3", Value = "4" });
+            model.quarter.Add(new SelectListItem() { Text = "Quarter 4", Value = "5" });
+
+            model.month.Add(new SelectListItem() { Text = "Select Month", Value = "0" });
+            model.month.Add(new SelectListItem() { Text = "January", Value = "1" });
+            model.month.Add(new SelectListItem() { Text = "February", Value = "2" });
+            model.month.Add(new SelectListItem() { Text = "March", Value = "3" });
+            model.month.Add(new SelectListItem() { Text = "April", Value = "4" });
+            model.month.Add(new SelectListItem() { Text = "May", Value = "5" });
+            model.month.Add(new SelectListItem() { Text = "June", Value = "6" });
+            model.month.Add(new SelectListItem() { Text = "July", Value = "7" });
+            model.month.Add(new SelectListItem() { Text = "August", Value = "8" });
+            model.month.Add(new SelectListItem() { Text = "September", Value = "9" });
+            model.month.Add(new SelectListItem() { Text = "October", Value = "10" });
+            model.month.Add(new SelectListItem() { Text = "November", Value = "11" });
+            model.month.Add(new SelectListItem() { Text = "December", Value = "12" });
+
+            model.yearlist.Add(new SelectListItem() { Text = "Select Report Type", Value = "0" });
+            model.yearlist.Add(new SelectListItem() { Text = "Consolidated", Value = "1" });
+            model.yearlist.Add(new SelectListItem() { Text = "Self", Value = "2" });
+            model.yearlist.Add(new SelectListItem() { Text = "Vendor", Value = "3" });
+
+            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
+            int groupid = Convert.ToInt32(Session["GroupCompanyId"]);
+            string xmldata = client.getCompanyListDropDown(groupid);
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            model.companyList = new List<SelectListItem>();
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.StartDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["Calender_StartDate"]);
+
+                    model.companyList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                }
+                //model.yearid = model.StartDate.Year;
+                model.years = Enumerable.Range(model.yearid, DateTime.Now.Year - (model.yearid - 1));
+            }
+            //model.BranchList = new List<SelectListItem>();
+            //xmldata = client.GeSpecifictBranchList(model.companyid);
+            //ds = new DataSet();
+            //ds.ReadXml(new StringReader(xmldata));
+            //if (ds.Tables.Count > 0)
+            //{
+            //    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            //    {
+            //        model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+            //    }
+            //}
+
+            model.ComplianceTypeList = new List<SelectListItem>();
+            xmldata = client.GetAssignedComplianceTypes(model.companyid);
+            ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.ComplianceTypeList.Add(new SelectListItem { Text = Convert.ToString(row["Compliance_Type_Name"]), Value = Convert.ToString(row["Compliance_Type_ID"]) });
+                }
+            }
+            //VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+            //xmldata = vendorServiceClient.GetAssignedVendorsforBranch(model.branchid);
+            //ds = new DataSet();
+            //ds.ReadXml(new StringReader(xmldata));
+            //if (ds.Tables.Count > 0)
+            //{
+            //    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+            //    {
+            //        model.VendorList.Add(new Organization { Company_Name = Convert.ToString(row["Company_Name"]), Company_Id = Convert.ToInt32(row["Vendor_ID"]), logo = Convert.ToString(row["logo"]) });
+            //    }
+            //}
+            //else
+            //{
+            //    TempData["Message"] = "No Vendors assigned for the selected branch.";
+            //}
+
+            return RedirectToAction("SelectAuditfrequencyForCompany", new { frequencyid = model.frequencyid,
+                yearid = model.yearid,
+                complianceid = model.complianceTypeid, compid = model.companyid, halfyearid = model.HalfYearFrequencyid,
+                monthid = model.MonthFrequencyid, typeid = model.ID
+            });
+        }
+
+        public ActionResult SelectAuditfrequencyForCompany(int frequencyid, int yearid, int complianceid, int compid,
+         int halfyearid, int monthid, int typeid)
+        {
+            ReportViewModel model = new ReportViewModel();
+            model.ComplianceAudit = new ComplianceAudit();
+            model.compliance_Types = new List<compliance_type>();
+            model.companyid = compid;
+            model.frequencyid = frequencyid;
+            model.yearid = yearid;
+            model.complianceTypeid = complianceid;
+            model.HalfYearFrequencyid = halfyearid;
+            model.MonthFrequencyid = monthid;
+            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
+            string xmldata = client.GetAssignedComplianceTypes(compid);
+            DataSet ds = new DataSet();
+            DataSet dscompliancetype = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            int[] compliancetypeid = new int[ds.Tables[0].Rows.Count];
+            int i = 0;
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    compliancetypeid[i++] = Convert.ToInt32(row["Compliance_Type_ID"]);
+                }
+            }
+            ComplianceXrefService.ComplianceXrefServiceClient serviceClient = new ComplianceXrefService.ComplianceXrefServiceClient();
+            for (i = 0; i < compliancetypeid.Length; i++)
+            {
+                xmldata = serviceClient.GetComplainceType(complianceid);
+                ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+                if (ds.Tables.Count > 0)
+                {
+                    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                    {
+                        model.compliance_Types.Add(new compliance_type
+                        {
+                            complianceid = Convert.ToInt32(row["Compliance_Type_ID"]),
+                            auditfrequency = Convert.ToInt32(row["Audit_Frequency"]),
+                            Name = Convert.ToString(row["Compliance_Type_Name"]),
+                            startdate = Convert.ToDateTime(row["Start_Date"]),
+                            enddate = Convert.ToDateTime(row["End_Date"])
+                        });
+                    }
+                    ViewBag.ComplianceName = ds.Tables[0].Rows[0]["Compliance_Type_Name"];
+                }
+                foreach (var item in model.compliance_Types)
+                {
+                    List<StartEndDates> dates = new List<StartEndDates>();
+                    model.startEndDates = new List<StartEndDates>();
+                    DateTime sdate = new DateTime(yearid, item.startdate.Month, item.startdate.Day);
+                    DateTime edate = new DateTime(yearid, item.enddate.Month, item.enddate.Day);
+                    //DateTime sdate = item.startdate;
+                    //DateTime edate = item.enddate;
+                    int k = 0;
+                    if (model.frequencyid == 1)
+                    {
+                        model.startEndDates.Add(new StartEndDates
+                        {
+                            StartDate = sdate,
+                            EndDate = edate
+                        });
+                    }
+                    else if (model.frequencyid == 2)
+                    {
+                        if (model.HalfYearFrequencyid == 1)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k),
+                                EndDate = edate.AddMonths(k - 6)
+                            });
+                        }
+                        else
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 6),
+                                EndDate = edate
+                            });
+                        }
+                    }
+                    else if (model.frequencyid == 3)
+                    {
+                        if (model.QuarterFrequencyid == 1)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k),
+                                EndDate = edate.AddMonths(k + 3)
+                            });
+                        }
+                        else if (model.QuarterFrequencyid == 2)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 3),
+                                EndDate = edate.AddMonths(k + 6)
+                            });
+                        }
+                        else if (model.QuarterFrequencyid == 3)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 6),
+                                EndDate = edate.AddMonths(k + 9)
+                            });
+                        }
+                        else
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 9),
+                                EndDate = edate
+                            });
+                        }
+                    }
+                    else if (model.frequencyid == 4)
+                    {
+                        if (model.MonthFrequencyid == 1)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k),
+                                EndDate = edate.AddMonths(k + 1)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 2)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 2),
+                                EndDate = edate.AddMonths(k + 3)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 3)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 3),
+                                EndDate = edate.AddMonths(k + 4)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 4)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 4),
+                                EndDate = edate.AddMonths(k + 5)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 5)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 5),
+                                EndDate = edate.AddMonths(k + 6)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 6)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 6),
+                                EndDate = edate.AddMonths(k + 7)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 7)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 7),
+                                EndDate = edate.AddMonths(k + 8)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 8)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 8),
+                                EndDate = edate.AddMonths(k + 9)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 9)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 9),
+                                EndDate = edate.AddMonths(k + 10)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 10)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 10),
+                                EndDate = edate.AddMonths(k + 11)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 11)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 11),
+                                EndDate = edate.AddMonths(k + 12)
+                            });
+                        }
+                        else if (model.MonthFrequencyid == 12)
+                        {
+                            model.startEndDates.Add(new StartEndDates
+                            {
+                                StartDate = sdate.AddMonths(k + 12),
+                                EndDate = edate
+                            });
+                        }
+                    }
+                    else
+                    {
+
+                        model.startEndDates.Add(new StartEndDates
+                        {
+                            StartDate = sdate.AddMonths(model.HalfYearFrequencyid - 1),
+                            EndDate = edate.AddMonths(model.MonthFrequencyid).AddYears(-1)
+                        });
+                    }
+                }
+
+                OrgService.OrganizationServiceClient orgclient = new OrgService.OrganizationServiceClient();
+                string xmlcompdata = orgclient.getDefaultCompanyDetails(model.companyid);
+                DataSet dsCompanyName = new DataSet();
+                dsCompanyName.ReadXml(new StringReader(xmlcompdata));
+                if (dsCompanyName.Tables.Count > 0)
+                {
+                    ViewBag.CompanyName = dsCompanyName.Tables[0].Rows[0]["Company_Name"];
+                    model.CompanyName = Convert.ToString(dsCompanyName.Tables[0].Rows[0]["Company_Name"]);
+                }
+                model.ID = typeid;
+                Session["model"] = model;
+            }
+            return View("_SelectFrequencyForCompany", model);
+        }
+        public ActionResult GetCompanyData()
+        {
+            int TotalBranchCount = 0;
+            int TotalCompliantBranchCount = 0;
+            int TotalNonCompliantBranchCount = 0;
+            ReportViewModel audit = new ReportViewModel();
+            audit.ComplianceAudit = new ComplianceAudit();
+            if (Session["model"] != null)
+            {
+                audit = (ReportViewModel)Session["model"];
+            }
+            ReportingService.ReportingServiceClient client = new ReportingService.ReportingServiceClient();
+            List<Ratio> objratiolist = new List<Ratio>();
+            if (audit.companyid>0)
+            {
+                if (audit.ID == 1)
+                {
+
+                }
+                else if (audit.ID == 2)
+                {
+                    foreach (var date in audit.startEndDates)
+                    {
+                        Ratio objratio = new Ratio();
+                        string xmlbranchcount = client.getBranchCount(audit.companyid);
+                        DataSet dsBranchCount = new DataSet();
+                        dsBranchCount.ReadXml(new StringReader(xmlbranchcount));
+                        if (dsBranchCount.Tables.Count > 0)
+                        {
+                            TotalBranchCount = dsBranchCount.Tables[0].Rows.Count;
+                        }
+                        string xmlCompliantbranchcount = client.getCompliantBranchCount(audit.companyid, date.StartDate, date.EndDate, audit.complianceTypeid);
+                        DataSet dsCompliantBranchCount = new DataSet();
+                        dsCompliantBranchCount.ReadXml(new StringReader(xmlCompliantbranchcount));
+                        if (dsCompliantBranchCount.Tables.Count > 0)
+                        {
+                            TotalCompliantBranchCount = dsCompliantBranchCount.Tables[0].Rows.Count;
+                        }
+                        string xmlNonCompliantbranchcount = client.getNonCompliantBranchCount(audit.companyid, date.StartDate, date.EndDate, audit.complianceTypeid);
+                        DataSet dsNonCompliantBranchCount = new DataSet();
+                        dsNonCompliantBranchCount.ReadXml(new StringReader(xmlNonCompliantbranchcount));
+                        if (dsNonCompliantBranchCount.Tables.Count > 0)
+                        {
+                            TotalNonCompliantBranchCount = dsNonCompliantBranchCount.Tables[0].Rows.Count;
+                        }
 
 
-        //    return View("_FrequencyType", model);
-        //}
+                        int complianced = TotalCompliantBranchCount;
+                        int non_complianced = TotalNonCompliantBranchCount;
+                        //complianced = 20;
+                        //non_complianced = 80;
+                        objratio.Complianced = complianced;
+                        objratio.Non_Complianced = non_complianced;
+                        objratio.StartDate = date.StartDate.ToString("dd/MMM/yyyy");
+                        objratio.EndDate = date.EndDate.ToString("dd/MMM/yyyy");
+                        objratio.frequencyid = audit.frequencyid;
+                        objratio.CompanyName = audit.CompanyName;
+                        objratio.CompanyID = audit.companyid;
+                        objratio.compliancetypeid = audit.complianceTypeid;
+                        objratio.yearid = audit.yearid;
+                        objratio.monthid = audit.MonthFrequencyid;
+                        objratio.halfyearid = audit.HalfYearFrequencyid;
+                        objratio.typeid = audit.ID;
+                        objratiolist.Add(objratio);
+                    }
+                }
+                else
+                {
 
-        //public JsonResult getLinks(string frequencyid, string yearid)
-        //{
-        //    Compliancetype_view_model model = new Compliancetype_view_model();
-        //    int FID = Convert.ToInt32(frequencyid);
+                }
+            }
+            return Json(objratiolist, JsonRequestBehavior.AllowGet);
+        }
 
-        //    int inc = 1;
-        //    if (FID == 1)
-        //    {
-        //        inc = 11;
-               
-        //    }
-        //    else if (FID == 2)
-        //    {
-        //        inc = 5;
-              
+        public ActionResult getCompanyReports()
+        
+        {
+            var companyname = Request.QueryString["companyname"];
+            var companyid = Request.QueryString["companyid"];
+            var frequencyid = Request.QueryString["frequencyid"];
+            var compliancetypeid = Request.QueryString["compliancetypeid"];
+            string status = Request.QueryString["n"];
+            string sdate = Request.QueryString["sdate"];
+            string edate = Request.QueryString["edate"];
+            string yearid = Request.QueryString["yearid"];
+            string monthid = Request.QueryString["monthid"];
+            string halfyearid = Request.QueryString["halfyearid"];
+            int typeid =Convert.ToInt32(Request.QueryString["typeid"]);
+            ReportViewModel model = new ReportViewModel();
+            model.CompliantBranchList = new List<SelectListItem>();
+            model.NonCompliantBranchList = new List<SelectListItem>();
+            if (typeid == 1)
+            {
 
-        //    }
-        //    else if (FID == 3)
-        //    {
-        //        inc = 3;
-            
+            }
+            else if (typeid == 2)
+            {
+                ReportingService.ReportingServiceClient client = new ReportingService.ReportingServiceClient();
+                string xmlbranchcount = client.getBranchCount(Convert.ToInt32(companyid));
+                DataSet dsBranchCount = new DataSet();
+                dsBranchCount.ReadXml(new StringReader(xmlbranchcount));
 
-        //    }
-        //    else
-        //    {
-        //        inc = 1;
+                string xmlcompliantbranchcount = client.getCompliantBranchCount
+                    (Convert.ToInt32(companyid), Convert.ToDateTime(sdate), Convert.ToDateTime(edate), Convert.ToInt32(compliancetypeid));
+                DataSet dsCompliantBranchCount = new DataSet();
+                dsCompliantBranchCount.ReadXml(new StringReader(xmlcompliantbranchcount));
+                if (dsCompliantBranchCount.Tables.Count > 0)
+                {
+                    foreach (System.Data.DataRow row in dsCompliantBranchCount.Tables[0].Rows)
+                    {
+                        model.CompliantBranchList.Add
+                            (new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+                    }
+                    ViewBag.ComplianceBranchCount = dsCompliantBranchCount.Tables[0].Rows.Count;
+                }
 
-        //    }
-        //    for (int i = 0, j = 0; j < FID; i = i + inc, j++)
-        //    {
-                
-        //    }
+                string xmlNoncompliantbranchcount = client.getNonCompliantBranchCount
+                   (Convert.ToInt32(companyid), Convert.ToDateTime(sdate), Convert.ToDateTime(edate), Convert.ToInt32(compliancetypeid));
+                DataSet dsNonCompliantBranchCount = new DataSet();
+                dsNonCompliantBranchCount.ReadXml(new StringReader(xmlNoncompliantbranchcount));
+                if (dsNonCompliantBranchCount.Tables.Count > 0)
+                {
+                    foreach (System.Data.DataRow row in dsNonCompliantBranchCount.Tables[0].Rows)
+                    {
+                        model.NonCompliantBranchList.Add
+                            (new SelectListItem() { Text = row["Company_Name"].ToString(), Value = row["Org_Hier_ID"].ToString() });
+                    }
+                    ViewBag.NonComplianceBranchCount = dsNonCompliantBranchCount.Tables[0].Rows.Count;
+                }
+                Session["CompliantBranchList"] = model.CompliantBranchList;
+                Session["NonCompliantBranchList"] = model.NonCompliantBranchList;
+            }
+            else
+            {
 
-        //        return Json(model, JsonRequestBehavior.AllowGet);
-        //}
+            }
+            ViewBag.StartDate = sdate;
+            ViewBag.EndDate = edate;
+            ViewBag.CompanyName = companyname;
+            model.StartDate = Convert.ToDateTime(sdate);
+            model.EndDate = Convert.ToDateTime(edate);
+            model.frequencyid =Convert.ToInt32( frequencyid);
+            model.companyid = Convert.ToInt32(companyid);
+            model.complianceTypeid = Convert.ToInt32(compliancetypeid);
+            model.MonthFrequencyid= Convert.ToInt32(monthid);
+            model.HalfYearFrequencyid= Convert.ToInt32(halfyearid);
+            model.yearid= Convert.ToInt32(yearid);
+
+           
+            return View("_CompanyReport", model);
+        }
 
 
+        public ActionResult CompanyReport()
+        {
+            var companyname = Request.QueryString["companyname"];
+            var sdate = Request.QueryString["sdate"];
+            var edate = Request.QueryString["edate"];
+            ReportViewModel model = new ReportViewModel();
+
+            model.CompliantBranchList =( List<SelectListItem>) Session["CompliantBranchList"];
+            model.NonCompliantBranchList =( List<SelectListItem>)Session["NonCompliantBranchList"];
+
+            ViewBag.CompanyNamePDF = companyname;
+            ViewBag.sdate = sdate;
+            ViewBag.edate = edate;
+            string footer =
+               "--footer-right \"Date: [date] [time]\" " + "--footer-center \"Page: [page] of " +
+               "[toPage]\" --footer-line --footer-font-size \"9\" --footer-spacing 5 --footer-font-name \"calibri light\"";
+            return new Rotativa.ViewAsPdf("_CompanyPDF", model)
+            {
+                FileName = "firstpdf.pdf",
+                CustomSwitches = footer
+            };
+
+
+        }
     }
 }

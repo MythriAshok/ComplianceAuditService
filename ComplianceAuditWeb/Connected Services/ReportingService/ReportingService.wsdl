@@ -42,6 +42,24 @@
   <wsdl:message name="IReportingService_getBranchpieReport_OutputMessage">
     <wsdl:part name="parameters" element="tns:getBranchpieReportResponse" />
   </wsdl:message>
+  <wsdl:message name="IReportingService_getBranchCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:getBranchCount" />
+  </wsdl:message>
+  <wsdl:message name="IReportingService_getBranchCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getBranchCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReportingService_getCompliantBranchCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:getCompliantBranchCount" />
+  </wsdl:message>
+  <wsdl:message name="IReportingService_getCompliantBranchCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getCompliantBranchCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReportingService_getNonCompliantBranchCount_InputMessage">
+    <wsdl:part name="parameters" element="tns:getNonCompliantBranchCount" />
+  </wsdl:message>
+  <wsdl:message name="IReportingService_getNonCompliantBranchCount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getNonCompliantBranchCountResponse" />
+  </wsdl:message>
   <wsdl:portType name="IReportingService">
     <wsdl:operation name="DoWork">
       <wsdl:input wsaw:Action="http://tempuri.org/IReportingService/DoWork" message="tns:IReportingService_DoWork_InputMessage" />
@@ -66,6 +84,18 @@
     <wsdl:operation name="getBranchpieReport">
       <wsdl:input wsaw:Action="http://tempuri.org/IReportingService/getBranchpieReport" message="tns:IReportingService_getBranchpieReport_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IReportingService/getBranchpieReportResponse" message="tns:IReportingService_getBranchpieReport_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getBranchCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReportingService/getBranchCount" message="tns:IReportingService_getBranchCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReportingService/getBranchCountResponse" message="tns:IReportingService_getBranchCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getCompliantBranchCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReportingService/getCompliantBranchCount" message="tns:IReportingService_getCompliantBranchCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReportingService/getCompliantBranchCountResponse" message="tns:IReportingService_getCompliantBranchCount_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getNonCompliantBranchCount">
+      <wsdl:input wsaw:Action="http://tempuri.org/IReportingService/getNonCompliantBranchCount" message="tns:IReportingService_getNonCompliantBranchCount_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IReportingService/getNonCompliantBranchCountResponse" message="tns:IReportingService_getNonCompliantBranchCount_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IReportingService" type="tns:IReportingService">
@@ -117,6 +147,33 @@
     </wsdl:operation>
     <wsdl:operation name="getBranchpieReport">
       <soap:operation soapAction="http://tempuri.org/IReportingService/getBranchpieReport" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBranchCount">
+      <soap:operation soapAction="http://tempuri.org/IReportingService/getBranchCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCompliantBranchCount">
+      <soap:operation soapAction="http://tempuri.org/IReportingService/getCompliantBranchCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getNonCompliantBranchCount">
+      <soap:operation soapAction="http://tempuri.org/IReportingService/getNonCompliantBranchCount" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

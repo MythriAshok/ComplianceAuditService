@@ -242,9 +242,12 @@
     <Content Include="Content\assets\images\audit_tool.png" />
     <Content Include="Content\assets\images\company1.JPG" />
     <Content Include="Content\assets\images\company2.JPG" />
+    <Content Include="Content\assets\images\consolidatedreport.jpg" />
     <Content Include="Content\assets\images\contact_icon.png" />
     <Content Include="Content\assets\images\content_icon.png" />
     <Content Include="Content\assets\images\deleteuser.jpg" />
+    <Content Include="Content\assets\images\reportpie%281%29.png" />
+    <Content Include="Content\assets\images\reportlines.png" />
     <Content Include="Content\assets\images\edituser.JPG" />
     <Content Include="Content\assets\images\heding_corner.png" />
     <Content Include="Content\assets\images\help_icon.png" />
@@ -800,6 +803,11 @@
     <Content Include="Views\Reporting\_FrequencyType.cshtml" />
     <Content Include="Views\AuditManagement\AuditWebgrid.cshtml" />
     <Content Include="Views\Audit\_SelectBranch.cshtml" />
+    <Content Include="Views\ManageOrganization\_AuditCalender.cshtml" />
+    <Content Include="Views\Reporting\_GetCompany.cshtml" />
+    <Content Include="Views\Reporting\_SelectFrequencyForCompany.cshtml" />
+    <Content Include="Views\Reporting\_CompanyReport.cshtml" />
+    <Content Include="Views\Reporting\_CompanyPDF.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

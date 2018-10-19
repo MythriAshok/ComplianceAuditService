@@ -12,7 +12,7 @@ namespace Compliance.DataAccess
     {
         MySqlConnection conn = DBConnection.getconnection();
 
-        public DataSet getBranchComlianceAuditReport(int Org_Hier_ID, DateTime StartDate, DateTime EndDate, int ComplianceTypeID)
+        public DataSet getBranchComlianceAuditReport(int Org_Hier_ID, DateTime StartDate, DateTime EndDate, int ComplianceTypeID, int VendorID)
         {
             DataSet dsComplianceAudit = new DataSet();
             try
@@ -22,9 +22,11 @@ namespace Compliance.DataAccess
                 MySqlCommand cmd = new MySqlCommand("sp_getDetailedBranchComplianceAuditReport", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID", Org_Hier_ID);
+                
                 cmd.Parameters.AddWithValue("p_Start_Date", StartDate);
                 cmd.Parameters.AddWithValue("p_End_Date",EndDate);
                 cmd.Parameters.AddWithValue("p_Compliance_Type_ID", ComplianceTypeID);
+                cmd.Parameters.AddWithValue("p_Vendor_ID", VendorID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsComplianceAudit);
             }
@@ -39,7 +41,7 @@ namespace Compliance.DataAccess
             return dsComplianceAudit;
         }
 
-        public DataSet getDetailedBranchACTComlianceAuditReport(int Org_Hier_ID)
+        public DataSet getDetailedBranchACTComlianceAuditReport(int Org_Hier_ID, int VendorID)
         {
             DataSet dsComplianceAudit = new DataSet();
             try
@@ -48,6 +50,7 @@ namespace Compliance.DataAccess
                 MySqlCommand cmd = new MySqlCommand("sp_getDetailedBranchCompliance_ACTAuditReport", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID", Org_Hier_ID);
+                cmd.Parameters.AddWithValue("p_Vendor_ID", VendorID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsComplianceAudit);
             }
@@ -62,7 +65,7 @@ namespace Compliance.DataAccess
             return dsComplianceAudit;
         }
 
-        public DataSet getBranchStatusComlianceAuditReport(int Org_Hier_ID, string status, DateTime StartDate, DateTime EndDate, int ComplianceID)
+        public DataSet getBranchStatusComlianceAuditReport(int Org_Hier_ID, string status, DateTime StartDate, DateTime EndDate, int ComplianceID, int VendorID)
         {
             DataSet dsComplianceAudit = new DataSet();
             try
@@ -71,6 +74,7 @@ namespace Compliance.DataAccess
                 MySqlCommand cmd = new MySqlCommand("sp_getCompiledBranchComplianceAuditReport", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID", Org_Hier_ID);
+                cmd.Parameters.AddWithValue("p_Vendor_ID", Org_Hier_ID);
                 cmd.Parameters.AddWithValue("p_Compliance_Status", status);
                 cmd.Parameters.AddWithValue("p_Start_Date", StartDate);
                 cmd.Parameters.AddWithValue("p_End_Date", EndDate);
@@ -89,7 +93,7 @@ namespace Compliance.DataAccess
             return dsComplianceAudit;
         }
 
-        public DataSet getComplianceStatusBranchACTAuditReport(int Org_Hier_ID, string status)
+        public DataSet getComplianceStatusBranchACTAuditReport(int Org_Hier_ID, string status, int VendorID)
         {
             DataSet dsComplianceAudit = new DataSet();
             try
@@ -99,6 +103,8 @@ namespace Compliance.DataAccess
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID", Org_Hier_ID);
                 cmd.Parameters.AddWithValue("p_Compliance_Status", status);
+                cmd.Parameters.AddWithValue("p_Vendor_ID", VendorID);
+
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsComplianceAudit);
             }
@@ -164,5 +170,82 @@ namespace Compliance.DataAccess
         //    }
         //    return dsComplianceAudit;
         //}
+        public DataSet getBranchCount(int Org_Hier_ID)
+        {
+            DataSet dsComplianceAudit = new DataSet();
+            try
+            {
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getBranchCount", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", Org_Hier_ID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsComplianceAudit);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsComplianceAudit;
+        }
+
+        public DataSet getCompliantBranchCount(int Org_Hier_ID, DateTime StartDate, DateTime EndDate, int ComplianceTypeID)
+        {
+            DataSet dsComplianceAudit = new DataSet();
+            try
+            {
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getCompliancedBranchCount", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", Org_Hier_ID);
+                cmd.Parameters.AddWithValue("p_Start_Date", StartDate);
+                cmd.Parameters.AddWithValue("p_End_Date", EndDate);
+                cmd.Parameters.AddWithValue("p_Compliance_Type_ID", ComplianceTypeID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsComplianceAudit);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsComplianceAudit;
+        }
+
+        public DataSet getNonCompliantBranchCount(int Org_Hier_ID, DateTime StartDate, DateTime EndDate, int ComplianceTypeID)
+        {
+            DataSet dsComplianceAudit = new DataSet();
+            try
+            {
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getNonCompliancedPartiallyCompliancedBranchCount", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Org_Hier_ID", Org_Hier_ID);
+                cmd.Parameters.AddWithValue("p_Start_Date", StartDate);
+                cmd.Parameters.AddWithValue("p_End_Date", EndDate);
+                cmd.Parameters.AddWithValue("p_Compliance_Type_ID", ComplianceTypeID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsComplianceAudit);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsComplianceAudit;
+        }
     }
 }

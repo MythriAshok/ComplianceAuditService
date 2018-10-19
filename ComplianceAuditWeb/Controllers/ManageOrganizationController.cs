@@ -453,7 +453,7 @@ namespace ComplianceAuditWeb.Controllers
                     DataSet dsCompliance = new DataSet();
                     dsCompliance.ReadXml(new StringReader(xmlComplianceType));
 
-
+                    companyVM.companydetails.Calender_StartDate = DateTime.Now;
                     TempData["CompleteCompanyDetails"] = companyVM;
 
                 }
@@ -480,39 +480,44 @@ namespace ComplianceAuditWeb.Controllers
             int id = 0;
             try
             {
-                if (companyVM.companydetails.Calender_StartDate != DateTime.MinValue)
+                if(companyVM.companydetails.CalenderCompEndDate == null)
                 {
-                    int year = DateTime.Now.Year;
-                    if (companyVM.companydetails.Calender_StartDate.Year <= year || companyVM.companydetails.Calender_StartDate.Year > year)
-                    {
-                        DateTime date = new DateTime();
-                        date.AddDays(31);
-                        if (companyVM.companydetails.Calender_StartDate.Month == 04)
-                        {
-                            date.AddMonths(03);
-                            date.AddYears(companyVM.companydetails.Calender_StartDate.Year + 1);
-                        }
-                        else
-                        {
-                            date.AddMonths(12);
-                        }
-                        companyVM.companydetails.Calender_EndDate = date;
-                    }
-                    else
-                        ModelState.AddModelError("Startdate", "Please enter the vaild Calender start date");
+                    DateTime date = DateTime.MaxValue;
+                    companyVM.companydetails.CalenderCompEndDate = Convert.ToDateTime( date.ToString("yyyy-MM-dd"));
                 }
-                else
-                {
-                    DateTime date = new DateTime();
-                    date.AddDays(01);
-                    date.AddMonths(04);
-                    date.AddYears(DateTime.Now.Year);
-                    companyVM.companydetails.Calender_StartDate = date;
-                    date.AddDays(31);
-                    date.AddMonths(03);
-                    date.AddYears(DateTime.Now.Year + 1);
-                    companyVM.companydetails.Calender_EndDate = date;
-                }
+                //if (companyVM.companydetails.Calender_StartDate != DateTime.MinValue)
+                //{
+                //    //int year = DateTime.Now.Year;
+                //    //if (companyVM.companydetails.Calender_StartDate.Year <= year || companyVM.companydetails.Calender_StartDate.Year > year)
+                //    //{
+                //    //    DateTime date = new DateTime();
+                //    //    date.AddDays(31);
+                //    //    if (companyVM.companydetails.Calender_StartDate.Month == 04)
+                //    //    {
+                //    //        date.AddMonths(03);
+                //    //        date.AddYears(companyVM.companydetails.Calender_StartDate.Year + 1);
+                //    //    }
+                //    //    else
+                //    //    {
+                //    //        date.AddMonths(12);
+                //    //    }
+                //    //    companyVM.companydetails.Calender_EndDate = date;
+                //    //}
+                //    //else
+                //    //    ModelState.AddModelError("Startdate", "Please enter the vaild Calender start date");
+                //}
+                //else
+                //{
+                //    DateTime date = new DateTime();
+                //    date.AddDays(01);
+                //    date.AddMonths(04);
+                //    date.AddYears(DateTime.Now.Year);
+                //    companyVM.companydetails.Calender_StartDate = date;
+                //    date.AddDays(31);
+                //    date.AddMonths(03);
+                //    date.AddYears(DateTime.Now.Year + 1);
+                //    companyVM.companydetails.Calender_EndDate = date;
+                //}
                 if (ModelState.IsValid)
                 {
                     if (file != null)
@@ -594,6 +599,85 @@ namespace ComplianceAuditWeb.Controllers
             }
             return View("_Company", companyVM);
         }
+
+        [HttpGet]
+        public ActionResult AuditCalender()
+        {
+            CompanyViewModel model = new CompanyViewModel();
+            model.CompaniesList = new List<SelectListItem>();
+            model.ComplianceList = new List<SelectListItem>();
+            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
+            int groupid = Convert.ToInt32(Session["GroupCompanyId"]);
+            if (groupid != 0)
+            {
+
+
+                string xmldata = client.getCompanyListDropDown(groupid);
+                DataSet ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+                model.CompaniesList = new List<SelectListItem>();
+                if (ds.Tables.Count > 0)
+                {
+                    model.CompanyID = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
+                    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                    {
+                        model.CompaniesList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                    }
+                }
+                model.ComplianceList = new List<SelectListItem>();
+                xmldata = client.GetAssignedComplianceTypes(model.CompanyID);
+                ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+                if (ds.Tables.Count > 0)
+                {
+                    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                    {
+                        model.ComplianceList.Add(new SelectListItem { Text = Convert.ToString(row["Compliance_Type_Name"]), Value = Convert.ToString(row["Compliance_Type_ID"]) });
+                    }
+                }
+            }
+            return View();
+
+        }
+        [HttpPost]
+        public ActionResult AuditCalender(CompanyViewModel model)
+        {
+            model.CompaniesList = new List<SelectListItem>();
+            model.ComplianceList = new List<SelectListItem>();
+            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
+            int groupid = Convert.ToInt32(Session["GroupCompanyId"]);
+            string xmldata = client.getCompanyListDropDown(groupid);
+            DataSet ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            model.CompaniesList = new List<SelectListItem>();
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.CompaniesList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                }
+            }
+        
+
+            model.ComplianceList = new List<SelectListItem>();
+            xmldata = client.GetAssignedComplianceTypes(model.CompanyID);
+            ds = new DataSet();
+            ds.ReadXml(new StringReader(xmldata));
+            if (ds.Tables.Count > 0)
+            {
+                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                {
+                    model.ComplianceList.Add(new SelectListItem { Text = Convert.ToString(row["Compliance_Type_Name"]), Value = Convert.ToString(row["Compliance_Type_ID"]) });
+                }
+            }
+            return View();
+
+        }
+
+
+
+
+
 
 
         [HttpGet]

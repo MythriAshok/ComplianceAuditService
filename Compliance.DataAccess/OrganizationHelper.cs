@@ -431,7 +431,8 @@ namespace Compliance.DataAccess
                   //  cmd.Parameters.AddWithValue("p_Industry_Type", details.Industry_Type);
                     cmd.Parameters.AddWithValue("p_Formal_Name", details.Formal_Name);
                     cmd.Parameters.AddWithValue("p_Calender_StartDate", details.Calender_StartDate);
-                    cmd.Parameters.AddWithValue("p_Calender_EndDate", details.Calender_EndDate);
+                    //cmd.Parameters.AddWithValue("p_Calender_EndDate", details.Calender_EndDate);
+                    cmd.Parameters.AddWithValue("p_Calender_EndDate", details.CalenderCompEndDate);
                     cmd.Parameters.AddWithValue("p_Auditing_Frequency", details.Auditing_Frequency);
                     cmd.Parameters.AddWithValue("p_Website", details.Website);
                     cmd.Parameters.AddWithValue("p_Company_Email_ID", details.Company_EmailID);
@@ -1066,7 +1067,28 @@ namespace Compliance.DataAccess
             }
             return dsMappedCompliance;
         }
-
+        public DataSet getParticularComplianceType(int ComplianceTypeID)
+        {
+            DataSet dsComplianceTypesList = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_getParticularComplianceType", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Compliance_Type_ID", ComplianceTypeID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsComplianceTypesList);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsComplianceTypesList;
+        }
 
     }
 

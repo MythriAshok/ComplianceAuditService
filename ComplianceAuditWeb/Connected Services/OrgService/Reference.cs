@@ -328,6 +328,12 @@ namespace ComplianceAuditWeb.OrgService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetMappedCompliance", ReplyAction="http://tempuri.org/IOrganizationService/GetMappedComplianceResponse")]
         System.Threading.Tasks.Task<string> GetMappedComplianceAsync(int ComplianceID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetParticularCompliance", ReplyAction="http://tempuri.org/IOrganizationService/GetParticularComplianceResponse")]
+        string GetParticularCompliance(int ComplianceTypeID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetParticularCompliance", ReplyAction="http://tempuri.org/IOrganizationService/GetParticularComplianceResponse")]
+        System.Threading.Tasks.Task<string> GetParticularComplianceAsync(int ComplianceTypeID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -763,6 +769,14 @@ namespace ComplianceAuditWeb.OrgService {
         
         public System.Threading.Tasks.Task<string> GetMappedComplianceAsync(int ComplianceID) {
             return base.Channel.GetMappedComplianceAsync(ComplianceID);
+        }
+        
+        public string GetParticularCompliance(int ComplianceTypeID) {
+            return base.Channel.GetParticularCompliance(ComplianceTypeID);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetParticularComplianceAsync(int ComplianceTypeID) {
+            return base.Channel.GetParticularComplianceAsync(ComplianceTypeID);
         }
     }
 }

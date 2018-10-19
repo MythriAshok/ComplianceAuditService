@@ -945,6 +945,21 @@ namespace ComplianceService
             string xmlCompaniesList = dsCompliancetypes.GetXml();
             return xmlCompaniesList;
         }
+
+        public string GetParticularCompliance(int ComplianceTypeID)
+        {
+            return bindParticularCompliance(ComplianceTypeID);
+        }
+
+        private string bindParticularCompliance(int ComplianceTypeID)
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsCompliancetypes = OrganizationHelper.getParticularComplianceType(ComplianceTypeID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCompliancetypes = utilityHelper.ConvertNullsToEmptyString(dsCompliancetypes);
+            string xmlCompaniesList = dsCompliancetypes.GetXml();
+            return xmlCompaniesList;
+        }
     }
 }
 
