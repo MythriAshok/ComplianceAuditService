@@ -179,7 +179,7 @@ namespace ComplianceAuditWeb.Controllers
         {
             AuditentryViewModel model = new AuditentryViewModel();
             model.ActList = new List<SelectListItem>();
-            AuditService.AuditServiceClient client = new AuditService.AuditServiceClient();
+            AudService.AuditServiceClient client = new AudService.AuditServiceClient();
             string xmldata=client.getComplianceActList(branchid, vendorid, compliancetypeid);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
@@ -208,7 +208,7 @@ namespace ComplianceAuditWeb.Controllers
             int pageSize = rows;
             AuditentryViewModel model = new AuditentryViewModel();
             model.auditentries = new List<Auditentry>();
-            AuditService.AuditServiceClient client = new AuditService.AuditServiceClient();
+            AudService.AuditServiceClient client = new AudService.AuditServiceClient();
             // int actid = Convert.ToInt32(form["actid"]);
             int branchid = Convert.ToInt32(Session["BranchID"]);
             int vendorid = Convert.ToInt32(Session["Vendorid"]);
@@ -308,7 +308,7 @@ namespace ComplianceAuditWeb.Controllers
             model.Version = 0;
 
             string option = form["oper"];
-            AuditService.AuditServiceClient client = new AuditService.AuditServiceClient();
+            AudService.AuditServiceClient client = new AudService.AuditServiceClient();
 
             if (option=="add")
             {
@@ -361,7 +361,7 @@ namespace ComplianceAuditWeb.Controllers
 
         public ActionResult SubmitAudit(AuditentryViewModel model,string sdate, string edate )
         {
-            AuditService.AuditServiceClient client = new AuditService.AuditServiceClient();
+            AudService.AuditServiceClient client = new AudService.AuditServiceClient();
             ComplianceAudit audit = new ComplianceAudit();
             audit.Audit_Remarks = model.Overallremarks;
             audit.Auditor_Id = Convert.ToInt32(Session["UserId"]);

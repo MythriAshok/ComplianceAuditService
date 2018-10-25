@@ -126,6 +126,16 @@
     <None Include="Connected Services\AccessService\AccessService11.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\AudService\AuditService.wsdl" />
+    <None Include="Connected Services\AudService\AuditService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AudService\AuditService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\AudService\AuditService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\ComplianceXrefService\ComplianceXrefService.wsdl" />
     <None Include="Connected Services\ComplianceXrefService\ComplianceXrefService.xsd">
       <SubType>Designer</SubType>
@@ -211,6 +221,13 @@
     <None Include="Connected Services\ReportingService\configuration91.svcinfo" />
     <None Include="Connected Services\ReportingService\configuration.svcinfo" />
     <None Include="Connected Services\ReportingService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Connected Services\AudService\AuditService.disco" />
+    <None Include="Connected Services\AudService\configuration91.svcinfo" />
+    <None Include="Connected Services\AudService\configuration.svcinfo" />
+    <None Include="Connected Services\AudService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -642,6 +659,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\AudService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\ComplianceXrefService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -839,6 +861,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\AccessService\" />
+    <WCFMetadataStorage Include="Connected Services\AudService\" />
     <WCFMetadataStorage Include="Connected Services\ComplianceXrefService\" />
     <WCFMetadataStorage Include="Connected Services\OrgService\" />
     <WCFMetadataStorage Include="Connected Services\ReportingService\" />

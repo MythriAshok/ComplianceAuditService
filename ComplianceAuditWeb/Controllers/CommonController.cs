@@ -9,6 +9,7 @@ using System.IO;
 using System.Configuration;
 using ComplianceAuditWeb.Models;
 
+
 namespace ComplianceAuditWeb.Controllers
 {
     public class CommonController : Controller
@@ -59,7 +60,7 @@ namespace ComplianceAuditWeb.Controllers
         {
             List<SelectListItem> branch = new List<SelectListItem>();
             int ID = Convert.ToInt32(compid);
-            AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
+            AudService.AuditServiceClient auditServiceClient = new AudService.AuditServiceClient();
             string xmldata = auditServiceClient.getSpecificBranchList(ID);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
@@ -126,7 +127,7 @@ namespace ComplianceAuditWeb.Controllers
         {
             List<SelectListItem> company = new List<SelectListItem>();
             int ID = Convert.ToInt32(compid);
-            AuditService.AuditServiceClient auditServiceClient = new AuditService.AuditServiceClient();
+            AudService.AuditServiceClient auditServiceClient = new AudService.AuditServiceClient();
             string xmldata = auditServiceClient.getSpecificBranchList(ID);
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));

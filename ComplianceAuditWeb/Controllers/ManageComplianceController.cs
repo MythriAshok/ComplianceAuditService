@@ -316,7 +316,7 @@ namespace ComplianceAuditWeb.Controllers
             DataSet ds = new DataSet();
             ds.ReadXml(new StringReader(xmldata));
             DataSet dsact = new DataSet();
-            int compliancetypeid = 0;
+            //int compliancetypeid = 0;
             xmldata = client.GetXrefComplainceTypemapping(compliancetypeid, 0);
             dsact.ReadXml(new StringReader(xmldata));
             Session["AssignedActs"] = dsact;
