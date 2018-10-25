@@ -13,6 +13,7 @@ namespace ComplianceAuditWeb.Models
     {
         public Organization organization { get; set; }
         public CompanyDetails companydetails { get; set; }
+        public BranchLocation location { get; set; }
         public List<SelectListItem> Country { get; set; }
         public List<SelectListItem> State { get; set; }
         public List<SelectListItem> City { get; set; }

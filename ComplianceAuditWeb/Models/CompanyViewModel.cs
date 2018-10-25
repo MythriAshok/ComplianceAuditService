@@ -32,8 +32,13 @@ namespace ComplianceAuditWeb.Models
         public List<SelectListItem> ComplianceList { get; set; }
         public int[] ComplianceID { get; set; }
 
-      
+        public AuditCalender AuditCalender { get; set; }
 
-     
+        public int yearid { get; set; }
+        
+        public IEnumerable<int> years { get; set; }
+
+        public List<string> branchlist { get; set; }
+
     }
 }

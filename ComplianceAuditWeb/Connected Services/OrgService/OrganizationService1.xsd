@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Compliance.DataObject" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Compliance.DataObject" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:56172/OrganizationService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:complexType name="Organization">
     <xs:sequence>
       <xs:element minOccurs="0" name="Company_Id" type="xs:int" />
@@ -67,4 +68,16 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ComplianceType" nillable="true" type="tns:ComplianceType" />
+  <xs:complexType name="AuditCalender">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AuditCalenderID" type="xs:int" />
+      <xs:element minOccurs="0" name="CompanyID" type="xs:int" />
+      <xs:element minOccurs="0" name="ComplainceTypeID" type="xs:int" />
+      <xs:element minOccurs="0" name="EndDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="StartDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Year" type="xs:int" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="newyearid" nillable="true" type="q1:ArrayOfint" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AuditCalender" nillable="true" type="tns:AuditCalender" />
 </xs:schema>

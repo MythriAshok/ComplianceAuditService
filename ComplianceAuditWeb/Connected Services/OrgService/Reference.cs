@@ -214,10 +214,10 @@ namespace ComplianceAuditWeb.OrgService {
         System.Threading.Tasks.Task<string> GetAllVendorsAssignedForBranchAsync(int BranchVendorID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertVendor", ReplyAction="http://tempuri.org/IOrganizationService/insertVendorResponse")]
-        int insertVendor(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company);
+        int insertVendor(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation location);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertVendor", ReplyAction="http://tempuri.org/IOrganizationService/insertVendorResponse")]
-        System.Threading.Tasks.Task<int> insertVendorAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company);
+        System.Threading.Tasks.Task<int> insertVendorAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation location);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updateVendor", ReplyAction="http://tempuri.org/IOrganizationService/updateVendorResponse")]
         bool updateVendor(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company);
@@ -274,16 +274,16 @@ namespace ComplianceAuditWeb.OrgService {
         System.Threading.Tasks.Task<string> GetIndustryTypeAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertcomplianceTypes", ReplyAction="http://tempuri.org/IOrganizationService/insertcomplianceTypesResponse")]
-        int insertcomplianceTypes(int[] ComplianceTypeID, int OrgID);
+        string insertcomplianceTypes(int[] ComplianceTypeID, int OrgID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertcomplianceTypes", ReplyAction="http://tempuri.org/IOrganizationService/insertcomplianceTypesResponse")]
-        System.Threading.Tasks.Task<int> insertcomplianceTypesAsync(int[] ComplianceTypeID, int OrgID);
+        System.Threading.Tasks.Task<string> insertcomplianceTypesAsync(int[] ComplianceTypeID, int OrgID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updatecomplianceTypes", ReplyAction="http://tempuri.org/IOrganizationService/updatecomplianceTypesResponse")]
-        int updatecomplianceTypes(int[] ComplianceTypeID, int OrgID);
+        string updatecomplianceTypes(int[] ComplianceTypeID, int OrgID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updatecomplianceTypes", ReplyAction="http://tempuri.org/IOrganizationService/updatecomplianceTypesResponse")]
-        System.Threading.Tasks.Task<int> updatecomplianceTypesAsync(int[] ComplianceTypeID, int OrgID);
+        System.Threading.Tasks.Task<string> updatecomplianceTypesAsync(int[] ComplianceTypeID, int OrgID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetAssignedComplianceTypes", ReplyAction="http://tempuri.org/IOrganizationService/GetAssignedComplianceTypesResponse")]
         string GetAssignedComplianceTypes(int CompID);
@@ -334,6 +334,24 @@ namespace ComplianceAuditWeb.OrgService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/GetParticularCompliance", ReplyAction="http://tempuri.org/IOrganizationService/GetParticularComplianceResponse")]
         System.Threading.Tasks.Task<string> GetParticularComplianceAsync(int ComplianceTypeID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updateAuditCalender", ReplyAction="http://tempuri.org/IOrganizationService/updateAuditCalenderResponse")]
+        bool updateAuditCalender(Compliance.DataObject.AuditCalender calender);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/updateAuditCalender", ReplyAction="http://tempuri.org/IOrganizationService/updateAuditCalenderResponse")]
+        System.Threading.Tasks.Task<bool> updateAuditCalenderAsync(Compliance.DataObject.AuditCalender calender);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertAuditCalender", ReplyAction="http://tempuri.org/IOrganizationService/insertAuditCalenderResponse")]
+        int insertAuditCalender(Compliance.DataObject.AuditCalender calender);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/insertAuditCalender", ReplyAction="http://tempuri.org/IOrganizationService/insertAuditCalenderResponse")]
+        System.Threading.Tasks.Task<int> insertAuditCalenderAsync(Compliance.DataObject.AuditCalender calender);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getClosure", ReplyAction="http://tempuri.org/IOrganizationService/getClosureResponse")]
+        string getClosure(int CompanyID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IOrganizationService/getClosure", ReplyAction="http://tempuri.org/IOrganizationService/getClosureResponse")]
+        System.Threading.Tasks.Task<string> getClosureAsync(int CompanyID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -627,12 +645,12 @@ namespace ComplianceAuditWeb.OrgService {
             return base.Channel.GetAllVendorsAssignedForBranchAsync(BranchVendorID);
         }
         
-        public int insertVendor(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company) {
-            return base.Channel.insertVendor(org, company);
+        public int insertVendor(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation location) {
+            return base.Channel.insertVendor(org, company, location);
         }
         
-        public System.Threading.Tasks.Task<int> insertVendorAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company) {
-            return base.Channel.insertVendorAsync(org, company);
+        public System.Threading.Tasks.Task<int> insertVendorAsync(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company, Compliance.DataObject.BranchLocation location) {
+            return base.Channel.insertVendorAsync(org, company, location);
         }
         
         public bool updateVendor(Compliance.DataObject.Organization org, Compliance.DataObject.CompanyDetails company) {
@@ -707,19 +725,19 @@ namespace ComplianceAuditWeb.OrgService {
             return base.Channel.GetIndustryTypeAsync();
         }
         
-        public int insertcomplianceTypes(int[] ComplianceTypeID, int OrgID) {
+        public string insertcomplianceTypes(int[] ComplianceTypeID, int OrgID) {
             return base.Channel.insertcomplianceTypes(ComplianceTypeID, OrgID);
         }
         
-        public System.Threading.Tasks.Task<int> insertcomplianceTypesAsync(int[] ComplianceTypeID, int OrgID) {
+        public System.Threading.Tasks.Task<string> insertcomplianceTypesAsync(int[] ComplianceTypeID, int OrgID) {
             return base.Channel.insertcomplianceTypesAsync(ComplianceTypeID, OrgID);
         }
         
-        public int updatecomplianceTypes(int[] ComplianceTypeID, int OrgID) {
+        public string updatecomplianceTypes(int[] ComplianceTypeID, int OrgID) {
             return base.Channel.updatecomplianceTypes(ComplianceTypeID, OrgID);
         }
         
-        public System.Threading.Tasks.Task<int> updatecomplianceTypesAsync(int[] ComplianceTypeID, int OrgID) {
+        public System.Threading.Tasks.Task<string> updatecomplianceTypesAsync(int[] ComplianceTypeID, int OrgID) {
             return base.Channel.updatecomplianceTypesAsync(ComplianceTypeID, OrgID);
         }
         
@@ -777,6 +795,30 @@ namespace ComplianceAuditWeb.OrgService {
         
         public System.Threading.Tasks.Task<string> GetParticularComplianceAsync(int ComplianceTypeID) {
             return base.Channel.GetParticularComplianceAsync(ComplianceTypeID);
+        }
+        
+        public bool updateAuditCalender(Compliance.DataObject.AuditCalender calender) {
+            return base.Channel.updateAuditCalender(calender);
+        }
+        
+        public System.Threading.Tasks.Task<bool> updateAuditCalenderAsync(Compliance.DataObject.AuditCalender calender) {
+            return base.Channel.updateAuditCalenderAsync(calender);
+        }
+        
+        public int insertAuditCalender(Compliance.DataObject.AuditCalender calender) {
+            return base.Channel.insertAuditCalender(calender);
+        }
+        
+        public System.Threading.Tasks.Task<int> insertAuditCalenderAsync(Compliance.DataObject.AuditCalender calender) {
+            return base.Channel.insertAuditCalenderAsync(calender);
+        }
+        
+        public string getClosure(int CompanyID) {
+            return base.Channel.getClosure(CompanyID);
+        }
+        
+        public System.Threading.Tasks.Task<string> getClosureAsync(int CompanyID) {
+            return base.Channel.getClosureAsync(CompanyID);
         }
     }
 }

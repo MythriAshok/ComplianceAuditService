@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -11,6 +11,7 @@ using ComplianceAuditWeb.Models;
 using Rotativa;
 using System.Collections;
 using Rotativa.Options;
+using System;
 
 namespace ComplianceAuditWeb.Controllers
 {
@@ -22,6 +23,7 @@ namespace ComplianceAuditWeb.Controllers
         [HttpGet]
         public ActionResult selectbranch()
         {
+            int branchid = Convert.ToInt32(Request.QueryString["branchid"]);
             ReportViewModel model = new ReportViewModel();
             model.companyList = new List<SelectListItem>();
             model.BranchList = new List<SelectListItem>();
@@ -72,7 +74,7 @@ namespace ComplianceAuditWeb.Controllers
                     model.companyid = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
                     model.StartDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["Calender_StartDate"]);
                     var companyid = Request.QueryString["companyid"];
-                    if(companyid!= null)
+                    if (companyid != null)
                     {
                         model.companyid = Convert.ToInt32(companyid);
                     }
@@ -105,19 +107,38 @@ namespace ComplianceAuditWeb.Controllers
                     }
                 }
 
-                model.BranchList = new List<SelectListItem>();
-                xmldata = client.GeSpecifictBranchList(model.companyid);
-                ds = new DataSet();
-                ds.ReadXml(new StringReader(xmldata));
-
-                model.BranchList.Add(new SelectListItem { Text = "-- Select Branch --", Value = "0" });
-                model.branchid = Convert.ToInt32(Request.QueryString["branchid"]);
-                if (ds.Tables.Count > 0)
+                if (branchid != 0)
                 {
-                    //model.branchid = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
-                    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                    model.branchid = branchid;
+                    string xmlbranchdata = client.getBranch(branchid);
+                    DataSet dsBranch = new DataSet();
+                    dsBranch.ReadXml(new StringReader(xmlbranchdata));
+                    model.CompanyName = Convert.ToString(dsBranch.Tables[0].Rows[0]["Company_Name"]);
+                }
+                else
+                {
+
+
+
+
+
+                    model.BranchList = new List<SelectListItem>();
+                    xmldata = client.GeSpecifictBranchList(model.companyid);
+                    ds = new DataSet();
+                    ds.ReadXml(new StringReader(xmldata));
+
+                    model.BranchList.Add(new SelectListItem { Text = "-- Select Branch --", Value = "0" });
+
                     {
-                        model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                        model.branchid = Convert.ToInt32(Request.QueryString["branchid"]);
+                    }
+                    if (ds.Tables.Count > 0)
+                    {
+                        //model.branchid = Convert.ToInt32(ds.Tables[0].Rows[0]["Org_Hier_ID"]);
+                        foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                        {
+                            model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                        }
                     }
                 }
 
@@ -147,110 +168,128 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult selectbranch(ReportViewModel model)
         {
-
-            model.companyList = new List<SelectListItem>();
-            model.BranchList = new List<SelectListItem>();
-            model.VendorList = new List<Organization>();
-            model.frequency = new List<SelectListItem>();
-            model.halfYear = new List<SelectListItem>();
-            model.quarter = new List<SelectListItem>();
-            model.month = new List<SelectListItem>();
-
-
-
-            model.frequency.Add(new SelectListItem() { Text = "Select Frequency", Value = "0" });
-            model.frequency.Add(new SelectListItem() { Text = "Yearly", Value = "1" });
-            model.frequency.Add(new SelectListItem() { Text = "Half-Yearly", Value = "2" });
-            model.frequency.Add(new SelectListItem() { Text = "Quarterly", Value = "3" });
-            model.frequency.Add(new SelectListItem() { Text = "Monthly", Value = "4" });
-            model.frequency.Add(new SelectListItem() { Text = "Periodic", Value = "5" });
-
-            model.halfYear.Add(new SelectListItem() { Text = "Select Half-Year", Value = "0" });
-            model.halfYear.Add(new SelectListItem() { Text = "First Half", Value = "1" });
-            model.halfYear.Add(new SelectListItem() { Text = "Second Half", Value = "2" });
-
-
-            model.quarter.Add(new SelectListItem() { Text = "Select Quarter", Value = "0" });
-            model.quarter.Add(new SelectListItem() { Text = "Quarter 1", Value = "2" });
-            model.quarter.Add(new SelectListItem() { Text = "Quarter 2", Value = "3" });
-            model.quarter.Add(new SelectListItem() { Text = "Quarter 3", Value = "4" });
-            model.quarter.Add(new SelectListItem() { Text = "Quarter 4", Value = "5" });
-
-
-            model.month.Add(new SelectListItem() { Text = "Select Month", Value = "0" });
-            model.month.Add(new SelectListItem() { Text = "January", Value = "1" });
-            model.month.Add(new SelectListItem() { Text = "February", Value = "2" });
-            model.month.Add(new SelectListItem() { Text = "March", Value = "3" });
-            model.month.Add(new SelectListItem() { Text = "April", Value = "4" });
-            model.month.Add(new SelectListItem() { Text = "May", Value = "5" });
-            model.month.Add(new SelectListItem() { Text = "June", Value = "6" });
-            model.month.Add(new SelectListItem() { Text = "July", Value = "7" });
-            model.month.Add(new SelectListItem() { Text = "August", Value = "8" });
-            model.month.Add(new SelectListItem() { Text = "September", Value = "9" });
-            model.month.Add(new SelectListItem() { Text = "October", Value = "10" });
-            model.month.Add(new SelectListItem() { Text = "November", Value = "11" });
-            model.month.Add(new SelectListItem() { Text = "December", Value = "12" });
-
-
-            OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
-            int groupid = Convert.ToInt32(Session["GroupCompanyId"]);
-            string xmldata = client.getCompanyListDropDown(groupid);
-            DataSet ds = new DataSet();
-            ds.ReadXml(new StringReader(xmldata));
-            model.companyList = new List<SelectListItem>();
-            if (ds.Tables.Count > 0)
+            if (model.BranchList == null)
             {
-                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+               return RedirectToAction("selectauditfrequency", new
                 {
-                    model.StartDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["Calender_StartDate"]);
-
-                    model.companyList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
-                }
-                //model.yearid = model.StartDate.Year;
-                model.years = Enumerable.Range(model.yearid, DateTime.Now.Year - (model.yearid - 1));
+                    branchid = model.branchid,
+                    vendorid = model.Vendorid,
+                    vendorname = model.Vendorname,
+                    frequencyid = model.frequencyid,
+                    yearid = model.yearid,
+                    compliancid = model.complianceTypeid,
+                    companyid = model.companyid,
+                    halfyearid = model.HalfYearFrequencyid,
+                    monthid = model.MonthFrequencyid
+                });
             }
-            model.BranchList = new List<SelectListItem>();
-            xmldata = client.GeSpecifictBranchList(model.companyid);
-            ds = new DataSet();
-            ds.ReadXml(new StringReader(xmldata));
-            if (ds.Tables.Count > 0)
-            {
-                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+          
+
+
+                model.companyList = new List<SelectListItem>();
+                model.BranchList = new List<SelectListItem>();
+                model.VendorList = new List<Organization>();
+                model.frequency = new List<SelectListItem>();
+                model.halfYear = new List<SelectListItem>();
+                model.quarter = new List<SelectListItem>();
+                model.month = new List<SelectListItem>();
+
+
+
+                model.frequency.Add(new SelectListItem() { Text = "Select Frequency", Value = "0" });
+                model.frequency.Add(new SelectListItem() { Text = "Yearly", Value = "1" });
+                model.frequency.Add(new SelectListItem() { Text = "Half-Yearly", Value = "2" });
+                model.frequency.Add(new SelectListItem() { Text = "Quarterly", Value = "3" });
+                model.frequency.Add(new SelectListItem() { Text = "Monthly", Value = "4" });
+                model.frequency.Add(new SelectListItem() { Text = "Periodic", Value = "5" });
+
+                model.halfYear.Add(new SelectListItem() { Text = "Select Half-Year", Value = "0" });
+                model.halfYear.Add(new SelectListItem() { Text = "First Half", Value = "1" });
+                model.halfYear.Add(new SelectListItem() { Text = "Second Half", Value = "2" });
+
+
+                model.quarter.Add(new SelectListItem() { Text = "Select Quarter", Value = "0" });
+                model.quarter.Add(new SelectListItem() { Text = "Quarter 1", Value = "2" });
+                model.quarter.Add(new SelectListItem() { Text = "Quarter 2", Value = "3" });
+                model.quarter.Add(new SelectListItem() { Text = "Quarter 3", Value = "4" });
+                model.quarter.Add(new SelectListItem() { Text = "Quarter 4", Value = "5" });
+
+
+                model.month.Add(new SelectListItem() { Text = "Select Month", Value = "0" });
+                model.month.Add(new SelectListItem() { Text = "January", Value = "1" });
+                model.month.Add(new SelectListItem() { Text = "February", Value = "2" });
+                model.month.Add(new SelectListItem() { Text = "March", Value = "3" });
+                model.month.Add(new SelectListItem() { Text = "April", Value = "4" });
+                model.month.Add(new SelectListItem() { Text = "May", Value = "5" });
+                model.month.Add(new SelectListItem() { Text = "June", Value = "6" });
+                model.month.Add(new SelectListItem() { Text = "July", Value = "7" });
+                model.month.Add(new SelectListItem() { Text = "August", Value = "8" });
+                model.month.Add(new SelectListItem() { Text = "September", Value = "9" });
+                model.month.Add(new SelectListItem() { Text = "October", Value = "10" });
+                model.month.Add(new SelectListItem() { Text = "November", Value = "11" });
+                model.month.Add(new SelectListItem() { Text = "December", Value = "12" });
+
+
+                OrgService.OrganizationServiceClient client = new OrgService.OrganizationServiceClient();
+                int groupid = Convert.ToInt32(Session["GroupCompanyId"]);
+                string xmldata = client.getCompanyListDropDown(groupid);
+                DataSet ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+                model.companyList = new List<SelectListItem>();
+                if (ds.Tables.Count > 0)
                 {
-                    model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
-                }
-            }
+                    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                    {
+                        model.StartDate = Convert.ToDateTime(ds.Tables[0].Rows[0]["Calender_StartDate"]);
 
-            model.ComplianceTypeList = new List<SelectListItem>();
-            xmldata = client.GetAssignedComplianceTypes(model.companyid);
-            ds = new DataSet();
-            ds.ReadXml(new StringReader(xmldata));
-            if (ds.Tables.Count > 0)
-            {
-                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                        model.companyList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                    }
+                    //model.yearid = model.StartDate.Year;
+                    model.years = Enumerable.Range(model.yearid, DateTime.Now.Year - (model.yearid - 1));
+                }
+                model.BranchList = new List<SelectListItem>();
+                xmldata = client.GeSpecifictBranchList(model.companyid);
+                ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+                if (ds.Tables.Count > 0)
                 {
-                    model.ComplianceTypeList.Add(new SelectListItem { Text = Convert.ToString(row["Compliance_Type_Name"]), Value = Convert.ToString(row["Compliance_Type_ID"]) });
+                    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                    {
+                        model.BranchList.Add(new SelectListItem { Text = Convert.ToString(row["Company_Name"]), Value = Convert.ToString(row["Org_Hier_ID"]) });
+                    }
                 }
-            }
-            VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
-            xmldata = vendorServiceClient.GetAssignedVendorsforBranch(model.branchid);
-            ds = new DataSet();
-            ds.ReadXml(new StringReader(xmldata));
-            if (ds.Tables.Count > 0)
-            {
-                foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+
+                model.ComplianceTypeList = new List<SelectListItem>();
+                xmldata = client.GetAssignedComplianceTypes(model.companyid);
+                ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+                if (ds.Tables.Count > 0)
                 {
-                    model.VendorList.Add(new Organization { Company_Name = Convert.ToString(row["Company_Name"]), Company_Id = Convert.ToInt32(row["Vendor_ID"]), logo = Convert.ToString(row["logo"]) });
+                    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                    {
+                        model.ComplianceTypeList.Add(new SelectListItem { Text = Convert.ToString(row["Compliance_Type_Name"]), Value = Convert.ToString(row["Compliance_Type_ID"]) });
+                    }
                 }
-            }
-            else
-            {
-                TempData["Message"] = "No Vendors assigned for the selected branch.";
-            }
+                VendorService.VendorServiceClient vendorServiceClient = new VendorService.VendorServiceClient();
+                xmldata = vendorServiceClient.GetAssignedVendorsforBranch(model.branchid);
+                ds = new DataSet();
+                ds.ReadXml(new StringReader(xmldata));
+                if (ds.Tables.Count > 0)
+                {
+                    foreach (System.Data.DataRow row in ds.Tables[0].Rows)
+                    {
+                        model.VendorList.Add(new Organization { Company_Name = Convert.ToString(row["Company_Name"]), Company_Id = Convert.ToInt32(row["Vendor_ID"]), logo = Convert.ToString(row["logo"]) });
+                    }
+                }
+                else
+                {
+                    TempData["Message"] = "No Vendors assigned for the selected branch.";
+                }
 
-            return View("_SelectBranch", model);
+                return View("_SelectBranch", model);
 
-        }
+            }
+        
 
         public ActionResult selectauditfrequency(int branchid, int vendorid, string vendorname, int frequencyid, int yearid, int compliancid, int companyid,
             int halfyearid, int monthid)

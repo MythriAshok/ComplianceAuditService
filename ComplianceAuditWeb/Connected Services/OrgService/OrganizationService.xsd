@@ -465,6 +465,7 @@
       <xs:sequence>
         <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="org" nillable="true" type="q13:Organization" />
         <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="company" nillable="true" type="q14:CompanyDetails" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="location" nillable="true" type="q15:BranchLocation" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -478,8 +479,8 @@
   <xs:element name="updateVendor">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="org" nillable="true" type="q15:Organization" />
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="company" nillable="true" type="q16:CompanyDetails" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="org" nillable="true" type="q16:Organization" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="company" nillable="true" type="q17:CompanyDetails" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -605,7 +606,7 @@
   <xs:element name="insertcomplianceTypes">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ComplianceTypeID" nillable="true" type="q17:ArrayOfint" />
+        <xs:element xmlns:q18="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ComplianceTypeID" nillable="true" type="q18:ArrayOfint" />
         <xs:element minOccurs="0" name="OrgID" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -613,14 +614,14 @@
   <xs:element name="insertcomplianceTypesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="insertcomplianceTypesResult" type="xs:int" />
+        <xs:element minOccurs="0" name="insertcomplianceTypesResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="updatecomplianceTypes">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ComplianceTypeID" nillable="true" type="q18:ArrayOfint" />
+        <xs:element xmlns:q19="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ComplianceTypeID" nillable="true" type="q19:ArrayOfint" />
         <xs:element minOccurs="0" name="OrgID" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -628,7 +629,7 @@
   <xs:element name="updatecomplianceTypesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="updatecomplianceTypesResult" type="xs:int" />
+        <xs:element minOccurs="0" name="updatecomplianceTypesResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -677,7 +678,7 @@
   <xs:element name="insertComplianceTypesMappedWithIndustryType">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="CompType" nillable="true" type="q19:ComplianceType" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="CompType" nillable="true" type="q20:ComplianceType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -691,7 +692,7 @@
   <xs:element name="updateComplianceTypesMappedWithIndustryType">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="CompType" nillable="true" type="q20:ComplianceType" />
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="CompType" nillable="true" type="q21:ComplianceType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -727,6 +728,48 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="GetParticularComplianceResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="updateAuditCalender">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="calender" nillable="true" type="q22:AuditCalender" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="updateAuditCalenderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="updateAuditCalenderResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="insertAuditCalender">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Compliance.DataObject" minOccurs="0" name="calender" nillable="true" type="q23:AuditCalender" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="insertAuditCalenderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="insertAuditCalenderResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getClosure">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CompanyID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="getClosureResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="getClosureResult" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -425,22 +425,22 @@ namespace ComplianceService
         }
 
 
-        public int insertVendor(Organization org, CompanyDetails company)
+        public int insertVendor(Organization org, CompanyDetails company, BranchLocation location)
         {
             int OrganizationID = 0;
             int CompanyDetailsID = 0;
+            int LocationID = 0;
             bool insertResult = false;
             try
             {
                 OrganizationHelper organizationhelper = new OrganizationHelper();
                 OrganizationID = organizationhelper.insertupdateOrganizationHier(org, 'I');
-
-
-
                 if (OrganizationID > 0)
                 {
                     company.Org_Hier_ID = OrganizationID;
                     CompanyDetailsID = organizationhelper.insertupdateCompanyDetails(company, 'I');
+                    location.Org_Hier_ID = OrganizationID;
+                    LocationID = organizationhelper.insertupdateBranchLocation(location, 'I');
                 }
 
                 if (OrganizationID > 0 && CompanyDetailsID > 0)
@@ -813,28 +813,29 @@ namespace ComplianceService
         }
 
 
-        public int insertcomplianceTypes(int[] ComplianceTypeID, int OrgID)
+        public string insertcomplianceTypes(int[] ComplianceTypeID, int OrgID)
         {
-            int resID = 0;
+            string res = "";
             OrganizationHelper helper = new OrganizationHelper();
             foreach (var item in ComplianceTypeID)
             {
-                 resID = helper.insertUpdateComplianceTypes(item, OrgID, 'I');
+               
+                 res = helper.insertUpdateComplianceTypes(item, OrgID, 'I');
             }
-            return resID;
+            return res;
 
         }
 
 
-        public int updatecomplianceTypes(int[] ComplianceTypeID, int OrgID)
+        public string updatecomplianceTypes(int[] ComplianceTypeID, int OrgID)
         {
-            int resID = 0;
+            string res = "";
             OrganizationHelper helper = new OrganizationHelper();
             foreach (var item in ComplianceTypeID)
             {
-                resID = helper.insertUpdateComplianceTypes(item, OrgID, 'U');
+                res = helper.insertUpdateComplianceTypes(item, OrgID, 'U');
             }
-            return resID;
+            return res;
 
         }
 
@@ -955,6 +956,61 @@ namespace ComplianceService
         {
             OrganizationHelper OrganizationHelper = new OrganizationHelper();
             DataSet dsCompliancetypes = OrganizationHelper.getParticularComplianceType(ComplianceTypeID);
+            UtilityHelper utilityHelper = new UtilityHelper();
+            dsCompliancetypes = utilityHelper.ConvertNullsToEmptyString(dsCompliancetypes);
+            string xmlCompaniesList = dsCompliancetypes.GetXml();
+            return xmlCompaniesList;
+        }
+
+
+
+        public int insertAuditCalender(AuditCalender calender)
+        {
+            int AuditCalenderID = 0;
+            try
+            {
+                OrganizationHelper organizationhelper = new OrganizationHelper();
+                foreach (var Year in calender.newyearid)
+                {
+                    calender.Year = Year;
+                    AuditCalenderID = organizationhelper.insertupdateAuditCalender(calender, 'I');
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            return AuditCalenderID;
+        }
+
+        public bool updateAuditCalender(AuditCalender calender)
+        {
+            int AuditCalenderID = 0;
+            bool updateResult = false;
+            try
+            {
+                OrganizationHelper organizationhelper = new OrganizationHelper();
+                AuditCalenderID = organizationhelper.insertupdateAuditCalender(calender, 'U');
+                if(AuditCalenderID!=0)
+                {
+                    updateResult = true;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            return updateResult;
+        }
+        public string getClosure(int CompanyID)
+        {
+            return bindClosure(CompanyID);
+        }
+
+        private string bindClosure(int CompanyID)
+        {
+            OrganizationHelper OrganizationHelper = new OrganizationHelper();
+            DataSet dsCompliancetypes = OrganizationHelper.getClosureDate(CompanyID);
             UtilityHelper utilityHelper = new UtilityHelper();
             dsCompliancetypes = utilityHelper.ConvertNullsToEmptyString(dsCompliancetypes);
             string xmlCompaniesList = dsCompliancetypes.GetXml();

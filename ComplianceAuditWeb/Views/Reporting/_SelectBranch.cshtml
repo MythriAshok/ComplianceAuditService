@@ -157,58 +157,7 @@
 
             }
         }
-                    //function Visible(elem) {
-                    //    //if (elem == 1) {
-                    //    //    document.getElementById('halfyearly').style.visibility = "hidden";
-                    //    //    document.getElementById('halfyearly').Vale = 0;
-                    //    //    document.getElementById('quarter').style.visibility = "hidden";
-                    //    //    document.getElementById('quarter').Value = 0;
-                    //    //    document.getElementById('month').style.visibility = "hidden";
-                    //    //    document.getElementById('month').Value = 0
-                    //    //    document.getElementById('periodicFROM').style.visibility = "hidden";
-                    //    //    document.getElementById('periodicFROM').Vale = 0;
-                    //    //    document.getElementById('periodicTO').style.visibility = "hidden";
-                    //    //    document.getElementById('periodicTO').Value = 0;
-
-                    //    //}
-
-                    //    if (elem == 2) {
-                    //        document.getElementById('halfyearly').style.visibility = "visible";
-                    //        document.getElementById('quarter').style.visibility = "hidden";
-                    //        document.getElementById('quarter').Value = 0;
-                    //        document.getElementById('month').style.visibility = "hidden";
-                    //        document.getElementById('month').Value = 0
-                    //        document.getElementById('periodicFROM').style.visibility = "hidden";
-                    //        document.getElementById('periodicFROM').Vale = 0;
-                    //        document.getElementById('periodicTO').style.visibility = "hidden";
-                    //        document.getElementById('periodicTO').Value = 0;
-
-                    //    }
-                    //    if (elem == 3) {
-                    //        document.getElementById('quarter').style.visibility = "visible";
-                    //        document.getElementById('halfyearly').style.visibility = "hidden";
-                    //        document.getElementById('month').style.visibility = "hidden";
-                    //        document.getElementById('periodicFROM').style.visibility = "hidden";
-                    //        document.getElementById('periodicTO').style.visibility = "hidden";
-
-                    //    }
-                    //    if (elem == 4) {
-                    //        document.getElementById('month').style.visibility = "visible";
-                    //        document.getElementById('quarter').style.visibility = "hidden";
-                    //        document.getElementById('halfyearly').style.visibility = "hidden";
-                    //        document.getElementById('periodicFROM').style.visibility = "hidden";
-                    //        document.getElementById('periodicTO').style.visibility = "hidden";
-                    //    }
-                    //    if (elem == 5) {
-                    //        document.getElementById('month').style.visibility = "hidden";
-                    //        document.getElementById('quarter').style.visibility = "hidden";
-                    //        document.getElementById('halfyearly').style.visibility = "hidden";
-                    //        document.getElementById('periodicFROM').style.visibility = "visible";
-                    //        document.getElementById('periodicTO').style.visibility = "visible";
-                    //    }
-
-
-                    //}
+               
 
 
 
@@ -221,10 +170,10 @@
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @*@if (TempData["Message"] != null)
-            {
-                <p class="alert alert-warning">@TempData["Message"]</p>
-                <p style="color:red">@TempData["Message"]</p>
-            }*@
+        {
+            <p class="alert alert-warning">@TempData["Message"]</p>
+            <p style="color:red">@TempData["Message"]</p>
+        }*@
 
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
@@ -251,15 +200,15 @@
             </div>
         </div>
 
-        
-            <div class="col-xs-4 subSelect" id="From" style="visibility:hidden">
-                <div class="input-field">
-                    @Html.Label("Select", new { @class = "floating-label" })
-                    @Html.DropDownListFor(model => model.HalfYearFrequencyid, Model.halfYear, new { @class = "inputMaterial ui - autocomplete - input" })
-                    @Html.ValidationMessageFor(model => model.HalfYearFrequencyid, "", new { @class = "text-danger" })
-                </div>
+
+        <div class="col-xs-4 subSelect" id="From" style="visibility:hidden">
+            <div class="input-field">
+                @Html.Label("Select", new { @class = "floating-label" })
+                @Html.DropDownListFor(model => model.HalfYearFrequencyid, Model.halfYear, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.HalfYearFrequencyid, "", new { @class = "text-danger" })
             </div>
-        
+        </div>
+
 
         <div class="col-xs-4 subSelect " id="periodicTO" style="visibility:hidden">
             <div class="input-field">
@@ -270,62 +219,41 @@
         </div>
 
 
-        @*<div class="col-xs-4 subSelect" id="halfyearly" style="visibility:hidden">
-                <div class="col-xs-4 subSelect">
-                    <div class="input-field">
-                        @Html.Label("Select Half-Year", new { @class = "floating-label" })
-                        @Html.DropDownListFor(model => model.HalfYearFrequencyid, Model.halfYear, new { @class = "inputMaterial ui - autocomplete - input" })
-                        @Html.ValidationMessageFor(model => model.HalfYearFrequencyid, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="col-xs-4 subSelect " id="quarter" style="visibility:hidden">
-                    <div class="input-field">
-                        @Html.Label("Select Quarter", new { @class = "floating-label" })
-                        @Html.DropDownListFor(model => model.QuarterFrequencyid, Model.quarter, new { @class = "inputMaterial ui - autocomplete - input" })
-                        @Html.ValidationMessageFor(model => model.QuarterFrequencyid, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="col-xs-4 subSelect " id="month" style="visibility:hidden">
-                    <div class="input-field">
-                        @Html.Label("Select Month", new { @class = "floating-label" })
-                        @Html.DropDownListFor(model => model.MonthFrequencyid, Model.month, new { @class = "inputMaterial ui - autocomplete - input" })
-                        @Html.ValidationMessageFor(model => model.MonthFrequencyid, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="col-xs-4 subSelect " id="periodicFROM" style="visibility:hidden">
-                    <div class="input-field">
-                        @Html.Label("From", new { @class = "floating-label" })
-                        @Html.DropDownListFor(model => model.MonthFrequencyid, Model.month, new { @class = "inputMaterial ui - autocomplete - input" })
-                        @Html.ValidationMessageFor(model => model.MonthFrequencyid, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="col-xs-4 subSelect " id="periodicTO" style="visibility:hidden">
-                    <div class="input-field">
-                        @Html.Label("To", new { @class = "floating-label" })
-                        @Html.DropDownListFor(model => model.MonthFrequencyid, Model.month, new { @class = "inputMaterial ui - autocomplete - input" })
-                        @Html.ValidationMessageFor(model => model.MonthFrequencyid, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>*@
         <div class="clearfix"></div>
         <div class="col-xs-4 subSelect ">
             <div class="input-field">
                 @Html.Label("Select Year", new { @class = "floating-label" })<span style="color:red">*</span>
                 @*@Html.DropDownListFor(m=>m.yearid, Enumerable.Range(Model.yearid,DateTime.Now.Year-(Model.yearid - 1)).Select(i=> new SelectListItem { Value = i.ToString(), Text = i.ToString() }),
-                    "Year", new { @class = "inputMaterial ui - autocomplete - input" })*@
+                "Year", new { @class = "inputMaterial ui - autocomplete - input" })*@
                 @Html.DropDownListFor(m => m.yearid, Model.years.Select(i => new SelectListItem { Value = i.ToString(), Text = i.ToString() }), new { @class = "inputMaterial ui - autocomplete - input" })
                 @Html.ValidationMessageFor(model => model.yearid, "", new { @class = "text-danger" })
             </div>
         </div>
-        <div class="col-xs-4 subSelect ">
-            <div class="input-field">
-                @Html.Label("Select Branch", new { @class = "floating-label" })<span style="color:red">*</span>
-                @Html.DropDownListFor(model => model.branchid, Model.BranchList,
-               new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
-                @Html.ValidationMessageFor(model => model.branchid, "", new { @class = "text-danger" })
+        @if (Model.BranchList.Count > 0)
+        {
+            <div class="col-xs-4 subSelect ">
+                <div class="input-field">
+                    @Html.Label("Select Branch", new { @class = "floating-label" })<span style="color:red">*</span>
+                    @Html.DropDownListFor(model => model.branchid, Model.BranchList,
+                    new { @onchange = "this.form.submit()", @class = "inputMaterial ui - autocomplete - input" })
+                    @Html.ValidationMessageFor(model => model.branchid, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div class="col-xs-4 subSelect ">
+                <div class="input-field">
+                    @Html.Label("Select Branch", new { @class = "floating-label" })<span style="color:red">*</span>
+                    @Html.TextBoxFor(model => model.CompanyName,
+                    new { @readonly = "readonly",  @class = "inputMaterial ui - autocomplete - input" })
+                    @Html.ValidationMessageFor(model => model.branchid, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
+        }
+        @if (Model.BranchList.Count > 0)
+        {
         <div class="clearfix"></div>
         <div class="col-xs-12 subSelect ">
             @if (Model.VendorList != null)
@@ -343,12 +271,19 @@
                                         <h4 class="big_hdng" style="text-transform:none; border:0; margin-top:15px;"></h4>
                                         <div class="queContainer">
                                             <a href="@Url.Action("selectauditfrequency", "Reporting",
-                                                    new { branchid = Model.branchid, vendorid = item.Value, vendorname = item.Text,
-                                                    yearid = Model.yearid, frequencyid = Model.frequencyid, compliancid = Model.complianceTypeid,
-                                                    halfyearid = Model.HalfYearFrequencyid,
-                                                    monthid = Model.MonthFrequencyid, companyid = Model.companyid
+    new
+    {
+        branchid = Model.branchid,
+        vendorid = item.Value,
+        vendorname = item.Text,
+        yearid = Model.yearid,
+        frequencyid = Model.frequencyid,
+        compliancid = Model.complianceTypeid,
+        halfyearid = Model.HalfYearFrequencyid,
+        monthid = Model.MonthFrequencyid,
+        companyid = Model.companyid
 
-                                                    })">
+    })">
 
                                                 @*<a href="@Url.Action("GoToChart", "Reporting", new { branchid = Model.branchid, vendorid = item.Value, vendorname = item.Text })">*@
                                                 <span class="qIcon"><img src="~/UploadedFiles/noimage.png" alt="" style="height:60px;width:75px"></span>
@@ -372,12 +307,19 @@
                                         @*<a href="@Url.Action("selectauditfrequency", "Reporting", new { branchid=Model.branchid,vendorid = item.Company_Id,vendorname=item.Company_Name })">*@
 
                                         <a href="@Url.Action("selectauditfrequency", "Reporting",
-                                                    new { branchid = Model.branchid, vendorid = item.Company_Id, vendorname=item.Company_Name,
-                                                    yearid = Model.yearid, frequencyid = Model.frequencyid, compliancid = Model.complianceTypeid,
-                                                    halfyearid = Model.HalfYearFrequencyid,
-                                                    monthid = Model.MonthFrequencyid, companyid = Model.companyid
+    new
+    {
+        branchid = Model.branchid,
+        vendorid = item.Company_Id,
+        vendorname = item.Company_Name,
+        yearid = Model.yearid,
+        frequencyid = Model.frequencyid,
+        compliancid = Model.complianceTypeid,
+        halfyearid = Model.HalfYearFrequencyid,
+        monthid = Model.MonthFrequencyid,
+        companyid = Model.companyid
 
-                                                    })">
+    })">
                                             <span class="qIcon"><img src="/UploadedFiles/@item.logo" alt="" style="height:60px;width:75px"></span>
                                             <h3 class="PB25"> @Html.DisplayFor(modelItem => item.Company_Name)</h3>
                                         </a>
@@ -392,12 +334,20 @@
             }
         </div>
 
-
+        }
     </div>
+        
     <div class="clearfix"></div>
     <ul class="list-inline continueBtn">
         <li>
-            <input type="reset" value="Reset" class="btn primary-button"><span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
+            @if(Model.BranchList.Count == 0)
+            {
+                <input type="submit" value="Submit" class="btn primary-button" />
+                
+            }
+
+            <input type="reset" value="Reset" class="btn primary-button">
+            <span class="ripple" style="width: 92.6094px; height: 92.6094px; top: 49.5px; left: -19.1875px;"></span>
 
             <a href="@Url.Action("dashboard","Common",new { pid=0})" class="btn primary-button">Cancel</a>
 

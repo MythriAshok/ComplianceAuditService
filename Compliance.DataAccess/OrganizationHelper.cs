@@ -146,7 +146,7 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_level", org.Level);
                     cmd.Parameters.AddWithValue("p_Is_Leaf", org.Is_Leaf);
                     cmd.Parameters.AddWithValue("p_Type", org.Type);
-                   // cmd.Parameters.AddWithValue("p_Industry_Type_ID", org.Industry_Type_ID); 
+                    // cmd.Parameters.AddWithValue("p_Industry_Type_ID", org.Industry_Type_ID); 
                     cmd.Parameters.AddWithValue("p_Last_Updated_Date", org.Last_Updated_Date);
                     cmd.Parameters.AddWithValue("p_Is_Vendor", org.Is_Vendor);
                     cmd.Parameters.AddWithValue("p_User_ID", org.User_Id);
@@ -197,7 +197,7 @@ namespace Compliance.DataAccess
             {
                 conn.Close();
             }
-            return dsOrganization; 
+            return dsOrganization;
         }
 
         public DataSet getOrganizationGroup(int OrgID)
@@ -220,7 +220,7 @@ namespace Compliance.DataAccess
             {
                 conn.Close();
             }
-            return dsOrganization; 
+            return dsOrganization;
         }
 
         public DataSet getBranch(int OrgID)
@@ -428,11 +428,11 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_Flag", Flag);
                     cmd.Parameters.AddWithValue("p_Company_Details_ID", details.Company_Details_ID);
                     cmd.Parameters.AddWithValue("p_Org_Hier_ID", details.Org_Hier_ID);
-                  //  cmd.Parameters.AddWithValue("p_Industry_Type", details.Industry_Type);
+                    //  cmd.Parameters.AddWithValue("p_Industry_Type", details.Industry_Type);
                     cmd.Parameters.AddWithValue("p_Formal_Name", details.Formal_Name);
                     cmd.Parameters.AddWithValue("p_Calender_StartDate", details.Calender_StartDate);
-                    //cmd.Parameters.AddWithValue("p_Calender_EndDate", details.Calender_EndDate);
-                    cmd.Parameters.AddWithValue("p_Calender_EndDate", details.CalenderCompEndDate);
+                    cmd.Parameters.AddWithValue("p_Calender_EndDate", details.Calender_EndDate);
+                    //cmd.Parameters.AddWithValue("p_Calender_EndDate", details.CalenderCompEndDate);
                     cmd.Parameters.AddWithValue("p_Auditing_Frequency", details.Auditing_Frequency);
                     cmd.Parameters.AddWithValue("p_Website", details.Website);
                     cmd.Parameters.AddWithValue("p_Company_Email_ID", details.Company_EmailID);
@@ -536,7 +536,7 @@ namespace Compliance.DataAccess
             try
             {
                 conn.Open();
-               // MySqlCommand cmd = new MySqlCommand("sp_getGroupCompaniesList", conn);
+                // MySqlCommand cmd = new MySqlCommand("sp_getGroupCompaniesList", conn);
                 MySqlCommand cmd = new MySqlCommand("sp_getGroupCompanyListActiveDeactive", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
@@ -606,10 +606,10 @@ namespace Compliance.DataAccess
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getDefaultCompanyLists", conn);
-        cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("p_Org_Hier_ID", CompanyID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
-        adapter.Fill(dsCompaniesList);
+                adapter.Fill(dsCompaniesList);
             }
             catch
             {
@@ -883,7 +883,7 @@ namespace Compliance.DataAccess
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand("sp_getIndustryTypeList", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                
+
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 adapter.Fill(dsIndustryTypesList);
             }
@@ -898,25 +898,25 @@ namespace Compliance.DataAccess
             return dsIndustryTypesList;
         }
 
-        public int insertUpdateComplianceTypes(int ComplianceTypeID,int OrgID, char Flag)
+        public string insertUpdateComplianceTypes(int ComplianceTypeID, int OrgID, char Flag)
         {
+            string result = "";
+
             int ComplianceTypeListID = 0;
             try
             {
-               // if (branchLocation != null)
                 {
                     conn.Open();
-                    MySqlCommand cmd = new MySqlCommand("sp_insertupdateComplianceTypeMapping", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("p_Flag", MySqlDbType.VarChar, 1).Value = Flag;
-                    cmd.Parameters.Add("p_Org_Hier_ID", MySqlDbType.Int32).Value = OrgID;
-                    cmd.Parameters.Add("p_compliance_type_map_ID", MySqlDbType.Int32).Value = ComplianceTypeListID;
-                    cmd.Parameters.Add("p_Compliance_Type_ID", MySqlDbType.Int32).Value = ComplianceTypeID;
 
-                    object objComplianceID = cmd.ExecuteScalar();
-                    if (Convert.ToInt32(objComplianceID) > 0)
                     {
-                        ComplianceTypeListID = Convert.ToInt32(objComplianceID);
+                        MySqlCommand cmd = new MySqlCommand("sp_insertupdateComplianceTypeMapping", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("p_Flag", MySqlDbType.VarChar, 1).Value = Flag;
+                        cmd.Parameters.Add("p_Org_Hier_ID", MySqlDbType.Int32).Value = OrgID;
+                        cmd.Parameters.Add("p_compliance_type_map_ID", MySqlDbType.Int32).Value = ComplianceTypeListID;
+                        cmd.Parameters.Add("p_Compliance_Type_ID", MySqlDbType.Int32).Value = ComplianceTypeID;
+                        object objComplianceID = cmd.ExecuteScalar();
+                        result = Convert.ToString(objComplianceID);
                     }
                 }
             }
@@ -928,7 +928,7 @@ namespace Compliance.DataAccess
             {
                 conn.Close();
             }
-            return ComplianceTypeListID;
+            return result;
         }
 
         public DataSet getAssignedComplianceTypes(int CompanyID)
@@ -1019,12 +1019,12 @@ namespace Compliance.DataAccess
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("p_Flag", Flag);
                     cmd.Parameters.AddWithValue("p_Compliance_Type_ID", type.ComplianceTypeID);
-                    cmd.Parameters.AddWithValue("p_Industry_Type_ID",  type.IndustryTypeID);
-                    cmd.Parameters.AddWithValue("p_Country_ID",  type.CountryID);
-                    cmd.Parameters.AddWithValue("p_Compliance_Type_Name",  type.ComplianceTypeName);
+                    cmd.Parameters.AddWithValue("p_Industry_Type_ID", type.IndustryTypeID);
+                    cmd.Parameters.AddWithValue("p_Country_ID", type.CountryID);
+                    cmd.Parameters.AddWithValue("p_Compliance_Type_Name", type.ComplianceTypeName);
                     cmd.Parameters.AddWithValue("p_Audit_Frequency", type.AuditingFrequency);
-                    cmd.Parameters.AddWithValue("p_Start_Date",  Convert.ToDateTime(type.StartDate));
-                    cmd.Parameters.AddWithValue("p_End_Date",  type.EndDate);
+                    cmd.Parameters.AddWithValue("p_Start_Date", Convert.ToDateTime(type.StartDate));
+                    cmd.Parameters.AddWithValue("p_End_Date", type.EndDate);
 
 
                     object objbranchlocationid = cmd.ExecuteScalar();
@@ -1090,12 +1090,72 @@ namespace Compliance.DataAccess
             return dsComplianceTypesList;
         }
 
+
+
+        public int insertupdateAuditCalender(AuditCalender calender, char Flag)
+        {
+            int auditcalenderid = 0;
+            try
+            {
+                if (calender != null)
+                {
+                    conn.Open();
+                    MySqlTransaction tran = conn.BeginTransaction();
+                    MySqlCommand cmd = new MySqlCommand("sp_insertUpdateAuditCalender", conn, tran);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("p_Flag", Flag);
+                    cmd.Parameters.AddWithValue("p_Audit_Calender_ID", calender.AuditCalenderID);
+                    cmd.Parameters.AddWithValue("p_Org_Hier_ID", calender.CompanyID);
+                    cmd.Parameters.AddWithValue("p_Compliance_Type_ID", calender.ComplainceTypeID);
+                    cmd.Parameters.AddWithValue("p_Start_Date", calender.StartDate);
+                    cmd.Parameters.AddWithValue("p_End_Date", calender.EndDate);
+                    cmd.Parameters.AddWithValue("p_Audit_Year", calender.Year);
+
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                    object calenderid = cmd.ExecuteScalar();
+                    if (Convert.ToInt32(calenderid) != 0)
+                    {
+                        auditcalenderid = Convert.ToInt32(calenderid);
+                    }
+                    tran.Commit();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return auditcalenderid;
+        }
+
+        public DataSet getClosureDate(int CompanyID)
+        {
+            DataSet dsClosure = new DataSet();
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("sp_closure_date", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("p_Company_ID", CompanyID);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                adapter.Fill(dsClosure);
+            }
+            catch
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return dsClosure;
+        }
     }
-
-
-
 }
 
 
 
-       
+

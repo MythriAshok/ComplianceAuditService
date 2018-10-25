@@ -320,6 +320,24 @@
   <wsdl:message name="IOrganizationService_GetParticularCompliance_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetParticularComplianceResponse" />
   </wsdl:message>
+  <wsdl:message name="IOrganizationService_updateAuditCalender_InputMessage">
+    <wsdl:part name="parameters" element="tns:updateAuditCalender" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_updateAuditCalender_OutputMessage">
+    <wsdl:part name="parameters" element="tns:updateAuditCalenderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_insertAuditCalender_InputMessage">
+    <wsdl:part name="parameters" element="tns:insertAuditCalender" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_insertAuditCalender_OutputMessage">
+    <wsdl:part name="parameters" element="tns:insertAuditCalenderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_getClosure_InputMessage">
+    <wsdl:part name="parameters" element="tns:getClosure" />
+  </wsdl:message>
+  <wsdl:message name="IOrganizationService_getClosure_OutputMessage">
+    <wsdl:part name="parameters" element="tns:getClosureResponse" />
+  </wsdl:message>
   <wsdl:portType name="IOrganizationService">
     <wsdl:operation name="insertOrganization">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertOrganization" message="tns:IOrganizationService_insertOrganization_InputMessage" />
@@ -528,6 +546,18 @@
     <wsdl:operation name="GetParticularCompliance">
       <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/GetParticularCompliance" message="tns:IOrganizationService_GetParticularCompliance_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/GetParticularComplianceResponse" message="tns:IOrganizationService_GetParticularCompliance_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="updateAuditCalender">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/updateAuditCalender" message="tns:IOrganizationService_updateAuditCalender_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/updateAuditCalenderResponse" message="tns:IOrganizationService_updateAuditCalender_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="insertAuditCalender">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/insertAuditCalender" message="tns:IOrganizationService_insertAuditCalender_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/insertAuditCalenderResponse" message="tns:IOrganizationService_insertAuditCalender_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="getClosure">
+      <wsdl:input wsaw:Action="http://tempuri.org/IOrganizationService/getClosure" message="tns:IOrganizationService_getClosure_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IOrganizationService/getClosureResponse" message="tns:IOrganizationService_getClosure_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IOrganizationService" type="tns:IOrganizationService">
@@ -993,6 +1023,33 @@
     </wsdl:operation>
     <wsdl:operation name="GetParticularCompliance">
       <soap:operation soapAction="http://tempuri.org/IOrganizationService/GetParticularCompliance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateAuditCalender">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/updateAuditCalender" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="insertAuditCalender">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/insertAuditCalender" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getClosure">
+      <soap:operation soapAction="http://tempuri.org/IOrganizationService/getClosure" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

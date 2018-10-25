@@ -1,0 +1,54 @@
+﻿@model ComplianceAuditWeb.Models.CompanyViewModel
+
+@{
+    ViewBag.Title = "Audit Calender";
+
+}
+
+@using (Html.BeginForm())
+{
+<div class="mid_content_sec">
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Select Company", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.DropDownListFor(model => model.AuditCalender.CompanyID, Model.CompaniesList, new { @onchange = "javascript:GetComplianceType(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
+            @Html.ValidationMessageFor(model => model.CompanyID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Select ComplianceType", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.DropDownListFor(model => model.AuditCalender.ComplainceTypeID, Model.ComplianceList, new { @class = "inputMaterial ui - autocomplete - input" })
+            @Html.ValidationMessageFor(model => model.ComplianceID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Select Year", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.ListBoxFor(m => m.AuditCalender.newyearid, Model.years.AsEnumerable().Select(i => new SelectListItem { Value = i.ToString(), Text = i.ToString() })
+             , new { @class = "inputMaterial ui - autocomplete - input" })
+            @Html.ValidationMessageFor(model => model.yearid, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="col-xs-4 subSelect ">
+        <div class="input-field">
+            @Html.Label("Start Date", new { @class = "floating-label" })<span style="color:red">*</span>
+            @Html.TextBoxFor(model => model.AuditCalender.StartDate, new { @readonly = "readonly", @class = "inputMaterial ui - autocomplete - input" })
+            @Html.ValidationMessageFor(model => model.ComplianceID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <input type="button" />
+
+</div>
+
+
+}
+
+

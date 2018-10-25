@@ -827,6 +827,8 @@
     <Content Include="Views\Reporting\_SelectFrequencyForCompany.cshtml" />
     <Content Include="Views\Reporting\_CompanyReport.cshtml" />
     <Content Include="Views\Reporting\_CompanyPDF.cshtml" />
+    <Content Include="Views\ManageOrganization\_ClosureDate.cshtml" />
+    <Content Include="Views\ManageOrganization\_AuditCalenderEntry.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

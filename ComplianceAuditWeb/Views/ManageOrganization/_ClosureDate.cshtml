@@ -1,0 +1,67 @@
+﻿@model ComplianceAuditWeb.Models.CompanyViewModel
+@using System.Configuration;
+@{
+    ViewBag.Title = "Audit Calender Closure Date";
+
+}
+
+@using (Html.BeginForm())
+{
+<div class="mid_content_sec">
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    @*<div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("Select Company", new { @class = "floating-label" })<span style="color:red">*</span>
+                @Html.DropDownListFor(model => model.AuditCalender.CompanyID, Model.CompaniesList, new { @onchange = "javascript:GetComplianceType(this.value); ", @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.CompanyID, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    @if (Model.branchlist == null)
+    {
+
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("End Date", new { @class = "floating-label" })
+                @Html.EditorFor(model => model.AuditCalender.EndDate, new { @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.ComplianceID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="col-xs-4 subSelect ">
+            <div class="input-field">
+                @Html.Label("End Date", new { @class = "floating-label" })
+                @Html.TextBoxFor(model => model.AuditCalender.EndDate, new { @readonly = "readonly", disabled = "disabled",
+               @class = "inputMaterial ui - autocomplete - input" })
+                @Html.ValidationMessageFor(model => model.ComplianceID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+   
+            <p>Audit has not been closed for these branches</p>
+            @foreach(var item in Model.branchlist)
+            {
+            <div class="col-sm-3 QueList">
+                <div class="queContainer">
+                    @*@item.OrganizationID = @Session["BranchID"];*@
+                    <a href="@Url.Action("", "ManageOrganization",new { id = Model.branch.Branch_Id })">
+
+                        <span class="qIcon"><img src="images/company2.JPG" alt=""></span>
+                     
+                            <h3 class="PB25"> @Html.DisplayFor(modelItem => item)</h3>
+                      
+                    </a>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            }
+       
+    }
+</div>
+
+}

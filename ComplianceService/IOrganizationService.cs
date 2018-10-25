@@ -110,7 +110,7 @@ namespace ComplianceService
         string GetAllVendorsAssignedForBranch(int BranchVendorID);
         [OperationContract]
 
-        int insertVendor(Organization org, CompanyDetails company);
+        int insertVendor(Organization org, CompanyDetails company, BranchLocation location);
         [OperationContract]
 
         bool updateVendor(Organization org, CompanyDetails company);
@@ -139,10 +139,10 @@ namespace ComplianceService
         string GetIndustryType();
         [OperationContract]
 
-        int insertcomplianceTypes(int[] ComplianceTypeID, int OrgID);
+        string insertcomplianceTypes(int[] ComplianceTypeID, int OrgID);
         [OperationContract]
 
-        int updatecomplianceTypes(int[] ComplianceTypeID, int OrgID);
+        string updatecomplianceTypes(int[] ComplianceTypeID, int OrgID);
         [OperationContract]
 
         string GetAssignedComplianceTypes(int CompID);
@@ -164,8 +164,15 @@ namespace ComplianceService
         [OperationContract]
 
         string GetParticularCompliance(int ComplianceTypeID);
+        [OperationContract]
 
+        bool updateAuditCalender(AuditCalender calender);
+        [OperationContract]
 
+        int insertAuditCalender(AuditCalender calender);
+        [OperationContract]
+
+        string getClosure(int CompanyID);
     }
 }
 

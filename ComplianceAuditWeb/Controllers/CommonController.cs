@@ -559,5 +559,69 @@ namespace ComplianceAuditWeb.Controllers
             return Json(frequency, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult getCompanyDetailsfroVendor(int compid, string industrytypeid)
+        {
+            int industryTypeID = 0;
+            if (industrytypeid != "")
+            {
+                 industryTypeID = Convert.ToInt32(industrytypeid);
+            }
+            List<SelectListItem> compliance = new List<SelectListItem>();
+            VendorViewModel vendorVM = new VendorViewModel();
+            vendorVM.location = new BranchLocation();
+            OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+            string strXMLCompanyDetails = organizationservice.getDefaultCompanyDetails(compid);
+            DataSet dsCompanyDetails = new DataSet();
+            dsCompanyDetails.ReadXml(new StringReader(strXMLCompanyDetails));
+            if (dsCompanyDetails.Tables.Count > 0)
+            {
+                vendorVM.location.Country_Id = Convert.ToInt32(dsCompanyDetails.Tables[0].Rows[0]["Country_ID"]);
+                vendorVM.location.State_Id = Convert.ToInt32(dsCompanyDetails.Tables[0].Rows[0]["State_ID"]);
+                vendorVM.location.City_Id = Convert.ToInt32(dsCompanyDetails.Tables[0].Rows[0]["City_ID"]);
+                vendorVM.location.Postal_Code = Convert.ToString(dsCompanyDetails.Tables[0].Rows[0]["Postal_Code"]);
+               string strCompliances= organizationservice.GetComplianceType(industryTypeID, vendorVM.location.Country_Id);
+                DataSet dsCompliances = new DataSet();
+                dsCompliances.ReadXml(new StringReader(strCompliances));
+                if (dsCompliances.Tables.Count > 0)
+                {
+                    foreach (System.Data.DataRow row in dsCompliances.Tables[0].Rows)
+                    {
+
+                        compliance.Add(new SelectListItem() { Text = row["Compliance_Type_Name"].ToString(), Value = row["Compliance_Type_ID"].ToString() });
+                    }
+                }
+
+            }
+            return Json(compliance, JsonRequestBehavior.AllowGet);
+        }
+
+        //public JsonResult getYearTextBox(int complianceid)
+        //{
+        //    int date = 0;
+        //    int month = 0;
+        //    List<string> years = new List<string>();
+
+        //    CompanyViewModel model = new CompanyViewModel();
+        //    model.companydetails = new CompanyDetails();
+        //    OrgService.OrganizationServiceClient organizationservice = new OrgService.OrganizationServiceClient();
+        //    string strxmlcompliancetype = organizationservice.GetParticularCompliance(complianceid);
+        //    DataSet dsComplianceType = new DataSet();
+        //    dsComplianceType.ReadXml(new StringReader(strxmlcompliancetype));
+        //    if (dsComplianceType.Tables.Count > 0)
+        //    {
+        //        string ComplianceName = Convert.ToString(dsComplianceType.Tables[0].Rows[0]["Compliance_Type_Name"]);
+        //        DateTime StartDate = Convert.ToDateTime(dsComplianceType.Tables[0].Rows[0]["Start_Date"]);
+        //        DateTime EndDate = Convert.ToDateTime(dsComplianceType.Tables[0].Rows[0]["End_date"]);
+
+        //        date = StartDate.Day;
+        //        month = StartDate.Month;
+
+        //        years.Add(Convert.ToString(date));
+        //        years.Add(Convert.ToString(month));
+
+
+        //    }
+        //    return Json(years, JsonRequestBehavior.AllowGet);
+        //}
     }
 }
