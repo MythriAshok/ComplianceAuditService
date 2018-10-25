@@ -23,7 +23,6 @@ namespace Compliance.DataAccess
                 {
                     conn.Open();
                     MySqlCommand cmd = new MySqlCommand("sp_insertupdateComplianceXref", conn);
-                    Flag = 'I';
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("p_Flag", Flag);
                     cmd.Parameters.AddWithValue("p_Compliance_Xref_ID", xref.Compliance_Xref_ID);
@@ -34,13 +33,13 @@ namespace Compliance.DataAccess
                     cmd.Parameters.AddWithValue("p_compl_def_consequence", xref.compl_def_consequence);
                     cmd.Parameters.AddWithValue("p_Is_Header", xref.Is_Header);
                     cmd.Parameters.AddWithValue("p_level", xref.level);
-                    cmd.Parameters.AddWithValue("p_Comp_Order", xref.Comp_Order);
+                   // cmd.Parameters.AddWithValue("p_Comp_Order", xref.Comp_Order);
                     cmd.Parameters.AddWithValue("p_Risk_Category", xref.Risk_Category);
                     cmd.Parameters.AddWithValue("p_Risk_Description", xref.Risk_Description);
                     cmd.Parameters.AddWithValue("p_Periodicity", xref.Periodicity);
                     //cmd.Parameters.AddWithValue("p_Form", xref.Form);
                     //cmd.Parameters.AddWithValue("p_Type", xref.Type);
-                    cmd.Parameters.AddWithValue("p_Is_Best_Practice", xref.Is_Best_Practice);
+                    //cmd.Parameters.AddWithValue("p_Is_Best_Practice", xref.Is_Best_Practice);
                     cmd.Parameters.AddWithValue("p_Version", xref.Version);
                     cmd.Parameters.AddWithValue("p_Effective_Start_Date", xref.Effective_Start_Date);
                     cmd.Parameters.AddWithValue("p_Effective_End_Date", xref.Effective_End_Date);

@@ -287,20 +287,20 @@ namespace ComplianceAuditWeb.Controllers
             if (dsCompliances.Tables.Count > 0)
             {
                 model.compliancetypeid = Convert.ToInt32(dsCompliances.Tables[0].Rows[0]["Compliance_Type_ID"]);
-                Session["compliancetypeid"]= Convert.ToInt32(dsCompliances.Tables[0].Rows[0]["Compliance_Type_ID"]);
+                Session["compliancetypeid"] = Convert.ToInt32(dsCompliances.Tables[0].Rows[0]["Compliance_Type_ID"]);
                 foreach (System.Data.DataRow row in dsCompliances.Tables[0].Rows)
                 {
                     model.ComplianceType.Add(new SelectListItem() { Text = row["Compliance_Type_Name"].ToString(), Value = row["Compliance_Type_ID"].ToString() });
                 }
             }
             return View("_complianceActMap", model);
-        }      
+        }
 
-            public JsonResult getcompliancetypeact()
+        public JsonResult getcompliancetypeact()
         {
 
-            string compliancetype = Request.QueryString["compliancetype"];
-           // int compliancetypeid = Convert.ToInt32(Session["compliancetypeid"]);
+            // string compliancetype = Request.QueryString["compliancetype"];
+            int compliancetypeid = Convert.ToInt32(Session["compliancetypeid"]);
             ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
             //Session["compliancetypeid"] = compliancetypeid;
 
@@ -735,6 +735,20 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult UpdateAct(ComplianceViewModel model)
         {
+            ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
+            model.Compliance.User_ID = Convert.ToInt32(Session["UserId"]);
+            client.UpdateActs(model.Compliance);
+            return RedirectToAction("ListofCompliance");
+
+        }
+
+        [HttpPost]
+        public ActionResult UpdateActasnewVersion(ComplianceViewModel model)
+        {
+            ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
+            model.Compliance.User_ID = Convert.ToInt32(Session["UserId"]);
+            model.Compliance.Effective_End_Date = DateTime.MaxValue.Date;
+            client.insertActs(model.Compliance);
             return RedirectToAction("ListofCompliance");
 
         }
@@ -762,7 +776,20 @@ namespace ComplianceAuditWeb.Controllers
         [HttpPost]
         public ActionResult UpdateLineitems(ComplianceViewModel model)
         {
+            ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
+            model.Compliance.User_ID = Convert.ToInt32(Session["UserId"]);
+            client.UpdateRules(model.Compliance);
             return RedirectToAction("ListofCompliance");
         }
+
+        [HttpPost]
+        public ActionResult UpdateLineitemsasnewVersion(ComplianceViewModel model)
+        {
+            ComplianceXrefService.ComplianceXrefServiceClient client = new ComplianceXrefService.ComplianceXrefServiceClient();
+            model.Compliance.User_ID = Convert.ToInt32(Session["UserId"]);
+            client.insertRules(model.Compliance);
+            return RedirectToAction("ListofCompliance");
+
+        }
     }
-}
+    }

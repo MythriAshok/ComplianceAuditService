@@ -17,6 +17,8 @@ namespace ComplianceAuditWeb.Models
         public string vendorname { get; set; }
 
         //public List<DateTime> date { get; set; }
+
+        public int year { get; set; }
       
 
     }

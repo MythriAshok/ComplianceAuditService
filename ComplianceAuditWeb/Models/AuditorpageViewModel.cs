@@ -12,9 +12,10 @@ namespace ComplianceAuditWeb.Models
         public List<SelectListItem> companyList { get; set; }
         public List<SelectListItem> BranchList { get; set; }
         public List<Organization> VendorList { get; set; }
-
+        public List<SelectListItem> CompliancceType { get; set; }
         public int companyid { get; set; }
         public int branchid { get; set; }
         public int Vendorid { get; set; }
+        public int ComplianceTypeid { get; set; }
     }
 }
